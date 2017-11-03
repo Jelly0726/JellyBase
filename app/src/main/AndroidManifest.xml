@@ -164,7 +164,7 @@
             android:name="com.base.bgabanner.GuideActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.AllianceBusinessAnswerActivity"
+        <activity android:name=".activity.AnswerActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="standard"
             android:screenOrientation="portrait">

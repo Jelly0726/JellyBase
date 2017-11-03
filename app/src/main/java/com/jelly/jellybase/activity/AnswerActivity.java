@@ -35,7 +35,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/11/2.
  */
 
-public class AllianceBusinessAnswerActivity extends MyActivity implements View.OnClickListener{
+public class AnswerActivity extends MyActivity implements View.OnClickListener{
     private static final String filePath=Environment.getExternalStorageDirectory().getPath();//文件路径
     private Uri imageUri;
     private LinearLayout left_back;
@@ -61,7 +61,7 @@ public class AllianceBusinessAnswerActivity extends MyActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DisplayUtils.initScreen(this);
-        setContentView(R.layout.alliance_business_answer_activity);
+        setContentView(R.layout.answer_activity);
         iniView();
     }
     private void iniView(){
@@ -192,7 +192,7 @@ public class AllianceBusinessAnswerActivity extends MyActivity implements View.O
                 .onCancel(new Action<String>() {
                     @Override
                     public void onAction(int requestCode, @NonNull String result) {
-                        Toast.makeText(AllianceBusinessAnswerActivity.this,"取消", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AnswerActivity.this,"取消", Toast.LENGTH_LONG).show();
                     }
                 })
                 .start();

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="mainArray">
+        <item>轻量底部导航栏</item>
+        <item>购物车</item>
+        <item>引导页</item>
+        <item>图片选择(多选)</item>
+    </string-array>
+</resources>

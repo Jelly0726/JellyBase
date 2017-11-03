@@ -54,7 +54,7 @@ public class BottomBarActivity extends MyFragmentActivity {
         HermesEventBus.getDefault().register(this);
         login= DBHelper.getInstance(getApplicationContext())
                 .getLogin();
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.bottombar_activity);
         initView();
         initData();
         initListener();
