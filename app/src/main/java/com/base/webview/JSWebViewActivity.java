@@ -165,6 +165,7 @@ public class JSWebViewActivity extends Activity {
     protected void onStart() {
         super.onStart();
     }
+
     //go back
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

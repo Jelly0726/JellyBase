@@ -23,16 +23,12 @@ public class BaseWebViewActivity extends MyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         setContentView(R.layout.base_webview_activity);
         webTools = getIntent().getParcelableExtra(WebConfig.CONTENT);
         if (webTools == null) {
             webTools = new WebTools();
         }
         iniWebView();
-//        initView();
-//        initData();
-//        initListener();
     }
 
     private void iniWebView() {
