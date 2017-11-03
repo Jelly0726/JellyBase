@@ -143,6 +143,24 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+            <intent-filter>
+                <action android:name="${applicationId}.action.ACTION_LOGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".login.RegisterActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+        </activity>
+        <activity android:name=".login.ForgetActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+        </activity>
+        <activity android:name=".login.SetPWDActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+        </activity>
+        <activity
             android:name="com.base.bgabanner.GuideActivity"
             android:screenOrientation="portrait">
         </activity>
