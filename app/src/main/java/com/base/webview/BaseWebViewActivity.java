@@ -17,7 +17,6 @@ import com.tencent.smtt.sdk.WebViewClient;
  */
 
 public class BaseWebViewActivity extends MyActivity {
-    public static final String CONTENT = "WebTools";
     private WebTools webTools;
     private WebView Web;
 
@@ -26,7 +25,7 @@ public class BaseWebViewActivity extends MyActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.base_webview_activity);
-        webTools = getIntent().getParcelableExtra(CONTENT);
+        webTools = getIntent().getParcelableExtra(WebConfig.CONTENT);
         if (webTools == null) {
             webTools = new WebTools();
         }

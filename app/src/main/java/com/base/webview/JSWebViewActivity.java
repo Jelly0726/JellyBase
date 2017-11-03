@@ -71,7 +71,6 @@ public class JSWebViewActivity extends Activity {
     private static final int REQUEST_CODE_ASK_PERMISSIONS_CAMERA = 97;
     private static final int REQUEST_CODE_ASK_PERMISSIONS_SD = 98;
 
-    public static final String EXTER_PARAM_WEBTOOLS = "webTools";
     private BridgeTBSWebView mWebView;
     private WebTools webTools;
     // private static ProgressDialog progressDialog;
@@ -90,7 +89,7 @@ public class JSWebViewActivity extends Activity {
 
         setContentView(R.layout.base_tbs_webview);
         HermesEventBus.getDefault().register(this);
-        webTools = (WebTools) getIntent().getExtras().getParcelable(EXTER_PARAM_WEBTOOLS);
+        webTools = (WebTools) getIntent().getExtras().getParcelable(WebConfig.CONTENT);
         //WebView
 //        progressDialog=new ProgressDialog(this);
 //        //progressDialog.setTitle("加载提示");
@@ -166,18 +165,6 @@ public class JSWebViewActivity extends Activity {
     protected void onStart() {
         super.onStart();
     }
-
-    /***
-     * 启动函数
-     * @param context
-     * @param webTools
-     */
-    public static void actionStart(Context context, @NonNull WebTools webTools) {
-        Intent intent = new Intent(context, JSWebViewActivity.class);
-        intent.putExtra(EXTER_PARAM_WEBTOOLS, webTools);
-        context.startActivity(intent);
-    }
-
     //go back
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
