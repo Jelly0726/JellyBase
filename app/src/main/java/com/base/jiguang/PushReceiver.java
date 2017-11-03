@@ -147,7 +147,7 @@ public class PushReceiver extends BroadcastReceiver {
         try {
             String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
             String url = bundle.getString(JPushInterface.EXTRA_EXTRA);
-           // WebViewActivity.actionStart(context, new WebTools(title, url));
+            // JSWebViewActivity.actionStart(context, new WebTools(title, url));
         }catch (Exception e){
             Log.e(TAG, e.toString());
         }

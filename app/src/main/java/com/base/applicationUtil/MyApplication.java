@@ -1,29 +1,26 @@
 package com.base.applicationUtil;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.base.MapUtil.LocationTask;
-import com.base.album.GlideAlbumLoader;
 import com.base.crashlog.CrashApphandler;
 import com.base.okGo.OkGoApp;
 import com.base.sqldao.DBConfig;
 import com.base.sqldao.MySQLiteOpenHelper;
-import com.yanzhenjie.album.Album;
-import com.yanzhenjie.album.AlbumConfig;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import cn.jpush.android.api.JPushInterface;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
@@ -51,29 +48,75 @@ public class MyApplication extends OkGoApp {
     @Override
     public void onCreate() {
         super.onCreate();
-        // AutoLayout适配
-        AutoLayoutConifg.getInstance().useDeviceSize();
         myApp=this;
-        //图片选择
-        Album.initialize(
-                AlbumConfig.newBuilder(myApp)
-                        .setAlbumLoader(new GlideAlbumLoader()) // This is not necessary.
-                        .setLocale(Locale.getDefault())
-                        .build()
-        );
-        File file = new File(AppUtils.getFileRoot(this)
-                + File.separator +"SaveXML");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        getThread = Executors.newCachedThreadPool();
-        cachedThreadPool = Executors.newCachedThreadPool();
-        fixedThreadPool = Executors.newFixedThreadPool(2);
-        scheduledThreadPool = Executors.newScheduledThreadPool(2);
-        singleThreadExecutor = Executors.newSingleThreadExecutor();
         HermesEventBus.getDefault().init(this);
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
+        if (getPackageName().equals(getCurProcessName(this))) {
+            // AutoLayout适配
+            AutoLayoutConifg.getInstance().useDeviceSize();
+            File file = new File(AppUtils.getFileRoot(this)
+                    + File.separator + "SaveXML");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+            //TbsDownloader.needDownload(getApplicationContext(), false);
+            QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+                @Override
+                public void onViewInitFinished(boolean arg0) {
+                    // TODO Auto-generated method stub
+                    Log.e("app", " onViewInitFinished is " + arg0);
+                }
+
+                @Override
+                public void onCoreInitFinished() {
+                    // TODO Auto-generated method stub
+
+                }
+            };
+            QbSdk.setTbsListener(new TbsListener() {
+                @Override
+                public void onDownloadFinish(int i) {
+                    Log.d("app", "onDownloadFinish");
+                }
+
+                @Override
+                public void onInstallFinish(int i) {
+                    Log.d("app", "onInstallFinish");
+                }
+
+                @Override
+                public void onDownloadProgress(int i) {
+                    Log.d("app", "onDownloadProgress:" + i);
+                }
+            });
+            QbSdk.initX5Environment(getApplicationContext(), cb);
+
+
+            getThread = Executors.newCachedThreadPool();
+            cachedThreadPool = Executors.newCachedThreadPool();
+            fixedThreadPool = Executors.newFixedThreadPool(2);
+            scheduledThreadPool = Executors.newScheduledThreadPool(2);
+            singleThreadExecutor = Executors.newSingleThreadExecutor();
+            //极光推送
+            JPushInterface.setDebugMode(true);
+            JPushInterface.init(this);
+        }
+    }
+
+    private String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager mActivityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+
+                return appProcess.processName;
+            }
+        }
+        return null;
     }
 //    @Override
 //    protected void attachBaseContext(Context base) {
@@ -149,58 +192,6 @@ public class MyApplication extends OkGoApp {
     }
     public void setThread(ExecutorService getordrth) {
         this.getThread = getordrth;
-    }
-    /**
-     * 获取手机唯一表示并转为uuid 加密
-     */
-    public String getuniqueId(){
-
-        TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-
-        String imei=tm.getDeviceId();
-
-        String simSerialNumber=tm.getSimSerialNumber();
-
-        String androidId =android.provider.Settings.Secure.getString(getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
-
-        UUID deviceUuid =new UUID(androidId.hashCode(), ((long)imei.hashCode() << 32) |simSerialNumber.hashCode());
-
-        String uniqueId= deviceUuid.toString();
-
-        return uniqueId;
-
-    }
-    /**
-     * 获取版本号
-     * @return 当前应用的版本号
-     */
-    public String getVersion() {
-        String version="V1.0.0";
-        try {
-            PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            version = info.versionName;
-            return version;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return version;
-    }
-    /**
-     * 获取版本号
-     * @return 当前应用的版本号
-     */
-    public int getVersionCode() {
-        int versionCode=1;
-        try {
-            PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            versionCode = info.versionCode;
-            return versionCode;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return versionCode;
     }
     //添加Activity到容器中
     public void addActivity(Activity activity)
