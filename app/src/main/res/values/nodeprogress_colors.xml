@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="nodeColor">#cccccc</color>
+    <color name="nodeTextColor">#00bcb4</color>
+</resources>

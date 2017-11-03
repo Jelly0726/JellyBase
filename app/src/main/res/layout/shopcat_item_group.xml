@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/shopcar_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:padding="1dp"
+        android:background="@color/shopcar_white"
+        android:layout_width="match_parent"
+        android:layout_height="88px">
+        <CheckBox
+            android:id="@+id/store_checkBox"
+            android:visibility="visible"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:minWidth="20dp"
+            android:minHeight="20dp"
+            android:background="@null"
+            android:button="@null"
+            android:drawableLeft="@drawable/shopcar_checkbox_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="22px" />
+        
+        <TextView
+            android:textColor="@color/grey_color2"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@mipmap/shopcart_store"
+            android:textSize="28px"
+            android:text="小马的店铺"
+            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/store_checkBox"
+            android:id="@+id/store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:background="@color/transparent"
+            android:textColor="@color/grey_color2"
+            android:id="@+id/store_edit"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="编辑"
+            android:textSize="24px"
+            android:layout_width="wrap_content"
+            android:layout_height="88px" />
+    </RelativeLayout>
+</LinearLayout>

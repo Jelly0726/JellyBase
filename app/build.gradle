@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
@@ -10,15 +11,84 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        //多进程数据共享SharedPreferences
+        // add this to set a unique tray authority based on your applicationId
+        resValue "string", "tray__authority", "${applicationId}.tray"
+        // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
+
+        ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64", 'mips', 'mips64'
+
+            //极光推送选择要添加的对应cpu类型的.so库。
+            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        //极光推送
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "你的appkey", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        release  {
+            storeFile file("Jelly.jks")
+            storePassword "1207qw"
+            keyAlias "jelly"
+            keyPassword "1207qw"
+            //v1SigningEnabled false
+            // v2SigningEnabled false
+        }
+        debug  {
+            storeFile file("Jelly.jks")
+            storePassword "1207qw"
+            keyAlias "jelly"
+            keyPassword "1207qw"
+            //v1SigningEnabled false
+            // v2SigningEnabled false
         }
     }
-}
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"//是否输出LOG信息
+            // 移除无用的resource文件
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles 'proguard-project.txt'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            // 移除无用的resource文件
+            shrinkResources false
 
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            proguardFiles 'proguard-project.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+}
+//greendao配置
+greendao {
+    schemaVersion 1//版本号，升级时可配置
+    daoPackage'systemdb' //包名
+    targetGenDir'src/main/java' //生成目录
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -27,4 +97,64 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    //支持百分比适配
+    compile 'com.android.support:percent:22.2.0'
+    //recyclerview
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    //compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:cardview-v7:23.1.1'
+    //多进程数据共享SharedPreferences
+    compile 'net.grandcentrix.tray:tray:0.11.0'
+    //
+    compile 'xiaofei.library:hermes-eventbus:0.3.0'
+    //okhttp
+    compile 'com.lzy.net:okgo:+'
+    //版本号使用 + 可以自动引用最新版
+    //    compile 'com.lzy.net:okrx:+'        //版本号使用 + 可以自动引用最新版
+    //    compile 'com.lzy.net:okserver:+'    //版本号使用 + 可以自动引用最新版
+    //    compile 'com.lzy.net:okrx2:2.0.0'
+    //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    //compile 'com.google.code.gson:gson:2.8.0'
+    //JSON解析
+    compile 'com.alibaba:fastjson:1.1.55.android'
+    //时间和地址选择器
+    compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
+        exclude group: 'com.android.support'
+    }
+    //自动适配
+    compile 'com.zhy:autolayout:1.4.5'
+    //高德地图so及jar
+    //3D地图
+    //compile 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    compile 'com.amap.api:location:latest.integration'
+    //搜索功能
+    compile 'com.amap.api:search:latest.integration'
+    //导航
+    compile 'com.amap.api:navi-3dmap:latest.integration'
+    //极光推送
+    compile 'cn.jiguang.sdk:jpush:3.0.8'
+    // 此处以JPush 3.0.3 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.6'
+    // 此处以JCore 1.1.1 版本为例。
+    //开源的守护进程库
+    compile 'com.coolerfall:android-app-daemon:1.2.0'
+    //sqlite框架greendao
+    compile 'org.greenrobot:greendao:3.2.2'
+    // 数据库加密时添加
+    //compile 'net.zetetic:android-database-sqlcipher:3.5.1'
+    // 使用数据库升级辅助GreenDaoUpgradeHelper时添加
+    //compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.2.0'
+    //multidex
+    compile 'com.android.support:multidex:1.0.1'
+    //glide图片加载库
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //微信支付
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //星级评价
+    compile 'com.github.ome450901:SimpleRatingBar:1.3.1'
+    //图片选择
+    compile 'com.yanzhenjie:album:2.0.1'
 }

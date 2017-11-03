@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--solid表示远的填充色、stroke则代表远的边框线-->
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval"
+    android:useLevel="false" >
+    <solid android:color="#fff39800" />
+    <padding
+        android:left="2dp"
+        android:top="1dp"
+        android:right="2dp"
+        android:bottom="1dp" />
+    <solid
+        android:color="#fff39800" />
+    <stroke
+        android:width="0dp"
+        android:color="@android:color/white" />
+    <size android:width="15dp"
+        android:height="15dp" />
+</shape>

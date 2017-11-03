@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+    <LinearLayout
+        android:id="@+id/left_back"
+        android:layout_width="100px"
+        android:layout_height="100px"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:layout_weight="0">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/left_back"/>
+    </LinearLayout>
+    <TextView
+        android:layout_centerInParent="true"
+        android:id="@+id/shoppingcat_num"
+        android:textColor="#313131"
+        android:textSize="30px"
+        android:text="购物车(0)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:textSize="28px"
+            android:background="@android:color/transparent"
+            android:textColor="#313131"
+            android:text="@string/actionBar_edit"
+            android:id="@+id/actionBar_edit"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+</RelativeLayout>

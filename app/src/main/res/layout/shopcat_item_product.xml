@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/light_white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/single_checkBox"
+            android:visibility="visible"
+            android:layout_marginEnd="20px"
+            android:layout_marginStart="22px"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:minWidth="20dp"
+            android:minHeight="20dp"
+            android:background="@null"
+            android:button="@null"
+            android:drawableLeft="@drawable/shopcar_checkbox_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginBottom="5dp"
+            android:id="@+id/goods_image"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/shopcar_cmaz"
+            android:layout_width="184px"
+            android:layout_height="184px"/>
+
+        <RelativeLayout
+            android:padding="2dp"
+            android:id="@+id/goods_data"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            
+            <TextView
+                android:text="五月天【沉梦昂志】2050年演唱会 武汉站"
+                android:textSize="28px"
+                android:textColor="#313131"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginRight="80px"
+                android:id="@+id/goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/goods_size"
+                android:paddingTop="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="门票:内场 类型:憨人"
+                android:visibility="gone"
+                android:textSize="24px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:textColor="#727272"
+                android:textSize="24px"
+                android:text="批发价："/>
+            <TextView
+                android:textSize="28px"
+                android:id="@+id/goods_price"
+                android:layout_toRightOf="@id/title"
+                android:textColor="#fe1212"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:lines="1"
+                android:text="100000/斤" />
+            <TextView
+                android:textSize="24px"
+                android:text=""
+                android:visibility="gone"
+                android:layout_toRightOf="@id/goods_price"
+                android:layout_marginStart="10dp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/goods_prime_price"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="28px"
+                android:textColor="#727272"
+                android:text="x1"
+                android:layout_marginEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/goods_buyNum"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:id="@+id/edit_goods_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_weight="0.7"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#eeeeee">
+                    <TextView
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="28px"
+                        android:text="—"
+                        android:id="@+id/reduce_goodsNum"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp" />
+
+                    <TextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="28px"
+                        android:text="1"
+                        android:id="@+id/goods_Num"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp" />
+
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:textSize="28px"
+                        android:text="+"
+                        android:id="@+id/increase_goods_Num"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+                <TextView
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:id="@+id/goodsSize"
+                    android:text="门票:内场 类型:憨人"
+                    android:textSize="24px"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:id="@+id/goodsName"
+                    android:text=""
+                    android:textSize="24px"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/del_goods"
+                android:textSize="24px"
+                android:gravity="center"
+                android:background="@color/ic_red"
+                android:textColor="@android:color/white"
+                android:text="删除"
+                android:layout_weight="0.3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2.5dp"
+            android:background="@color/shopcar_white"/>
+    </LinearLayout>
+</LinearLayout>

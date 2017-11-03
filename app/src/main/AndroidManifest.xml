@@ -1,21 +1,324 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jelly.jellybase">
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_OWNER_DATA"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
+    <uses-permission android:name="com.android.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.google.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.bbk.launcher2.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.huaqin.launcherEx.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.htc.launcher.settings"/>
+    <uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.htc.launcher.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="com.huawei.launcher3.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.huawei.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE"/>
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ"/>
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
+    <uses-permission android:name="com.lenovo.launcher.permission.BADGE_READ"/>
+    <uses-permission android:name="com.lenovo.launcher.permission.BADGE_WRITE"/>
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <uses-permission android:name="com.huawei.authentication.HW_ACCESS_AUTH_SERVICE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.location" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.network" android:required="false"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
+    <uses-permission android:name="android.permission.READ_APP_BADGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FIND_LOCATION" />
+    <uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.SET_TIME"/>
+    <uses-permission android:name="android.permission.SIGNAL_PERSISTENT_PROCESSES"/>
+    <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.BATTERY_STATS"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REMOVED"/>
+    <uses-permission android:name="android.permission.BROADCAST_WAP_PUSH"/>
+    <uses-permission android:name="android.permission.DEVICE_POWER"/>
+    <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY"/>
 
     <application
+        android:name="com.base.applicationUtil.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <!-- 高德地图: 正式：edaee61dc5b9fc53d7cd648c1fa93114 测试: 347ec1a0457b72288c5b50a2a9bc1881 530a0fd298ac7fc059c8029b6007c1c9-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="edaee61dc5b9fc53d7cd648c1fa93114"/>
+        <!-- 定位需要的服务 -->
+        <!--<service android:name="com.amap.api.location.APSService" />-->
+
+        <!--autolayout 设计稿的尺寸。-->
+        <meta-data android:name="design_width" android:value="768">
+        </meta-data>
+        <meta-data android:name="design_height" android:value="1280">
+        </meta-data>
+        <!--autolayout 设计稿的尺寸。-->
+        <!--↓↓↓↓↓circle_dialog↓↓↓↓↓-->
+        <meta-data
+            android:name="circle_dialog_design_width" android:value="1200"/>
+        <meta-data
+            android:name="circle_dialog_design_height" android:value="1920"/>
+        <!--↑↑↑↑↑↑↑↑circle_dialog↑↑↑↑↑↑↑↑-->
+        <activity android:name="com.base.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+            <intent-filter>
+                <action android:name="${applicationId}.action.ACTION_MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.base.bgabanner.GuideActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.AllianceBusinessAnswerActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.BottomBarActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↓↓↓↓↓↓↓微信支付回调↓↓↓↓↓↓↓-->
+        <activity android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+        <!--↑↑↑↑↑↑↑↑微信支付回调↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.base.screenCapture.ScreenShotActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑屏幕截图↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓地图搜索↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.base.MapUtil.DestinationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑地图搜索↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓物流节点↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.base.nodeprogress.NodeProgressDemo"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑物流节点↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓图片选择↓↓↓↓↓-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--↑↑↑↑↑↑↑↑图片选择↑↑↑↑↑↑↑↑-->
+        <!--二维码-->
+        <activity
+            android:name="com.base.zxing.ScanerCodeActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            />
+        <!--二维码-->
+        <!-- 注册监听手机状态 -->
+        <receiver android:name=".receiver.PhoneStatReceiver" >
+            <intent-filter android:priority="2147483647" >
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+        <!--↓↓↓保活服务↓↓↓-->
+        <activity android:name="com.base.appservicelive.LiveActivity"
+            android:theme="@style/LiveStyle"/>
+        <!-- 定时开启服务的广播 -->
+        <receiver
+            android:name="com.base.appservicelive.receiver.PushAlarmReceiver"
+            android:exported="true"
+            android:enabled="true" />
+        <!-- 手机重启的广播 -->
+        <receiver android:name="com.base.appservicelive.receiver.PushStartupReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter android:priority="2147483647" >
+                <!-- 解锁完成后会调用 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 网络状态变化：-->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <!-- wifi信号变化：-->
+                <action android:name="android.net.wifi.RSSI_CHANGED" />
+                <!-- wifi连接状态变化：-->
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <!-- wifi状态变化(启用、禁用)：-->
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <!-- 电话的信号强度已经改变。 -->
+                <action android:name="android.intent.action.SIG_STR"></action>
+                <!-- 电话服务的状态已经改变。(调为飞行模式可观察到变化) -->
+                <action android:name="android.intent.action.SERVICE_STATE"></action>
+                <!-- 与充电器或USB连接时触发 -->
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
+                <action android:name="android.intent.action.POWER_USAGE_SUMMARY"></action>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN"></action>
+            </intent-filter>
+        </receiver>
+        <!-- 手机解锁的广播 -->
+        <receiver android:name="com.base.appservicelive.receiver.PresentReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter android:priority="2147483647" >
+                <!--<category android:name="android.intent.category.HOME" />-->
+                <!-- 解锁完成后会调用 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 网络状态变化：-->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <!-- 电话的信号强度已经改变。 -->
+                <action android:name="android.intent.action.SIG_STR"></action>
+                <!-- 电话服务的状态已经改变。(调为飞行模式可观察到变化) -->
+                <action android:name="android.intent.action.SERVICE_STATE"></action>
+                <!-- 与充电器或USB连接时触发 -->
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
+                <action android:name="android.intent.action.POWER_USAGE_SUMMARY"></action>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN"></action>
+            </intent-filter>
+        </receiver>
+        <receiver android:enabled="true" android:exported="true"
+            android:name="com.base.appservicelive.receiver.StarReceiver"
+            >
+            <intent-filter android:priority="2147483647">
+                <category android:name="android.intent.category.HOME" />
+                <!-- 开机自启动,需要android.permission.RECEIVE_BOOT_COMPLETED -->
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
+                <action android:name="android.intent.action.PHONE_STATE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.base.appservicelive.service.LiveService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="com.base.appservicelive.life" >
+        </service>
+        <service android:name="com.base.appservicelive.service.LiveService$DaemonInnerService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="com.base.appservicelive.life">
+        </service>
+        <service android:name="com.base.appservicelive.service.GuardService"
+            android:enabled="true"
+            android:exported="true"
+            android:process="com.base.appservicelive.guard" />
+        <service android:name="com.base.appservicelive.service.StartLiveActivity"
+            android:enabled="true"/>
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:name="com.base.appservicelive.service.NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
+            <!--</intent-filter>-->
+        </service>
+        <service android:name="com.base.appservicelive.service.StartService"
+            android:enabled="true"
+            >
+        </service>
+        <!--↑↑↑保活服务↑↑↑-->
+        <service android:name=".server.JobSchedulerService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
+        <service android:name=".server.WokeService"
+            android:enabled="true"
+            >
+        </service>
+        <service android:name=".server.PushService"
+            android:enabled="true"
+            >
+        </service>
     </application>
 
 </manifest>

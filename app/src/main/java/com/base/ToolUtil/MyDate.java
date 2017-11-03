@@ -1,0 +1,613 @@
+package com.base.ToolUtil;
+
+import android.util.Log;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+public class MyDate {
+    /**
+     * 根据年 月 获取对应的月份 天数
+     * */
+    public static int getDaysByYearMonth(int year, int month) {
+        Calendar a = Calendar.getInstance();
+        a.set(Calendar.YEAR, year);
+        a.set(Calendar.MONTH, month-1);
+        a.set(Calendar.DATE, 1);
+        a.roll(Calendar.DATE, -1);
+        int maxDate = a.get(Calendar.DATE);
+        return maxDate;
+    }
+
+    /**
+     * 将字符串转为 yyyy-MM-dd EEE HH:mm
+     * @param time
+     * @return
+     */
+    public static String getTimeToStamp(String time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+        try {
+            Date date = sdf.parse(time);
+            sdf = new SimpleDateFormat( "yyyy-MM-dd EEE HH:mm" );
+            return sdf.format(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return time;
+    }
+    /**
+     * 将字符串转为 yyyy-MM-dd EEE
+     * @param time
+     * @return
+     */
+    public static String getTimeToStampDa(String time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            Date date = sdf.parse(time);
+            sdf = new SimpleDateFormat( "yyyy-MM-dd EEE " );
+            return sdf.format(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return time;
+    }
+    /**
+     * 将字符串转为 yyyy
+     * @param time
+     * @return
+     */
+    public static int getTimeToStampY(String time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            Date date = sdf.parse(time);
+            sdf = new SimpleDateFormat( "yyyy" );
+            return Integer.parseInt(sdf.format(date));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    /**
+     * 将字符串转为MM
+     * @param time
+     * @return
+     */
+    public static int getTimeToStampM(String time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            Date date = sdf.parse(time);
+            sdf = new SimpleDateFormat( "MM" );
+            return Integer.parseInt(sdf.format(date));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    /**
+     * 将字符串转为 dd
+     * @param time
+     * @return
+     */
+    public static int getTimeToStampD(String time){
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+        try {
+            Date date = sdf.parse(time);
+            sdf = new SimpleDateFormat( "dd" );
+            return Integer.parseInt(sdf.format(date));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+	public static String getDateCN() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
+		String date = format.format(new Date(System.currentTimeMillis()));
+		return date;// 2012年10月03日 23:41:31
+	}
+
+	public static String getDateEN() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date1 = format1.format(new Date(System.currentTimeMillis()));
+		return date1;// 2012-10-03 23:41:31
+	}
+
+	public static String getDate() {
+		SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+		String date = format2.format(new Date(System.currentTimeMillis()));
+		return date;
+	}
+	public static String getDatemiao() {
+		SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
+		String date = format2.format(new Date(System.currentTimeMillis()));
+		return date;
+	}
+	public static String getHour() {
+		SimpleDateFormat format2 = new SimpleDateFormat("HH");
+		String date = format2.format(new Date(System.currentTimeMillis()));
+		return date;
+	}
+	public static String getMinutes() {
+//		Calendar   date   =   Calendar.getInstance();
+//		// 得到24小时机制
+//		date.get(Calendar.HOUR_OF_DAY);
+//		// 得到12小时机制
+//		date.get(Calendar.HOUR);
+
+		SimpleDateFormat format2 = new SimpleDateFormat("mm");
+		String date = format2.format(new Date(System.currentTimeMillis()));
+		return date;
+	}
+	public static String getDateDaEN() {
+		SimpleDateFormat format3 = new SimpleDateFormat("yyyy-MM-dd");
+		String date = format3.format(new Date(System.currentTimeMillis()));
+		return date;//2012-10-03
+	}
+	public static String getDateMonthEN() {
+		SimpleDateFormat format3 = new SimpleDateFormat("yyyy-MM");
+		String date = format3.format(new Date(System.currentTimeMillis()));
+		return date;//2012-10
+	}
+	public static String getDateMonthCN() {
+		SimpleDateFormat format3 = new SimpleDateFormat("yyyy年MM月");
+		String date = format3.format(new Date(System.currentTimeMillis()));
+		return date;//2012年10月
+	}
+	public static String getDateDaCN() {
+		SimpleDateFormat format4 = new SimpleDateFormat("yyyy年MM月dd日");
+		String date = format4.format(new Date(System.currentTimeMillis()));
+		return date;//2012年10月03日
+	}
+	public static String getDateDaEN(int da){
+		Date date=new Date();//取时间
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
+		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(date);
+		return dateString;
+	}
+	public static String getDateDaCN(int da){
+		Date date=new Date();//取时间
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
+		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+		String dateString = formatter.format(date);
+		return dateString;
+	}
+	/* 将字符串转为时间戳 */
+	public static String getTimeToStampCN(String time) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒",
+				Locale.CHINA);
+		Date date = new Date();
+		try {
+			date = sdf.parse(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String tmptime = String.valueOf(date.getTime()).substring(0, 10);
+
+		return tmptime;
+	}
+	/* 将字符串转为时间戳 */
+	public static String getTimeToStampEN(String time) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+				Locale.CHINA);
+		Date date = new Date();
+		try {
+			date = sdf.parse(time);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String tmptime = String.valueOf(date.getTime()).substring(0, 10);
+
+		return tmptime;
+	}
+
+	/**
+	 *  整数(秒数)转换为时分秒格式
+	 代码如下:
+	 */
+	// a integer to xx:xx:xx
+	public static String secToTimeEN(int time) {
+		String timeStr = null;
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
+		if (time <= 0)
+			return "00:00";
+		else {
+			minute = time / 60;
+			if (minute < 60) {
+				second = time % 60;
+				timeStr = unitFormat(minute) + ":" + unitFormat(second);
+			} else {
+				hour = minute / 60;
+				if (hour > 99)
+					return "99:59:59";
+				minute = minute % 60;
+				second = time - hour * 3600 - minute * 60;
+				timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second);
+			}
+		}
+		return timeStr;
+	}
+	/**
+	 *  整数(秒数)转换为时分秒格式
+	 代码如下:
+	 */
+	// a integer to xx:xx:xx
+	public static String secToTimeCN(int time) {
+		String timeStr = null;
+		int hour = 0;
+		int minute = 0;
+		int second = 0;
+		if (time <= 0)
+			return "00分00秒";
+		else {
+			minute = time / 60;
+			if (minute < 60) {
+				second = time % 60;
+				timeStr = unitFormat(minute) + "分"+ unitFormat(second)+ "秒";
+			} else {
+				hour = minute / 60;
+				if (hour > 99)
+					return "99时59分59秒";
+				minute = minute % 60;
+				second = time - hour * 3600 - minute * 60;
+				timeStr = unitFormat(hour) + "时" + unitFormat(minute) + "分" + unitFormat(second)+ "秒" ;
+			}
+		}
+		return timeStr;
+	}
+	public static String unitFormat(int i) {
+		String retStr = null;
+		if (i >= 0 && i < 10)
+			retStr = "0" + Integer.toString(i);
+		else
+			retStr = "" + i;
+		return retStr;
+	}
+	private static final String TAG = "MyDate";
+
+	/**
+	 * 时间格式：yyyy-MM-dd
+	 */
+	public static final String DATE_FORMAT = "yyyy年MM月dd日";
+
+	/**
+	 * 时间格式：yyyy-MM-dd HH:mm:ss
+	 */
+	public static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * 时间格式：yyyy-MM-dd HH:mm
+	 */
+	public static final String TIME_FORMAT2 = "yyyy-MM-dd HH:mm";
+
+	/**
+	 * 在之前
+	 */
+	public static final int TIME_BEFORE = 1;
+
+	/**
+	 * 在中间
+	 */
+	public static final int TIME_ING = 2;
+
+	/**
+	 * 在之后
+	 */
+	public static final int TIME_AFTER = 3;
+
+	/**
+	 * 异常
+	 */
+	public static final int TIME_ERROR = -1;
+
+	/**
+	 * string型时间转换
+	 *
+	 * @param timeFormat 时间格式
+	 * @param timestamp  时间
+	 * @return 刚刚  x分钟  小时前  ...
+	 */
+	public static String convertTime(String timeFormat, String timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+		try {
+			return convertTime(sdf.parse(timestamp).getTime());
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG, e.getMessage());
+			return null;
+		} catch (ParseException e) {
+			Log.e(TAG, e.getMessage());
+		}
+
+		return timestamp;
+	}
+
+	/**
+	 * string型时间转换
+	 *
+	 * @param timeFormat 时间格式
+	 * @param timestamp  时间
+	 * @return 刚刚  x分钟  小时前  ...
+	 */
+	public static String convertTime(String timeFormat, long timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+		try {
+			Date date = new Date();
+			date.setTime(timestamp);
+			return sdf.format(date);
+		} catch (IllegalArgumentException e) {
+			Log.e(TAG, e.getMessage());
+			return "";
+		}
+	}
+
+	/**
+	 * int型时间转换
+	 *
+	 * @param timestamp 时间
+	 * @return 刚刚  x分钟  一天内  ...
+	 */
+	public static String convertTime(long timestamp) {
+		String timeStr = null;
+
+		long interval = (System.currentTimeMillis() - timestamp) / 1000;
+		if (interval <= 60) { //1分钟内 服务端的时间 可能和本地的有区别 所以小于0的 对于这个情况全部都显示刚刚
+			timeStr = "刚刚";
+		} else if (interval < 60 * 60) { // 1小时内
+			timeStr = (interval / 60 == 0 ? 1 : interval / 60) + "分钟前";
+		} else if (interval < 24 * 60 * 60) { // 一天内
+			timeStr = (interval / 60 * 60 == 0 ? 1 : interval / (60 * 60)) + "小时前";
+		} else if (interval < 30 * 24 * 60 * 60) { // 天前
+			timeStr = (interval / 24 * 60 * 60 == 0 ? 1 : interval / (24 * 60 * 60)) + "天前";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 月前
+			timeStr = (interval / 30 * 24 * 60 * 60 == 0 ? 1 : interval / (30 * 24 * 60 * 60)) + "月前";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 年前
+			timeStr = (interval / 12 * 30 * 24 * 60 * 60 == 0 ? 1 : interval / (12 * 30 * 24 * 60 * 60)) + "年前";
+		} else {
+			Date date = new Date();
+			date.setTime(timestamp);
+			timeStr = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
+		}
+
+		return timeStr;
+	}
+
+	/**
+	 * int型时间转换 比较距离结束
+	 * @param timestamp 时间
+	 * @return 刚刚  x分钟  一天后  ...
+	 */
+	public static String convertEndTime(long timestamp) {
+		String timeStr = null;
+
+		long interval = (timestamp - System.currentTimeMillis()) / 1000;
+		if (interval <= 60) { //1分钟内 服务端的时间 可能和本地的有区别 所以小于0的 对于这个情况全部都显示刚刚
+			timeStr = "刚刚";
+		} else if (interval < 60 * 60) { // 1小时内
+			timeStr = (interval / 60 == 0 ? 1 : interval / 60) + "分钟后";
+		} else if (interval < 24 * 60 * 60) { // 一天内
+			timeStr = (interval / 60 * 60 == 0 ? 1 : interval / (60 * 60)) + "小时后";
+		} else if (interval < 30 * 24 * 60 * 60) { // 天前
+			timeStr = (interval / 24 * 60 * 60 == 0 ? 1 : interval / (24 * 60 * 60)) + "天后";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 月前
+			timeStr = (interval / 30 * 24 * 60 * 60 == 0 ? 1 : interval / (30 * 24 * 60 * 60)) + "月后";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 年前
+			timeStr = (interval / 12 * 30 * 24 * 60 * 60 == 0 ? 1 : interval / (12 * 30 * 24 * 60 * 60)) + "年后";
+		} else {
+			Date date = new Date();
+			date.setTime(interval);
+			timeStr = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
+		}
+
+		return timeStr;
+	}
+
+	/**
+	 * 将long型时间转为固定格式的时间字符串
+	 *
+	 * @param longTime 时间
+	 * @return {@link MyDate#TIME_FORMAT}
+	 */
+	public static String convertToTime(long longTime) {
+		return convertToTime(TIME_FORMAT, longTime);
+	}
+
+	/**
+	 * 将long型时间转为固定格式的时间字符串
+	 *
+	 * @param timeformat 时间格式
+	 * @param longTime   时间
+	 * @return timeformat
+	 */
+	public static String convertToTime(String timeformat, long longTime) {
+		Date date = new Date(longTime);
+		return convertToTime(timeformat, date);
+	}
+
+	/**
+	 * 将Date型时间转为固定格式的时间字符串
+	 * @param timeformat 时间格式
+	 * @param date 时间
+	 * @return timeformat
+	 */
+	public static String convertToTime(String timeformat, Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeformat, Locale.getDefault());
+		return sdf.format(date);
+	}
+
+	/**
+	 * 将Calendar型时间转为固定格式的时间字符串
+	 * @param timeformat 时间格式
+	 * @param calendar   时间
+	 * @return timeformat
+	 */
+	public static String convertToTime(String timeformat, Calendar calendar) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeformat, Locale.getDefault());
+		return sdf.format(calendar.getTime());
+	}
+
+	/**
+	 * 将long型时间转为固定格式的日期字符串
+	 *
+	 * @param longTime 时间
+	 * @return {@link MyDate#DATE_FORMAT}
+	 */
+	public static String convertToDate(long longTime) {
+		return convertToTime(DATE_FORMAT, longTime);
+	}
+
+	/**
+	 * 将String类型时间转为long类型时间
+	 *
+	 * @param timeFormat 解析格式
+	 * @param timestamp  yyyy-MM-dd HH:mm:ss
+	 * @return 时间
+	 */
+	public static long covertToLong(String timeFormat, String timestamp) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
+		try {
+			Date date = sdf.parse(timestamp);
+			return date.getTime();
+		} catch (ParseException e) {
+			Log.e(TAG, e.getMessage());
+			return -1;
+		}
+	}
+
+	/**
+	 * long型时间转换
+	 *
+	 * @param longTime 长整型时间
+	 * @return 2013年7月3日 18:05(星期三)
+	 */
+	public static String convertDayOfWeek(long longTime) {
+		final String format = "%d年%d月%d日 %s:%s(%s)";
+
+		Calendar c = Calendar.getInstance(); // 日历实例
+		c.setTime(new Date(longTime));
+
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH);
+		int date = c.get(Calendar.DATE);
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+		String h = hour > 9 ? String.valueOf(hour) : "0" + hour;
+		int minute = c.get(Calendar.MINUTE);
+		String m = minute > 9 ? String.valueOf(minute) : "0" + minute;
+		return String.format(Locale.getDefault(), format, year, month + 1, date, h, m, converToWeek(c.get(Calendar.DAY_OF_WEEK)));
+	}
+
+	/**
+	 * 转换数字的星期为字符串的
+	 *
+	 * @param w
+	 * @return 星期x
+	 */
+	private static String converToWeek(int w) {
+		String week = null;
+
+		switch (w) {
+			case 1:
+				week = "星期日";
+				break;
+			case 2:
+				week = "星期一";
+				break;
+			case 3:
+				week = "星期二";
+				break;
+			case 4:
+				week = "星期三";
+				break;
+			case 5:
+				week = "星期四";
+				break;
+			case 6:
+				week = "星期五";
+				break;
+			case 7:
+				week = "星期六";
+				break;
+		}
+
+		return week;
+	}
+
+	/**
+	 * 计算时间是否在区间内
+	 *
+	 * @param time  time
+	 * @param time1 time
+	 * @param time2 time
+	 * @return {@link MyDate#TIME_BEFORE}{@link MyDate#TIME_ING}{@link MyDate#TIME_AFTER}
+	 */
+	public static int betweenTime(long time, long time1, long time2) {
+		if (time1 > time2) {  //时间1大
+			long testTime = time1;
+			time1 = time2;
+			time2 = testTime;
+		}
+
+		//已经过去
+		if (time1 > time) {
+			return TIME_BEFORE;
+		} else if (time2 < time) {
+			return TIME_AFTER;
+		} else {
+			return TIME_ING;
+		}
+	}
+
+	public static String computeTimeDifference(String time) {
+		try {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			java.util.Date date = df.parse(time);
+			return computeTimeDifference(date.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String computeTimeDifference(long time) {
+		long l = time - System.currentTimeMillis();
+		if(l <= 0) {
+			return "" + 0 + "天" + 0 + "小时" + 0 + "分" + 0 + "秒";
+		}
+
+		long day = l / (24 * 60 * 60 * 1000);
+		long hour = (l / (60 * 60 * 1000) - day * 24);
+		long min = ((l / (60 * 1000)) - day * 24 * 60 - hour * 60);
+		long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+		return "" + day + "天" + hour + "小时" + min + "分" + s + "秒";
+	}
+
+	public static String timeFormat(long time){
+		long l = time - System.currentTimeMillis();
+		if(l <= 0) {
+			return "" + 0 + "天" + 0 + "小时";
+		}
+
+		long diffHour = l/(1000 * 60 * 60);
+		long day = l/(1000 * 60 *60 * 24);
+		if (diffHour < 24){
+			// 显示为小时
+			return  "" + diffHour + "小时";
+		} else {
+			// 显示天
+			return "" + day + "天";
+		}
+	}
+}

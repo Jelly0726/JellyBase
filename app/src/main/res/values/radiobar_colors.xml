@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="radiobutton_false_bg">#ffffff</color>
+    <color name="radiobutton_false_text">#f58612</color>
+    <color name="radiobutton_true_bg">#f58612</color>
+    <color name="radiobutton_true_text">#ffffff</color>
+</resources>
