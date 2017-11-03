@@ -6,5 +6,7 @@
         <item>引导页</item>
         <item>图片选择(多选)</item>
         <item>注册获取验证码</item>
+        <item>WebView</item>
+        <item>JS交互WebView</item>
     </string-array>
 </resources>
