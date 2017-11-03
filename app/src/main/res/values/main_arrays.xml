@@ -8,5 +8,6 @@
         <item>注册获取验证码</item>
         <item>WebView</item>
         <item>JS交互WebView</item>
+        <item>仿支付宝密码输入</item>
     </string-array>
 </resources>

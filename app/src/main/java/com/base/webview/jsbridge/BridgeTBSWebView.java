@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
+import com.base.webview.jsbridge.utils.WebViewJavaScriptFunction;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -28,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jsbridge.utils.WebViewJavaScriptFunction;
 
 @SuppressLint("SetJavaScriptEnabled")
 public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge {

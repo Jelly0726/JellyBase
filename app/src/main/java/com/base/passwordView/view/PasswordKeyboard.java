@@ -9,10 +9,10 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.RelativeLayout;
 
 import com.jelly.jellybase.R;
 
@@ -31,13 +31,16 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
     public static final String DONE = "OK";
     //因为UED是给的是iPhone设计稿,所以是按照等比的思想设置键盘Key的高度和宽度
     private static final int IPHONE = 779;
+    private int screenWidth = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE))
+            .getDefaultDisplay().getWidth();
+    private int screenHeight = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE))
+            .getDefaultDisplay().getHeight();
+    private int padding=10;//10dp
+    private int mBackgroundColor=Color.parseColor("#eeeeee");
     //每个键盘Key的宽度,为屏幕宽度的三分之一
-    private int keyWidth = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth() / 3;
+    private int keyWidth = (screenWidth) / 3;
     //每个键盘Key的高度
-    private int keyHeight = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight() * 59 / IPHONE;
-
-    private int screenWidth = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
-
+    private int keyHeight = screenHeight* 59 / IPHONE;
     private Paint mPaint;
     //List集合存储Key,方便每次输错都能再次随机数字键盘
     private final List<Button> keyButtons = new ArrayList<>();
@@ -45,7 +48,10 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
     private WorkHandler mWorkHandler;
 
     private static final int DELETE = 1;
-
+    private static int dipTopx(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
     //WorkHandler 用于处理长按"删除"Key时,执行重复删除操作。
     private static class WorkHandler extends Handler {
 
@@ -96,7 +102,7 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         super.onMeasure(widthSpec, heightSpec);
-        setMeasuredDimension(screenWidth, keyHeight * 4);
+        setMeasuredDimension(screenWidth, keyHeight * 4+(dipTopx(getContext(),padding*5)));
     }
 
     //重新设置键盘key位置
@@ -109,6 +115,10 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
     }
 
     private void initView() {
+        keyWidth=(screenWidth-(dipTopx(getContext(),padding*4)))/3;
+        //keyHeight=(screenHeight-(dipTopx(getContext(),padding*5)))* 59/IPHONE;
+        setBackgroundColor(mBackgroundColor);
+        setPadding(dipTopx(getContext(),padding),dipTopx(getContext(),padding),0,0);
         //必须设置调用该方法,不然onDraw方法不执行。如果ViewGroup没有背景,则其onDraw方法不执行
         setWillNotDraw(false);
         if (getChildCount() > 0) {
@@ -120,14 +130,17 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
         //填充键盘Key,用Button来完成Key功能
         for (int i = 0; i < keyList.size(); i++) {
             Button item = new Button(getContext());
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(keyWidth, keyHeight);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(keyWidth, keyHeight);
+            params.setMargins(0,0,dipTopx(getContext(),padding),dipTopx(getContext(),padding));
             item.setLayoutParams(params);
             item.setOnClickListener(this);
             item.setText(keyList.get(i));
-            item.setBackgroundDrawable(getResources().getDrawable(R.drawable.password_key_selector));
+            item.setBackgroundColor(Color.parseColor("#00000000"));
             //监听"删除"的长按监听事件,完成重复删除操作
             if (DEL.equals(keyList.get(i))) {
                 item.setOnTouchListener(this);
+            } else if (!"".equals(keyList.get(i))){
+                item.setBackgroundDrawable(getResources().getDrawable(R.drawable.password_key_bg));
             }
             item.setTag(keyList.get(i));
             addView(item);
@@ -144,11 +157,11 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //绘制分割线
-        canvas.drawLine(0, getMeasuredHeight() / 4, getMeasuredWidth(), getMeasuredHeight() / 4, mPaint);
-        canvas.drawLine(0, 2 * getMeasuredHeight() / 4, getMeasuredWidth(), 2 * getMeasuredHeight() / 4, mPaint);
-        canvas.drawLine(0, 3 * getMeasuredHeight() / 4, getMeasuredWidth(), 3 * getMeasuredHeight() / 4, mPaint);
-        canvas.drawLine(getMeasuredWidth() / 3, 0, getMeasuredWidth() / 3, getMeasuredHeight(), mPaint);
-        canvas.drawLine(2 * getMeasuredWidth() / 3, 0, 2 * getMeasuredWidth() / 3, getMeasuredHeight(), mPaint);
+//        canvas.drawLine(0, getMeasuredHeight() / 4, getMeasuredWidth(), getMeasuredHeight() / 4, mPaint);
+//        canvas.drawLine(0, 2 * getMeasuredHeight() / 4, getMeasuredWidth(), 2 * getMeasuredHeight() / 4, mPaint);
+//        canvas.drawLine(0, 3 * getMeasuredHeight() / 4, getMeasuredWidth(), 3 * getMeasuredHeight() / 4, mPaint);
+//        canvas.drawLine(getMeasuredWidth() / 3, 0, getMeasuredWidth() / 3, getMeasuredHeight(), mPaint);
+//        canvas.drawLine(2 * getMeasuredWidth() / 3, 0, 2 * getMeasuredWidth() / 3, getMeasuredHeight(), mPaint);
     }
 
     @Override

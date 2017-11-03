@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
+import com.base.webview.BaseWebViewActivity;
+import com.base.webview.JSWebViewActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.ItemDecoration;
+import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
@@ -108,6 +111,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 3://图片多选
                     intent=new Intent(MyApplication.getMyApp(), AnswerActivity.class);
+                    startActivity(intent);
+                    break;
+                case 4://WebView
+                    intent=new Intent(MyApplication.getMyApp(), BaseWebViewActivity.class);
+                    startActivity(intent);
+                    break;
+                case 5://JS交互WebView
+                    intent=new Intent(MyApplication.getMyApp(), JSWebViewActivity.class);
+                    startActivity(intent);
+                    break;
+                case 6://仿支付宝密码输入
+                    intent=new Intent(MyApplication.getMyApp(), AlipayPassWordActivity.class);
                     startActivity(intent);
                     break;
             }
