@@ -9,10 +9,10 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.RelativeLayout;
 
 import com.jelly.jellybase.R;
 
@@ -105,6 +105,17 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
         setMeasuredDimension(screenWidth, keyHeight * 4+(dipTopx(getContext(),padding*5)));
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        for (int i=0;i<getChildCount();i++){
+            Button item= (Button) getChildAt(i);
+            ViewGroup.MarginLayoutParams params = (MarginLayoutParams) item.getLayoutParams();
+            params.setMargins(0,0,dipTopx(getContext(),padding),dipTopx(getContext(),padding));
+            item.setLayoutParams(params);
+        }
+    }
+
     //重新设置键盘key位置
     public void resetKeyboard() {
         List<String> keyList = randomKeys(10);
@@ -130,8 +141,8 @@ public class PasswordKeyboard extends GridLayout implements View.OnClickListener
         //填充键盘Key,用Button来完成Key功能
         for (int i = 0; i < keyList.size(); i++) {
             Button item = new Button(getContext());
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(keyWidth, keyHeight);
-            params.setMargins(0,0,dipTopx(getContext(),padding),dipTopx(getContext(),padding));
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(keyWidth, keyHeight);
+            //params.setMargins(0,0,dipTopx(getContext(),padding),dipTopx(getContext(),padding));
             item.setLayoutParams(params);
             item.setOnClickListener(this);
             item.setText(keyList.get(i));
