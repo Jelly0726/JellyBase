@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -47,9 +46,7 @@ public class SearchResultActivity extends MyActivity {
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private SearchResultAdapter adapter;
-    private TextView textView;
     private List<Product> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
@@ -92,8 +89,6 @@ public class SearchResultActivity extends MyActivity {
         xRefreshView.setPullLoadEnable(true);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
         recyclerView.setHasFixedSize(true);
-        // 设置静默加载模式
-//		xRefreshView1.setSilenceLoadMore();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         Rect rect=new Rect();
@@ -102,40 +97,11 @@ public class SearchResultActivity extends MyActivity {
         rect.left=0;
         rect.right=0;
         recyclerView.addItemDecoration(new ItemDecoration(rect,0, ItemDecoration.NONE));
-        // 静默加载模式不能设置footerview
         recyclerView.setAdapter(adapter);
-//        xRefreshView1.setAutoLoadMore(false);
         xRefreshView.setPinnedTime(1000);
         xRefreshView.setMoveForHorizontal(true);
-
-        //当需要使用数据不满一屏时不显示点击加载更多的效果时，解注释下面的三行代码
-        //并注释掉第四行代码
-//        CustomerFooter customerFooter = new CustomerFooter(this);
-//        customerFooter.setRecyclerView(recyclerView);
-//        recyclerviewAdapter.setCustomLoadMoreView(customerFooter);
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
-        //xRefreshView.setCustomFooterView(new XRefreshViewFooter(this.getActivity()));
-//        recyclerviewAdapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
-//		xRefreshView1.setPullLoadEnable(false);
-        //设置静默加载时提前加载的item个数
-//		xRefreshView1.setPreLoadCount(2);
-
         xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
-//		// 实现Recyclerview的滚动监听，在这里可以自己处理到达底部加载更多的操作，可以不实现onLoadMore方法，更加自由
-//		xRefreshView1.setOnRecyclerViewScrollListener(new OnScrollListener() {
-//			@Override
-//			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//				super.onScrolled(recyclerView, dx, dy);
-//				lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-//			}
-//
-//			public void onScrollStateChanged(RecyclerView recyclerView,
-//											 int newState) {
-//				if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//					isBottom = recyclerviewAdapter.getItemCount() - 1 == lastVisibleItem;
-//				}
-//			}
-//		});
     }
     /**
      * 设置弹窗
