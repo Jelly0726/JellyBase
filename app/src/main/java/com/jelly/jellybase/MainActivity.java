@@ -23,6 +23,7 @@ import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
+import com.jelly.jellybase.login.RegisterActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -113,15 +114,19 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(MyApplication.getMyApp(), AnswerActivity.class);
                     startActivity(intent);
                     break;
-                case 4://WebView
+                case 4://获取验证码
+                    intent=new Intent(MyApplication.getMyApp(), RegisterActivity.class);
+                    startActivity(intent);
+                    break;
+                case 5://WebView
                     intent=new Intent(MyApplication.getMyApp(), BaseWebViewActivity.class);
                     startActivity(intent);
                     break;
-                case 5://JS交互WebView
+                case 6://JS交互WebView
                     intent=new Intent(MyApplication.getMyApp(), JSWebViewActivity.class);
                     startActivity(intent);
                     break;
-                case 6://仿支付宝密码输入
+                case 7://仿支付宝密码输入
                     intent=new Intent(MyApplication.getMyApp(), AlipayPassWordActivity.class);
                     startActivity(intent);
                     break;
