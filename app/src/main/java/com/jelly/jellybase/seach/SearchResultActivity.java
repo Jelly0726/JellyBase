@@ -1,4 +1,4 @@
-package com.jelly.jellybase.activity;
+package com.jelly.jellybase.seach;
 
 import android.content.Intent;
 import android.graphics.Rect;
@@ -20,7 +20,6 @@ import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.adpater.SearchResultAdapter;
 import com.jelly.jellybase.datamodel.Product;
 import com.jelly.jellybase.mypopupmenu.BaseItem;
 import com.jelly.jellybase.mypopupmenu.TopMiddlePopup;

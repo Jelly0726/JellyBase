@@ -1,4 +1,4 @@
-package com.jelly.jellybase.activity;
+package com.jelly.jellybase.seach;
 
 import android.content.Intent;
 import android.os.Bundle;

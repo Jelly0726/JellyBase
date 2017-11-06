@@ -204,12 +204,12 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.SearchActivity"
+        <activity android:name=".seach.SearchActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.SearchResultActivity"
+        <activity android:name=".seach.SearchResultActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="standard"
             android:screenOrientation="portrait">

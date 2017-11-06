@@ -35,6 +35,7 @@ import com.jelly.jellybase.datamodel.Product;
 import com.jelly.jellybase.mypopupmenu.BaseItem;
 import com.jelly.jellybase.mypopupmenu.TopMiddlePopup;
 import com.jelly.jellybase.mypopupmenu.Util;
+import com.jelly.jellybase.seach.SearchActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

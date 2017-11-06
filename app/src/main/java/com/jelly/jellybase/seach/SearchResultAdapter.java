@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jelly.jellybase.adpater;
+package com.jelly.jellybase.seach;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
