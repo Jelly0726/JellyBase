@@ -1,4 +1,4 @@
-package com.base.applicationUtil;
+package com.base.sqldao;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
