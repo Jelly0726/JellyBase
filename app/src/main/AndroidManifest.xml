@@ -179,6 +179,16 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.PaymentActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".shopcar.ShopCartActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="com.base.webview.JSWebViewActivity"
             android:screenOrientation="portrait"

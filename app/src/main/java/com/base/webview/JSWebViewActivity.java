@@ -89,7 +89,10 @@ public class JSWebViewActivity extends Activity {
 
         setContentView(R.layout.base_tbs_webview);
         HermesEventBus.getDefault().register(this);
-        webTools = (WebTools) getIntent().getExtras().getParcelable(WebConfig.CONTENT);
+        webTools = (WebTools) getIntent().getParcelableExtra(WebConfig.CONTENT);
+        if (webTools == null) {
+            webTools = new WebTools();
+        }
         //WebView
 //        progressDialog=new ProgressDialog(this);
 //        //progressDialog.setTitle("加载提示");
