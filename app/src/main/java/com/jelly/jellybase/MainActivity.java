@@ -13,16 +13,22 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
+import com.base.nodeprogress.NodeProgressDemo;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.ItemDecoration;
+import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
+import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
+import com.jelly.jellybase.activity.PickActivity;
+import com.jelly.jellybase.activity.ScreenShortActivity;
+import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.login.RegisterActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
@@ -133,6 +139,30 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 8://支付方式选择
                     intent=new Intent(MyApplication.getMyApp(), PaymentActivity.class);
+                    startActivity(intent);
+                    break;
+                case 9://加入购物车
+                    intent=new Intent(MyApplication.getMyApp(), AddShopcartActivity.class);
+                    startActivity(intent);
+                    break;
+                case 10://截图并保存图片
+                    intent=new Intent(MyApplication.getMyApp(), ScreenShortActivity.class);
+                    startActivity(intent);
+                    break;
+                case 11://快递节点
+                    intent=new Intent(MyApplication.getMyApp(), NodeProgressDemo.class);
+                    startActivity(intent);
+                    break;
+                case 12://悬停，搜索，扫描，弹窗
+                    intent=new Intent(MyApplication.getMyApp(), HomeActivity.class);
+                    startActivity(intent);
+                    break;
+                case 13://下拉选择
+                    intent=new Intent(MyApplication.getMyApp(), SpinnerActivity.class);
+                    startActivity(intent);
+                    break;
+                case 14://地址时间选择
+                    intent=new Intent(MyApplication.getMyApp(), PickActivity.class);
                     startActivity(intent);
                     break;
             }

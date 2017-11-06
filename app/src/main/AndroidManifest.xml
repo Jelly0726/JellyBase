@@ -189,6 +189,41 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.AddShopcartActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.ScreenShortActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SearchResultActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SpinnerActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.PickActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="com.base.webview.JSWebViewActivity"
             android:screenOrientation="portrait"

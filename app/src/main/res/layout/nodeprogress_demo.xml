@@ -9,6 +9,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
+    android:background="#eeeeee"
     tools:context="com.base.nodeprogress.NodeProgressDemo">
 
     <ScrollView

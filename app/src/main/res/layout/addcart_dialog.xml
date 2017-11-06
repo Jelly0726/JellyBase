@@ -10,7 +10,7 @@
         android:layout_weight="1"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="232px"
+        android:layout_height="146dp"
         android:paddingTop="0px"
         android:paddingBottom="0px"
         android:paddingLeft="0px"
@@ -20,17 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="30px"
-            android:paddingTop="30px"
-            android:paddingLeft="310px"
-            android:paddingRight="90px"
+            android:layout_marginTop="15dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="155dp"
+            android:paddingRight="45dp"
             android:background="#fff">
             <TextView
                 android:id="@+id/goods_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#fe1212"
-                android:textSize="28px"
+                android:textSize="14sp"
                 android:gravity="center_vertical"
                 android:text="￥：20/斤"/>
             <TextView
@@ -39,18 +39,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20px"
                 android:textColor="#313131"
-                android:textSize="28px"
+                android:textSize="14sp"
                 android:gravity="center_vertical"
                 android:text="库存200件"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/goods_pic"
-            android:layout_width="250px"
-            android:layout_height="250px"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
             android:layout_marginTop="0px"
-            android:layout_marginLeft="30px"
-            android:layout_marginBottom="30px"
-            android:padding="10px"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"
+            android:padding="5dp"
             android:scaleType="fitXY"
             android:src="@mipmap/yumi"
             android:elevation="5dp"
@@ -62,8 +62,8 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/addcart_cancel"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="60px"
-            android:layout_marginRight="30px"/>
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="15dp"/>
 
     </RelativeLayout>
     <LinearLayout
@@ -79,11 +79,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="134px"
+        android:layout_height="65dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:background="#fff">
         <TextView
             android:layout_width="match_parent"
@@ -91,7 +91,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:textSize="30px"
+            android:textSize="15sp"
             android:textColor="#313131"
             android:text="购买数量"/>
         <LinearLayout
@@ -102,7 +102,7 @@
             android:background="#fff">
             <TextView
                 android:gravity="center"
-                android:textSize="28px"
+                android:textSize="14sp"
                 android:text="—"
                 android:id="@+id/reduce_goodsNum"
                 android:layout_width="50dp"
@@ -113,7 +113,7 @@
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="28px"
+                android:textSize="14sp"
                 android:text="1"
                 android:id="@+id/goods_Num"
                 android:layout_width="match_parent"
@@ -121,7 +121,7 @@
 
             <TextView
                 android:gravity="center"
-                android:textSize="28px"
+                android:textSize="14sp"
                 android:text="+"
                 android:id="@+id/increase_goods_Num"
                 android:layout_width="50dp"
@@ -141,13 +141,13 @@
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="40px"
+        android:layout_height="20dp"
         android:background="#fff"/>
     <TextView
         android:id="@+id/confirm_tv"
         android:layout_width="match_parent"
-        android:layout_height="98px"
-        android:textSize="28px"
+        android:layout_height="49dp"
+        android:textSize="14sp"
         android:textColor="#fff"
         android:gravity="center"
         android:text="确定"

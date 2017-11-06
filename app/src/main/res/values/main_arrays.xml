@@ -10,5 +10,11 @@
         <item>JS交互WebView</item>
         <item>仿支付宝密码输入</item>
         <item>支付方式选择</item>
+        <item>加入购物车</item>
+        <item>截图并保存图片</item>
+        <item>快递节点</item>
+        <item>悬停，搜索，扫描，弹窗</item>
+        <item>下拉选择框</item>
+        <item>地址时间选择</item>
     </string-array>
 </resources>
