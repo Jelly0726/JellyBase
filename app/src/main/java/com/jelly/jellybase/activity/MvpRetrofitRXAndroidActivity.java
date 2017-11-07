@@ -9,11 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.base.applicationUtil.ToastUtils;
-import com.base.network.DataBean.BankInfoGson;
-import com.base.network.Mode.NetIPSourceMode;
-import com.base.network.Presenter.NetIPInter;
-import com.base.network.Presenter.NetIPPresenter;
-import com.base.network.RetrofitApi.HttpMethods;
+import com.base.http.DataBean.BankInfoGson;
+import com.base.http.Mode.NetIPSourceMode;
+import com.base.http.Presenter.NetIPInter;
+import com.base.http.Presenter.NetIPPresenter;
+import com.base.http.RetrofitApi.HttpMethods;
 import com.jelly.jellybase.R;
 
 import java.util.List;
