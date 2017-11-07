@@ -10,6 +10,7 @@ import com.base.crashlog.CrashApphandler;
 import com.base.okGo.OkGoApp;
 import com.base.sqldao.DBConfig;
 import com.base.sqldao.MySQLiteOpenHelper;
+import com.jelly.jellybase.BuildConfig;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.zhy.autolayout.config.AutoLayoutConifg;
@@ -20,6 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
@@ -52,6 +54,8 @@ public class MyApplication extends OkGoApp {
         HermesEventBus.getDefault().init(this);
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
+        //butterknife注解式绑定id
+        ButterKnife.setDebug(BuildConfig.DEBUG);
         if (getPackageName().equals(getCurProcessName(this))) {
             // AutoLayout适配
             AutoLayoutConifg.getInstance().useDeviceSize();

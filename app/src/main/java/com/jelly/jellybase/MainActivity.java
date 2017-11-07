@@ -25,6 +25,7 @@ import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.HomeActivity;
+import com.jelly.jellybase.activity.MvpRetrofitRXAndroidActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
@@ -163,6 +164,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 14://地址时间选择
                     intent=new Intent(MyApplication.getMyApp(), PickActivity.class);
+                    startActivity(intent);
+                    break;
+                case 15://Android MVP+Retrofit+RxAndroid
+                    intent=new Intent(MyApplication.getMyApp(), MvpRetrofitRXAndroidActivity.class);
                     startActivity(intent);
                     break;
             }

@@ -16,5 +16,6 @@
         <item>悬停，搜索，扫描，弹窗</item>
         <item>下拉选择框</item>
         <item>地址时间选择</item>
+        <item>MVP+Retrofit+RxAndroid,butterknife注解式绑定id</item>
     </string-array>
 </resources>

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
@@ -101,7 +102,9 @@ dependencies {
     compile 'com.android.support:percent:22.2.0'
     //recyclerview
     compile 'com.android.support:design:24.2.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    //butterknife注解式绑定id
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     //compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.android.support:cardview-v7:23.1.1'
@@ -109,7 +112,7 @@ dependencies {
     compile 'net.grandcentrix.tray:tray:0.11.0'
     //
     compile 'xiaofei.library:hermes-eventbus:0.3.0'
-    //okhttp
+    //okgo
     compile 'com.lzy.net:okgo:+'
     //版本号使用 + 可以自动引用最新版
     //    compile 'com.lzy.net:okrx:+'        //版本号使用 + 可以自动引用最新版
@@ -117,6 +120,17 @@ dependencies {
     //    compile 'com.lzy.net:okrx2:2.0.0'
     //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //compile 'com.google.code.gson:gson:2.8.0'
+    //okhttp
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    //Retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'                     //Retrofit2所需要的包
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'               //ConverterFactory的Gson依赖包
+    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'            //ConverterFactory的String依赖包
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'               //添加Retrofit对Rxjava的支持
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    //RxJava
+    compile 'io.reactivex:rxjava:1.2.7'
+    compile 'io.reactivex:rxandroid:1.2.1'
     //JSON解析
     compile 'com.alibaba:fastjson:1.1.55.android'
     //时间和地址选择器

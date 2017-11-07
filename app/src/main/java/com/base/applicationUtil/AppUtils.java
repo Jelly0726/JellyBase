@@ -63,6 +63,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
@@ -935,52 +936,46 @@ public class AppUtils {
                 final ExecutorService exec= Executors.newFixedThreadPool(3);
                 Callable<String> call=new Callable<String>(){
                     public String call() throws Exception {
-                        String IP = "127.0.0.1";
-                        String address = "http://ip.taobao.com/service/getIpInfo2.php?ip=myip";
-                        URL url = new URL(address);
-                        HttpURLConnection connection = (HttpURLConnection) url
-                                .openConnection();
-                        connection.setConnectTimeout(3000);
-                        connection.setUseCaches(false);
-                        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                            InputStream in = connection.getInputStream();
-                            // 将流转化为字符串
-                            BufferedReader reader = new BufferedReader(
-                                    new InputStreamReader(in));
-                            String tmpString = "";
-                            StringBuilder retJSON = new StringBuilder();
-                            while ((tmpString = reader.readLine()) != null) {
-                                retJSON.append(tmpString + "\n");
+                        String ip = "127.0.0.1";
+                        String chinaz = "http://ip.chinaz.com";
+
+                        StringBuilder inputLine = new StringBuilder();
+                        String read = "";
+                        URL url = null;
+                        HttpURLConnection urlConnection = null;
+                        BufferedReader in = null;
+                        try {
+                            url = new URL(chinaz);
+                            urlConnection = (HttpURLConnection) url.openConnection();
+                            in = new BufferedReader( new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+                            while((read=in.readLine())!=null){
+                                inputLine.append(read+"\r\n");
                             }
-                            JSONObject jsonObject = new JSONObject(retJSON.toString());
-                            String code = jsonObject.getString("code");
-                            if (code.equals("0")) {
-                                JSONObject data = jsonObject.getJSONObject("data");
-                                if(params[0].equals("I")){
-                                    IP = data.getString("ip");
+                            //System.out.println(inputLine.toString());
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }finally{
+                            if(in!=null){
+                                try {
+                                    in.close();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
                                 }
-                                if(params[0].equals("Z")){
-                                    IP =  data.getString("country")
-                                            + data.getString("area") + "区"
-                                            + data.getString("region") + data.getString("city")
-                                            + data.getString("isp");
-                                }
-                                if(params[0].equals("H")) {
-                                    IP = data.getString("ip") + "(" + data.getString("country")
-                                            + data.getString("area") + "区"
-                                            + data.getString("region") + data.getString("city")
-                                            + data.getString("isp") + ")";
-                                }
-                                //Log.e("提示", "您的IP地址是：" + IP+" params="+params[0]);
-                            } else {
-                                IP = "127.0.0.1";
-                                Log.e("提示", "IP接口异常，无法获取IP地址！");
                             }
-                        } else {
-                            IP = "127.0.0.1";
-                            Log.e("提示", "网络连接异常，无法获取IP地址！");
                         }
-                        return IP;
+
+
+                        Pattern p = Pattern.compile("\\<dd class\\=\"fz24\">(.*?)\\<\\/dd>");
+                        Matcher m = p.matcher(inputLine.toString());
+                        if(m.find()){
+                            String ipstr = m.group(1);
+                            ip = ipstr;
+                            //System.out.println(ipstr);
+                        }
+                        return ip;
                     }
                 };
                 // 开始任务执行服务

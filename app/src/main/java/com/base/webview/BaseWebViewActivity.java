@@ -3,11 +3,11 @@ package com.base.webview;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-
-import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
+import android.view.KeyEvent;
 
 import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -113,5 +113,30 @@ public class BaseWebViewActivity extends MyActivity {
         if (!TextUtils.isEmpty(webTools.url)) {
             Web.loadUrl(webTools.url);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        if (Web != null && Web.canGoBack()) {
+            Web.goBack();
+            return;
+        }
+        super.onBackPressed();
+    }
+    //go back
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        try {
+            // Check if the key event was the Back button and if there's history
+            if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+                if (Web != null && Web.canGoBack()) {
+                    Web.goBack();
+                    return true;
+                } else
+                    return super.onKeyDown(keyCode, event);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
