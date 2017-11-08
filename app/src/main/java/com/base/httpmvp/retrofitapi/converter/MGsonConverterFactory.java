@@ -30,15 +30,15 @@ import retrofit2.Retrofit;
 /**
  * Created by Administrator on 2017/11/7.
  */
-//GsonConverterFactory.java
-public class GsonConverterFactory extends Converter.Factory {
+//MGsonConverterFactory.java
+public class MGsonConverterFactory extends Converter.Factory {
 
     //private final Gson gson;
-    private GsonConverterFactory() {
+    private MGsonConverterFactory() {
         //this.gson = gson;
     }
-    public static GsonConverterFactory create() {
-        return new GsonConverterFactory();
+    public static MGsonConverterFactory create() {
+        return new MGsonConverterFactory();
     }
 
     @Override

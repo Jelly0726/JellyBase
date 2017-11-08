@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.base.config.BaseConfig;
 import com.base.httpmvp.mode.databean.RegistrationVo;
 import com.base.httpmvp.mode.databean.TokenModel;
+import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -17,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -59,8 +59,8 @@ public class HttpMethods implements IGlobalManager {
 							.client(sOkHttpClient)
 //							.addConverterFactory(GsonConverterFactory.create())
 							//.addConverterFactory(new ListConverterFactory())
-							.addConverterFactory(GsonConverterFactory.create())
-							//.addConverterFactory(new GsonConverterFactory())
+							.addConverterFactory(MGsonConverterFactory.create())
+							//.addConverterFactory(new MGsonConverterFactory())
 							.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
 							.baseUrl(sUrl)
 							.build();
