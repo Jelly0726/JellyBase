@@ -4,25 +4,13 @@ package com.base.httpmvp.view;
  * Created by Administrator on 2017/11/8.
  */
 
-public interface IRegisterActivityView {
-
+public interface IRegisterActivityView extends IBaseView{
     /**
      * 获取参数
      *
      * @return
      */
     public Object getParamenters();
-
-    /**
-     * 显示操作进度
-     */
-    public void showProgress();
-
-    /**
-     * 关闭进度
-     */
-    public void closeProgress();
-
     /**
      * 成功回调
      */

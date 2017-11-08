@@ -205,6 +205,12 @@ public class MyApplication extends OkGoApp {
     public void deleteActivity(Activity activity){
         activities.remove(activity);
     }
+    public void finishAllActivity(){
+        for(Activity activity:activities){
+            activity.finish();
+        }
+        activities.clear();
+    }
     /**
      * 退出
      */
