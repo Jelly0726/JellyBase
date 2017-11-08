@@ -17,15 +17,15 @@ import retrofit2.Converter;
 /**
  * Created by Administrator on 2017/11/7.
  */
-//GsonRequestBodyConverter.java
-final class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+//MGsonRequestBodyConverter.java
+final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    GsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    MGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

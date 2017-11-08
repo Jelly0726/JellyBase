@@ -20,19 +20,19 @@ import retrofit2.Converter;
 /**
  * Created by Administrator on 2017/11/7.
  */
-//GsonResponseBodyConverter.java
-final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+//MGsonResponseBodyConverter.java
+final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
     private final Gson gson;
     private final TypeAdapter<T> adapter;
     //private final Type type;
 
-        GsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+        MGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }
-//    GsonResponseBodyConverter(Gson gson, Type type) {
+//    MGsonResponseBodyConverter(Gson gson, Type type) {
 //        this.gson = gson;
 //        this.type = type;
 //    }

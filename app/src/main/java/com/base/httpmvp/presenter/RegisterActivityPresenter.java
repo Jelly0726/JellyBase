@@ -2,8 +2,12 @@ package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.mode.business.Business;
 import com.base.httpmvp.mode.business.ICallBackListener;
+import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpResultAll;
 import com.base.httpmvp.view.IRegisterActivityView;
 import com.iflytek.cloud.thirdparty.T;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -27,8 +31,12 @@ public class RegisterActivityPresenter implements IBasePresenter {
         mIBusiness.register(mIRegisterActivityView.getParamenters(), new ICallBackListener<T>() {
             @Override
             public void onSuccess(final T mCallBackVo) {
-                mIRegisterActivityView.closeProgress();
-                mIRegisterActivityView.excuteSuccessCallBack(isRefresh,mCallBackVo);
+                HttpResultAll httpResultAll= (HttpResultAll)((List)mCallBackVo).get(0);
+                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
+                    mIRegisterActivityView.excuteSuccessCallBack(isRefresh,mCallBackVo);
+                }else {
+                    mIRegisterActivityView.excuteFailedCallBack(isRefresh,httpResultAll.getMsg());
+                }
             }
 
             @Override

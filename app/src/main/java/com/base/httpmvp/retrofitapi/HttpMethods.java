@@ -3,10 +3,8 @@ package com.base.httpmvp.retrofitapi;
 import android.text.TextUtils;
 
 import com.base.config.BaseConfig;
-import com.base.httpmvp.mode.databean.RegistrationVo;
 import com.base.httpmvp.mode.databean.TokenModel;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
-import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
@@ -163,9 +161,9 @@ public class HttpMethods implements IGlobalManager {
 	 * 注册
 	 * @param subscriber
 	 */
-	public void userRegistration(Object paramMap, Subscriber<List<RegistrationVo>> subscriber){
+	public void userRegistration(Object paramMap, Subscriber<List<HttpResultAll>> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
-				.map(new HttpResultFunc<List<RegistrationVo>>());
+				.map(new HttpResultFunc<List<HttpResultAll>>());
 		toSubscribe(observable, subscriber);
 	}
 	/***
@@ -184,9 +182,9 @@ public class HttpMethods implements IGlobalManager {
 	private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
 		@Override
 		public T call(HttpResult<T> tHttpResult) {
-			if (tHttpResult.getStatus() == 0) {
-				throw new ApiException(tHttpResult.getMsg());
-			}
+//			if (tHttpResult.getStatus() == 0) {
+//				throw new ApiException(tHttpResult.getMsg());
+//			}
 			return tHttpResult.getData();
 		}
 	}

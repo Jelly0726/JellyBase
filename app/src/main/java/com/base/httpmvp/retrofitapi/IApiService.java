@@ -1,7 +1,6 @@
 package com.base.httpmvp.retrofitapi;
 
 
-import com.base.httpmvp.mode.databean.RegistrationVo;
 import com.base.httpmvp.mode.databean.TokenModel;
 
 import java.util.List;
@@ -24,5 +23,5 @@ public interface IApiService {
 	//Observable<ResultModel> getResult(@Query("token") String token);
 	//注册
 	@POST("SLD/sales/register2.doAdminJJ")
-	Observable<HttpResult<List<RegistrationVo>>> userRegistration(@Query("data") Object jsonObject);
+	Observable<HttpResult<List<HttpResultAll>>> userRegistration(@Query("data") Object jsonObject);
 }

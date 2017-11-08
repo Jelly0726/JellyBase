@@ -8,19 +8,23 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class HttpResult<T> {
-	@SerializedName("status")
-	private int status;
+	@SerializedName("returnState")
+	private boolean returnState;
 	@SerializedName(value ="msg", alternate = "message")
 	private String msg;
 	@SerializedName("data")
 	private T data;
-
-	public int getStatus() {
-		return status;
+	/**
+	 * API是否请求失败
+	 *
+	 * @return 成功返回true, 失败返回false
+	 */
+	public boolean isReturnState() {
+		return returnState;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setReturnState(boolean status) {
+		this.returnState = status;
 	}
 
 	public String getMsg() {

@@ -62,14 +62,14 @@ public class MGsonConverterFactory extends Converter.Factory {
 //        };
         //TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(newType));
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new GsonResponseBodyConverter<>(gson,adapter);
+        return new MGsonResponseBodyConverter<>(gson,adapter);
     }
 
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
                                                           Annotation[] methodAnnotations, Retrofit retrofit) {
         TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
-        return new GsonRequestBodyConverter<>(gson, adapter);
+        return new MGsonRequestBodyConverter<>(gson, adapter);
     }
 
     // 解决data返回为字符串""时跳出的异常
@@ -86,7 +86,13 @@ public class MGsonConverterFactory extends Converter.Factory {
                     list.add(item);
                 }
                 return list;
-            } else {
+            } else if (json.isJsonObject()){
+                Type itemType = ((ParameterizedType) typeOfT).getActualTypeArguments()[0];
+                List list = new ArrayList<>();
+                Object item = context.deserialize(json, itemType);
+                list.add(item);
+                return list;
+            }else {
                 //和接口类型不符，返回空List
                 return Collections.EMPTY_LIST;
             }
