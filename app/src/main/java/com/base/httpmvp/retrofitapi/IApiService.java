@@ -1,7 +1,7 @@
 package com.base.httpmvp.retrofitapi;
 
 
-import com.base.httpmvp.mode.databean.TokenModel;
+import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.mode.databean.UploadData;
 
 import java.util.List;
@@ -20,10 +20,9 @@ import rx.Observable;
  */
 
 public interface IApiService {
-	@GET("get_token")
-	Observable<TokenModel> getToken();
-	@GET("refresh_token")
-	Observable<TokenModel> refreshToken();
+	//获取token
+	@GET("SLD/token/getToken.doAdminJJ")
+	Observable<HttpResultAll<HttpResultData<TokenModel>>> getToken(@Query("data") Object jsonObject);
 	//@GET("request")
 	//Observable<ResultModel> getResult(@Query("token") String token);
 	//注册

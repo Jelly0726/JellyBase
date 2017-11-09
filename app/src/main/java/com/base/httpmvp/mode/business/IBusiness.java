@@ -5,7 +5,11 @@ package com.base.httpmvp.mode.business;
  */
 
 public interface IBusiness {
-
+    /**
+     * 获取token
+     * @param mUserVo:请求参数：封装为bean
+     */
+    public void getToken(Object mUserVo);
     /**
      * 注册
      * @param mUserVo:请求参数：封装为bean

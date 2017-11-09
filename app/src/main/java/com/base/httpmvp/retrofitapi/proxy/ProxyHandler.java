@@ -3,7 +3,7 @@ package com.base.httpmvp.retrofitapi.proxy;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.httpmvp.mode.databean.TokenModel;
+import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;

@@ -3,13 +3,12 @@ package com.base.httpmvp.retrofitapi;
 import android.text.TextUtils;
 
 import com.base.config.BaseConfig;
-import com.base.httpmvp.mode.databean.TokenModel;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
+import com.base.httpmvp.retrofitapi.token.TokenModel;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -118,50 +117,10 @@ public class HttpMethods implements IGlobalManager {
 	/***
 	 *获取Token
 	 */
-	public void getToken(){
-		Observable observable = get(IApiService.class).getToken();
-		toSubscribe(observable, new Subscriber<TokenModel>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(TokenModel model) {
-				if (model != null && !TextUtils.isEmpty(model.token)) {
-					GlobalToken.updateToken(model.token);
-				}
-			}
-		});
-	}
-	/***
-	 *重新获取Token
-	 */
-	public void regainToken(){
-		Observable observable = get(IApiService.class).refreshToken();
-		toSubscribe(observable, new Subscriber<TokenModel>() {
-			@Override
-			public void onCompleted() {
-
-			}
-
-			@Override
-			public void onError(Throwable e) {
-
-			}
-
-			@Override
-			public void onNext(TokenModel model) {
-				if (model != null && !TextUtils.isEmpty(model.token)) {
-					GlobalToken.updateToken(model.token);
-				}
-			}
-		});
+	public void getToken(Object paramMap, Subscriber<HttpResultData<TokenModel>> subscriber){
+		Observable observable = get(IApiService.class).getToken(paramMap)
+				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());;
+		toSubscribe(observable,subscriber);
 	}
 	/***
 	 * 注册
