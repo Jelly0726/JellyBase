@@ -33,6 +33,12 @@ public interface IBusiness {
      * @param  mICallBackListener：回调接口
      */
     public void feedBack(Object obj, ICallBackListener mICallBackListener);
+    /**
+     * 上传文件（图片）
+     * @param obj:请求参数，可根据实际需求定义
+     * @param  mICallBackListener：回调接口
+     */
+    public void upload(Object obj, ICallBackListener mICallBackListener);
 
     //  TODO MORE
 }

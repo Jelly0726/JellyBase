@@ -7,11 +7,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by BYPC006 on 2017/3/6.
  */
 
-public class HttpResult {
+public class HttpResultData<T> {
 	@SerializedName("status")
 	private int status;
 	@SerializedName(value ="msg", alternate = "message")
 	private String msg;
+	@SerializedName("data")
+	private T data;
 
 	public int getStatus() {
 		return status;
@@ -27,5 +29,13 @@ public class HttpResult {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public T getData() {
+		return data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
 	}
 }

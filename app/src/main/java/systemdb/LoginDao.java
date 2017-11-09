@@ -23,46 +23,14 @@ public class LoginDao extends AbstractDao<Login, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Memberid = new Property(1, Integer.class, "memberid", false, "MEMBERID");
+        public final static Property UserID = new Property(1, Integer.class, "userID", false, "USER_ID");
         public final static Property Code = new Property(2, String.class, "code", false, "CODE");
         public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property Commission = new Property(4, String.class, "commission", false, "COMMISSION");
-        public final static Property Khreferralcode = new Property(5, String.class, "khreferralcode", false, "KHREFERRALCODE");
-        public final static Property Phonenumber = new Property(6, String.class, "phonenumber", false, "PHONENUMBER");
-        public final static Property Nickname = new Property(7, String.class, "nickname", false, "NICKNAME");
-        public final static Property Age = new Property(8, Integer.class, "age", false, "AGE");
-        public final static Property Photo = new Property(9, String.class, "photo", false, "PHOTO");
-        public final static Property City = new Property(10, String.class, "city", false, "CITY");
-        public final static Property Latitude = new Property(11, double.class, "latitude", false, "LATITUDE");
-        public final static Property Longitude = new Property(12, double.class, "longitude", false, "LONGITUDE");
-        public final static Property Address = new Property(13, String.class, "address", false, "ADDRESS");
-        public final static Property Sex = new Property(14, String.class, "sex", false, "SEX");
-        public final static Property Idcard = new Property(15, String.class, "idcard", false, "IDCARD");
-        public final static Property Drivercount = new Property(16, int.class, "drivercount", false, "DRIVERCOUNT");
-        public final static Property Viplevel = new Property(17, int.class, "viplevel", false, "VIPLEVEL");
-        public final static Property Version = new Property(18, String.class, "version", false, "VERSION");
-        public final static Property Integral = new Property(19, int.class, "integral", false, "INTEGRAL");
-        public final static Property Balance = new Property(20, float.class, "balance", false, "BALANCE");
-        public final static Property Couponsbalance = new Property(21, float.class, "couponsbalance", false, "COUPONSBALANCE");
-        public final static Property Startprice = new Property(22, float.class, "startprice", false, "STARTPRICE");
-        public final static Property Upmemberid = new Property(23, Integer.class, "upmemberid", false, "UPMEMBERID");
-        public final static Property Membertypeid = new Property(24, int.class, "membertypeid", false, "MEMBERTYPEID");
-        public final static Property Membertypename = new Property(25, String.class, "membertypename", false, "MEMBERTYPENAME");
-        public final static Property Phonetype = new Property(26, String.class, "phonetype", false, "PHONETYPE");
-        public final static Property Alipayaccout = new Property(27, String.class, "alipayaccout", false, "ALIPAYACCOUT");
-        public final static Property WeiXinid = new Property(28, String.class, "weiXinid", false, "WEI_XINID");
-        public final static Property Weixinaccount = new Property(29, String.class, "weixinaccount", false, "WEIXINACCOUNT");
-        public final static Property Bankname = new Property(30, String.class, "bankname", false, "BANKNAME");
-        public final static Property Bankaccount = new Property(31, String.class, "bankaccount", false, "BANKACCOUNT");
-        public final static Property Bankidcard = new Property(32, String.class, "bankidcard", false, "BANKIDCARD");
-        public final static Property Bankusername = new Property(33, String.class, "bankusername", false, "BANKUSERNAME");
-        public final static Property Jobs = new Property(34, String.class, "jobs", false, "JOBS");
-        public final static Property Icename = new Property(35, String.class, "icename", false, "ICENAME");
-        public final static Property Icephone = new Property(36, String.class, "icephone", false, "ICEPHONE");
-        public final static Property Complain = new Property(37, String.class, "complain", false, "COMPLAIN");
-        public final static Property Areacode = new Property(38, String.class, "areacode", false, "AREACODE");
-        public final static Property Plate = new Property(39, String.class, "plate", false, "PLATE");
-        public final static Property Num = new Property(40, int.class, "num", false, "NUM");
+        public final static Property Phone = new Property(4, String.class, "phone", false, "PHONE");
+        public final static Property Nickname = new Property(5, String.class, "nickname", false, "NICKNAME");
+        public final static Property Age = new Property(6, Integer.class, "age", false, "AGE");
+        public final static Property Sex = new Property(7, String.class, "sex", false, "SEX");
+        public final static Property Balance = new Property(8, float.class, "balance", false, "BALANCE");
     }
 
 
@@ -79,46 +47,14 @@ public class LoginDao extends AbstractDao<Login, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"LOGIN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"MEMBERID\" INTEGER NOT NULL ," + // 1: memberid
+                "\"USER_ID\" INTEGER NOT NULL ," + // 1: userID
                 "\"CODE\" TEXT," + // 2: code
                 "\"NAME\" TEXT," + // 3: name
-                "\"COMMISSION\" TEXT," + // 4: commission
-                "\"KHREFERRALCODE\" TEXT," + // 5: khreferralcode
-                "\"PHONENUMBER\" TEXT," + // 6: phonenumber
-                "\"NICKNAME\" TEXT," + // 7: nickname
-                "\"AGE\" INTEGER NOT NULL ," + // 8: age
-                "\"PHOTO\" TEXT," + // 9: photo
-                "\"CITY\" TEXT," + // 10: city
-                "\"LATITUDE\" REAL NOT NULL ," + // 11: latitude
-                "\"LONGITUDE\" REAL NOT NULL ," + // 12: longitude
-                "\"ADDRESS\" TEXT," + // 13: address
-                "\"SEX\" TEXT," + // 14: sex
-                "\"IDCARD\" TEXT," + // 15: idcard
-                "\"DRIVERCOUNT\" INTEGER NOT NULL ," + // 16: drivercount
-                "\"VIPLEVEL\" INTEGER NOT NULL ," + // 17: viplevel
-                "\"VERSION\" TEXT," + // 18: version
-                "\"INTEGRAL\" INTEGER NOT NULL ," + // 19: integral
-                "\"BALANCE\" REAL NOT NULL ," + // 20: balance
-                "\"COUPONSBALANCE\" REAL NOT NULL ," + // 21: couponsbalance
-                "\"STARTPRICE\" REAL NOT NULL ," + // 22: startprice
-                "\"UPMEMBERID\" INTEGER NOT NULL ," + // 23: upmemberid
-                "\"MEMBERTYPEID\" INTEGER NOT NULL ," + // 24: membertypeid
-                "\"MEMBERTYPENAME\" TEXT," + // 25: membertypename
-                "\"PHONETYPE\" TEXT," + // 26: phonetype
-                "\"ALIPAYACCOUT\" TEXT," + // 27: alipayaccout
-                "\"WEI_XINID\" TEXT," + // 28: weiXinid
-                "\"WEIXINACCOUNT\" TEXT," + // 29: weixinaccount
-                "\"BANKNAME\" TEXT," + // 30: bankname
-                "\"BANKACCOUNT\" TEXT," + // 31: bankaccount
-                "\"BANKIDCARD\" TEXT," + // 32: bankidcard
-                "\"BANKUSERNAME\" TEXT," + // 33: bankusername
-                "\"JOBS\" TEXT," + // 34: jobs
-                "\"ICENAME\" TEXT," + // 35: icename
-                "\"ICEPHONE\" TEXT," + // 36: icephone
-                "\"COMPLAIN\" TEXT," + // 37: complain
-                "\"AREACODE\" TEXT," + // 38: areacode
-                "\"PLATE\" TEXT," + // 39: plate
-                "\"NUM\" INTEGER NOT NULL );"); // 40: num
+                "\"PHONE\" TEXT," + // 4: phone
+                "\"NICKNAME\" TEXT," + // 5: nickname
+                "\"AGE\" INTEGER NOT NULL ," + // 6: age
+                "\"SEX\" TEXT," + // 7: sex
+                "\"BALANCE\" REAL NOT NULL );"); // 8: balance
     }
 
     /** Drops the underlying database table. */
@@ -135,7 +71,7 @@ public class LoginDao extends AbstractDao<Login, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getMemberid());
+        stmt.bindLong(2, entity.getUserID());
  
         String code = entity.getCode();
         if (code != null) {
@@ -147,142 +83,22 @@ public class LoginDao extends AbstractDao<Login, Long> {
             stmt.bindString(4, name);
         }
  
-        String commission = entity.getCommission();
-        if (commission != null) {
-            stmt.bindString(5, commission);
-        }
- 
-        String khreferralcode = entity.getKhreferralcode();
-        if (khreferralcode != null) {
-            stmt.bindString(6, khreferralcode);
-        }
- 
-        String phonenumber = entity.getPhonenumber();
-        if (phonenumber != null) {
-            stmt.bindString(7, phonenumber);
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(5, phone);
         }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
-            stmt.bindString(8, nickname);
+            stmt.bindString(6, nickname);
         }
-        stmt.bindLong(9, entity.getAge());
- 
-        String photo = entity.getPhoto();
-        if (photo != null) {
-            stmt.bindString(10, photo);
-        }
- 
-        String city = entity.getCity();
-        if (city != null) {
-            stmt.bindString(11, city);
-        }
-        stmt.bindDouble(12, entity.getLatitude());
-        stmt.bindDouble(13, entity.getLongitude());
- 
-        String address = entity.getAddress();
-        if (address != null) {
-            stmt.bindString(14, address);
-        }
+        stmt.bindLong(7, entity.getAge());
  
         String sex = entity.getSex();
         if (sex != null) {
-            stmt.bindString(15, sex);
+            stmt.bindString(8, sex);
         }
- 
-        String idcard = entity.getIdcard();
-        if (idcard != null) {
-            stmt.bindString(16, idcard);
-        }
-        stmt.bindLong(17, entity.getDrivercount());
-        stmt.bindLong(18, entity.getViplevel());
- 
-        String version = entity.getVersion();
-        if (version != null) {
-            stmt.bindString(19, version);
-        }
-        stmt.bindLong(20, entity.getIntegral());
-        stmt.bindDouble(21, entity.getBalance());
-        stmt.bindDouble(22, entity.getCouponsbalance());
-        stmt.bindDouble(23, entity.getStartprice());
-        stmt.bindLong(24, entity.getUpmemberid());
-        stmt.bindLong(25, entity.getMembertypeid());
- 
-        String membertypename = entity.getMembertypename();
-        if (membertypename != null) {
-            stmt.bindString(26, membertypename);
-        }
- 
-        String phonetype = entity.getPhonetype();
-        if (phonetype != null) {
-            stmt.bindString(27, phonetype);
-        }
- 
-        String alipayaccout = entity.getAlipayaccout();
-        if (alipayaccout != null) {
-            stmt.bindString(28, alipayaccout);
-        }
- 
-        String weiXinid = entity.getWeiXinid();
-        if (weiXinid != null) {
-            stmt.bindString(29, weiXinid);
-        }
- 
-        String weixinaccount = entity.getWeixinaccount();
-        if (weixinaccount != null) {
-            stmt.bindString(30, weixinaccount);
-        }
- 
-        String bankname = entity.getBankname();
-        if (bankname != null) {
-            stmt.bindString(31, bankname);
-        }
- 
-        String bankaccount = entity.getBankaccount();
-        if (bankaccount != null) {
-            stmt.bindString(32, bankaccount);
-        }
- 
-        String bankidcard = entity.getBankidcard();
-        if (bankidcard != null) {
-            stmt.bindString(33, bankidcard);
-        }
- 
-        String bankusername = entity.getBankusername();
-        if (bankusername != null) {
-            stmt.bindString(34, bankusername);
-        }
- 
-        String jobs = entity.getJobs();
-        if (jobs != null) {
-            stmt.bindString(35, jobs);
-        }
- 
-        String icename = entity.getIcename();
-        if (icename != null) {
-            stmt.bindString(36, icename);
-        }
- 
-        String icephone = entity.getIcephone();
-        if (icephone != null) {
-            stmt.bindString(37, icephone);
-        }
- 
-        String complain = entity.getComplain();
-        if (complain != null) {
-            stmt.bindString(38, complain);
-        }
- 
-        String areacode = entity.getAreacode();
-        if (areacode != null) {
-            stmt.bindString(39, areacode);
-        }
- 
-        String plate = entity.getPlate();
-        if (plate != null) {
-            stmt.bindString(40, plate);
-        }
-        stmt.bindLong(41, entity.getNum());
+        stmt.bindDouble(9, entity.getBalance());
     }
 
     @Override
@@ -293,7 +109,7 @@ public class LoginDao extends AbstractDao<Login, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getMemberid());
+        stmt.bindLong(2, entity.getUserID());
  
         String code = entity.getCode();
         if (code != null) {
@@ -305,142 +121,22 @@ public class LoginDao extends AbstractDao<Login, Long> {
             stmt.bindString(4, name);
         }
  
-        String commission = entity.getCommission();
-        if (commission != null) {
-            stmt.bindString(5, commission);
-        }
- 
-        String khreferralcode = entity.getKhreferralcode();
-        if (khreferralcode != null) {
-            stmt.bindString(6, khreferralcode);
-        }
- 
-        String phonenumber = entity.getPhonenumber();
-        if (phonenumber != null) {
-            stmt.bindString(7, phonenumber);
+        String phone = entity.getPhone();
+        if (phone != null) {
+            stmt.bindString(5, phone);
         }
  
         String nickname = entity.getNickname();
         if (nickname != null) {
-            stmt.bindString(8, nickname);
+            stmt.bindString(6, nickname);
         }
-        stmt.bindLong(9, entity.getAge());
- 
-        String photo = entity.getPhoto();
-        if (photo != null) {
-            stmt.bindString(10, photo);
-        }
- 
-        String city = entity.getCity();
-        if (city != null) {
-            stmt.bindString(11, city);
-        }
-        stmt.bindDouble(12, entity.getLatitude());
-        stmt.bindDouble(13, entity.getLongitude());
- 
-        String address = entity.getAddress();
-        if (address != null) {
-            stmt.bindString(14, address);
-        }
+        stmt.bindLong(7, entity.getAge());
  
         String sex = entity.getSex();
         if (sex != null) {
-            stmt.bindString(15, sex);
+            stmt.bindString(8, sex);
         }
- 
-        String idcard = entity.getIdcard();
-        if (idcard != null) {
-            stmt.bindString(16, idcard);
-        }
-        stmt.bindLong(17, entity.getDrivercount());
-        stmt.bindLong(18, entity.getViplevel());
- 
-        String version = entity.getVersion();
-        if (version != null) {
-            stmt.bindString(19, version);
-        }
-        stmt.bindLong(20, entity.getIntegral());
-        stmt.bindDouble(21, entity.getBalance());
-        stmt.bindDouble(22, entity.getCouponsbalance());
-        stmt.bindDouble(23, entity.getStartprice());
-        stmt.bindLong(24, entity.getUpmemberid());
-        stmt.bindLong(25, entity.getMembertypeid());
- 
-        String membertypename = entity.getMembertypename();
-        if (membertypename != null) {
-            stmt.bindString(26, membertypename);
-        }
- 
-        String phonetype = entity.getPhonetype();
-        if (phonetype != null) {
-            stmt.bindString(27, phonetype);
-        }
- 
-        String alipayaccout = entity.getAlipayaccout();
-        if (alipayaccout != null) {
-            stmt.bindString(28, alipayaccout);
-        }
- 
-        String weiXinid = entity.getWeiXinid();
-        if (weiXinid != null) {
-            stmt.bindString(29, weiXinid);
-        }
- 
-        String weixinaccount = entity.getWeixinaccount();
-        if (weixinaccount != null) {
-            stmt.bindString(30, weixinaccount);
-        }
- 
-        String bankname = entity.getBankname();
-        if (bankname != null) {
-            stmt.bindString(31, bankname);
-        }
- 
-        String bankaccount = entity.getBankaccount();
-        if (bankaccount != null) {
-            stmt.bindString(32, bankaccount);
-        }
- 
-        String bankidcard = entity.getBankidcard();
-        if (bankidcard != null) {
-            stmt.bindString(33, bankidcard);
-        }
- 
-        String bankusername = entity.getBankusername();
-        if (bankusername != null) {
-            stmt.bindString(34, bankusername);
-        }
- 
-        String jobs = entity.getJobs();
-        if (jobs != null) {
-            stmt.bindString(35, jobs);
-        }
- 
-        String icename = entity.getIcename();
-        if (icename != null) {
-            stmt.bindString(36, icename);
-        }
- 
-        String icephone = entity.getIcephone();
-        if (icephone != null) {
-            stmt.bindString(37, icephone);
-        }
- 
-        String complain = entity.getComplain();
-        if (complain != null) {
-            stmt.bindString(38, complain);
-        }
- 
-        String areacode = entity.getAreacode();
-        if (areacode != null) {
-            stmt.bindString(39, areacode);
-        }
- 
-        String plate = entity.getPlate();
-        if (plate != null) {
-            stmt.bindString(40, plate);
-        }
-        stmt.bindLong(41, entity.getNum());
+        stmt.bindDouble(9, entity.getBalance());
     }
 
     @Override
@@ -452,46 +148,14 @@ public class LoginDao extends AbstractDao<Login, Long> {
     public Login readEntity(Cursor cursor, int offset) {
         Login entity = new Login( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getInt(offset + 1), // memberid
+            cursor.getInt(offset + 1), // userID
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // code
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // commission
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // khreferralcode
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // phonenumber
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // nickname
-            cursor.getInt(offset + 8), // age
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // photo
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // city
-            cursor.getDouble(offset + 11), // latitude
-            cursor.getDouble(offset + 12), // longitude
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // address
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // sex
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // idcard
-            cursor.getInt(offset + 16), // drivercount
-            cursor.getInt(offset + 17), // viplevel
-            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // version
-            cursor.getInt(offset + 19), // integral
-            cursor.getFloat(offset + 20), // balance
-            cursor.getFloat(offset + 21), // couponsbalance
-            cursor.getFloat(offset + 22), // startprice
-            cursor.getInt(offset + 23), // upmemberid
-            cursor.getInt(offset + 24), // membertypeid
-            cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25), // membertypename
-            cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26), // phonetype
-            cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27), // alipayaccout
-            cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28), // weiXinid
-            cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29), // weixinaccount
-            cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30), // bankname
-            cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31), // bankaccount
-            cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32), // bankidcard
-            cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33), // bankusername
-            cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34), // jobs
-            cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35), // icename
-            cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36), // icephone
-            cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37), // complain
-            cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38), // areacode
-            cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39), // plate
-            cursor.getInt(offset + 40) // num
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // phone
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // nickname
+            cursor.getInt(offset + 6), // age
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // sex
+            cursor.getFloat(offset + 8) // balance
         );
         return entity;
     }
@@ -499,46 +163,14 @@ public class LoginDao extends AbstractDao<Login, Long> {
     @Override
     public void readEntity(Cursor cursor, Login entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setMemberid(cursor.getInt(offset + 1));
+        entity.setUserID(cursor.getInt(offset + 1));
         entity.setCode(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setCommission(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setKhreferralcode(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setPhonenumber(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setNickname(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setAge(cursor.getInt(offset + 8));
-        entity.setPhoto(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setCity(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setLatitude(cursor.getDouble(offset + 11));
-        entity.setLongitude(cursor.getDouble(offset + 12));
-        entity.setAddress(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setSex(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
-        entity.setIdcard(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
-        entity.setDrivercount(cursor.getInt(offset + 16));
-        entity.setViplevel(cursor.getInt(offset + 17));
-        entity.setVersion(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
-        entity.setIntegral(cursor.getInt(offset + 19));
-        entity.setBalance(cursor.getFloat(offset + 20));
-        entity.setCouponsbalance(cursor.getFloat(offset + 21));
-        entity.setStartprice(cursor.getFloat(offset + 22));
-        entity.setUpmemberid(cursor.getInt(offset + 23));
-        entity.setMembertypeid(cursor.getInt(offset + 24));
-        entity.setMembertypename(cursor.isNull(offset + 25) ? null : cursor.getString(offset + 25));
-        entity.setPhonetype(cursor.isNull(offset + 26) ? null : cursor.getString(offset + 26));
-        entity.setAlipayaccout(cursor.isNull(offset + 27) ? null : cursor.getString(offset + 27));
-        entity.setWeiXinid(cursor.isNull(offset + 28) ? null : cursor.getString(offset + 28));
-        entity.setWeixinaccount(cursor.isNull(offset + 29) ? null : cursor.getString(offset + 29));
-        entity.setBankname(cursor.isNull(offset + 30) ? null : cursor.getString(offset + 30));
-        entity.setBankaccount(cursor.isNull(offset + 31) ? null : cursor.getString(offset + 31));
-        entity.setBankidcard(cursor.isNull(offset + 32) ? null : cursor.getString(offset + 32));
-        entity.setBankusername(cursor.isNull(offset + 33) ? null : cursor.getString(offset + 33));
-        entity.setJobs(cursor.isNull(offset + 34) ? null : cursor.getString(offset + 34));
-        entity.setIcename(cursor.isNull(offset + 35) ? null : cursor.getString(offset + 35));
-        entity.setIcephone(cursor.isNull(offset + 36) ? null : cursor.getString(offset + 36));
-        entity.setComplain(cursor.isNull(offset + 37) ? null : cursor.getString(offset + 37));
-        entity.setAreacode(cursor.isNull(offset + 38) ? null : cursor.getString(offset + 38));
-        entity.setPlate(cursor.isNull(offset + 39) ? null : cursor.getString(offset + 39));
-        entity.setNum(cursor.getInt(offset + 40));
+        entity.setPhone(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setNickname(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setAge(cursor.getInt(offset + 6));
+        entity.setSex(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setBalance(cursor.getFloat(offset + 8));
      }
     
     @Override

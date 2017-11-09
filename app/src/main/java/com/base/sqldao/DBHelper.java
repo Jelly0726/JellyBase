@@ -82,8 +82,8 @@ public class DBHelper {
             if (getLoginList().size() > 0) {
                 logi = getLoginList().get(0);
                 if (logi != null) {
-                    if (logi.getMemberid() != null) {
-                        if (logi.getMemberid() == 0) {
+                    if (logi.getUserID() != null) {
+                        if (logi.getUserID() == 0) {
                             logi = null;
                         }
                     } else {

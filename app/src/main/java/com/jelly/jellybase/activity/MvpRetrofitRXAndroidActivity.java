@@ -12,6 +12,7 @@ import com.base.applicationUtil.ToastUtils;
 import com.base.httpmvp.mode.databean.RegisterParam;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.view.IRegisterActivityView;
+import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;
@@ -49,6 +50,9 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
     }
     @OnClick(R.id.query)
     public void onClick(View v) {
+        if (AntiShake.check(v.getId())) {    //判断是否多次点击
+            return;
+        }
         switch (v.getId()){
             case R.id.query:
                 //netIPPresenter.getData(false);
@@ -84,11 +88,11 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
     }
 
     @Override
-    public void excuteSuccessCallBack(boolean isRefresh, Object mCallBackVo) {
+    public void excuteSuccess(boolean isRefresh, Object mCallBackVo) {
     }
 
     @Override
-    public void excuteFailedCallBack(boolean isRefresh, String message) {
+    public void excuteFailed(boolean isRefresh, String message) {
         ToastUtils.showToast(this,message);
     }
 }

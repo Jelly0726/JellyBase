@@ -4,16 +4,22 @@ import android.text.TextUtils;
 
 import com.base.config.BaseConfig;
 import com.base.httpmvp.mode.databean.TokenModel;
+import com.base.httpmvp.mode.databean.UploadBean;
+import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 
+import java.io.File;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
@@ -161,9 +167,34 @@ public class HttpMethods implements IGlobalManager {
 	 * 注册
 	 * @param subscriber
 	 */
-	public void userRegistration(Object paramMap, Subscriber<List<HttpResultAll>> subscriber){
+	public void userRegistration(Object paramMap, Subscriber<List<HttpResult>> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
-				.map(new HttpResultFunc<List<HttpResultAll>>());
+				.map(new HttpResultFunc<List<HttpResult>>());
+				//.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber);
+	}
+	/**
+	 * 上传文件(图片)
+	 */
+	public void upload(File file, UploadBean uploadBean, Subscriber<HttpResultData<UploadData>> subscriber){
+		// 创建 RequestBody，用于封装构建RequestBody
+		RequestBody requestFile =
+				RequestBody.create(MediaType.parse("multipart/form-data"), file);
+		// MultipartBody.Part  和后端约定好Key，这里的partName是用image
+		String type="image";
+		if(!TextUtils.isEmpty(uploadBean.getFileType())){
+			type=uploadBean.getFileType();
+		}
+		MultipartBody.Part body =
+				MultipartBody.Part.createFormData(type, file.getName(), requestFile);
+		// 添加描述
+		String descriptionString =uploadBean.getFileDesc();
+		RequestBody description =
+				RequestBody.create(
+						MediaType.parse("multipart/form-data"), descriptionString);
+		// 执行请求
+		Observable observable = getProxy(IApiService.class).upload(description, body)
+				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
 		toSubscribe(observable, subscriber);
 	}
 	/***
@@ -178,14 +209,24 @@ public class HttpMethods implements IGlobalManager {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(s);
 	}
-
-	private class HttpResultFunc<T> implements Func1<HttpResult<T>, T> {
+	//map
+	private class HttpResultFunc<T> implements Func1<HttpResultAll<T>, T> {
 		@Override
-		public T call(HttpResult<T> tHttpResult) {
-//			if (tHttpResult.getStatus() == 0) {
-//				throw new ApiException(tHttpResult.getMsg());
+		public T call(HttpResultAll<T> tHttpResultAll) {
+//			if (tHttpResultAll.getStatus() == 0) {
+//				throw new ApiException(tHttpResultAll.getMsg());
 //			}
-			return tHttpResult.getData();
+			return tHttpResultAll.getData();
+		}
+	}
+	//flatMap
+	private class HttpResultFuncs<T> implements Func1<HttpResultAll<T>, Observable<T>> {
+		@Override
+		public Observable<T> call(HttpResultAll<T> tHttpResultAll) {
+//			if (!tHttpResultAll.isReturnState()) {
+//				throw new ApiException(tHttpResultAll.getMsg());
+//			}
+			return Observable.just(tHttpResultAll.getData());
 		}
 	}
 }

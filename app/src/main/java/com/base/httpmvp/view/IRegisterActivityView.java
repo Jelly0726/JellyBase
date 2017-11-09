@@ -14,12 +14,12 @@ public interface IRegisterActivityView extends IBaseView{
     /**
      * 成功回调
      */
-    public void excuteSuccessCallBack(boolean isRefresh, Object mCallBackVo);
+    public void excuteSuccess(boolean isRefresh, Object mCallBackVo);
 
     /**
      * 失败回调
      */
-    public void excuteFailedCallBack(boolean isRefresh, String message);
+    public void excuteFailed(boolean isRefresh, String message);
 
 
 }

@@ -103,7 +103,7 @@ public class CommonStaticUtil {
                 , LiveService.class.getName())){
             //Log.i(TAG, "Service 没有开启，开启推送服务........>");
             ServiceManager serviceManager = new ServiceManager(context);
-            serviceManager.setNotificationIcon(R.drawable.icon_logo);
+            serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
             serviceManager.startService();
         }else{
            // Log.i(TAG, "Service 推送服务已开启........>");
@@ -121,7 +121,7 @@ public class CommonStaticUtil {
        // Log.i(TAG, "关闭 推送服务........");
         // 关闭推送服务
         ServiceManager serviceManager = new ServiceManager(context);
-        serviceManager.setNotificationIcon(R.drawable.icon_logo);
+        serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
         serviceManager.stopService();
         //删除配置文件
 //        SharedPreferences preferences = context

@@ -20,13 +20,9 @@ import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.WokeService;
 
-import org.greenrobot.eventbus.Subscribe;
-
 import systemdb.Login;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class LauncherActivity extends MyActivity {
-	private Login login;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,7 +38,6 @@ public class LauncherActivity extends MyActivity {
 		//去掉  标题栏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.base_activity_launcher);
-		HermesEventBus.getDefault().register(LauncherActivity.this);
 		//开启服务
 		Intent stateGuardService =  new Intent(MyApplication.getMyApp(), WokeService.class);
 		startService(stateGuardService);
@@ -54,13 +49,11 @@ public class LauncherActivity extends MyActivity {
 				delShortcut();
 			}
 		}
-		login= DBHelper.getInstance(getApplicationContext())
+		final Login login= DBHelper.getInstance(getApplicationContext())
 				.getLogin();
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
 				if (login!=null) {
-					//Log.i("WF","getDriverId="+login.getDriverId());
-					//Toast.makeText(WelcomeActivity.this,"getDriverId="+login.getDriverid(),Toast.LENGTH_LONG).show();
 					if(login.getId()!=0){
 						goMainActivity();//进入主界面
 						//goGuideActivity();//进入引导页界面
@@ -197,18 +190,6 @@ public class LauncherActivity extends MyActivity {
 	}
 	@Override
 	protected void onDestroy() {
-		HermesEventBus.getDefault().unregister(LauncherActivity.this);
 		super.onDestroy();
-		//SMSSDK.unregisterAllEventHandler();
-	}
-	/***
-	 * 订阅
-	 */
-	@Subscribe
-	public void onEvent(String type){
-		switch (type){
-			case "FROM":
-				break;
-		}
 	}
 }

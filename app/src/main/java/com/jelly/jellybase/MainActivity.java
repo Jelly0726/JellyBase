@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
+import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
@@ -104,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(View view, int position) {
+            if (AntiShake.check(position)) {    //判断是否多次点击
+                return;
+            }
             Intent intent;
             switch (position){
                 case 0://轻量底部导航栏
