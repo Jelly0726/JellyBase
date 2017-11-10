@@ -15,6 +15,7 @@ import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
+import com.base.sqldao.DBHelper;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
 import com.base.xrefreshview.XRefreshView;
@@ -35,6 +36,8 @@ import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.login.RegisterActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 
+import systemdb.Login;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
@@ -45,11 +48,14 @@ public class MainActivity extends AppCompatActivity {
     private String[] mList;
     private int startRownumber=0;
     private int pageSize=10;
+
+    public static Login login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         iniXRefreshView();
+        login= DBHelper.getInstance(MyApplication.getMyApp()).getLogin();
     }
     private void iniXRefreshView(){
         mList= getResources().getStringArray(R.array.mainArray);

@@ -10,11 +10,11 @@ public class HttpStatus {
 
     @SerializedName("returnState")
     private boolean returnState;
-    @SerializedName("message")
-    private String mMessage;
+    @SerializedName(value = "message",alternate = "msg")
+    private String message;
 
     public String getMessage() {
-        return mMessage;
+        return message;
     }
     /**
      * API是否请求失败

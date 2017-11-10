@@ -16,7 +16,7 @@ import com.base.bottomBar.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
-import com.base.view.MyFragmentActivity;
+import com.base.view.MyActivity;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
@@ -37,7 +37,7 @@ import java.util.List;
 import systemdb.Login;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
-public class BottomBarActivity extends MyFragmentActivity {
+public class BottomBarActivity extends MyActivity {
     private final int zxingRequestCode=1;
     private ViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;

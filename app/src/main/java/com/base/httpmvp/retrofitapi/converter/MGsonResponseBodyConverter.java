@@ -41,18 +41,18 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
         Log.i("ss","response="+response);
-        try {
             HttpStatus httpStatus = gson.fromJson(response, HttpStatus.class);
             if (!httpStatus.isReturnState()) {
-                if (httpStatus.getMessage().equals(HttpCode.TOKEN_NOT_EXIST)) {
+                if (httpStatus.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
                     throw new TokenNotExistException();
-                } else if (httpStatus.getMessage().equals(HttpCode.TOKEN_INVALID)) {
+                } else if (httpStatus.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
                     throw new TokenInvalidException();
                 } else {
                     // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
                     throw new ApiException(httpStatus.getMessage());
                 }
             }
+        try {
 //            MediaType contentType = value.contentType();
 //            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;
 //            InputStream inputStream = new ByteArrayInputStream(response.getBytes());

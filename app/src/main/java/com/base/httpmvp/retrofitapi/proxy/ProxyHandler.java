@@ -3,24 +3,30 @@ package com.base.httpmvp.retrofitapi.proxy;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.alibaba.fastjson.JSON;
+import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.IApiService;
+import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
+import com.base.httpmvp.retrofitapi.token.TokenModel;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
+
+import static com.jelly.jellybase.MainActivity.login;
 
 /**
  * Created by david on 16/8/21.
@@ -97,28 +103,35 @@ public class ProxyHandler implements InvocationHandler {
                 return Observable.just(true);
             } else {
                 // call the refresh token api.
-                HttpMethods.getInstance().get(IApiService.class).refreshToken()
-                        .subscribe(new Subscriber<TokenModel>() {
-                    @Override
-                    public void onCompleted() {
+                if (login!=null) {
+                    Map<String,String> map=new TreeMap<>();
+                    map.put("saleid",login.getUserID()+"");
+                    HttpMethods.getInstance().getToken(JSON.toJSON(map)
+                            ,new Subscriber<HttpResultData<TokenModel>>() {
+                                @Override
+                                public void onCompleted() {
 
-                    }
+                                }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mRefreshTokenError = e;
-                    }
+                                @Override
+                                public void onError(Throwable e) {
+                                    mRefreshTokenError = e;
+                                }
 
-                    @Override
-                    public void onNext(TokenModel model) {
-                        if (model != null) {
-                            mIsTokenNeedRefresh = true;
-                            tokenChangedTime = new Date().getTime();
-                            GlobalToken.updateToken(model.token);
-                            Log.d(TAG, "Refresh token success, time = " + tokenChangedTime);
-                        }
-                    }
-                });
+                                @Override
+                                public void onNext(HttpResultData<TokenModel> model) {
+                                    if (model != null && model.getStatus()== HttpCode.SUCCEED) {
+                                        TokenModel tokenModel = model.getData();
+                                        if (tokenModel != null) {
+                                            mIsTokenNeedRefresh = true;
+                                            tokenChangedTime = new Date().getTime();
+                                            GlobalToken.updateToken(tokenModel);
+                                            Log.i(TAG, "Refresh token success, time = " + tokenChangedTime);
+                                        }
+                                    }
+                                }
+                            });
+                }
                 if (mRefreshTokenError != null) {
                     return Observable.error(mRefreshTokenError);
                 } else {
@@ -135,7 +148,7 @@ public class ProxyHandler implements InvocationHandler {
      * 若是 POST 请求，或者使用 Body ，自行替换。因为 参数数组已经知道，进行遍历找到相应的值，进行替换即可（更新为新的 token 值）。
      */
     private void updateMethodToken(Method method, Object[] args) {
-        if (mIsTokenNeedRefresh && !TextUtils.isEmpty(GlobalToken.getToken())) {
+        if (mIsTokenNeedRefresh && !TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
             Annotation[][] annotationsArray = method.getParameterAnnotations();
             Annotation[] annotations;
             if (annotationsArray != null && annotationsArray.length > 0) {

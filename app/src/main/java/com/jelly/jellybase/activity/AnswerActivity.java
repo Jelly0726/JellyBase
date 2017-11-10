@@ -173,7 +173,7 @@ public class AnswerActivity extends MyActivity implements View.OnClickListener{
         Album.image(this)
                 .multipleChoice()
                 .requestCode(200)
-                .camera(false)
+                .camera(true)
                 .columnCount(2)
                 .selectCount(3)
                 .checkedList(mAlbumFiles)

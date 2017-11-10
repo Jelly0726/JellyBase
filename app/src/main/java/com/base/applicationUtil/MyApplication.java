@@ -3,6 +3,7 @@ package com.base.applicationUtil;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.base.MapUtil.LocationTask;
@@ -122,11 +123,11 @@ public class MyApplication extends OkGoApp {
         }
         return null;
     }
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
     /**
      * 获取本app可用的Context
      *
