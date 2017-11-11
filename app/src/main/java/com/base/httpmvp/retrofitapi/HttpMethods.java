@@ -7,6 +7,7 @@ import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 
@@ -152,7 +153,8 @@ public class HttpMethods implements IGlobalManager {
 				RequestBody.create(
 						MediaType.parse("multipart/form-data"), descriptionString);
 		// 执行请求
-		Observable observable = getProxy(IApiService.class).upload(description, body)
+		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken()
+				,description, body)
 				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
 		toSubscribe(observable, subscriber);
 	}
@@ -169,23 +171,23 @@ public class HttpMethods implements IGlobalManager {
 				.subscribe(s);
 	}
 	//map
-	private class HttpResultFunc<T> implements Func1<HttpResultAll<T>, T> {
+	private class HttpResultFunc<T> implements Func1<HttpStateData<T>, T> {
 		@Override
-		public T call(HttpResultAll<T> tHttpResultAll) {
-//			if (tHttpResultAll.getStatus() == 0) {
-//				throw new ApiException(tHttpResultAll.getMsg());
+		public T call(HttpStateData<T> tHttpStateData) {
+//			if (tHttpStateData.getStatus() == 0) {
+//				throw new ApiException(tHttpStateData.getMsg());
 //			}
-			return tHttpResultAll.getData();
+			return tHttpStateData.getData();
 		}
 	}
 	//flatMap
-	private class HttpResultFuncs<T> implements Func1<HttpResultAll<T>, Observable<T>> {
+	private class HttpResultFuncs<T> implements Func1<HttpStateData<T>, Observable<T>> {
 		@Override
-		public Observable<T> call(HttpResultAll<T> tHttpResultAll) {
-//			if (!tHttpResultAll.isReturnState()) {
-//				throw new ApiException(tHttpResultAll.getMsg());
+		public Observable<T> call(HttpStateData<T> tHttpStateData) {
+//			if (!tHttpStateData.isReturnState()) {
+//				throw new ApiException(tHttpStateData.getMsg());
 //			}
-			return Observable.just(tHttpResultAll.getData());
+			return Observable.just(tHttpStateData.getData());
 		}
 	}
 }

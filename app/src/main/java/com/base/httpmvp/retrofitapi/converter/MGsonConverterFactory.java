@@ -45,7 +45,7 @@ public class MGsonConverterFactory extends Converter.Factory {
 //
 //            @Override
 //            public Type getRawType() {
-//                return HttpStatus.class;
+//                return HttpState.class;
 //            }
 //        };
         //TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(newType));

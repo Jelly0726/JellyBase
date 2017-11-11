@@ -1,14 +1,15 @@
 package com.base.httpmvp.retrofitapi;
 
 
-import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.mode.databean.UploadData;
+import com.base.httpmvp.retrofitapi.token.TokenModel;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -22,16 +23,17 @@ import rx.Observable;
 public interface IApiService {
 	//获取token
 	@GET("SLD/token/getToken.doAdminJJ")
-	Observable<HttpResultAll<HttpResultData<TokenModel>>> getToken(@Query("data") Object jsonObject);
+	Observable<HttpStateData<HttpResultData<TokenModel>>> getToken(@Query("data") Object jsonObject);
 	//@GET("request")
 	//Observable<ResultModel> getResult(@Query("token") String token);
 	//注册
 	@POST("SLD/sales/register2.doAdminJJ")
-	Observable<HttpResultAll<List<HttpResult>>> userRegistration(@Query("data") Object jsonObject);
+	Observable<HttpStateData<List<HttpResult>>> userRegistration(@Query("data") Object jsonObject);
 
 	//上传文件
 	@Multipart
 	@POST("SLD/sales/uploadAttachment.doAdminJJ")
-	Observable<HttpResultAll<HttpResultData<UploadData>>> upload(@Part("description") RequestBody description,
+	Observable<HttpStateData<HttpResultData<UploadData>>> upload(@Header("token") String token,
+																 @Part("description") RequestBody description,
 																 @Part MultipartBody.Part file);
 }

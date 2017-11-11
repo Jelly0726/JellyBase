@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Administrator on 2017/11/7.
  */
 
-public class HttpStatus {
+public class HttpState {
 
     @SerializedName("returnState")
     private boolean returnState;

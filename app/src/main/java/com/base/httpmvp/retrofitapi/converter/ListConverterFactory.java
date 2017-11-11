@@ -2,7 +2,7 @@ package com.base.httpmvp.retrofitapi.converter;
 
 
 import com.base.httpmvp.retrofitapi.HttpCode;
-import com.base.httpmvp.retrofitapi.HttpStatus;
+import com.base.httpmvp.retrofitapi.HttpState;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
@@ -78,15 +78,15 @@ public class ListConverterFactory extends Converter.Factory {
 		public T convert(ResponseBody responseBody) throws IOException
 		{
 			String result = responseBody.string();
-			HttpStatus httpStatus = gson.fromJson(result, HttpStatus.class);
-			if (!httpStatus.isReturnState()) {
-				if (httpStatus.getMessage().equals(HttpCode.TOKEN_NOT_EXIST)) {
+			HttpState httpState = gson.fromJson(result, HttpState.class);
+			if (!httpState.isReturnState()) {
+				if (httpState.getMessage().equals(HttpCode.TOKEN_NOT_EXIST)) {
 					throw new TokenNotExistException();
-				} else if (httpStatus.getMessage().equals(HttpCode.TOKEN_INVALID)) {
+				} else if (httpState.getMessage().equals(HttpCode.TOKEN_INVALID)) {
 					throw new TokenInvalidException();
 				} else {
 					// 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
-					throw new ApiException(httpStatus.getMessage());
+					throw new ApiException(httpState.getMessage());
 				}
 			}
 			T users = gson.fromJson(result, type);
