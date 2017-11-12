@@ -104,7 +104,6 @@ dependencies {
     //butterknife注解式绑定id
     compile 'com.jakewharton:butterknife:8.8.1'
     apt 'com.jakewharton:butterknife-compiler:8.8.1'
-    //compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     //多进程数据共享SharedPreferences
