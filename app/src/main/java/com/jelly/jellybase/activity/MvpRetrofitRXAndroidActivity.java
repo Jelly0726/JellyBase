@@ -1,6 +1,5 @@
 package com.jelly.jellybase.activity;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +11,10 @@ import com.base.applicationUtil.ToastUtils;
 import com.base.httpmvp.mode.databean.RegisterParam;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.view.IRegisterActivityView;
+import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
+import com.maning.mndialoglibrary.MProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +28,7 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
     @BindView(R.id.query)Button query;
     @BindView(R.id.iptv)TextView iptv;
     private RegisterActivityPresenter registerActivityPresenter;
-    private ProgressDialog progressDialog;
+    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +42,12 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
     private void iniView(){
     }
     private void iniProgress(){
-        progressDialog=new ProgressDialog(this);
-        //progressDialog.setTitle("加载提示");
-        progressDialog.setMessage("正在加载.....");
-        progressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
-        progressDialog.setCancelable(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        progressDialog=null;
     }
     @OnClick(R.id.query)
     public void onClick(View v) {
@@ -72,18 +73,14 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
     @Override
     public void showProgress() {
         if (progressDialog!=null){
-            if (!progressDialog.isShowing()){
                 progressDialog.show();
-            }
         }
     }
 
     @Override
     public void closeProgress() {
         if (progressDialog!=null){
-            if (progressDialog.isShowing()){
                 progressDialog.dismiss();
-            }
         }
     }
 

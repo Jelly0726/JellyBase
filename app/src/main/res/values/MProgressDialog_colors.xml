@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="BackgroundWindowColor">#00000000</color><!--全屏背景窗体的颜色-->
+    <color name="BackgroundViewColor">#80000000</color><!--View背景的颜色-->
+    <color name="StrokeColor">#00000000</color><!--View 边框的颜色-->
+    <color name="ProgressColor">#ffffffff</color><!--Progress 颜色-->
+    <color name="TextColor">#ffffffff</color><!--文字的颜色-->
+</resources>
