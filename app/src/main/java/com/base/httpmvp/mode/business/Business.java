@@ -2,7 +2,6 @@ package com.base.httpmvp.mode.business;
 
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSON;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.HttpCode;
@@ -11,6 +10,8 @@ import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.google.gson.Gson;
+import com.base.bankcard.BankCardInfo;
 
 import java.io.File;
 import java.util.List;
@@ -22,12 +23,12 @@ import rx.Subscriber;
  */
 
 public class Business implements IBusiness {
-
+    private static Gson gson= new Gson();
     private static final String TAG = Business.class.getSimpleName();
     //获取token
     @Override
     public void getToken(Object mUserVo) {
-        HttpMethods.getInstance().getToken(JSON.toJSON(mUserVo)
+        HttpMethods.getInstance().getToken(gson.toJson(mUserVo)
                 ,new Subscriber<HttpResultData<TokenModel>>() {
                     @Override
                     public void onCompleted() {
@@ -52,7 +53,7 @@ public class Business implements IBusiness {
     }
     @Override
     public void register(Object mUserVo, final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().userRegistration(JSON.toJSON(mUserVo),new Subscriber<List<HttpResult>>() {
+        HttpMethods.getInstance().userRegistration(gson.toJson(mUserVo),new Subscriber<List<HttpResult>>() {
             @Override
             public void onCompleted() {
 
@@ -108,5 +109,24 @@ public class Business implements IBusiness {
             mICallBackListener.onFaild("文件不存在");
         }
 
+    }
+    @Override
+    public void getBank(Object param,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getBank(gson.toJson(param),new Subscriber<HttpResultData<BankCardInfo>>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onNext(HttpResultData<BankCardInfo> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
     }
 }

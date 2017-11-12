@@ -29,8 +29,8 @@ public class BaseActivity extends AutoLayoutActivity {
         bankCardEditText = (BandCardEditText) findViewById(R.id.bankCardEditText);
         bankCardEditText.setBankCardListener(new BandCardEditText.BankCardListener() {
             @Override
-            public void success(String name) {
-                tv_desc.setText(name);
+            public void success(String name,String type) {
+                tv_desc.setText(name+"·"+type);
             }
 
             @Override

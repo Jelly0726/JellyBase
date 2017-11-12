@@ -8,15 +8,23 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
+
+import com.base.httpmvp.presenter.GetBankPresenter;
+import com.base.httpmvp.view.IGetBankView;
+
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * 欢迎关注微信公众号：aikaifa
  */
-public class BandCardEditText extends EditText {
+public class BandCardEditText extends EditText implements IGetBankView{
 
     private boolean shouldStopChange = false;
     private final String space = " ";
 
     private BankCardListener listener;
+    private GetBankPresenter getBankPresenter;
 
     public BandCardEditText(Context context) {
         this(context, null);
@@ -28,6 +36,7 @@ public class BandCardEditText extends EditText {
 
     public BandCardEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        getBankPresenter=new GetBankPresenter(this);
         init();
     }
 
@@ -41,6 +50,68 @@ public class BandCardEditText extends EditText {
         setEnabled(true);
         setFocusableInTouchMode(true);
         addTextChangedListener(new BandCardWatcher());
+    }
+
+    /**
+     * 获取未格式化的卡号
+     * @return
+     */
+    public String getCardNo() {
+        return getText().toString().trim().replaceAll(space, "");
+    }
+
+    /**
+     * 获取格式化后的卡号
+     * @return
+     */
+    @Override
+    public Editable getText() {
+        return super.getText();
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void closeProgress() {
+
+    }
+
+    @Override
+    public Object getBankParam() {
+        String bankNo=getText().toString().trim().replaceAll(space, "");
+        Map<String,String> map=new TreeMap<>();
+        map.put("cardNo",bankNo);
+        return map;
+    }
+
+    @Override
+    public void getBankSuccess(boolean isRefresh, Object mCallBackVo) {
+        BankCardInfo bankCardInfo= (BankCardInfo) mCallBackVo;
+        String name="";
+        String type="";
+        if (bankCardInfo!=null){
+            if (!TextUtils.isEmpty(bankCardInfo.getBankName())){
+                name=bankCardInfo.getBankName();
+                type=bankCardInfo.getType();
+            }
+        }
+        if (listener != null) {
+            if (name.trim().length()>0) {
+                listener.success(name,type);
+            } else {
+                listener.failure();
+            }
+        }
+    }
+
+    @Override
+    public void getBankFailed(boolean isRefresh, String message) {
+        if (listener != null) {
+            listener.failure();
+        }
     }
 
     class BandCardWatcher implements TextWatcher {
@@ -84,21 +155,24 @@ public class BandCardEditText extends EditText {
         courPos = builder.length();
         setText(builder.toString());
         setSelection(courPos);
-        if (listener != null) {
-//            if (isBankCard()) {
-//                char[] ss = getBankCardText().toCharArray();
-//                listener.success(BankCardInfo.getNameOfBank(ss, 0));
+        if(courPos==19||courPos==23){
+            getBankPresenter.getBank();
+        }
+//        if (listener != null) {
+////            if (isBankCard()) {
+////                char[] ss = getBankCardText().toCharArray();
+////                listener.success(BankCardInfo.getNameOfBank(ss, 0));
+////            } else {
+////                listener.failure();
+////            }
+//            if(courPos<19)return;
+//            String bankname=BankUtil.getNameOfBank(getBankCardText());
+//            if (bankname.trim().length()>0) {
+//                listener.success(bankname);
 //            } else {
 //                listener.failure();
 //            }
-            if(courPos<19)return;
-            String bankname=BankUtil.getNameOfBank(getBankCardText());
-            if (bankname.trim().length()>0) {
-                listener.success(bankname);
-            } else {
-                listener.failure();
-            }
-        }
+//        }
     }
 
     public String getBankCardText() {
@@ -157,7 +231,7 @@ public class BandCardEditText extends EditText {
     }
 
     public interface BankCardListener {
-        void success(String name);
+        void success(String name,String type);
 
         void failure();
     }

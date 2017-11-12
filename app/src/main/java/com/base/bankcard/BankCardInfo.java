@@ -1,6 +1,7 @@
-package com.jelly.jellybase.datamodel;
+package com.base.bankcard;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.jelly.jellybase.R;
 
 import java.io.Serializable;
@@ -10,8 +11,14 @@ import java.io.Serializable;
  */
 
 public class BankCardInfo implements Serializable{
+    @SerializedName("bankType")
+    private String type;
+    @SerializedName("bankname")
     private String bankName;
+    @SerializedName("bankno")
     private String bankNo;
+    @SerializedName("isdefault")
+    private Integer isdefault;
     private int bankDraw= R.drawable.yinlian;
     private String bankLogo;
 
@@ -45,6 +52,22 @@ public class BankCardInfo implements Serializable{
 
     public void setBankLogo(String bankLogo) {
         this.bankLogo = bankLogo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getIsdefault() {
+        return isdefault;
+    }
+
+    public void setIsdefault(Integer isdefault) {
+        this.isdefault = isdefault;
     }
 
 }

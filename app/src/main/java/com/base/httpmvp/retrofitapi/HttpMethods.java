@@ -10,6 +10,7 @@ import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.base.bankcard.BankCardInfo;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -158,6 +159,18 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
 		toSubscribe(observable, subscriber);
 	}
+
+	/***
+	 * 获取所属银行
+	 * @param subscriber
+	 */
+	public void getBank(Object param,Subscriber<HttpResultData<BankCardInfo>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
+				.flatMap(new HttpResultFuncs<HttpResultData<BankCardInfo>>());
+		toSubscribe(observable, subscriber);
+	}
+
+
 	/***
 	 * 统一异步,同步处理
 	 * @param o

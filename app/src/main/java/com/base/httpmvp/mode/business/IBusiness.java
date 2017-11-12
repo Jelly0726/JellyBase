@@ -45,4 +45,10 @@ public interface IBusiness {
     public void upload(Object obj, ICallBackListener mICallBackListener);
 
     //  TODO MORE
+    /**
+     * 获取所属银行
+     * @param obj:请求参数，可根据实际需求定义
+     * @param  mICallBackListener：回调接口
+     */
+    public void getBank(Object obj, ICallBackListener mICallBackListener);
 }
