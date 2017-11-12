@@ -102,8 +102,8 @@ dependencies {
     //recyclerview
     compile 'com.android.support:design:26.1.0'
     //butterknife注解式绑定id
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    apt 'com.jakewharton:butterknife-compiler:8.8.1'
     //compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
