@@ -1,4 +1,4 @@
-package com.base.bottomBar;
+package com.base.middleBar;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import java.util.List;
  * @description: 顶部页签根节点
  * @date 2017/6/23  11:02
  */
-public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class MiddleBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
 
     private static final String STATE_INSTANCE = "instance_state";
     private static final String STATE_ITEM = "state_item";
@@ -27,7 +27,7 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
 
     private ViewPager mViewPager;
     private int mChildCount;//子条目个数
-    private List<TopBarItem> mItemViews = new ArrayList<>();
+    private List<MiddleBarItem> mItemViews = new ArrayList<>();
     private int mCurrentItem;//当前条目的索引
     private boolean mSmoothScroll;
     private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
@@ -45,15 +45,15 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-    public TopBarLayout(Context context) {
+    public MiddleBarLayout(Context context) {
         this(context, null);
     }
 
-    public TopBarLayout(Context context, AttributeSet attrs) {
+    public MiddleBarLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TopBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MiddleBarLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         setOrientation(HORIZONTAL);
@@ -82,11 +82,11 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
             throw new IllegalArgumentException("LinearLayout的子View数量必须和ViewPager条目数量一致");
         }
         for (int i = 0; i < mChildCount; i++) {
-            if (getChildAt(i) instanceof TopBarItem) {
-                TopBarItem topBarItem = (TopBarItem) getChildAt(i);
-                mItemViews.add(topBarItem);
+            if (getChildAt(i) instanceof MiddleBarItem) {
+                MiddleBarItem middleBarItem = (MiddleBarItem) getChildAt(i);
+                mItemViews.add(middleBarItem);
                 //设置点击监听
-                topBarItem.setOnClickListener(new MyOnClickListener(i));
+                middleBarItem.setOnClickListener(new MyOnClickListener(i));
             } else {
                 throw new IllegalArgumentException("AlphaIndicator的子View必须是AlphaView");
             }
@@ -103,21 +103,10 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
 
     @Override
     public void onPageSelected(int position) {
-        if(!mItemViews.get(position).getIsHeave()) {//判断是否为凸起，若为凸起则跳过
-            mCurrentItem = position;//记录当前位置
-            resetState();
-            mItemViews.get(position).setStatus(true);
-            mViewPager.setCurrentItem(position, mSmoothScroll);
-        }else {
-            if(mCurrentItem<position){
-                mCurrentItem = position+1;//记录当前位置
-            }else {
-                mCurrentItem = position-1;//记录当前位置
-            }
-            resetState();
-            mItemViews.get(mCurrentItem).setStatus(true);
-            mViewPager.setCurrentItem(mCurrentItem, mSmoothScroll);
-        }
+        mCurrentItem = position;//记录当前位置
+        resetState();
+        mItemViews.get(position).setStatus(true);
+        mViewPager.setCurrentItem(position, mSmoothScroll);
     }
 
     @Override
@@ -139,15 +128,13 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
             if (onItemSelectedListener != null) {
                 onItemSelectedListener.onItemSelected(getTopItem(currentIndex),currentIndex);
             }
-            if(!mItemViews.get(currentIndex).getIsHeave()){
-                //点击前先重置所有按钮的状态
-                resetState();
-                mItemViews.get(currentIndex).setStatus(true);//设置为选中状态
-                //不能使用平滑滚动，否者颜色改变会乱
-                mViewPager.setCurrentItem(currentIndex, mSmoothScroll);
-                //点击是保存当前按钮索引
-                mCurrentItem = currentIndex;
-            }
+            //点击前先重置所有按钮的状态
+            resetState();
+            mItemViews.get(currentIndex).setStatus(true);//设置为选中状态
+            //不能使用平滑滚动，否者颜色改变会乱
+            mViewPager.setCurrentItem(currentIndex, mSmoothScroll);
+            //点击是保存当前按钮索引
+            mCurrentItem = currentIndex;
 
         }
     }
@@ -166,47 +153,6 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
         mViewPager.setCurrentItem(mCurrentItem,mSmoothScroll);
     }
 
-    /**
-     * 设置未读数
-     * @param position 底部标签的下标
-     * @param unreadNum 未读数
-     */
-    public void setUnread(int position,int unreadNum){
-        mItemViews.get(position).setUnreadNum(unreadNum);
-    }
-
-    /**
-     * 设置提示消息
-     * @param position 底部标签的下标
-     * @param msg 未读数
-     */
-    public void setMsg(int position,String msg){
-        mItemViews.get(position).setMsg(msg);
-    }
-
-    /**
-     * 隐藏提示消息
-     * @param position 底部标签的下标
-     */
-    public void hideMsg(int position){
-        mItemViews.get(position).hideMsg();
-    }
-
-    /**
-     * 显示提示的小红点
-     * @param position 底部标签的下标
-     */
-    public void showNotify(int position){
-        mItemViews.get(position).showNotify();
-    }
-
-    /**
-     * 隐藏提示的小红点
-     * @param position 底部标签的下标
-     */
-    public void hideNotify(int position){
-        mItemViews.get(position).hideNotify();
-    }
 
     public int getCurrentItem() {
         return mCurrentItem;
@@ -216,7 +162,7 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
         this.mSmoothScroll = mSmoothScroll;
     }
 
-    public TopBarItem getTopItem(int position){
+    public MiddleBarItem getTopItem(int position){
         return mItemViews.get(position);
     }
 
@@ -252,7 +198,7 @@ public class TopBarLayout extends LinearLayout implements ViewPager.OnPageChange
     private OnItemSelectedListener onItemSelectedListener;
 
     public interface OnItemSelectedListener {
-        void onItemSelected(TopBarItem topBarItem, int position);
+        void onItemSelected(MiddleBarItem middleBarItem, int position);
     }
 
     public void setOnItemSelectedListener(OnItemSelectedListener onItemSelectedListener) {

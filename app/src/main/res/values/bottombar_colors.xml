@@ -7,7 +7,4 @@
     <color name="bottombar_white">#ffffff</color>
     <color name="bottombar_red">#000000</color>
     <color name="bottombar_selector_grey">#DDDDDD</color>
-
-    <color name="topbar_normal_color">#313131</color>
-    <color name="topbar_selected_color">#fd7c13</color>
 </resources>

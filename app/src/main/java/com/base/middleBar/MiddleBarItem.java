@@ -1,4 +1,4 @@
-package com.base.bottomBar;
+package com.base.middleBar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.middleBar.UIUtils;
 import com.jelly.jellybase.R;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
@@ -21,11 +20,11 @@ import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
  * @author ChayChan
- * @description: 底部tab条目
+ * @description: 顶部tab条目
  * @date 2017/6/23  9:14
  */
 
-public class BottomBarItem extends LinearLayout {
+public class MiddleBarItem extends LinearLayout {
 
     private Context mContext;
     private int mIconNormalResourceId;//普通状态图标的资源id
@@ -35,25 +34,15 @@ public class BottomBarItem extends LinearLayout {
     private int mTextSize = 12;//文字大小 默认为12sp
     private int mTextColorNormal = 0xFF999999;    //描述文本的默认显示颜色
     private int mTextColorSelected = 0xFF46C01B;  //述文本的默认选中显示颜色
-    private int mTextViewHeight = 15;  //述文本的高度,默认15dp
-    private int mMarginBottom = 5;//图标距离底部文字的距离,默认5dp
     private boolean mOpenTouchBg = false;// 是否开启触摸背景，默认关闭
     private Drawable mTouchDrawable;//触摸时的背景
-    private boolean mIsHeave = false;// 是否凸起项,默认关闭
     private int mIconWidth;//图标的宽度
     private int mIconHeight;//图标的高度
     private int mItemPadding;//BottomBarItem的padding
 
     private LinearLayout mLinearLayout;
-    private FrameLayout image_flayout;
     private ImageView mImageView;
-    private TextView mTvUnread;
-    private TextView mTvNotify;
-    private TextView mTvMsg;
     private TextView mTextView;
-
-    private int mUnreadTextSize = 10; //未读数默认字体大小10sp
-    private int mMsgTextSize = 6; //消息默认字体大小6sp
 
     private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
     @Override
@@ -70,50 +59,40 @@ public class BottomBarItem extends LinearLayout {
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
-
-    public BottomBarItem(Context context) {
+    public MiddleBarItem(Context context) {
         this(context, null);
     }
 
-    public BottomBarItem(Context context, @Nullable AttributeSet attrs) {
+    public MiddleBarItem(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BottomBarItem(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public MiddleBarItem(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         mContext = context;
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BottomBarItem);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MiddleBarItem);
 
-        mIconNormalResourceId = ta.getResourceId(R.styleable.BottomBarItem_iconNormal, -1);
-        mIconSelectedResourceId = ta.getResourceId(R.styleable.BottomBarItem_iconSelected, -1);
+        mIconNormalResourceId = ta.getResourceId(R.styleable.MiddleBarItem_mIconNormal, -1);
+        mIconSelectedResourceId = ta.getResourceId(R.styleable.MiddleBarItem_mIconSelected, -1);
 
-        mItemHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemHeight,
+        mItemHeight = ta.getDimensionPixelSize(R.styleable.MiddleBarItem_mItemHeight,
                 UIUtils.sp2px(mContext,mItemHeight));
 
-        mText = ta.getString(R.styleable.BottomBarItem_itemText);
-        mTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemTextSize,
-                UIUtils.sp2px(mContext,mTextSize));
+        mText = ta.getString(R.styleable.MiddleBarItem_mItemText);
+        mTextSize = ta.getDimensionPixelSize(R.styleable.MiddleBarItem_mItemTextSize, UIUtils.sp2px(mContext,mTextSize));
 
-        mTextColorNormal = ta.getColor(R.styleable.BottomBarItem_textColorNormal, mTextColorNormal);
-        mTextColorSelected = ta.getColor(R.styleable.BottomBarItem_textColorSelected, mTextColorSelected);
+        mTextColorNormal = ta.getColor(R.styleable.MiddleBarItem_mTextColorNormal, mTextColorNormal);
+        mTextColorSelected = ta.getColor(R.styleable.MiddleBarItem_mTextColorSelected, mTextColorSelected);
 
-        mMarginBottom = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconMarginBottom,
-                UIUtils.dip2Px(mContext, mMarginBottom));
-        mTextViewHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_textViewHeight,
-                UIUtils.dip2Px(mContext, mTextViewHeight));
+        mOpenTouchBg = ta.getBoolean(R.styleable.MiddleBarItem_mOpenTouchBg, mOpenTouchBg);
+        mTouchDrawable = ta.getDrawable(R.styleable.MiddleBarItem_mTouchDrawable);
 
-        mIsHeave = ta.getBoolean(R.styleable.BottomBarItem_isHeave, mIsHeave);
-        mOpenTouchBg = ta.getBoolean(R.styleable.BottomBarItem_openTouchBg, mOpenTouchBg);
-        mTouchDrawable = ta.getDrawable(R.styleable.BottomBarItem_touchDrawable);
+        mIconWidth = ta.getDimensionPixelSize(R.styleable.MiddleBarItem_mIconWidth, 0);
+        mIconHeight = ta.getDimensionPixelSize(R.styleable.MiddleBarItem_mIconHeight, 0);
+        mItemPadding = ta.getDimensionPixelSize(R.styleable.MiddleBarItem_mItemPadding, 0);
 
-        mIconWidth = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconWidth, 0);
-        mIconHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconHeight, 0);
-        mItemPadding = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemPadding, 0);
-
-        mUnreadTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_unreadTextSize, UIUtils.sp2px(mContext,mUnreadTextSize));
-        mMsgTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_msgTextSize, UIUtils.sp2px(mContext,mMsgTextSize));
 
         ta.recycle();
 
@@ -141,21 +120,16 @@ public class BottomBarItem extends LinearLayout {
 
     private void init() {
         setOrientation(VERTICAL);
-        setGravity(Gravity.BOTTOM);
+        setGravity(Gravity.CENTER);
 
-        View view = View.inflate(mContext, R.layout.bottombar_item, null);
+        View view = View.inflate(mContext, R.layout.middlebar_item, null);
         if (mItemPadding != 0){
             //如果有设置item的padding
             view.setPadding(mItemPadding,mItemPadding,mItemPadding,mItemPadding);
         }
         mLinearLayout = (LinearLayout) view.findViewById(R.id.mLinearLayout);
 
-        image_flayout = (FrameLayout) view.findViewById(R.id.image_flayout);
-
         mImageView = (ImageView) view.findViewById(R.id.iv_icon);
-        mTvUnread = (TextView) view.findViewById(R.id.tv_unred_num);
-        mTvMsg = (TextView) view.findViewById(R.id.tv_msg);
-        mTvNotify = (TextView) view.findViewById(R.id.tv_point);
         mTextView = (TextView) view.findViewById(R.id.tv_text);
 
         mImageView.setImageResource(mIconNormalResourceId);
@@ -169,20 +143,8 @@ public class BottomBarItem extends LinearLayout {
         }
 
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,mTextSize);//设置底部文字字体大小
-        mTvUnread.setTextSize(TypedValue.COMPLEX_UNIT_PX,mUnreadTextSize);//设置未读数的字体大小
-        mTvMsg.setTextSize(TypedValue.COMPLEX_UNIT_PX,mMsgTextSize);//设置提示文字的字体大小
-
-        mTextView.setTextColor(mTextColorNormal);//设置底部文字字体颜色
+        mTextView.setTextColor(mTextColorNormal);//设置文字字体颜色
         mTextView.setText(mText);//设置标签文字
-        //设置TextView的高
-        LayoutParams textLayoutParams = (LayoutParams) mTextView.getLayoutParams();
-        textLayoutParams.height = mTextViewHeight;
-        textLayoutParams.gravity=Gravity.CENTER;
-        mTextView.setLayoutParams(textLayoutParams);
-
-        MarginLayoutParams imLayoutParams= (MarginLayoutParams) image_flayout.getLayoutParams();
-        imLayoutParams.bottomMargin=mMarginBottom+mTextViewHeight;
-        image_flayout.setLayoutParams(imLayoutParams);
 
         if (mOpenTouchBg){
             //如果有开启触摸背景
@@ -190,14 +152,11 @@ public class BottomBarItem extends LinearLayout {
             mLinearLayout.setBackground(mTouchDrawable);
         }
         //设置Item的高度
-        FrameLayout.LayoutParams imageLayoutParams = (FrameLayout.LayoutParams) mLinearLayout.getLayoutParams();
+        LayoutParams imageLayoutParams = (LayoutParams) mLinearLayout.getLayoutParams();
         imageLayoutParams.height = mItemHeight;
         mLinearLayout.setLayoutParams(imageLayoutParams);
 
         addView(view);
-    }
-    public boolean getIsHeave(){
-        return mIsHeave;
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -222,45 +181,5 @@ public class BottomBarItem extends LinearLayout {
     public void setStatus(boolean isSelected){
         mImageView.setImageResource(isSelected?mIconSelectedResourceId:mIconNormalResourceId);
         mTextView.setTextColor(isSelected?mTextColorSelected:mTextColorNormal);
-    }
-
-    private void setTvVisiable(TextView tv){
-        //都设置为不可见
-        mTvUnread.setVisibility(GONE);
-        mTvMsg.setVisibility(GONE);
-        mTvNotify.setVisibility(GONE);
-
-        tv.setVisibility(VISIBLE);//设置为可见
-    }
-
-    /**
-     * 设置未读数
-     * @param unreadNum 小于等于0则隐藏，大于0小于99则显示对应数字，超过99显示99+
-     */
-    public void setUnreadNum(int unreadNum){
-        setTvVisiable(mTvUnread);
-        if (unreadNum <= 0){
-            mTvUnread.setVisibility(GONE);
-        }else if (unreadNum <= 99){
-            mTvUnread.setText(String.valueOf(unreadNum));
-        }else{
-            mTvUnread.setText("99+");
-        }
-    }
-    public void setMsg(String msg){
-        setTvVisiable(mTvMsg);
-        mTvMsg.setText(msg);
-    }
-
-    public void hideMsg(){
-        mTvMsg.setVisibility(GONE);
-    }
-
-    public void showNotify(){
-        setTvVisiable(mTvNotify);
-    }
-
-    public void hideNotify(){
-        mTvNotify.setVisibility(GONE);
     }
 }

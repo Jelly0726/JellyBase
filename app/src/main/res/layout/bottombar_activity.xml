@@ -1,105 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
     android:orientation="vertical"
     android:background="@color/main_bg">
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp"
         ></android.support.v4.view.ViewPager>
 
     <com.base.bottomBar.BottomBarLayout
         android:id="@+id/bbl"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:clipChildren="false"
-        >
+        android:gravity="bottom"
+        android:layout_alignParentBottom="true">
 
         <com.base.bottomBar.BottomBarItem
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:iconNormal="@mipmap/home_un"
             app:iconSelected="@mipmap/home_on"
             app:itemText="首页"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="5px"
-            app:openTouchBg="false"
-            android:background="@drawable/bottombar_white_bg"/>
+            app:iconMarginBottom="5px"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/bottombar_white_bg"/>
         <com.base.bottomBar.BottomBarItem
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:iconNormal="@mipmap/order_un"
             app:iconSelected="@mipmap/order_on"
             app:itemText="订单"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="5px"
-            app:openTouchBg="false"
-            android:background="@drawable/bottombar_white_bg"/>
+            app:iconMarginBottom="5px"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/bottombar_white_bg"/>
         <com.base.bottomBar.BottomBarItem
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:iconNormal="@mipmap/middle_on"
             app:iconSelected="@mipmap/middle_on"
-            app:iconWidth="45dp"
-            app:iconHeight="45dp"
-            app:heaveWidth="60dp"
-            app:heaveHeight="60dp"
+            app:iconWidth="60dp"
+            app:iconHeight="60dp"
             app:itemText="支付"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="5px"
-            app:openTouchBg="false"
-            app:openHeaveBg="false"
+            app:iconMarginBottom="5px"
+            app:openTouchBg="true"
             app:isHeave="true"
-            app:heaveGravity="bottom"
             android:layout_gravity="bottom"
-            android:background="@drawable/bottombar_round_white_bg"/>
+            app:touchDrawable="@drawable/bottombar_white_bg"/>
 
         <com.base.bottomBar.BottomBarItem
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:iconNormal="@mipmap/wallet_un"
             app:iconSelected="@mipmap/wallet_on"
             app:itemText="钱包"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="5px"
-            app:openTouchBg="false"
-            android:background="@drawable/bottombar_white_bg"/>
+            app:iconMarginBottom="5px"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/bottombar_white_bg"/>
 
         <com.base.bottomBar.BottomBarItem
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:iconNormal="@mipmap/me_un"
             app:iconSelected="@mipmap/me_on"
             app:itemText="我的"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
             app:itemTextSize="8sp"
-            app:itemMarginTop="5px"
-            app:openTouchBg="false"
-            android:background="@drawable/bottombar_white_bg"/>
+            app:iconMarginBottom="5px"
+            app:openTouchBg="true"
+            app:touchDrawable="@drawable/bottombar_white_bg"/>
 
     </com.base.bottomBar.BottomBarLayout>
-</LinearLayout>
+</RelativeLayout>

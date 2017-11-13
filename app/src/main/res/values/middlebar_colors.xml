@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="topbar_gb">#F3F5F4</color>
+
+    <color name="topbar_white">#ffffff</color>
+    <color name="topbar_red">#000000</color>
+    <color name="topbar_selector_grey">#DDDDDD</color>
+
+    <color name="topbar_normal_color">#313131</color>
+    <color name="topbar_selected_color">#fd7c13</color>
+</resources>

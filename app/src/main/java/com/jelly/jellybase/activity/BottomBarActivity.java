@@ -12,7 +12,7 @@ import android.view.animation.RotateAnimation;
 import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
-import com.base.bottomBar.FragmentAdapter;
+import com.base.middleBar.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
