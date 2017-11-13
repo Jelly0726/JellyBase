@@ -48,7 +48,7 @@ public class MProgressUtil {
                 //Progress 宽度
                 .setProgressWidth(context.getResources().getDimension(R.dimen.ProgressWidth))
                 //Progress 内圈颜色
-                .setProgressRimColor(Color.WHITE)
+                .setProgressRimColor(Color.TRANSPARENT)
                 //Progress 内圈宽度
                 .setProgressRimWidth(context.getResources().getDimensionPixelSize(R.dimen.ProgressRimWidth))
                 //文字的颜色
