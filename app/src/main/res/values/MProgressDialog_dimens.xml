@@ -17,7 +17,7 @@
   -->
 
 <resources>
-    <dimen name="CornerRadius">10dp</dimen><!--View背景的圆角-->
+    <dimen name="CornerRadius">5dp</dimen><!--View背景的圆角-->
     <dimen name="StrokeWidth">1dp</dimen><!--View 边框的宽度-->
     <dimen name="ProgressWidth">1.5dp</dimen><!--Progress 宽度-->
     <dimen name="ProgressRimWidth">2dp</dimen><!--Progress 内圈宽度-->
