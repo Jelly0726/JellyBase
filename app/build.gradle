@@ -18,7 +18,7 @@ android {
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
 
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64", 'mips', 'mips64'
+            abiFilters "armeabi", "armeabi-v7a", "x86",'mips'
 
             //极光推送选择要添加的对应cpu类型的.so库。
             //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
