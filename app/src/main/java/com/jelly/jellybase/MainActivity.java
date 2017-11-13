@@ -30,6 +30,7 @@ import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.MvpRetrofitRXAndroidActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
+import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
@@ -178,6 +179,11 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 15://Android MVP+Retrofit+RxAndroid
                     intent=new Intent(MyApplication.getMyApp(), MvpRetrofitRXAndroidActivity.class);
+                    startActivity(intent);
+                    break;
+                case 16://商品详情
+                    intent=new Intent(MyApplication.getMyApp(), ProductDetailsActivity.class);
+                    intent.putExtra("isShanGou",true);
                     startActivity(intent);
                     break;
             }

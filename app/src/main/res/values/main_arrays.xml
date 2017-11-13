@@ -17,5 +17,6 @@
         <item>下拉选择框</item>
         <item>地址时间选择</item>
         <item>MVP+Retrofit+RxAndroid,butterknife注解式绑定id</item>
+        <item>商品详情</item>
     </string-array>
 </resources>
