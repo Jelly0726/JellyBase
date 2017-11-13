@@ -2,6 +2,7 @@ package com.base.httpmvp.retrofitapi;
 
 import android.text.TextUtils;
 
+import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
@@ -10,7 +11,6 @@ import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.bankcard.BankCardInfo;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -21,6 +21,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
@@ -54,9 +55,9 @@ public class HttpMethods implements IGlobalManager {
 					OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 					httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-//					HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-//					httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//					httpClientBuilder.addInterceptor(httpLoggingInterceptor);
+					HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+					httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+					httpClientBuilder.addInterceptor(httpLoggingInterceptor);
 
 					sOkHttpClient = httpClientBuilder.build();
 
