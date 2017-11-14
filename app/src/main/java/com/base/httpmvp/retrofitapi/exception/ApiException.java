@@ -68,8 +68,8 @@ public class ApiException extends RuntimeException {
         } else if (throwable instanceof ConnectException) {
             message = "连接失败("+ ERROR.NETWORD_ERROR+")";  //均视为网络错误
             return message;
-        } else if (throwable instanceof SocketTimeoutException) {//请求超时
-            message = "请求超时("+REQUEST_TIMEOUT+")";
+        } else if (throwable instanceof SocketTimeoutException) {//连接超时
+            message = "连接超时("+ERROR.NETWORD_ERROR+")";//均视为网络错误
             return message;
         } else {
             message = "未知错误("+ERROR.UNKNOWN+"):"+throwable.getMessage();          //未知错误
