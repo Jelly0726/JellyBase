@@ -9,9 +9,9 @@ public class TokenModel {
     @SerializedName("token")
     private String token;
     @SerializedName(value = "tokenExpirationTime",alternate = "time")
-    private int validTime;
+    private int validTime;//有效时间
     @SerializedName("createTime")
-    private long createTime;
+    private long createTime;//创建时间
     public String getToken() {
         return token;
     }
