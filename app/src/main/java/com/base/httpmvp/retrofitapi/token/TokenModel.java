@@ -8,8 +8,8 @@ import com.google.gson.annotations.SerializedName;
 public class TokenModel {
     @SerializedName("token")
     private String token;
-    @SerializedName("tokenExpirationTime")
-    private int tokenExpirationTime;
+    @SerializedName(value = "tokenExpirationTime",alternate = "time")
+    private int validTime;
     @SerializedName("createTime")
     private long createTime;
     public String getToken() {
@@ -20,12 +20,12 @@ public class TokenModel {
         this.token = token;
     }
 
-    public int getTokenExpirationTime() {
-        return tokenExpirationTime;
+    public int getValidTime() {
+        return validTime;
     }
 
-    public void setTokenExpirationTime(int tokenExpirationTime) {
-        this.tokenExpirationTime = tokenExpirationTime;
+    public void setValidTime(int validTime) {
+        this.validTime = validTime;
     }
 
     public long getCreateTime() {
