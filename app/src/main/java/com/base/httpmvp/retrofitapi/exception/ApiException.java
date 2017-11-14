@@ -72,7 +72,7 @@ public class ApiException extends RuntimeException {
             message = "请求超时("+REQUEST_TIMEOUT+")";
             return message;
         } else {
-            message = "未知错误("+ ERROR.UNKNOWN+")";          //未知错误
+            message = "未知错误("+ERROR.UNKNOWN+"):"+throwable.getMessage();          //未知错误
             return message;
         }
     }
