@@ -1,5 +1,6 @@
 package com.base.httpmvp.retrofitapi.converter;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.HttpCode;
@@ -41,6 +42,9 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
         Log.i("ss","response="+response);
+        if (TextUtils.isEmpty(response)){
+            throw new ApiException("服务器返回数据异常!");
+        }
             HttpState httpState = gson.fromJson(response, HttpState.class);
             if (!httpState.isReturnState()) {
                 if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
