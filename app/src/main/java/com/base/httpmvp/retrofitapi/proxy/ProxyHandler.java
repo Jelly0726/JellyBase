@@ -37,7 +37,7 @@ public class ProxyHandler implements InvocationHandler {
 
     private final static String TOKEN = "token";
 
-    private final static int REFRESH_TOKEN_VALID_TIME = 30;
+    private static int REFRESH_TOKEN_VALID_TIME = 30;
     private static long tokenChangedTime = 0;
     private Throwable mRefreshTokenError = null;
     private boolean mIsTokenNeedRefresh;
@@ -97,6 +97,8 @@ public class ProxyHandler implements InvocationHandler {
      */
     private Observable<?> refreshTokenWhenTokenInvalid() {
         synchronized (ProxyHandler.class) {
+            REFRESH_TOKEN_VALID_TIME=GlobalToken.getToken().getTokenExpirationTime()*1000;
+            tokenChangedTime=GlobalToken.getToken().getCreateTime();
             // Have refreshed the token successfully in the valid time.
             if (new Date().getTime() - tokenChangedTime < REFRESH_TOKEN_VALID_TIME) {
                 mIsTokenNeedRefresh = true;
