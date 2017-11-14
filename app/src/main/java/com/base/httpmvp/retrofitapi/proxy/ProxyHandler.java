@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -27,6 +28,7 @@ import rx.Subscriber;
 import rx.functions.Func1;
 
 import static com.jelly.jellybase.MainActivity.login;
+
 
 /**
  * Created by david on 16/8/21.
@@ -75,15 +77,16 @@ public class ProxyHandler implements InvocationHandler {
                 return observable.flatMap(new Func1<Throwable, Observable<?>>() {
                     @Override
                     public Observable<?> call(Throwable throwable) {
+                        Log.i("sss","ProxyHandler throwable="+throwable);
                         if (throwable instanceof TokenInvalidException) {
                             return refreshTokenWhenTokenInvalid();
                         } else if (throwable instanceof TokenNotExistException) {
                             // Token 不存在，执行退出登录的操作。（为了防止多个请求，都出现 Token 不存在的问题，
                             // 这里需要取消当前所有的网络请求）
                             mGlobalManager.exitLogin();
-                            return Observable.error(throwable);
+                            return Observable.error(new ApiException(throwable));
                         }
-                        return Observable.error(throwable);
+                        return Observable.error(new ApiException(throwable));
                     }
                 });
             }
@@ -97,8 +100,8 @@ public class ProxyHandler implements InvocationHandler {
      */
     private Observable<?> refreshTokenWhenTokenInvalid() {
         synchronized (ProxyHandler.class) {
-            REFRESH_TOKEN_VALID_TIME=GlobalToken.getToken().getTokenExpirationTime()*1000;
-            tokenChangedTime=GlobalToken.getToken().getCreateTime();
+            REFRESH_TOKEN_VALID_TIME= GlobalToken.getToken().getTokenExpirationTime()*1000;
+            tokenChangedTime= GlobalToken.getToken().getCreateTime();
             // Have refreshed the token successfully in the valid time.
             if (new Date().getTime() - tokenChangedTime < REFRESH_TOKEN_VALID_TIME) {
                 mIsTokenNeedRefresh = true;
@@ -135,7 +138,7 @@ public class ProxyHandler implements InvocationHandler {
                             });
                 }
                 if (mRefreshTokenError != null) {
-                    return Observable.error(mRefreshTokenError);
+                    return Observable.error(new ApiException(mRefreshTokenError));
                 } else {
                     return Observable.just(true);
                 }

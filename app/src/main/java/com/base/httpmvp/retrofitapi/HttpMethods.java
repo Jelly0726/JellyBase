@@ -123,6 +123,7 @@ public class HttpMethods implements IGlobalManager {
 	public void getToken(Object paramMap, Subscriber<HttpResultData<TokenModel>> subscriber){
 		Observable observable = get(IApiService.class).getToken(paramMap)
 				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());;
+		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable,subscriber);
 	}
 	/***
@@ -133,6 +134,7 @@ public class HttpMethods implements IGlobalManager {
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
 				.map(new HttpResultFunc<List<HttpResult>>());
 				//.flatMap(new HttpResultFuncs<HttpResult>());
+		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber);
 	}
 	/**
@@ -158,6 +160,7 @@ public class HttpMethods implements IGlobalManager {
 		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken()
 				,description, body)
 				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
+		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber);
 	}
 
@@ -168,6 +171,7 @@ public class HttpMethods implements IGlobalManager {
 	public void getBank(Object param,Subscriber<HttpResultData<BankCardInfo>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
 				.flatMap(new HttpResultFuncs<HttpResultData<BankCardInfo>>());
+		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber);
 	}
 
@@ -202,6 +206,15 @@ public class HttpMethods implements IGlobalManager {
 //				throw new ApiException(tHttpStateData.getMsg());
 //			}
 			return Observable.just(tHttpStateData.getData());
+		}
+	}
+
+	//ExceptionEngine为处理异常的驱动器
+	private class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
+		@Override public Observable<T> call(Throwable throwable) {
+			//ExceptionEngine为处理异常的驱动器
+			//return Observable.error(new Throwable(throwable));
+			return Observable.error(throwable);
 		}
 	}
 }
