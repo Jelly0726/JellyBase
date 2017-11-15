@@ -12,5 +12,6 @@ public class IntentAction {
     public static final String NOTICE="IntentAction.NOTICE";//
     public static final String ACTION_MAIN= MyApplication.getMyApp().getPackageName()+".action.ACTION_MAIN";//跳转主页
     public static final String ACTION_LOGIN =MyApplication.getMyApp().getPackageName()+".action.ACTION_LOGIN";//跳转登录
+    public static final String TOKEN_NOT_EXIST =MyApplication.getMyApp().getPackageName()+".action.TOKEN_NOT_EXIST";//token不存在
 
 }

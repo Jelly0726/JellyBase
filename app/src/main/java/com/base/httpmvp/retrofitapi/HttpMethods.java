@@ -1,9 +1,14 @@
 package com.base.httpmvp.retrofitapi;
 
+import android.content.Intent;
 import android.text.TextUtils;
 
+import com.base.applicationUtil.MyApplication;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
+import com.base.config.IntentAction;
+import com.base.eventBus.LoginEvent;
+import com.base.eventBus.NetEvent;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
@@ -11,6 +16,7 @@ import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.base.sqldao.DBHelper;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -29,6 +35,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by BYPC006 on 2017/3/6.
@@ -79,16 +86,15 @@ public class HttpMethods implements IGlobalManager {
 	public void exitLogin() {
 		// Cancel all the netWorkRequest
 		sOkHttpClient.dispatcher().cancelAll();
-		// Goto the home page
-//		new Handler(Looper.getMainLooper()).post(new Runnable() {
-//			@Override
-//			public void run() {
-//				Intent intent = new Intent(BaseApplication.getContext(), MainActivity.class);
-//				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				BaseApplication.getContext().startActivity(intent);
-//				Toast.makeText(BaseApplication.getContext(), "Token is not existed!!", Toast.LENGTH_SHORT).show();
-//			}
-//		});
+		GlobalToken.removeToken();
+		DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
+		NetEvent netEvent = new NetEvent();
+		netEvent.setEvent(new LoginEvent(false));
+		HermesEventBus.getDefault().post(netEvent);
+
+		Intent intent=new Intent();
+		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
+		MyApplication.getMyApp().sendBroadcast(intent);
 	}
 	//获取单例
 	public static HttpMethods getInstance(){
