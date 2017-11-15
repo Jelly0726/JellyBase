@@ -14,7 +14,6 @@ import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.base.MapUtil.LocationTask;
 import com.base.MapUtil.OnLocationGetListener;
-import com.base.MapUtil.PositionEntity;
 import com.base.MapUtil.RegeocodeTask;
 import com.base.MapUtil.RouteTask;
 import com.base.ToolUtil.UtilSelf;
@@ -30,6 +29,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DecimalFormat;
+
+import systemdb.PositionEntity;
 
 
 /**gps定位服务

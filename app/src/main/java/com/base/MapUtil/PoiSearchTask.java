@@ -12,6 +12,8 @@ import com.amap.api.services.poisearch.PoiSearch.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import systemdb.PositionEntity;
+
 /**
  * ClassName:PoiSearchTask <br/>
  * Function: 简单封装了poi搜索的功能，搜索结果配合RecommendAdapter进行使用显示 <br/>
@@ -36,7 +38,7 @@ public class PoiSearchTask implements OnPoiSearchListener {
 	}
 
 	public void search(String keyWord,String city) {
-		Query query = new PoiSearch.Query(keyWord, "", city);
+		Query query = new Query(keyWord, "", city);
 		query.setPageSize(10); 
 		query.setPageNum(0); 
 

@@ -19,6 +19,8 @@ import com.amap.api.services.help.Tip;
 import java.util.ArrayList;
 import java.util.List;
 
+import systemdb.PositionEntity;
+
 /**
  * ClassName:InputTipTask <br/>
  * Function: 简单封装了Inputtips的搜索服务，将其余提示的adapter进行数据绑定

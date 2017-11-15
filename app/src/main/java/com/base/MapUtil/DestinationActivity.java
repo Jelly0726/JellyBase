@@ -24,12 +24,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amap.api.maps.offlinemap.OfflineMapCity;
 import com.base.config.BaseBroadcast;
+import com.base.sqldao.DBHelper;
 import com.jelly.jellybase.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import cn.jpush.android.api.JPushInterface;
+import systemdb.PositionEntity;
 
 /**
  */
@@ -41,6 +45,8 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 	private ImageView mBack_Image;
 
 	private TextView mSearchText;
+	private TextView address_tv;
+	private TextView location_tv;
 
 	private EditText mDestinaionText;
 
@@ -49,9 +55,20 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 	private RouteTask mRouteTask;
 	private InputMethodManager imm;//输入法服务
 	private int resultCode=-1;
+
+	private List<OfflineMapCity> cityLisi;
+	//private Spinner city_sp;
+	private List<PositionEntity> posList;
+	private String city;
+
+	private int type=0;
+	private int from=0;
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.amap_destination);
+		type=getIntent().getIntExtra("type",0);
+		from=getIntent().getIntExtra("from",0);
+
 		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 		mRecommendList=(ListView) findViewById(R.id.recommend_list);
 		mBack_Image=(ImageView) findViewById(R.id.destination_back);
@@ -59,6 +76,11 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 
 		mSearchText=(TextView) findViewById(R.id.destination_search);
 		mSearchText.setOnClickListener(this);
+		address_tv=(TextView) findViewById(R.id.address_tv);
+		location_tv=(TextView) findViewById(R.id.location_tv);
+		location_tv.setOnClickListener(this);
+
+
 
 		mDestinaionText=(EditText) findViewById(R.id.destination_edittext);
 		mDestinaionText.addTextChangedListener(this);
@@ -73,18 +95,26 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 					if (!TextUtils.isEmpty(mDestinaionText.getText().toString()) &&
 							RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 						PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-						poiSearchTask.search(mDestinaionText.getText().toString(),RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+						poiSearchTask.search(mDestinaionText.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 					}
 					return true;
 				}
 				return false;
 			}
 		});
+		posList= DBHelper.getInstance(this).getPositionList();
 		mRecomandAdapter=new RecomandAdapter(getApplicationContext());
 		mRecommendList.setAdapter(mRecomandAdapter);
 		mRecommendList.setOnItemClickListener(this);
 
-		mRouteTask=RouteTask.getInstance(getApplicationContext());
+		mRouteTask= RouteTask.getInstance(getApplicationContext());
+		city= RouteTask.getInstance(getApplicationContext()).getStartPoint().city;
+		if(posList!=null){
+			if(posList.size()>0){
+				mRecomandAdapter.setPositionEntities(posList);
+				mRecomandAdapter.notifyDataSetChanged();
+			}
+		}
 
 		resultCode=getIntent().getIntExtra("resultCode",-1);
 	}
@@ -126,7 +156,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 				if (!TextUtils.isEmpty(mDestinaionText.getText().toString()) &&
 						RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 					PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-					poiSearchTask.search(mDestinaionText.getText().toString(),RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+					poiSearchTask.search(mDestinaionText.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 				}
 				break;
 			case R.id.destination_edittext://
@@ -134,6 +164,11 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 				//imm.hideSoftInputFromWindow(zhanghu_layout.getWindowToken(), 0);
 				//显示输入法
 				imm.showSoftInputFromInputMethod(mDestinaionText.getWindowToken(),0);
+				break;
+			case R.id.location_tv:
+				Intent ii=new Intent(BaseBroadcast.SEARCH_RECEIVER);
+				setResult(resultCode,ii);
+				finish();
 				break;
 		}
 
@@ -146,7 +181,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 		PositionEntity entity = (PositionEntity) mRecomandAdapter.getItem(position);
 		if (entity.latitue == 0 && entity.longitude == 0) {
 			PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-			poiSearchTask.search(entity.address,RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+			poiSearchTask.search(entity.address, RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 
 		} else {
 			mRouteTask.setEndPoint(entity);
@@ -155,18 +190,32 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 			ii.putExtra("search",(Serializable)entity);
 			//sendBroadcast(ii);
 			setResult(resultCode,ii);
+			upPosition(entity);
 			finish();
 		}
 	}
-	@Override
-	protected void onResume() {
-		super.onResume();
-		JPushInterface.onResume(this);
-	}
-	@Override
-	protected void onPause() {
-		super.onPause();
-		JPushInterface.onPause(this);
+	private void upPosition(PositionEntity positionEntity){
+		if(posList!=null){
+			DBHelper.getInstance(this).clearPosition();
+			for (int i=0;i<posList.size();i++){
+				PositionEntity positionEntity1=posList.get(i);
+				if(positionEntity.city.equals(positionEntity1.city)
+						&&positionEntity.address.equals(positionEntity1.address)){
+					posList.remove(i);
+				}
+			}
+			if(posList.size()==10){
+				posList.remove(9);
+			}
+			List<PositionEntity> list=new ArrayList<>();
+			list.addAll(posList);
+			posList.clear();
+			posList.add(0,positionEntity);
+			posList.addAll(list);
+			DBHelper.getInstance(this).addToPositionListfoTable(posList);
+			list.clear();
+			list=null;
+		}
 	}
 }
   

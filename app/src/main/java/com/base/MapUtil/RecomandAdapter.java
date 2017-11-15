@@ -20,6 +20,8 @@ import com.jelly.jellybase.R;
 import java.util.Arrays;
 import java.util.List;
 
+import systemdb.PositionEntity;
+
 
 /**
  * ClassName:RecomandAdapter <br/>

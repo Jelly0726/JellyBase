@@ -15,6 +15,9 @@ import com.amap.api.services.route.WalkRouteResult;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import systemdb.PositionEntity;
+
 /**
  * ClassName:RouteTask <br/>
  * Function: 封装的驾车路径规划 <br/>

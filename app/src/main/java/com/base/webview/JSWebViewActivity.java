@@ -32,7 +32,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.base.MapUtil.DestinationActivity;
-import com.base.MapUtil.PositionEntity;
 import com.base.MapUtil.RouteTask;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.MyApplication;
