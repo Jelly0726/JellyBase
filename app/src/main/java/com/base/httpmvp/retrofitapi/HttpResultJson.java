@@ -13,7 +13,7 @@ public class HttpResultJson {
 	@SerializedName(value ="msg", alternate = "message")
 	private String msg;
 	@SerializedName("data")
-	private String json;
+	private Object json;
 
 	public int getStatus() {
 		return status;
@@ -31,11 +31,11 @@ public class HttpResultJson {
 		this.msg = msg;
 	}
 
-	public String getJson() {
+	public Object getJson() {
 		return json;
 	}
 
-	public void setJson(String json) {
+	public void setJson(Object json) {
 		this.json = json;
 	}
 }

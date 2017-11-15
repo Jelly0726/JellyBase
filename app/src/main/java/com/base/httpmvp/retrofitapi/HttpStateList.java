@@ -3,17 +3,20 @@ package com.base.httpmvp.retrofitapi;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by BYPC006 on 2017/3/6.
  */
 
-public class HttpStateData<T> {
+public class HttpStateList<T> {
     @SerializedName("returnState")
     private boolean returnState;
     @SerializedName(value ="msg", alternate = "message")
     private String message;
     @SerializedName("data")
-    private T data;
+    private List<T> data=new ArrayList<>();
     /**
      * API是否请求失败
      *
@@ -35,11 +38,11 @@ public class HttpStateData<T> {
         this.message = message;
     }
 
-    public T getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

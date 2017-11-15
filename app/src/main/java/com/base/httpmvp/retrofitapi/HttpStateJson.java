@@ -7,13 +7,13 @@ import com.google.gson.annotations.SerializedName;
  * Created by BYPC006 on 2017/3/6.
  */
 
-public class HttpStateData<T> {
+public class HttpStateJson {
     @SerializedName("returnState")
     private boolean returnState;
     @SerializedName(value ="msg", alternate = "message")
     private String message;
     @SerializedName("data")
-    private T data;
+    private Object json;
     /**
      * API是否请求失败
      *
@@ -35,11 +35,11 @@ public class HttpStateData<T> {
         this.message = message;
     }
 
-    public T getData() {
-        return data;
+    public Object getJson() {
+        return json;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setJson(Object json) {
+        this.json = json;
     }
 }
