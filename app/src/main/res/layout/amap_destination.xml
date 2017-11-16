@@ -71,7 +71,7 @@
             android:paddingLeft="20dp"
             android:text="定位"
             android:gravity="center"
-            android:background="#209705"
+            android:background="@drawable/amap_btn_bg"
             android:textColor="#ffffff"/>
     </LinearLayout>
     <ListView
