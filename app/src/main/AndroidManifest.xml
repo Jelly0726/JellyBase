@@ -105,6 +105,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:hardwareAccelerated="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!-- 高德地图: 正式：edaee61dc5b9fc53d7cd648c1fa93114 测试: 347ec1a0457b72288c5b50a2a9bc1881 530a0fd298ac7fc059c8029b6007c1c9-->
