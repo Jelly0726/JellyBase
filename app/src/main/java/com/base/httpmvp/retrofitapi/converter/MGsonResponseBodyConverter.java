@@ -29,7 +29,7 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     private final TypeAdapter<T> adapter;
     //private final Type type;
 
-        MGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    MGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }
@@ -45,17 +45,17 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
         if (TextUtils.isEmpty(response)){
             throw new ApiException("服务器返回数据异常!");
         }
-            HttpState httpState = gson.fromJson(response, HttpState.class);
-            if (!httpState.isReturnState()) {
-                if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
-                    throw new TokenNotExistException();
-                } else if (httpState.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
-                    throw new TokenInvalidException();
-                } else {
-                    // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
-                    throw new ApiException(httpState.getMessage());
-                }
+        HttpState httpState = gson.fromJson(response, HttpState.class);
+        if (!httpState.isReturnState()) {
+            if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
+                throw new TokenNotExistException();
+            } else if (httpState.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
+                throw new TokenInvalidException();
+            } else {
+                // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
+                throw new ApiException(httpState.getMessage());
             }
+        }
         try {
 //            MediaType contentType = value.contentType();
 //            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;

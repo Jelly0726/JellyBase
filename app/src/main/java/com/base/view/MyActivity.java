@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +33,9 @@ public class MyActivity extends AutoLayoutActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRecevier = new InnerRecevier();
-        mFilter = new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        mFilter = new IntentFilter();
+        mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        mFilter.addAction(IntentAction.TOKEN_NOT_EXIST);
         MyApplication.getMyApp().addActivity(this);
         /**
          * 开始监听，注册广播
@@ -121,7 +124,8 @@ public class MyActivity extends AutoLayoutActivity {
                             .setCanceledOnTouchOutside(false)
                             .setCancelable(false)
                             .setTitle("系统提示！")
-                            .setText("登录状态失效，请重新登录!")
+                            .setTextColor(Color.parseColor("#FF1F50F1"))
+                            .setText("登录状态异常或异地登录，请重新登录!")
                             .setPositive("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

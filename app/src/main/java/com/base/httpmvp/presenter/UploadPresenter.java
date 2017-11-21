@@ -29,9 +29,9 @@ public class UploadPresenter implements IBasePresenter {
                 HttpResultData httpResultAll= (HttpResultData)((List)mCallBackVo).get(0);
                 if (httpResultAll.getStatus()== HttpCode.SUCCEED){
                     UploadData model= (UploadData) httpResultAll.getData();
-                    interfaceView.uploadSuccessCallBack(true,model);
+                    interfaceView.uploadSuccess(true,model);
                 }else {
-                    interfaceView.uploadFailedCallBack(true,httpResultAll.getMsg());
+                    interfaceView.uploadFailed(true,httpResultAll.getMsg());
                 }
 
             }
@@ -39,7 +39,7 @@ public class UploadPresenter implements IBasePresenter {
             @Override
             public void onFaild(final String message) {
                 interfaceView.closeProgress();
-                interfaceView.uploadFailedCallBack(true,message);
+                interfaceView.uploadFailed(true,message);
             }
         });
     }

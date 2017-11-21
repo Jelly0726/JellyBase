@@ -15,12 +15,12 @@ public interface IUploadView extends IBaseView {
     /**
      * 成功回调
      */
-    public void uploadSuccessCallBack(boolean isRefresh, Object mCallBackVo);
+    public void uploadSuccess(boolean isRefresh, Object mCallBackVo);
 
     /**
      * 失败回调
      */
-    public void uploadFailedCallBack(boolean isRefresh, String message);
+    public void uploadFailed(boolean isRefresh, String message);
 
 
 }
