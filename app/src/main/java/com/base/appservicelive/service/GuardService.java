@@ -46,6 +46,7 @@ public class GuardService extends Service {
     }
     @Override
     public void onDestroy() {
+        HermesEventBus.getDefault().destroy();
 
         Intent intent = new Intent();
         intent.setAction("GuardService");
@@ -54,6 +55,5 @@ public class GuardService extends Service {
         unregisterReceiver(mBR);
         //Log.i("msg","GuardService关闭");
         super.onDestroy();
-        HermesEventBus.getDefault().destroy();
     }
 }

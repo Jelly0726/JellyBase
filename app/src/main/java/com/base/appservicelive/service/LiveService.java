@@ -131,6 +131,7 @@ public class LiveService extends Service {
     }
     @Override
     public void onDestroy() {
+        HermesEventBus.getDefault().destroy();
 
         Intent intent = new Intent();
         intent.setAction("LiveService");
@@ -140,7 +141,6 @@ public class LiveService extends Service {
         stopForeground(true);
         //Log.i("msg","LiveService关闭");
         super.onDestroy();
-        HermesEventBus.getDefault().destroy();
     }
 
     /**
