@@ -28,6 +28,8 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.JobSchedulerService;
 import com.jelly.jellybase.server.WokeService;
 
+import xiaofei.library.hermeseventbus.HermesEventBus;
+
 
 /**后台不死服务
  * Created by Administrator on 2016/9/6.
@@ -138,6 +140,7 @@ public class LiveService extends Service {
         stopForeground(true);
         //Log.i("msg","LiveService关闭");
         super.onDestroy();
+        HermesEventBus.getDefault().destroy();
     }
 
     /**

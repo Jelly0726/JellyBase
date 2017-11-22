@@ -3,6 +3,7 @@ package com.base.applicationUtil;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -222,12 +223,33 @@ public class MyApplication extends OkGoApp {
             }
             activities.clear();
             LocationTask.getInstance(this).onDestroy();//销毁定位
+            HermesEventBus.getDefault().destroy();
             System.exit(0);
         }catch(Exception e){
             e.printStackTrace();
         }
     }
-
+    @Override
+    public void onTerminate() {
+        // 程序终止的时候执行
+        LocationTask.getInstance(this).onDestroy();//销毁定位
+        HermesEventBus.getDefault().destroy();
+        super.onTerminate();
+    }
+    @Override
+    public void onLowMemory() {
+        // 低内存的时候执行
+        super.onLowMemory();
+    }
+    @Override
+    public void onTrimMemory(int level) {
+        // 程序在内存清理的时候执行
+        super.onTrimMemory(level);
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
     /**
      * 是否后台运行
      * @return
