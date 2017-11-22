@@ -8,8 +8,6 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import xiaofei.library.hermeseventbus.HermesEventBus;
-
 /**后台不死守护服务
  * Created by Administrator on 2016/9/6.
  */
@@ -46,7 +44,6 @@ public class GuardService extends Service {
     }
     @Override
     public void onDestroy() {
-        HermesEventBus.getDefault().destroy();
 
         Intent intent = new Intent();
         intent.setAction("GuardService");

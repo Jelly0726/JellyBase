@@ -17,7 +17,6 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -53,19 +52,17 @@ public class MyApplication extends OkGoApp {
     public void onCreate() {
         super.onCreate();
         myApp=this;
-        HermesEventBus.getDefault().init(this);
+        if(!"com.base.appservicelive.life".equals(getCurProcessName())
+                &&!"com.base.appservicelive.guard".equals(getCurProcessName())) {
+            HermesEventBus.getDefault().init(this);
+        }
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
-        //butterknife注解式绑定id
-        ButterKnife.setDebug(BuildConfig.DEBUG);
-        if (getPackageName().equals(getCurProcessName(this))) {
+        if (getPackageName().equals(getCurProcessName())) {
+            //butterknife注解式绑定id
+            ButterKnife.setDebug(BuildConfig.DEBUG);
             // AutoLayout适配
             AutoLayoutConifg.getInstance().useDeviceSize();
-            File file = new File(AppUtils.getFileRoot(this)
-                    + File.separator + "SaveXML");
-            if (!file.exists()) {
-                file.mkdirs();
-            }
             //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
             //TbsDownloader.needDownload(getApplicationContext(), false);
             QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
@@ -111,14 +108,13 @@ public class MyApplication extends OkGoApp {
         }
     }
 
-    private String getCurProcessName(Context context) {
+    private String getCurProcessName() {
         int pid = android.os.Process.myPid();
-        ActivityManager mActivityManager = (ActivityManager) context
+        ActivityManager mActivityManager = (ActivityManager) getApplicationContext()
                 .getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
                 .getRunningAppProcesses()) {
             if (appProcess.pid == pid) {
-
                 return appProcess.processName;
             }
         }

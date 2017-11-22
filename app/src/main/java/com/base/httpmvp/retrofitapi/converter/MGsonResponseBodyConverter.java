@@ -67,6 +67,7 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             T users = adapter.fromJson(response);
             return users;
         } catch (Exception e){
+            Log.i("ss","convert e="+e);
             throw new ApiException(e);
         }finally {
             value.close();

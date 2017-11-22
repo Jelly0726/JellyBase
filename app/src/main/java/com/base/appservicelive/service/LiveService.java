@@ -28,8 +28,6 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.JobSchedulerService;
 import com.jelly.jellybase.server.WokeService;
 
-import xiaofei.library.hermeseventbus.HermesEventBus;
-
 
 /**后台不死服务
  * Created by Administrator on 2016/9/6.
@@ -131,7 +129,6 @@ public class LiveService extends Service {
     }
     @Override
     public void onDestroy() {
-        HermesEventBus.getDefault().destroy();
 
         Intent intent = new Intent();
         intent.setAction("LiveService");
