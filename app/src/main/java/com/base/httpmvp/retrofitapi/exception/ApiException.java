@@ -75,7 +75,7 @@ public class ApiException extends RuntimeException {
             return "登录状态异常！";
         }else if (throwable instanceof TokenNotExistException) {//token不存在
             return "登录状态异常！";
-        }else if (throwable instanceof ApiException) {//token不存在
+        }else if (throwable instanceof ApiException) {//ApiException
             return throwable.getMessage();
         }else {
             message = "未知错误("+ERROR.UNKNOWN+"):"+throwable.getMessage();          //未知错误
