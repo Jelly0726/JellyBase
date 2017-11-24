@@ -108,6 +108,19 @@ public class MyActivity extends AutoLayoutActivity {
         }
         }
     }
+
+    /**
+     * 延迟关闭
+     * @param time 延迟时间
+     */
+    public void finish(int time) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },time);
+    }
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
