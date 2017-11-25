@@ -67,8 +67,6 @@ import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -278,34 +276,6 @@ public class AppUtils {
 //        this.startActivity(intent);
 //    }
     }
-    /**
-     * MD5加密算法
-     * @param plainText
-     * @return
-     */
-    public static String Md5(String plainText) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(plainText.getBytes());
-            byte b[] = md.digest();
-
-            int i;
-
-            StringBuffer buf = new StringBuffer("");
-            for (int offset = 0; offset < b.length; offset++) {
-                i = b[offset];
-                if (i < 0) i += 256;
-                if (i < 16)
-                    buf.append("0");
-                buf.append(Integer.toHexString(i));
-            }
-
-            return buf.toString();//32位的加密
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     /**
      *
@@ -342,7 +312,7 @@ public class AppUtils {
         }
         stringBuffer.append("&key=").append(BaseConfig.KEY);
         //Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
-        map.put("sign",Md5(stringBuffer.toString().toLowerCase()).toUpperCase());
+        map.put("sign",MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
         return map;
         //return MD5(stringBuffer.toString()).toUpperCase();
     }
