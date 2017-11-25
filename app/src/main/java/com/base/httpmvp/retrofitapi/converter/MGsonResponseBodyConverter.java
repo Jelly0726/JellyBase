@@ -63,6 +63,8 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
 //            Reader reader = new InputStreamReader(inputStream, charset);
 //            JsonReader jsonReader = gson.newJsonReader(reader);
 //            return adapter.read(jsonReader);
+            //json转换为list
+            //List<SearchResul> list=gson.fromJson(json, new TypeToken<List<SearchResul>>(){}.getType());
             //T users = gson.fromJson(response,type);
             T users = adapter.fromJson(response);
             return users;
