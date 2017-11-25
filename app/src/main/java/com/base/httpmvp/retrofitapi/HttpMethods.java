@@ -23,6 +23,10 @@ import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -30,11 +34,8 @@ import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
@@ -126,7 +127,7 @@ public class HttpMethods implements IGlobalManager {
 	/***
 	 *获取Token
 	 */
-	public void getToken(Object paramMap, Subscriber<HttpResultData<TokenModel>> subscriber){
+	public void getToken(Object paramMap, Observer<HttpResultData<TokenModel>> subscriber){
 		Observable observable = get(IApiService.class).getToken(paramMap)
 				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());;
 		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
@@ -136,7 +137,7 @@ public class HttpMethods implements IGlobalManager {
 	 * 注册
 	 * @param subscriber
 	 */
-	public void userRegistration(Object paramMap, Subscriber<List<HttpResult>> subscriber){
+	public void userRegistration(Object paramMap, Observer<List<HttpResult>> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
 				.map(new HttpResultFunc<List<HttpResult>>());
 				//.flatMap(new HttpResultFuncs<HttpResult>());
@@ -146,7 +147,7 @@ public class HttpMethods implements IGlobalManager {
 	/**
 	 * 上传文件(图片)
 	 */
-	public void upload(File file, UploadBean uploadBean, Subscriber<HttpResultData<UploadData>> subscriber){
+	public void upload(File file, UploadBean uploadBean, Observer<HttpResultData<UploadData>> subscriber){
 		// 创建 RequestBody，用于封装构建RequestBody
 		RequestBody requestFile =
 				RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -174,7 +175,7 @@ public class HttpMethods implements IGlobalManager {
 	 * 获取所属银行
 	 * @param subscriber
 	 */
-	public void getBank(Object param,Subscriber<HttpResultData<BankCardInfo>> subscriber){
+	public void getBank(Object param,Observer<HttpResultData<BankCardInfo>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
 				.flatMap(new HttpResultFuncs<HttpResultData<BankCardInfo>>());
 		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
@@ -185,41 +186,36 @@ public class HttpMethods implements IGlobalManager {
 	/***
 	 * 统一异步,同步处理
 	 * @param o
-	 * @param s
+	 * @param observer
 	 * @param <T>
 	 */
-	private <T> void toSubscribe(Observable<T> o, Subscriber<T> s){
+	private <T> void toSubscribe(Observable<T> o, Observer<T> observer){
 		o.subscribeOn(Schedulers.io())
 				.unsubscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(s);
+				.subscribe(observer);
+
 	}
 	//map
-	private class HttpResultFunc<T> implements Func1<HttpStateData<T>, T> {
+	private class HttpResultFunc<T> implements Function<HttpStateData<T>, T> {
 		@Override
-		public T call(HttpStateData<T> tHttpStateData) {
-//			if (tHttpStateData.getStatus() == 0) {
-//				throw new ApiException(tHttpStateData.getMsg());
-//			}
+		public T apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
 			return tHttpStateData.getData();
 		}
 	}
 	//flatMap
-	private class HttpResultFuncs<T> implements Func1<HttpStateData<T>, Observable<T>> {
+	private class HttpResultFuncs<T> implements Function<HttpStateData<T>, Observable<T>> {
+
 		@Override
-		public Observable<T> call(HttpStateData<T> tHttpStateData) {
-//			if (!tHttpStateData.isReturnState()) {
-//				throw new ApiException(tHttpStateData.getMsg());
-//			}
+		public Observable<T> apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
 			return Observable.just(tHttpStateData.getData());
 		}
 	}
 
 	//ExceptionEngine为处理异常的驱动器
-	private class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
-		@Override public Observable<T> call(Throwable throwable) {
-			//ExceptionEngine为处理异常的驱动器
-			//return Observable.error(new Throwable(throwable));
+	private class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
+		@Override
+		public Observable<T> apply(@NonNull Throwable throwable) throws Exception {
 			return Observable.error(throwable);
 		}
 	}
