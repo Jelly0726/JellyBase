@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
+import com.base.xrefreshview.view.CustomerFooter;
 import com.base.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.ProductEvaluateAdapter;
@@ -87,10 +87,10 @@ public class ProductEvaluateFragment extends BaseFragment{
 
         //当需要使用数据不满一屏时不显示点击加载更多的效果时，解注释下面的三行代码
         //并注释掉第四行代码
-//        CustomerFooter customerFooter = new CustomerFooter(this);
-//        customerFooter.setRecyclerView(recyclerView);
-//        recyclerviewAdapter.setCustomLoadMoreView(customerFooter);
-        adapter.setCustomLoadMoreView(new XRefreshViewFooter(this.getActivity()));
+        CustomerFooter customerFooter = new CustomerFooter(this.getActivity());
+        customerFooter.setRecyclerView(recyclerView);
+        adapter.setCustomLoadMoreView(customerFooter);
+        //adapter.setCustomLoadMoreView(new XRefreshViewFooter(this.getActivity()));
         //xRefreshView.setCustomFooterView(new XRefreshViewFooter(this.getActivity()));
 //        recyclerviewAdapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
 //		xRefreshView1.setPullLoadEnable(false);
