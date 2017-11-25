@@ -27,8 +27,10 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
         public final static Property Longitude = new Property(2, double.class, "longitude", false, "LONGITUDE");
         public final static Property Address = new Property(3, String.class, "address", false, "ADDRESS");
         public final static Property City = new Property(4, String.class, "city", false, "CITY");
-        public final static Property Type = new Property(5, int.class, "type", false, "TYPE");
-        public final static Property From = new Property(6, int.class, "from", false, "FROM");
+        public final static Property AdCode = new Property(5, String.class, "adCode", false, "AD_CODE");
+        public final static Property District = new Property(6, String.class, "district", false, "DISTRICT");
+        public final static Property Type = new Property(7, int.class, "type", false, "TYPE");
+        public final static Property From = new Property(8, int.class, "from", false, "FROM");
     }
 
 
@@ -49,8 +51,10 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
                 "\"LONGITUDE\" REAL NOT NULL ," + // 2: longitude
                 "\"ADDRESS\" TEXT," + // 3: address
                 "\"CITY\" TEXT," + // 4: city
-                "\"TYPE\" INTEGER NOT NULL ," + // 5: type
-                "\"FROM\" INTEGER NOT NULL );"); // 6: from
+                "\"AD_CODE\" TEXT," + // 5: adCode
+                "\"DISTRICT\" TEXT," + // 6: district
+                "\"TYPE\" INTEGER NOT NULL ," + // 7: type
+                "\"FROM\" INTEGER NOT NULL );"); // 8: from
     }
 
     /** Drops the underlying database table. */
@@ -79,8 +83,18 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
         if (city != null) {
             stmt.bindString(5, city);
         }
-        stmt.bindLong(6, entity.getType());
-        stmt.bindLong(7, entity.getFrom());
+ 
+        String adCode = entity.getAdCode();
+        if (adCode != null) {
+            stmt.bindString(6, adCode);
+        }
+ 
+        String district = entity.getDistrict();
+        if (district != null) {
+            stmt.bindString(7, district);
+        }
+        stmt.bindLong(8, entity.getType());
+        stmt.bindLong(9, entity.getFrom());
     }
 
     @Override
@@ -103,8 +117,18 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
         if (city != null) {
             stmt.bindString(5, city);
         }
-        stmt.bindLong(6, entity.getType());
-        stmt.bindLong(7, entity.getFrom());
+ 
+        String adCode = entity.getAdCode();
+        if (adCode != null) {
+            stmt.bindString(6, adCode);
+        }
+ 
+        String district = entity.getDistrict();
+        if (district != null) {
+            stmt.bindString(7, district);
+        }
+        stmt.bindLong(8, entity.getType());
+        stmt.bindLong(9, entity.getFrom());
     }
 
     @Override
@@ -120,8 +144,10 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
             cursor.getDouble(offset + 2), // longitude
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // address
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // city
-            cursor.getInt(offset + 5), // type
-            cursor.getInt(offset + 6) // from
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // adCode
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // district
+            cursor.getInt(offset + 7), // type
+            cursor.getInt(offset + 8) // from
         );
         return entity;
     }
@@ -133,8 +159,10 @@ public class PositionEntityDao extends AbstractDao<PositionEntity, Long> {
         entity.setLongitude(cursor.getDouble(offset + 2));
         entity.setAddress(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setCity(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setType(cursor.getInt(offset + 5));
-        entity.setFrom(cursor.getInt(offset + 6));
+        entity.setAdCode(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setDistrict(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setType(cursor.getInt(offset + 7));
+        entity.setFrom(cursor.getInt(offset + 8));
      }
     
     @Override
