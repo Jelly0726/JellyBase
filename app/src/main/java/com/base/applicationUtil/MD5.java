@@ -21,7 +21,7 @@ public class MD5 {
         for (byte aB : b) {
             resultSb.append(byteToHexString(aB));
         }
-        return resultSb.toString();
+        return resultSb.toString().toUpperCase();
     }
 
     /**
@@ -53,7 +53,7 @@ public class MD5 {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return resultString;
+        return resultString.toUpperCase();
     }
 
 }
