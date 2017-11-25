@@ -120,6 +120,8 @@ dependencies {
     //compile 'com.google.code.gson:gson:2.8.0'
     //okhttp
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
     //Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.2.0'                     //Retrofit2所需要的包
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'               //ConverterFactory的Gson依赖包
