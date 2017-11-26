@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.CheckResult;
+import android.view.Gravity;
 import android.view.View;
 
 import com.base.applicationUtil.AppPrefs;
@@ -15,23 +17,36 @@ import com.base.applicationUtil.MyApplication;
 import com.base.appservicelive.service.LiveService;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
+import com.base.circledialog.callback.ConfigText;
 import com.base.circledialog.params.DialogParams;
+import com.base.circledialog.params.TextParams;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
+import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import cn.jpush.android.api.JPushInterface;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.subjects.BehaviorSubject;
 
 /**
  * Created by Administrator on 2016/3/14.
  */
-public class MyActivity extends AutoLayoutActivity {
+public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<ActivityEvent> {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
+    public LifecycleProvider lifecycleProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        lifecycleSubject.onNext(ActivityEvent.CREATE);
+        lifecycleProvider=this;
         mRecevier = new InnerRecevier();
         mFilter = new IntentFilter();
         mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -44,10 +59,21 @@ public class MyActivity extends AutoLayoutActivity {
             registerReceiver(mRecevier, mFilter);
         }
     }
-
+    /**
+     * 延迟关闭
+     * @param time 延迟时间
+     */
+    public void finish(int time) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },time);
+    }
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        lifecycleSubject.onNext(ActivityEvent.DESTROY);
         /**
          * 停止监听，注销广播
          */
@@ -55,24 +81,57 @@ public class MyActivity extends AutoLayoutActivity {
             unregisterReceiver(mRecevier);
         }
         MyApplication.getMyApp().deleteActivity(this);
+        super.onDestroy();
     }
     @Override
     protected void onResume() {
         super.onResume();
+        lifecycleSubject.onNext(ActivityEvent.RESUME);
         JPushInterface.onResume(this);
         isResume=true;
     }
     @Override
     protected void onPause() {
+        lifecycleSubject.onNext(ActivityEvent.PAUSE);
         super.onPause();
         JPushInterface.onPause(this);
         isResume=false;
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        lifecycleSubject.onNext(ActivityEvent.START);
+    }
+
+    @Override
     protected void onStop() {
+        lifecycleSubject.onNext(ActivityEvent.STOP);
         super.onStop();
     }
+    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final Observable<ActivityEvent> lifecycle() {
+        return lifecycleSubject.hide();
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
+        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
+    }
+
+    @Override
+    @NonNull
+    @CheckResult
+    public final <T> LifecycleTransformer<T> bindToLifecycle() {
+        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
+    }
+
     /**
      * 广播接收者
      */
@@ -100,26 +159,13 @@ public class MyActivity extends AutoLayoutActivity {
                     }
                 }
             }else if (action.equals(IntentAction.TOKEN_NOT_EXIST)) {//token不存在
-            if (isResume) {
-                Message message=Message.obtain();
-                message.arg1=0;
-                handler.sendMessage(message);
+                if (isResume) {
+                    Message message=Message.obtain();
+                    message.arg1=0;
+                    handler.sendMessage(message);
+                }
             }
         }
-        }
-    }
-
-    /**
-     * 延迟关闭
-     * @param time 延迟时间
-     */
-    public void finish(int time) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        },time);
     }
     private Handler handler=new Handler(){
         @Override
@@ -136,8 +182,15 @@ public class MyActivity extends AutoLayoutActivity {
                             })
                             .setCanceledOnTouchOutside(false)
                             .setCancelable(false)
-                            .setTitle("系统提示！")
-                            .setTextColor(Color.parseColor("#FF1F50F1"))
+                            .setTitle("登录状态异常！")
+                            .configText(new ConfigText() {
+                                @Override
+                                public void onConfig(TextParams params) {
+                                    params.gravity= Gravity.LEFT;
+                                    params.textColor=Color.parseColor("#FF1F50F1");
+                                    params.padding=new int[]{20,0,20,0};
+                                }
+                            })
                             .setText("登录状态异常或异地登录，请重新登录!")
                             .setPositive("确定", new View.OnClickListener() {
                                 @Override
@@ -147,6 +200,7 @@ public class MyActivity extends AutoLayoutActivity {
                                     Intent intent1 = new Intent();
                                     //intent.setClass(this, LoginActivity.class);
                                     intent1.setAction(IntentAction.ACTION_LOGIN);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     MyApplication.getMyApp().startActivity(intent1);
                                 }
                             })

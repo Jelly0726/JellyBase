@@ -8,6 +8,8 @@ import com.base.httpmvp.view.IUploadView;
 
 import java.util.List;
 
+import io.reactivex.ObservableTransformer;
+
 /**
  * Created by Administrator on 2017/11/8.
  * 说明：上传文件View(activityview)对应的Presenter
@@ -20,9 +22,9 @@ public class UploadPresenter implements IBasePresenter {
         this.interfaceView = interfaceView;
     }
 
-    public void upload() {
+    public void upload(ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.upload(interfaceView.getUpParam(), new ICallBackListener() {
+        mIBusiness.upload(interfaceView.getUpParam(),composer, new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
                 interfaceView.closeProgress();

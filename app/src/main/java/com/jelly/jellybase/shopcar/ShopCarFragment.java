@@ -25,7 +25,7 @@ import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnBottomLoadMoreTime;
 import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.fragment.BaseFragment;
+import com.base.view.BaseFragment;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.adapter.ShopcatAdapter;
 import com.jelly.jellybase.shopcar.entity.GoodsInfo;

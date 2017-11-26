@@ -56,7 +56,7 @@ public class ProxyHandler implements InvocationHandler {
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        return Observable.just(null).flatMap(new Function<Object, Observable<?>>() {
+        return Observable.just(proxy).flatMap(new Function<Object, Observable<?>>() {
             @Override
             public Observable<?> apply(@NonNull Object o) throws Exception {
                 try {
@@ -66,12 +66,11 @@ public class ProxyHandler implements InvocationHandler {
                         }
                         return (Observable<?>) method.invoke(mProxyObject, args);
                     } catch (InvocationTargetException e) {
-                        e.printStackTrace();
+                        return Observable.error(new ApiException(e));
                     }
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    return Observable.error(new ApiException(e));
                 }
-                return null;
             }
         }).retryWhen(new Function<Observable<? extends Throwable>, Observable<?>>() {
             @Override
@@ -114,7 +113,7 @@ public class ProxyHandler implements InvocationHandler {
                 if (login!=null) {
                     Map<String,String> map=new TreeMap<>();
                     map.put("saleid",login.getUserID()+"");
-                    HttpMethods.getInstance().getToken(JSON.toJSON(map)
+                    HttpMethods.getInstance().getToken(JSON.toJSON(map),null
                             ,new Observer<HttpResultData<TokenModel>>() {
 
                                 @Override

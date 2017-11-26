@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.view.ItemDecoration;

@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.base.view.BaseFragment;
+
 /**
  * Created by Administrator on 2017/9/18.
  */

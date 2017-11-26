@@ -21,7 +21,7 @@ import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
-import com.jelly.jellybase.fragment.BaseFragment;
+import com.base.view.BaseFragment;
 import com.jelly.jellybase.fragment.HomeFragment;
 import com.jelly.jellybase.fragment.MeFragment;
 import com.jelly.jellybase.fragment.MiddleFragment;

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.util.List;
 
+import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -29,8 +30,8 @@ public class Business implements IBusiness {
     private static final String TAG = Business.class.getSimpleName();
     //获取token
     @Override
-    public void getToken(Object mUserVo) {
-        HttpMethods.getInstance().getToken(gson.toJson(mUserVo)
+    public void getToken(Object mUserVo,ObservableTransformer composer) {
+        HttpMethods.getInstance().getToken(gson.toJson(mUserVo),null
                 ,new Observer<HttpResultData<TokenModel>>() {
 
                     @Override
@@ -60,8 +61,8 @@ public class Business implements IBusiness {
                 });
     }
     @Override
-    public void register(Object mUserVo, final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().userRegistration(gson.toJson(mUserVo),new Observer<List<HttpResult>>() {
+    public void register(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().userRegistration(gson.toJson(mUserVo),composer,new Observer<List<HttpResult>>() {
 
             @Override
             public void onError(Throwable e) {
@@ -86,24 +87,24 @@ public class Business implements IBusiness {
     }
 
     @Override
-    public void login(Object obj, ICallBackListener mICallBackListener) {
+    public void login(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
     }
 
     @Override
-    public void forgetPwd(Object obj, ICallBackListener mICallBackListener) {
+    public void forgetPwd(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
         // TODO
     }
 
     @Override
-    public void feedBack(Object obj, ICallBackListener mICallBackListener) {
+    public void feedBack(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
         // TODO
     }
     @Override
-    public void upload(Object obj,final ICallBackListener mICallBackListener) {
+    public void upload(Object obj,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
         UploadBean uploadBean= (UploadBean) obj;
         File file= new File(uploadBean.getFilePath());
         if (file.exists()) {
-            HttpMethods.getInstance().upload(file,uploadBean,new Observer<HttpResultData<UploadData>>() {
+            HttpMethods.getInstance().upload(file,uploadBean,composer,new Observer<HttpResultData<UploadData>>() {
 
                 @Override
                 public void onError(Throwable e) {
@@ -131,8 +132,8 @@ public class Business implements IBusiness {
 
     }
     @Override
-    public void getBank(Object param,final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().getBank(gson.toJson(param),new Observer<HttpResultData<BankCardInfo>>() {
+    public void getBank(Object param,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getBank(gson.toJson(param),composer,new Observer<HttpResultData<BankCardInfo>>() {
 
 
             @Override
