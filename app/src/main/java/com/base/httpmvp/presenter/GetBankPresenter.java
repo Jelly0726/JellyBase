@@ -1,10 +1,12 @@
 package com.base.httpmvp.presenter;
 
+import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IGetBankView;
-import com.base.bankcard.BankCardInfo;
+
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -18,9 +20,9 @@ public class GetBankPresenter implements IBasePresenter {
         this.interfaceView = interfaceView;
     }
 
-    public void getBank() {
+    public void getBank(ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.getBank(interfaceView.getBankParam(), new ICallBackListener() {
+        mIBusiness.getBank(interfaceView.getBankParam(),composer, new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
                 interfaceView.closeProgress();

@@ -2,7 +2,6 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,8 +12,10 @@ import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.view.IRegisterActivityView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
+import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/11/7.
  */
 
-public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements IRegisterActivityView{
+public class MvpRetrofitRXAndroidActivity extends MyActivity implements IRegisterActivityView{
     @BindView(R.id.query)Button query;
     @BindView(R.id.iptv)TextView iptv;
     private RegisterActivityPresenter registerActivityPresenter;
@@ -57,7 +58,8 @@ public class MvpRetrofitRXAndroidActivity extends AppCompatActivity implements I
         switch (v.getId()){
             case R.id.query:
                 //netIPPresenter.getData(false);
-                registerActivityPresenter.userRegister(true);
+                registerActivityPresenter.userRegister(true,lifecycleProvider
+                        .<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }

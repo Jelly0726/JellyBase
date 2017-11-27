@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.view.CustomerFooter;
 import com.base.xrefreshview.view.ItemDecoration;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/21.
  */
 
-public class ProductEvaluateFragment extends BaseFragment{
+public class ProductEvaluateFragment extends BaseFragment {
     private View mRootView;
 
     private RecyclerView recyclerView;

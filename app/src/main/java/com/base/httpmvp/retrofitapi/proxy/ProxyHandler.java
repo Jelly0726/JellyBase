@@ -22,10 +22,12 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import retrofit2.http.Query;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
 
 import static com.jelly.jellybase.MainActivity.login;
 
@@ -54,9 +56,9 @@ public class ProxyHandler implements InvocationHandler {
 
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
-        return Observable.just(null).flatMap(new Func1<Object, Observable<?>>() {
+        return Observable.just(proxy).flatMap(new Function<Object, Observable<?>>() {
             @Override
-            public Observable<?> call(Object o) {
+            public Observable<?> apply(@NonNull Object o) throws Exception {
                 try {
                     try {
                         if (mIsTokenNeedRefresh) {
@@ -64,19 +66,18 @@ public class ProxyHandler implements InvocationHandler {
                         }
                         return (Observable<?>) method.invoke(mProxyObject, args);
                     } catch (InvocationTargetException e) {
-                        e.printStackTrace();
+                        return Observable.error(new ApiException(e));
                     }
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    return Observable.error(new ApiException(e));
                 }
-                return null;
             }
-        }).retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+        }).retryWhen(new Function<Observable<? extends Throwable>, Observable<?>>() {
             @Override
-            public Observable<?> call(Observable<? extends Throwable> observable) {
-                return observable.flatMap(new Func1<Throwable, Observable<?>>() {
+            public Observable<?> apply(@NonNull Observable<? extends Throwable> observable) throws Exception {
+                return observable.flatMap(new Function<Throwable, Observable<?>>() {
                     @Override
-                    public Observable<?> call(Throwable throwable) {
+                    public Observable<?> apply(@NonNull Throwable throwable) throws Exception {
                         Log.i("sss","ProxyHandler throwable="+throwable);
                         if (throwable instanceof TokenInvalidException) {
                             return refreshTokenWhenTokenInvalid();
@@ -88,6 +89,7 @@ public class ProxyHandler implements InvocationHandler {
                         }
                         return Observable.error(new ApiException(throwable));
                     }
+
                 });
             }
         });
@@ -111,16 +113,22 @@ public class ProxyHandler implements InvocationHandler {
                 if (login!=null) {
                     Map<String,String> map=new TreeMap<>();
                     map.put("saleid",login.getUserID()+"");
-                    HttpMethods.getInstance().getToken(JSON.toJSON(map)
-                            ,new Subscriber<HttpResultData<TokenModel>>() {
-                                @Override
-                                public void onCompleted() {
-
-                                }
+                    HttpMethods.getInstance().getToken(JSON.toJSON(map),null
+                            ,new Observer<HttpResultData<TokenModel>>() {
 
                                 @Override
                                 public void onError(Throwable e) {
                                     mRefreshTokenError = e;
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+
+                                @Override
+                                public void onSubscribe(@NonNull Disposable d) {
+
                                 }
 
                                 @Override
