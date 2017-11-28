@@ -89,6 +89,8 @@
                     android:id="@+id/horizontalProgress1"
                     android:progress="30"
                     app:ProgressMiddleText="已抢30%"
+                    app:ProgressFollowText="12"
+                    app:HorizontalProgresTextSize="14sp"
                     app:HorizontalProgressRadius="15dp"
                     app:HorizontalProgresReachColor="#ffcc00"
                     app:HorizontalProgresUnReachColor="#F1EFC0"
