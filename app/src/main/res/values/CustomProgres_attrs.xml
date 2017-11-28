@@ -24,6 +24,7 @@
         <attr name="ProgressLeftText" format="string"></attr>
         <attr name="ProgressRightText" format="string"></attr>
         <attr name="ProgressMiddleText" format="string"></attr>
+        <attr name="ProgressFollowText" format="string"></attr>
 
     </declare-styleable>
 

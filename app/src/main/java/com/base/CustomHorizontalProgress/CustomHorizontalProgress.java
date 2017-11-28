@@ -43,6 +43,21 @@ public class CustomHorizontalProgress extends ProgressBar{
     protected int HorizontalProgresTextOffset;
     private int HorizontalProgressRadius=0;//进度条的圆角
 
+    public int getHorizontalProgresUnReachColor() {
+        return HorizontalProgresUnReachColor;
+    }
+
+    public void setHorizontalProgresUnReachColor(int horizontalProgresUnReachColor) {
+        HorizontalProgresUnReachColor = horizontalProgresUnReachColor;
+    }
+
+    public int getHorizontalProgresReachColor() {
+        return HorizontalProgresReachColor;
+    }
+
+    public void setHorizontalProgresReachColor(int horizontalProgresReachColor) {
+        HorizontalProgresReachColor = horizontalProgresReachColor;
+    }
     public String getLeftText() {
         return leftText;
     }
@@ -66,10 +81,18 @@ public class CustomHorizontalProgress extends ProgressBar{
     public void setRightText(@NonNull String rightText) {
         this.rightText = rightText;
     }
+    public String getFollowText() {
+        return followText;
+    }
+
+    public void setFollowText(@NonNull String followText) {
+        this.followText = followText;
+    }
 
     private String leftText="";//左边文字
     private String middleText="";//中间文字
     private String rightText="";//右边文字
+    private String followText="";//跟随文字
 
     protected Paint mPaint = new Paint();
     public CustomHorizontalProgress(Context context) {
@@ -113,6 +136,10 @@ public class CustomHorizontalProgress extends ProgressBar{
         middleText=typedArray.getString(R.styleable.CustomHorizontalProgresStyle_ProgressMiddleText);
         if (TextUtils.isEmpty(middleText)){
             middleText="";
+        }
+        followText=typedArray.getString(R.styleable.CustomHorizontalProgresStyle_ProgressFollowText);
+        if (TextUtils.isEmpty(followText)){
+            followText="";
         }
         typedArray.recycle();//记得加这句
     }
@@ -167,6 +194,9 @@ public class CustomHorizontalProgress extends ProgressBar{
 
         int rightTextWidth = (int) mPaint.measureText(rightText);//The width of the text
         canvas.drawText(rightText,realWidth-rightTextWidth-dp2px(getContext(),5)
+                ,getPaddingTop() + y,mPaint);
+        int followTextWidth = (int) mPaint.measureText(followText);//The width of the text
+        canvas.drawText(followText,(int)progressO-followTextWidth-dp2px(getContext(),5)
                 ,getPaddingTop() + y,mPaint);
         canvas.restore();
     }
