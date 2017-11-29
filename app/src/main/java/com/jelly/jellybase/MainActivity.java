@@ -26,6 +26,7 @@ import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
+import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.MvpRetrofitRXAndroidActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
@@ -184,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
                 case 16://商品详情
                     intent=new Intent(MyApplication.getMyApp(), ProductDetailsActivity.class);
                     intent.putExtra("isShanGou",true);
+                    startActivity(intent);
+                    break;
+                case 17://提交评价
+                    intent=new Intent(MyApplication.getMyApp(), EvaluateActivity.class);
                     startActivity(intent);
                     break;
             }

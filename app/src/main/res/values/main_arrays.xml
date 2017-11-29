@@ -18,5 +18,6 @@
         <item>地址时间选择</item>
         <item>MVP+Retrofit+RxAndroid,butterknife注解式绑定id</item>
         <item>商品详情</item>
+        <item>提交评价</item>
     </string-array>
 </resources>

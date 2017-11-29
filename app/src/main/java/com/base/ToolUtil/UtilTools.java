@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.amap.api.maps.model.LatLng;
-import com.base.applicationUtil.AppUtils;
+import com.base.applicationUtil.MD5;
 import com.base.config.BaseConfig;
 
 import java.io.BufferedReader;
@@ -222,7 +222,7 @@ public class UtilTools {
 		stringBuffer.append("&key=").append(BaseConfig.KEY);
 		//Log.i("msg","签名前="+stringBuffer.toString());
 		// map.put("SIGN",MD5(stringBuffer.toString()).toUpperCase());
-		sign = AppUtils.Md5(stringBuffer.toString().toLowerCase()).toUpperCase();
+		sign = MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase();
 		map.put("sign", sign);
 		return sign;
 	}
