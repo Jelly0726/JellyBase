@@ -157,6 +157,10 @@ public class BandCardEditText extends EditText implements IGetBankView{
         setSelection(courPos);
         if(courPos==19||courPos==23){
             getBankPresenter.getBank(null);
+        }else {
+            if (listener != null) {
+                listener.failure();
+            }
         }
 //        if (listener != null) {
 ////            if (isBankCard()) {
