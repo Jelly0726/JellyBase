@@ -33,6 +33,7 @@ import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
+import com.jelly.jellybase.activity.SettingsActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.login.RegisterActivity;
@@ -189,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 17://提交评价
                     intent=new Intent(MyApplication.getMyApp(), EvaluateActivity.class);
+                    startActivity(intent);
+                    break;
+                case 18://版本检查
+                    intent=new Intent(MyApplication.getMyApp(), SettingsActivity.class);
                     startActivity(intent);
                     break;
             }

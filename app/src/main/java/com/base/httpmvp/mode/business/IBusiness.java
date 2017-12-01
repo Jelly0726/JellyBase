@@ -53,4 +53,10 @@ public interface IBusiness {
      * @param  mICallBackListener：回调接口
      */
     public void getBank(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener);
+
+    /**
+     * 检查版本
+     * @param  mICallBackListener：回调接口
+     */
+    public void getAppversionList(ObservableTransformer composer,ICallBackListener mICallBackListener);
 }

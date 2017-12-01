@@ -3,6 +3,7 @@ package com.base.httpmvp.mode.business;
 import android.text.TextUtils;
 
 import com.base.bankcard.BankCardInfo;
+import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.HttpCode;
@@ -153,6 +154,32 @@ public class Business implements IBusiness {
 
             @Override
             public void onNext(HttpResultData<BankCardInfo> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+
+    @Override
+    public void getAppversionList(ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getAppversionList(composer,new Observer<HttpResultData<AppVersion>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<AppVersion> model) {
                 mICallBackListener.onSuccess(model);
             }
         });

@@ -9,6 +9,7 @@ import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
 import com.base.eventBus.LoginEvent;
 import com.base.eventBus.NetEvent;
+import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
@@ -190,6 +191,15 @@ public class HttpMethods implements IGlobalManager {
 		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber,composer);
 	}
+    /***
+     * 检查版本
+     * @param subscriber
+     */
+    public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
+        Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
+                .flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
+        toSubscribe(observable, subscriber,composer);
+    }
 
 
 	/***

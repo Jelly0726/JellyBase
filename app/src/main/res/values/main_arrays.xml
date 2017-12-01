@@ -19,5 +19,6 @@
         <item>MVP+Retrofit+RxAndroid,butterknife注解式绑定id</item>
         <item>商品详情</item>
         <item>提交评价</item>
+        <item>版本检查</item>
     </string-array>
 </resources>

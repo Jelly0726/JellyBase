@@ -1,12 +1,14 @@
 package com.base.httpmvp.retrofitapi;
 
 
+import com.base.bankcard.BankCardInfo;
+import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.bankcard.BankCardInfo;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.GET;
@@ -15,7 +17,6 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
-import io.reactivex.Observable;
 
 /**
  * Created by BYPC006 on 2017/3/6.
@@ -40,4 +41,8 @@ public interface IApiService {
 	Observable<HttpStateData<HttpResultData<UploadData>>> upload(@Header("token") String token,
 																 @Part("description") RequestBody description,
 																 @Part MultipartBody.Part file);
+
+	//检查版本
+	@POST("JFF/appuser/getAppversionList.doAdminJJ")
+	Observable<HttpStateData<HttpResultData<AppVersion>>> getAppversionList(@Header("token") String token);
 }
