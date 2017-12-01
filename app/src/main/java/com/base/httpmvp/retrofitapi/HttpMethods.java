@@ -17,6 +17,7 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.sqldao.DBHelper;
+import com.jelly.jellybase.BuildConfig;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -62,10 +63,17 @@ public class HttpMethods implements IGlobalManager {
 				if (retrofit == null) {
 					//手动创建一个OkHttpClient并设置超时时间
 					OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-					httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+					httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+							.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+							.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
 					HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-					httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+					// 开发模式记录整个body，否则只记录基本信息如返回200，http协议版本等
+					if (BuildConfig.DEBUG) {
+						httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+					} else {
+						httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+					}
 					httpClientBuilder.addInterceptor(httpLoggingInterceptor);
 
 					sOkHttpClient = httpClientBuilder.build();
