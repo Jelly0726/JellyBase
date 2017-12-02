@@ -347,5 +347,10 @@ public class TTSController implements MyNaviListener {
 
 	}
 
+	@Override
+	public void onGpsSignalWeak(boolean b) {
+
+	}
+
 
 }

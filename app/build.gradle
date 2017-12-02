@@ -107,7 +107,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
     //多进程数据共享SharedPreferences
-    compile 'net.grandcentrix.tray:tray:0.11.0'
+    compile 'net.grandcentrix.tray:tray:0.12.0'
     //
     compile 'xiaofei.library:hermes-eventbus:0.3.0'
     //okgo
@@ -144,10 +144,13 @@ dependencies {
     //compile 'com.amap.api:3dmap:latest.integration'
     //定位功能
     compile 'com.amap.api:location:latest.integration'
+    //compile 'com.amap.api:location:3.6.1'
     //搜索功能
     compile 'com.amap.api:search:latest.integration'
+    //compile 'com.amap.api:search:5.5.0'
     //导航
     compile 'com.amap.api:navi-3dmap:latest.integration'
+    //compile 'com.amap.api:navi-3dmap:5.5.0'
     //极光推送
     compile 'cn.jiguang.sdk:jpush:3.0.8'
     // 此处以JPush 3.0.3 版本为例。

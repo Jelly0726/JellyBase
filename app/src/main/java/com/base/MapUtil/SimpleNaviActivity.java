@@ -8,6 +8,7 @@ import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.AMapLaneInfo;
+import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
 import com.amap.api.navi.model.AMapNaviInfo;
@@ -181,6 +182,16 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener {
 
 	@Override
 	public void hideCross() {
+
+	}
+
+	@Override
+	public void showModeCross(AMapModelCross aMapModelCross) {
+
+	}
+
+	@Override
+	public void hideModeCross() {
 
 	}
 
