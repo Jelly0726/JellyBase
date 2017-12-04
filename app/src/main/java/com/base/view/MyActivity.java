@@ -182,7 +182,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                             })
                             .setCanceledOnTouchOutside(false)
                             .setCancelable(false)
-                            .setTitle("登录状态异常！")
+                            .setTitle("登录过期！")
                             .configText(new ConfigText() {
                                 @Override
                                 public void onConfig(TextParams params) {
@@ -191,7 +191,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                                     params.padding=new int[]{20,0,20,0};
                                 }
                             })
-                            .setText("登录状态异常或异地登录，请重新登录!")
+                            .setText("登录过期或异地登录，请重新登录!")
                             .setPositive("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
