@@ -2,6 +2,7 @@ package com.base.httpmvp.retrofitapi;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.bankcard.BankCardInfo;
@@ -21,6 +22,7 @@ import com.base.sqldao.DBHelper;
 import com.jelly.jellybase.BuildConfig;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,10 +34,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -48,9 +55,11 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 public class HttpMethods implements IGlobalManager {
 	private volatile static HttpMethods sInstance;
 
+	private static final String CACHE_NAME  = "retrofitcache";
+
 	public static String sBASE_URL = BaseConfig.SERVICE_IP;
 	public static String sUrl = "http://" + sBASE_URL + "/";
-//	public static final String sBASE_URL = "http://120.26.208.28:8088/";
+	//	public static final String sBASE_URL = "http://120.26.208.28:8088/";
 	private static final int DEFAULT_TIMEOUT = 5;
 
 	private Retrofit retrofit;
@@ -62,11 +71,73 @@ public class HttpMethods implements IGlobalManager {
 		if (retrofit == null) {
 			synchronized (mRetrofitLock) {
 				if (retrofit == null) {
+					//设置缓存目录
+					File cacheFile = new File(MyApplication.getMyApp().getExternalCacheDir(), CACHE_NAME);
+					//生成缓存，50M
+					Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
+					//缓存拦截器
+					Interceptor cacheInterceptor = new Interceptor() {
+						@Override
+						public Response intercept(Chain chain) throws IOException {
+							Request request = chain.request();
+							//网络不可用
+							if (!NetworkUtils.isAvailable(MyApplication.getMyApp())) {
+								//在请求头中加入：强制使用缓存，不访问网络
+								request = request.newBuilder()
+										.cacheControl(CacheControl.FORCE_CACHE)
+										.build();
+								Log.i("sss","no network");
+							}
+							Response response = chain.proceed(request);
+							//网络可用
+							if (NetworkUtils.isAvailable(MyApplication.getMyApp())) {
+								int maxAge = 0;
+								// 有网络时 在响应头中加入：设置缓存超时时间0个小时
+								Log.i("sss","has network maxAge="+maxAge);
+								response.newBuilder()
+										.header("Cache-Control", "public, max-age=" + maxAge)
+										//.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+										.build();
+							} else {
+								Log.i("sss","network error");
+								// 无网络时，在响应头中加入：设置缓存超时为4周
+								//离线缓存控制 总缓存时间=在线缓存时间+设置离线时的缓存时间
+								int maxStale = 60 * 60 * 24 * 28;
+								response.newBuilder()
+										.header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+										//.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+										.build();
+								Log.i("sss","response build maxStale="+maxStale);
+							}
+							return response;
+						}
+					};
+					//只有 网络拦截器环节 才会写入缓存写入缓存,在有网络的时候 设置缓存时间
+					Interceptor rewriteCacheControlInterceptor = new Interceptor() {
+						@Override
+						public Response intercept(Chain chain) throws IOException {
+							Request request = chain.request();
+							Response originalResponse = chain.proceed(request);
+							int maxAge = 1 * 60; // 在线缓存在1分钟内可读取 单位:秒
+							return originalResponse.newBuilder()
+									.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+									.removeHeader("Cache-Control")
+									.header("Cache-Control", "public, max-age=" + maxAge)
+									.build();
+						}
+					};
 					//手动创建一个OkHttpClient并设置超时时间
 					OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-					httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+					httpClientBuilder
+							.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
 							.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-							.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+							.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+							//错误重连
+							.retryOnConnectionFailure(false)
+							//设置缓存
+							.addInterceptor(cacheInterceptor)
+							.addNetworkInterceptor(rewriteCacheControlInterceptor)
+							.cache(cache);
 
 					HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 					// 开发模式记录整个body，否则只记录基本信息如返回200，http协议版本等
@@ -88,6 +159,7 @@ public class HttpMethods implements IGlobalManager {
 							.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 							.baseUrl(sUrl)
 							.build();
+
 				}
 			}
 		}
@@ -150,7 +222,7 @@ public class HttpMethods implements IGlobalManager {
 	public void userRegistration(Object paramMap,ObservableTransformer composer, Observer<List<HttpResult>> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
 				.map(new HttpResultFunc<List<HttpResult>>());
-				//.flatMap(new HttpResultFuncs<HttpResult>());
+		//.flatMap(new HttpResultFuncs<HttpResult>());
 		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber,composer);
 	}
@@ -191,15 +263,15 @@ public class HttpMethods implements IGlobalManager {
 		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber,composer);
 	}
-    /***
-     * 检查版本
-     * @param subscriber
-     */
-    public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
-        Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
-                .flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
-        toSubscribe(observable, subscriber,composer);
-    }
+	/***
+	 * 检查版本
+	 * @param subscriber
+	 */
+	public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
+				.flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
+		toSubscribe(observable, subscriber,composer);
+	}
 
 
 	/***
