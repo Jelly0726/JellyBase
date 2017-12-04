@@ -29,8 +29,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import retrofit2.http.Query;
 
-import static com.jelly.jellybase.MainActivity.login;
-
 
 /**
  * Created by david on 16/8/21.
@@ -111,9 +109,8 @@ public class ProxyHandler implements InvocationHandler {
                 return Observable.just(true);
             } else {
                 // call the refresh token api.
-                if (login!=null) {
                     Map<String,String> map=new TreeMap<>();
-                    map.put("saleid",login.getUserID()+"");
+                    //map.put("saleid",login.getUserID()+"");
                     HttpMethods.getInstance().getToken(JSON.toJSON(map),null
                             ,new Observer<HttpResultData<TokenModel>>() {
 
@@ -145,7 +142,6 @@ public class ProxyHandler implements InvocationHandler {
                                     }
                                 }
                             });
-                }
                 if (mRefreshTokenError != null) {
                     return Observable.error(new ApiException(mRefreshTokenError));
                 } else {

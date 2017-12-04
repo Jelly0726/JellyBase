@@ -18,7 +18,6 @@ import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.ILoginActivityView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.sqldao.DBHelper;
 import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
@@ -162,8 +161,6 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
         tokenModel.setCreateTime(login.getCreateTime());
         GlobalToken.updateToken(tokenModel);
 
-        DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
-        DBHelper.getInstance(MyApplication.getMyApp()).addToLoginfoTable(login);
         Intent intent=new Intent();
         intent.setAction(IntentAction.ACTION_MAIN);
         startActivity(intent);

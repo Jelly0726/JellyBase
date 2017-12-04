@@ -19,7 +19,6 @@ import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.sqldao.DBHelper;
 import com.jelly.jellybase.BuildConfig;
 
 import java.io.File;
@@ -168,7 +167,6 @@ public class HttpMethods implements IGlobalManager {
 		// Cancel all the netWorkRequest
 		sOkHttpClient.dispatcher().cancelAll();
 
-		DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
 		NetEvent netEvent = new NetEvent();
 		netEvent.setEvent(new LoginEvent(false));
 		HermesEventBus.getDefault().post(netEvent);

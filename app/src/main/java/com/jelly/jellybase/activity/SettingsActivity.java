@@ -25,7 +25,6 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.IGetAppversionListView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.sqldao.DBHelper;
 import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
@@ -138,7 +137,7 @@ public class SettingsActivity extends MyActivity implements IGetAppversionListVi
                                 @Override
                                 public void onClick(View v) {
                                     GlobalToken.removeToken();
-                                    DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
+
                                     NetEvent netEvent=new NetEvent();
                                     netEvent.setEvent(new LoginEvent(false));
                                     HermesEventBus.getDefault().post(netEvent);
@@ -146,7 +145,8 @@ public class SettingsActivity extends MyActivity implements IGetAppversionListVi
                                     Intent intent = new Intent();
                                     //intent.setClass(this, LoginActivity.class);
                                     intent.setAction(IntentAction.ACTION_LOGIN);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                     finish();
                                 }
