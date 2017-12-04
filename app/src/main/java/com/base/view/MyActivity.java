@@ -200,7 +200,8 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                                     Intent intent1 = new Intent();
                                     //intent.setClass(this, LoginActivity.class);
                                     intent1.setAction(IntentAction.ACTION_LOGIN);
-                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     MyApplication.getMyApp().startActivity(intent1);
                                 }
                             })
