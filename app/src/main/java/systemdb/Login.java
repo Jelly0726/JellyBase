@@ -22,7 +22,7 @@ public class Login implements Serializable {
     private Long id;
     @NotNull
     @SerializedName(value ="saleid", alternate = "userid")
-    private Integer userID;
+    private Integer userID=-1;
     private String code;
     private String name;
     private String phone;

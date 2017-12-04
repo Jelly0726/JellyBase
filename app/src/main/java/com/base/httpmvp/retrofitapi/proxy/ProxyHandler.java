@@ -80,7 +80,9 @@ public class ProxyHandler implements InvocationHandler {
                     public Observable<?> apply(@NonNull Throwable throwable) throws Exception {
                         Log.i("sss","ProxyHandler throwable="+throwable);
                         if (throwable instanceof TokenInvalidException) {
-                            return refreshTokenWhenTokenInvalid();
+                            //return refreshTokenWhenTokenInvalid();
+                            mGlobalManager.exitLogin();
+                            return Observable.error(new ApiException(throwable));
                         } else if (throwable instanceof TokenNotExistException) {
                             // Token 不存在，执行退出登录的操作。（为了防止多个请求，都出现 Token 不存在的问题，
                             // 这里需要取消当前所有的网络请求）
