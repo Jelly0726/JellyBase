@@ -15,7 +15,7 @@ public class GlobalToken {
         tokenModel = token;
         AppPrefs.putString(MyApplication.getMyApp(),"Token",tokenModel.getToken());
         AppPrefs.putLong(MyApplication.getMyApp(),"CreateTime",tokenModel.getCreateTime());
-        AppPrefs.putInt(MyApplication.getMyApp(),"tokenExpirationTime",tokenModel.getValidTime());
+        AppPrefs.putInt(MyApplication.getMyApp(),"tokenExpirationTime",tokenModel.getTokenExpirationTime());
     }
     public static TokenModel getToken() {
         if(tokenModel==null){
@@ -24,7 +24,7 @@ public class GlobalToken {
         if (TextUtils.isEmpty(tokenModel.getToken())) {
             tokenModel.setToken(AppPrefs.getString(MyApplication.getMyApp(), "Token"));
             tokenModel.setCreateTime(AppPrefs.getLong(MyApplication.getMyApp(), "CreateTime", 0l));
-            tokenModel.setValidTime(AppPrefs.getInt(MyApplication.getMyApp(), "tokenExpirationTime", 0));
+            tokenModel.setTokenExpirationTime(AppPrefs.getInt(MyApplication.getMyApp(), "tokenExpirationTime", 0));
         }
         return tokenModel;
     }

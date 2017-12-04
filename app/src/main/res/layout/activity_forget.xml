@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#eeeeee"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,6 +57,7 @@
             android:src="@mipmap/shouji"
             android:layout_gravity="center_vertical"/>
         <EditText
+            android:id="@+id/phone_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -96,6 +97,7 @@
             android:src="@mipmap/mima"
             android:layout_gravity="center_vertical"/>
         <EditText
+            android:id="@+id/verificationCode_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -103,7 +105,7 @@
             android:textColor="#727272"
             android:textSize="24px"
             android:background="@null"
-            android:inputType="number"
+            android:inputType="text"
             android:lines="1"
             android:singleLine="true"
             android:hint="请输入验证码"
@@ -120,5 +122,5 @@
         android:textSize="28px"
         android:text="下一步"
         android:gravity="center"
-        android:background="@drawable/orange_btn_bg"/>
+        android:background="@drawable/green_btn_bg"/>
 </LinearLayout>

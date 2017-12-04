@@ -1,27 +1,24 @@
-package com.jelly.jellybase.login;
+package com.jelly.jellybase.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
-import com.base.httpmvp.presenter.RegisterActivityPresenter;
+import com.base.httpmvp.presenter.UpdatePhonePresenter;
 import com.base.httpmvp.presenter.VerifiCodePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IRegisterActivityView;
+import com.base.httpmvp.view.IUpdatePhoneView;
 import com.base.httpmvp.view.IVerifiCodeView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.view.MyActivity;
-import com.base.webview.BaseWebViewActivity;
-import com.base.webview.WebConfig;
-import com.base.webview.WebTools;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -34,56 +31,57 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/9/28.
+ * Created by Administrator on 2017/9/27.
  */
 
-public class RegisterActivity extends MyActivity implements IRegisterActivityView,IVerifiCodeView {
+public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,IUpdatePhoneView {
     @BindView(R.id.left_back)
     LinearLayout left_back;
-    @BindView(R.id.next_tv)
-    TextView next_tv;
-    @BindView(R.id.login_tv)
-    TextView login_tv;
     @BindView(R.id.btn_get_ver)
     CountDownTimerButton get_ver_btn;
-    @BindView(R.id.agree)
-    CheckBox agree;
-    @BindView(R.id.clause)
-    TextView clause;
     @BindView(R.id.phone_edit)
     EditText phone_edit;
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
+    @BindView(R.id.password_edit)
+    EditText password_edit;
+    @BindView(R.id.ok_tv)
+    TextView ok_tv;
 
-    private RegisterActivityPresenter registerActivityPresenter;
     private VerifiCodePresenter verifiCodePresenter;
+    private UpdatePhonePresenter updatePhonePresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_change_phone);
         // 进行id绑定
         ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
         iniProgress();
-        registerActivityPresenter=new RegisterActivityPresenter(this);
         verifiCodePresenter=new VerifiCodePresenter(this);
+        updatePhonePresenter=new UpdatePhonePresenter(this);
+    }
+    @Override
+    public void onBackPressed() {
+        closeProgress();
+        super.onBackPressed();
     }
     private void iniView(){
-        agree.setChecked(false);
     }
     private void iniProgress(){
         progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
     }
     private void initCountDownBtn() {
+        get_ver_btn= (CountDownTimerButton) findViewById(R.id.btn_get_ver);
         get_ver_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String phone=phone_edit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone))
                 {
-                    ToastUtils.showToast(RegisterActivity.this,"请输入手机号");
+                    ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
                     return;
                 }
                 verifiCodePresenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
@@ -98,7 +96,7 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
         get_ver_btn.onDestroy();
         progressDialog=null;
     }
-    @OnClick({ R.id.next_tv, R.id.left_back,R.id.login_tv,R.id.clause})
+    @OnClick({R.id.left_back,R.id.ok_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
@@ -108,45 +106,19 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
             case R.id.left_back:
                 finish();
                 break;
-            case R.id.login_tv:
-                finish();
-                break;
-            case R.id.next_tv:
+            case R.id.ok_tv:
                 String phone=phone_edit.getText().toString().trim();
-                String verificationCode=verificationCode_edit.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(verificationCode))
-                {
-                    ToastUtils.showToast(RegisterActivity.this,"请输入手机号和验证码");
+                String pw=password_edit.getText().toString().trim();
+                String vcode=verificationCode_edit.getText().toString().trim();
+                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(pw)||
+                        TextUtils.isEmpty(vcode)){
+                    ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
                     return;
                 }
-                if (agree.isChecked())
-                {
-                    registerActivityPresenter.userRegister(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
-                }else {
-                    ToastUtils.showToast(RegisterActivity.this,"请先阅读服务协议，并同意！");
-                }
-                break;
-            case R.id.clause:
-                intent=new Intent(RegisterActivity.this,BaseWebViewActivity.class);
-                WebTools webTools=new WebTools();
-                webTools.url="https://www.baidu.com/";
-                webTools.title="服务协议";
-                intent.putExtra(WebConfig.CONTENT,webTools);
-                startActivity(intent);
-                agree.setChecked(true);
+                updatePhonePresenter.updatePhone(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
-    @Override
-    public Object getRegParam() {
-        String phone=phone_edit.getText().toString().trim();
-        String verificationCode=verificationCode_edit.getText().toString().trim();
-        Map map=new TreeMap();
-        map.put("account",phone);
-        map.put("vericode",verificationCode);
-        return map;
-    }
-
     @Override
     public void showProgress() {
         if (progressDialog!=null){
@@ -162,24 +134,11 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
     }
 
     @Override
-    public void excuteSuccess(boolean isRefresh, Object mCallBackVo) {
-        String phone=phone_edit.getText().toString().trim();
-        Intent intent=new Intent(RegisterActivity.this,SetPWDActivity.class);
-        intent.putExtra("phone",phone);
-        startActivity(intent);
-    }
-
-    @Override
-    public void excuteFailed(boolean isRefresh, String message) {
-        ToastUtils.showToast(this,message);
-    }
-
-    @Override
     public Object getVerifiCodeParam() {
         String phone=phone_edit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
-        map.put("flag",1);//验证码标识：1注册，2忘记密码，3修改手机号
+        map.put("flag",3);//验证码标识：1注册，2忘记密码，3修改手机号
         return map;
     }
 
@@ -191,6 +150,30 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
 
     @Override
     public void verifiCodeFailed(boolean isRefresh, String message) {
+        ToastUtils.showToast(this,message);
+    }
+
+    @Override
+    public Object getUpdatePhoneParam() {
+        String phone=phone_edit.getText().toString().trim();
+        String pw=password_edit.getText().toString().trim();
+        pw= MD5.MD5Encode(pw);
+        String vcode=verificationCode_edit.getText().toString().trim();
+        Map<String,String> map=new TreeMap<>();
+        map.put("phone",phone);
+        map.put("vericode",vcode);
+        map.put("password",pw);
+        return map;
+    }
+
+    @Override
+    public void updatePhoneSuccess(boolean isRefresh, Object mCallBackVo) {
+        ToastUtils.showToast(this, (String) mCallBackVo);
+        finish(2000);
+    }
+
+    @Override
+    public void updatePhoneFailed(boolean isRefresh, String message) {
         ToastUtils.showToast(this,message);
     }
 }

@@ -91,7 +91,6 @@ public class ProxyHandler implements InvocationHandler {
                         }
                         return Observable.error(new ApiException(throwable));
                     }
-
                 });
             }
         });
@@ -104,7 +103,7 @@ public class ProxyHandler implements InvocationHandler {
      */
     private Observable<?> refreshTokenWhenTokenInvalid() {
         synchronized (ProxyHandler.class) {
-            REFRESH_TOKEN_VALID_TIME= GlobalToken.getToken().getValidTime()*1000;
+            REFRESH_TOKEN_VALID_TIME= GlobalToken.getToken().getTokenExpirationTime()*1000;
             tokenChangedTime= GlobalToken.getToken().getCreateTime();
             // Have refreshed the token successfully in the valid time.
             if (new Date().getTime() - tokenChangedTime < REFRESH_TOKEN_VALID_TIME) {

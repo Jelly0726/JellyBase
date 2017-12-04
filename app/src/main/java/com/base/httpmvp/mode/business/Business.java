@@ -3,6 +3,7 @@ package com.base.httpmvp.mode.business;
 import android.text.TextUtils;
 
 import com.base.bankcard.BankCardInfo;
+import com.base.httpmvp.mode.databean.AboutUs;
 import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
@@ -10,17 +11,18 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.HttpResultList;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.util.List;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import systemdb.Login;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -31,8 +33,8 @@ public class Business implements IBusiness {
     private static final String TAG = Business.class.getSimpleName();
     //获取token
     @Override
-    public void getToken(Object mUserVo,ObservableTransformer composer) {
-        HttpMethods.getInstance().getToken(gson.toJson(mUserVo),null
+    public void getToken(Object obj,ObservableTransformer composer) {
+        HttpMethods.getInstance().getToken(gson.toJson(obj),composer
                 ,new Observer<HttpResultData<TokenModel>>() {
 
                     @Override
@@ -62,8 +64,8 @@ public class Business implements IBusiness {
                 });
     }
     @Override
-    public void register(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().userRegistration(gson.toJson(mUserVo),composer,new Observer<List<HttpResult>>() {
+    public void register(Object obj,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().userRegistration(gson.toJson(obj),composer,new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
@@ -81,25 +83,266 @@ public class Business implements IBusiness {
             }
 
             @Override
-            public void onNext(List<HttpResult> model) {
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void getVerifiCode(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getVerifiCode(gson.toJson(mUserVo),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
                 mICallBackListener.onSuccess(model);
             }
         });
     }
 
     @Override
-    public void login(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
+    public void setPassword(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().setPassWord(gson.toJson(mUserVo),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void updatePassword(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().updatePassword(gson.toJson(mUserVo),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void updatePhone(Object mUserVo,ObservableTransformer composer, final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().updatePhone(gson.toJson(mUserVo),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
     }
 
     @Override
-    public void forgetPwd(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
+    public void login(Object obj,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().userLogin(gson.toJson(obj),composer,new Observer<HttpResultData<Login>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<Login> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void forgetPwd(Object obj,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
         // TODO
+        HttpMethods.getInstance().forgetPassword(gson.toJson(obj),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
     }
 
     @Override
-    public void feedBack(Object obj,ObservableTransformer composer, ICallBackListener mICallBackListener) {
-        // TODO
+    public void aboutUs(ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().aboutUs(composer,new Observer<HttpResultData<AboutUs>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<AboutUs> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
     }
+    @Override
+    public void getAppversionList(ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getAppversionList(composer,new Observer<HttpResultData<AppVersion>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<AppVersion> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void getBank(Object param,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().getBank(gson.toJson(param),composer,new Observer<HttpResultData<BankCardInfo>>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<BankCardInfo> model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+    @Override
+    public void addbank(Object param,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().addbank(gson.toJson(param),composer,new Observer<HttpResult>() {
+
+            @Override
+            public void onError(Throwable e) {
+                mICallBackListener.onFaild(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                mICallBackListener.onSuccess(model);
+            }
+        });
+    }
+
     @Override
     public void upload(Object obj,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
         UploadBean uploadBean= (UploadBean) obj;
@@ -133,35 +376,8 @@ public class Business implements IBusiness {
 
     }
     @Override
-    public void getBank(Object param,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().getBank(gson.toJson(param),composer,new Observer<HttpResultData<BankCardInfo>>() {
-
-
-            @Override
-            public void onError(Throwable e) {
-                mICallBackListener.onFaild(e.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(HttpResultData<BankCardInfo> model) {
-                mICallBackListener.onSuccess(model);
-            }
-        });
-    }
-
-    @Override
-    public void getAppversionList(ObservableTransformer composer,final ICallBackListener mICallBackListener) {
-        HttpMethods.getInstance().getAppversionList(composer,new Observer<HttpResultData<AppVersion>>() {
+    public void bankList(Object obj,ObservableTransformer composer,final ICallBackListener mICallBackListener) {
+        HttpMethods.getInstance().bankList(gson.toJson(obj),composer,new Observer<HttpResultList<BankCardInfo>>() {
 
             @Override
             public void onError(Throwable e) {
@@ -179,7 +395,7 @@ public class Business implements IBusiness {
             }
 
             @Override
-            public void onNext(HttpResultData<AppVersion> model) {
+            public void onNext(HttpResultList<BankCardInfo> model) {
                 mICallBackListener.onSuccess(model);
             }
         });

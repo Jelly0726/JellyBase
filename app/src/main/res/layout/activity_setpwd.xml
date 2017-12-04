@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="#eeeeee">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100px"
@@ -56,6 +56,7 @@
             android:src="@mipmap/mima"
             android:layout_gravity="center_vertical"/>
         <EditText
+            android:id="@+id/password_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -85,6 +86,7 @@
             android:src="@mipmap/mima"
             android:layout_gravity="center_vertical"/>
         <EditText
+            android:id="@+id/password1_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
@@ -109,5 +111,5 @@
         android:textSize="28px"
         android:text="下一步"
         android:gravity="center"
-        android:background="@drawable/orange_btn_bg"/>
+        android:background="@drawable/green_btn_bg"/>
 </LinearLayout>

@@ -4,13 +4,13 @@ package com.base.httpmvp.view;
  * Created by Administrator on 2017/11/8.
  */
 
-public interface IRegisterActivityView extends IBaseView {
+public interface ISetPassWordActivityView extends IBaseView {
     /**
      * 获取参数
      *
      * @return
      */
-    public Object getRegParam();
+    public Object getSetPassWordParam();
 
     /**
      * 成功回调

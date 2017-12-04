@@ -1,45 +1,44 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.mode.business.ICallBackListener;
-import com.base.httpmvp.mode.databean.UploadData;
+import com.base.httpmvp.mode.databean.AboutUs;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResultData;
-import com.base.httpmvp.view.IUploadView;
+import com.base.httpmvp.view.IAboutUsView;
 
 import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/11/8.
- * 说明：上传文件View(activityview)对应的Presenter
+ * 说明：关于我们View(activityview)对应的Presenter
  */
-public class UploadPresenter implements IBasePresenter {
+public class AboutUsPresenter implements IBasePresenter {
 
-    private IUploadView interfaceView;
+    private IAboutUsView interfaceView;
 
-    public UploadPresenter(IUploadView interfaceView) {
+    public AboutUsPresenter(IAboutUsView interfaceView) {
         this.interfaceView = interfaceView;
     }
 
-    public void upload(ObservableTransformer composer) {
+    public void aboutUs(final boolean isRefresh, ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.upload(interfaceView.getUpParam(),composer, new ICallBackListener() {
+        mIBusiness.aboutUs(composer,new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
                 interfaceView.closeProgress();
                 HttpResultData httpResultAll= (HttpResultData)mCallBackVo;
                 if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    UploadData model= (UploadData) httpResultAll.getData();
-                    interfaceView.uploadSuccess(true,model);
+                    AboutUs model= (AboutUs) httpResultAll.getData();
+                    interfaceView.aboutUsSuccess(isRefresh,model);
                 }else {
-                    interfaceView.uploadFailed(true,httpResultAll.getMsg());
+                    interfaceView.aboutUsFailed(isRefresh,httpResultAll.getMsg());
                 }
-
             }
 
             @Override
             public void onFaild(final String message) {
                 interfaceView.closeProgress();
-                interfaceView.uploadFailed(true,message);
+                interfaceView.aboutUsFailed(isRefresh,message);
             }
         });
     }

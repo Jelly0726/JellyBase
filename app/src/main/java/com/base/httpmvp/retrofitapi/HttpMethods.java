@@ -10,6 +10,7 @@ import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
 import com.base.eventBus.LoginEvent;
 import com.base.eventBus.NetEvent;
+import com.base.httpmvp.mode.databean.AboutUs;
 import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadBean;
 import com.base.httpmvp.mode.databean.UploadData;
@@ -24,7 +25,6 @@ import com.jelly.jellybase.BuildConfig;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -46,6 +46,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import systemdb.Login;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
@@ -54,12 +55,11 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class HttpMethods implements IGlobalManager {
 	private volatile static HttpMethods sInstance;
-
 	private static final String CACHE_NAME  = "retrofitcache";
 
 	public static String sBASE_URL = BaseConfig.SERVICE_IP;
 	public static String sUrl = "http://" + sBASE_URL + "/";
-	//	public static final String sBASE_URL = "http://120.26.208.28:8088/";
+//	public static final String sBASE_URL = "http://120.26.208.28:8088/";
 	private static final int DEFAULT_TIMEOUT = 5;
 
 	private Retrofit retrofit;
@@ -147,7 +147,6 @@ public class HttpMethods implements IGlobalManager {
 						httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 					}
 					httpClientBuilder.addInterceptor(httpLoggingInterceptor);
-
 					sOkHttpClient = httpClientBuilder.build();
 
 					retrofit = new Retrofit.Builder()
@@ -159,7 +158,6 @@ public class HttpMethods implements IGlobalManager {
 							.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 							.baseUrl(sUrl)
 							.build();
-
 				}
 			}
 		}
@@ -171,13 +169,14 @@ public class HttpMethods implements IGlobalManager {
 		sOkHttpClient.dispatcher().cancelAll();
 		GlobalToken.removeToken();
 		DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
-		NetEvent netEvent = new NetEvent();
+		NetEvent netEvent=new NetEvent();
 		netEvent.setEvent(new LoginEvent(false));
 		HermesEventBus.getDefault().post(netEvent);
-
-		Intent intent=new Intent();
-		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
-		MyApplication.getMyApp().sendBroadcast(intent);
+		MyApplication.getMyApp().finishAllActivity();
+		Intent intent = new Intent();
+		//intent.setClass(this, LoginActivity.class);
+		intent.setAction(IntentAction.ACTION_LOGIN);
+		MyApplication.getMyApp().startActivity(intent);
 	}
 	//获取单例
 	public static HttpMethods getInstance(){
@@ -209,27 +208,98 @@ public class HttpMethods implements IGlobalManager {
 	/***
 	 *获取Token
 	 */
-	public void getToken(Object paramMap,ObservableTransformer composer, Observer<HttpResultData<TokenModel>> subscriber){
+	public void getToken(Object paramMap, ObservableTransformer composer, Observer<HttpResultData<TokenModel>> subscriber){
 		Observable observable = get(IApiService.class).getToken(paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());;
-		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
+				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());
 		toSubscribe(observable,subscriber,composer);
+	}
+	/***
+	 * 登录
+	 * @param subscriber
+	 */
+	public void userLogin(Object paramMap,ObservableTransformer composer, Observer<HttpResultData<Login>> subscriber){
+		Observable observable =  getProxy(IApiService.class).userLogin(paramMap)
+				.flatMap(new HttpResultFuncs<HttpResultData<Login>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 获取验证码
+	 * @param subscriber
+	 */
+	public void getVerifiCode(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).getVerifiCode(paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
 	}
 	/***
 	 * 注册
 	 * @param subscriber
 	 */
-	public void userRegistration(Object paramMap,ObservableTransformer composer, Observer<List<HttpResult>> subscriber){
+	public void userRegistration(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
-				.map(new HttpResultFunc<List<HttpResult>>());
-		//.flatMap(new HttpResultFuncs<HttpResult>());
-		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
+				//.map(new HttpResultFunc<List<HttpResult>>());
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 忘记密码
+	 * @param subscriber
+	 */
+	public void forgetPassword(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).forgetPassword(paramMap)
+				//.map(new HttpResultFunc<List<HttpResult>>());
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 设置密码
+	 * @param subscriber
+	 */
+	public void setPassWord(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).setPassWord(paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 修改密码
+	 * @param subscriber
+	 */
+	public void updatePassword(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).updatePassword(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 修改手机号
+	 * @param subscriber
+	 */
+	public void updatePhone(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).updatePhone(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 关于我们
+	 * @param subscriber
+	 */
+	public void aboutUs(ObservableTransformer composer,Observer<HttpResultData<AboutUs>> subscriber){
+		Observable observable =  getProxy(IApiService.class).aboutUs(GlobalToken.getToken().getToken())
+				.flatMap(new HttpResultFuncs<HttpResultData<AboutUs>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 检查版本
+	 * @param subscriber
+	 */
+	public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
+				.flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/**
 	 * 上传文件(图片)
 	 */
-	public void upload(File file, UploadBean uploadBean,ObservableTransformer composer, Observer<HttpResultData<UploadData>> subscriber){
+	public void upload(File file, UploadBean uploadBean, ObservableTransformer composer, Observer<HttpResultData<UploadData>> subscriber){
 		// 创建 RequestBody，用于封装构建RequestBody
 		RequestBody requestFile =
 				RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -246,13 +316,11 @@ public class HttpMethods implements IGlobalManager {
 				RequestBody.create(
 						MediaType.parse("multipart/form-data"), descriptionString);
 		// 执行请求
-		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken()
-				,description, body)
+		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken(),
+				description, body)
 				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
-		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber,composer);
 	}
-
 	/***
 	 * 获取所属银行
 	 * @param subscriber
@@ -260,44 +328,53 @@ public class HttpMethods implements IGlobalManager {
 	public void getBank(Object param,ObservableTransformer composer,Observer<HttpResultData<BankCardInfo>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
 				.flatMap(new HttpResultFuncs<HttpResultData<BankCardInfo>>());
-		//.onErrorResumeNext(new HttpResponseFunc<HttpResult>());;
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
-	 * 检查版本
+	 * 添加银行卡
 	 * @param subscriber
 	 */
-	public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
-				.flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
+	public void addbank(Object param,ObservableTransformer composer,Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).addbank(GlobalToken.getToken().getToken(),param)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+
+	/***
+	 * 获取银行卡列表
+	 * @param subscriber
+	 */
+	public void bankList(Object paramMap,ObservableTransformer composer,Observer<HttpResultList<BankCardInfo>> subscriber){
+		Observable observable =  getProxy(IApiService.class).bankList(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResultList<BankCardInfo>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 
 
 	/***
 	 * 统一异步,同步处理
-	 * @param o
-	 * @param observer
+	 * @param
+	 * @param s
 	 * @param <T>
 	 */
-	private <T> void toSubscribe(Observable<T> o, Observer<T> observer
+	private <T> void toSubscribe(Observable<T> o, Observer<T> s
 			,ObservableTransformer composer){
 		if (composer!=null) {
 			o.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.compose(composer)
-					.subscribe(observer);
+					.subscribe(s);
 		}else {
 			o.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(observer);
+					.subscribe(s);
 		}
-
 	}
 	//map
 	private class HttpResultFunc<T> implements Function<HttpStateData<T>, T> {
+
 		@Override
 		public T apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
 			return tHttpStateData.getData();
@@ -309,14 +386,6 @@ public class HttpMethods implements IGlobalManager {
 		@Override
 		public Observable<T> apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
 			return Observable.just(tHttpStateData.getData());
-		}
-	}
-
-	//ExceptionEngine为处理异常的驱动器
-	private class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
-		@Override
-		public Observable<T> apply(@NonNull Throwable throwable) throws Exception {
-			return Observable.error(throwable);
 		}
 	}
 }

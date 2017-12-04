@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.base.view.AutoCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="#7cc879"
+    card_view:cardCornerRadius="10px"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="false"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:contentPadding="0px"
+    android:layout_height="200px"
+    android:layout_marginLeft="16px"
+    android:layout_marginRight="16px"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@mipmap/yinghangka">
+        <ImageView
+            android:id="@+id/bank_logo"
+            android:layout_width="72px"
+            android:layout_height="72px"
+            android:layout_marginTop="16px"
+            android:layout_marginLeft="30px"
+            android:src="@drawable/yinlian" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10px"
+            android:layout_marginLeft="20px"
+            android:layout_marginBottom="30px"
+            android:layout_marginTop="16px"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="28px"
+                android:text="中国银行"/>
+            <TextView
+                android:id="@+id/card_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="24px"
+                android:text="储蓄卡"/>
+            <TextView
+                android:id="@+id/bank_no"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="28px"
+                android:text="**** **** **** 123"/>
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tag_tv"
+            android:layout_width="160px"
+            android:layout_height="50px"
+            android:layout_marginTop="10px"
+            android:textSize="28px"
+            android:gravity="center"
+            android:text="默认银行卡"
+            android:textColor="#fa9191"
+            android:background="@drawable/default_bank_bg"/>
+    </LinearLayout>
+</com.base.view.AutoCardView>

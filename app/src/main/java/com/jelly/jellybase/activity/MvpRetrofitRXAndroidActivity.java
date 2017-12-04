@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.base.applicationUtil.ToastUtils;
-import com.base.httpmvp.mode.databean.RegisterParam;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.view.IRegisterActivityView;
 import com.base.mprogressdialog.MProgressUtil;
@@ -16,6 +15,9 @@ import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,18 +60,16 @@ public class MvpRetrofitRXAndroidActivity extends MyActivity implements IRegiste
         switch (v.getId()){
             case R.id.query:
                 //netIPPresenter.getData(false);
-                registerActivityPresenter.userRegister(true,lifecycleProvider
+                registerActivityPresenter.userRegister(lifecycleProvider
                         .<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
 
     @Override
-    public Object getParamenters() {
-        RegisterParam registerParam=new RegisterParam();
-        registerParam.setAccount("18850221236");
-        registerParam.setPassword("C4CA4238A0B923820DCC509A6F75849B");
-        return registerParam;
+    public Object getRegParam() {
+        Map map=new TreeMap();
+        return map;
     }
 
     @Override

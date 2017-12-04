@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/28.
  */
 
-public class SetPWDActivity extends MyActivity implements ISetPassWordActivityView {
+public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActivityView {
 
     private MProgressDialog progressDialog;
     @BindView(R.id.left_back)
