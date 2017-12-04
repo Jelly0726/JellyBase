@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.Window;
 
@@ -15,12 +16,10 @@ import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
-import com.base.sqldao.DBHelper;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.WokeService;
-
-import systemdb.Login;
 
 public class LauncherActivity extends MyActivity {
 	@Override
@@ -49,23 +48,16 @@ public class LauncherActivity extends MyActivity {
 				delShortcut();
 			}
 		}
-		final Login login= DBHelper.getInstance(getApplicationContext())
-				.getLogin();
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
-				if (login!=null) {
-					if(login.getId()!=0){
-						goMainActivity();//进入主界面
-						//goGuideActivity();//进入引导页界面
-					}else{
-						//goLoginActivity();
-						//goGuideActivity();//进入引导页界面
-						goMainActivity();//进入主界面
-					}
-				}else{
+				if (!TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
 					//goLoginActivity();
-					//goGuideActivity();//进入引导页界面
 					goMainActivity();//进入主界面
+					//goGuideActivity();//进入引导页界面
+				}else{
+					goLoginActivity();
+					//goGuideActivity();//进入引导页界面
+					//goMainActivity();//进入主界面
 				}
 			}
 		},1000);
