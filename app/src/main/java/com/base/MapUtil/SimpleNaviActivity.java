@@ -71,9 +71,9 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		mAMapNaviView.onDestroy();
 		mAMapNavi.stopNavi();
+		super.onDestroy();
 	}
 
 	/**
@@ -359,6 +359,7 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 	 */
 	@Override
 	public void onNaviCancel() {
+		mTtsManager.stopSpeaking();
 		finish();
 	}
 
