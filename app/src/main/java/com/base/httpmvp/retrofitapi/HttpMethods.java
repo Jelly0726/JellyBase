@@ -176,6 +176,7 @@ public class HttpMethods implements IGlobalManager {
 		Intent intent = new Intent();
 		//intent.setClass(this, LoginActivity.class);
 		intent.setAction(IntentAction.ACTION_LOGIN);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		MyApplication.getMyApp().startActivity(intent);
 	}
 	//获取单例
