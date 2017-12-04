@@ -169,15 +169,13 @@ public class HttpMethods implements IGlobalManager {
 		sOkHttpClient.dispatcher().cancelAll();
 		GlobalToken.removeToken();
 		DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
-		NetEvent netEvent=new NetEvent();
+		NetEvent netEvent = new NetEvent();
 		netEvent.setEvent(new LoginEvent(false));
 		HermesEventBus.getDefault().post(netEvent);
-		MyApplication.getMyApp().finishAllActivity();
-		Intent intent = new Intent();
-		//intent.setClass(this, LoginActivity.class);
-		intent.setAction(IntentAction.ACTION_LOGIN);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		MyApplication.getMyApp().startActivity(intent);
+
+		Intent intent=new Intent();
+		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
+		MyApplication.getMyApp().sendBroadcast(intent);
 	}
 	//获取单例
 	public static HttpMethods getInstance(){
