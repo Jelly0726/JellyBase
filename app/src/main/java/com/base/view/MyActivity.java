@@ -22,6 +22,7 @@ import com.base.circledialog.params.DialogParams;
 import com.base.circledialog.params.TextParams;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -195,7 +196,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                             .setPositive("确定", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
+                                    GlobalToken.removeToken();
                                     MyApplication.getMyApp().finishAllActivity();
                                     Intent intent1 = new Intent();
                                     //intent.setClass(this, LoginActivity.class);

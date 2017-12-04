@@ -167,7 +167,7 @@ public class HttpMethods implements IGlobalManager {
 	public void exitLogin() {
 		// Cancel all the netWorkRequest
 		sOkHttpClient.dispatcher().cancelAll();
-		GlobalToken.removeToken();
+
 		DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
 		NetEvent netEvent = new NetEvent();
 		netEvent.setEvent(new LoginEvent(false));
