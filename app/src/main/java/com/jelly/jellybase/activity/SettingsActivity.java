@@ -17,8 +17,6 @@ import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.DialogParams;
 import com.base.config.IntentAction;
-import com.base.eventBus.LoginEvent;
-import com.base.eventBus.NetEvent;
 import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.presenter.GetAppversionListPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -30,8 +28,6 @@ import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.BuildConfig;
-
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2017/9/27.
@@ -138,9 +134,6 @@ public class SettingsActivity extends MyActivity implements IGetAppversionListVi
                                 public void onClick(View v) {
                                     GlobalToken.removeToken();
 
-                                    NetEvent netEvent=new NetEvent();
-                                    netEvent.setEvent(new LoginEvent(false));
-                                    HermesEventBus.getDefault().post(netEvent);
                                     MyApplication.getMyApp().finishAllActivity();
                                     Intent intent = new Intent();
                                     //intent.setClass(this, LoginActivity.class);

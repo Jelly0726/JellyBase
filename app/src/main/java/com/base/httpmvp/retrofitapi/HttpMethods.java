@@ -8,8 +8,6 @@ import com.base.applicationUtil.MyApplication;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
-import com.base.eventBus.LoginEvent;
-import com.base.eventBus.NetEvent;
 import com.base.httpmvp.mode.databean.AboutUs;
 import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.mode.databean.UploadBean;
@@ -46,7 +44,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import systemdb.Login;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by BYPC006 on 2017/3/6.
@@ -166,10 +163,6 @@ public class HttpMethods implements IGlobalManager {
 	public void exitLogin() {
 		// Cancel all the netWorkRequest
 		sOkHttpClient.dispatcher().cancelAll();
-
-		NetEvent netEvent = new NetEvent();
-		netEvent.setEvent(new LoginEvent(false));
-		HermesEventBus.getDefault().post(netEvent);
 
 		Intent intent=new Intent();
 		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
