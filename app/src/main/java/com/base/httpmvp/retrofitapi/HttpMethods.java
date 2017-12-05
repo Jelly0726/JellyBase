@@ -29,6 +29,9 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
@@ -163,11 +166,38 @@ public class HttpMethods implements IGlobalManager {
 	public void exitLogin() {
 		// Cancel all the netWorkRequest
 		sOkHttpClient.dispatcher().cancelAll();
+		unDisposable();
 
 		Intent intent=new Intent();
 		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
 		MyApplication.getMyApp().sendBroadcast(intent);
 	}
+	//以下下为配合RxJava2+retrofit2使用的
+	//将所有正在处理的Subscription都添加到CompositeSubscription中。统一退出的时候注销观察
+	private CompositeDisposable mCompositeDisposable;
+
+	/**
+	 * 将Disposable添加
+	 *
+	 * @param subscription
+	 */
+	public void addDisposable(Disposable subscription) {
+		//csb 如果解绑了的话添加 sb 需要新的实例否则绑定时无效的
+		if (mCompositeDisposable == null || mCompositeDisposable.isDisposed()) {
+			mCompositeDisposable = new CompositeDisposable();
+		}
+		mCompositeDisposable.add(subscription);
+	}
+
+	/**
+	 * 在界面退出等需要解绑观察者的情况下调用此方法统一解绑，防止Rx造成的内存泄漏
+	 */
+	public void unDisposable() {
+		if (mCompositeDisposable != null) {
+			mCompositeDisposable.dispose();
+		}
+	}
+
 	//获取单例
 	public static HttpMethods getInstance(){
 		if (sInstance == null){
@@ -352,12 +382,24 @@ public class HttpMethods implements IGlobalManager {
 		if (composer!=null) {
 			o.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
+					.doOnSubscribe(new Consumer<Disposable>() {
+						@Override
+						public void accept(@NonNull Disposable disposable) throws Exception {
+							addDisposable(disposable);//请求加入管理
+						}
+					})
 					.observeOn(AndroidSchedulers.mainThread())
 					.compose(composer)
 					.subscribe(s);
 		}else {
 			o.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
+					.doOnSubscribe(new Consumer<Disposable>() {
+						@Override
+						public void accept(@NonNull Disposable disposable) throws Exception {
+							addDisposable(disposable);//请求加入管理
+						}
+					})
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(s);
 		}
