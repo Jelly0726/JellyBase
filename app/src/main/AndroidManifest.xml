@@ -144,7 +144,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".userInfo.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
             <intent-filter>
@@ -152,13 +152,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.RegisterActivity"
+        <activity android:name=".userInfo.RegisterActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
         </activity>
-        <activity android:name=".login.ForgetActivity"
+        <activity android:name=".userInfo.ForgetActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
         </activity>
-        <activity android:name=".login.SetPWDActivity"
+        <activity android:name=".userInfo.SetPWDActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
         </activity>
         <activity
@@ -247,7 +247,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".userInfo.SettingsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->

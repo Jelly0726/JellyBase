@@ -57,7 +57,7 @@ public class BankCardListActivity extends MyActivity implements IBankListView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bankcardlist);
+        setContentView(R.layout.bankcardlist_activity);
         ButterKnife.bind(this);
         iniView();
         iniXRefreshView();

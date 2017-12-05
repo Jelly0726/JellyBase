@@ -1,4 +1,4 @@
-package com.jelly.jellybase.activity;
+package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +46,7 @@ public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_pwd);
+        setContentView(R.layout.user_changepwd_activity);
         ButterKnife.bind(this);
         iniView();
         iniProgress();

@@ -32,10 +32,10 @@ import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
-import com.jelly.jellybase.activity.SettingsActivity;
+import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
-import com.jelly.jellybase.login.RegisterActivity;
+import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 
 public class MainActivity extends AppCompatActivity {

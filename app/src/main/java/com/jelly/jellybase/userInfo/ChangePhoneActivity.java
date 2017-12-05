@@ -1,4 +1,4 @@
-package com.jelly.jellybase.login;
+package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +8,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
-import com.base.httpmvp.presenter.ForgetPasswordPresenter;
+import com.base.httpmvp.presenter.UpdatePhonePresenter;
 import com.base.httpmvp.presenter.VerifiCodePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IForgetPasswordView;
+import com.base.httpmvp.view.IUpdatePhoneView;
 import com.base.httpmvp.view.IVerifiCodeView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
@@ -30,35 +31,42 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2017/9/28.
+ * Created by Administrator on 2017/9/27.
  */
 
-public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForgetPasswordView {
+public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,IUpdatePhoneView {
     @BindView(R.id.left_back)
     LinearLayout left_back;
-    @BindView(R.id.next_tv)
-    TextView next_tv;
     @BindView(R.id.btn_get_ver)
     CountDownTimerButton get_ver_btn;
     @BindView(R.id.phone_edit)
     EditText phone_edit;
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
+    @BindView(R.id.password_edit)
+    EditText password_edit;
+    @BindView(R.id.ok_tv)
+    TextView ok_tv;
 
     private VerifiCodePresenter verifiCodePresenter;
-    private ForgetPasswordPresenter forgetPasswordPresenter;
+    private UpdatePhonePresenter updatePhonePresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget);
+        setContentView(R.layout.user_changephone_activity);
         // 进行id绑定
         ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
         iniProgress();
         verifiCodePresenter=new VerifiCodePresenter(this);
-        forgetPasswordPresenter=new ForgetPasswordPresenter(this);
+        updatePhonePresenter=new UpdatePhonePresenter(this);
+    }
+    @Override
+    public void onBackPressed() {
+        closeProgress();
+        super.onBackPressed();
     }
     private void iniView(){
     }
@@ -73,7 +81,7 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
                 String phone=phone_edit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone))
                 {
-                    ToastUtils.showToast(ForgetActivity.this,"请输入手机号");
+                    ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
                     return;
                 }
                 verifiCodePresenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
@@ -88,24 +96,26 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
         get_ver_btn.onDestroy();
         progressDialog=null;
     }
-    @OnClick({ R.id.next_tv, R.id.left_back})
+    @OnClick({R.id.left_back,R.id.ok_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
         }
+        Intent intent;
         switch (v.getId()){
             case R.id.left_back:
                 finish();
                 break;
-            case R.id.next_tv:
+            case R.id.ok_tv:
                 String phone=phone_edit.getText().toString().trim();
-                String verificationCode=verificationCode_edit.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(verificationCode))
-                {
-                    ToastUtils.showToast(ForgetActivity.this,"请输入手机号和验证码");
+                String pw=password_edit.getText().toString().trim();
+                String vcode=verificationCode_edit.getText().toString().trim();
+                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(pw)||
+                        TextUtils.isEmpty(vcode)){
+                    ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
                     return;
                 }
-                forgetPasswordPresenter.execute(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                updatePhonePresenter.updatePhone(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -128,7 +138,7 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
         String phone=phone_edit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
-        map.put("flag",2);//验证码标识：1注册，2忘记密码，3修改手机号
+        map.put("flag",3);//验证码标识：1注册，2忘记密码，3修改手机号
         return map;
     }
 
@@ -144,25 +154,26 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
     }
 
     @Override
-    public Object forgetPasswordParam() {
+    public Object getUpdatePhoneParam() {
         String phone=phone_edit.getText().toString().trim();
-        String verificationCode=verificationCode_edit.getText().toString().trim();
-        Map map=new TreeMap<>();
+        String pw=password_edit.getText().toString().trim();
+        pw= MD5.MD5Encode(pw);
+        String vcode=verificationCode_edit.getText().toString().trim();
+        Map<String,String> map=new TreeMap<>();
         map.put("phone",phone);
-        map.put("vericode",verificationCode);
+        map.put("vericode",vcode);
+        map.put("password",pw);
         return map;
     }
 
     @Override
-    public void forgetPasswordSuccess(boolean isRefresh, Object mCallBackVo) {
-        String phone=phone_edit.getText().toString().trim();
-        Intent intent=new Intent(this,RefeshSetPWDActivity.class);
-        intent.putExtra("phone",phone);
-        startActivity(intent);
+    public void updatePhoneSuccess(boolean isRefresh, Object mCallBackVo) {
+        ToastUtils.showToast(this, (String) mCallBackVo);
+        finish(2000);
     }
 
     @Override
-    public void forgetPasswordFailed(boolean isRefresh, String message) {
+    public void updatePhoneFailed(boolean isRefresh, String message) {
         ToastUtils.showToast(this,message);
     }
 }

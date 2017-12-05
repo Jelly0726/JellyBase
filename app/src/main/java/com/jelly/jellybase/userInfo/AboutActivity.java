@@ -1,4 +1,4 @@
-package com.jelly.jellybase.activity;
+package com.jelly.jellybase.userInfo;
 
 import android.os.Bundle;
 import android.view.View;
@@ -43,7 +43,7 @@ public class AboutActivity extends MyActivity implements IAboutUsView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about_activity);
+        setContentView(R.layout.user_about_activity);
         //绑定id
         ButterKnife.bind(this);
         iniView();

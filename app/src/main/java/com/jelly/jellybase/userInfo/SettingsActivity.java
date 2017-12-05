@@ -1,4 +1,4 @@
-package com.jelly.jellybase.activity;
+package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,7 +46,7 @@ public class SettingsActivity extends MyActivity implements IGetAppversionListVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.user_settings_activity);
         iniView();
         progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
         getAppversionListPresenter=new GetAppversionListPresenter(this);

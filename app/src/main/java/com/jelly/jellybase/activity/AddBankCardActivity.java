@@ -57,7 +57,7 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_bankcard);
+        setContentView(R.layout.bankcard_add_activity);
         ButterKnife.bind(this);
         iniView();
         iniProgress();

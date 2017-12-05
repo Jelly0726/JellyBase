@@ -1,4 +1,4 @@
-package com.jelly.jellybase.login;
+package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,7 +55,7 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.user_login_activity);
         ButterKnife.bind(this);
         iniView();
         iniProgress();
