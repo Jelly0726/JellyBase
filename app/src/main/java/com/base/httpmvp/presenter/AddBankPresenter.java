@@ -1,11 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.AddBankCartContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,23 +24,32 @@ public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View>
     @Override
     public void addBank(final boolean isRefresh, ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.addbank(view.addBankParam(),composer,new ICallBackListener() {
+        HttpMethods.getInstance().addbank(gson.toJson(view.addBankParam()),composer,new Observer<HttpResult>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResult httpResultAll= (HttpResult)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    view.addBankSuccess(isRefresh,httpResultAll.getMsg());
-                }else {
-                    view.addBankFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.addBankFailed(isRefresh,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
                 view.closeProgress();
-                view.addBankFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.addBankSuccess(isRefresh,model.getMsg());
+                }else {
+                    view.addBankFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }

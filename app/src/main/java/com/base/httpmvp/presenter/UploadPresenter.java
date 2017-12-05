@@ -1,12 +1,17 @@
 package com.base.httpmvp.presenter;
 
-import com.base.httpmvp.mode.business.ICallBackListener;
-import com.base.httpmvp.mode.databean.UploadData;
+import com.base.httpmvp.mode.UploadBean;
+import com.base.httpmvp.mode.UploadData;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IUploadView;
 
+import java.io.File;
+
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -23,26 +28,40 @@ public class UploadPresenter implements IBasePresenter {
 
     public void upload(ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.upload(interfaceView.getUpParam(),composer, new ICallBackListener() {
-            @Override
-            public void onSuccess(final Object mCallBackVo) {
-                interfaceView.closeProgress();
-                HttpResultData httpResultAll= (HttpResultData)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    UploadData model= (UploadData) httpResultAll.getData();
-                    interfaceView.uploadSuccess(true,model);
-                }else {
-                    interfaceView.uploadFailed(true,httpResultAll.getMsg());
+        UploadBean uploadBean= (UploadBean) interfaceView.getUpParam();
+        File file= new File(uploadBean.getFilePath());
+        if (file.exists()) {
+            HttpMethods.getInstance().upload(file,uploadBean,composer,new Observer<HttpResultData<UploadData>>() {
+
+                @Override
+                public void onError(Throwable e) {
+                    interfaceView.closeProgress();
+                    interfaceView.uploadFailed(true,e.getMessage());
                 }
 
-            }
+                @Override
+                public void onComplete() {
 
-            @Override
-            public void onFaild(final String message) {
-                interfaceView.closeProgress();
-                interfaceView.uploadFailed(true,message);
-            }
-        });
+                }
+
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(HttpResultData<UploadData> model) {
+                    interfaceView.closeProgress();
+                    if (model.getStatus()== HttpCode.SUCCEED){
+                        interfaceView.uploadSuccess(true,model.getData());
+                    }else {
+                        interfaceView.uploadFailed(true,model.getMsg());
+                    }
+                }
+            });
+        }else {
+            interfaceView.uploadFailed(true,"文件不存在");
+        }
     }
 
     @Override

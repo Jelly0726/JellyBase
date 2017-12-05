@@ -1,11 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.SetPwdContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -22,22 +25,33 @@ implements SetPwdContact.Presenter{
     @Override
     public void setPassword(final boolean isRefresh, ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.setPassword(view.getSetPassWordParam(),composer, new ICallBackListener() {
+        HttpMethods.getInstance().setPassWord(gson.toJson(view.getSetPassWordParam()),
+                composer,new Observer<HttpResult>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResult httpResult = (HttpResult)mCallBackVo;
-                if (httpResult.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(isRefresh,httpResult.getMsg());
-                }else {
-                    view.excuteFailed(isRefresh, httpResult.getMsg());
-                }
+                view.excuteFailed(isRefresh,e.getMessage());
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onComplete() {
                 view.closeProgress();
-                view.excuteFailed(isRefresh,message);
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                view.closeProgress();
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.excuteSuccess(isRefresh,model.getMsg());
+                }else {
+                    view.excuteFailed(isRefresh, model.getMsg());
+                }
             }
         });
     }

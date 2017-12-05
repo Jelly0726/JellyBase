@@ -1,12 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.bankcard.BankCardInfo;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IGetBankView;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -23,23 +25,32 @@ public class GetBankPresenter implements IBasePresenter {
 
     public void getBank(ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.getBank(interfaceView.getBankParam(),composer, new ICallBackListener() {
+        HttpMethods.getInstance().getBank(gson.toJson(interfaceView.getBankParam()),composer,new Observer<HttpResultData<BankCardInfo>>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 interfaceView.closeProgress();
-                HttpResultData<BankCardInfo> httpResultAll= (HttpResultData<BankCardInfo>)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.getBankSuccess(true,httpResultAll.getData());
-                }else {
-                    interfaceView.getBankFailed(true,httpResultAll.getMsg());
-                }
+                interfaceView.getBankFailed(true,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<BankCardInfo> model) {
                 interfaceView.closeProgress();
-                interfaceView.getBankFailed(true,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    interfaceView.getBankSuccess(true,model.getData());
+                }else {
+                    interfaceView.getBankFailed(true,model.getMsg());
+                }
             }
         });
     }

@@ -1,11 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.UpdataPwdContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,23 +24,33 @@ public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.
 
     public void updatePassword(final boolean isRefresh,ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.updatePassword(view.getUpdatePasswordParam(),composer, new ICallBackListener() {
+        HttpMethods.getInstance().updatePassword(gson.toJson(view.getUpdatePasswordParam())
+                ,composer,new Observer<HttpResult>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResult httpResultAll= (HttpResult)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    view.updatePasswordSuccess(isRefresh,httpResultAll.getMsg());
-                }else {
-                    view.updatePasswordFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.updatePasswordFailed(isRefresh,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
                 view.closeProgress();
-                view.updatePasswordFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.updatePasswordSuccess(isRefresh,model.getMsg());
+                }else {
+                    view.updatePasswordFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }

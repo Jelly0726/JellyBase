@@ -1,11 +1,13 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.LoginContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import systemdb.Login;
 
@@ -23,45 +25,33 @@ implements LoginContact.Presenter{
 
     public void userLogin(final boolean isRefresh,ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.login(view.getLoginParam(),composer, new ICallBackListener() {
+        HttpMethods.getInstance().userLogin(gson.toJson(view.getLoginParam()),composer,new Observer<HttpResultData<Login>>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResultData<Login> httpResultAll= (HttpResultData<Login>)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    Login model=httpResultAll.getData();
-                    view.loginSuccess(isRefresh,model);
-                }else {
-                    view.loginFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.loginFailed(isRefresh,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<Login> model) {
                 view.closeProgress();
-                view.loginFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.loginSuccess(isRefresh,model.getData());
+                }else {
+                    view.loginFailed(isRefresh,model.getMsg());
+                }
             }
         });
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void detach() {
-
-    }
-
-    @Override
-    public void addDisposable(Disposable subscription) {
-
-    }
-
-    @Override
-    public void unDisposable() {
-
     }
 }

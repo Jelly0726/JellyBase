@@ -1,8 +1,7 @@
 package com.base.httpmvp.presenter;
 
 
-import com.base.httpmvp.mode.business.Business;
-import com.base.httpmvp.mode.business.IBusiness;
+import com.google.gson.Gson;
 
 import io.reactivex.disposables.Disposable;
 
@@ -12,7 +11,7 @@ import io.reactivex.disposables.Disposable;
  */
 
 public interface IBasePresenter{
-    public IBusiness mIBusiness = new Business();
+    public Gson gson= new Gson();
 
     //默认初始化
     void start();

@@ -1,11 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.RegisterContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,45 +24,66 @@ implements RegisterContact.Presenter{
 
     public void userRegister(final boolean isRefresh, ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.register(view.getRegParam(), composer,new ICallBackListener() {
-            @Override
-            public void onSuccess(final Object mCallBackVo) {
-                view.closeProgress();
-                HttpResult httpResult = (HttpResult)mCallBackVo;
-                if (httpResult.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(isRefresh,mCallBackVo);
-                }else {
-                    view.excuteFailed(isRefresh, httpResult.getMsg());
-                }
+        HttpMethods.getInstance().userRegistration(gson.toJson(view.getRegParam()),composer
+                ,new Observer<HttpResult>() {
 
+            @Override
+            public void onError(Throwable e) {
+                view.closeProgress();
+                view.excuteFailed(isRefresh,e.getMessage());
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onComplete() {
                 view.closeProgress();
-                view.excuteFailed(isRefresh,message);
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                //addDisposable(d);
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
+                view.closeProgress();
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.excuteSuccess(isRefresh,model);
+                }else {
+                    view.excuteFailed(isRefresh, model.getMsg());
+                }
+
             }
         });
     }
     public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.getVerifiCode(view.getVerifiCodeParam(),composer, new ICallBackListener() {
+        HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
+                ,composer,new Observer<HttpResult>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResult httpResultAll= (HttpResult)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    view.verifiCodeSuccess(isRefresh,mCallBackVo);
-                }else {
-                    view.verifiCodeFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.verifiCodeFailed(isRefresh,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
                 view.closeProgress();
-                view.verifiCodeFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.verifiCodeSuccess(isRefresh,model);
+                }else {
+                    view.verifiCodeFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }

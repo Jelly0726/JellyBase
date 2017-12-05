@@ -2,9 +2,9 @@ package com.base.httpmvp.retrofitapi;
 
 
 import com.base.bankcard.BankCardInfo;
-import com.base.httpmvp.mode.databean.AboutUs;
-import com.base.httpmvp.mode.databean.AppVersion;
-import com.base.httpmvp.mode.databean.UploadData;
+import com.base.httpmvp.mode.AboutUs;
+import com.base.httpmvp.mode.AppVersion;
+import com.base.httpmvp.mode.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 
 import io.reactivex.Observable;

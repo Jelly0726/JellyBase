@@ -1,13 +1,15 @@
 package com.base.httpmvp.presenter;
 
+import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.contact.BankCartListContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultList;
 
-import java.util.List;
-
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -23,23 +25,32 @@ public class BankListPresenter extends BasePresenterImpl<BankCartListContact.Vie
 
     public void bankList(final boolean isRefresh, ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.bankList(view.getBankListParam(),composer,new ICallBackListener() {
+        HttpMethods.getInstance().bankList(gson.toJson(view.getBankListParam()),composer,new Observer<HttpResultList<BankCardInfo>>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResultList httpResultAll= (HttpResultList)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    List model= (List) httpResultAll.getData();
-                    view.bankListSuccess(isRefresh,model);
-                }else {
-                    view.bankListFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.bankListFailed(isRefresh,e.getMessage());
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultList<BankCardInfo> model) {
                 view.closeProgress();
-                view.bankListFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.bankListSuccess(isRefresh,model.getData());
+                }else {
+                    view.bankListFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }

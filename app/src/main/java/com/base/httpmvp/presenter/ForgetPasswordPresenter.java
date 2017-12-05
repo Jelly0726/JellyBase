@@ -1,11 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.ForgetPwdContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResult;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,46 +24,65 @@ implements ForgetPwdContact.Presenter{
 
     public void forgetPwd(final boolean isRefresh,ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.forgetPwd(view.forgetPasswordParam(),composer,new ICallBackListener() {
+        HttpMethods.getInstance().forgetPassword(gson.toJson(view.forgetPasswordParam()),composer,new Observer<HttpResult>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResult httpResultAll= (HttpResult)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    view.forgetPasswordSuccess(isRefresh,httpResultAll.getMsg());
-                }else {
-                    view.forgetPasswordFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.forgetPasswordFailed(isRefresh,e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
 
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResult model) {
                 view.closeProgress();
-                view.forgetPasswordFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.forgetPasswordSuccess(isRefresh,model.getMsg());
+                }else {
+                    view.forgetPasswordFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }
     public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.getVerifiCode(view.getVerifiCodeParam(),composer, new ICallBackListener() {
-            @Override
-            public void onSuccess(final Object mCallBackVo) {
-                view.closeProgress();
-                HttpResult httpResultAll= (HttpResult)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    view.verifiCodeSuccess(isRefresh,mCallBackVo);
-                }else {
-                    view.verifiCodeFailed(isRefresh,httpResultAll.getMsg());
-                }
+        HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
+                ,composer,new Observer<HttpResult>() {
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        view.closeProgress();
+                        view.verifiCodeFailed(isRefresh,e.getMessage());
+                    }
 
-            @Override
-            public void onFaild(final String message) {
-                view.closeProgress();
-                view.verifiCodeFailed(isRefresh,message);
-            }
-        });
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(HttpResult model) {
+                        view.closeProgress();
+                        if (model.getStatus()== HttpCode.SUCCEED){
+                            view.verifiCodeSuccess(isRefresh,model);
+                        }else {
+                            view.verifiCodeFailed(isRefresh,model.getMsg());
+                        }
+                    }
+                });
     }
 }

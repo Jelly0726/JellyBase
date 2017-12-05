@@ -1,12 +1,15 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.AboutContact;
-import com.base.httpmvp.mode.business.ICallBackListener;
-import com.base.httpmvp.mode.databean.AboutUs;
+import com.base.httpmvp.mode.AboutUs;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -21,23 +24,32 @@ public class AboutUsPresenter extends BasePresenterImpl<AboutContact.View> imple
 
     public void aboutUs(final boolean isRefresh, ObservableTransformer composer) {
         view.showProgress();
-        mIBusiness.aboutUs(composer,new ICallBackListener() {
+        HttpMethods.getInstance().aboutUs(composer,new Observer<HttpResultData<AboutUs>>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 view.closeProgress();
-                HttpResultData httpResultAll= (HttpResultData)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    AboutUs model= (AboutUs) httpResultAll.getData();
-                    view.aboutUsSuccess(isRefresh,model);
-                }else {
-                    view.aboutUsFailed(isRefresh,httpResultAll.getMsg());
-                }
+                view.aboutUsFailed(isRefresh,e.getMessage());
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onComplete() {
                 view.closeProgress();
-                view.aboutUsFailed(isRefresh,message);
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<AboutUs> model) {
+                view.closeProgress();
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    view.aboutUsSuccess(isRefresh,model.getData());
+                }else {
+                    view.aboutUsFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }

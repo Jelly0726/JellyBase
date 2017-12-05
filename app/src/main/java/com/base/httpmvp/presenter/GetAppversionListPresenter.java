@@ -1,12 +1,14 @@
 package com.base.httpmvp.presenter;
 
-import com.base.httpmvp.mode.business.ICallBackListener;
-import com.base.httpmvp.mode.databean.AppVersion;
+import com.base.httpmvp.mode.AppVersion;
 import com.base.httpmvp.retrofitapi.HttpCode;
+import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IGetAppversionListView;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -23,22 +25,32 @@ public class GetAppversionListPresenter implements IBasePresenter {
 
     public void execute(final boolean isRefresh, ObservableTransformer composer) {
         interfaceView.showProgress();
-        mIBusiness.getAppversionList(composer,new ICallBackListener() {
+        HttpMethods.getInstance().getAppversionList(composer,new Observer<HttpResultData<AppVersion>>() {
+
             @Override
-            public void onSuccess(final Object mCallBackVo) {
+            public void onError(Throwable e) {
                 interfaceView.closeProgress();
-                HttpResultData<AppVersion> httpResultAll= (HttpResultData)mCallBackVo;
-                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.getAppversionListSuccess(isRefresh,httpResultAll.getData());
-                }else {
-                    interfaceView.getAppversionListFailed(isRefresh,httpResultAll.getMsg());
-                }
+                interfaceView.getAppversionListFailed(isRefresh,e.getMessage());
             }
 
             @Override
-            public void onFaild(final String message) {
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(HttpResultData<AppVersion> model) {
                 interfaceView.closeProgress();
-                interfaceView.getAppversionListFailed(isRefresh,message);
+                if (model.getStatus()== HttpCode.SUCCEED){
+                    interfaceView.getAppversionListSuccess(isRefresh,model.getData());
+                }else {
+                    interfaceView.getAppversionListFailed(isRefresh,model.getMsg());
+                }
             }
         });
     }
