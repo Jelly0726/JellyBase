@@ -12,13 +12,13 @@ import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
 import com.base.config.IntentAction;
+import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.presenter.LoginActivityPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.httpmvp.view.ILoginActivityView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -35,7 +35,8 @@ import systemdb.Login;
  * Created by Administrator on 2017/9/18.
  */
 
-public class LoginActivity extends MyActivity implements ILoginActivityView {
+public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
+        implements LoginContact.View {
     @BindView(R.id.login_tv)
     TextView login_tv;
     @BindView(R.id.forget_pwd)
@@ -50,7 +51,6 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
     @BindView(R.id.password_edit)
     EditText password_edit;
 
-    private LoginActivityPresenter loginActivityPresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,6 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
         ButterKnife.bind(this);
         iniView();
         iniProgress();
-        loginActivityPresenter=new LoginActivityPresenter(this);
         phone=getIntent().getStringExtra("phone");
         password=getIntent().getStringExtra("password");
         from=getIntent().getIntExtra("from",-1);
@@ -75,7 +74,7 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
             phone_edit.setSelection(phone.length());
             password_edit.setText(password);
             password_edit.setSelection(password.length());
-            loginActivityPresenter.userLogin(lifecycleProvider
+            presenter.userLogin(true,lifecycleProvider
                     .<Long>bindUntilEvent(ActivityEvent.DESTROY));
         }
 
@@ -85,6 +84,11 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
     protected void onResume() {
         super.onResume();
         iniData();
+    }
+
+    @Override
+    public LoginContact.Presenter initPresenter() {
+        return new LoginActivityPresenter(this);
     }
 
     private void iniProgress(){
@@ -105,7 +109,7 @@ public class LoginActivity extends MyActivity implements ILoginActivityView {
                     ToastUtils.showToast(this,"请输入您的手机号和密码!");
                     return;
                 }
-                loginActivityPresenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.userLogin(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
             case R.id.forget_pwd:
                 intent=new Intent(LoginActivity.this, ForgetActivity.class);

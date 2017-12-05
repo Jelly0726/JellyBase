@@ -19,11 +19,12 @@ import com.base.circledialog.params.DialogParams;
 import com.base.config.IntentAction;
 import com.base.httpmvp.mode.databean.AppVersion;
 import com.base.httpmvp.presenter.GetAppversionListPresenter;
+import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.httpmvp.view.IGetAppversionListView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -33,7 +34,7 @@ import com.trello.rxlifecycle2.android.BuildConfig;
  * Created by Administrator on 2017/9/27.
  */
 
-public class SettingsActivity extends MyActivity implements IGetAppversionListView {
+public class SettingsActivity extends BaseActivityImpl implements IGetAppversionListView {
     private LinearLayout left_back;
     private LinearLayout change_pwd;
     private LinearLayout change_phone;
@@ -60,6 +61,11 @@ public class SettingsActivity extends MyActivity implements IGetAppversionListVi
             progressDialog=null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
     }
 
     private void iniView(){

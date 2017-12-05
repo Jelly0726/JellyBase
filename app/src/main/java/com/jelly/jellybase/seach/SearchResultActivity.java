@@ -13,7 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
-import com.base.view.MyActivity;
+import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
@@ -32,7 +33,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/28.
  */
 
-public class SearchResultActivity extends MyActivity {
+public class SearchResultActivity extends BaseActivityImpl {
     private LinearLayout left_back;
     private TextView back_search;
     private LinearLayout price_layout;
@@ -235,6 +236,11 @@ public class SearchResultActivity extends MyActivity {
     public void onResume() {
         super.onResume();
         startRownumber=0;
+    }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
     }
 
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){

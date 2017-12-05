@@ -2,13 +2,13 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.base.ToolUtil.MyDate;
 import com.base.androidPicker.AddressPickTask;
 import com.base.applicationUtil.ToastUtils;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 
 import cn.qqtheme.framework.entity.City;
@@ -21,7 +21,7 @@ import cn.qqtheme.framework.util.ConvertUtils;
  * Created by JELLY on 2017/11/3.
  */
 
-public class PickActivity extends MyActivity implements View.OnClickListener{
+public class PickActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView select_address;
     private TextView begin_date;
     private DatePicker picker;//时间选择器

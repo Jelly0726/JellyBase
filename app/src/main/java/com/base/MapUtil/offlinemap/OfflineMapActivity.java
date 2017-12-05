@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,6 @@ import com.amap.api.maps.offlinemap.OfflineMapManager;
 import com.amap.api.maps.offlinemap.OfflineMapManager.OfflineMapDownloadListener;
 import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity extends MyActivity implements
+public class OfflineMapActivity extends AppCompatActivity implements
         OfflineMapDownloadListener, View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private OfflineMapManager amapManager = null;// 离线地图下载控制器

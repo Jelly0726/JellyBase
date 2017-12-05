@@ -1,9 +1,9 @@
 package com.base.httpmvp.presenter;
 
+import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IUpdatePasswordView;
 
 import io.reactivex.ObservableTransformer;
 
@@ -11,33 +11,33 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/11/8.
  * 说明：修改密码View(activityview)对应的Presenter
  */
-public class UpdatePasswordPresenter implements IBasePresenter {
+public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.View>
+        implements UpdataPwdContact.Presenter {
 
-    private IUpdatePasswordView interfaceView;
 
-    public UpdatePasswordPresenter(IUpdatePasswordView interfaceView) {
-        this.interfaceView = interfaceView;
+    public UpdatePasswordPresenter(UpdataPwdContact.View interfaceView) {
+        super(interfaceView);
     }
 
-    public void updatePassword(ObservableTransformer composer) {
-        interfaceView.showProgress();
-        mIBusiness.updatePassword(interfaceView.getUpdatePasswordParam(),composer, new ICallBackListener() {
+    public void updatePassword(final boolean isRefresh,ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.updatePassword(view.getUpdatePasswordParam(),composer, new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
-                interfaceView.closeProgress();
+                view.closeProgress();
                 HttpResult httpResultAll= (HttpResult)mCallBackVo;
                 if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.updatePasswordSuccess(true,httpResultAll.getMsg());
+                    view.updatePasswordSuccess(isRefresh,httpResultAll.getMsg());
                 }else {
-                    interfaceView.updatePasswordFailed(true,httpResultAll.getMsg());
+                    view.updatePasswordFailed(isRefresh,httpResultAll.getMsg());
                 }
 
             }
 
             @Override
             public void onFaild(final String message) {
-                interfaceView.closeProgress();
-                interfaceView.updatePasswordFailed(true,message);
+                view.closeProgress();
+                view.updatePasswordFailed(isRefresh,message);
             }
         });
     }

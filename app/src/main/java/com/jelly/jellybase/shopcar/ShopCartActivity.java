@@ -2,14 +2,15 @@ package com.jelly.jellybase.shopcar;
 
 import android.os.Bundle;
 
-import com.base.view.MyActivity;
+import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.jelly.jellybase.R;
 
 /**
  * Created by Administrator on 2017/10/28.
  */
 
-public class ShopCartActivity extends MyActivity {
+public class ShopCartActivity extends BaseActivityImpl {
     private ShopCarFragment shopCarFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,11 @@ public class ShopCartActivity extends MyActivity {
                 .replace(R.id.main, shopCarFragment)
                 .commit();
 
+    }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
     }
 
     /**

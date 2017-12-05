@@ -1,9 +1,9 @@
 package com.base.httpmvp.presenter;
 
+import com.base.httpmvp.contact.RegisterContact;
 import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IRegisterActivityView;
 
 import io.reactivex.ObservableTransformer;
 
@@ -11,33 +11,55 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/11/8.
  * 说明：注册View(activityview)对应的Presenter
  */
-public class RegisterActivityPresenter implements IBasePresenter {
+public class RegisterActivityPresenter extends BasePresenterImpl<RegisterContact.View>
+implements RegisterContact.Presenter{
 
-    private IRegisterActivityView interfaceView;
 
-    public RegisterActivityPresenter(IRegisterActivityView interfaceView) {
-        this.interfaceView = interfaceView;
+    public RegisterActivityPresenter(RegisterContact.View interfaceView) {
+        super(interfaceView);
     }
 
-    public void userRegister( ObservableTransformer composer) {
-        interfaceView.showProgress();
-        mIBusiness.register(interfaceView.getRegParam(), composer,new ICallBackListener() {
+    public void userRegister(final boolean isRefresh, ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.register(view.getRegParam(), composer,new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
-                interfaceView.closeProgress();
+                view.closeProgress();
                 HttpResult httpResult = (HttpResult)mCallBackVo;
                 if (httpResult.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.excuteSuccess(true,mCallBackVo);
+                    view.excuteSuccess(isRefresh,mCallBackVo);
                 }else {
-                    interfaceView.excuteFailed(true, httpResult.getMsg());
+                    view.excuteFailed(isRefresh, httpResult.getMsg());
                 }
 
             }
 
             @Override
             public void onFaild(final String message) {
-                interfaceView.closeProgress();
-                interfaceView.excuteFailed(true,message);
+                view.closeProgress();
+                view.excuteFailed(isRefresh,message);
+            }
+        });
+    }
+    public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.getVerifiCode(view.getVerifiCodeParam(),composer, new ICallBackListener() {
+            @Override
+            public void onSuccess(final Object mCallBackVo) {
+                view.closeProgress();
+                HttpResult httpResultAll= (HttpResult)mCallBackVo;
+                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
+                    view.verifiCodeSuccess(isRefresh,mCallBackVo);
+                }else {
+                    view.verifiCodeFailed(isRefresh,httpResultAll.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFaild(final String message) {
+                view.closeProgress();
+                view.verifiCodeFailed(isRefresh,message);
             }
         });
     }

@@ -9,11 +9,11 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.ToastUtils;
+import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.presenter.UpdatePasswordPresenter;
-import com.base.httpmvp.view.IUpdatePasswordView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -29,7 +29,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/27.
  */
 
-public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView {
+public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Presenter>
+        implements UpdataPwdContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.old_pwd)
@@ -41,7 +42,6 @@ public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView
     @BindView(R.id.commit_tv)
     TextView commit_tv;
 
-    private UpdatePasswordPresenter updatePasswordPresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,6 @@ public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView
         ButterKnife.bind(this);
         iniView();
         iniProgress();
-        updatePasswordPresenter=new UpdatePasswordPresenter(this);
     }
     private void iniView(){
     }
@@ -67,6 +66,12 @@ public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView
         super.onDestroy();
         progressDialog=null;
     }
+
+    @Override
+    public UpdataPwdContact.Presenter initPresenter() {
+        return new UpdatePasswordPresenter(this);
+    }
+
     @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -84,7 +89,7 @@ public class ChangePWDActivity extends MyActivity implements IUpdatePasswordView
                     ToastUtils.showToast(this,"两次密码不一致，请重新输入!");
                     return;
                 }
-                updatePasswordPresenter.updatePassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePassword(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }

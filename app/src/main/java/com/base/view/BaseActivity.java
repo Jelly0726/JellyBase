@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.CheckResult;
 import android.view.Gravity;
 import android.view.View;
 
@@ -23,31 +22,21 @@ import com.base.circledialog.params.TextParams;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.RxLifecycle;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 import cn.jpush.android.api.JPushInterface;
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.subjects.BehaviorSubject;
 
 /**
- * Created by Administrator on 2016/3/14.
+ * Created by Administrator on 2017/12/5.
  */
-public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<ActivityEvent> {
+
+public class BaseActivity extends AutoLayoutActivity {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
-    public LifecycleProvider lifecycleProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lifecycleSubject.onNext(ActivityEvent.CREATE);
-        lifecycleProvider=this;
         mRecevier = new InnerRecevier();
         mFilter = new IntentFilter();
         mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -74,7 +63,6 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
     }
     @Override
     protected void onDestroy() {
-        lifecycleSubject.onNext(ActivityEvent.DESTROY);
         /**
          * 停止监听，注销广播
          */
@@ -87,13 +75,11 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
     @Override
     protected void onResume() {
         super.onResume();
-        lifecycleSubject.onNext(ActivityEvent.RESUME);
         JPushInterface.onResume(this);
         isResume=true;
     }
     @Override
     protected void onPause() {
-        lifecycleSubject.onNext(ActivityEvent.PAUSE);
         super.onPause();
         JPushInterface.onPause(this);
         isResume=false;
@@ -102,35 +88,11 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
     @Override
     protected void onStart() {
         super.onStart();
-        lifecycleSubject.onNext(ActivityEvent.START);
     }
 
     @Override
     protected void onStop() {
-        lifecycleSubject.onNext(ActivityEvent.STOP);
         super.onStop();
-    }
-    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final Observable<ActivityEvent> lifecycle() {
-        return lifecycleSubject.hide();
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
-        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindToLifecycle() {
-        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
     }
 
     /**
@@ -151,7 +113,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                     //Log.i("msg", "action:" + action + ",reason:" + reason);
                     if (reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
                         // 短按home键
-                        AppPrefs.putBoolean(MyApplication.getMyApp(),ConfigKey.ISHOME,true);
+                        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISHOME,true);
                         Intent intent1=new Intent(context, LiveService.class);
                         startService(intent1);
                     } else if (reason
@@ -174,7 +136,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
             super.handleMessage(msg);
             switch (msg.arg1){
                 case 0:
-                    new CircleDialog.Builder(MyActivity.this)
+                    new CircleDialog.Builder(BaseActivity.this)
                             .configDialog(new ConfigDialog() {
                                 @Override
                                 public void onConfig(DialogParams params) {
@@ -188,7 +150,7 @@ public class MyActivity extends AutoLayoutActivity implements LifecycleProvider<
                                 @Override
                                 public void onConfig(TextParams params) {
                                     params.gravity= Gravity.LEFT;
-                                    params.textColor=Color.parseColor("#FF1F50F1");
+                                    params.textColor= Color.parseColor("#FF1F50F1");
                                     params.padding=new int[]{20,0,20,0};
                                 }
                             })

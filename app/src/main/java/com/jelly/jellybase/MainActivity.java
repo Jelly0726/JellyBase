@@ -27,11 +27,11 @@ import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.HomeActivity;
-import com.jelly.jellybase.activity.MvpRetrofitRXAndroidActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
+import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case 15://Android MVP+Retrofit+RxAndroid
-                    intent=new Intent(MyApplication.getMyApp(), MvpRetrofitRXAndroidActivity.class);
+                    intent=new Intent(MyApplication.getMyApp(), LoginActivity.class);
                     startActivity(intent);
                     break;
                 case 16://商品详情

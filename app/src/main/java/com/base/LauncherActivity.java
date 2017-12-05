@@ -16,12 +16,13 @@ import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
+import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.view.MyActivity;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.WokeService;
 
-public class LauncherActivity extends MyActivity {
+public class LauncherActivity extends BaseActivityImpl {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,9 +56,9 @@ public class LauncherActivity extends MyActivity {
 					goMainActivity();//进入主界面
 					//goGuideActivity();//进入引导页界面
 				}else{
-					goLoginActivity();
+					//goLoginActivity();
 					//goGuideActivity();//进入引导页界面
-					//goMainActivity();//进入主界面
+					goMainActivity();//进入主界面
 				}
 			}
 		},1000);
@@ -180,6 +181,12 @@ public class LauncherActivity extends MyActivity {
 	protected void onPause() {
 		super.onPause();
 	}
+
+	@Override
+	public IBasePresenter initPresenter() {
+		return null;
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

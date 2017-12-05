@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.ToastUtils;
+import com.base.httpmvp.contact.AboutContact;
 import com.base.httpmvp.mode.databean.AboutUs;
 import com.base.httpmvp.presenter.AboutUsPresenter;
-import com.base.httpmvp.view.IAboutUsView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/10/19.
  */
 
-public class AboutActivity extends MyActivity implements IAboutUsView {
+public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> implements AboutContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.versions_tv)
@@ -37,7 +37,6 @@ public class AboutActivity extends MyActivity implements IAboutUsView {
     @BindView(R.id.phone_tv)
     TextView phone_tv;
 
-    private AboutUsPresenter aboutUsPresenter;
     private MProgressDialog progressDialog;
     private AboutUs aboutUs;
     @Override
@@ -48,8 +47,7 @@ public class AboutActivity extends MyActivity implements IAboutUsView {
         ButterKnife.bind(this);
         iniView();
         iniProgress();
-        aboutUsPresenter=new AboutUsPresenter(this);
-        aboutUsPresenter.aboutUs(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.aboutUs(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
     }
     private void iniView(){
 
@@ -70,9 +68,16 @@ public class AboutActivity extends MyActivity implements IAboutUsView {
     }
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        closeProgress();
         progressDialog=null;
+        super.onDestroy();
     }
+
+    @Override
+    public AboutContact.Presenter initPresenter() {
+        return new AboutUsPresenter(this);
+    }
+
     @OnClick({R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -88,20 +93,15 @@ public class AboutActivity extends MyActivity implements IAboutUsView {
     @Override
     public void showProgress() {
         if (progressDialog!=null){
-                progressDialog.show();
+            progressDialog.show();
         }
     }
 
     @Override
     public void closeProgress() {
         if (progressDialog!=null){
-                progressDialog.dismiss();
+            progressDialog.dismiss();
         }
-    }
-
-    @Override
-    public Object getAboutUsParam() {
-        return null;
     }
 
     @Override

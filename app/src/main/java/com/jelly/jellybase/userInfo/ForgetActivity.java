@@ -10,14 +10,12 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.base.httpmvp.contact.ForgetPwdContact;
 import com.base.httpmvp.presenter.ForgetPasswordPresenter;
-import com.base.httpmvp.presenter.VerifiCodePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IForgetPasswordView;
-import com.base.httpmvp.view.IVerifiCodeView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -33,7 +31,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/28.
  */
 
-public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForgetPasswordView {
+public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
+        implements ForgetPwdContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.next_tv)
@@ -45,8 +44,6 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
 
-    private VerifiCodePresenter verifiCodePresenter;
-    private ForgetPasswordPresenter forgetPasswordPresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +54,6 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
         iniView();
         initCountDownBtn();
         iniProgress();
-        verifiCodePresenter=new VerifiCodePresenter(this);
-        forgetPasswordPresenter=new ForgetPasswordPresenter(this);
     }
     private void iniView(){
     }
@@ -76,7 +71,7 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号");
                     return;
                 }
-                verifiCodePresenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -88,6 +83,12 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
         get_ver_btn.onDestroy();
         progressDialog=null;
     }
+
+    @Override
+    public ForgetPwdContact.Presenter initPresenter() {
+        return new ForgetPasswordPresenter(this);
+    }
+
     @OnClick({ R.id.next_tv, R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -105,7 +106,7 @@ public class ForgetActivity extends MyActivity implements IVerifiCodeView,IForge
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号和验证码");
                     return;
                 }
-                forgetPasswordPresenter.execute(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.forgetPwd(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }

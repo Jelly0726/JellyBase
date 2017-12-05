@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.ToastUtils;
 import com.base.bankcard.BandCardEditText;
+import com.base.httpmvp.contact.AddBankCartContact;
 import com.base.httpmvp.presenter.AddBankPresenter;
-import com.base.httpmvp.view.IAddBankView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -26,14 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.jelly.jellybase.MainActivity.login;
 
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class AddBankCardActivity extends MyActivity implements IAddBankView {
+public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Presenter>
+        implements AddBankCartContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.cardholder_edit)
@@ -50,7 +50,6 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
     TextView commit_tv;
 
 
-    private AddBankPresenter addBankPresenter;
     private MProgressDialog progressDialog;
     private String bankName="没有查到所属银行";
     private String bankType="储蓄卡";
@@ -61,7 +60,6 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
         ButterKnife.bind(this);
         iniView();
         iniProgress();
-        addBankPresenter=new AddBankPresenter(this);
     }
     private void iniView(){
         bankCard_id.setBankCardListener(new BandCardEditText.BankCardListener() {
@@ -93,6 +91,12 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
         super.onDestroy();
         progressDialog=null;
     }
+
+    @Override
+    public AddBankCartContact.Presenter initPresenter() {
+        return new AddBankPresenter(this);
+    }
+
     @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -111,7 +115,7 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
                     ToastUtils.showToast(this,"手机号、持卡人、卡号不能为空！");
                     return;
                 }
-                addBankPresenter.addBank(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.addBank(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -136,7 +140,6 @@ public class AddBankCardActivity extends MyActivity implements IAddBankView {
         String cardholder=cardholder_edit.getText().toString().trim();
         String bankCard=bankCard_id.getCardNo().toString().trim();
         Map map=new TreeMap();
-        map.put("saleid",login.getUserID()+"");
         map.put("phone",phone);
         map.put("bankname",bankName);
         map.put("bankno",bankCard);

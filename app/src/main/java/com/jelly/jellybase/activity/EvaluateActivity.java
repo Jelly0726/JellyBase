@@ -7,9 +7,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.base.applicationUtil.ToastUtils;
+import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.willy.ratingbar.BaseRatingBar;
@@ -22,7 +23,7 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/10/11.
  */
 
-public class EvaluateActivity extends MyActivity {
+public class EvaluateActivity extends BaseActivityImpl {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.top_right)
@@ -46,6 +47,12 @@ public class EvaluateActivity extends MyActivity {
         iniView();
         progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
     }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
+    }
+
     private void iniView(){
         describeRatingBar.setRating(4);
         logisticsRatingBar.setRating(4);

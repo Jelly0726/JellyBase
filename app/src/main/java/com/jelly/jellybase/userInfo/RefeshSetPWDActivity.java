@@ -12,12 +12,12 @@ import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
 import com.base.config.IntentAction;
+import com.base.httpmvp.contact.SetPwdContact;
 import com.base.httpmvp.presenter.SetPassWordActivityPresenter;
-import com.base.httpmvp.view.ISetPassWordActivityView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.sqldao.DBHelper;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -33,7 +33,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/28.
  */
 
-public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActivityView {
+public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
+        implements SetPwdContact.View {
 
     private MProgressDialog progressDialog;
     @BindView(R.id.left_back)
@@ -48,7 +49,6 @@ public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActi
     private String password;
     private String password1;
 
-    private SetPassWordActivityPresenter setPassWordActivityPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +57,6 @@ public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActi
         ButterKnife.bind(this);
         phone=getIntent().getStringExtra("phone");
         iniProgress();
-        setPassWordActivityPresenter=new SetPassWordActivityPresenter(this);
     }
     private void iniProgress(){
         progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
@@ -82,7 +81,7 @@ public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActi
                     ToastUtils.showToast(this,"两次密码输入不一致,请重新输入!");
                     return;
                 }
-                setPassWordActivityPresenter.setPassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.setPassword(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -91,6 +90,11 @@ public class RefeshSetPWDActivity extends MyActivity implements ISetPassWordActi
     protected void onDestroy() {
         super.onDestroy();
         progressDialog=null;
+    }
+
+    @Override
+    public SetPwdContact.Presenter initPresenter() {
+        return new SetPassWordActivityPresenter(this);
     }
 
     @Override

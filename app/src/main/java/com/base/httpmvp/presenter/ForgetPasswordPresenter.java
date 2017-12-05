@@ -1,9 +1,9 @@
 package com.base.httpmvp.presenter;
 
+import com.base.httpmvp.contact.ForgetPwdContact;
 import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IForgetPasswordView;
 
 import io.reactivex.ObservableTransformer;
 
@@ -11,33 +11,55 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/11/8.
  * 说明：忘记密码View(activityview)对应的Presenter
  */
-public class ForgetPasswordPresenter implements IBasePresenter {
+public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPwdContact.View>
+implements ForgetPwdContact.Presenter{
 
-    private IForgetPasswordView interfaceView;
 
-    public ForgetPasswordPresenter(IForgetPasswordView interfaceView) {
-        this.interfaceView = interfaceView;
+    public ForgetPasswordPresenter(ForgetPwdContact.View interfaceView) {
+        super(interfaceView);
     }
 
-    public void execute(ObservableTransformer composer) {
-        interfaceView.showProgress();
-        mIBusiness.forgetPwd(interfaceView.forgetPasswordParam(),composer,new ICallBackListener() {
+    public void forgetPwd(final boolean isRefresh,ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.forgetPwd(view.forgetPasswordParam(),composer,new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
-                interfaceView.closeProgress();
+                view.closeProgress();
                 HttpResult httpResultAll= (HttpResult)mCallBackVo;
                 if (httpResultAll.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.forgetPasswordSuccess(true,httpResultAll.getMsg());
+                    view.forgetPasswordSuccess(isRefresh,httpResultAll.getMsg());
                 }else {
-                    interfaceView.forgetPasswordFailed(true,httpResultAll.getMsg());
+                    view.forgetPasswordFailed(isRefresh,httpResultAll.getMsg());
                 }
 
             }
 
             @Override
             public void onFaild(final String message) {
-                interfaceView.closeProgress();
-                interfaceView.forgetPasswordFailed(true,message);
+                view.closeProgress();
+                view.forgetPasswordFailed(isRefresh,message);
+            }
+        });
+    }
+    public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.getVerifiCode(view.getVerifiCodeParam(),composer, new ICallBackListener() {
+            @Override
+            public void onSuccess(final Object mCallBackVo) {
+                view.closeProgress();
+                HttpResult httpResultAll= (HttpResult)mCallBackVo;
+                if (httpResultAll.getStatus()== HttpCode.SUCCEED){
+                    view.verifiCodeSuccess(isRefresh,mCallBackVo);
+                }else {
+                    view.verifiCodeFailed(isRefresh,httpResultAll.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onFaild(final String message) {
+                view.closeProgress();
+                view.verifiCodeFailed(isRefresh,message);
             }
         });
     }

@@ -15,13 +15,14 @@ import com.base.bottomBar.BottomBarLayout;
 import com.base.bottomBar.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
+import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.sqldao.DBHelper;
-import com.base.view.MyActivity;
+import com.base.view.BaseFragment;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
-import com.base.view.BaseFragment;
 import com.jelly.jellybase.fragment.HomeFragment;
 import com.jelly.jellybase.fragment.MeFragment;
 import com.jelly.jellybase.fragment.MiddleFragment;
@@ -37,7 +38,7 @@ import java.util.List;
 import systemdb.Login;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
-public class BottomBarActivity extends MyActivity {
+public class BottomBarActivity extends BaseActivityImpl {
     private final int zxingRequestCode=1;
     private ViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
@@ -161,6 +162,12 @@ public class BottomBarActivity extends MyActivity {
         PermissionUtil.requestPermission(this, PermissionUtil.CODE_READ_EXTERNAL_STORAGE, mPermissionGrant);
         PermissionUtil.requestPermission(this, PermissionUtil.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
     }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
+    }
+
     /**
      * Callback received when a permissions request has been completed.
      */

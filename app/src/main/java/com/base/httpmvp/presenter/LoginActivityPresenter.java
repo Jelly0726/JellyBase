@@ -1,46 +1,67 @@
 package com.base.httpmvp.presenter;
 
+import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.mode.business.ICallBackListener;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResultData;
-import com.base.httpmvp.view.ILoginActivityView;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.disposables.Disposable;
 import systemdb.Login;
 
 /**
  * Created by Administrator on 2017/11/8.
  * 说明：登录View(activityview)对应的Presenter
  */
-public class LoginActivityPresenter implements IBasePresenter {
+public class LoginActivityPresenter extends BasePresenterImpl<LoginContact.View>
+implements LoginContact.Presenter{
 
-    private ILoginActivityView interfaceView;
 
-    public LoginActivityPresenter(ILoginActivityView interfaceView) {
-        this.interfaceView = interfaceView;
+    public LoginActivityPresenter(LoginContact.View interfaceView) {
+        super(interfaceView);
     }
 
-    public void userLogin(ObservableTransformer composer) {
-        interfaceView.showProgress();
-        mIBusiness.login(interfaceView.getLoginParam(),composer, new ICallBackListener() {
+    public void userLogin(final boolean isRefresh,ObservableTransformer composer) {
+        view.showProgress();
+        mIBusiness.login(view.getLoginParam(),composer, new ICallBackListener() {
             @Override
             public void onSuccess(final Object mCallBackVo) {
-                interfaceView.closeProgress();
+                view.closeProgress();
                 HttpResultData<Login> httpResultAll= (HttpResultData<Login>)mCallBackVo;
                 if (httpResultAll.getStatus()== HttpCode.SUCCEED){
                     Login model=httpResultAll.getData();
-                    interfaceView.loginSuccess(true,model);
+                    view.loginSuccess(isRefresh,model);
                 }else {
-                    interfaceView.loginFailed(true,httpResultAll.getMsg());
+                    view.loginFailed(isRefresh,httpResultAll.getMsg());
                 }
 
             }
 
             @Override
             public void onFaild(final String message) {
-                interfaceView.closeProgress();
-                interfaceView.loginFailed(true,message);
+                view.closeProgress();
+                view.loginFailed(isRefresh,message);
             }
         });
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void detach() {
+
+    }
+
+    @Override
+    public void addDisposable(Disposable subscription) {
+
+    }
+
+    @Override
+    public void unDisposable() {
+
     }
 }

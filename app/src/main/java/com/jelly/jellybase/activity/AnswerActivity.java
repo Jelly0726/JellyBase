@@ -18,7 +18,8 @@ import com.base.circledialog.callback.ConfigButton;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.ButtonParams;
 import com.base.circledialog.params.DialogParams;
-import com.base.view.MyActivity;
+import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/11/2.
  */
 
-public class AnswerActivity extends MyActivity implements View.OnClickListener{
+public class AnswerActivity extends BaseActivityImpl implements View.OnClickListener{
     private static final String filePath=Environment.getExternalStorageDirectory().getPath();//文件路径
     private Uri imageUri;
     private LinearLayout left_back;
@@ -51,6 +52,11 @@ public class AnswerActivity extends MyActivity implements View.OnClickListener{
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public IBasePresenter initPresenter() {
+        return null;
     }
 
     @Override

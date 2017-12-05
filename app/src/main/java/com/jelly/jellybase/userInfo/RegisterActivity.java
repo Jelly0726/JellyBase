@@ -11,14 +11,12 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.base.httpmvp.contact.RegisterContact;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
-import com.base.httpmvp.presenter.VerifiCodePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IRegisterActivityView;
-import com.base.httpmvp.view.IVerifiCodeView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.WebConfig;
 import com.base.webview.WebTools;
@@ -37,7 +35,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/28.
  */
 
-public class RegisterActivity extends MyActivity implements IRegisterActivityView,IVerifiCodeView {
+public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter>
+        implements RegisterContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.next_tv)
@@ -55,8 +54,6 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
 
-    private RegisterActivityPresenter registerActivityPresenter;
-    private VerifiCodePresenter verifiCodePresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +64,6 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
         iniView();
         initCountDownBtn();
         iniProgress();
-        registerActivityPresenter=new RegisterActivityPresenter(this);
-        verifiCodePresenter=new VerifiCodePresenter(this);
     }
     private void iniView(){
         agree.setChecked(false);
@@ -86,7 +81,7 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
                     ToastUtils.showToast(RegisterActivity.this,"请输入手机号");
                     return;
                 }
-                verifiCodePresenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -98,6 +93,12 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
         get_ver_btn.onDestroy();
         progressDialog=null;
     }
+
+    @Override
+    public RegisterContact.Presenter initPresenter() {
+        return new RegisterActivityPresenter(this);
+    }
+
     @OnClick({ R.id.next_tv, R.id.left_back,R.id.login_tv,R.id.clause})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -121,7 +122,7 @@ public class RegisterActivity extends MyActivity implements IRegisterActivityVie
                 }
                 if (agree.isChecked())
                 {
-                    registerActivityPresenter.userRegister(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.userRegister(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 }else {
                     ToastUtils.showToast(RegisterActivity.this,"请先阅读服务协议，并同意！");
                 }

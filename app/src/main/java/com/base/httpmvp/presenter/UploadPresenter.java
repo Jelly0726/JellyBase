@@ -7,6 +7,7 @@ import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IUploadView;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -42,5 +43,25 @@ public class UploadPresenter implements IBasePresenter {
                 interfaceView.uploadFailed(true,message);
             }
         });
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void detach() {
+
+    }
+
+    @Override
+    public void addDisposable(Disposable subscription) {
+
+    }
+
+    @Override
+    public void unDisposable() {
+
     }
 }

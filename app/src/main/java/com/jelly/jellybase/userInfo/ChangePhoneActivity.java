@@ -11,14 +11,12 @@ import android.widget.TextView;
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;
-import com.base.httpmvp.presenter.VerifiCodePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.view.IUpdatePhoneView;
-import com.base.httpmvp.view.IVerifiCodeView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -34,7 +32,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/27.
  */
 
-public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,IUpdatePhoneView {
+public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Presenter>
+        implements UpdatePhoneContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.btn_get_ver)
@@ -48,8 +47,6 @@ public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,I
     @BindView(R.id.ok_tv)
     TextView ok_tv;
 
-    private VerifiCodePresenter verifiCodePresenter;
-    private UpdatePhonePresenter updatePhonePresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +57,6 @@ public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,I
         iniView();
         initCountDownBtn();
         iniProgress();
-        verifiCodePresenter=new VerifiCodePresenter(this);
-        updatePhonePresenter=new UpdatePhonePresenter(this);
     }
     @Override
     public void onBackPressed() {
@@ -84,7 +79,7 @@ public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,I
                     ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
                     return;
                 }
-                verifiCodePresenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -96,6 +91,12 @@ public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,I
         get_ver_btn.onDestroy();
         progressDialog=null;
     }
+
+    @Override
+    public UpdatePhoneContact.Presenter initPresenter() {
+        return new UpdatePhonePresenter(this);
+    }
+
     @OnClick({R.id.left_back,R.id.ok_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -115,7 +116,7 @@ public class ChangePhoneActivity extends MyActivity implements IVerifiCodeView,I
                     ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
                     return;
                 }
-                updatePhonePresenter.updatePhone(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePhone(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }

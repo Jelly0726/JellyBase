@@ -7,6 +7,7 @@ import com.base.httpmvp.retrofitapi.HttpResultData;
 import com.base.httpmvp.view.IGetBankView;
 
 import io.reactivex.ObservableTransformer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -41,5 +42,25 @@ public class GetBankPresenter implements IBasePresenter {
                 interfaceView.getBankFailed(true,message);
             }
         });
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void detach() {
+
+    }
+
+    @Override
+    public void addDisposable(Disposable subscription) {
+
+    }
+
+    @Override
+    public void unDisposable() {
+
     }
 }

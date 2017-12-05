@@ -3,6 +3,7 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,7 +18,6 @@ import com.base.middleBar.FragmentAdapter;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.OnMultiClickListener;
-import com.base.view.MyActivity;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
@@ -39,7 +39,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  * Created by Administrator on 2017/9/21.
  */
 
-public class ProductDetailsActivity extends MyActivity {
+public class ProductDetailsActivity extends AppCompatActivity {
     private BGABanner banner;
     private ImageView productdetails_back;
     private TextView airlines_tv;
@@ -205,6 +205,7 @@ public class ProductDetailsActivity extends MyActivity {
         super.onPause();
         banner.stopAutoPlay();
     }
+
     @Override
     protected void onDestroy() {
         banner.onDestroy();

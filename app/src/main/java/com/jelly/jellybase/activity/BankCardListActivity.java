@@ -9,11 +9,11 @@ import android.widget.LinearLayout;
 
 import com.base.applicationUtil.ToastUtils;
 import com.base.bankcard.BankCardInfo;
+import com.base.httpmvp.contact.BankCartListContact;
 import com.base.httpmvp.presenter.BankListPresenter;
-import com.base.httpmvp.view.IBankListView;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
-import com.base.view.MyActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
@@ -36,7 +36,8 @@ import butterknife.OnClick;
  * Created by Administrator on 2017/9/27.
  */
 
-public class BankCardListActivity extends MyActivity implements IBankListView {
+public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.Presenter>
+        implements BankCartListContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.top_right)
@@ -52,7 +53,6 @@ public class BankCardListActivity extends MyActivity implements IBankListView {
     private int startRownumber=0;
     private int pageSize=10;
 
-    private BankListPresenter bankListPresenter;
     private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,6 @@ public class BankCardListActivity extends MyActivity implements IBankListView {
         iniView();
         iniXRefreshView();
         iniProgress();
-        bankListPresenter=new BankListPresenter(this);
     }
     private void iniView(){
     }
@@ -83,7 +82,12 @@ public class BankCardListActivity extends MyActivity implements IBankListView {
     protected void onResume() {
         super.onResume();
         startRownumber=0;
-        bankListPresenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+    }
+
+    @Override
+    public BankCartListContact.Presenter initPresenter() {
+        return new BankListPresenter(this);
     }
 
     private void iniXRefreshView(){
@@ -127,13 +131,13 @@ public class BankCardListActivity extends MyActivity implements IBankListView {
         @Override
         public void onRefresh(boolean isPullDown) {
             startRownumber=0;
-            bankListPresenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
         }
 
         @Override
         public void onLoadMore(boolean isSilence) {
             startRownumber++;
-            bankListPresenter.bankList(false,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.bankList(false,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
         }
     };
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){
