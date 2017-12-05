@@ -2,9 +2,9 @@ package com.base.httpmvp.view;
 
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.view.BaseFragment;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -21,7 +21,14 @@ import io.reactivex.subjects.BehaviorSubject;
  * Created by Administrator on 2017/9/21.
  */
 
-public abstract class BaseFragmentImpl extends BaseFragment implements LifecycleProvider<FragmentEvent> {
+public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFragment
+        implements LifecycleProvider<FragmentEvent> ,IBaseView {
+
+    protected P presenter;
+    private boolean isViewCreate = false;//view是否创建
+    private boolean isViewVisible = false;//view是否可见
+    private boolean isFirst = true;//是否第一次加载
+
     public LifecycleProvider lifecycleProvider;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
 
@@ -57,14 +64,23 @@ public abstract class BaseFragmentImpl extends BaseFragment implements Lifecycle
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE);
         lifecycleProvider=this;
+        presenter = initPresenter();
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
+        isViewCreate = true;
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isViewVisible = isVisibleToUser;
+        if (isVisibleToUser && isViewCreate) {
+            visibleToUser();
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -75,6 +91,9 @@ public abstract class BaseFragmentImpl extends BaseFragment implements Lifecycle
     public void onResume() {
         super.onResume();
         lifecycleSubject.onNext(FragmentEvent.RESUME);
+        if (isViewVisible) {
+            visibleToUser();
+        }
     }
 
     @Override
@@ -91,6 +110,10 @@ public abstract class BaseFragmentImpl extends BaseFragment implements Lifecycle
 
     @Override
     public void onDestroyView() {
+        if (presenter != null) {
+            presenter.detach();
+        }
+        isViewCreate = false;
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
         super.onDestroyView();
     }
@@ -106,4 +129,24 @@ public abstract class BaseFragmentImpl extends BaseFragment implements Lifecycle
         lifecycleSubject.onNext(FragmentEvent.DETACH);
         super.onDetach();
     }
+    /**
+     * 懒加载
+     * 让用户可见
+     * 第一次加载
+     */
+    protected void firstLoad() {
+
+    }
+
+    /**
+     * 懒加载
+     * 让用户可见
+     */
+    protected void visibleToUser() {
+        if (isFirst) {
+            firstLoad();
+            isFirst = false;
+        }
+    }
+    public abstract P initPresenter();
 }
