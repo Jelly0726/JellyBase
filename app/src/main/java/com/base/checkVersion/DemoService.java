@@ -9,7 +9,7 @@ import android.util.Log;
 import com.allenliu.versionchecklib.core.AVersionService;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.MyApplication;
-import com.base.httpmvp.mode.AppVersion;
+import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.retrofitapi.HttpResultData;

@@ -1,6 +1,6 @@
 package com.base.httpmvp.presenter;
 
-import com.base.httpmvp.mode.AppVersion;
+import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;

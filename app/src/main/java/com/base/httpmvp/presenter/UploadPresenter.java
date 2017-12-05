@@ -1,7 +1,7 @@
 package com.base.httpmvp.presenter;
 
-import com.base.httpmvp.mode.UploadBean;
-import com.base.httpmvp.mode.UploadData;
+import com.base.httpmvp.databean.UploadBean;
+import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.HttpResultData;

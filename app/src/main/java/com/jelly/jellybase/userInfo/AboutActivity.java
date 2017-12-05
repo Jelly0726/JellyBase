@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.ToastUtils;
 import com.base.httpmvp.contact.AboutContact;
-import com.base.httpmvp.mode.AboutUs;
+import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.presenter.AboutUsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
