@@ -88,7 +88,7 @@ public class HttpMethods implements IGlobalManager {
 									// 解决java.io.IOException: unexpected end of stream on Connection
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
-											.addHeader("Connection", "close")
+											//.addHeader("Connection", "close")
 											.build();
 								}else {
 									//在请求头中加入：强制使用缓存，不访问网络
