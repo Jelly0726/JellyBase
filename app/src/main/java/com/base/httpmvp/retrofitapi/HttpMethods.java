@@ -84,8 +84,13 @@ public class HttpMethods implements IGlobalManager {
 							if (!NetworkUtils.isAvailable(MyApplication.getMyApp())) {
 								if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
 									//在请求头中加入：强制使用缓存，不访问网络
-									// .addHeader("Connection", "close")
-									// 解决java.io.IOException: unexpected end of stream on Connection
+								/*
+									.addHeader("Connection", "close")
+									解决java.io.IOException: unexpected end of stream on Connection
+									主要就是在http header里面增加关闭连接，不让它保持连接。
+									主要是在回收url connection有可能有问题，后来我也增加了连接关闭，
+									不保持url connection，这样就解决了，但是付出了性能的代价。
+									 */
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
 											//.addHeader("Connection", "close")
