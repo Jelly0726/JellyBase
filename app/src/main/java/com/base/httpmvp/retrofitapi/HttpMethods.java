@@ -1,6 +1,7 @@
 package com.base.httpmvp.retrofitapi;
 
 import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -81,10 +82,20 @@ public class HttpMethods implements IGlobalManager {
 							Request request = chain.request();
 							//网络不可用
 							if (!NetworkUtils.isAvailable(MyApplication.getMyApp())) {
-								//在请求头中加入：强制使用缓存，不访问网络
-								request = request.newBuilder()
-										.cacheControl(CacheControl.FORCE_CACHE)
-										.build();
+								if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
+									//在请求头中加入：强制使用缓存，不访问网络
+									// .addHeader("Connection", "close")
+									// 解决java.io.IOException: unexpected end of stream on Connection
+									request = request.newBuilder()
+											.cacheControl(CacheControl.FORCE_CACHE)
+											.addHeader("Connection", "close")
+											.build();
+								}else {
+									//在请求头中加入：强制使用缓存，不访问网络
+									request = request.newBuilder()
+											.cacheControl(CacheControl.FORCE_CACHE)
+											.build();
+								}
 								Log.i("sss","no network");
 							}
 							Response response = chain.proceed(request);
@@ -95,7 +106,7 @@ public class HttpMethods implements IGlobalManager {
 								Log.i("sss","has network maxAge="+maxAge);
 								response.newBuilder()
 										.header("Cache-Control", "public, max-age=" + maxAge)
-										//.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+										.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
 										.build();
 							} else {
 								Log.i("sss","network error");
@@ -104,7 +115,7 @@ public class HttpMethods implements IGlobalManager {
 								int maxStale = 60 * 60 * 24 * 28;
 								response.newBuilder()
 										.header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-										//.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+										.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
 										.build();
 								Log.i("sss","response build maxStale="+maxStale);
 							}
