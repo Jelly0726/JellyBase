@@ -185,8 +185,13 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
         if (isRefresh){
             mList.clear();
             xRefreshView.stopRefresh();
-        }else {
             if (list.size()<pageSize){
+                xRefreshView.setLoadComplete(true);
+            }else {
+                xRefreshView.setLoadComplete(false);
+            }
+        }else {
+            if (list.size()==0){
                 xRefreshView.setLoadComplete(true);
             }else
                 xRefreshView.stopLoadMore();
