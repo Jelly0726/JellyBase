@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BaseActivity extends Activity implements AMapNaviListener, AMapNaviViewListener {
+public class AMapBaseActivity extends Activity implements AMapNaviListener, AMapNaviViewListener {
 
     protected AMapNaviView mAMapNaviView;
     protected AMapNavi mAMapNavi;
