@@ -60,6 +60,7 @@ public class UploadPresenter implements IBasePresenter {
                 }
             });
         }else {
+            interfaceView.closeProgress();
             interfaceView.uploadFailed(true,"文件不存在");
         }
     }
