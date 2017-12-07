@@ -18,4 +18,5 @@ public class ConfigKey {
     public static final String ISRUN="ISRUN";
     public static final String ORDERNU="ORDERNU";
     public static final String ISHOME="ISHOME";
+    public static final String DEFAULT_BANK="DEFAULT_BANK";//默认银行卡
 }

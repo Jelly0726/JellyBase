@@ -24,11 +24,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.base.applicationUtil.AppPrefs;
 import com.base.bankcard.BankCardInfo;
 import com.base.bankcard.BankUtil;
+import com.base.config.ConfigKey;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -72,6 +75,16 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
         holder.bank_name.setText(mList.get(position).getBankName());
         holder.bank_no.setText(BankUtil.getBankCardID(mList.get(position).getBankNo()));
         holder.card_type.setText(mList.get(position).getType());
+        if (mList.get(position).getIsdefault()){
+            holder.tag_tv.setVisibility(View.VISIBLE);
+            Gson gson=new Gson();
+            String json=gson.toJson(mList.get(position));
+            AppPrefs.putString(context.getApplicationContext(),
+                    ConfigKey.DEFAULT_BANK,json);
+        }else {
+            holder.tag_tv.setVisibility(View.GONE);
+        }
+
         if(mList.get(position).getBankLogo()!=null){
             if (mList.get(position).getBankLogo().trim().length()>6){
                 Glide.with(context)
@@ -85,6 +98,7 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
             }
         }
         holder.bank_logo.setImageResource(mList.get(position).getBankDraw());
+
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override

@@ -18,7 +18,7 @@ public class BankCardInfo implements Serializable{
     @SerializedName("bankno")
     private String bankNo;
     @SerializedName("isdefault")
-    private Integer isdefault;
+    private boolean isdefault;
     private int bankDraw= R.drawable.yinlian;
     private String bankLogo;
 
@@ -62,11 +62,11 @@ public class BankCardInfo implements Serializable{
         this.type = type;
     }
 
-    public Integer getIsdefault() {
+    public boolean getIsdefault() {
         return isdefault;
     }
 
-    public void setIsdefault(Integer isdefault) {
+    public void setIsdefault(boolean isdefault) {
         this.isdefault = isdefault;
     }
 
