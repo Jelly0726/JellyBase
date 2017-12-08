@@ -19,6 +19,7 @@ public abstract class BasePresenterImpl<V extends IBaseView> implements IBasePre
 
     @Override
     public void detach() {
+        view.closeProgress();
         this.view = null;
         unDisposable();
     }

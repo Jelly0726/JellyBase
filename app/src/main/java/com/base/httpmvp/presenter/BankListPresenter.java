@@ -40,7 +40,7 @@ public class BankListPresenter extends BasePresenterImpl<BankCartListContact.Vie
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

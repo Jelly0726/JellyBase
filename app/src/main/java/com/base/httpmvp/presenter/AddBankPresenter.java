@@ -39,7 +39,7 @@ public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View>
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

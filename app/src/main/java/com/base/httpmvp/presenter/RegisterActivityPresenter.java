@@ -40,7 +40,7 @@ implements RegisterContact.Presenter{
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-                //addDisposable(d);
+                addDisposable(d);
             }
 
             @Override
@@ -73,7 +73,7 @@ implements RegisterContact.Presenter{
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

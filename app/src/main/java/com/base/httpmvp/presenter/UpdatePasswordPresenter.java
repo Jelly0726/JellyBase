@@ -40,7 +40,7 @@ public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

@@ -39,7 +39,7 @@ implements ForgetPwdContact.Presenter{
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override
@@ -71,7 +71,7 @@ implements ForgetPwdContact.Presenter{
 
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        addDisposable(d);
                     }
 
                     @Override

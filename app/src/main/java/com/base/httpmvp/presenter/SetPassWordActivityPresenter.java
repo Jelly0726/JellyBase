@@ -41,7 +41,7 @@ implements SetPwdContact.Presenter{
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

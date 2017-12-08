@@ -40,7 +40,7 @@ public class GetBankPresenter implements IBasePresenter {
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

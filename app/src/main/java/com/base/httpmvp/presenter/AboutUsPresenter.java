@@ -39,7 +39,7 @@ public class AboutUsPresenter extends BasePresenterImpl<AboutContact.View> imple
 
             @Override
             public void onSubscribe(@NonNull Disposable d) {
-
+                addDisposable(d);
             }
 
             @Override

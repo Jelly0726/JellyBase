@@ -40,7 +40,7 @@ implements UpdatePhoneContact.Presenter{
 
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        addDisposable(d);
                     }
 
                     @Override
@@ -72,7 +72,7 @@ implements UpdatePhoneContact.Presenter{
 
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        addDisposable(d);
                     }
 
                     @Override
