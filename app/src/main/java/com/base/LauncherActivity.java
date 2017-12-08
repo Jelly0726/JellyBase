@@ -16,13 +16,12 @@ import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
-import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.httpmvp.view.BaseActivityImpl;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.WokeService;
+import com.base.view.BaseActivity;
 
-public class LauncherActivity extends BaseActivityImpl {
+public class LauncherActivity extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -182,13 +181,10 @@ public class LauncherActivity extends BaseActivityImpl {
 		super.onPause();
 	}
 
-	@Override
-	public IBasePresenter initPresenter() {
-		return null;
-	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 	}
+
 }

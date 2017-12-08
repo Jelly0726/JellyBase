@@ -20,8 +20,7 @@ import com.base.MapUtil.DestinationActivity;
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
-import com.base.httpmvp.presenter.IBasePresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XScrollView;
 import com.base.xrefreshview.listener.OnItemClickListener;
@@ -52,7 +51,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  * Created by Administrator on 2017/9/18.
  */
 
-public class HomeActivity extends BaseActivityImpl {
+public class HomeActivity extends BaseActivity {
     private View mRootView;
     private final int zxingRequestCode=1;
     private final int addressRequestCode=2;
@@ -457,8 +456,4 @@ public class HomeActivity extends BaseActivityImpl {
         banner.stopAutoPlay();
     }
 
-    @Override
-    public IBasePresenter initPresenter() {
-        return null;
-    }
 }

@@ -5,8 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.base.httpmvp.presenter.IBasePresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -17,7 +16,7 @@ import com.tencent.smtt.sdk.WebViewClient;
  * Created by Administrator on 2017/11/3.
  */
 
-public class BaseWebViewActivity extends BaseActivityImpl {
+public class BaseWebViewActivity extends BaseActivity {
     private WebTools webTools;
     private WebView Web;
 
@@ -30,11 +29,6 @@ public class BaseWebViewActivity extends BaseActivityImpl {
             webTools = new WebTools();
         }
         iniWebView();
-    }
-
-    @Override
-    public IBasePresenter initPresenter() {
-        return null;
     }
 
     private void iniWebView() {

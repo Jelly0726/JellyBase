@@ -2,15 +2,14 @@ package com.jelly.jellybase.shopcar;
 
 import android.os.Bundle;
 
-import com.base.httpmvp.presenter.IBasePresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * Created by Administrator on 2017/10/28.
  */
 
-public class ShopCartActivity extends BaseActivityImpl {
+public class ShopCartActivity extends BaseActivity {
     private ShopCarFragment shopCarFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +27,6 @@ public class ShopCartActivity extends BaseActivityImpl {
 
     }
 
-    @Override
-    public IBasePresenter initPresenter() {
-        return null;
-    }
 
     /**
      * 当活动被回收时，存储当前的状态。

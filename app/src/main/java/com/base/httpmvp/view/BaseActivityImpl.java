@@ -88,14 +88,4 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
      * @return 相应的presenter
      */
     public abstract P initPresenter();
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void closeProgress() {
-
-    }
-
 }

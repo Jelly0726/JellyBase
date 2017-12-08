@@ -12,10 +12,9 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
-import com.base.httpmvp.presenter.IBasePresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.OnMultiClickListener;
 import com.base.sqldao.DBHelper;
+import com.base.view.BaseActivity;
 import com.base.view.FlowLayout;
 import com.jelly.jellybase.R;
 
@@ -27,7 +26,7 @@ import systemdb.SearchHistory;
  * Created by Administrator on 2017/9/28.
  */
 
-public class SearchActivity extends BaseActivityImpl {
+public class SearchActivity extends BaseActivity {
     private EditText search_edit;
     private TextView cancel_tv;
     private ImageView clear_history;
@@ -139,8 +138,4 @@ public class SearchActivity extends BaseActivityImpl {
         super.onResume();
     }
 
-    @Override
-    public IBasePresenter initPresenter() {
-        return null;
-    }
 }
