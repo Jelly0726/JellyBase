@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,6 +131,36 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         //count=child.getCount();
         final EditText num = (EditText) view.findViewById(R.id.dialog_num);
         num.setText(count + "");
+        num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//                if (TextUtils.isEmpty(s.toString().trim())){
+//
+//                }else {
+//                    int number = Integer.parseInt(s.toString().trim());
+//                    if (number <= goods.getMinsale()) {
+//                        number = goods.getMinsale();
+//                        num.setText(String.valueOf(number));
+//                    } else {
+//                        if (number > goods.getStockqty()) {
+//                            number = goods.getStockqty();
+//                            num.setText(String.valueOf(number));
+//                            num.setSelection(String.valueOf(number).length());
+//                        }
+//                    }
+//                }
+            }
+        });
         //自动弹出键盘
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
