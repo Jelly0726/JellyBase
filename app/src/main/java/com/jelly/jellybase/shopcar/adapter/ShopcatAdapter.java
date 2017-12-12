@@ -301,6 +301,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
                         if (number > child.getStockqty()) {
                             number = child.getStockqty();
                             num.setText(String.valueOf(number));
+                            num.setSelection(String.valueOf(number).length());
                         }
                     }
                 }
