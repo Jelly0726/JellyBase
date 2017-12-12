@@ -63,6 +63,10 @@ public class BaseActivity extends AutoLayoutActivity {
     }
     @Override
     protected void onDestroy() {
+        if (circleDialog!=null){
+            circleDialog.onDismiss();
+            circleDialog=null;
+        }
         /**
          * 停止监听，注销广播
          */
@@ -130,46 +134,54 @@ public class BaseActivity extends AutoLayoutActivity {
             }
         }
     }
+    private CircleDialog.Builder circleDialog;
+    private final static Object mLock = new Object();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.arg1){
                 case 0:
-                    new CircleDialog.Builder(BaseActivity.this)
-                            .configDialog(new ConfigDialog() {
-                                @Override
-                                public void onConfig(DialogParams params) {
-                                    params.width=0.6f;
-                                }
-                            })
-                            .setCanceledOnTouchOutside(false)
-                            .setCancelable(false)
-                            .setTitle("登录过期！")
-                            .configText(new ConfigText() {
-                                @Override
-                                public void onConfig(TextParams params) {
-                                    params.gravity= Gravity.LEFT;
-                                    params.textColor= Color.parseColor("#FF1F50F1");
-                                    params.padding=new int[]{20,0,20,0};
-                                }
-                            })
-                            .setText("登录过期或异地登录，请重新登录!")
-                            .setPositive("确定", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    GlobalToken.removeToken();
-                                    MyApplication.getMyApp().finishAllActivity();
-                                    Intent intent1 = new Intent();
-                                    //intent.setClass(this, LoginActivity.class);
-                                    intent1.setAction(IntentAction.ACTION_LOGIN);
-                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    MyApplication.getMyApp().startActivity(intent1);
-                                }
-                            })
-                            .show();
-
+                    if (circleDialog == null) {
+                        synchronized (mLock) {
+                            if (circleDialog == null) {
+                                new CircleDialog.Builder(BaseActivity.this)
+                                        .configDialog(new ConfigDialog() {
+                                            @Override
+                                            public void onConfig(DialogParams params) {
+                                                params.width = 0.6f;
+                                            }
+                                        })
+                                        .setCanceledOnTouchOutside(false)
+                                        .setCancelable(false)
+                                        .setTitle("登录过期！")
+                                        .configText(new ConfigText() {
+                                            @Override
+                                            public void onConfig(TextParams params) {
+                                                params.gravity = Gravity.LEFT;
+                                                params.textColor = Color.parseColor("#FF1F50F1");
+                                                params.padding = new int[]{20, 0, 20, 0};
+                                            }
+                                        })
+                                        .setText("登录过期或异地登录，请重新登录!")
+                                        .setPositive("确定", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                circleDialog = null;
+                                                GlobalToken.removeToken();
+                                                MyApplication.getMyApp().finishAllActivity();
+                                                Intent intent1 = new Intent();
+                                                //intent.setClass(this, LoginActivity.class);
+                                                intent1.setAction(IntentAction.ACTION_LOGIN);
+                                                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                                        | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                MyApplication.getMyApp().startActivity(intent1);
+                                            }
+                                        })
+                                        .show();
+                            }
+                        }
+                    }
                     break;
             }
 
