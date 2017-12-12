@@ -229,7 +229,12 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
             for (int j = 0; j <= i; j++) {
                 int[] img = {R.drawable.shopcar_cmaz, R.drawable.shopcar_cmaz, R.drawable.shopcar_cmaz, R.drawable.shopcar_cmaz, R.drawable.shopcar_cmaz, R.drawable.shopcar_cmaz};
                 //i-j 就是商品的id， 对应着第几个店铺的第几个商品，1-1 就是第一个店铺的第一个商品
-                goods.add(new GoodsInfo(i + "-" + j, "商品", groups.get(i).getName() + "的第" + (j + 1) + "个商品", 255.00 + new Random().nextInt(1500), 1555 + new Random().nextInt(3000), "第一排", "出头天者", img[j], new Random().nextInt(100)));
+                goods.add(new GoodsInfo(i + "-" + j, "商品",
+                        groups.get(i).getName() + "的第" + (j + 1) + "个商品",
+                        255.00 + new Random().nextInt(1500),
+                        1555 + new Random().nextInt(3000),
+                        "第一排", "出头天者", img[j],
+                        new Random().nextInt(100),100));
             }
             childs.put(groups.get(i).getId(), goods);
         }
@@ -335,6 +340,9 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
         GoodsInfo good = (GoodsInfo) adapter.getChild(groupPosition, childPosition);
         int count = good.getCount();
         count++;
+        if (count>good.getStockqty()) {
+            count=good.getStockqty();
+        }
         good.setCount(count);
         ((TextView) showCountView).setText(String.valueOf(count));
         adapter.notifyDataSetChanged();

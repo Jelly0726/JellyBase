@@ -3,8 +3,11 @@ package com.jelly.jellybase.shopcar.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -274,6 +277,35 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
         count=child.getCount();
         final EditText num= (EditText) view.findViewById(R.id.dialog_num);
         num.setText(count+"");
+        num.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(s.toString().trim())){
+
+                }else {
+                    int number = Integer.parseInt(s.toString().trim());
+                    if (number <= 0) {
+                        number = 1;
+                        num.setText(String.valueOf(number));
+                    } else {
+                        if (number > child.getStockqty()) {
+                            number = child.getStockqty();
+                            num.setText(String.valueOf(number));
+                        }
+                    }
+                }
+            }
+        });
         //自动弹出键盘
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -298,9 +330,12 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
                 if(number==0){
                     dialog.dismiss();
                 }else{
+                    if (number>child.getStockqty()) {
+                        number=child.getStockqty();
+                    }
                     num.setText(String.valueOf(number));
                     child.setCount(number);
-                    modifyCountInterface.doUpdate(groupPosition,childPosition,showCountView,isChecked);
+                    modifyCountInterface.doUpdate(groupPosition, childPosition, showCountView, isChecked);
                     dialog.dismiss();
                 }
             }
@@ -309,6 +344,9 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 count++;
+                if (count>child.getStockqty()) {
+                    count=child.getStockqty();
+                }
                 num.setText(String.valueOf(count));
             }
         });

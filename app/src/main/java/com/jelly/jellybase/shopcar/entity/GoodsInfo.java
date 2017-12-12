@@ -15,18 +15,20 @@ public class GoodsInfo {
     private double prime_price;
     private int postion;
     private int count;
+    private int stockqty=100;
     private String color;
     private String size;
     private int goodsImg;
 
     public GoodsInfo(String id, String name, String desc,double price, double prime_price,
-                     String color, String size, int goodsImg,int count) {
+                     String color, String size, int goodsImg,int count,int stockqty) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.price = price;
         this.prime_price = prime_price;
         this.count = count;
+        this.stockqty = stockqty;
         this.color = color;
         this.size = size;
         this.goodsImg = goodsImg;
@@ -126,5 +128,13 @@ public class GoodsInfo {
 
     public void setGoodsImg(int goodsImg) {
         this.goodsImg = goodsImg;
+    }
+
+    public int getStockqty() {
+        return stockqty;
+    }
+
+    public void setStockqty(int stockqty) {
+        this.stockqty = stockqty;
     }
 }
