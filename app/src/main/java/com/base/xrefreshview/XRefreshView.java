@@ -214,6 +214,8 @@ public class XRefreshView extends LinearLayout {
                 a.recycle();
             }
         }
+        setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.xrefreshview_empty_layout,
+                this, false));
         addHeaderView();
         this.getViewTreeObserver().addOnGlobalLayoutListener(
                 new OnGlobalLayoutListener() {
