@@ -14,10 +14,8 @@ import com.base.httpmvp.contact.ForgetPwdContact;
 import com.base.httpmvp.presenter.ForgetPasswordPresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -44,7 +42,6 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +50,8 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
         ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
-        iniProgress();
     }
     private void iniView(){
-    }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
     }
     private void initCountDownBtn() {
         get_ver_btn= (CountDownTimerButton) findViewById(R.id.btn_get_ver);
@@ -81,7 +74,6 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
     protected void onDestroy() {
         super.onDestroy();
         get_ver_btn.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -108,19 +100,6 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
                 }
                 presenter.forgetPwd(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
-        }
-    }
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
         }
     }
 

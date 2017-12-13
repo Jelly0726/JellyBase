@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.CheckResult;
 
 import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;
+import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -22,11 +24,13 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
         implements LifecycleProvider<ActivityEvent>,IBaseView {
     public LifecycleProvider lifecycleProvider;
     public P presenter;
+    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         lifecycleProvider=this;
+        progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
         presenter = initPresenter();
     }
     @Override
@@ -35,6 +39,10 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
         if (presenter != null) {
             presenter.detach();//在presenter中解绑释放view
             presenter = null;
+        }
+        if (progressDialog!=null){
+            progressDialog.dismiss();
+            progressDialog=null;
         }
         super.onDestroy();
     }
@@ -88,4 +96,17 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
      * @return 相应的presenter
      */
     public abstract P initPresenter();
+    @Override
+    public void showProgress() {
+        if (progressDialog != null) {
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void closeProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }

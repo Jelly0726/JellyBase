@@ -15,10 +15,8 @@ import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -47,7 +45,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     @BindView(R.id.ok_tv)
     TextView ok_tv;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +53,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
         ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
-        iniProgress();
     }
     @Override
     public void onBackPressed() {
@@ -64,9 +60,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
         super.onBackPressed();
     }
     private void iniView(){
-    }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
     }
     private void initCountDownBtn() {
         get_ver_btn= (CountDownTimerButton) findViewById(R.id.btn_get_ver);
@@ -89,7 +82,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     protected void onDestroy() {
         super.onDestroy();
         get_ver_btn.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -118,19 +110,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                 }
                 presenter.updatePhone(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
-        }
-    }
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
         }
     }
 

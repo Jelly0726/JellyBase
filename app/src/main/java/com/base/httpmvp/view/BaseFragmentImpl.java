@@ -5,7 +5,9 @@ import android.support.annotation.CheckResult;
 import android.view.View;
 
 import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseFragment;
+import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -25,6 +27,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         implements LifecycleProvider<FragmentEvent> ,IBaseView {
 
     protected P presenter;
+    private MProgressDialog progressDialog;
     private boolean isViewCreate = false;//view是否创建
     private boolean isViewVisible = false;//view是否可见
     private boolean isFirst = true;//是否第一次加载
@@ -72,6 +75,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
         isViewCreate = true;
+        progressDialog = MProgressUtil.getInstance().getMProgressDialog(getActivity());
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -115,6 +119,10 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         }
         isViewCreate = false;
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
+        if (progressDialog!=null){
+            progressDialog.dismiss();
+            progressDialog=null;
+        }
         super.onDestroyView();
     }
 
@@ -149,4 +157,17 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         }
     }
     public abstract P initPresenter();
+    @Override
+    public void showProgress() {
+        if (progressDialog != null) {
+            progressDialog.show();
+        }
+    }
+
+    @Override
+    public void closeProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
 }

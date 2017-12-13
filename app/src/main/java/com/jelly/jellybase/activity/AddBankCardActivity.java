@@ -13,10 +13,8 @@ import com.base.bankcard.BandCardEditText;
 import com.base.httpmvp.contact.AddBankCartContact;
 import com.base.httpmvp.presenter.AddBankPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -50,7 +48,6 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
     TextView commit_tv;
 
 
-    private MProgressDialog progressDialog;
     private String bankName="没有查到所属银行";
     private String bankType="储蓄卡";
     @Override
@@ -59,7 +56,6 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
         setContentView(R.layout.bankcard_add_activity);
         ButterKnife.bind(this);
         iniView();
-        iniProgress();
     }
     private void iniView(){
         bankCard_id.setBankCardListener(new BandCardEditText.BankCardListener() {
@@ -83,13 +79,9 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
         closeProgress();
         super.onBackPressed();
     }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -117,20 +109,6 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
                 }
                 presenter.addBank(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
-        }
-    }
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-            progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-            progressDialog.dismiss();
         }
     }
 

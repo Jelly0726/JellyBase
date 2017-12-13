@@ -23,10 +23,8 @@ import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.httpmvp.view.IGetAppversionListView;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.BuildConfig;
 
@@ -43,23 +41,17 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
     private TextView exit_tv;
 
     private GetAppversionListPresenter getAppversionListPresenter;
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_settings_activity);
         iniView();
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
         getAppversionListPresenter=new GetAppversionListPresenter(this);
     }
 
     @Override
     protected void onDestroy() {
         AllenChecker.cancelMission();
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-            progressDialog=null;
-        }
         super.onDestroy();
     }
 
@@ -156,20 +148,6 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
             }
         }
     };
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-            progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-        }
-    }
 
     @Override
     public Object getAppversionListParam() {

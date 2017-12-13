@@ -12,7 +12,6 @@ import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.contact.BankCartListContact;
 import com.base.httpmvp.presenter.BankListPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
@@ -20,7 +19,6 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.BankCardListAdapter;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.ArrayList;
@@ -53,7 +51,6 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     private int startRownumber=0;
     private int pageSize=10;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +58,6 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
         ButterKnife.bind(this);
         iniView();
         iniXRefreshView();
-        iniProgress();
     }
     private void iniView(){
     }
@@ -70,13 +66,8 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
         closeProgress();
         super.onBackPressed();
     }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
-    }
-    @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog=null;
     }
     @Override
     protected void onResume() {
@@ -155,21 +146,6 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
 //            startActivity(intent);
         }
     };
-
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-            progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-        }
-    }
 
     @Override
     public Object getBankListParam() {

@@ -17,10 +17,8 @@ import com.base.httpmvp.presenter.LoginActivityPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -51,14 +49,12 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
     @BindView(R.id.password_edit)
     EditText password_edit;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login_activity);
         ButterKnife.bind(this);
         iniView();
-        iniProgress();
         phone=getIntent().getStringExtra("phone");
         password=getIntent().getStringExtra("password");
         from=getIntent().getIntExtra("from",-1);
@@ -91,9 +87,6 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
         return new LoginActivityPresenter(this);
     }
 
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
-    }
     @OnClick({R.id.login_tv,R.id.forget_pwd,R.id.register_account})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -129,23 +122,7 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog=null;
     }
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
-        }
-    }
-
     @Override
     public Object getLoginParam() {
         password= MD5.MD5Encode(password);

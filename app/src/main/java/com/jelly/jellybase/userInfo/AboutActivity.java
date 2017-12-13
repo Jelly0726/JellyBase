@@ -11,10 +11,8 @@ import com.base.httpmvp.contact.AboutContact;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.presenter.AboutUsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import butterknife.BindView;
@@ -37,7 +35,6 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
     @BindView(R.id.phone_tv)
     TextView phone_tv;
 
-    private MProgressDialog progressDialog;
     private AboutUs aboutUs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,6 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
         //绑定id
         ButterKnife.bind(this);
         iniView();
-        iniProgress();
         presenter.aboutUs(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
     }
     private void iniView(){
@@ -63,13 +59,9 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
         address_tv.setText(aboutUs.getAddress());
         phone_tv.setText(aboutUs.getTelephone());
     }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
-    }
     @Override
     protected void onDestroy() {
         closeProgress();
-        progressDialog=null;
         super.onDestroy();
     }
 
@@ -87,20 +79,6 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
             case R.id.left_back:
                 finish();
                 break;
-        }
-    }
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-            progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-            progressDialog.dismiss();
         }
     }
 

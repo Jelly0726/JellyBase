@@ -12,10 +12,8 @@ import com.base.applicationUtil.ToastUtils;
 import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -42,14 +40,12 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
     @BindView(R.id.commit_tv)
     TextView commit_tv;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_changepwd_activity);
         ButterKnife.bind(this);
         iniView();
-        iniProgress();
     }
     private void iniView(){
     }
@@ -58,13 +54,9 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
         closeProgress();
         super.onBackPressed();
     }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -94,19 +86,6 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
         }
     }
 
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
-        }
-    }
 
     @Override
     public Object getUpdatePasswordParam() {

@@ -15,11 +15,9 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SetPwdContact;
 import com.base.httpmvp.presenter.SetPassWordActivityPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.sqldao.DBHelper;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -36,7 +34,6 @@ import butterknife.OnClick;
 public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
         implements SetPwdContact.View {
 
-    private MProgressDialog progressDialog;
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.next_tv)
@@ -56,10 +53,6 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
         // 进行id绑定
         ButterKnife.bind(this);
         phone=getIntent().getStringExtra("phone");
-        iniProgress();
-    }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
     }
     @OnClick({ R.id.next_tv, R.id.left_back})
     public void onClick(View v) {
@@ -89,7 +82,6 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -105,19 +97,6 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
         map.put("salesphone",phone);
         map.put("password",password);
         return map;
-    }
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
-        }
     }
 
     @Override

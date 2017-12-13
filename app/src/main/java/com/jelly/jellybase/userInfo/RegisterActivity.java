@@ -15,13 +15,11 @@ import com.base.httpmvp.contact.RegisterContact;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.WebConfig;
 import com.base.webview.WebTools;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import java.util.Map;
@@ -54,7 +52,6 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     @BindView(R.id.verificationCode_edit)
     EditText verificationCode_edit;
 
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +60,9 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
         ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
-        iniProgress();
     }
     private void iniView(){
         agree.setChecked(false);
-    }
-    private void iniProgress(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
     }
     private void initCountDownBtn() {
         get_ver_btn.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +84,6 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     protected void onDestroy() {
         super.onDestroy();
         get_ver_btn.onDestroy();
-        progressDialog=null;
     }
 
     @Override
@@ -146,20 +138,6 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
         map.put("account",phone);
         map.put("vericode",verificationCode);
         return map;
-    }
-
-    @Override
-    public void showProgress() {
-        if (progressDialog!=null){
-                progressDialog.show();
-        }
-    }
-
-    @Override
-    public void closeProgress() {
-        if (progressDialog!=null){
-                progressDialog.dismiss();
-        }
     }
 
     @Override
