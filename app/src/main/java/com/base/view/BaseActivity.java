@@ -135,7 +135,6 @@ public class BaseActivity extends AutoLayoutActivity {
         }
     }
     private CircleDialog.Builder circleDialog;
-    private final static Object mLock = new Object();
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -143,7 +142,7 @@ public class BaseActivity extends AutoLayoutActivity {
             switch (msg.arg1){
                 case 0:
                     if (circleDialog == null) {
-                        synchronized (mLock) {
+                        synchronized (MyApplication.getMyApp()) {
                             if (circleDialog == null) {
                                 new CircleDialog.Builder(BaseActivity.this)
                                         .configDialog(new ConfigDialog() {
