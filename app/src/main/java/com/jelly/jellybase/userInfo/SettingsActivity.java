@@ -17,12 +17,11 @@ import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.DialogParams;
 import com.base.config.IntentAction;
+import com.base.httpmvp.contact.SettingContact;
 import com.base.httpmvp.databean.AppVersion;
-import com.base.httpmvp.presenter.GetAppversionListPresenter;
-import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.presenter.SettingPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.httpmvp.view.IGetAppversionListView;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -32,7 +31,7 @@ import com.trello.rxlifecycle2.android.BuildConfig;
  * Created by Administrator on 2017/9/27.
  */
 
-public class SettingsActivity extends BaseActivityImpl implements IGetAppversionListView {
+public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter> implements SettingContact.View {
     private LinearLayout left_back;
     private LinearLayout change_pwd;
     private LinearLayout change_phone;
@@ -40,13 +39,11 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
     private LinearLayout about;
     private TextView exit_tv;
 
-    private GetAppversionListPresenter getAppversionListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_settings_activity);
         iniView();
-        getAppversionListPresenter=new GetAppversionListPresenter(this);
     }
 
     @Override
@@ -56,8 +53,8 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
     }
 
     @Override
-    public IBasePresenter initPresenter() {
-        return null;
+    public SettingContact.Presenter initPresenter() {
+        return new SettingPresenter(this);
     }
 
     private void iniView(){
@@ -94,8 +91,7 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
 //                    startActivity(intent);
                     break;
                 case R.id.check_updata:
-                    getAppversionListPresenter.execute(true
-                            ,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.getAppversion(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
 //                    AllenChecker.init(true);
 //                    HttpHeaders httpHeaders=new HttpHeaders();
 //                    httpHeaders.put("token",GlobalToken.getToken().getToken());
@@ -150,12 +146,7 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
     };
 
     @Override
-    public Object getAppversionListParam() {
-        return null;
-    }
-
-    @Override
-    public void getAppversionListSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void getAppversionSuccess( Object mCallBackVo) {
         AppVersion appVersion= (AppVersion) mCallBackVo;
 
         HttpHeaders httpHeaders=new HttpHeaders();
@@ -190,7 +181,7 @@ public class SettingsActivity extends BaseActivityImpl implements IGetAppversion
     }
 
     @Override
-    public void getAppversionListFailed(boolean isRefresh, String message) {
+    public void getAppversionFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 }
