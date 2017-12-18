@@ -20,8 +20,13 @@ import com.zzhoujay.richtext.ig.DefaultImageDownloader;
 public class ResolveHtmlActivity extends AppCompatActivity implements View.OnClickListener{
     private LinearLayout left_back;
     private TextView productDetail_tv;
+
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
+        // activity onDestory时
+        RichText.clear(this);
+        //在应用退出时调用
+        RichText.recycle();
         super.onDestroy();
     }
 
@@ -59,4 +64,5 @@ public class ResolveHtmlActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
+
 }
