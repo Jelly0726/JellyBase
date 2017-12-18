@@ -20,5 +20,6 @@
         <item>商品详情</item>
         <item>提交评价</item>
         <item>版本检查</item>
+        <item>解析html</item>
     </string-array>
 </resources>

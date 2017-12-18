@@ -178,6 +178,7 @@ dependencies {
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
     //检查版本
     compile 'com.allenliu.versionchecklib:library:1.8.2'
-
+    //Android平台下的富文本解析器，支持Html和Markdown
+    compile 'com.zzhoujay.richtext:richtext:3.0.4'
     compile files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
 }

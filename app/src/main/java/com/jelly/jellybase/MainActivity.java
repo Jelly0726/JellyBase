@@ -30,13 +30,14 @@ import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
+import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
-import com.jelly.jellybase.userInfo.LoginActivity;
-import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
-import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
+import com.jelly.jellybase.userInfo.LoginActivity;
+import com.jelly.jellybase.userInfo.RegisterActivity;
+import com.jelly.jellybase.userInfo.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -189,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 18://版本检查
                     intent=new Intent(MyApplication.getMyApp(), SettingsActivity.class);
+                    startActivity(intent);
+                    break;
+                case 19://解析html
+                    intent=new Intent(MyApplication.getMyApp(), ResolveHtmlActivity.class);
                     startActivity(intent);
                     break;
             }
