@@ -27,6 +27,7 @@ import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.HomeActivity;
+import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
@@ -194,6 +195,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 19://解析html
                     intent=new Intent(MyApplication.getMyApp(), ResolveHtmlActivity.class);
+                    startActivity(intent);
+                    break;
+                case 20://Android图表视图/图形视图库
+                    intent=new Intent(MyApplication.getMyApp(), LineChartActivity.class);
                     startActivity(intent);
                     break;
             }

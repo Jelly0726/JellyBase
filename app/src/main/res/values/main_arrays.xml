@@ -21,5 +21,6 @@
         <item>提交评价</item>
         <item>版本检查</item>
         <item>解析html</item>
+        <item>Android图表视图/图形视图库</item>
     </string-array>
 </resources>
