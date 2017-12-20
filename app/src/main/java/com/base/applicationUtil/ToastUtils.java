@@ -60,7 +60,28 @@ public class ToastUtils {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
-
+    /**
+     * 屏幕居中显示Toast短时
+     * @param context
+     * @param msg
+     */
+    public static void showShort(@Nullable Context context, @Nullable String msg){
+        Toast toast = Toast.makeText(context.getApplicationContext(),
+                msg,  Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+    /**
+     * 屏幕居中显示Toast短时
+     * @param context
+     * @param msg
+     */
+    public static void showShort(@Nullable Context context, @Nullable int msg){
+        Toast toast = Toast.makeText(context.getApplicationContext(),
+                msg, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
     /**
      * 屏幕居中显示带图片的Toast
      * @param context
