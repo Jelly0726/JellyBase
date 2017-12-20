@@ -66,7 +66,7 @@ public class NodeProgressView extends View {
         init();
     }
 
-    private void init() {
+    public void init() {
         paint = new Paint();
         paint.setColor(getResources().getColor(R.color.nodeColor));
         paint.setAntiAlias(true);

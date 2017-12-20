@@ -46,5 +46,8 @@ public class NodeProgressDemo extends AppCompatActivity {
                 return logisticsDatas;
             }
         });
+        //刷新数据
+        nodeProgressView.requestLayout();
+        nodeProgressView.init();
     }
 }
