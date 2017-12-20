@@ -48,6 +48,5 @@ public class NodeProgressDemo extends AppCompatActivity {
         });
         //刷新数据
         nodeProgressView.requestLayout();
-        nodeProgressView.init();
     }
 }
