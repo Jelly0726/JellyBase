@@ -9,99 +9,187 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class MyDate {
-    /**
-     * 根据年 月 获取对应的月份 天数
-     * */
-    public static int getDaysByYearMonth(int year, int month) {
-        Calendar a = Calendar.getInstance();
-        a.set(Calendar.YEAR, year);
-        a.set(Calendar.MONTH, month-1);
-        a.set(Calendar.DATE, 1);
-        a.roll(Calendar.DATE, -1);
-        int maxDate = a.get(Calendar.DATE);
-        return maxDate;
-    }
+	/**
+	 * 根据年 月 获取对应的月份 天数
+	 * */
+	public static int getDaysByYearMonth(int year, int month) {
+		Calendar a = Calendar.getInstance();
+		a.set(Calendar.YEAR, year);
+		a.set(Calendar.MONTH, month-1);
+		a.set(Calendar.DATE, 1);
+		a.roll(Calendar.DATE, -1);
+		int maxDate = a.get(Calendar.DATE);
+		return maxDate;
+	}
 
-    /**
-     * 将字符串转为 yyyy-MM-dd EEE HH:mm
-     * @param time
-     * @return
-     */
-    public static String getTimeToStamp(String time){
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
-        try {
-            Date date = sdf.parse(time);
-            sdf = new SimpleDateFormat( "yyyy-MM-dd EEE HH:mm" );
-            return sdf.format(date);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return time;
-    }
-    /**
-     * 将字符串转为 yyyy-MM-dd EEE
-     * @param time
-     * @return
-     */
-    public static String getTimeToStampDa(String time){
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
-        try {
-            Date date = sdf.parse(time);
-            sdf = new SimpleDateFormat( "yyyy-MM-dd EEE " );
-            return sdf.format(date);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return time;
-    }
-    /**
-     * 将字符串转为 yyyy
-     * @param time
-     * @return
-     */
-    public static int getTimeToStampY(String time){
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
-        try {
-            Date date = sdf.parse(time);
-            sdf = new SimpleDateFormat( "yyyy" );
-            return Integer.parseInt(sdf.format(date));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
-    /**
-     * 将字符串转为MM
-     * @param time
-     * @return
-     */
-    public static int getTimeToStampM(String time){
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
-        try {
-            Date date = sdf.parse(time);
-            sdf = new SimpleDateFormat( "MM" );
-            return Integer.parseInt(sdf.format(date));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
-    /**
-     * 将字符串转为 dd
-     * @param time
-     * @return
-     */
-    public static int getTimeToStampD(String time){
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
-        try {
-            Date date = sdf.parse(time);
-            sdf = new SimpleDateFormat( "dd" );
-            return Integer.parseInt(sdf.format(date));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
+	/**
+	 * 将字符串转为 yyyy-MM-dd EEE HH:mm
+	 * @param time
+	 * @return
+	 */
+	public static String getTimeToStamp(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "yyyy-MM-dd EEE HH:mm" );
+			return sdf.format(date);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return time;
+	}
+	/**
+	 * 将字符串转为 yyyy-MM-dd EEE
+	 * @param time
+	 * @return
+	 */
+	public static String getTimeToStampDa(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "yyyy-MM-dd EEE " );
+			return sdf.format(date);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return time;
+	}
+	/**
+	 * 将字符串转为 yyyy
+	 * @param time
+	 * @return
+	 */
+	public static int getTimeToStampY(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "yyyy" );
+			return Integer.parseInt(sdf.format(date));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	/**
+	 * 将字符串转为MM
+	 * @param time
+	 * @return
+	 */
+	public static int getTimeToStampM(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "MM" );
+			return Integer.parseInt(sdf.format(date));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	/**
+	 * 将字符串转为 dd
+	 * @param time
+	 * @return
+	 */
+	public static int getTimeToStampD(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "dd" );
+			return Integer.parseInt(sdf.format(date));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	/**
+	 * 将字符串转为 HH
+	 * @param time
+	 * @return
+	 */
+	public static int getTimeToStampH(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "HH" );
+			return Integer.parseInt(sdf.format(date));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	/**
+	 * 将字符串转为 mm
+	 * @param time
+	 * @return
+	 */
+	public static int getTimeToStampMin(String time){
+		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		try {
+			Date date = sdf.parse(time);
+			sdf = new SimpleDateFormat( "mm" );
+			return Integer.parseInt(sdf.format(date));
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	/**
+	 * 获取当前年
+	 * @return
+	 */
+	public static int getYear(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.YEAR);
+	}
+	/**
+	 * 获取当前月
+	 * @return
+	 */
+	public static int getMonth(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.MONTH);
+	}
+	/**
+	 * 获取当前天
+	 * @return
+	 */
+	public static int getDay(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.DAY_OF_MONTH);
+	}
+	/**
+	 * 获取当前时(24)
+	 * @return
+	 */
+	public static int getHour(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.HOUR_OF_DAY);
+	}
+	/**
+	 * 获取当前分
+	 * @return
+	 */
+	public static int getMinute(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.MINUTE);
+	}
+	/**
+	 * 获取当前秒
+	 * @return
+	 */
+	public static int getSecond(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.SECOND);
+	}
+	/**
+	 * 获取当前毫秒
+	 * @return
+	 */
+	public static int getMilliSecond(){
+		Calendar c = Calendar.getInstance();
+		return c.get(Calendar.MILLISECOND);
+	}
 	public static String getDateCN() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
 		String date = format.format(new Date(System.currentTimeMillis()));
@@ -121,22 +209,6 @@ public class MyDate {
 	}
 	public static String getDatemiao() {
 		SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
-		String date = format2.format(new Date(System.currentTimeMillis()));
-		return date;
-	}
-	public static String getHour() {
-		SimpleDateFormat format2 = new SimpleDateFormat("HH");
-		String date = format2.format(new Date(System.currentTimeMillis()));
-		return date;
-	}
-	public static String getMinutes() {
-//		Calendar   date   =   Calendar.getInstance();
-//		// 得到24小时机制
-//		date.get(Calendar.HOUR_OF_DAY);
-//		// 得到12小时机制
-//		date.get(Calendar.HOUR);
-
-		SimpleDateFormat format2 = new SimpleDateFormat("mm");
 		String date = format2.format(new Date(System.currentTimeMillis()));
 		return date;
 	}
