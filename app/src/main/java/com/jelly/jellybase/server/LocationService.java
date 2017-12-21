@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.RegeocodeResult;
@@ -16,21 +17,19 @@ import com.base.MapUtil.LocationTask;
 import com.base.MapUtil.OnLocationGetListener;
 import com.base.MapUtil.RegeocodeTask;
 import com.base.MapUtil.RouteTask;
-import com.base.ToolUtil.UtilSelf;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
 import com.base.config.ConfigKey;
-import com.base.eventBus.LocationAddressEvent;
 import com.base.eventBus.LocationTypeEvent;
-import com.base.eventBus.LoginEvent;
+import com.base.eventBus.NetEvent;
 import com.jelly.jellybase.R;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DecimalFormat;
 
 import systemdb.PositionEntity;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
 /**gps定位服务
@@ -41,15 +40,17 @@ public class LocationService extends Service {
     private LocationTask mLocationTask;                                                             // 自定义定位类
     private RegeocodeTask regeocodeTask;                                                            // 自定义坐标转换类
     //private Login login;
-    private static int postConnt=0;
     private PositionEntity entity = new PositionEntity();
     private LocationTypeEvent mLocationTypeEvent = new LocationTypeEvent();
-    private LocationAddressEvent mLocationAddressEvent = new LocationAddressEvent();
-    private UtilSelf mUtilSelf = new UtilSelf();
     private DecimalFormat mDecimalFormat = new DecimalFormat("#####0.000000");
     private DecimalFormat mDf = new DecimalFormat("#####0.0");
     private LatLng mLatLngPre = new LatLng(0, 0);                                                   // 前一个坐标数据
     private LatLng mLatLngNow = new LatLng(0, 0);                                                   // 当前获取坐标数据
+    private String address;
+    private String city;
+    private String adCode;
+    private String district;//城区
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -64,21 +65,21 @@ public class LocationService extends Service {
         regeocodeTask.setOnLocationGetListener(onLocationGetListener);
         mLocationTask = LocationTask.getInstance(MyApplication.getMyApp());
         mLocationTask.setOnLocationGetListener(onLocationGetListener);
-        if (!EventBus.getDefault().isRegistered(LocationService.this)){
-            EventBus.getDefault().register(LocationService.this);
+        if (!HermesEventBus.getDefault().isRegistered(LocationService.this)){
+            HermesEventBus.getDefault().register(LocationService.this);
         }
         //==================================================================//
         AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,true);
         // 开启高精度定位
         mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_HIGHT_PRECISION);
-        EventBus.getDefault().post(mLocationTypeEvent);
+        HermesEventBus.getDefault().post(mLocationTypeEvent);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (!mLocationTask.getLocationStatus()){
             // 开启定位
-            EventBus.getDefault().post(mLocationTypeEvent);
+            HermesEventBus.getDefault().post(mLocationTypeEvent);
         }
         return Service.START_STICKY;
     }
@@ -89,7 +90,7 @@ public class LocationService extends Service {
             mLocationTask.RemoveListener(onLocationGetListener);
             mLocationTask.stopLocate();
         }
-        EventBus.getDefault().unregister(LocationService.this);
+        HermesEventBus.getDefault().unregister(LocationService.this);
         AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,false);
         Log.d(TAG, "onDestroy");
         super.onDestroy();
@@ -118,12 +119,11 @@ public class LocationService extends Service {
             if (!getLocationType(amapLocation)){
                 return;
             }
-            EventBus.getDefault().post(amapLocation);
 //            if(MyApplication.orderNu.equals("0") ) {
 //                if ( mLocationTypeEvent.getType() != LocationTypeEvent.sTYPE_LBS){
 //                    // 开启lbs模式
 //                    mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_LBS);
-//                    EventBus.getDefault().post(mLocationTypeEvent);
+//                    HermesEventBus.getDefault().post(mLocationTypeEvent);
 //                }
 //            }else {
 //                final int  starNum = amapLocation.getSatellites();
@@ -132,13 +132,13 @@ public class LocationService extends Service {
 //                    if (mLocationTypeEvent.getType() != LocationTypeEvent.sTYPE_HIGHT_PRECISION){
 //                        // mag.append("开启High精度模式" + "\n");
 //                        mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_HIGHT_PRECISION);
-//                        EventBus.getDefault().post(mLocationTypeEvent);
+//                        HermesEventBus.getDefault().post(mLocationTypeEvent);
 //                    }
 //                }else {
 //                    if (mLocationTypeEvent.getType() != LocationTypeEvent.sTYPE_GPS){
 //                        // mag.append("开启gps模式" + "\n");
 //                        mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_GPS);
-//                        EventBus.getDefault().post(mLocationTypeEvent);
+//                        HermesEventBus.getDefault().post(mLocationTypeEvent);
 //                    }
 //                }
 //            }
@@ -150,26 +150,31 @@ public class LocationService extends Service {
 //            entity.longitude = amapLocation.getLongitude();
 ////            PostDriverXY.postErrorMessage(MyApplication.mDriverId, "x:"+MyApplication.latitude+"y:"+MyApplication.longitude);
 //            //Log.i("msg","getProvider()="+amapLocation.getProvider()+" getLocationType="+amapLocation.getLocationType());
-//            if (amapLocation.getProvider().equals("gps")) {
-//                mLatLngNow = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
-//                float distance = AMapUtils.calculateLineDistance(mLatLngNow, mLatLngPre);
-//                if (distance > 50){            // 距离上一个坐标点大于 50m才进行地址解析
-//                    regeocodeTask.search(amapLocation.getLatitude(), amapLocation.getLongitude());
-//                    mLatLngPre = mLatLngNow;
-//                }
-//            } else {
-//                MyApplication.address = amapLocation.getAddress();
-//                MyApplication.city = amapLocation.getCity();
-//                MyApplication.adCode = amapLocation.getAdCode().substring(0, 6);
-//                entity.address = MyApplication.address;
-//                entity.city = MyApplication.city;
-//                RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
-//                EventBus.getDefault().post(mLocationAddressEvent);
-//            }
-//            if (MyApplication.mDriverId.equals("0")){
-////                MyApplication.mDriverId = MyApplication.getMyApp().getAppPreferences()
-////                        .getString(ConfigKey.LOGINID,"0");
-//            }
+            entity.latitue = amapLocation.getLatitude();
+            entity.longitude = amapLocation.getLongitude();
+            if (amapLocation.getProvider().equals("gps")) {
+                mLatLngNow = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                float distance = AMapUtils.calculateLineDistance(mLatLngNow, mLatLngPre);
+                if (distance > 50){            // 距离上一个坐标点大于 50m才进行地址解析
+                    regeocodeTask.search(amapLocation.getLatitude(), amapLocation.getLongitude());
+                    mLatLngPre = mLatLngNow;
+                }
+            } else {
+                address = amapLocation.getAddress();
+                city = amapLocation.getCity();
+                adCode = amapLocation.getAdCode().substring(0, 6);
+                district = amapLocation.getCountry();
+                entity.address = address;
+                entity.city = city;
+                entity.district = district;
+                entity.adCode=adCode;
+                RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
+                if (MyApplication.getMyApp().getEventSize()>0) {
+                    NetEvent netEvent1 = new NetEvent();
+                    netEvent1.setEvent(entity);
+                    HermesEventBus.getDefault().post(netEvent1);
+                }
+            }
         }
 
         /**
@@ -181,22 +186,30 @@ public class LocationService extends Service {
             if (regeocodeReult == null ) {
 
             }else{
-//                MyApplication.address=regeocodeReult.getRegeocodeAddress().getFormatAddress();
-//                EventBus.getDefault().post(mLocationAddressEvent);
-//                if(regeocodeReult.getRegeocodeAddress().getFormatAddress().isEmpty()
-//                        ||regeocodeReult.getRegeocodeAddress().getFormatAddress().equals("null")){
-//                }
-//                if(regeocodeReult.getRegeocodeAddress().getFormatAddress().length()!=0
-//                        &&!regeocodeReult.getRegeocodeAddress().getFormatAddress().equals("0")){
-//                    MyApplication.city=regeocodeReult.getRegeocodeAddress().getCity();
-//                    MyApplication.adCode=regeocodeReult.getRegeocodeAddress()
-//                            .getAdCode().substring(0,6);
-//                }else{
-//                }
+               address=regeocodeReult.getRegeocodeAddress().getFormatAddress();
+                if(regeocodeReult.getRegeocodeAddress().getFormatAddress().isEmpty()
+                        ||regeocodeReult.getRegeocodeAddress().getFormatAddress().equals("null")){
+                }
+                if(regeocodeReult.getRegeocodeAddress().getFormatAddress().length()!=0
+                        &&!regeocodeReult.getRegeocodeAddress().getFormatAddress().equals("0")){
+                    city=regeocodeReult.getRegeocodeAddress().getCity();
+                    district=regeocodeReult.getRegeocodeAddress().getDistrict();
+                    adCode=regeocodeReult.getRegeocodeAddress()
+                            .getAdCode().substring(0,6);
+                    stopSelf();
+                }else{
+                }
             }
-//            entity.address = MyApplication.address;
-//            entity.city = MyApplication.city;
+            entity.address = address;
+            entity.city = city;
+            entity.city = district;
+            entity.adCode=adCode;
             RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
+            if (MyApplication.getMyApp().getEventSize()>0) {
+                NetEvent netEvent = new NetEvent();
+                netEvent.setEvent(entity);
+                HermesEventBus.getDefault().post(netEvent);
+            }
         }
         /**
          * 地址转坐标回调
@@ -226,14 +239,6 @@ public class LocationService extends Service {
             default:
                 break;
         }
-    }
-    /***
-     * 订阅 账号重新登录
-     */
-    @Subscribe
-    public void onReLogin(LoginEvent loginEvent){
-//        login = DBHelper.getInstance(getApplicationContext())
-//                .getLogin();
     }
 	/***
      * 定位错误码返回信息
@@ -288,9 +293,12 @@ public class LocationService extends Service {
                 errorMessage = "定位失败, errorCode:" + errorCode;
                 break;
         }
-        //MyApplication.address = errorMessage;
-        EventBus.getDefault().post(mLocationAddressEvent);
-       // PostDriverXY.postErrorMessage(MyApplication.mDriverId, errorMessage);
+        entity.address = errorMessage;
+        if (MyApplication.getMyApp().getEventSize()>0) {
+            NetEvent netEvent = new NetEvent();
+            netEvent.setEvent(entity);
+            HermesEventBus.getDefault().post(netEvent);
+        }
     }
 
 	/***
