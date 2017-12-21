@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class MyDate {
+	private MyDate(){}
 	private static final String TAG = "MyDate";
 	/**
 	 * 时间格式：yyyy年MM月dd日
