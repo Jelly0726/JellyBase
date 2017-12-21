@@ -9,6 +9,98 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class MyDate {
+	private static final String TAG = "MyDate";
+	/**
+	 * 时间格式：yyyy年MM月dd日
+	 */
+	public static final String DATE_FORMAT = "yyyy年MM月dd日";
+	/**
+	 * 时间格式：yyyy年MM月dd日HH时mm分ss秒
+	 */
+	public static final String DATE_FORMAT2 = "yyyy年MM月dd日HH时mm分ss秒";
+	/**
+	 * 时间格式：yyyy年MM月dd日HH时mm分
+	 */
+	public static final String DATE_FORMAT3 = "yyyy年MM月dd日HH时mm分";
+	/**
+	 * 时间格式：yyyy年MM月dd日HH时
+	 */
+	public static final String DATE_FORMAT4 = "yyyy年MM月dd日HH时";
+	/**
+	 * 时间格式：HH时mm分ss秒
+	 */
+	public static final String DATE_FORMAT5 = "HH时mm分ss秒";
+	/**
+	 * 时间格式：HH时mm分
+	 */
+	public static final String DATE_FORMAT6 = "HH时mm分";
+	/**
+	 * 时间格式：mm分ss秒
+	 */
+	public static final String DATE_FORMAT7 = "mm分ss秒";
+	/**
+	 * 时间格式：yyyy年MM月
+	 */
+	public static final String DATE_FORMAT8 = "yyyy年MM月";
+	/**
+	 * 时间格式：yyyy-MM-dd HH:mm:ss
+	 */
+	public static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	/**
+	 * 时间格式：yyyy-MM-dd EEE HH:mm
+	 */
+	public static final String TIME_FORMAT0 = "yyyy-MM-dd EEE HH:mm";
+	/**
+	 * 时间格式：yyyy-MM-dd EEE
+	 */
+	public static final String TIME_FORMAT1 = "yyyy-MM-dd EEE";
+	/**
+	 * 时间格式：yyyy-MM-dd HH:mm
+	 */
+	public static final String TIME_FORMAT2 = "yyyy-MM-dd HH:mm";
+	/**
+	 * 时间格式：yyyy-MM-dd HH
+	 */
+	public static final String TIME_FORMAT3 = "yyyy-MM-dd HH";
+	/**
+	 * 时间格式：yyyy-MM-dd
+	 */
+	public static final String TIME_FORMAT4 = "yyyy-MM-dd";
+	/**
+	 * 时间格式：HH:mm:ss
+	 */
+	public static final String TIME_FORMAT5 = "HH:mm:ss";
+	/**
+	 * 时间格式：HH:mm
+	 */
+	public static final String TIME_FORMAT6 = "HH:mm";
+	/**
+	 * 时间格式：mm:ss
+	 */
+	public static final String TIME_FORMAT7 = "mm:ss";
+	/**
+	 * 时间格式：yyyy-MM
+	 */
+	public static final String TIME_FORMAT8 = "yyyy-MM";
+	/**
+	 * 在之前
+	 */
+	public static final int TIME_BEFORE = 1;
+
+	/**
+	 * 在中间
+	 */
+	public static final int TIME_ING = 2;
+
+	/**
+	 * 在之后
+	 */
+	public static final int TIME_AFTER = 3;
+
+	/**
+	 * 异常
+	 */
+	public static final int TIME_ERROR = -1;
 	/**
 	 * 根据年 月 获取对应的月份 天数
 	 * */
@@ -28,10 +120,10 @@ public class MyDate {
 	 * @return
 	 */
 	public static String getTimeToStamp(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat(TIME_FORMAT2);
 		try {
 			Date date = sdf.parse(time);
-			sdf = new SimpleDateFormat( "yyyy-MM-dd EEE HH:mm" );
+			sdf = new SimpleDateFormat( TIME_FORMAT0 );
 			return sdf.format(date);
 		}catch (Exception e){
 			e.printStackTrace();
@@ -44,10 +136,10 @@ public class MyDate {
 	 * @return
 	 */
 	public static String getTimeToStampDa(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT4 );
 		try {
 			Date date = sdf.parse(time);
-			sdf = new SimpleDateFormat( "yyyy-MM-dd EEE " );
+			sdf = new SimpleDateFormat( TIME_FORMAT1);
 			return sdf.format(date);
 		}catch (Exception e){
 			e.printStackTrace();
@@ -60,7 +152,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampY(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2 );
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "yyyy" );
@@ -76,7 +168,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampM(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2 );
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "MM" );
@@ -92,7 +184,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampD(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2);
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "dd" );
@@ -108,7 +200,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampH(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2);
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "HH" );
@@ -124,7 +216,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampMin(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( "yyyy-MM-dd HH:mm" );
+		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2);
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "mm" );
@@ -148,7 +240,7 @@ public class MyDate {
 	 */
 	public static int getMonth(){
 		Calendar c = Calendar.getInstance();
-		return c.get(Calendar.MONTH);
+		return c.get(Calendar.MONTH)+1;
 	}
 	/**
 	 * 获取当前天
@@ -191,44 +283,44 @@ public class MyDate {
 		return c.get(Calendar.MILLISECOND);
 	}
 	public static String getDateCN() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒");
+		SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT2);
 		String date = format.format(new Date(System.currentTimeMillis()));
 		return date;// 2012年10月03日 23:41:31
 	}
 
 	public static String getDateEN() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format1 = new SimpleDateFormat(TIME_FORMAT);
 		String date1 = format1.format(new Date(System.currentTimeMillis()));
 		return date1;// 2012-10-03 23:41:31
 	}
 
 	public static String getDate() {
-		SimpleDateFormat format2 = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat format2 = new SimpleDateFormat(TIME_FORMAT6);
 		String date = format2.format(new Date(System.currentTimeMillis()));
 		return date;
 	}
 	public static String getDatemiao() {
-		SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat format2 = new SimpleDateFormat(TIME_FORMAT5);
 		String date = format2.format(new Date(System.currentTimeMillis()));
 		return date;
 	}
 	public static String getDateDaEN() {
-		SimpleDateFormat format3 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format3 = new SimpleDateFormat(TIME_FORMAT4);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012-10-03
 	}
 	public static String getDateMonthEN() {
-		SimpleDateFormat format3 = new SimpleDateFormat("yyyy-MM");
+		SimpleDateFormat format3 = new SimpleDateFormat(TIME_FORMAT8);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012-10
 	}
 	public static String getDateMonthCN() {
-		SimpleDateFormat format3 = new SimpleDateFormat("yyyy年MM月");
+		SimpleDateFormat format3 = new SimpleDateFormat(DATE_FORMAT8);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012年10月
 	}
 	public static String getDateDaCN() {
-		SimpleDateFormat format4 = new SimpleDateFormat("yyyy年MM月dd日");
+		SimpleDateFormat format4 = new SimpleDateFormat(DATE_FORMAT);
 		String date = format4.format(new Date(System.currentTimeMillis()));
 		return date;//2012年10月03日
 	}
@@ -238,7 +330,7 @@ public class MyDate {
 		calendar.setTime(date);
 		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
 		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT4);
 		String dateString = formatter.format(date);
 		return dateString;
 	}
@@ -248,13 +340,13 @@ public class MyDate {
 		calendar.setTime(date);
 		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
 		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+		SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
 		String dateString = formatter.format(date);
 		return dateString;
 	}
 	/* 将字符串转为时间戳 */
 	public static String getTimeToStampCN(String time) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日HH时mm分ss秒",
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT2,
 				Locale.CHINA);
 		Date date = new Date();
 		try {
@@ -270,7 +362,7 @@ public class MyDate {
 	}
 	/* 将字符串转为时间戳 */
 	public static String getTimeToStampEN(String time) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+		SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT,
 				Locale.CHINA);
 		Date date = new Date();
 		try {
@@ -349,42 +441,6 @@ public class MyDate {
 			retStr = "" + i;
 		return retStr;
 	}
-	private static final String TAG = "MyDate";
-
-	/**
-	 * 时间格式：yyyy-MM-dd
-	 */
-	public static final String DATE_FORMAT = "yyyy年MM月dd日";
-
-	/**
-	 * 时间格式：yyyy-MM-dd HH:mm:ss
-	 */
-	public static final String TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
-	/**
-	 * 时间格式：yyyy-MM-dd HH:mm
-	 */
-	public static final String TIME_FORMAT2 = "yyyy-MM-dd HH:mm";
-
-	/**
-	 * 在之前
-	 */
-	public static final int TIME_BEFORE = 1;
-
-	/**
-	 * 在中间
-	 */
-	public static final int TIME_ING = 2;
-
-	/**
-	 * 在之后
-	 */
-	public static final int TIME_AFTER = 3;
-
-	/**
-	 * 异常
-	 */
-	public static final int TIME_ERROR = -1;
 
 	/**
 	 * string型时间转换
