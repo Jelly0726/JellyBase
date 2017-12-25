@@ -144,7 +144,7 @@ public class BaseActivity extends AutoLayoutActivity {
                     if (circleDialog == null) {
                         synchronized (MyApplication.getMyApp()) {
                             if (circleDialog == null) {
-                                new CircleDialog.Builder(BaseActivity.this)
+                                circleDialog=new CircleDialog.Builder(BaseActivity.this)
                                         .configDialog(new ConfigDialog() {
                                             @Override
                                             public void onConfig(DialogParams params) {
@@ -176,8 +176,8 @@ public class BaseActivity extends AutoLayoutActivity {
                                                         | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 MyApplication.getMyApp().startActivity(intent1);
                                             }
-                                        })
-                                        .show();
+                                        });
+                                circleDialog.show();
                             }
                         }
                     }
