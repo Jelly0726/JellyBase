@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -67,7 +68,8 @@ public class ApiException extends RuntimeException {
             message = "解析错误("+ ERROR.PARSE_ERROR+")";     //均视为解析错误
             return message;
         } else if (throwable instanceof ConnectException
-                ||throwable instanceof SocketException) {
+                ||throwable instanceof SocketException
+                ||throwable instanceof IOException) {
             message = "连接失败("+ ERROR.NETWORD_ERROR+")";  //均视为网络错误
             return message;
         } else if (throwable instanceof SocketTimeoutException) {//连接超时
