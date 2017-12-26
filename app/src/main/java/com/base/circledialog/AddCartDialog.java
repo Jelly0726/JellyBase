@@ -89,7 +89,7 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
                 break;
             case R.id.confirm_tv://确定
                 if (onConfirmListener != null) {
-                    onConfirmListener.OnConfirm(0);
+                    onConfirmListener.OnConfirm(count);
                 }
                 dismiss();
                 break;
@@ -185,6 +185,7 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
                 if (number == 0) {
                     dialog.dismiss();
                 } else {
+                    count=number;
                     num.setText(String.valueOf(number));
                     //child.setCount(number);
                     dialog.dismiss();
