@@ -5,4 +5,9 @@
             name="camera_photos"
             path="" />
     </paths>
+    <!-- ↓↓↓↓↓↓↓百度自动更新↓↓↓↓↓↓↓ -->
+    <external-files-path name="extfiles" path="autoupdatecache/" />
+    <external-cache-path name="extcachs" path="autoupdatecache/" />
+    <cache-path name="intcachs" path="autoupdatecache/" />
+    <!-- ↑↑↑↑↑↑↑百度自动更新↑↑↑↑↑↑↑ -->
 </resources>
