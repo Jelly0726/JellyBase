@@ -160,10 +160,9 @@ dependencies {
     compile 'com.amap.api:navi-3dmap:latest.integration'
     //compile 'com.amap.api:navi-3dmap:5.5.0'
     //极光推送
-    compile 'cn.jiguang.sdk:jpush:3.0.8'
+    compile 'cn.jiguang.sdk:jpush:3.1.0'
     // 此处以JPush 3.0.3 版本为例。
-    compile 'cn.jiguang.sdk:jcore:1.1.6'
-    // 此处以JCore 1.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.8'
     //开源的守护进程库
     compile 'com.coolerfall:android-app-daemon:1.2.0'
     //sqlite框架greendao
