@@ -291,7 +291,7 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↑↑↑↑↑↑↑↑物流节点↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓图片选择↓↓↓↓↓-->
+        <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -301,7 +301,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!--↑↑↑↑↑↑↑↑图片选择↑↑↑↑↑↑↑↑-->
+        <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
         <!--二维码-->
         <activity
             android:name="com.base.zxing.ScanerCodeActivity"
