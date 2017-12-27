@@ -89,7 +89,15 @@ greendao {
     daoPackage'systemdb' //包名
     targetGenDir'src/main/java' //生成目录
 }
+//导入智能更新 SDK 的 AAR 文件
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 dependencies {
+    //百度智能更新 SDK 的 AAR 文件
+    compile(name: 'autoupdatesdk-release', ext: 'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'

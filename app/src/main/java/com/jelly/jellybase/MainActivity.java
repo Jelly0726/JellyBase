@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.multiClick.AntiShake;
@@ -56,6 +58,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         iniXRefreshView();
+        //百度智能更新 SDK 的 AAR 文件
+        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
+    }
+    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+        /**
+         * 当检测到无版本更新时会触发回调该方法
+         */
+        @Override
+        public void onNoUpdateFound() {
+
+        }
+
+        /**
+         * 当检测到无版本更新或者用户关闭版本更新ᨀ示框
+         或者用户点击了升级下载时会触发回调该方法
+         */
+        @Override
+        public void onCheckComplete() {
+        }
+
     }
     private void iniXRefreshView(){
         mList= getResources().getStringArray(R.array.mainArray);
