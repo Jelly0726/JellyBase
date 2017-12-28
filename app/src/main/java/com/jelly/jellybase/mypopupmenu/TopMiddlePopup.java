@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,14 +18,14 @@ import android.widget.PopupWindow;
 
 import com.jelly.jellybase.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class TopMiddlePopup extends PopupWindow {
+public class TopMiddlePopup<T extends BaseItem> extends PopupWindow {
 
     private Context myContext;
     private ListView myLv;
     private OnItemClickListener myOnItemClickListener;
-    private ArrayList<? extends BaseItem> myItems;
+    private List<T> myItems;
     private int myWidth;
     private int myHeight;
     private int myType;
@@ -39,12 +40,8 @@ public class TopMiddlePopup extends PopupWindow {
 
     private PopupAdapter adapter;
 
-    public TopMiddlePopup(Context context) {
-        // TODO Auto-generated constructor stub
-    }
-
     public TopMiddlePopup(Context context, int width, int height,
-                          OnItemClickListener onItemClickListener, ArrayList<? extends BaseItem> items,
+                          OnItemClickListener onItemClickListener, List<T> items,
                           int type) {
 
         inflater = (LayoutInflater) context
@@ -58,6 +55,9 @@ public class TopMiddlePopup extends PopupWindow {
 
         this.myWidth = width;
         this.myHeight = height;
+
+        System.out.println("--myWidth--:" + myWidth + "--myHeight--:"
+                + myHeight);
         initWidget();
         setPopup();
     }
@@ -68,9 +68,23 @@ public class TopMiddlePopup extends PopupWindow {
     private void initWidget() {
         myLv = (ListView) myMenuView.findViewById(R.id.popup_lv);
         popupLL = (LinearLayout) myMenuView.findViewById(R.id.popup_layout);
-        if(myOnItemClickListener!=null){
-            myLv.setOnItemClickListener(myOnItemClickListener);
-        }
+        myLv.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                if(myOnItemClickListener!=null){
+                    myOnItemClickListener.onItemClick(parent,view,position,id);
+                }
+                if (myItems!=null){
+                    for ( BaseItem item :myItems){
+                        item.setCheck(false);
+                    }
+                    myItems.get(position).setCheck(true);
+                }
+
+            }
+        });
 
         if (myType == Util.Anim_TopLeft) {
             android.widget.RelativeLayout.LayoutParams lpPopup = (android.widget.RelativeLayout.LayoutParams) popupLL
@@ -123,10 +137,13 @@ public class TopMiddlePopup extends PopupWindow {
                 int height = popupLL.getBottom();
                 int left = popupLL.getLeft();
                 int right = popupLL.getRight();
+                System.out.println("--popupLL.getBottom()--:"
+                        + popupLL.getBottom());
                 int y = (int) event.getY();
                 int x = (int) event.getX();
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     if (y > height || x < left || x > right) {
+                        System.out.println("---点击位置在列表下方--");
                         dismiss();
                     }
                 }
@@ -156,7 +173,7 @@ public class TopMiddlePopup extends PopupWindow {
             showAsDropDown(view, 0, 0);
         }
     }
-    public void setData(ArrayList<? extends BaseItem> items){
+    public void setData(List<T> items){
         this.myItems = items;
         adapter.setData(myItems);
     }

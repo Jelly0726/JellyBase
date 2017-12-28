@@ -1,24 +1,27 @@
 package com.jelly.jellybase.mypopupmenu;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jelly.jellybase.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PopupAdapter<T extends BaseItem> extends BaseAdapter {
     private Context myContext;
     private LayoutInflater inflater;
-    private ArrayList<T> myItems;
+    private List<T> myItems;
     private int myType;
 
-    public PopupAdapter(Context context, ArrayList<T> items, int type) {
+    public PopupAdapter(Context context, List<T> items, int type) {
         this.myContext = context;
         this.myItems = items;
         this.myType = type;
@@ -26,7 +29,7 @@ public class PopupAdapter<T extends BaseItem> extends BaseAdapter {
         inflater = LayoutInflater.from(myContext);
 
     }
-    public void setData(ArrayList<T> items){
+    public void setData(List<T> items){
         this.myItems = items;
         notifyDataSetChanged();
     }
@@ -39,12 +42,11 @@ public class PopupAdapter<T extends BaseItem> extends BaseAdapter {
     public T getItem(int position) {
         return myItems.get(position);
     }
-
+    private AdapterView.OnItemClickListener mOnItemClickListener;
     @Override
     public long getItemId(int position) {
         return 0;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         PopupHolder holder = null;
@@ -65,7 +67,14 @@ public class PopupAdapter<T extends BaseItem> extends BaseAdapter {
             holder = (PopupHolder) convertView.getTag();
         }
         T itemName = getItem(position);
-        holder.itemNameTv.setText(((BaseItem)itemName).getTitle());
+        holder.itemNameTv.setText(((T)itemName).toString());
+        if (itemName.isCheck()){
+            Drawable img = ContextCompat.getDrawable(myContext,R.drawable.popup_check_24dp);
+            img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+            holder.itemNameTv.setCompoundDrawables(null, null, img, null);
+        }else {
+            holder.itemNameTv.setCompoundDrawables(null, null, null, null);
+        }
         return convertView;
     }
 
