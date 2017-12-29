@@ -110,9 +110,9 @@ public class SearchResultActivity extends BaseActivity {
      */
     private void setPopup(int type) {
         ArrayList<BaseItem> items = new ArrayList<BaseItem>();
-        items.add(new BaseItem("集团客户"));
-        items.add(new BaseItem("集团客户"));
-        items.add(new BaseItem("集团客户"));
+        items.add(new BaseItem("集团客户",-1));
+        items.add(new BaseItem("集团客户",-1));
+        items.add(new BaseItem("集团客户",-1));
         topMiddlePopup = new TopMiddlePopup(this,
                 Util.getScreenWidth(MyApplication.getMyApp()), Util.getScreenHeight(MyApplication.getMyApp()),
                 onPopItem,items, type);
