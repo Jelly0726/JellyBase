@@ -64,6 +64,8 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
         phone=getIntent().getStringExtra("phone");
         password=getIntent().getStringExtra("password");
         from=getIntent().getIntExtra("from",-1);
+        AppPrefs.remove(getApplicationContext(),
+                ConfigKey.DEFAULT_BANK);
     }
     private void iniView (){
     }
