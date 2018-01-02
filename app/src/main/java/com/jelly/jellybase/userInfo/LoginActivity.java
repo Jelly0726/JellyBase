@@ -150,7 +150,9 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
                 tagAliasBean.action = TagAliasOperatorHelper.ACTION_SET;
                 tagAliasBean.tags = tagSet;
                 tagAliasBean.isAliasAction = false;
-                TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),0,tagAliasBean);
+                TagAliasOperatorHelper.sequence++;
+                TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),
+                        TagAliasOperatorHelper.sequence,tagAliasBean);
             }
         }
         //↑↑↑↑↑↑极光设置tag↑↑↑↑↑↑
