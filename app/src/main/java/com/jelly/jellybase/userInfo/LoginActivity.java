@@ -32,6 +32,7 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import systemdb.Login;
 
 /**
@@ -141,7 +142,7 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
     public void loginSuccess(boolean isRefresh, Object mCallBackVo) {
         Login login= (Login) mCallBackVo;
 
-        //↓↓↓↓↓↓极光设置tag↓↓↓↓↓↓↓
+        //↓↓↓↓↓↓极光设置tag↓↓↓↓↓↓
         if (!AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,false)){
             if (!TextUtils.isEmpty(login.getCompanyno())){
                 Set<String> tagSet = new LinkedHashSet<String>();
@@ -156,7 +157,13 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
             }
         }
         //↑↑↑↑↑↑极光设置tag↑↑↑↑↑↑
-
+        //↓↓↓↓↓↓极光ID↓↓↓↓↓↓
+        String RegistrationID= AppPrefs.getString(MyApplication.getMyApp(), ConfigKey.JPUSHID);
+        if (TextUtils.isEmpty(RegistrationID)){
+            RegistrationID= JPushInterface.getRegistrationID(MyApplication.getMyApp());
+            AppPrefs.putString(MyApplication.getMyApp(), ConfigKey.JPUSHID,RegistrationID);
+        }
+        //↑↑↑↑↑↑极光ID↑↑↑↑↑↑
         TokenModel tokenModel=new TokenModel();
         tokenModel.setTokenExpirationTime(login.getTokenExpirationTime());
         tokenModel.setToken(login.getToken());
