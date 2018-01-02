@@ -265,9 +265,13 @@ public class TagAliasOperatorHelper {
     }
 
     public static class TagAliasBean{
+        //操作
         public  int action;
+        //标签（tags）
         public Set<String> tags;
+        //别名（Alias）
         public String alias;
+        //是否是Alias  true 别名（Alias）   false 标签（tags）
         public boolean isAliasAction;
 
         @Override
