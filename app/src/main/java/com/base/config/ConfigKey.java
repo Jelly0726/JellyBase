@@ -19,4 +19,5 @@ public class ConfigKey {
     public static final String ORDERNU="ORDERNU";
     public static final String ISHOME="ISHOME";
     public static final String DEFAULT_BANK="DEFAULT_BANK";//默认银行卡
+    public static final String IS_SET_TAG="IS_SET_TAG";//是否设置了极光tag
 }

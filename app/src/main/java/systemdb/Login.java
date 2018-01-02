@@ -34,6 +34,10 @@ public class Login implements Serializable {
     private float balance=0.0f;
 
     @Transient// 不存储在数据库中
+    @SerializedName(value ="companyno")
+    private String companyno;
+
+    @Transient// 不存储在数据库中
     @SerializedName(value ="token")
     private String token;
 
@@ -159,5 +163,13 @@ public class Login implements Serializable {
 
     public void setCreateTime(long createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCompanyno() {
+        return companyno;
+    }
+
+    public void setCompanyno(String companyno) {
+        this.companyno = companyno;
     }
 }

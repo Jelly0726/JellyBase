@@ -8,20 +8,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
+import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.presenter.LoginActivityPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -135,6 +140,20 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
     @Override
     public void loginSuccess(boolean isRefresh, Object mCallBackVo) {
         Login login= (Login) mCallBackVo;
+
+        //↓↓↓↓↓↓极光设置tag↓↓↓↓↓↓↓
+        if (!AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,false)){
+            if (!TextUtils.isEmpty(login.getCompanyno())){
+                Set<String> tagSet = new LinkedHashSet<String>();
+                tagSet.add(login.getCompanyno());
+                TagAliasOperatorHelper.TagAliasBean tagAliasBean = new TagAliasOperatorHelper.TagAliasBean();
+                tagAliasBean.action = TagAliasOperatorHelper.ACTION_SET;
+                tagAliasBean.tags = tagSet;
+                tagAliasBean.isAliasAction = false;
+                TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),0,tagAliasBean);
+            }
+        }
+        //↑↑↑↑↑↑极光设置tag↑↑↑↑↑↑
 
         TokenModel tokenModel=new TokenModel();
         tokenModel.setTokenExpirationTime(login.getTokenExpirationTime());

@@ -402,6 +402,16 @@
             </intent-filter>
         </receiver>
         <!-- ↑↑↑↑↑↑↑↑User defined. 用户自定义的极光广播接收器↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓极光用户自定义接收消息器↓↓↓↓↓↓↓↓-->
+        <!-- User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,
+        目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调-->
+        <receiver android:name="com.base.jiguang.MyJPushMessageReceiver">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="${applicationId}"></category>
+            </intent-filter>
+        </receiver>
+        <!--↑↑↑↑↑↑↑↑极光用户自定义接收消息器↑↑↑↑↑↑↑↑-->
         <service android:name="com.base.appservicelive.service.LiveService"
             android:enabled="true"
             android:exported="true"
