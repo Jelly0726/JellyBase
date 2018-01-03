@@ -359,7 +359,6 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 	 */
 	@Override
 	public void onNaviCancel() {
-		mTtsManager.stopSpeaking();
 		finish();
 	}
 
