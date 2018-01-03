@@ -23,6 +23,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#------------------  ↓↓↓基础的排除项目 ↓↓↓   ----------------
 # 代码混淆压缩比，在0和7之间，默认为5，一般不需要改
 -optimizationpasses 5
 
@@ -131,6 +132,21 @@ public static ** valueOf(java.lang.String);
 }
 #如果引用了v4或者v7包
 -dontwarn android.support.**
+#------------------  下方是共性的排除项目         ----------------
+# 方法名中含有“JNI”字符的，认定是Java Native Interface方法，自动排除
+# 方法名中含有“JRI”字符的，认定是Java Reflection Interface方法，自动排除
+
+-keepclasseswithmembers class * {
+    ... *JNI*(...);
+}
+
+-keepclasseswithmembernames class * {
+	... *JRI*(...);
+}
+
+-keep class **JNI* {*;}
+
+#------------------ ↑↑↑基础的排除项目↑↑↑ ----------------
 # 保留实体类和成员不被混淆
 -keep public class com.base.httpmvp.databean.** {
     public void set*(***);
