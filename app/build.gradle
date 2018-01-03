@@ -65,6 +65,7 @@ android {
 
             signingConfig signingConfigs.release
             minifyEnabled false
+            zipAlignEnabled false
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
             proguardFiles 'proguard-project.txt'
             signingConfig signingConfigs.release
