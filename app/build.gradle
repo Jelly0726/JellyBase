@@ -96,6 +96,7 @@ repositories {
     }
 }
 dependencies {
+
     //百度智能更新 SDK 的 AAR 文件
     compile(name: 'autoupdatesdk-release', ext: 'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -105,89 +106,143 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
     //支持百分比适配
     compile 'com.android.support:percent:22.2.0'
+
     //recyclerview
     compile 'com.android.support:design:26.1.0'
+
     //butterknife注解式绑定id
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
+
     //多进程数据共享SharedPreferences
     compile 'net.grandcentrix.tray:tray:0.12.0'
+
     //
     compile 'xiaofei.library:hermes-eventbus:0.3.0'
+
     //okgo
     compile 'com.lzy.net:okgo:+'
+
     //版本号使用 + 可以自动引用最新版
+
     //    compile 'com.lzy.net:okrx:+'        //版本号使用 + 可以自动引用最新版
+
     //    compile 'com.lzy.net:okserver:+'    //版本号使用 + 可以自动引用最新版
+
     //    compile 'com.lzy.net:okrx2:2.0.0'
+
     //    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
     //compile 'com.google.code.gson:gson:2.8.0'
+
     //okhttp
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
+
     //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
     compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+
     //Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'                     //Retrofit2所需要的包
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'               //ConverterFactory的Gson依赖包
-    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'            //ConverterFactory的String依赖包
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'               //添加Retrofit对Rxjava的支持
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+
+    //Retrofit2所需要的包
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+
+    //ConverterFactory的Gson依赖包
+    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
+
+    //ConverterFactory的String依赖包
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+
+    //添加Retrofit对Rxjava的支持
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+
     //RxJava
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+
     //JSON解析
     compile 'com.alibaba:fastjson:1.1.55.android'
+
     //时间和地址选择器
     compile('cn.qqtheme.framework:WheelPicker:1.5.5') {
         exclude group: 'com.android.support'
     }
+
     //自动适配
     compile 'com.zhy:autolayout:1.4.5'
+
     //高德地图so及jar
+
     //3D地图
+
     //compile 'com.amap.api:3dmap:latest.integration'
+
     //定位功能
     compile 'com.amap.api:location:latest.integration'
+
     //compile 'com.amap.api:location:3.6.1'
+
     //搜索功能
     compile 'com.amap.api:search:latest.integration'
+
     //compile 'com.amap.api:search:5.5.0'
+
     //导航
     compile 'com.amap.api:navi-3dmap:latest.integration'
+
     //compile 'com.amap.api:navi-3dmap:5.5.0'
+
     //极光推送
     compile 'cn.jiguang.sdk:jpush:3.1.0'
+
     // 此处以JPush 3.0.3 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.8'
+
     //开源的守护进程库
     compile 'com.coolerfall:android-app-daemon:1.2.0'
+
     //sqlite框架greendao
     compile 'org.greenrobot:greendao:3.2.2'
+
     // 数据库加密时添加
+
     //compile 'net.zetetic:android-database-sqlcipher:3.5.1'
+
     // 使用数据库升级辅助GreenDaoUpgradeHelper时添加
+
     //compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.2.0'
+
     //multidex
     compile 'com.android.support:multidex:1.0.1'
+
     //glide图片加载库
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
     //微信支付
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
     //星级评价
     compile 'com.github.ome450901:SimpleRatingBar:1.3.4'
+
     //图片选择
     compile 'com.yanzhenjie:album:2.0.2'
+
     //ProgressDialog
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
+
     //检查版本
     compile 'com.allenliu.versionchecklib:library:1.8.2'
+
     //Android平台下的富文本解析器，支持Html和Markdown
     compile 'com.zzhoujay.richtext:richtext:3.0.4'
+
     //Android图表视图/图形视图库
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     compile files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
+    implementation files('libs/zxing-core-3.3.1.jar')
 }

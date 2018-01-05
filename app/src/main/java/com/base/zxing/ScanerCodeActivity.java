@@ -2,10 +2,10 @@ package com.base.zxing;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -60,7 +60,6 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
-	private String photo_path;
 	private ImageView scanLine;
 	private TranslateAnimation translateAnimation;
 	private ImageView mo_scanner_back;
@@ -188,39 +187,48 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 				case ZXingUtils.ScanPhotosRequestCode:
-					String[] proj = { MediaStore.Images.Media.DATA };
-					// 获取选中图片的路径
-					Cursor cursor = getContentResolver().query(data.getData(),
-							proj, null, null, null);
-					if (cursor.moveToFirst()) {
-						int column_index = cursor
-								.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-						photo_path = cursor.getString(column_index);
-						if (photo_path == null) {
-							photo_path = ZXingUtils.getPath(getApplicationContext(),
-									data.getData());
-							//Log.i("123path  Utils", photo_path);
-						}
-						//Log.i("123path", photo_path);
-
+					ContentResolver resolver = getContentResolver();
+					try {
+						// 使用ContentProvider通过URI获取原始图片
+						final Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+						//解析图片
+						analysisImage(photo);
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
-					cursor.close();
-					//解析图片
-					analysisImage(photo_path);
+//					String[] proj = { MediaStore.Images.Media.DATA };
+//					// 获取选中图片的路径
+//					Cursor cursor = getContentResolver().query(data.getData(),
+//							proj, null, null, null);
+//					if (cursor.moveToFirst()) {
+//						int column_index = cursor
+//								.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//						photo_path = cursor.getString(column_index);
+//						if (photo_path == null) {
+//							photo_path = ZXingUtils.getPath(getApplicationContext(),
+//									data.getData());
+//							//Log.i("123path  Utils", photo_path);
+//						}
+//						//Log.i("123path", photo_path);
+//
+//					}
+//					cursor.close();
+//					//解析图片
+//					analysisImage(photo_path);
 					break;
 			}
 		}
 	}
 
-	private void analysisImage(final String photoPath) {
-		if (TextUtils.isEmpty(photoPath)) {
+	private void analysisImage(final Bitmap photo) {
+		if (photo==null) {
 			Toast.makeText(this, R.string.libraryzxing_get_pic_fail, Toast.LENGTH_SHORT).show();
 			return;
 		}
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				final Result result = ZXingUtils.syncDecodeQRCode(photoPath);
+				final Result result = ZXingUtils.syncDecodeQRCode(photo);
 				final BarcodeFormat type = result.getBarcodeFormat();
 				final String realContent = ZXingUtils.recode(result.toString());
 				if (BarcodeFormat.QR_CODE.equals(type)) {
