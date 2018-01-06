@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
@@ -16,6 +15,7 @@ import com.base.bottomBar.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
+import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
 import com.base.view.NoPreloadViewPager;
@@ -38,7 +38,7 @@ import java.util.List;
 import systemdb.Login;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
-public class BottomBarActivity extends BaseActivity {
+public class BottomBarActivity extends BaseActivity implements BackInterface {
     private final int zxingRequestCode=1;
     private NoPreloadViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
@@ -198,6 +198,22 @@ public class BottomBarActivity extends BaseActivity {
             mBottomBarLayout.setCurrentItem(currentItem.getItemIndex());
             BaseFragment baseFragment= (BaseFragment) myAdapter.getItem(currentItem.getItemIndex());
             baseFragment.setData(currentItem.getData());
+        }
+    }
+    private BaseFragment mBaseFragment;
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+        this.mBaseFragment = selectedFragment;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
+            if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+                super.onBackPressed();
+            }else{
+                getSupportFragmentManager().popBackStack();
+            }
         }
     }
 }

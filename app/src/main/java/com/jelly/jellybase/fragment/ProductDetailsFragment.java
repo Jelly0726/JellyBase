@@ -39,6 +39,10 @@ public class ProductDetailsFragment extends BaseFragment {
 
 
     }
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
     public View getRootView() {
         return mRootView;
     }

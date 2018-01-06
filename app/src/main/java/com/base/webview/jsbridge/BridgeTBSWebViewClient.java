@@ -46,6 +46,11 @@ public class BridgeTBSWebViewClient extends WebViewClient {
                // Log.i(TAG, "onProgressChanged:----------->" + newProgress);
                 if (newProgress == 100) {
                     //loadingLayout.setVisibility(View.GONE);
+                    if (progressDialog != null) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
                 }
             }
 
@@ -97,11 +102,6 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        if (progressDialog != null) {
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-        }
         if (webViewClientCallBack != null) {
             webViewClientCallBack.onPageFinished(view, url);
         }

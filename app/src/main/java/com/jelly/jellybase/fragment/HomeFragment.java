@@ -38,6 +38,10 @@ public class HomeFragment extends BaseFragment {
 
     }
     @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data==null){

@@ -49,6 +49,10 @@ public class ProductEvaluateFragment extends BaseFragment {
     public void setData(String json) {
 
     }
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
     public View getRootView() {
         return mRootView;
     }
