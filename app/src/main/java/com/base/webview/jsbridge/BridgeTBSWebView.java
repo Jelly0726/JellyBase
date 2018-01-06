@@ -177,9 +177,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
     }
 
     void handlerReturnData(String url) {
-        String functionName = BridgeUtil.getFunctionFromReturnUrl(url);
+        String functionName = BridgeTBSUtil.getFunctionFromReturnUrl(url);
         CallBackFunction f = responseCallbacks.get(functionName);
-        String data = BridgeUtil.getDataFromReturnUrl(url);
+        String data = BridgeTBSUtil.getDataFromReturnUrl(url);
         if (f != null) {
             f.onCallBack(data);
             responseCallbacks.remove(functionName);
@@ -203,7 +203,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             m.setData(data);
         }
         if (responseCallback != null) {
-            String callbackStr = String.format(BridgeUtil.CALLBACK_ID_FORMAT, ++uniqueId + (BridgeUtil.UNDERLINE_STR + SystemClock.currentThreadTimeMillis()));
+            String callbackStr = String.format(BridgeTBSUtil.CALLBACK_ID_FORMAT, ++uniqueId + (BridgeTBSUtil.UNDERLINE_STR + SystemClock.currentThreadTimeMillis()));
             responseCallbacks.put(callbackStr, responseCallback);
             m.setCallbackId(callbackStr);
         }
@@ -226,7 +226,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         //escape special characters for json string
         messageJson = messageJson.replaceAll("(\\\\)([^utrn])", "\\\\\\\\$1$2");
         messageJson = messageJson.replaceAll("(?<=[^\\\\])(\")", "\\\\\"");
-        String javascriptCommand = String.format(BridgeUtil.JS_HANDLE_MESSAGE_FROM_JAVA, messageJson);
+        String javascriptCommand = String.format(BridgeTBSUtil.JS_HANDLE_MESSAGE_FROM_JAVA, messageJson);
         if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
             this.loadUrl(javascriptCommand);
         }
@@ -234,7 +234,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
 
     void flushMessageQueue() {
         if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
-            loadUrl(BridgeUtil.JS_FETCH_QUEUE_FROM_JAVA, new CallBackFunction() {
+            loadUrl(BridgeTBSUtil.JS_FETCH_QUEUE_FROM_JAVA, new CallBackFunction() {
 
                 @Override
                 public void onCallBack(String data) {
@@ -380,13 +380,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
          */
         @Override
         public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
-//				FrameLayout normalView = (FrameLayout) findViewById(R.id.web_filechooser);
-//				ViewGroup viewGroup = (ViewGroup) normalView.getParent();
-//				viewGroup.removeView(normalView);
-//				viewGroup.addView(view);
-//				myVideoView = view;
-//				myNormalView = normalView;
-//				callback = customViewCallback;
         }
 
         @Override
@@ -415,11 +408,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
 
         @Override
         public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
-//				BrowserActivity.this.uploadFile = uploadFile;
-//				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-//				i.addCategory(Intent.CATEGORY_OPENABLE);
-//				i.setType("*/*");
-//				startActivityForResult(Intent.createChooser(i, "test"), 0);
             if (openFileCallBack != null) {
                 openFileCallBack.openFileChooser(uploadFile, acceptType);
             }
@@ -432,22 +420,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             /**
              * 这里写入你自定义的window alert
              */
-            // AlertDialog.Builder builder = new Builder(getContext());
-            // builder.setTitle("X5内核");
-            // builder.setPositiveButton("确定", new
-            // DialogInterface.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // // TODO Auto-generated method stub
-            // dialog.dismiss();
-            // }
-            // });
-            // builder.show();
-            // arg3.confirm();
-            // return true;
             Log.i("yuanhaizhou", "setX5webview = null");
-            //return super.onJsAlert(null, "www.baidu.com", "aa", arg3);
             return true;
         }
 
@@ -498,7 +471,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
 
     public void loadUrl(String jsUrl, CallBackFunction returnCallback) {
         this.loadUrl(jsUrl);
-        responseCallbacks.put(BridgeUtil.parseFunctionName(jsUrl), returnCallback);
+        responseCallbacks.put(BridgeTBSUtil.parseFunctionName(jsUrl), returnCallback);
     }
 
     /**

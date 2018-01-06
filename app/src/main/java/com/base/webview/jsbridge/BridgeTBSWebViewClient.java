@@ -4,9 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.jelly.jellybase.R;
+import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebHistoryItem;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -21,15 +27,38 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     private BridgeTBSWebView webView;
     private static ProgressDialog progressDialog;
     private TBSWebViewClientCallBack webViewClientCallBack;
-
+    private View mErrorView;
+    private Context context;
     public BridgeTBSWebViewClient(BridgeTBSWebView webView, Context context) {
         this.webView = webView;
+        this.context = context;
+        initErrorPage();//初始化自定义页面
         progressDialog = new ProgressDialog(context);
         //progressDialog.setTitle("加载提示");
         progressDialog.setMessage("正在加载.....");
         progressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
         progressDialog.setCancelable(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+               // Log.i(TAG, "onProgressChanged:----------->" + newProgress);
+                if (newProgress == 100) {
+                    //loadingLayout.setVisibility(View.GONE);
+                }
+            }
+
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+               // Log.i(TAG, "onReceivedTitle:title ------>" + title);
+                if (title.contains("404")){
+                    showErrorPage();
+                }
+            }
+        });
     }
 
     @Override
@@ -107,20 +136,46 @@ public class BridgeTBSWebViewClient extends WebViewClient {
             //Log.i("msg","list="+list.getSize());
         }
     }
-
-    @Override
-    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        Log.i("msg onReceivedError", "errorCode=" + errorCode + " description=" + description + " failingUrl=" + failingUrl);
-        super.onReceivedError(view, errorCode, description, failingUrl);
-    }
-
     @Override
     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
         Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
         super.onReceivedHttpError(view, request, error);
 
     }
+    @Override
+    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        super.onReceivedError(view, errorCode, description, failingUrl);
+        //6.0以下执行
+        //Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
+        //网络未连接
+        showErrorPage();
+    }
 
+    //处理网页加载失败时
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
+        //6.0以上执行
+        //Log.i(TAG, "onReceivedError: ");
+        showErrorPage();//显示错误页面
+    }
+    /**
+     * 显示自定义错误提示页面，用一个View覆盖在WebView
+     */
+    private void showErrorPage() {
+        ((ViewGroup)webView.getParent()).removeAllViews(); //移除加载网页错误时，默认的提示信息
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        ((ViewGroup)webView.getParent()).addView(mErrorView, 0, layoutParams); //添加自定义的错误提示的View
+    }
+
+    /***
+     * 显示加载失败时自定义的网页
+     */
+    private void initErrorPage() {
+        if (mErrorView == null) {
+            mErrorView = View.inflate(context, R.layout.webview_load_error, null);
+        }
+    }
     public static void progressDialogDismiss() {
         if (progressDialog != null) {
             if (progressDialog.isShowing()) {
