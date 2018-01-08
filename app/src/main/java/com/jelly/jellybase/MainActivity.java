@@ -18,6 +18,7 @@ import com.base.applicationUtil.MyApplication;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
+import com.base.eventBus.NetEvent;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
@@ -42,10 +43,17 @@ import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
+import com.jelly.jellybase.server.LocationService;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import systemdb.PositionEntity;
+import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -67,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
         //开启保活服务
         CommonStaticUtil.startService(MyApplication.getMyApp());
+        HermesEventBus.getDefault().register(this);
     }
     private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
         /**
@@ -86,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    protected void onDestroy() {
+        HermesEventBus.getDefault().unregister(this);
+        MyApplication.getMyApp().removeEvent(this);
+        super.onDestroy();
+    }
+
     private void isLogin(){
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -160,6 +177,15 @@ public class MainActivity extends AppCompatActivity {
             }, 1000);
         }
     };
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(NetEvent netEvent){
+        if (netEvent.getEventType().equals(PositionEntity.class.getName())){
+            Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
+            MyApplication.getMyApp().stopService(intent);
+            PositionEntity entity= (PositionEntity) netEvent.getEvent();
+        }
+
+    }
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){
 
         @Override

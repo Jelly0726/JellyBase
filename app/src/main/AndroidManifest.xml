@@ -448,21 +448,20 @@
         </service>
         <service android:name="com.base.appservicelive.service.StartService"
             android:enabled="true"
-            >
-        </service>
+            />
         <!--↑↑↑保活服务↑↑↑-->
         <service android:name=".server.JobSchedulerService"
             android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service android:name=".server.WokeService"
             android:enabled="true"
-            >
-        </service>
+            />
         <service android:name=".server.PushService"
             android:enabled="true"
-            >
-        </service>
+            />
+        <service android:name=".server.LocationService"
+            android:enabled="true"
+            />
     </application>
 
 </manifest>
