@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
+import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
@@ -28,6 +29,7 @@ import com.jelly.jellybase.fragment.MeFragment;
 import com.jelly.jellybase.fragment.MiddleFragment;
 import com.jelly.jellybase.fragment.OrderFragment;
 import com.jelly.jellybase.fragment.WalletFragment;
+import com.jelly.jellybase.server.LocationService;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import systemdb.Login;
+import systemdb.PositionEntity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class BottomBarActivity extends BaseActivity implements BackInterface {
@@ -61,14 +64,19 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         initListener();
 
         //isLogin();
+        MyApplication.getMyApp().addEvent(this);
+        //开启定位服务
+        Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+        startService(stateGuardService);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if(HermesEventBus.getDefault().isRegistered(this)){
             HermesEventBus.getDefault().unregister(this);
         }
+        MyApplication.getMyApp().removeEvent(this);
+        super.onDestroy();
     }
 
     private void isLogin(){
@@ -198,6 +206,17 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             mBottomBarLayout.setCurrentItem(currentItem.getItemIndex());
             BaseFragment baseFragment= (BaseFragment) myAdapter.getItem(currentItem.getItemIndex());
             baseFragment.setData(currentItem.getData());
+        }
+        if (netEvent.getEventType().equals(PositionEntity.class.getName())){
+            Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
+            MyApplication.getMyApp().stopService(intent);
+            PositionEntity entity= (PositionEntity) netEvent.getEvent();
+            if (entity.latitue!=0d&&entity.longitude!=0d) {
+                mBottomBarLayout.setText(2,entity.city);
+                //停止定位服务
+                Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+                stopService(stateGuardService);
+            }
         }
     }
     private BaseFragment mBaseFragment;
