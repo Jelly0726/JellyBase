@@ -47,7 +47,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         return startupMessage;
     }
 
-
     private int num = 0;
     private String msg = "Hello world!";
     private static final int MSG = 0;
@@ -108,7 +107,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
     }
 
     private void init(Context context) {
-
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
@@ -152,7 +150,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-
         bridgeWebViewClient = generateBridgeWebViewClient(context);
         this.setWebViewClient(bridgeWebViewClient);
 
@@ -428,11 +425,13 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
          * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
          */
 
-
         @Override
         public void onReceivedTitle(WebView arg0, final String arg1) {
             super.onReceivedTitle(arg0, arg1);
             Log.i("yuanhaizhou", "webpage title is " + arg1);
+            if (arg1.contains("404")){
+                showErrorPage();
+            }
 
         }
 
@@ -466,9 +465,23 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
                 openFileCallBack.openFileChooser(uploadMsg, acceptType);
             }
         }
-
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            Log.i("ss", "BridgeTBSWebViewClient onProgressChanged:----------->" + newProgress);
+            if (newProgress == 100) {
+                //loadingLayout.setVisibility(View.GONE);
+                if (bridgeWebViewClient != null) {
+                    bridgeWebViewClient.progressDialogDismiss();
+                }
+            }
+        }
     };
-
+    /**
+     * 显示自定义错误提示页面，用一个View覆盖在WebView
+     */
+    public void showErrorPage() {
+        loadUrl("file:///android_asset/webpage/404.html");
+    }
     public void loadUrl(String jsUrl, CallBackFunction returnCallback) {
         this.loadUrl(jsUrl);
         responseCallbacks.put(BridgeTBSUtil.parseFunctionName(jsUrl), returnCallback);

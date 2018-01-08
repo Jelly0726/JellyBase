@@ -69,7 +69,6 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
     }
 
     private void init(Context context) {
-
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
@@ -174,6 +173,25 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
                 if (openFileCallBack != null) {
                     openFileCallBack.openFileChooser(uploadMsg, acceptType);
+                }
+            }
+            @Override
+            public void onReceivedTitle(WebView arg0, final String arg1) {
+                super.onReceivedTitle(arg0, arg1);
+                Log.i("yuanhaizhou", "webpage title is " + arg1);
+                if (arg1.contains("404")){
+                    showErrorPage();
+                }
+
+            }
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                Log.i("ss", "BridgeTBSWebViewClient onProgressChanged:----------->" + newProgress);
+                if (newProgress == 100) {
+                    //loadingLayout.setVisibility(View.GONE);
+                    if (bridgeWebViewClient != null) {
+                        bridgeWebViewClient.progressDialogDismiss();
+                    }
                 }
             }
         });
@@ -311,7 +329,12 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             });
         }
     }
-
+    /**
+     * 显示自定义错误提示页面，用一个View覆盖在WebView
+     */
+    public void showErrorPage() {
+        loadUrl("file:///android_asset/webpage/404.html");
+    }
     public void loadUrl(String jsUrl, CallBackFunction returnCallback) {
         this.loadUrl(jsUrl);
         responseCallbacks.put(BridgeUtil.parseFunctionName(jsUrl), returnCallback);

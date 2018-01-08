@@ -4,18 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.webkit.WebHistoryItem;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-
-import com.jelly.jellybase.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -27,42 +21,14 @@ public class BridgeWebViewClient extends WebViewClient {
     private BridgeWebView webView;
     private static ProgressDialog progressDialog;
     private WebViewClientCallBack webViewClientCallBack;
-    private View mErrorView;
-    private Context context;
     public BridgeWebViewClient(BridgeWebView webView, Context context) {
         this.webView = webView;
-        this.context = context;
-        initErrorPage();//初始化自定义页面
         progressDialog = new ProgressDialog(context);
         //progressDialog.setTitle("加载提示");
         progressDialog.setMessage("正在加载.....");
         progressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
         progressDialog.setCancelable(true);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                // Log.i(TAG, "onProgressChanged:----------->" + newProgress);
-                if (newProgress == 100) {
-                    //loadingLayout.setVisibility(View.GONE);
-                    if (progressDialog != null) {
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                    }
-                }
-            }
-
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-                // Log.i(TAG, "onReceivedTitle:title ------>" + title);
-                if (title.contains("404")){
-                    showErrorPage();
-                }
-            }
-        });
     }
 
     @Override
@@ -131,7 +97,7 @@ public class BridgeWebViewClient extends WebViewClient {
         String uu = webHistoryItem.getOriginalUrl();
         //Log.i("msg","url="+url+" isReload="+isReload+" uu="+uu);
         if (url.contains(uu)) {
-            webView.clearHistory();//清除历史记录
+            //webView.clearHistory();//清除历史记录
             //Log.i("msg","list="+list.getSize());
         }
     }
@@ -147,7 +113,7 @@ public class BridgeWebViewClient extends WebViewClient {
         //6.0以下执行
         //Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
         //网络未连接
-        showErrorPage();
+        webView.showErrorPage();
     }
 
     //处理网页加载失败时
@@ -156,26 +122,9 @@ public class BridgeWebViewClient extends WebViewClient {
         super.onReceivedError(view, request, error);
         //6.0以上执行
         //Log.i(TAG, "onReceivedError: ");
-        showErrorPage();//显示错误页面
+        webView.showErrorPage();//显示错误页面
     }
-    /**
-     * 显示自定义错误提示页面，用一个View覆盖在WebView
-     */
-    private void showErrorPage() {
-        ((ViewGroup)webView.getParent()).removeAllViews(); //移除加载网页错误时，默认的提示信息
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        ((ViewGroup)webView.getParent()).addView(mErrorView, 0, layoutParams); //添加自定义的错误提示的View
-    }
-
-    /***
-     * 显示加载失败时自定义的网页
-     */
-    private void initErrorPage() {
-        if (mErrorView == null) {
-            mErrorView = View.inflate(context, R.layout.webview_load_error, null);
-        }
-    }
-    public static void progressDialogDismiss() {
+    public void progressDialogDismiss() {
         if (progressDialog != null) {
             if (progressDialog.isShowing()) {
                 progressDialog.dismiss();

@@ -106,6 +106,12 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
     public void setData(String json) {
 
     }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
     private void iniView(){
         left_back= (LinearLayout) mRootView.findViewById(R.id.left_back);
         left_back.setOnClickListener(this);
