@@ -22,5 +22,6 @@
         <item>版本检查</item>
         <item>解析html</item>
         <item>Android图表视图/图形视图库</item>
+        <item>图形验证码</item>
     </string-array>
 </resources>

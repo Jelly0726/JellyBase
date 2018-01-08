@@ -28,6 +28,7 @@ import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
+import com.jelly.jellybase.activity.GraphValiCodeActivity;
 import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
@@ -221,6 +222,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 20://Android图表视图/图形视图库
                     intent=new Intent(MyApplication.getMyApp(), LineChartActivity.class);
+                    startActivity(intent);
+                    break;
+                case 21://图形验证码
+                    intent=new Intent(MyApplication.getMyApp(), GraphValiCodeActivity.class);
                     startActivity(intent);
                     break;
             }

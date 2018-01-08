@@ -256,6 +256,10 @@
             android:name=".activity.LineChartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".activity.GraphValiCodeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
         <service
             android:name="com.base.checkVersion.DemoService"
