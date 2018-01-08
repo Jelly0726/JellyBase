@@ -153,7 +153,24 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
          */
         @Override
         public void onNoUpdateFound() {
-
+            new CircleDialog.Builder(SettingsActivity.this)
+                    .configDialog(new ConfigDialog() {
+                        @Override
+                        public void onConfig(DialogParams params) {
+                            params.width=0.6f;
+                        }
+                    })
+                    .setCanceledOnTouchOutside(false)
+                    .setCancelable(false)
+                    .setTitle("检查更新")
+                    .setText("当前版本已是最新版本!")
+                    .setNegative("取消", null)
+                    .setPositive("确定", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    })
+                    .show();
         }
 
         /**
