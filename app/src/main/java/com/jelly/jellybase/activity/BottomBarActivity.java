@@ -212,7 +212,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             MyApplication.getMyApp().stopService(intent);
             PositionEntity entity= (PositionEntity) netEvent.getEvent();
             if (entity.latitue!=0d&&entity.longitude!=0d) {
-                mBottomBarLayout.setText(2,entity.city);
+                mBottomBarLayout.setText(2,entity.city);//设置第三个页签显示的文字
                 //停止定位服务
                 Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
                 stopService(stateGuardService);
