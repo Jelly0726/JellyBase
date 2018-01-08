@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
+import com.base.config.IntentAction;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.webview.BaseWebViewActivity;
@@ -79,6 +82,30 @@ public class MainActivity extends AppCompatActivity {
         public void onCheckComplete() {
         }
 
+    }
+    private void isLogin(){
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                if (!TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
+                }else{
+                    goLoginActivity();
+                }
+            }
+        },1000);
+    }
+    /**
+     * 进入登陆界面
+     */
+    public void goLoginActivity() {
+        try{
+            Intent intent = new Intent();
+            //intent.setClass(this, LoginActivity.class);
+            intent.setAction(IntentAction.ACTION_LOGIN);
+            startActivity(intent);
+            finish();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     private void iniXRefreshView(){
         mList= getResources().getStringArray(R.array.mainArray);

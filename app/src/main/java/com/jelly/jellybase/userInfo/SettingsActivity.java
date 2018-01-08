@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.allenliu.versionchecklib.core.AllenChecker;
 import com.allenliu.versionchecklib.core.VersionParams;
 import com.allenliu.versionchecklib.core.http.HttpHeaders;
+import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
@@ -92,6 +93,8 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                     break;
                 case R.id.check_updata:
                     presenter.getAppversion(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    //百度智能更新 SDK 的 AAR 文件
+                    //BDAutoUpdateSDK.uiUpdateAction(SettingsActivity.this, new MyUICheckUpdateCallback());
 //                    AllenChecker.init(true);
 //                    HttpHeaders httpHeaders=new HttpHeaders();
 //                    httpHeaders.put("token",GlobalToken.getToken().getToken());
@@ -144,7 +147,24 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
             }
         }
     };
+    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+        /**
+         * 当检测到无版本更新时会触发回调该方法
+         */
+        @Override
+        public void onNoUpdateFound() {
 
+        }
+
+        /**
+         * 当检测到无版本更新或者用户关闭版本更新ᨀ示框
+         或者用户点击了升级下载时会触发回调该方法
+         */
+        @Override
+        public void onCheckComplete() {
+        }
+
+    }
     @Override
     public void getAppversionSuccess( Object mCallBackVo) {
         AppVersion appVersion= (AppVersion) mCallBackVo;
