@@ -11,9 +11,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        //多进程数据共享SharedPreferences
-        // add this to set a unique tray authority based on your applicationId
-        resValue "string", "tray__authority", "${applicationId}.tray"
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
 
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）

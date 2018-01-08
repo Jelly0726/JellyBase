@@ -22,6 +22,29 @@ public class AppPrefs {
         public TrayEMMPrefs(Context context) {
             super(context, context.getPackageName(), VERSION);
         }
+        @Override
+        protected void onCreate(final int initialVersion) {
+            super.onCreate(initialVersion);
+        }
+
+        /**
+         * 升级
+          * @param oldVersion
+         * @param newVersion
+         */
+        @Override
+        protected void onUpgrade(final int oldVersion, final int newVersion) {
+            super.onUpgrade(oldVersion, newVersion);
+        }
+        /**
+         * 降级
+         * @param oldVersion
+         * @param newVersion
+         */
+        @Override
+        protected void onDowngrade(final int oldVersion, final int newVersion) {
+            super.onDowngrade(oldVersion, newVersion);
+        }
     }
 
     private AppPrefs(Context context) {
