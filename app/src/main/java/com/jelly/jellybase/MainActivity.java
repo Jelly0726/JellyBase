@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.applicationUtil.MyApplication;
+import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         iniXRefreshView();
         //百度智能更新 SDK 的 AAR 文件
         BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
+        //开启保活服务
+        CommonStaticUtil.startService(MyApplication.getMyApp());
     }
     private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
         /**

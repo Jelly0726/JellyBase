@@ -13,13 +13,13 @@ import android.view.Window;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.server.WokeService;
+import com.base.view.BaseActivity;
 
 public class LauncherActivity extends BaseActivity{
 	@Override
@@ -38,7 +38,8 @@ public class LauncherActivity extends BaseActivity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.base_activity_launcher);
 		//开启服务
-		CommonStaticUtil.startService(MyApplication.getMyApp());
+		Intent stateGuardService =  new Intent(MyApplication.getMyApp(), WokeService.class);
+		startService(stateGuardService);
 
 		if (AppPrefs.getBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,true)) {
 			if(!hasShortcut()){
