@@ -22,7 +22,7 @@ implements RegisterContact.Presenter{
         super(interfaceView);
     }
 
-    public void userRegister(final boolean isRefresh, ObservableTransformer composer) {
+    public void userRegister( ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().userRegistration(gson.toJson(view.getRegParam()),composer
                 ,new Observer<HttpResult>() {
@@ -30,7 +30,7 @@ implements RegisterContact.Presenter{
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.excuteFailed(isRefresh,e.getMessage());
+                view.excuteFailed(e.getMessage());
             }
 
             @Override
@@ -47,15 +47,15 @@ implements RegisterContact.Presenter{
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(isRefresh,model);
+                    view.excuteSuccess(model);
                 }else {
-                    view.excuteFailed(isRefresh, model.getMsg());
+                    view.excuteFailed(model.getMsg());
                 }
 
             }
         });
     }
-    public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
+    public void getVerifiCode(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
                 ,composer,new Observer<HttpResult>() {
@@ -63,7 +63,7 @@ implements RegisterContact.Presenter{
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.verifiCodeFailed(isRefresh,e.getMessage());
+                view.verifiCodeFailed(e.getMessage());
             }
 
             @Override
@@ -80,9 +80,9 @@ implements RegisterContact.Presenter{
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.verifiCodeSuccess(isRefresh,model);
+                    view.verifiCodeSuccess(model);
                 }else {
-                    view.verifiCodeFailed(isRefresh,model.getMsg());
+                    view.verifiCodeFailed(model.getMsg());
                 }
             }
         });

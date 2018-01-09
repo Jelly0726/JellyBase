@@ -1,123 +1,147 @@
 package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
 import com.base.config.ConfigKey;
-import com.base.config.IntentAction;
-import com.base.httpmvp.contact.LoginContact;
-import com.base.httpmvp.presenter.LoginActivityPresenter;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.httpmvp.view.BaseActivityImpl;
-import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
+import com.base.view.BackInterface;
+import com.base.view.BaseActivity;
+import com.base.view.BaseFragment;
+import com.base.view.NoPreloadViewPager;
+import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.yanzhenjie.sofia.Sofia;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
-import systemdb.Login;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
-        implements LoginContact.View {
-    @BindView(R.id.login_tv)
-    TextView login_tv;
-    @BindView(R.id.forget_pwd)
-    TextView forget_pwd;
+public class LoginActivity extends BaseActivity implements
+        NoPreloadViewPager.OnPageChangeListener,BackInterface {
+
     @BindView(R.id.register_account)
     TextView register_account;
     private String phone="";
     private String password;
     private int from=-1;
-    @BindView(R.id.phone_edit)
-    EditText phone_edit;
-    @BindView(R.id.password_edit)
-    EditText password_edit;
-
+    @BindView(R.id.topbar_rg)
+    RadioGroup topbar_rg;
+    @BindView(R.id.vp_content)
+    NoPreloadViewPager mVpContent;
+    private List<BaseFragment> mFragmentList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login_activity);
         ButterKnife.bind(this);
-        iniView();
         phone=getIntent().getStringExtra("phone");
         password=getIntent().getStringExtra("password");
         from=getIntent().getIntExtra("from",-1);
+        iniView();
+
         AppPrefs.remove(getApplicationContext(),
                 ConfigKey.DEFAULT_BANK);
     }
     private void iniView (){
+        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
+        Sofia.with(this)
+                // 状态栏深色字体。
+                .statusBarDarkFont()
+                // 状态栏浅色字体。
+                //.statusBarLightFont()
+                // 导航栏背景透明度。
+                //.navigationBarBackgroundAlpha(int alpha)
+                // 状态栏背景。可接受Color、Drawable
+                .statusBarBackground(Color.parseColor("#eeeeee"));
+                // 导航栏背景。可接受Color、Drawable
+                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
+                // 内容入侵状态栏。
+                //.invasionStatusBar()
+                // 内容入侵导航栏。
+                //.invasionNavigationBar()
+                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
+                //.fitsSystemWindowView(mStatusView);
+        //// ↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑
+
+        mVpContent.setOnPageChangeListener(this);
+        topbar_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                for (int i=0;i<topbar_rg.getChildCount();i++){
+                    if (topbar_rg.getChildAt(i).getId()==checkedId){
+                        mVpContent.setCurrentItem(i, false);
+                    }else {
+                    }
+                }
+            }
+        });
     }
     private void iniData(){
         Log.i("ss","phone="+phone);
         Log.i("ss","password="+password);
         Log.i("ss","from="+from);
-        if (!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(password)&&from==0){
-            phone_edit.setText(phone);
-            phone_edit.setSelection(phone.length());
-            password_edit.setText(password);
-            password_edit.setSelection(password.length());
-            presenter.userLogin(true,lifecycleProvider
-                    .<Long>bindUntilEvent(ActivityEvent.DESTROY));
-        }
+        Map map=new HashMap();
+        map.put("phone",phone);
+        map.put("password",password);
+        map.put("from",from);
+
+        mFragmentList.clear();
+
+        UserPwLoginFragment boutiquesStoreFragment = new UserPwLoginFragment();
+        boutiquesStoreFragment.setData(new Gson().toJson(map));
+        mFragmentList.add(boutiquesStoreFragment);
+
+        UserDyLoginFragment allianceFragment = new UserDyLoginFragment();
+        mFragmentList.add(allianceFragment);
 
     }
 
+    private void initListener() {
+        mVpContent.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        if (mVpContent.getAdapter().getCount() != topbar_rg.getChildCount()) {
+            throw new IllegalArgumentException("RadioGroup的子RadioButton数量必须和ViewPager条目数量一致");
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
         iniData();
+        initListener();
     }
 
-    @Override
-    public LoginContact.Presenter initPresenter() {
-        return new LoginActivityPresenter(this);
-    }
 
-    @OnClick({R.id.login_tv,R.id.forget_pwd,R.id.register_account})
+
+    @OnClick({R.id.register_account})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
         }
         Intent intent;
         switch (v.getId()){
-            case R.id.login_tv:
-                phone=phone_edit.getText().toString().trim();
-                password=password_edit.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(password))
-                {
-                    ToastUtils.showToast(this,"请输入您的手机号和密码!");
-                    return;
-                }
-                presenter.userLogin(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
-                break;
-            case R.id.forget_pwd:
-                intent=new Intent(LoginActivity.this, ForgetActivity.class);
-                startActivity(intent);
-                break;
             case R.id.register_account:
-                intent=new Intent(LoginActivity.this, RegisterActivity.class);
+                intent=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -132,54 +156,39 @@ public class LoginActivity extends BaseActivityImpl<LoginContact.Presenter>
         super.onDestroy();
     }
     @Override
-    public Object getLoginParam() {
-        password= MD5.MD5Encode(password);
-        Map map=new TreeMap();
-        map.put("salesphone",phone);
-        map.put("password",password);
-        return map;
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
 
     @Override
-    public void loginSuccess(boolean isRefresh, Object mCallBackVo) {
-        Login login= (Login) mCallBackVo;
-
-        //↓↓↓↓↓↓极光设置tag↓↓↓↓↓↓
-        if (!AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,false)){
-            if (!TextUtils.isEmpty(login.getCompanyno())){
-                Set<String> tagSet = new LinkedHashSet<String>();
-                tagSet.add(login.getCompanyno());
-                TagAliasOperatorHelper.TagAliasBean tagAliasBean = new TagAliasOperatorHelper.TagAliasBean();
-                tagAliasBean.action = TagAliasOperatorHelper.ACTION_SET;
-                tagAliasBean.tags = tagSet;
-                tagAliasBean.isAliasAction = false;
-                TagAliasOperatorHelper.sequence++;
-                TagAliasOperatorHelper.getInstance().handleAction(getApplicationContext(),
-                        TagAliasOperatorHelper.sequence,tagAliasBean);
-            }
-        }
-        //↑↑↑↑↑↑极光设置tag↑↑↑↑↑↑
-        //↓↓↓↓↓↓极光ID↓↓↓↓↓↓
-        String RegistrationID= AppPrefs.getString(MyApplication.getMyApp(), ConfigKey.JPUSHID);
-        if (TextUtils.isEmpty(RegistrationID)){
-            RegistrationID= JPushInterface.getRegistrationID(MyApplication.getMyApp());
-            AppPrefs.putString(MyApplication.getMyApp(), ConfigKey.JPUSHID,RegistrationID);
-        }
-        //↑↑↑↑↑↑极光ID↑↑↑↑↑↑
-        TokenModel tokenModel=new TokenModel();
-        tokenModel.setTokenExpirationTime(login.getTokenExpirationTime());
-        tokenModel.setToken(login.getToken());
-        tokenModel.setCreateTime(login.getCreateTime());
-        GlobalToken.updateToken(tokenModel);
-
-        Intent intent=new Intent();
-        intent.setAction(IntentAction.ACTION_MAIN);
-        startActivity(intent);
-        finish();
+    public void onPageSelected(int position) {
+        ((RadioButton)topbar_rg.getChildAt(position)).setChecked(true);
+        mVpContent.setCurrentItem(position, false);
     }
 
     @Override
-    public void loginFailed(boolean isRefresh, String message) {
-        ToastUtils.showToast(this,message);
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private BaseFragment mBaseFragment;
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+        this.mBaseFragment = selectedFragment;
+    }
+    class MyAdapter extends FragmentStatePagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
     }
 }

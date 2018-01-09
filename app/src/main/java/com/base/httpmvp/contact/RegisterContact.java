@@ -21,12 +21,12 @@ public interface RegisterContact {
         /**
          * 成功回调
          */
-        public void excuteSuccess(boolean isRefresh, Object mCallBackVo);
+        public void excuteSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void excuteFailed(boolean isRefresh, String message);
+        public void excuteFailed(String message);
 
         /**
          * 获取参数
@@ -38,17 +38,17 @@ public interface RegisterContact {
         /**
          * 成功回调
          */
-        public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo);
+        public void verifiCodeSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void verifiCodeFailed(boolean isRefresh, String message);
+        public void verifiCodeFailed(String message);
 
 
     }
     public interface Presenter extends IBasePresenter {
-        public void userRegister(final boolean isRefresh, ObservableTransformer composer);
-        public void getVerifiCode(final boolean isRefresh, ObservableTransformer composer);
+        public void userRegister(ObservableTransformer composer);
+        public void getVerifiCode(ObservableTransformer composer);
     }
 }

@@ -74,7 +74,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
                     ToastUtils.showToast(RegisterActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -114,7 +114,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
                 }
                 if (agree.isChecked())
                 {
-                    presenter.userRegister(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.userRegister(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 }else {
                     ToastUtils.showToast(RegisterActivity.this,"请先阅读服务协议，并同意！");
                 }
@@ -141,7 +141,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     }
 
     @Override
-    public void excuteSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void excuteSuccess( Object mCallBackVo) {
         String phone=phone_edit.getText().toString().trim();
         Intent intent=new Intent(RegisterActivity.this,SetPWDActivity.class);
         intent.putExtra("phone",phone);
@@ -149,7 +149,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     }
 
     @Override
-    public void excuteFailed(boolean isRefresh, String message) {
+    public void excuteFailed( String message) {
         ToastUtils.showToast(this,message);
     }
 
@@ -163,13 +163,13 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     }
 
     @Override
-    public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
     }
 
     @Override
-    public void verifiCodeFailed(boolean isRefresh, String message) {
+    public void verifiCodeFailed( String message) {
         ToastUtils.showToast(this,message);
     }
 }
