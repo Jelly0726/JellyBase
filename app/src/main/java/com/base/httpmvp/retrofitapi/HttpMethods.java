@@ -10,6 +10,7 @@ import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
 import com.base.httpmvp.databean.AboutUs;
+import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
@@ -19,6 +20,7 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.jelly.jellybase.BuildConfig;
+import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import java.io.File;
 import java.io.IOException;
@@ -386,7 +388,49 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpResultFuncs<HttpResultList<BankCardInfo>>());
 		toSubscribe(observable, subscriber,composer);
 	}
-
+	/***
+	 * 删除银行卡
+	 * @param subscriber
+	 */
+	public void deletebank(Object param,ObservableTransformer composer,Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).deletebank(GlobalToken.getToken().getToken(),param)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 提现
+	 * @param subscriber
+	 */
+	public void withdrawals(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).withdrawals(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 账户明细
+	 * @param subscriber
+	 */
+	public void accountDetails(Object paramMap,ObservableTransformer composer, Observer<HttpResultList<AccountDetail>> subscriber){
+		Observable observable =  getProxy(IApiService.class).accountDetails(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResultList<AccountDetail>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/**
+	 * 配置地址
+	 */
+	public void operaAddress(Object paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).operaAddress(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/**
+	 * 获取地址列表
+	 */
+	public void getAddressList(Object paramMap,ObservableTransformer composer,Observer<HttpResultList<RecevierAddress>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getAddressList(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpResultFuncs<HttpResultList<RecevierAddress>>());
+		toSubscribe(observable, subscriber,composer);
+	}
 
 	/***
 	 * 统一异步,同步处理

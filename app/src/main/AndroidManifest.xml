@@ -261,6 +261,45 @@
             android:name=".activity.GraphValiCodeActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.AddressListActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.AddAddressActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.EditAddressActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.RechargeActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.WithdrawActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.BankCardListActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.AddBankCardActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.BankCardEditActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
         <service
             android:name="com.base.checkVersion.DemoService"

@@ -1,5 +1,6 @@
 package com.jelly.jellybase.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -7,14 +8,21 @@ import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.base.applicationUtil.MyApplication;
+import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XNestedScrollView;
 import com.base.xrefreshview.XRefreshView;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.activity.BalanceActivity;
+import com.jelly.jellybase.activity.BankCardListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -24,11 +32,18 @@ import butterknife.Unbinder;
 public class MeFragment extends BaseFragment {
     private View mRootView;
     private Unbinder unbinder;
-
     @BindView(R.id.xrefreshview)
     XRefreshView xRefreshView;
     @BindView(R.id.nestedScroll_view)
     XNestedScrollView scrollView;
+    @BindView(R.id.balance_layout)
+    LinearLayout balance_layout;
+    @BindView(R.id.balance_tv)
+    TextView balance_tv;
+    @BindView(R.id.bankcard_layout)
+    LinearLayout bankcard_layout;
+    @BindView(R.id.banksqy_tv)
+    TextView banksqy_tv;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,4 +119,22 @@ public class MeFragment extends BaseFragment {
             }, 1000);
         }
     };
+    @OnClick({R.id.right_icon,R.id.balance_layout,R.id.bankcard_layout})
+    public void onClick(View view){
+        if (AntiShake.check(view.getId()))return;
+        Intent intent;
+        switch (view.getId()){
+            case R.id.right_icon:
+                break;
+            case R.id.balance_layout:
+                intent=new Intent(MyApplication.getMyApp(), BalanceActivity.class);
+                intent.putExtra("Balance",balance_tv.getText().toString().trim());
+                startActivity(intent);
+                break;
+            case R.id.bankcard_layout:
+                intent=new Intent(MyApplication.getMyApp(), BankCardListActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }

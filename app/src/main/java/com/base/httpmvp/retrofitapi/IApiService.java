@@ -3,9 +3,11 @@ package com.base.httpmvp.retrofitapi;
 
 import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.databean.AboutUs;
+import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -75,4 +77,22 @@ public interface IApiService {
 	//添加银行卡
 	@POST("SLD/buyersInfo/addbank.doAdminJJ")
 	Observable<HttpStateData<HttpResult>> addbank(@Header("token") String token, @Query("data") Object jsonObject);
+	//删除银行卡
+	@POST("SLD/buyersInfo/deleteBankById.doAdminJJ")
+	Observable<HttpStateData<HttpResult>> deletebank(@Header("token") String token, @Query("data") Object jsonObject);
+	//提现
+	@POST("SLD/buyersInfo/withdrawals.doAdminJJ")
+	Observable<HttpStateData<HttpResult>> withdrawals(@Header("token") String token, @Query("data") Object jsonObject);
+	//账户明细
+	@POST("SLD/buyersInfo/buyerAccountDetails.doAdminJJ")
+	Observable<HttpStateData<HttpResultList<AccountDetail>>> accountDetails(@Header("token") String token,
+																			@Query("data") Object jsonObject);
+	//配置地址
+	@POST("SLD/buyerAddress/operaAddress.doAdminJJ")
+	Observable<HttpStateData<HttpResult>> operaAddress(@Header("token") String token,
+													   @Query("data") Object jsonObject);
+	//获取地址列表
+	@POST("SLD/buyerAddress/getAddressList.doAdminJJ")
+	Observable<HttpStateData<HttpResultList<RecevierAddress>>> getAddressList(@Header("token") String token,
+																			  @Query("data") Object jsonObject);
 }
