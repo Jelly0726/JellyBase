@@ -70,11 +70,39 @@
             android:hint="请输入密码"
             android:textColorHint="#727272"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="30px"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="#727272"
+            android:text="三个月内免登录"
+            android:layout_gravity="center_vertical">
+        </TextView>
+        <Switch
+            android:id="@+id/isparallel"
+            android:layout_width="98px"
+            android:layout_height="44px"
+            android:switchMinWidth="10dp"
+            android:layout_gravity="center_vertical"
+            android:textOn="  "
+            android:textOff="  "
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track"
+            />
+    </LinearLayout>
     <TextView
         android:id="@+id/login_tv"
         android:layout_width="match_parent"
         android:layout_height="88px"
-        android:layout_marginTop="60px"
+        android:layout_marginTop="30px"
         android:layout_marginLeft="80px"
         android:layout_marginRight="80px"
         android:textColor="#ffffff"

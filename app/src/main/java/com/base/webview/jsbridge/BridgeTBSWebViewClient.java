@@ -1,10 +1,11 @@
 package com.base.webview.jsbridge;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.base.mprogressdialog.MProgressUtil;
+import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
@@ -20,16 +21,11 @@ import java.net.URLDecoder;
  */
 public class BridgeTBSWebViewClient extends WebViewClient {
     private BridgeTBSWebView webView;
-    private static ProgressDialog progressDialog;
+    private MProgressDialog progressDialog;
     private TBSWebViewClientCallBack webViewClientCallBack;
     public BridgeTBSWebViewClient(BridgeTBSWebView webView, Context context) {
         this.webView = webView;
-        progressDialog = new ProgressDialog(context);
-        //progressDialog.setTitle("加载提示");
-        progressDialog.setMessage("正在加载.....");
-        progressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
-        progressDialog.setCancelable(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog = MProgressUtil.getInstance().getMProgressDialog(context);
     }
 
     @Override
@@ -55,6 +51,9 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
+        if (progressDialog != null) {
+            progressDialog.show();
+        }
         if (webViewClientCallBack != null) {
             webViewClientCallBack.onPageStarted(view, url, favicon);
         }
@@ -121,11 +120,9 @@ public class BridgeTBSWebViewClient extends WebViewClient {
         webView.showErrorPage();//显示错误页面
     }
 
-    public static void progressDialogDismiss() {
+    public void progressDialogDismiss() {
         if (progressDialog != null) {
-            if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
-            }
         }
     }
 

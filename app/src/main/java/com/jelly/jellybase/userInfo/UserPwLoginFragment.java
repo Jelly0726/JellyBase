@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
@@ -55,7 +56,8 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     EditText phone_edit;
     @BindView(R.id.password_edit)
     EditText password_edit;
-
+    @BindView(R.id.isparallel)
+    Switch isparallel;
     private String phone="";
     private String password;
     private double from=-1;
@@ -134,6 +136,7 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
         Map map=new TreeMap();
         map.put("salesphone",phone);
         map.put("password",password);
+        map.put("isparallel",isparallel.isChecked());
         return map;
     }
 

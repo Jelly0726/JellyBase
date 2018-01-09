@@ -1,6 +1,5 @@
 package com.base.webview.jsbridge;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -11,6 +10,9 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.base.mprogressdialog.MProgressUtil;
+import com.maning.mndialoglibrary.MProgressDialog;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
@@ -19,16 +21,11 @@ import java.net.URLDecoder;
  */
 public class BridgeWebViewClient extends WebViewClient {
     private BridgeWebView webView;
-    private static ProgressDialog progressDialog;
+    private MProgressDialog progressDialog;
     private WebViewClientCallBack webViewClientCallBack;
     public BridgeWebViewClient(BridgeWebView webView, Context context) {
         this.webView = webView;
-        progressDialog = new ProgressDialog(context);
-        //progressDialog.setTitle("加载提示");
-        progressDialog.setMessage("正在加载.....");
-        progressDialog.setCanceledOnTouchOutside(false);// 设置在点击Dialog外是否取消Dialog进度条
-        progressDialog.setCancelable(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog = MProgressUtil.getInstance().getMProgressDialog(context);
     }
 
     @Override
@@ -55,9 +52,7 @@ public class BridgeWebViewClient extends WebViewClient {
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         if (progressDialog != null) {
-            if (!progressDialog.isShowing()) {
                 progressDialog.show();
-            }
         }
         if (webViewClientCallBack != null) {
             webViewClientCallBack.onPageStarted(view, url, favicon);
@@ -126,9 +121,7 @@ public class BridgeWebViewClient extends WebViewClient {
     }
     public void progressDialogDismiss() {
         if (progressDialog != null) {
-            if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
-            }
         }
     }
 

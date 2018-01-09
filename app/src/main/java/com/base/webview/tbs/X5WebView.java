@@ -2,6 +2,7 @@ package com.base.webview.tbs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.base.mprogressdialog.MProgressUtil;
+import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
@@ -41,6 +44,7 @@ public class X5WebView extends WebView {
 	RelativeLayout.LayoutParams layoutParams;
 	private RelativeLayout refreshRela;
 	TextView title;
+	private MProgressDialog progressDialog;
 	private WebViewClient client = new WebViewClient() {
 		/**
 		 * 防止加载网页时调起系统浏览器
@@ -49,7 +53,6 @@ public class X5WebView extends WebView {
 			view.loadUrl(url);
 			return false;
 		}
-
 		public void onReceivedHttpAuthRequest(WebView webview,
 				com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost, String host,
 				String realm) {
@@ -65,8 +68,13 @@ public class X5WebView extends WebView {
 			return super.shouldInterceptRequest(view, request);
 		}
 
-
-
+		@Override
+		public void onPageStarted(WebView view, String url, Bitmap favicon) {
+			super.onPageStarted(view, url, favicon);
+			if (progressDialog != null) {
+				progressDialog.show();
+			}
+		}
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
@@ -91,7 +99,16 @@ public class X5WebView extends WebView {
 		@Override
 		public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
 		}
-
+		@Override
+		public void onProgressChanged(WebView view, int newProgress) {
+			Log.i("ss", "BridgeTBSWebViewClient onProgressChanged:----------->" + newProgress);
+			if (newProgress == 100) {
+				//loadingLayout.setVisibility(View.GONE);
+				if (progressDialog != null) {
+					progressDialog.dismiss();
+				}
+			}
+		}
 		@Override
 		public void onHideCustomView() {
 			if (callback != null) {
@@ -169,6 +186,7 @@ public class X5WebView extends WebView {
 				return false;
 			}
 		});
+		progressDialog = MProgressUtil.getInstance().getMProgressDialog(arg0);
 	}
 
 	private void initWebViewSettings() {
