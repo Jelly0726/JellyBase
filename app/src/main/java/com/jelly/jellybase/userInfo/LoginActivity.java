@@ -48,6 +48,8 @@ public class LoginActivity extends BaseActivity implements
     private int from=-1;
     @BindView(R.id.topbar_rg)
     RadioGroup topbar_rg;
+    @BindView(R.id.left_rb)
+    RadioButton left_rb;
     @BindView(R.id.vp_content)
     NoPreloadViewPager mVpContent;
     private List<BaseFragment> mFragmentList = new ArrayList<>();
@@ -115,7 +117,7 @@ public class LoginActivity extends BaseActivity implements
 
         UserDyLoginFragment allianceFragment = new UserDyLoginFragment();
         mFragmentList.add(allianceFragment);
-
+        left_rb.setChecked(true);
     }
 
     private void initListener() {
