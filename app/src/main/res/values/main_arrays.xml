@@ -23,5 +23,6 @@
         <item>解析html</item>
         <item>Android图表视图/图形视图库</item>
         <item>图形验证码</item>
+        <item>SystemBar一体化，状态栏和导航栏</item>
     </string-array>
 </resources>

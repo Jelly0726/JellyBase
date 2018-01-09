@@ -37,5 +37,8 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
+    <!--↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓-->
+    <style name="AppTheme.AppBarDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.Popup" parent="ThemeOverlay.AppCompat.Light"/>
+    <!--↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑-->
 </resources>

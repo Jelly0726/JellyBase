@@ -228,7 +228,8 @@ dependencies {
 
     //图片选择
     compile 'com.yanzhenjie:album:2.0.2'
-
+    //SystemBar一体化，状态栏
+    compile 'com.yanzhenjie:sofia:1.0.4'
     //ProgressDialog
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
 

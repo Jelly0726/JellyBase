@@ -259,6 +259,9 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(MyApplication.getMyApp(), GraphValiCodeActivity.class);
                     startActivity(intent);
                     break;
+                case 22://轻量底部导航栏
+                    intent=new Intent(MyApplication.getMyApp(), BottomBarActivity.class);
+                    startActivity(intent);
             }
 
         }

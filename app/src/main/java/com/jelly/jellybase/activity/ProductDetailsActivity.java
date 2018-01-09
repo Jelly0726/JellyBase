@@ -3,7 +3,7 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,13 +17,17 @@ import com.base.eventBus.NetEvent;
 import com.base.middleBar.FragmentAdapter;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
-import com.base.multiClick.OnMultiClickListener;
+import com.base.multiClick.AntiShake;
+import com.base.view.BackInterface;
+import com.base.view.BaseActivity;
+import com.base.view.BaseFragment;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.fragment.ProductDetailsFragment;
 import com.jelly.jellybase.fragment.ProductEvaluateFragment;
 import com.jelly.jellybase.fragment.ProductParameterFragment;
+import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -33,36 +37,51 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2017/9/21.
  */
 
-public class ProductDetailsActivity extends AppCompatActivity {
-    private BGABanner banner;
-    private ImageView productdetails_back;
-    private TextView airlines_tv;
-    private TextView addcart_tv;
-    private TextView buy_immediately;
-
-    private ViewPager mVpContent;
-    private MiddleBarLayout mBottomBarLayout;
+public class ProductDetailsActivity extends BaseActivity implements BackInterface {
+    @BindView(R.id.banner)
+    BGABanner banner;
+    @BindView(R.id.productdetails_back)
+    ImageView productdetails_back;
+    @BindView(R.id.airlines_tv)
+    TextView airlines_tv;
+    @BindView(R.id.addcart_tv)
+    TextView addcart_tv;
+    @BindView(R.id.buy_immediately)
+    TextView buy_immediately;
+    @BindView(R.id.vp_content)
+    ViewPager mVpContent;
+    @BindView(R.id.bbl)
+    MiddleBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
-
-    private LinearLayout shangou_layout;
-    private ImageView shangou_img;
-    private TextView time_tv;
+    @BindView(R.id.shangou_layout)
+    LinearLayout shangou_layout;
+    @BindView(R.id.shangou_img)
+    ImageView shangou_img;
+    @BindView(R.id.time_tv)
+    TextView time_tv;
     private boolean isShanGou=false;//是否闪购
     private Timer timer;
     private static int time=0;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
         setContentView(R.layout.product_details_activity);
+        ButterKnife.bind(this);
         isShanGou=getIntent().getBooleanExtra("isShanGou",false);
         iniView();
         processLogic();
@@ -71,9 +90,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         initViewPagerListener();
     }
     private void iniView(){
-        productdetails_back= (ImageView) findViewById(R.id.productdetails_back);
-        productdetails_back.setOnClickListener(listener);
-        banner= (BGABanner) findViewById(R.id.banner);
         banner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
@@ -94,19 +110,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         .into(itemView);
             }
         });
-
-        airlines_tv= (TextView) findViewById(R.id.airlines_tv);
-        airlines_tv.setOnClickListener(listener);
-        addcart_tv= (TextView) findViewById(R.id.addcart_tv);
-        addcart_tv.setOnClickListener(listener);
-        buy_immediately= (TextView) findViewById(R.id.buy_immediately);
-        buy_immediately.setOnClickListener(listener);
         if (isShanGou){
-            shangou_layout= (LinearLayout) findViewById(R.id.shangou_layout);
             shangou_layout.setVisibility(View.VISIBLE);
-            shangou_img= (ImageView) findViewById(R.id.shangou_img);
             shangou_img.setVisibility(View.VISIBLE);
-            time_tv= (TextView) findViewById(R.id.time_tv);
             time=24*3600;
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -132,27 +138,59 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             }, 50, 1000);
         }
+
+        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
+        setSupportActionBar(mToolbar);
+        mToolbar.setVisibility(View.GONE);
+        Sofia.with(this)
+                // 状态栏深色字体。
+                //.statusBarDarkFont()
+                // 状态栏浅色字体。
+                //.statusBarLightFont()
+                // 导航栏背景透明度。
+                //.navigationBarBackgroundAlpha(int alpha)
+                // 状态栏背景。可接受Color、Drawable
+                //.statusBarBackground(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
+                // 导航栏背景。可接受Color、Drawable
+                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
+                // 内容入侵状态栏。
+                .invasionStatusBar()
+                // 内容入侵导航栏。
+                //.invasionNavigationBar()
+                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
+                .fitsSystemWindowView(mToolbar);
+
+        setAnyBarAlpha(0);
+        ////↑↑↑↑↑ 内容入侵状态栏。↑↑↑↑↑
     }
-    private OnMultiClickListener listener=new OnMultiClickListener() {
-        @Override
-        public void onMultiClick(View v) {
-            switch (v.getId()){
-                case R.id.productdetails_back:
-                    finish();
-                    break;
-                case R.id.airlines_tv:
-                    break;
-                case R.id.addcart_tv:
-                    AddCartDialog addCartDialog=AddCartDialog.getInstance();
-                    addCartDialog.show(getSupportFragmentManager(),"addCartDialog");
-                    break;
-                case R.id.buy_immediately:
-                    AddCartDialog addCartDialog1=AddCartDialog.getInstance();
-                    addCartDialog1.show(getSupportFragmentManager(),"addCartDialog");
-                    break;
-            }
+    /**
+     * 设置状态栏透明度
+     * @param alpha
+     */
+    private void setAnyBarAlpha(int alpha) {
+        mToolbar.getBackground().mutate().setAlpha(alpha);
+        Sofia.with(this)
+                .statusBarBackgroundAlpha(alpha);
+    }
+    @OnClick({R.id.productdetails_back,R.id.airlines_tv,R.id.addcart_tv,R.id.buy_immediately})
+    public void onClick(View v) {
+        if (AntiShake.check(v.getId()))return;
+        switch (v.getId()){
+            case R.id.productdetails_back:
+                finish();
+                break;
+            case R.id.airlines_tv:
+                break;
+            case R.id.addcart_tv:
+                AddCartDialog addCartDialog=AddCartDialog.getInstance();
+                addCartDialog.show(getSupportFragmentManager(),"addCartDialog");
+                break;
+            case R.id.buy_immediately:
+                AddCartDialog addCartDialog1=AddCartDialog.getInstance();
+                addCartDialog1.show(getSupportFragmentManager(),"addCartDialog");
+                break;
         }
-    };
+    }
     private void processLogic() {
         // 设置数据源
 //        mBackgroundBanner.setData(R.drawable.uoko_guide_background_1, R.drawable.uoko_guide_background_2, R.drawable.uoko_guide_background_3);
@@ -163,8 +201,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         banner.setData(imgs,null);
     }
     private void initViewPagerView() {
-        mVpContent = (ViewPager) findViewById(R.id.vp_content);
-        mBottomBarLayout = (MiddleBarLayout) findViewById(R.id.bbl);
     }
 
     private void initViewPagerData() {
@@ -220,6 +256,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (netEvent.getEventType().equals(CurrentItem.class.getName())){
             CurrentItem currentItem= (CurrentItem) netEvent.getEvent();
             mBottomBarLayout.setCurrentItem(currentItem.getItemIndex());
+        }
+    }
+
+    private BaseFragment mBaseFragment;
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+        this.mBaseFragment = selectedFragment;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
+            if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+                super.onBackPressed();
+            }else{
+                getSupportFragmentManager().popBackStack();
+            }
         }
     }
 }
