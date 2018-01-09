@@ -119,13 +119,11 @@ public class MeFragment extends BaseFragment {
             }, 1000);
         }
     };
-    @OnClick({R.id.right_icon,R.id.balance_layout,R.id.bankcard_layout})
+    @OnClick({R.id.balance_layout,R.id.bankcard_layout})
     public void onClick(View view){
         if (AntiShake.check(view.getId()))return;
         Intent intent;
         switch (view.getId()){
-            case R.id.right_icon:
-                break;
             case R.id.balance_layout:
                 intent=new Intent(MyApplication.getMyApp(), BalanceActivity.class);
                 intent.putExtra("Balance",balance_tv.getText().toString().trim());
