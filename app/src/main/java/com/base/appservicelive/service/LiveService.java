@@ -89,12 +89,19 @@ public class LiveService extends Service {
             }
         });
         //↑↑↑↑屏幕关闭的时候启动一个1像素的Activity，开屏的时候关闭Activity↑↑↑↑
-
-        if(!CommonStaticUtil.isServiceRunning(this
-                , NotificationService.class.getName())){
-            //Log.i(TAG, "Service 没有开启，开启NotificationService服务........>");
-            Intent c = new Intent(this, NotificationService.class);
-            this.startService(c);
+        // 当 API > 18 时，使用 extras 获取通知的详细信息
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!CommonStaticUtil.isServiceRunning(this
+                    , NotificationService.class.getName())) {
+                //Log.i(TAG, "Service 没有开启，开启NotificationService服务........>");
+                CommonStaticUtil.starNotificationService(this);
+            }
+        }else {
+            if (!CommonStaticUtil.isServiceRunning(this
+                    , AccessibilityServices.class.getName())) {
+                //Log.i(TAG, "Service 没有开启，开启NotificationService服务........>");
+                CommonStaticUtil.starAccessibilityService(this);
+            }
         }
     }
 

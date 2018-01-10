@@ -2,7 +2,6 @@ package com.jelly.jellybase.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import com.base.view.BaseFragment;
 import com.base.webview.jsbridge.BridgeTBSWebView;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.sofia.StatusView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +23,6 @@ public class HomeFragment extends BaseFragment {
     private Unbinder unbinder;
     @BindView(R.id.webView)
     BridgeTBSWebView webView;
-
-    @BindView(R.id.status_view)
-    StatusView mStatusView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,9 +51,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓
-        mStatusView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gary));
-        //↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑
         iniData();
     }
     private void iniData(){

@@ -1,7 +1,6 @@
 package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -23,7 +22,6 @@ import com.base.view.BaseFragment;
 import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,25 +65,6 @@ public class LoginActivity extends BaseActivity implements
                 ConfigKey.DEFAULT_BANK);
     }
     private void iniView (){
-        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
-        Sofia.with(this)
-                // 状态栏深色字体。
-                .statusBarDarkFont()
-                // 状态栏浅色字体。
-                //.statusBarLightFont()
-                // 导航栏背景透明度。
-                //.navigationBarBackgroundAlpha(int alpha)
-                // 状态栏背景。可接受Color、Drawable
-                .statusBarBackground(Color.parseColor("#eeeeee"));
-                // 导航栏背景。可接受Color、Drawable
-                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-                // 内容入侵状态栏。
-                //.invasionStatusBar()
-                // 内容入侵导航栏。
-                //.invasionNavigationBar()
-                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-                //.fitsSystemWindowView(mStatusView);
-        //// ↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑
 
         mVpContent.setOnPageChangeListener(this);
         topbar_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

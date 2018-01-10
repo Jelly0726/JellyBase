@@ -7,15 +7,21 @@ import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
+import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.base.appservicelive.receiver.PushAlarmReceiver;
+import com.base.appservicelive.service.AccessibilityServices;
 import com.base.appservicelive.service.LiveService;
+import com.base.appservicelive.service.NotificationService;
 import com.jelly.jellybase.R;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -47,7 +53,7 @@ public class CommonStaticUtil {
         }
         //如果有，那么迭代List，判断是否有当前某个服务
         for (int i = 0; i < serviceList.size(); i++) {
-           //Log.i("msg","service="+serviceList.get(i).service.getClassName());
+            //Log.i("msg","service="+serviceList.get(i).service.getClassName());
             if (serviceList.get(i).service.getClassName().equals(className) == true) {
                 return true;
             }
@@ -106,7 +112,7 @@ public class CommonStaticUtil {
             serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
             serviceManager.startService();
         }else{
-           // Log.i(TAG, "Service 推送服务已开启........>");
+            // Log.i(TAG, "Service 推送服务已开启........>");
 //            ServiceManager serviceManager = new ServiceManager(context);
 //            serviceManager.setNotificationIcon(R.drawable.touxiang);
 //            serviceManager.startService();
@@ -118,7 +124,7 @@ public class CommonStaticUtil {
      * @param context 上下文
      */
     public static void stopService(Context context){
-       // Log.i(TAG, "关闭 推送服务........");
+        // Log.i(TAG, "关闭 推送服务........");
         // 关闭推送服务
         ServiceManager serviceManager = new ServiceManager(context);
         serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
@@ -168,4 +174,68 @@ public class CommonStaticUtil {
         return tm.getDeviceId();
     }
 
+    /**
+     * 开启知监听服务
+     * @param context
+     */
+    public static void starNotificationService(Context context){
+        if (!isNotificationListenerEnabled(context)) {
+            Intent c = new Intent(context, NotificationService.class);
+            context.startService(c);
+            toggleNotificationListenerService(context);
+        } else {
+            openNotificationListenSettings(context);
+        }
+    }
+    /**
+     * 开启知监听服务
+     * @param context
+     */
+    public static void starAccessibilityService(Context context){
+        Intent c = new Intent(context, AccessibilityServices.class);
+        context.startService(c);
+    }
+    /**
+     * 检测通知监听服务是否被授权
+     * @param context
+     * @return
+     */
+    private static boolean isNotificationListenerEnabled(Context context) {
+        Set<String> packageNames = NotificationManagerCompat.getEnabledListenerPackages(context);
+        if (packageNames.contains(context.getPackageName())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *打开通知监听设置页面
+     */
+    private static void openNotificationListenSettings(Context context) {
+        try {
+            Intent intent;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                intent = new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS);
+            } else {
+                intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 重新触发系统的 rebind 操作
+     * @param context
+     */
+    private static void toggleNotificationListenerService(Context context) {
+        PackageManager pm = context.getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(context,NotificationService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        pm.setComponentEnabledSetting(new ComponentName(context,NotificationService.class),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+    }
 }
