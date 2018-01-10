@@ -9,8 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
@@ -37,6 +41,7 @@ public class BaseActivity extends AutoLayoutActivity {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +56,29 @@ public class BaseActivity extends AutoLayoutActivity {
         if (mRecevier != null) {
             registerReceiver(mRecevier, mFilter);
         }
+    }
+
+    @Override
+    public void setContentView(View view) {
+        FrameLayout frameLayout=new FrameLayout(this);
+        frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        frameLayout.addView(view);
+        View topBar = LayoutInflater.from(this).inflate(R.layout.toolbar_dark, null, false);
+        frameLayout.addView(topBar);
+        super.setContentView(frameLayout);
+        iniBar();
+    }
+    @Override
+    public void setContentView(int view) {
+        View views = getLayoutInflater().inflate(view, null);
+        this.setContentView(views);
+    }
+    private void iniBar(){
         //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
+        mToolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setVisibility(View.GONE);
         Sofia.with(this)
                 // 状态栏深色字体。
                 .statusBarDarkFont()
@@ -60,16 +87,26 @@ public class BaseActivity extends AutoLayoutActivity {
                 // 导航栏背景透明度。
                 //.navigationBarBackgroundAlpha(int alpha)
                 // 状态栏背景。可接受Color、Drawable
-                .statusBarBackground(ContextCompat.getColor(this, R.color.navi_color));
-        // 导航栏背景。可接受Color、Drawable
-        //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-        // 内容入侵状态栏。
-        //.invasionStatusBar()
-        // 内容入侵导航栏。
-        //.invasionNavigationBar()
-        // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-        //.fitsSystemWindowView(mStatusView);
+                .statusBarBackground(ContextCompat.getColor(this, R.color.navi_color))
+                // 导航栏背景。可接受Color、Drawable
+                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
+                // 内容入侵状态栏。
+                .invasionStatusBar()
+                // 内容入侵导航栏。
+                //.invasionNavigationBar()
+                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
+                .fitsSystemWindowView(mToolbar);
+        setAnyBarAlpha(0);
         //// ↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑
+    }
+    /**
+     * 设置状态栏透明度
+     * @param alpha
+     */
+    private void setAnyBarAlpha(int alpha) {
+        mToolbar.getBackground().mutate().setAlpha(alpha);
+        Sofia.with(this)
+                .statusBarBackgroundAlpha(alpha);
     }
     /**
      * 延迟关闭

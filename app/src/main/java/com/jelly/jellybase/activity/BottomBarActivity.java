@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 
@@ -32,7 +30,6 @@ import com.jelly.jellybase.fragment.MiddleFragment;
 import com.jelly.jellybase.fragment.OrderFragment;
 import com.jelly.jellybase.fragment.WalletFragment;
 import com.jelly.jellybase.server.LocationService;
-import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -40,7 +37,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import systemdb.Login;
 import systemdb.PositionEntity;
@@ -57,9 +53,6 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     private Handler mHandler = new Handler();
 
     private Login login;
-
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,38 +71,6 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
         startService(stateGuardService);
 
-        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
-        setSupportActionBar(mToolbar);
-        mToolbar.setVisibility(View.GONE);
-        Sofia.with(this)
-                // 状态栏深色字体。
-                //.statusBarDarkFont()
-                // 状态栏浅色字体。
-                //.statusBarLightFont()
-                // 导航栏背景透明度。
-                //.navigationBarBackgroundAlpha(int alpha)
-                // 状态栏背景。可接受Color、Drawable
-                //.statusBarBackground(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
-                // 导航栏背景。可接受Color、Drawable
-                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-                // 内容入侵状态栏。
-                .invasionStatusBar()
-                // 内容入侵导航栏。
-                //.invasionNavigationBar()
-                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-                .fitsSystemWindowView(mToolbar);
-
-        setAnyBarAlpha(0);
-        ////↑↑↑↑↑ 内容入侵状态栏。↑↑↑↑↑
-    }
-    /**
-     * 设置状态栏透明度
-     * @param alpha
-     */
-    private void setAnyBarAlpha(int alpha) {
-        mToolbar.getBackground().mutate().setAlpha(alpha);
-        Sofia.with(this)
-                .statusBarBackgroundAlpha(alpha);
     }
     @Override
     protected void onDestroy() {
