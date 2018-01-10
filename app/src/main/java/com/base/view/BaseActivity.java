@@ -11,7 +11,6 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -64,7 +63,7 @@ public class BaseActivity extends AutoLayoutActivity {
         frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         frameLayout.addView(view);
-        View topBar = LayoutInflater.from(this).inflate(R.layout.toolbar_dark, null, false);
+        View topBar = getLayoutInflater().inflate(R.layout.toolbar_dark, null);
         frameLayout.addView(topBar);
         super.setContentView(frameLayout);
         iniBar();
