@@ -259,7 +259,7 @@ public class AppUtils {
                 .getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningTaskInfo> taskInfoList = manager.getRunningTasks(10);
         for (RunningTaskInfo taskInfo : taskInfoList) {
-           // Log.i("wf","baseActivity="+taskInfo.topActivity.getClassName());
+            // Log.i("wf","baseActivity="+taskInfo.topActivity.getClassName());
             if (taskInfo.topActivity.getClassName().equals(activity.getName())) { // 说明它已经启动了
 //                String name = taskInfo.topActivity.getClassName();
 //                Log.i("wf","baseActivity="+taskInfo.topActivity.getClassName()+" name="+name);
@@ -673,49 +673,49 @@ public class AppUtils {
 
         return screenSize;
     }
+
     /**
-     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     * 根据手机分辨率从DP转成PX
+     * @param context
+     * @param dpValue
+     * @return
      */
     public static int dipTopx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+        float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
 
     /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-     *
-     * @param context
-     * @param pxValue
-     *            像素值
-     * @return 返回dp值
-     */
-    public static int pxTodip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 sp
-     *
-     * @param context
-     * @param pxValue
-     *            像素值
-     * @return 返回sp值
-     */
-    public static int pxTosp(Context context, float pxValue, float fontScale){
-        return (int)(pxValue/fontScale + 0.5f);
-    }
-    /**
-     * 根据手机的分辨率从 sp(像素) 的单位 转成为 px
-     *
+     * 将sp值转换为px值，保证文字大小不变
      * @param spValue
-     * @param fontScale
-     *            像素值
-     * @return 返回px值
+     * @return
      */
-    public static int spTopx(float spValue,float fontScale){
-        return (int)(spValue * fontScale + 0.5f);
+    public static int spTopx(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
+    /**
+     * 根据手机的分辨率PX(像素)转成DP
+     * @param context
+     * @param pxValue
+     * @return
+     */
+    public static int pxTodip(Context context, float pxValue) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+    /**
+     * 将px值转换为sp值，保证文字大小不变
+     * @param pxValue
+     * @return
+     */
+
+    public static int pxTosp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
     /**
      * 获取手机唯一表示并转为uuid 加密
      */

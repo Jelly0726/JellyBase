@@ -163,7 +163,7 @@ public class LocationService extends Service {
                 address = amapLocation.getAddress();
                 city = amapLocation.getCity();
                 adCode = amapLocation.getAdCode().substring(0, 6);
-                district = amapLocation.getCountry();
+                district = amapLocation.getDistrict();
                 entity.address = address;
                 entity.city = city;
                 entity.district = district;
