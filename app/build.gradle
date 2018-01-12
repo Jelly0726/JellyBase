@@ -222,17 +222,25 @@ dependencies {
 
     //微信支付
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
     //QQ、微信、微博登陆和分享
-    compile ('com.github.arvinljw:SocialHelper:v1.0.5'){
+    compile('com.github.arvinljw:SocialHelper:v1.0.5') {
         exclude group: 'com.android.support'
     }
+
+    //微博
+
+    //compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
+
     //星级评价
     compile 'com.github.ome450901:SimpleRatingBar:1.3.4'
 
     //图片选择
     compile 'com.yanzhenjie:album:2.0.2'
+
     //SystemBar一体化，状态栏
     compile 'com.yanzhenjie:sofia:1.0.4'
+
     //ProgressDialog
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
 
