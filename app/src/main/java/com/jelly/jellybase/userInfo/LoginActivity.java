@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.base.social.SocialUtil;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
 import com.base.config.ConfigKey;
@@ -170,6 +171,22 @@ public class LoginActivity extends BaseActivity implements
         @Override
         public int getCount() {
             return mFragmentList.size();
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("s'ss","intent  ss="+data);
+        if (data != null && SocialUtil.getInstance() != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
+            SocialUtil.getInstance().socialHelper().onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("s'ss","intent="+intent);
+        if (SocialUtil.getInstance() != null) {
+            SocialUtil.getInstance().socialHelper().onNewIntent(intent);
         }
     }
 }

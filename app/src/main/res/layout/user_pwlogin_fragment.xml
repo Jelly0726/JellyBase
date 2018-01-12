@@ -179,12 +179,14 @@
         android:gravity="center"
         android:layout_marginTop="20px">
         <ImageView
+            android:id="@+id/wechat_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
             android:src="@mipmap/ic_launcher"/>
         <ImageView
+            android:id="@+id/qq_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

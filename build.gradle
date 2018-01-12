@@ -21,6 +21,7 @@ allprojects {
         //从api 26开始，support libraries 需要从google的maven仓库下载
        // maven { url "https://maven.google.com" }
         maven { url 'https://dl.google.com/dl/android/maven2/' }
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
     }
 }
 

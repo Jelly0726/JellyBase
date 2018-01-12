@@ -4,4 +4,6 @@
     <color name="radiobutton_false_text">#f58612</color>
     <color name="radiobutton_true_bg">#f58612</color>
     <color name="radiobutton_true_text">#ffffff</color>
+    <color name="radiobutton_true_text_r">#e1041e</color>
+    <color name="radiobutton_false_text_r">#313131</color>
 </resources>

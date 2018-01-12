@@ -5,15 +5,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
+import com.base.social.SocialUtil;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.weixinpay.PayUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
@@ -103,6 +106,24 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 			}
 			dialog.setMessage(getResources().getString(result));
 			dialog.show();
+		}else {
+			//登录
+			Log.d("WXEntryActivity", baseResp.errCode + baseResp.errStr);
+			if (baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {
+				if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
+					String code = ((SendAuth.Resp) baseResp).code;
+					SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, code);
+				} else {
+					SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, null);
+				}
+			} else if (baseResp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
+				if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
+					SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, true);
+				} else {
+					SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, false);
+				}
+			}
+			onBackPressed();
 		}
 	}
 

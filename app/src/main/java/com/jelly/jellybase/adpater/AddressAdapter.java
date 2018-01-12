@@ -17,30 +17,37 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.httpmvp.databean.AccountDetail;
+import com.base.addressmodel.Area;
+import com.base.applicationUtil.AppUtils;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
-import com.jelly.jellybase.R;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
-public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAdapter.ViewHolder> {
+public class AddressAdapter extends BaseRecyclerAdapter<AddressAdapter.ViewHolder> {
 
     private LayoutInflater mInflater;
     private Context context;
-    private List<AccountDetail> mList;
+    private List<? extends Area> mList;
 
-    public AccountDetailsAdapter(Context context, List<AccountDetail> mList) {
+    public AddressAdapter(Context context, List<? extends Area> mList) {
         this.context=context;
         mInflater = LayoutInflater.from(context);
         this.mList=mList;
+    }
+    public void setData(List<? extends Area> mList){
+        this.mList=mList;
+        notifyDataSetChanged();
     }
     @Override
     public int getAdapterItemViewType(int position) {
@@ -58,25 +65,19 @@ public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAda
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        final View view = mInflater.inflate(R.layout.account_details_item, parent, false);
-        //view.setOnClickListener(listener);
-        return new ViewHolder(view);
+        TextView textView=new TextView(context);
+        textView.setOnClickListener(listener);
+        textView.setHeight(AppUtils.dipTopx(context,50));
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(Color.parseColor("#313131"));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        return new ViewHolder(textView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position, boolean isItem) {
-        //holder.itemView.setTag(position);
-        if(mList.get(position).getAmount()>=0){
-            holder.amount_tv.setText("" + mList.get(position).getAmount());
-            holder.amount_tv.setTextColor(context.getResources().getColor(R.color.income));
-        }else {
-            holder.amount_tv.setText("" + mList.get(position).getAmount());
-            holder.amount_tv.setTextColor(context.getResources().getColor(R.color.disburse));
-        }
-        holder.time_tv.setText(mList.get(position).getAddtime());
-        holder.type_tv.setText(mList.get(position).getType());
-        holder.state_tv.setText(mList.get(position).getStatus());
-
+        holder.textView.setTag(position);
+        holder.textView.setText(mList.get(position).getAreaName());
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
@@ -88,18 +89,11 @@ public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAda
      * item的ViewHolder
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView state_tv;
-        public TextView type_tv;
-        public TextView time_tv;
-        public TextView amount_tv;
-
+        TextView textView;
         public ViewHolder(View itemView) {
             super(itemView);
             AutoUtils.autoSize(itemView);
-            type_tv = (TextView) itemView.findViewById(R.id.type_tv);
-            state_tv = (TextView) itemView.findViewById(R.id.state_tv);
-            time_tv = (TextView) itemView.findViewById(R.id.time_tv);
-            amount_tv = (TextView) itemView.findViewById(R.id.amount_tv);
+            textView= (TextView) itemView;
         }
     }
     private OnItemClickListener mOnItemClickListener;

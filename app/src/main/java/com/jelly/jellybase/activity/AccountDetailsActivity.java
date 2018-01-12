@@ -135,17 +135,21 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         List list= (List) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            xRefreshView.stopRefresh();
-            if (list.size()<pageSize){
-                xRefreshView.setLoadComplete(true);
-            }else {
-                xRefreshView.setLoadComplete(false);
+            if (xRefreshView!=null) {
+                xRefreshView.stopRefresh();
+                if (list.size() < pageSize) {
+                    xRefreshView.setLoadComplete(true);
+                } else {
+                    xRefreshView.setLoadComplete(false);
+                }
             }
         }else {
-            if (list.size()==0){
-                xRefreshView.setLoadComplete(true);
-            }else
-                xRefreshView.stopLoadMore();
+            if (xRefreshView!=null) {
+                if (list.size() == 0) {
+                    xRefreshView.setLoadComplete(true);
+                } else
+                    xRefreshView.stopLoadMore();
+            }
         }
         mList.addAll((List)mCallBackVo);
         adapter.notifyDataSetChanged();
@@ -153,10 +157,12 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
 
     @Override
     public void accountDetailFailed(boolean isRefresh, String message) {
-        if (isRefresh){
-            xRefreshView.stopRefresh();
-        }else {
-            xRefreshView.stopLoadMore();
+        if (xRefreshView!=null) {
+            if (isRefresh) {
+                xRefreshView.stopRefresh();
+            } else {
+                xRefreshView.stopLoadMore();
+            }
         }
         ToastUtils.showToast(this,message);
     }

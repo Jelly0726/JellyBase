@@ -5,9 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 
+import com.base.addressmodel.Address;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
@@ -43,16 +42,16 @@ import systemdb.PositionEntity;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class BottomBarActivity extends BaseActivity implements BackInterface {
+    private static final int areaRresultCode=0;
     private final int zxingRequestCode=1;
     private NoPreloadViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
-    private RotateAnimation mRotateAnimation;
-    private Handler mHandler = new Handler();
-
     private Login login;
+    private PositionEntity entity;
+    private Address address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +63,11 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         initView();
         initData();
         initListener();
-
-        //isLogin();
         MyApplication.getMyApp().addEvent(this);
         //开启定位服务
         Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
         startService(stateGuardService);
-
+        //isLogin();
     }
     @Override
     protected void onDestroy() {
@@ -154,23 +151,10 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
 //        mBottomBarLayout.showNotify(2);//设置第三个页签显示提示的小红点
 //        mBottomBarLayout.setMsg(3,"NEW");//设置第四个页签显示NEW提示文字
     }
-
-    /**停止首页页签的旋转动画*/
-    private void cancelTabLoading(BottomBarItem bottomItem) {
-        Animation animation = bottomItem.getImageView().getAnimation();
-        if (animation != null){
-            animation.cancel();
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        PermissionUtil.requestPermission(this, PermissionUtil.CODE_READ_PHONE_STATE, mPermissionGrant);
-        PermissionUtil.requestPermission(this, PermissionUtil.CODE_ACCESS_COARSE_LOCATION, mPermissionGrant);
-        PermissionUtil.requestPermission(this, PermissionUtil.CODE_CAMERA, mPermissionGrant);
-        PermissionUtil.requestPermission(this, PermissionUtil.CODE_READ_EXTERNAL_STORAGE, mPermissionGrant);
-        PermissionUtil.requestPermission(this, PermissionUtil.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
+        PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
     }
 
 
@@ -186,6 +170,13 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         @Override
         public void onPermissionGranted(int requestCode) {
             switch (requestCode) {
+                case PermissionUtil.CODE_ACCESS_COARSE_LOCATION:
+                    if (entity!=null){
+                        //开启定位服务
+                        Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+                        startService(stateGuardService);
+                    }
+                    break;
             }
         }
     };
@@ -198,6 +189,14 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         //扫描
         if(requestCode==zxingRequestCode && resultCode== ZXingUtils.resultCode){
             //Log.i("ss","data="+data.getStringExtra("result"));
+        }
+        if(requestCode==areaRresultCode && resultCode== areaRresultCode){
+            address=data.getParcelableExtra("address");
+            if (address!=null){
+                mBottomBarLayout.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+            }else if (entity!=null) {
+                mBottomBarLayout.setText(3,entity.district);//设置第三个页签显示的文字
+            }
         }
     }
 
@@ -214,7 +213,12 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             MyApplication.getMyApp().stopService(intent);
             PositionEntity entity= (PositionEntity) netEvent.getEvent();
             if (entity.latitue!=0d&&entity.longitude!=0d) {
-                mBottomBarLayout.setText(2,entity.city);//设置第三个页签显示的文字
+                this.entity=entity;
+                if (address!=null){
+                    mBottomBarLayout.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+                }else if (entity!=null) {
+                    mBottomBarLayout.setText(3,entity.district);//设置第三个页签显示的文字
+                }
                 //停止定位服务
                 Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
                 stopService(stateGuardService);

@@ -25,5 +25,12 @@
         <attr name="mIconHeight" format="dimension"/>
         <!--设置TopBarItem的padding-->
         <attr name="mItemPadding" format="dimension"/>
+        <!-- 图标与文字的布局 -->
+        <attr name="mOrientation" format="enum">
+            <!--水平-->
+            <enum name="horizontal" value="0"/>
+            <!--垂直-->
+            <enum name="vertical" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

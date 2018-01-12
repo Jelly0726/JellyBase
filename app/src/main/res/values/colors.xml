@@ -32,6 +32,6 @@
     <color name="coupon_new">#dd3e3e</color>
     <color name="coupon_overdue">#959592</color>
 
-    <color name="tixian">#27a02d</color>
-    <color name="chonzhi">#ff0101</color>
+    <color name="disburse">#27a02d</color>
+    <color name="income">#ff0101</color>
 </resources>

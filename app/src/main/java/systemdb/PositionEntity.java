@@ -1,11 +1,11 @@
 package systemdb;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 
 import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * ClassName:PositionEntity <br/>
@@ -28,7 +28,7 @@ public class PositionEntity implements Serializable {
 	public double longitude=0d;
 
 	public String address;
-
+	public String province;
 	public String city;
 	public String adCode;
 	public String district;
@@ -44,13 +44,14 @@ public class PositionEntity implements Serializable {
 		this.city=city;
 	}
 
-	@Generated(hash = 1532927154)
+	@Generated(hash = 747413895)
 	public PositionEntity(Long id, double latitue, double longitude, String address,
-			String city, String adCode, String district, int type, int from) {
+			String province, String city, String adCode, String district, int type, int from) {
 		this.id = id;
 		this.latitue = latitue;
 		this.longitude = longitude;
 		this.address = address;
+		this.province = province;
 		this.city = city;
 		this.adCode = adCode;
 		this.district = district;
@@ -88,6 +89,14 @@ public class PositionEntity implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	public String getCity() {

@@ -3,7 +3,6 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -74,8 +73,6 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     private Timer timer;
     private static int time=0;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +85,9 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
         initViewPagerView();
         initViewPagerData();
         initViewPagerListener();
+        Sofia.with(this)
+        // 状态栏浅色字体。
+        .statusBarLightFont();
     }
     private void iniView(){
         banner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
@@ -139,38 +139,6 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
             }, 50, 1000);
         }
 
-        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
-        setSupportActionBar(mToolbar);
-        mToolbar.setVisibility(View.GONE);
-        Sofia.with(this)
-                // 状态栏深色字体。
-                //.statusBarDarkFont()
-                // 状态栏浅色字体。
-                //.statusBarLightFont()
-                // 导航栏背景透明度。
-                //.navigationBarBackgroundAlpha(int alpha)
-                // 状态栏背景。可接受Color、Drawable
-                //.statusBarBackground(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
-                // 导航栏背景。可接受Color、Drawable
-                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-                // 内容入侵状态栏。
-                .invasionStatusBar()
-                // 内容入侵导航栏。
-                //.invasionNavigationBar()
-                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-                .fitsSystemWindowView(mToolbar);
-
-        setAnyBarAlpha(0);
-        ////↑↑↑↑↑ 内容入侵状态栏。↑↑↑↑↑
-    }
-    /**
-     * 设置状态栏透明度
-     * @param alpha
-     */
-    private void setAnyBarAlpha(int alpha) {
-        mToolbar.getBackground().mutate().setAlpha(alpha);
-        Sofia.with(this)
-                .statusBarBackgroundAlpha(alpha);
     }
     @OnClick({R.id.productdetails_back,R.id.airlines_tv,R.id.addcart_tv,R.id.buy_immediately})
     public void onClick(View v) {

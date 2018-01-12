@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.base.social.SocialUtil;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
@@ -28,6 +30,9 @@ import com.base.multiClick.AntiShake;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+
+import net.arvin.socialhelper.callback.SocialLoginCallback;
+import net.arvin.socialhelper.entities.ThirdInfoEntity;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -59,7 +64,10 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     EditText password_edit;
     @BindView(R.id.btn_get_ver)
     CountDownTimerButton get_ver_btn;
-
+    @BindView(R.id.wechat_tv)
+    ImageView wechat_tv;
+    @BindView(R.id.qq_tv)
+    ImageView qq_tv;
     private String phone="";
     private String password;
     private double from=-1;
@@ -143,6 +151,32 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
             case R.id.forget_pwd:
                 intent=new Intent(MyApplication.getMyApp(), ForgetActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.wechat_tv:
+                SocialUtil.getInstance().socialHelper().loginWX(getActivity(), new SocialLoginCallback() {
+                    @Override
+                    public void loginSuccess(ThirdInfoEntity info) {
+
+                    }
+
+                    @Override
+                    public void socialError(String msg) {
+                        ToastUtils.showToast(getContext(),msg);
+                    }
+                });
+                break;
+            case R.id.qq_tv:
+                SocialUtil.getInstance().socialHelper().loginQQ(getActivity(), new SocialLoginCallback() {
+                    @Override
+                    public void loginSuccess(ThirdInfoEntity info) {
+
+                    }
+
+                    @Override
+                    public void socialError(String msg) {
+                        ToastUtils.showToast(getContext(),msg);
+                    }
+                });
                 break;
         }
     }

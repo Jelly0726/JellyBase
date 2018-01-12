@@ -300,6 +300,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.ChangeAddressActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
         <service
             android:name="com.base.checkVersion.DemoService"
@@ -310,6 +314,23 @@
             android:theme="@style/versionCheckLibvtransparentTheme"
             android:launchMode="singleTask"/>
         <!--↑↑↑↑↑↑↑↑版本检查↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓qq配置开始↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="tencentqqAppId"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <!--↑↑↑↑↑↑↑qq配置结束↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信支付回调↓↓↓↓↓↓↓-->
         <activity android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

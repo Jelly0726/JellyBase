@@ -27,6 +27,7 @@ import com.zhy.autolayout.utils.AutoLayoutHelper;
 public class MiddleBarItem extends LinearLayout {
 
     private Context mContext;
+    private int mOrientation=0;//图标与文字的布局 0 水平 1垂直
     private int mIconNormalResourceId;//普通状态图标的资源id
     private int mIconSelectedResourceId;//选中状态图标的资源id
     private String mText;//文本
@@ -74,6 +75,7 @@ public class MiddleBarItem extends LinearLayout {
 
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MiddleBarItem);
 
+        mOrientation = ta.getInt(R.styleable.MiddleBarItem_mOrientation,mOrientation);
         mIconNormalResourceId = ta.getResourceId(R.styleable.MiddleBarItem_mIconNormal, -1);
         mIconSelectedResourceId = ta.getResourceId(R.styleable.MiddleBarItem_mIconSelected, -1);
 
@@ -122,7 +124,10 @@ public class MiddleBarItem extends LinearLayout {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER);
 
-        View view = View.inflate(mContext, R.layout.middlebar_item, null);
+        View view = View.inflate(mContext, R.layout.middlebar_item_v, null);
+        if (mOrientation==1){
+            view = View.inflate(mContext, R.layout.middlebar_item_v, null);
+        }
         if (mItemPadding != 0){
             //如果有设置item的padding
             view.setPadding(mItemPadding,mItemPadding,mItemPadding,mItemPadding);

@@ -165,6 +165,7 @@ public class LocationService extends Service {
                 adCode = amapLocation.getAdCode().substring(0, 6);
                 district = amapLocation.getDistrict();
                 entity.address = address;
+                entity.province = amapLocation.getProvince();
                 entity.city = city;
                 entity.district = district;
                 entity.adCode=adCode;
@@ -192,6 +193,7 @@ public class LocationService extends Service {
                 }
                 if(regeocodeReult.getRegeocodeAddress().getFormatAddress().length()!=0
                         &&!regeocodeReult.getRegeocodeAddress().getFormatAddress().equals("0")){
+                    entity.province = regeocodeReult.getRegeocodeAddress().getProvince();
                     city=regeocodeReult.getRegeocodeAddress().getCity();
                     district=regeocodeReult.getRegeocodeAddress().getDistrict();
                     adCode=regeocodeReult.getRegeocodeAddress()
