@@ -33,7 +33,7 @@ public class EvaluateActivity extends BaseActivity {
     BaseRatingBar logisticsRatingBar;
     @BindView(R.id.storeRatingBar)
     BaseRatingBar storeRatingBar;
-    @BindView(R.id.content)
+    @BindView(R.id.content_ed)
     EditText content;
 
 

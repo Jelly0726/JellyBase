@@ -192,7 +192,7 @@
 
     </LinearLayout>
     <EditText
-        android:id="@+id/content"
+        android:id="@+id/content_ed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16px"

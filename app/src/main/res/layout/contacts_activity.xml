@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/contacts_bg_color"
+    android:orientation="vertical" >
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.yanzhenjie.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navi_color"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1px"
+        android:background="@color/navi_color">
+        <LinearLayout
+            android:id="@+id/left_back"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_back"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="通讯录"
+            android:textColor="#313131"/>
+        <LinearLayout
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/layoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:padding="8dp" >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/contacts_search_edit_bg"
+            android:drawableLeft="@drawable/contacts_search"
+            android:drawablePadding="5dp"
+            android:hint="搜索"
+            android:paddingLeft="7dp"
+            android:paddingRight="40dp"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/ivClearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:padding="0dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/contacts_clear_button"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/lv_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#000000"
+            android:divider="#e3e3e3"
+            android:dividerHeight="1.0dp"
+            android:fadingEdge="none"
+            android:scrollbars="none"
+            android:scrollingCache="false"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="80.0dip"
+            android:layout_height="80.0dip"
+            android:layout_gravity="center"
+            android:background="@drawable/contacts_show_toast_bg"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="30.0dip"
+            android:visibility="invisible" />
+
+        <com.base.Contacts.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="30.0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
+
+</LinearLayout>

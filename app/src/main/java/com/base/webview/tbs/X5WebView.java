@@ -170,7 +170,25 @@ public class X5WebView extends WebView {
 
 		}
 	};
-
+	/**
+	 * onAttachedToWindow在初始化视频播放（既创建view）之前调用，
+	 */
+	@Override
+	protected void onAttachedToWindow() {
+		super.onAttachedToWindow();
+	}
+	/**
+	 *
+	 onDetachedFromWindow在退出视频播放，销毁资源（既销毁view）之后调用。
+	 */
+	@Override
+	protected void onDetachedFromWindow() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+		progressDialog=null;
+		super.onDetachedFromWindow();
+	}
 	@SuppressLint("SetJavaScriptEnabled")
 	public X5WebView(Context arg0, AttributeSet arg1) {
 		super(arg0, arg1);

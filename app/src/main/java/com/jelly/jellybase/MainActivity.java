@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
+import com.base.Contacts.ContactsActivity;
 import com.base.applicationUtil.MyApplication;
+import com.base.applicationUtil.PermissionUtil;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
@@ -160,7 +163,28 @@ public class MainActivity extends AppCompatActivity {
             }, 1000);
         }
     };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
+    }
 
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionUtil.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
+    }
+    private PermissionUtil.PermissionGrant mPermissionGrant = new PermissionUtil.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode) {
+            }
+        }
+    };
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){
 
         @Override
@@ -259,9 +283,14 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(MyApplication.getMyApp(), GraphValiCodeActivity.class);
                     startActivity(intent);
                     break;
-                case 22://轻量底部导航栏
+                case 22://SystemBar一体化，状态栏和导航栏
                     intent=new Intent(MyApplication.getMyApp(), BottomBarActivity.class);
                     startActivity(intent);
+                    break;
+                case 23://手机通讯录
+                    intent=new Intent(MyApplication.getMyApp(), ContactsActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }

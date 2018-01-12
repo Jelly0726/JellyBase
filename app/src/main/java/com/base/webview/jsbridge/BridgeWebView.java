@@ -196,7 +196,25 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             }
         });
     }
-
+    /**
+     * onAttachedToWindow在初始化视频播放（既创建view）之前调用，
+     */
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+    /**
+     *
+     onDetachedFromWindow在退出视频播放，销毁资源（既销毁view）之后调用。
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        if (bridgeWebViewClient != null) {
+            bridgeWebViewClient.progressDialogDismiss();
+        }
+        bridgeWebViewClient=null;
+        super.onDetachedFromWindow();
+    }
     protected BridgeWebViewClient generateBridgeWebViewClient(Context context) {
         return new BridgeWebViewClient(this, context);
     }
