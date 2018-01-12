@@ -20,6 +20,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.base.Contacts.adapter.ContactsSortAdapter;
+import com.base.Contacts.model.SortModel;
+import com.base.Contacts.model.SortToken;
+import com.base.Contacts.utils.CharacterParser;
+import com.base.Contacts.utils.PinyinComparator;
+import com.base.Contacts.view.SideBar;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;

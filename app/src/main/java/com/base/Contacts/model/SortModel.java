@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.model;
 
 public class SortModel extends Contact {
 

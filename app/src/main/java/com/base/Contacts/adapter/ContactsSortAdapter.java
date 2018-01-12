@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.base.Contacts.model.SortModel;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

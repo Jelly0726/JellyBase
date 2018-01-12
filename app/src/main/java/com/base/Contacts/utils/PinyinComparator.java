@@ -1,4 +1,6 @@
-package com.base.Contacts;
+package com.base.Contacts.utils;
+
+import com.base.Contacts.model.SortModel;
 
 import java.util.Comparator;
 

@@ -4,7 +4,7 @@
  * @author	LuRuihui
  * @version	0.1
  */
-package com.base.Contacts;
+package com.base.Contacts.utils;
 
 /**
  * Java汉字转换为拼音

@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.model;
 
 /**
  *@author xiaobo.cui 2014年11月24日 下午5:36:29

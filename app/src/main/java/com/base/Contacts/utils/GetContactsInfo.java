@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.utils;
 
 /**
  *@author xiaobo.cui 2014年11月7日 上午11:24:25
@@ -23,6 +23,8 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredPostal;
 import android.provider.ContactsContract.CommonDataKinds.Website;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.Groups;
+
+import com.base.Contacts.utils.CLogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

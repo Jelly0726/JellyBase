@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

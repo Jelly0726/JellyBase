@@ -1,4 +1,4 @@
-package com.base.Contacts;
+package com.base.Contacts.utils;
 
 import android.content.Context;
 
