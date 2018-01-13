@@ -30,6 +30,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.telephony.SmsManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.ClipboardManager;
 import android.text.Spannable;
@@ -717,24 +719,68 @@ public class AppUtils {
         return (int) (pxValue / fontScale + 0.5f);
     }
     /**
-     * 获取手机唯一表示并转为uuid 加密
+     * 获取手机唯一标识（MD5加密）
      */
-    public static String getuniqueId(android.app.Application application){
-
-        TelephonyManager tm = (TelephonyManager)application.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-
-        String imei=tm.getDeviceId();
-
-        String simSerialNumber=tm.getSimSerialNumber();
-
-        String androidId =android.provider.Settings.Secure.getString(application.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
-
-        UUID deviceUuid =new UUID(androidId.hashCode(), ((long)imei.hashCode() << 32) |simSerialNumber.hashCode());
-
-        String uniqueId= deviceUuid.toString();
-
-        return uniqueId;
-
+    public static String getuniqueId(android.app.Application application) {
+        try {
+            //IMEI（imei）
+            TelephonyManager tm = (TelephonyManager) application.getSystemService(Context.TELEPHONY_SERVICE);
+            String imei = tm.getDeviceId();
+            if (TextUtils.isEmpty(imei)){
+                imei= getUUID();
+            }
+            //序列号（SerialNumber ）
+            String SerialNumber  = getSimIccId();
+            //如果上面都没有， 则生成一个id：随机码
+            String uuid = getUUID();
+            UUID deviceId = new UUID(uuid.hashCode(), ((long)imei.hashCode() << 32) | SerialNumber .hashCode());
+            return deviceId.toString();
+        } catch (Exception e) {
+            Log.i("ssss","e="+e);
+            return getUUID();
+        }
+    }
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    private static String getSimIccId() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) { //大于等于Android 5.1.0 L版本
+            SubscriptionManager sub = (SubscriptionManager) MyApplication.getMyApp()
+                    .getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+            List<SubscriptionInfo> info = sub.getActiveSubscriptionInfoList();
+            int count = sub.getActiveSubscriptionInfoCount();
+            if (count > 0) {
+                if (count > 1) {
+                    String icc1 = info.get(0).getIccId();
+                    String icc2 = info.get(1).getIccId();
+                    return icc1 + "," + icc2;
+                } else {
+                    for (SubscriptionInfo list : info) {
+                        String icc1 = list.getIccId();
+                        return icc1;
+                    }
+                }
+            } else {
+                Log.d("PhoneUtil", "无SIM卡");
+                return getUUID();
+            }
+        } else { //小于5.1.0 以下的版本
+            TelephonyManager tm = (TelephonyManager) MyApplication.getMyApp()
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+            String SerialNumber  =tm.getSimSerialNumber();
+            if (TextUtils.isEmpty(SerialNumber)){
+                SerialNumber=getUUID();
+            }
+            return SerialNumber;
+        }
+        return getUUID();
+    }
+    private static String getUUID(){
+        //如果上面都没有， 则生成一个id：随机码
+        String uuid = AppPrefs.getString(MyApplication.getMyApp(),"UUID","");
+        if(TextUtils.isEmpty(uuid)){
+            uuid = UUID.randomUUID().toString();
+            AppPrefs.putString(MyApplication.getMyApp(),"UUID",uuid);
+        }
+        return uuid;
     }
     /**
      * 检查是否存在SDCard
