@@ -7,39 +7,15 @@ import com.google.gson.annotations.SerializedName;
  * Created by BYPC006 on 2017/3/6.
  */
 
-public class HttpStateJson {
-    @SerializedName("returnState")
-    private boolean returnState;
-    @SerializedName(value ="msg", alternate = "message")
-    private String message;
+public class HttpStateJson extends HttpState{
     @SerializedName("data")
-    private Object json;
-    /**
-     * API是否请求失败
-     *
-     * @return 成功返回true, 失败返回false
-     */
-    public boolean isReturnState() {
-        return returnState;
-    }
+    private String json;
 
-    public void setReturnState(boolean status) {
-        this.returnState = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getJson() {
+    public String getJson() {
         return json;
     }
 
-    public void setJson(Object json) {
+    public void setJson(String json) {
         this.json = json;
     }
 }

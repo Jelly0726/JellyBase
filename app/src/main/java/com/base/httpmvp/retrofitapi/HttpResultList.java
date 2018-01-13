@@ -10,30 +10,9 @@ import java.util.List;
  * Created by BYPC006 on 2017/3/6.
  */
 
-public class HttpResultList<T> {
-	@SerializedName("status")
-	private int status;
-	@SerializedName(value ="msg", alternate = "message")
-	private String msg;
+public class HttpResultList<T> extends HttpResult {
 	@SerializedName("data")
 	private List<T> data=new ArrayList<>();
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
-	}
-
 	public List<T> getData() {
 		return data;
 	}

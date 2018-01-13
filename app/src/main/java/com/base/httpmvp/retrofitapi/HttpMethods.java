@@ -466,19 +466,19 @@ public class HttpMethods implements IGlobalManager {
 		}
 	}
 	//map
-	private class HttpResultFunc<T> implements Function<HttpStateData<T>, T> {
+	private class HttpResultFunc<T> implements Function<T, T> {
 
 		@Override
-		public T apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
-			return tHttpStateData.getData();
+		public T apply(@NonNull T tHttpStateData) throws Exception {
+			return tHttpStateData;
 		}
 	}
 	//flatMap
-	private class HttpResultFuncs<T> implements Function<HttpStateData<T>, Observable<T>> {
+	private class HttpResultFuncs<T> implements Function<T, Observable<T>> {
 
 		@Override
-		public Observable<T> apply(@NonNull HttpStateData<T> tHttpStateData) throws Exception {
-			return Observable.just(tHttpStateData.getData());
+		public Observable<T> apply(@NonNull T tHttpStateData) throws Exception {
+			return Observable.just(tHttpStateData);
 		}
 	}
 }
