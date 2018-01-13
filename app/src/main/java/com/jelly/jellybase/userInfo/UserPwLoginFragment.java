@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.base.social.SocialUtil;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
@@ -26,9 +25,11 @@ import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.BaseFragmentImpl;
 import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
+import com.base.social.SocialUtil;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.entities.ThirdInfoEntity;
@@ -127,7 +128,7 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     ToastUtils.showToast(getContext(),"请输入您的手机号和动态密码!");
                     return;
                 }
-                presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 break;
             case R.id.forget_pwd:
                 intent=new Intent(MyApplication.getMyApp(), ForgetActivity.class);

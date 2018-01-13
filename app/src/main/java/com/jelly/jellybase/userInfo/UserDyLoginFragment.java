@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.social.SocialUtil;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
@@ -27,9 +26,11 @@ import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.BaseFragmentImpl;
 import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
+import com.base.social.SocialUtil;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.entities.ThirdInfoEntity;
@@ -125,7 +126,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     ToastUtils.showToast(getContext(),"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -146,7 +147,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     ToastUtils.showToast(getContext(),"请输入您的手机号和动态密码!");
                     return;
                 }
-                presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 break;
             case R.id.forget_pwd:
                 intent=new Intent(MyApplication.getMyApp(), ForgetActivity.class);
