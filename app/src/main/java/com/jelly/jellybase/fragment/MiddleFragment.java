@@ -94,6 +94,7 @@ public class MiddleFragment extends BaseFragment implements BackInterface {
             case R.id.changeAddress_tv:
                 intent=new Intent(MyApplication.getMyApp(),ChangeAddressActivity.class);
                 intent.putExtra("entity",entity);
+                intent.putExtra("address",address);
                 intent.putExtra("rresultCode",areaRresultCode);
                 startActivityForResult(intent,areaRresultCode);
                 break;

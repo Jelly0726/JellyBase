@@ -55,10 +55,12 @@ public class ChangeAddressActivity extends BaseActivity {
     private Province province;
     private City city;
     private Area district;
+    private Address address;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         entity= (PositionEntity) getIntent().getSerializableExtra("entity");
+        address= (Address) getIntent().getParcelableExtra("address");
         setContentView(R.layout.change_address_activity);
         ButterKnife.bind(this);
         iniData();
@@ -96,7 +98,7 @@ public class ChangeAddressActivity extends BaseActivity {
                 adapter.setData(province.getCities());
                 break;
             case R.id.address_tv:
-                setResult(getIntent().getIntExtra("rresultCode",-1),getIntent());
+                setResult(getIntent().getIntExtra("rresultCode",-1),new Intent());
                 finish();
                 break;
         }
@@ -139,7 +141,43 @@ public class ChangeAddressActivity extends BaseActivity {
                 }
             }
         });
-        if (entity!=null) {
+        if (address!=null){
+            if (!TextUtils.isEmpty(address.getProvince().getAreaName())) {
+                province_rb.setText(address.getProvince().getAreaName());
+                city_rb.setChecked(true);
+                city_rb.setVisibility(View.VISIBLE);
+                city_rb.setText("请选择");
+                for (Province pro : mList) {
+                    if (pro.getAreaName().contains(address.getProvince().getAreaName())) {
+                        province = pro;
+                        adapter.setData(province.getCities());
+                        break;
+                    }
+                }
+                if (!TextUtils.isEmpty(address.getCity().getAreaName())) {
+                    city_rb.setText(address.getCity().getAreaName());
+                    district_rb.setChecked(true);
+                    district_rb.setVisibility(View.VISIBLE);
+                    district_rb.setText("请选择");
+                    for (City pro : province.getCities()) {
+                        if (pro.getAreaName().contains(address.getCity().getAreaName())) {
+                            city = pro;
+                            adapter.setData(city.getCounties());
+                            break;
+                        }
+                    }
+                    if (!TextUtils.isEmpty(address.getDistrict().getAreaName())) {
+                        district_rb.setText(address.getDistrict().getAreaName());
+                        for (Area pro : city.getCounties()) {
+                            if (pro.getAreaName().contains(address.getDistrict().getAreaName())) {
+                                district = pro;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }else if (entity!=null) {
             if (!TextUtils.isEmpty(entity.province)) {
                 province_rb.setText(entity.province);
                 city_rb.setChecked(true);
