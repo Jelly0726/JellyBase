@@ -266,12 +266,12 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.AddAddressActivity"
+        <activity android:name=".activity.AddressAddActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.EditAddressActivity"
+        <activity android:name=".activity.AddressEditActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="standard"
             android:screenOrientation="portrait">

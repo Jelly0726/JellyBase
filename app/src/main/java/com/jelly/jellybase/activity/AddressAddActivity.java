@@ -32,7 +32,7 @@ import cn.qqtheme.framework.entity.Province;
  * Created by Administrator on 2017/10/13.
  */
 
-public class AddAddressActivity extends BaseActivityImpl<OperaAddressContact.Presenter>
+public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Presenter>
         implements OperaAddressContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -122,7 +122,7 @@ public class AddAddressActivity extends BaseActivityImpl<OperaAddressContact.Pre
         task.setCallback(new AddressPickTask.Callback() {
             @Override
             public void onAddressInitFailed() {
-                ToastUtils.showToast(AddAddressActivity.this, "数据初始化失败");
+                ToastUtils.showToast(AddressAddActivity.this, "数据初始化失败");
             }
 
             @Override

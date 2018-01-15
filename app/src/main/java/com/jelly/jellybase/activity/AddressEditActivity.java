@@ -40,7 +40,7 @@ import cn.qqtheme.framework.entity.Province;
  * Created by Administrator on 2017/10/13.
  */
 
-public class EditAddressActivity extends BaseActivityImpl<OperaAddressContact.Presenter>
+public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Presenter>
         implements OperaAddressContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -138,7 +138,7 @@ public class EditAddressActivity extends BaseActivityImpl<OperaAddressContact.Pr
                 presenter.operaAddress(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
             case R.id.delete_address:
-                CircleDialog.Builder circleDialog = new CircleDialog.Builder(EditAddressActivity.this)
+                CircleDialog.Builder circleDialog = new CircleDialog.Builder(AddressEditActivity.this)
                         .configDialog(new ConfigDialog() {
                             @Override
                             public void onConfig(DialogParams params) {
@@ -180,7 +180,7 @@ public class EditAddressActivity extends BaseActivityImpl<OperaAddressContact.Pr
         task.setCallback(new AddressPickTask.Callback() {
             @Override
             public void onAddressInitFailed() {
-                ToastUtils.showToast(EditAddressActivity.this, "数据初始化失败");
+                ToastUtils.showToast(AddressEditActivity.this, "数据初始化失败");
             }
 
             @Override

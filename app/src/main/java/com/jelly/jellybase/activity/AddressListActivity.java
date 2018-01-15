@@ -96,7 +96,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
                 finish();
                 break;
             case R.id.add_address:
-                Intent intent=new Intent(this,AddAddressActivity.class);
+                Intent intent=new Intent(this,AddressAddActivity.class);
                 startActivity(intent);
 
                 break;
@@ -195,7 +195,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
             intent.putExtra("data",recevierAddress);
             setResult(getIntent().getIntExtra("requestCode",-1),intent);
             finish();
-//            Intent intent=new Intent(MyApplication.getMyApp(), AddAddressActivity.class);
+//            Intent intent=new Intent(MyApplication.getMyApp(), AddressAddActivity.class);
 //            startActivity(intent);
         }
     };

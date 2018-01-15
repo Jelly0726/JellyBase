@@ -30,7 +30,7 @@ import com.base.multiClick.OnMultiClickListener;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.activity.EditAddressActivity;
+import com.jelly.jellybase.activity.AddressEditActivity;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 import com.zhy.autolayout.utils.AutoUtils;
 
@@ -94,7 +94,7 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListAdapter.V
             @Override
             public void onClick(View v) {
                 if (AntiShake.check(v.getId()))return;
-                Intent intent=new Intent(context,EditAddressActivity.class);
+                Intent intent=new Intent(context,AddressEditActivity.class);
                 intent.putExtra("recevierAddress",mList.get((int) v.getTag()));
                 context.startActivity(intent);
             }

@@ -121,10 +121,6 @@ public class BaseActivity extends AutoLayoutActivity {
     }
     @Override
     protected void onDestroy() {
-        if (circleDialog!=null){
-            circleDialog.onDismiss();
-            circleDialog=null;
-        }
         /**
          * 停止监听，注销广播
          */
@@ -133,6 +129,10 @@ public class BaseActivity extends AutoLayoutActivity {
         }
         MyApplication.getMyApp().deleteActivity(this);
         super.onDestroy();
+        if (circleDialog!=null){
+            circleDialog.onDismiss();
+            circleDialog=null;
+        }
     }
     @Override
     protected void onResume() {
