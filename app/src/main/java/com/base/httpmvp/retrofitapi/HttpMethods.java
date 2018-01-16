@@ -130,21 +130,22 @@ public class HttpMethods implements IGlobalManager {
 										.build();
 							}
 							//↓↓↓↓↓↓↓拦截401异常
-							BufferedSource source = response.body().source();
-							source.request(Long.MAX_VALUE); // Buffer the entire body.
-							Buffer buffer = source.buffer();
-							Charset UTF8 = Charset.forName("UTF-8");
-							Charset charset = UTF8;
-							MediaType contentType = response.body().contentType();
-							if (contentType != null) {
-								charset = contentType.charset(UTF8);
-							}
-							String string=buffer.clone().readString(charset);
-							if (!TextUtils.isEmpty(string)){
-								HttpResult httpResult=new Gson().fromJson(string,HttpResult.class);
-								if (httpResult.getStatus()==401
-										&&!TextUtils.isEmpty(httpResult.getMsg())){
-									throw new ApiException(httpResult.getMsg());
+							if (response.code()==401) {
+								BufferedSource source = response.body().source();
+								source.request(Long.MAX_VALUE); // Buffer the entire body.
+								Buffer buffer = source.buffer();
+								Charset charset = Charset.forName("UTF-8");
+								MediaType contentType = response.body().contentType();
+								if (contentType != null) {
+									charset = contentType.charset(charset);
+								}
+								String string = buffer.clone().readString(charset);
+								if (!TextUtils.isEmpty(string)) {
+									HttpResult httpResult = new Gson().fromJson(string, HttpResult.class);
+									if (httpResult.getStatus() == 401
+											&& !TextUtils.isEmpty(httpResult.getMsg())) {
+										throw new ApiException(httpResult.getMsg());
+									}
 								}
 							}
 							//↑↑↑↑↑↑↑↑拦截401异常
