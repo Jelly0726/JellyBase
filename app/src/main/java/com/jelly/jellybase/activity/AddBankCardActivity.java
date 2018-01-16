@@ -107,7 +107,7 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
                     ToastUtils.showToast(this,"手机号、持卡人、卡号不能为空！");
                     return;
                 }
-                presenter.addBank(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.addBank(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -128,13 +128,13 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
     }
 
     @Override
-    public void addBankSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void addBankSuccess( Object mCallBackVo) {
         ToastUtils.showToast(this, (String) mCallBackVo);
         finish(2000);
     }
 
     @Override
-    public void addBankFailed(boolean isRefresh, String message) {
+    public void addBankFailed( String message) {
         ToastUtils.showToast(this,message);
     }
 }

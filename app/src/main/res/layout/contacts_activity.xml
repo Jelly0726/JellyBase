@@ -39,14 +39,17 @@
             android:text="通讯录"
             android:textColor="#313131"/>
         <LinearLayout
+            android:id="@+id/right_text"
             android:layout_width="100px"
             android:layout_height="100px"
             android:gravity="center_vertical"
             android:paddingLeft="20px">
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:textSize="14sp"
+                android:textColor="#313131"
+                android:text="确定"/>
         </LinearLayout>
     </LinearLayout>
     <FrameLayout

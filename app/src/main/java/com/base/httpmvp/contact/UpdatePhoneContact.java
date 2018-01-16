@@ -21,12 +21,12 @@ public interface UpdatePhoneContact {
         /**
          * 成功回调
          */
-        public void updatePhoneSuccess(boolean isRefresh, Object mCallBackVo);
+        public void updatePhoneSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void updatePhoneFailed(boolean isRefresh, String message);
+        public void updatePhoneFailed(String message);
 
         /**
          * 获取参数
@@ -38,16 +38,16 @@ public interface UpdatePhoneContact {
         /**
          * 成功回调
          */
-        public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo);
+        public void verifiCodeSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void verifiCodeFailed(boolean isRefresh, String message);
+        public void verifiCodeFailed(String message);
 
     }
     public interface Presenter extends IBasePresenter {
-        public void updatePhone(final boolean isRefresh, ObservableTransformer composer);
-        public void getVerifiCode(final boolean isRefresh, ObservableTransformer composer);
+        public void updatePhone(ObservableTransformer composer);
+        public void getVerifiCode(ObservableTransformer composer);
     }
 }

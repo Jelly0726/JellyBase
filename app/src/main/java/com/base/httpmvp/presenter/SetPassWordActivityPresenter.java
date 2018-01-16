@@ -23,7 +23,7 @@ implements SetPwdContact.Presenter{
     }
 
     @Override
-    public void setPassword(final boolean isRefresh, ObservableTransformer composer) {
+    public void setPassword( ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().setPassWord(gson.toJson(view.getSetPassWordParam()),
                 composer,new Observer<HttpResult>() {
@@ -31,7 +31,7 @@ implements SetPwdContact.Presenter{
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.excuteFailed(isRefresh,e.getMessage());
+                view.excuteFailed(e.getMessage());
             }
 
             @Override
@@ -48,9 +48,9 @@ implements SetPwdContact.Presenter{
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(isRefresh,model.getMsg());
+                    view.excuteSuccess(model.getMsg());
                 }else {
-                    view.excuteFailed(isRefresh, model.getMsg());
+                    view.excuteFailed( model.getMsg());
                 }
             }
         });

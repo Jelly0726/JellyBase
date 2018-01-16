@@ -183,13 +183,13 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
     }
 
     @Override
-    public void withdrawalsSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void withdrawalsSuccess(Object mCallBackVo) {
         ToastUtils.showToast(this, (String) mCallBackVo);
         finish(3000);
     }
 
     @Override
-    public void withdrawalsFailed(boolean isRefresh, String message) {
+    public void withdrawalsFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 }

@@ -72,7 +72,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                     ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -108,7 +108,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                     ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
                     return;
                 }
-                presenter.updatePhone(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePhone(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -123,13 +123,13 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     }
 
     @Override
-    public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
     }
 
     @Override
-    public void verifiCodeFailed(boolean isRefresh, String message) {
+    public void verifiCodeFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 
@@ -147,13 +147,13 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     }
 
     @Override
-    public void updatePhoneSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void updatePhoneSuccess( Object mCallBackVo) {
         ToastUtils.showToast(this, (String) mCallBackVo);
         finish(2000);
     }
 
     @Override
-    public void updatePhoneFailed(boolean isRefresh, String message) {
+    public void updatePhoneFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 }

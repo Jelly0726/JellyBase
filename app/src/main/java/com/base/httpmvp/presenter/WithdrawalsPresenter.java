@@ -29,7 +29,7 @@ public class WithdrawalsPresenter extends BasePresenterImpl<WithdrawalsContact.V
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.withdrawalsFailed(true,e.getMessage());
+                view.withdrawalsFailed(e.getMessage());
             }
 
             @Override
@@ -46,9 +46,9 @@ public class WithdrawalsPresenter extends BasePresenterImpl<WithdrawalsContact.V
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.withdrawalsSuccess(true,model.getMsg());
+                    view.withdrawalsSuccess(model.getMsg());
                 }else {
-                    view.withdrawalsFailed(true,model.getMsg());
+                    view.withdrawalsFailed(model.getMsg());
                 }
             }
         });

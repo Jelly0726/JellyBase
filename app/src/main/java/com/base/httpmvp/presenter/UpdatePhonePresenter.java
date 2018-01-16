@@ -22,7 +22,7 @@ implements UpdatePhoneContact.Presenter{
         super(interfaceView);
     }
 
-    public void updatePhone(final boolean isRefresh, ObservableTransformer composer) {
+    public void updatePhone( ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().updatePhone(gson.toJson(view.getUpdatePhoneParam())
                 ,composer,new Observer<HttpResult>() {
@@ -30,7 +30,7 @@ implements UpdatePhoneContact.Presenter{
                     @Override
                     public void onError(Throwable e) {
                         view.closeProgress();
-                        view.updatePhoneFailed(isRefresh,e.getMessage());
+                        view.updatePhoneFailed(e.getMessage());
                     }
 
                     @Override
@@ -47,14 +47,14 @@ implements UpdatePhoneContact.Presenter{
                     public void onNext(HttpResult model) {
                         view.closeProgress();
                         if (model.getStatus()== HttpCode.SUCCEED){
-                            view.updatePhoneSuccess(isRefresh,model);
+                            view.updatePhoneSuccess(model);
                         }else {
-                            view.updatePhoneFailed(isRefresh,model.getMsg());
+                            view.updatePhoneFailed(model.getMsg());
                         }
                     }
                 });
     }
-    public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
+    public void getVerifiCode(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
                 ,composer,new Observer<HttpResult>() {
@@ -62,7 +62,7 @@ implements UpdatePhoneContact.Presenter{
                     @Override
                     public void onError(Throwable e) {
                         view.closeProgress();
-                        view.verifiCodeFailed(isRefresh,e.getMessage());
+                        view.verifiCodeFailed(e.getMessage());
                     }
 
                     @Override
@@ -79,9 +79,9 @@ implements UpdatePhoneContact.Presenter{
                     public void onNext(HttpResult model) {
                         view.closeProgress();
                         if (model.getStatus()== HttpCode.SUCCEED){
-                            view.verifiCodeSuccess(isRefresh,model);
+                            view.verifiCodeSuccess(model);
                         }else {
-                            view.verifiCodeFailed(isRefresh,model.getMsg());
+                            view.verifiCodeFailed(model.getMsg());
                         }
                     }
                 });

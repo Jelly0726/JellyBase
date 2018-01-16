@@ -88,7 +88,7 @@ public class BandCardEditText extends EditText implements IGetBankView{
     }
 
     @Override
-    public void getBankSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void getBankSuccess( Object mCallBackVo) {
         BankCardInfo bankCardInfo= (BankCardInfo) mCallBackVo;
         String name="";
         String type="";
@@ -108,7 +108,7 @@ public class BandCardEditText extends EditText implements IGetBankView{
     }
 
     @Override
-    public void getBankFailed(boolean isRefresh, String message) {
+    public void getBankFailed(String message) {
         if (listener != null) {
             listener.failure();
         }

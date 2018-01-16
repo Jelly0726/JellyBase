@@ -81,7 +81,7 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
                     ToastUtils.showToast(this,"两次密码不一致，请重新输入!");
                     return;
                 }
-                presenter.updatePassword(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -100,13 +100,13 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
     }
 
     @Override
-    public void updatePasswordSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void updatePasswordSuccess(Object mCallBackVo) {
         ToastUtils.showToast(this, (String) mCallBackVo);
         finish(2000);
     }
 
     @Override
-    public void updatePasswordFailed(boolean isRefresh, String message) {
+    public void updatePasswordFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 }

@@ -15,12 +15,12 @@ public interface IGetBankView extends IBaseView {
     /**
      * 成功回调
      */
-    public void getBankSuccess(boolean isRefresh, Object mCallBackVo);
+    public void getBankSuccess( Object mCallBackVo);
 
     /**
      * 失败回调
      */
-    public void getBankFailed(boolean isRefresh, String message);
+    public void getBankFailed(String message);
 
 
 }

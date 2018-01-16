@@ -22,7 +22,7 @@ public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.
         super(interfaceView);
     }
 
-    public void updatePassword(final boolean isRefresh,ObservableTransformer composer) {
+    public void updatePassword(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().updatePassword(gson.toJson(view.getUpdatePasswordParam())
                 ,composer,new Observer<HttpResult>() {
@@ -30,7 +30,7 @@ public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.updatePasswordFailed(isRefresh,e.getMessage());
+                view.updatePasswordFailed(e.getMessage());
             }
 
             @Override
@@ -47,9 +47,9 @@ public class UpdatePasswordPresenter extends BasePresenterImpl<UpdataPwdContact.
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.updatePasswordSuccess(isRefresh,model.getMsg());
+                    view.updatePasswordSuccess(model.getMsg());
                 }else {
-                    view.updatePasswordFailed(isRefresh,model.getMsg());
+                    view.updatePasswordFailed(model.getMsg());
                 }
             }
         });

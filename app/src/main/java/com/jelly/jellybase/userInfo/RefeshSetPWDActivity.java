@@ -74,7 +74,7 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
                     ToastUtils.showToast(this,"两次密码输入不一致,请重新输入!");
                     return;
                 }
-                presenter.setPassword(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.setPassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -100,7 +100,7 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
     }
 
     @Override
-    public void excuteSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void excuteSuccess( Object mCallBackVo) {
         DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
         MyApplication.getMyApp().finishAllActivity();
         String password=password_edit.getText().toString().trim();
@@ -115,7 +115,7 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
     }
 
     @Override
-    public void excuteFailed(boolean isRefresh, String message) {
+    public void excuteFailed( String message) {
         ToastUtils.showToast(this,message);
     }
 }

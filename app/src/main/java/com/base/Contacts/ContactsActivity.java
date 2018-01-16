@@ -26,6 +26,7 @@ import com.base.Contacts.model.SortToken;
 import com.base.Contacts.utils.CharacterParser;
 import com.base.Contacts.utils.PinyinComparator;
 import com.base.Contacts.view.SideBar;
+import com.base.applicationUtil.ToastUtils;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -42,6 +43,8 @@ import butterknife.OnClick;
 public class ContactsActivity extends BaseActivity {
 	@BindView(R.id.left_back)
 	LinearLayout left_back;
+	@BindView(R.id.right_text)
+	LinearLayout right_text;
 	@BindView(R.id.lv_contacts)
 	ListView mListView;
 	@BindView(R.id.et_search)
@@ -151,7 +154,7 @@ public class ContactsActivity extends BaseActivity {
 
 	}
 
-	@OnClick({R.id.left_back})
+	@OnClick({R.id.left_back,R.id.right_text})
 	public void onClick(View v) {
 		if (AntiShake.check(v.getId())) {    //判断是否多次点击
 			return;
@@ -159,6 +162,10 @@ public class ContactsActivity extends BaseActivity {
 		switch (v.getId()){
 			case R.id.left_back:
 				finish();
+				break;
+			case R.id.right_text:
+				List list=adapter.getSelectedList();
+				ToastUtils.showToast(this,"已选择："+list.size()+"个联系人");
 				break;
 		}
 	}

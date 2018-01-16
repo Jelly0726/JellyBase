@@ -30,7 +30,7 @@ public class GetBankPresenter implements IBasePresenter {
             @Override
             public void onError(Throwable e) {
                 interfaceView.closeProgress();
-                interfaceView.getBankFailed(true,e.getMessage());
+                interfaceView.getBankFailed(e.getMessage());
             }
 
             @Override
@@ -47,9 +47,9 @@ public class GetBankPresenter implements IBasePresenter {
             public void onNext(HttpResultData<BankCardInfo> model) {
                 interfaceView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.getBankSuccess(true,model.getData());
+                    interfaceView.getBankSuccess(model.getData());
                 }else {
-                    interfaceView.getBankFailed(true,model.getMsg());
+                    interfaceView.getBankFailed(model.getMsg());
                 }
             }
         });

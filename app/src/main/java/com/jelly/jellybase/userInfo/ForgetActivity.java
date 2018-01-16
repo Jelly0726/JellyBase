@@ -64,7 +64,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
                 get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
@@ -98,7 +98,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号和验证码");
                     return;
                 }
-                presenter.forgetPwd(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.forgetPwd(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
         }
     }
@@ -113,13 +113,13 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
     }
 
     @Override
-    public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
     }
 
     @Override
-    public void verifiCodeFailed(boolean isRefresh, String message) {
+    public void verifiCodeFailed( String message) {
         ToastUtils.showToast(this,message);
     }
 
@@ -134,7 +134,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
     }
 
     @Override
-    public void forgetPasswordSuccess(boolean isRefresh, Object mCallBackVo) {
+    public void forgetPasswordSuccess( Object mCallBackVo) {
         String phone=phone_edit.getText().toString().trim();
         Intent intent=new Intent(this,RefeshSetPWDActivity.class);
         intent.putExtra("phone",phone);
@@ -142,7 +142,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
     }
 
     @Override
-    public void forgetPasswordFailed(boolean isRefresh, String message) {
+    public void forgetPasswordFailed(String message) {
         ToastUtils.showToast(this,message);
     }
 }

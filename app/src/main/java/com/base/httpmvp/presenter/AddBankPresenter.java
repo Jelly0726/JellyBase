@@ -22,14 +22,14 @@ public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View>
     }
 
     @Override
-    public void addBank(final boolean isRefresh, ObservableTransformer composer) {
+    public void addBank(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().addbank(gson.toJson(view.addBankParam()),composer,new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.addBankFailed(isRefresh,e.getMessage());
+                view.addBankFailed(e.getMessage());
             }
 
             @Override
@@ -46,9 +46,9 @@ public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View>
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.addBankSuccess(isRefresh,model.getMsg());
+                    view.addBankSuccess(model.getMsg());
                 }else {
-                    view.addBankFailed(isRefresh,model.getMsg());
+                    view.addBankFailed(model.getMsg());
                 }
             }
         });

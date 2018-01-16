@@ -21,14 +21,14 @@ public interface SetPwdContact {
         /**
          * 成功回调
          */
-        public void excuteSuccess(boolean isRefresh, Object mCallBackVo);
+        public void excuteSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void excuteFailed(boolean isRefresh, String message);
+        public void excuteFailed( String message);
     }
     public interface Presenter extends IBasePresenter {
-        public void setPassword(final boolean isRefresh, ObservableTransformer composer);
+        public void setPassword(ObservableTransformer composer);
     }
 }

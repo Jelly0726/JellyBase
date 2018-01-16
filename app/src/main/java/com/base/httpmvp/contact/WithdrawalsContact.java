@@ -21,12 +21,12 @@ public interface WithdrawalsContact {
         /**
          * 成功回调
          */
-        public void withdrawalsSuccess(boolean isRefresh, Object mCallBackVo);
+        public void withdrawalsSuccess( Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void withdrawalsFailed(boolean isRefresh, String message);
+        public void withdrawalsFailed( String message);
     }
     public interface Presenter extends IBasePresenter {
         public void withdrawals(ObservableTransformer composer);

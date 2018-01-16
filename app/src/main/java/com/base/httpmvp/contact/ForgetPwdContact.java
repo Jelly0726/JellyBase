@@ -21,12 +21,12 @@ public interface ForgetPwdContact {
         /**
          * 成功回调
          */
-        public void forgetPasswordSuccess(boolean isRefresh, Object mCallBackVo);
+        public void forgetPasswordSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void forgetPasswordFailed(boolean isRefresh, String message);
+        public void forgetPasswordFailed(String message);
 
         /**
          * 获取参数
@@ -38,17 +38,17 @@ public interface ForgetPwdContact {
         /**
          * 成功回调
          */
-        public void verifiCodeSuccess(boolean isRefresh, Object mCallBackVo);
+        public void verifiCodeSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void verifiCodeFailed(boolean isRefresh, String message);
+        public void verifiCodeFailed(String message);
 
 
     }
     public interface Presenter extends IBasePresenter {
-        public void forgetPwd(final boolean isRefresh, ObservableTransformer composer);
-        public void getVerifiCode(final boolean isRefresh, ObservableTransformer composer);
+        public void forgetPwd(ObservableTransformer composer);
+        public void getVerifiCode(ObservableTransformer composer);
     }
 }

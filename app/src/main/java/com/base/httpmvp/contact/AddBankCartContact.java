@@ -21,16 +21,16 @@ public interface AddBankCartContact {
         /**
          * 成功回调
          */
-        public void addBankSuccess(boolean isRefresh, Object mCallBackVo);
+        public void addBankSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void addBankFailed(boolean isRefresh, String message);
+        public void addBankFailed(String message);
 
 
     }
     public interface Presenter extends IBasePresenter {
-        public void addBank(final boolean isRefresh, ObservableTransformer composer);
+        public void addBank(ObservableTransformer composer);
     }
 }

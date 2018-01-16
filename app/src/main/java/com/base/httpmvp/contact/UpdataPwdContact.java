@@ -21,16 +21,16 @@ public interface UpdataPwdContact {
         /**
          * 成功回调
          */
-        public void updatePasswordSuccess(boolean isRefresh, Object mCallBackVo);
+        public void updatePasswordSuccess(Object mCallBackVo);
 
         /**
          * 失败回调
          */
-        public void updatePasswordFailed(boolean isRefresh, String message);
+        public void updatePasswordFailed(String message);
 
 
     }
     public interface Presenter extends IBasePresenter {
-        public void updatePassword(final boolean isRefresh, ObservableTransformer composer);
+        public void updatePassword(ObservableTransformer composer);
     }
 }

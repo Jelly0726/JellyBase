@@ -22,14 +22,14 @@ implements ForgetPwdContact.Presenter{
         super(interfaceView);
     }
 
-    public void forgetPwd(final boolean isRefresh,ObservableTransformer composer) {
+    public void forgetPwd(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().forgetPassword(gson.toJson(view.forgetPasswordParam()),composer,new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
                 view.closeProgress();
-                view.forgetPasswordFailed(isRefresh,e.getMessage());
+                view.forgetPasswordFailed(e.getMessage());
             }
 
             @Override
@@ -46,14 +46,14 @@ implements ForgetPwdContact.Presenter{
             public void onNext(HttpResult model) {
                 view.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.forgetPasswordSuccess(isRefresh,model.getMsg());
+                    view.forgetPasswordSuccess(model.getMsg());
                 }else {
-                    view.forgetPasswordFailed(isRefresh,model.getMsg());
+                    view.forgetPasswordFailed(model.getMsg());
                 }
             }
         });
     }
-    public void getVerifiCode(final boolean isRefresh,ObservableTransformer composer) {
+    public void getVerifiCode(ObservableTransformer composer) {
         view.showProgress();
         HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
                 ,composer,new Observer<HttpResult>() {
@@ -61,7 +61,7 @@ implements ForgetPwdContact.Presenter{
                     @Override
                     public void onError(Throwable e) {
                         view.closeProgress();
-                        view.verifiCodeFailed(isRefresh,e.getMessage());
+                        view.verifiCodeFailed(e.getMessage());
                     }
 
                     @Override
@@ -78,9 +78,9 @@ implements ForgetPwdContact.Presenter{
                     public void onNext(HttpResult model) {
                         view.closeProgress();
                         if (model.getStatus()== HttpCode.SUCCEED){
-                            view.verifiCodeSuccess(isRefresh,model);
+                            view.verifiCodeSuccess(model);
                         }else {
-                            view.verifiCodeFailed(isRefresh,model.getMsg());
+                            view.verifiCodeFailed(model.getMsg());
                         }
                     }
                 });
