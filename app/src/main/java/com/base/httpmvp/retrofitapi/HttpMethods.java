@@ -14,6 +14,7 @@ import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
+import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
@@ -38,7 +39,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -272,7 +272,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void getToken(Object paramMap, ObservableTransformer composer, Observer<HttpResultData<TokenModel>> subscriber){
 		Observable observable = get(IApiService.class).getToken(paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultData<TokenModel>>());
+				.flatMap(new HttpFunctions<HttpResultData<TokenModel>>());
 		toSubscribe(observable,subscriber,composer);
 	}
 	/***
@@ -281,7 +281,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void userLogin(Object paramMap,ObservableTransformer composer, Observer<HttpResultData<Login>> subscriber){
 		Observable observable =  getProxy(IApiService.class).userLogin(paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultData<Login>>());
+				.flatMap(new HttpFunctions<HttpResultData<Login>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -290,7 +290,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void getVerifiCode(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).getVerifiCode(paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -300,7 +300,7 @@ public class HttpMethods implements IGlobalManager {
 	public void userRegistration(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
 				//.map(new HttpResultFunc<List<HttpResult>>());
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -310,7 +310,7 @@ public class HttpMethods implements IGlobalManager {
 	public void forgetPassword(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).forgetPassword(paramMap)
 				//.map(new HttpResultFunc<List<HttpResult>>());
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -319,7 +319,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void setPassWord(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).setPassWord(paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -328,7 +328,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void updatePassword(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).updatePassword(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -337,7 +337,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void updatePhone(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).updatePhone(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -346,7 +346,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void aboutUs(ObservableTransformer composer,Observer<HttpResultData<AboutUs>> subscriber){
 		Observable observable =  getProxy(IApiService.class).aboutUs(GlobalToken.getToken().getToken())
-				.flatMap(new HttpResultFuncs<HttpResultData<AboutUs>>());
+				.flatMap(new HttpFunctions<HttpResultData<AboutUs>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -355,7 +355,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
-				.flatMap(new HttpResultFuncs<HttpResultData<AppVersion>>());
+				.flatMap(new HttpFunctions<HttpResultData<AppVersion>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/**
@@ -380,7 +380,7 @@ public class HttpMethods implements IGlobalManager {
 		// 执行请求
 		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken(),
 				description, body)
-				.flatMap(new HttpResultFuncs<HttpResultData<UploadData>>());
+				.flatMap(new HttpFunctions<HttpResultData<UploadData>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -389,7 +389,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void getBank(Object param,ObservableTransformer composer,Observer<HttpResultData<BankCardInfo>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpResultFuncs<HttpResultData<BankCardInfo>>());
+				.flatMap(new HttpFunctions<HttpResultData<BankCardInfo>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -398,7 +398,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void addbank(Object param,ObservableTransformer composer,Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).addbank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 
@@ -408,7 +408,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void bankList(Object paramMap,ObservableTransformer composer,Observer<HttpResultList<BankCardInfo>> subscriber){
 		Observable observable =  getProxy(IApiService.class).bankList(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultList<BankCardInfo>>());
+				.flatMap(new HttpFunctions<HttpResultList<BankCardInfo>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -417,7 +417,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void deletebank(Object param,ObservableTransformer composer,Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).deletebank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -426,7 +426,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void withdrawals(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).withdrawals(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -435,7 +435,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void accountDetails(Object paramMap,ObservableTransformer composer, Observer<HttpResultList<AccountDetail>> subscriber){
 		Observable observable =  getProxy(IApiService.class).accountDetails(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultList<AccountDetail>>());
+				.flatMap(new HttpFunctions<HttpResultList<AccountDetail>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/**
@@ -443,7 +443,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void operaAddress(Object paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).operaAddress(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResult>());
+				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/**
@@ -451,7 +451,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void getAddressList(Object paramMap,ObservableTransformer composer,Observer<HttpResultList<RecevierAddress>> subscriber){
 		Observable observable =  getProxy(IApiService.class).getAddressList(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpResultFuncs<HttpResultList<RecevierAddress>>());
+				.flatMap(new HttpFunctions<HttpResultList<RecevierAddress>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 
@@ -486,22 +486,6 @@ public class HttpMethods implements IGlobalManager {
 					})
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(s);
-		}
-	}
-	//map
-	private class HttpResultFunc<T> implements Function<T, T> {
-
-		@Override
-		public T apply(@NonNull T tHttpStateData) throws Exception {
-			return tHttpStateData;
-		}
-	}
-	//flatMap
-	private class HttpResultFuncs<T> implements Function<T, Observable<T>> {
-
-		@Override
-		public Observable<T> apply(@NonNull T tHttpStateData) throws Exception {
-			return Observable.just(tHttpStateData);
 		}
 	}
 }
