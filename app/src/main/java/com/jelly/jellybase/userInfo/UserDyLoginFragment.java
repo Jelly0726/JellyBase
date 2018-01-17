@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,9 +39,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.jpush.android.api.JPushInterface;
 import systemdb.Login;
 
@@ -53,8 +49,6 @@ import systemdb.Login;
 
 public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter>
         implements LoginContact.View{
-    private View mRootView;
-    private Unbinder unbinder;
     @BindView(R.id.login_tv)
     TextView login_tv;
     @BindView(R.id.forget_pwd)
@@ -72,17 +66,24 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     private String phone="";
     private String password;
     private double from=-1;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.user_dylogin_fragment, container, false);
-        unbinder= ButterKnife.bind(this,mRootView);
-        return mRootView;
+    protected int getLayoutResource() {
+        return R.layout.user_dylogin_fragment;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+
     }
 
     @Override
     public void onDestroyView() {
-        unbinder.unbind();
         super.onDestroyView();
     }
 

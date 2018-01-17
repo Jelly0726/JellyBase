@@ -2,9 +2,6 @@ package com.jelly.jellybase.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
 
@@ -12,17 +9,21 @@ import com.base.view.BaseFragment;
  * Created by Administrator on 2017/9/18.
  */
 
-public class OrderFragment extends BaseFragment implements View.OnClickListener{
-    private View mRootView;
+public class OrderFragment extends BaseFragment{
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        //mRootView = inflater.inflate(R.layout.home_fragment, container, false);
-        return mRootView;
+    protected int getLayoutResource() {
+        return 0;
     }
 
-    public View getRootView() {
-        return mRootView;
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+
     }
 
     @Override
@@ -45,11 +46,6 @@ public class OrderFragment extends BaseFragment implements View.OnClickListener{
         super.onActivityResult(requestCode, resultCode, data);
         if(data==null){
             return;
-        }
-    }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
         }
     }
     @Override

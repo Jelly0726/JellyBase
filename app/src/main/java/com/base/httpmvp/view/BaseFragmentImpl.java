@@ -28,9 +28,6 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
 
     protected P presenter;
     private MProgressDialog progressDialog;
-    private boolean isViewCreate = false;//view是否创建
-    private boolean isViewVisible = false;//view是否可见
-    private boolean isFirst = true;//是否第一次加载
 
     public LifecycleProvider lifecycleProvider;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
@@ -74,16 +71,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
-        isViewCreate = true;
         progressDialog = MProgressUtil.getInstance().getMProgressDialog(getActivity());
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        isViewVisible = isVisibleToUser;
-        if (isVisibleToUser && isViewCreate) {
-            visibleToUser();
-        }
     }
     @Override
     public void onStart() {
@@ -95,9 +83,6 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public void onResume() {
         super.onResume();
         lifecycleSubject.onNext(FragmentEvent.RESUME);
-        if (isViewVisible) {
-            visibleToUser();
-        }
     }
 
     @Override
@@ -117,7 +102,6 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         if (presenter != null) {
             presenter.detach();
         }
-        isViewCreate = false;
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
         if (progressDialog!=null){
             progressDialog.dismiss();
@@ -136,25 +120,6 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public void onDetach() {
         lifecycleSubject.onNext(FragmentEvent.DETACH);
         super.onDetach();
-    }
-    /**
-     * 懒加载
-     * 让用户可见
-     * 第一次加载
-     */
-    protected void firstLoad() {
-
-    }
-
-    /**
-     * 懒加载
-     * 让用户可见
-     */
-    protected void visibleToUser() {
-        if (isFirst) {
-            firstLoad();
-            isFirst = false;
-        }
     }
     public abstract P initPresenter();
     @Override

@@ -32,7 +32,7 @@ public class MProgressUtil {
         //新建一个Dialog
         MProgressDialog  progressDialog = new MProgressDialog.Builder(context)
                 //点击外部是否可以取消
-                .isCanceledOnTouchOutside(false)
+                .isCanceledOnTouchOutside(true)
                 //全屏背景窗体的颜色
                 .setBackgroundWindowColor(ContextCompat.getColor(context, R.color.BackgroundWindowColor))
                 //View背景的颜色

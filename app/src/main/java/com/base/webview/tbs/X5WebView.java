@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.base.applicationUtil.MyApplication;
 import com.base.mprogressdialog.MProgressUtil;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
@@ -45,6 +46,7 @@ public class X5WebView extends WebView {
 	private RelativeLayout refreshRela;
 	TextView title;
 	private MProgressDialog progressDialog;
+	private boolean isVisible=true;//视图是否可见
 	private WebViewClient client = new WebViewClient() {
 		/**
 		 * 防止加载网页时调起系统浏览器
@@ -54,13 +56,13 @@ public class X5WebView extends WebView {
 			return false;
 		}
 		public void onReceivedHttpAuthRequest(WebView webview,
-				com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost, String host,
-				String realm) {
+											  com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost, String host,
+											  String realm) {
 			boolean flag = httpAuthHandlerhost.useHttpAuthUsernamePassword();
 		}
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view,
-                                                          WebResourceRequest request) {
+														  WebResourceRequest request) {
 			// TODO Auto-generated method stub
 
 			Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
@@ -71,7 +73,7 @@ public class X5WebView extends WebView {
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
-			if (progressDialog != null) {
+			if (progressDialog != null&&isVisible) {
 				progressDialog.show();
 			}
 		}
@@ -124,7 +126,7 @@ public class X5WebView extends WebView {
 
 		@Override
 		public boolean onShowFileChooser(WebView arg0,
-                                         ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
+										 ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
 			// TODO Auto-generated method stub
 			Log.e("app", "onShowFileChooser");
 			return super.onShowFileChooser(arg0, arg1, arg2);
@@ -208,6 +210,11 @@ public class X5WebView extends WebView {
 	}
 
 	private void initWebViewSettings() {
+		//android:scrollbars="none"   隐藏滚动条
+		this.setHorizontalScrollBarEnabled(false);//水平不显示
+		this.setVerticalScrollBarEnabled(false); //垂直不显示
+		this.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
+		this.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
 		WebSettings webSetting = this.getSettings();
 		webSetting.setJavaScriptEnabled(true);
 		webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -227,7 +234,10 @@ public class X5WebView extends WebView {
 		webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
 		//webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
 		webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
-
+		webSetting.setAppCachePath(MyApplication.getMyApp().getDir("appcache", 0).getPath());
+		webSetting.setDatabasePath(MyApplication.getMyApp().getDir("databases", 0).getPath());
+		webSetting.setGeolocationDatabasePath(MyApplication.getMyApp().getDir("geolocation", 0)
+				.getPath());
 		// this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
 		// settings 的设计
 	}
@@ -237,7 +247,13 @@ public class X5WebView extends WebView {
 		boolean ret = super.drawChild(canvas, child, drawingTime);
 		return ret;
 	}
-
+	/**
+	 * 设置视图是否可见
+	 * @param visible
+	 */
+	public void setVisible(boolean visible) {
+		this.isVisible=visible;
+	}
 	public X5WebView(Context arg0) {
 		super(arg0);
 		setBackgroundColor(85621);
@@ -306,7 +322,7 @@ public class X5WebView extends WebView {
 	}
 
 	protected boolean tbs_overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX,
-			int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent, View view) {
+									   int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent, View view) {
 		return super_overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX,
 				maxOverScrollY, isTouchEvent);
 	}

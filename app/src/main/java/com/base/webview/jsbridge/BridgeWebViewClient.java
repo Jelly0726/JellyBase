@@ -23,6 +23,12 @@ public class BridgeWebViewClient extends WebViewClient {
     private BridgeWebView webView;
     private MProgressDialog progressDialog;
     private WebViewClientCallBack webViewClientCallBack;
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
+
+    private boolean isVisible=true;//视图是否可见
     public BridgeWebViewClient(BridgeWebView webView, Context context) {
         this.webView = webView;
         progressDialog = MProgressUtil.getInstance().getMProgressDialog(context);
@@ -51,7 +57,7 @@ public class BridgeWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        if (progressDialog != null) {
+        if (progressDialog != null&&isVisible) {
                 progressDialog.show();
         }
         if (webViewClientCallBack != null) {

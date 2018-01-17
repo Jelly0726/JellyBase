@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.addressmodel.Address;
@@ -16,8 +13,8 @@ import com.base.middleBar.FragmentAdapter;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
-import com.base.view.BackInterface;
 import com.base.view.BaseFragment;
+import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BottomBarActivity;
@@ -27,9 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import systemdb.PositionEntity;
 
 
@@ -37,10 +32,8 @@ import systemdb.PositionEntity;
  * Created by Administrator on 2017/9/18.
  */
 
-public class MiddleFragment extends BaseFragment implements BackInterface {
+public class MiddleFragment extends BaseFragment{
     private static final int areaRresultCode=0;
-    private View mRootView;
-    private Unbinder unbinder;
     private PositionEntity entity;
     private Address address;
     @BindView(R.id.address_tv)
@@ -48,28 +41,35 @@ public class MiddleFragment extends BaseFragment implements BackInterface {
     @BindView(R.id.changeAddress_tv)
     TextView changeAddress_tv;
     @BindView(R.id.vp_content)
-    ViewPager mVpContent;
+    NoPreloadViewPager mVpContent;
     @BindView(R.id.bbl)
     MiddleBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.location_fragment, container, false);
-        unbinder= ButterKnife.bind(this,mRootView);
-        return mRootView;
+    protected int getLayoutResource() {
+        return R.layout.location_fragment;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+
     }
 
     @Override
     public void onDestroyView() {
-        unbinder.unbind();
         super.onDestroyView();
     }
     @Override
     public void setData(String json) {
         entity=new Gson().fromJson(json,PositionEntity.class);
-        if (getActivity()!=null)
+        if (getActivity()!=null&&isFragmentVisible)
             iniData();
     }
     @Override
@@ -124,11 +124,6 @@ public class MiddleFragment extends BaseFragment implements BackInterface {
                     baseFragment.setData(new Gson().toJson(entity));
             }
         });
-    }
-    private BaseFragment mBaseFragment;
-    @Override
-    public void setSelectedFragment(BaseFragment selectedFragment) {
-        this.mBaseFragment = selectedFragment;
     }
     @Override
     public boolean onBackPressed() {

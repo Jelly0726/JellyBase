@@ -51,7 +51,10 @@ import android.widget.Toast;
 import com.base.config.BaseConfig;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -127,6 +130,23 @@ public class AppUtils {
     public static String Wireless="com.android.settings.WirelessSettings"; //无线和网络设置
     //保证该类不能被实例化
     private AppUtils() {
+
+    }
+
+    /**
+     *
+     * @param str 需要正则表达式判断的字符串
+     * @param regex 正则表达式
+     * @param bool 是否区分大小写
+     * @return
+     */
+    public static boolean like(String str,String regex,boolean bool)
+    {
+        regex = regex.replaceAll("\\*", ".*");
+        regex = regex.replaceAll("\\?", ".");
+        Pattern pattern = Pattern.compile(regex,bool?Pattern.CASE_INSENSITIVE:0);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.find();
 
     }
 

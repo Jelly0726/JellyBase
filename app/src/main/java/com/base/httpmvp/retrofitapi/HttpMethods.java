@@ -16,19 +16,16 @@ import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
-import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.google.gson.Gson;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
-import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -50,8 +47,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import okio.Buffer;
-import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import systemdb.Login;
@@ -129,26 +124,7 @@ public class HttpMethods implements IGlobalManager {
 										.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
 										.build();
 							}
-							//↓↓↓↓↓↓↓拦截401异常
-							if (response.code()==401) {
-								BufferedSource source = response.body().source();
-								source.request(Long.MAX_VALUE); // Buffer the entire body.
-								Buffer buffer = source.buffer();
-								Charset charset = Charset.forName("UTF-8");
-								MediaType contentType = response.body().contentType();
-								if (contentType != null) {
-									charset = contentType.charset(charset);
-								}
-								String string = buffer.clone().readString(charset);
-								if (!TextUtils.isEmpty(string)) {
-									HttpResult httpResult = new Gson().fromJson(string, HttpResult.class);
-									if (httpResult.getStatus() == 401
-											&& !TextUtils.isEmpty(httpResult.getMsg())) {
-										throw new ApiException(httpResult.getMsg());
-									}
-								}
-							}
-							//↑↑↑↑↑↑↑↑拦截401异常
+							HttpUtils.checkResponse(response);
 							return response;
 						}
 					};

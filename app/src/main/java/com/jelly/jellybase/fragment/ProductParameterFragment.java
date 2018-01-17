@@ -3,13 +3,8 @@ package com.jelly.jellybase.fragment;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
@@ -22,28 +17,38 @@ import com.jelly.jellybase.datamodel.Product;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Created by Administrator on 2017/9/18.
  */
 
 public class ProductParameterFragment extends BaseFragment {
-    private View mRootView;
-
-    private RecyclerView recyclerView;
-    private XRefreshView xRefreshView;
+    @BindView(R.id.recycler_view_test_rv)
+    RecyclerView recyclerView;
+    @BindView(R.id.xrefreshview)
+    XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private ProductParameterAdapter adapter;
-    private TextView textView;
     private List<Product> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.product_parameter_fragment, container, false);
-        return mRootView;
+    protected int getLayoutResource() {
+        return R.layout.product_parameter_fragment;
     }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+
+    }
+
     @Override
     public void setData(String json) {
 
@@ -52,9 +57,6 @@ public class ProductParameterFragment extends BaseFragment {
     @Override
     public boolean onBackPressed() {
         return false;
-    }
-    public View getRootView() {
-        return mRootView;
     }
 
     @Override
@@ -69,10 +71,8 @@ public class ProductParameterFragment extends BaseFragment {
             mList.add(new Product());
         }
         adapter=new ProductParameterAdapter(this.getActivity(),mList);
-        xRefreshView = (XRefreshView) mRootView.findViewById(R.id.xrefreshview);
         xRefreshView.setPullLoadEnable(false);
         xRefreshView.setPullRefreshEnable(false);
-        recyclerView = (RecyclerView) mRootView.findViewById(R.id.recycler_view_test_rv);
         recyclerView.setHasFixedSize(true);
         // 设置静默加载模式
 //		xRefreshView1.setSilenceLoadMore();

@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,11 +19,11 @@ import com.base.circledialog.callback.ConfigButton;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.ButtonParams;
 import com.base.circledialog.params.DialogParams;
+import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnBottomLoadMoreTime;
 import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
-import com.base.view.BaseFragment;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.adapter.ShopcatAdapter;
 import com.jelly.jellybase.shopcar.entity.GoodsInfo;
@@ -37,32 +35,47 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class ShopCarFragment extends BaseFragment implements View.OnClickListener,
+public class ShopCarFragment extends BaseFragment implements
         ShopcatAdapter.CheckInterface, ShopcatAdapter.ModifyCountInterface,
         ShopcatAdapter.GroupEditorListener {
-    private View mRootView;
-
+    @BindView(R.id.left_back)
     LinearLayout left_back;
+    @BindView(R.id.listView)
     ExpandableListView listView;
+    @BindView(R.id.all_checkBox)
     CheckBox allCheckBox;
+    @BindView(R.id.total_price)
     TextView totalPrice;
+    @BindView(R.id.go_pay)
     TextView goPay;
+    @BindView(R.id.order_info)
     LinearLayout orderInfo;
+    @BindView(R.id.share_goods)
     TextView shareGoods;
+    @BindView(R.id.collect_goods)
     TextView collectGoods;
+    @BindView(R.id.del_goods)
     TextView delGoods;
+    @BindView(R.id.share_info)
     LinearLayout shareInfo;
+    @BindView(R.id.ll_cart)
     LinearLayout llCart;
-    private XRefreshView xRefreshView;
+    @BindView(R.id.xrefreshview)
+    XRefreshView xRefreshView;
     private int mTotalItemCount;
-
+    @BindView(R.id.shoppingcat_num)
     TextView shoppingcatNum;
+    @BindView(R.id.actionBar_edit)
     Button actionBarEdit;
+    @BindView(R.id.layout_empty_shopcart)
     LinearLayout empty_shopcart;
     private Context mcontext;
     private double mtotalPrice = 0.00;
@@ -84,14 +97,18 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
         return new ShopCarFragment();
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.shopcar_fragment, container, false);
-        return mRootView;
+    protected int getLayoutResource() {
+        return R.layout.shopcar_fragment;
     }
 
-    public View getRootView() {
-        return mRootView;
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void onFragmentVisibleChange(boolean isVisible) {
+
     }
 
     @Override
@@ -113,28 +130,6 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void iniView(){
-        left_back= (LinearLayout) mRootView.findViewById(R.id.left_back);
-        left_back.setOnClickListener(this);
-        xRefreshView= (XRefreshView) mRootView.findViewById(R.id.xrefreshview);
-        llCart= (LinearLayout) mRootView.findViewById(R.id.ll_cart);
-        listView= (ExpandableListView) mRootView.findViewById(R.id.listView);
-        allCheckBox= (CheckBox) mRootView.findViewById(R.id.all_checkBox);
-        allCheckBox.setOnClickListener(this);
-        totalPrice= (TextView) mRootView.findViewById(R.id.total_price);
-        goPay= (TextView) mRootView.findViewById(R.id.go_pay);
-        goPay.setOnClickListener(this);
-        orderInfo= (LinearLayout) mRootView.findViewById(R.id.order_info);
-        shareGoods= (TextView) mRootView.findViewById(R.id.share_goods);
-        shareGoods.setOnClickListener(this);
-        collectGoods= (TextView) mRootView.findViewById(R.id.collect_goods);
-        collectGoods.setOnClickListener(this);
-        delGoods= (TextView) mRootView.findViewById(R.id.del_goods);
-        delGoods.setOnClickListener(this);
-        shareInfo= (LinearLayout) mRootView.findViewById(R.id.share_info);
-        shoppingcatNum = (TextView) mRootView.findViewById(R.id.shoppingcat_num);
-        actionBarEdit = (Button) mRootView.findViewById(R.id.actionBar_edit);
-        //不知道为什么，ButterKnife不知道BindView
-        empty_shopcart = (LinearLayout) mRootView.findViewById(R.id.layout_empty_shopcart);
     }
     private void initEvents() {
         xRefreshView.setPullLoadEnable(false);
@@ -166,7 +161,6 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
         });
         xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
 
-        actionBarEdit.setOnClickListener(this);
         adapter = new ShopcatAdapter(groups, childs, mcontext);
         adapter.setCheckInterface(this);//关键步骤1：设置复选框的接口
         adapter.setModifyCountInterface(this); //关键步骤2:设置增删减的接口
@@ -405,7 +399,8 @@ public class ShopCarFragment extends BaseFragment implements View.OnClickListene
     public void groupEditor(int groupPosition) {
 
     }
-
+    @OnClick({R.id.left_back,R.id.all_checkBox,R.id.go_pay,R.id.share_goods,R.id.collect_goods,
+            R.id.del_goods,R.id.actionBar_edit})
     public void onClick(View view) {
         AlertDialog dialog;
         switch (view.getId()) {

@@ -3,11 +3,11 @@ package com.base.middleBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.base.view.NoPreloadViewPager;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 
@@ -19,13 +19,13 @@ import java.util.List;
  * @description: 顶部页签根节点
  * @date 2017/6/23  11:02
  */
-public class MiddleBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class MiddleBarLayout extends LinearLayout implements NoPreloadViewPager.OnPageChangeListener {
 
     private static final String STATE_INSTANCE = "instance_state";
     private static final String STATE_ITEM = "state_item";
 
 
-    private ViewPager mViewPager;
+    private NoPreloadViewPager mViewPager;
     private int mChildCount;//子条目个数
     private List<MiddleBarItem> mItemViews = new ArrayList<>();
     private int mCurrentItem;//当前条目的索引
@@ -67,7 +67,7 @@ public class MiddleBarLayout extends LinearLayout implements ViewPager.OnPageCha
         super.setOrientation(orientation);
     }
 
-    public void setViewPager(ViewPager mViewPager) {
+    public void setViewPager(NoPreloadViewPager mViewPager) {
         this.mViewPager = mViewPager;
         init();
     }

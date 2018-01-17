@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
+import com.base.applicationUtil.MyApplication;
 import com.base.webview.jsbridge.utils.WebViewJavaScriptFunction;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
@@ -107,8 +108,11 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
     }
 
     private void init(Context context) {
-        this.setVerticalScrollBarEnabled(false);
-        this.setHorizontalScrollBarEnabled(false);
+        //android:scrollbars="none"   隐藏滚动条
+        this.setHorizontalScrollBarEnabled(false);//水平不显示
+        this.setVerticalScrollBarEnabled(false); //垂直不显示
+        this.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
+        this.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
         this.getSettings().setJavaScriptEnabled(true);
         this.getSettings().setUseWideViewPort(true);//设置此属性，可任意比例缩放
         this.getSettings().setLoadWithOverviewMode(true);
@@ -122,18 +126,10 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         //this.getSettings().setAppCacheMaxSize(Long.MAX_VALUE);
         this.getSettings().setAllowFileAccess(true);
         this.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        this.getSettings().setAppCachePath(context.getApplicationContext().getDir("appcache", 0).getPath());
-        this.getSettings().setDatabasePath(context.getApplicationContext().getDir("databases", 0).getPath());
-        this.getSettings().setGeolocationDatabasePath(context.getApplicationContext().getDir("database", Context.MODE_PRIVATE)
+        this.getSettings().setAppCachePath(MyApplication.getMyApp().getDir("appcache", 0).getPath());
+        this.getSettings().setDatabasePath(MyApplication.getMyApp().getDir("databases", 0).getPath());
+        this.getSettings().setGeolocationDatabasePath(MyApplication.getMyApp().getDir("geolocation", 0)
                 .getPath());
-        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
-//		String dbPath =context.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-//		this.getSettings().setDatabasePath(dbPath);
-//		// 应用可以有缓存
-//		this.getSettings().setAppCacheEnabled(true);
-//		String appCaceDir =context.getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath();
-//		this.getSettings().setAppCachePath(appCaceDir);
-
         this.getSettings().setPluginState(WebSettings.PluginState.ON_DEMAND);
         this.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         this.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
@@ -164,7 +160,15 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
     protected BridgeTBSWebViewClient generateBridgeWebViewClient(Context context) {
         return new BridgeTBSWebViewClient(this, context);
     }
-
+    /**
+     * 设置视图是否可见
+     * @param visible
+     */
+    public void setVisible(boolean visible) {
+        if (bridgeWebViewClient != null) {
+            bridgeWebViewClient.setVisible(visible);
+        }
+    }
     public void setWebViewClientCallBack(BridgeTBSWebViewClient.
                                                  TBSWebViewClientCallBack webViewClientCallBack) {
         if (bridgeWebViewClient != null) {

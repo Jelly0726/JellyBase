@@ -2,7 +2,6 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +19,7 @@ import com.base.multiClick.AntiShake;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
+import com.base.view.NoPreloadViewPager;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
@@ -57,7 +57,7 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     @BindView(R.id.buy_immediately)
     TextView buy_immediately;
     @BindView(R.id.vp_content)
-    ViewPager mVpContent;
+    NoPreloadViewPager mVpContent;
     @BindView(R.id.bbl)
     MiddleBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
