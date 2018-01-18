@@ -2,27 +2,37 @@ package com.jelly.jellybase.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
+import com.jelly.jellybase.R;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
 public class OrderFragment extends BaseFragment{
-
+    private Unbinder mUnbinder;
     @Override
-    protected int getLayoutResource() {
-        return 0;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(R.layout.loca_fragment, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
-    protected void initView() {
+    public void onFragmentVisibleChange(boolean isVisible) {
 
     }
 
     @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
+    public void onFragmentFirstVisible() {
 
     }
 
@@ -62,5 +72,6 @@ public class OrderFragment extends BaseFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

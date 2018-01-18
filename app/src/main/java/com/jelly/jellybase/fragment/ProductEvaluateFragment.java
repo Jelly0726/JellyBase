@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
@@ -18,12 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/9/21.
  */
 
 public class ProductEvaluateFragment extends BaseFragment {
+    private Unbinder mUnbinder;
     @BindView(R.id.recycler_view_test_rv)
     RecyclerView recyclerView;
     @BindView(R.id.xrefreshview)
@@ -33,19 +39,27 @@ public class ProductEvaluateFragment extends BaseFragment {
     private List<Product> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.product_evaluate_fragment;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(R.layout.product_evaluate_fragment, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
-    protected void initView() {
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
+    @Override
+    public void onFragmentVisibleChange(boolean isVisible) {
 
     }
 
     @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
+    public void onFragmentFirstVisible() {
 
     }
 

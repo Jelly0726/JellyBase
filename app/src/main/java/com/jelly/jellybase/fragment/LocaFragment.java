@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.view.BaseFragment;
@@ -19,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import systemdb.PositionEntity;
 
 /**
@@ -26,6 +31,7 @@ import systemdb.PositionEntity;
  */
 
 public class LocaFragment extends BaseFragment {
+    private Unbinder mUnbinder;
     private PositionEntity entity;
 
     @BindView(R.id.recycler_view_test_rv)
@@ -37,25 +43,28 @@ public class LocaFragment extends BaseFragment {
     private List<AccountDetail> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.loca_fragment;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(R.layout.loca_fragment, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
-    protected void initView() {
+    public void onFragmentVisibleChange(boolean isVisible) {
 
     }
 
     @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
+    public void onFragmentFirstVisible() {
 
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {

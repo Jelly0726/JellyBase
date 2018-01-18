@@ -2,7 +2,9 @@ package com.jelly.jellybase.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -14,6 +16,8 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
@@ -21,20 +25,54 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  */
 
 public class ProductDetailsFragment extends BaseFragment {
+    private Unbinder mUnbinder;
     @BindView(R.id.product_parameter)
     TextView product_parameter;
     @BindView(R.id.custom_view)
     XRefreshView xRefreshView;
     @BindView(R.id.xscrollview)
     XScrollView scrollView;
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.product_details_fragment;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(R.layout.product_details_fragment, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
-    protected void initView() {
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
+
+    @Override
+    public void onFragmentVisibleChange(boolean isVisible) {
+
+    }
+
+    @Override
+    public void onFragmentFirstVisible() {
+
+    }
+
+    @Override
+    public void setData(String json) {
+
+
+    }
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+
+    }
+    private void initView() {
         product_parameter.setOnClickListener(listener);
         scrollView.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
@@ -53,27 +91,6 @@ public class ProductDetailsFragment extends BaseFragment {
 //		outView.setSilenceLoadMore();
         xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
         //xRefreshView.setCustomFooterView(new CustomerFooter(this.getActivity()));
-    }
-
-    @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
-
-    }
-
-    @Override
-    public void setData(String json) {
-
-
-    }
-    @Override
-    public boolean onBackPressed() {
-        return false;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override

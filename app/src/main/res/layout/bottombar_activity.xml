@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg">
-    <com.base.view.NoPreloadViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="45dp"
-        ></com.base.view.NoPreloadViewPager>
+        ></android.support.v4.view.ViewPager>
 
     <com.base.bottomBar.BottomBarLayout
         android:id="@+id/bbl"

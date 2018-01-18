@@ -99,11 +99,11 @@
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
     </com.base.middleBar.MiddleBarLayout>
-    <com.base.view.NoPreloadViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="1px"
-        ></com.base.view.NoPreloadViewPager>
+        ></android.support.v4.view.ViewPager>
 </LinearLayout>

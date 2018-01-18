@@ -1,8 +1,9 @@
-package com.base.bottomBar;
+package com.base.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,5 +31,14 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mFragmentList.size();
+    }
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        Fragment fragment =mFragmentList.get(position);
+        if (fragment instanceof BaseFragment){
+            BaseFragment baseFragment= (BaseFragment) mFragmentList.get(position);
+            if (!baseFragment.isReuseView())
+                super.destroyItem(container, position, object);
+        }else super.destroyItem(container, position, object);
     }
 }

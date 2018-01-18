@@ -4,17 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.addressmodel.Address;
 import com.base.applicationUtil.MyApplication;
-import com.base.middleBar.FragmentAdapter;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
-import com.base.view.NoPreloadViewPager;
+import com.base.view.FragmentAdapter;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BottomBarActivity;
@@ -24,7 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import systemdb.PositionEntity;
 
 
@@ -33,6 +37,7 @@ import systemdb.PositionEntity;
  */
 
 public class MiddleFragment extends BaseFragment{
+    private Unbinder mUnbinder;
     private static final int areaRresultCode=0;
     private PositionEntity entity;
     private Address address;
@@ -41,35 +46,38 @@ public class MiddleFragment extends BaseFragment{
     @BindView(R.id.changeAddress_tv)
     TextView changeAddress_tv;
     @BindView(R.id.vp_content)
-    NoPreloadViewPager mVpContent;
+    ViewPager mVpContent;
     @BindView(R.id.bbl)
     MiddleBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
-
     @Override
-    protected int getLayoutResource() {
-        return R.layout.location_fragment;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView == null)
+            rootView = inflater.inflate(R.layout.location_fragment, container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
-    protected void initView() {
+    public void onFragmentVisibleChange(boolean isVisible) {
 
     }
 
     @Override
-    protected void onFragmentVisibleChange(boolean isVisible) {
+    public void onFragmentFirstVisible() {
 
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {
         entity=new Gson().fromJson(json,PositionEntity.class);
-        if (getActivity()!=null&&isFragmentVisible)
+        if (getActivity()!=null&&isFragmentVisible())
             iniData();
     }
     @Override

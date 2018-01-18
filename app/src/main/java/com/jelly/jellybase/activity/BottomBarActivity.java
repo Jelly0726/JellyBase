@@ -5,20 +5,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 
 import com.base.addressmodel.Address;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
-import com.base.bottomBar.FragmentAdapter;
+import com.base.view.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
-import com.base.view.NoPreloadViewPager;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
@@ -44,7 +44,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 public class BottomBarActivity extends BaseActivity implements BackInterface {
     private static final int areaRresultCode=0;
     private final int zxingRequestCode=1;
-    private NoPreloadViewPager mVpContent;
+    private ViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
 
@@ -109,7 +109,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         }
     }
     private void initView() {
-        mVpContent = (NoPreloadViewPager) findViewById(R.id.vp_content);
+        mVpContent = (ViewPager) findViewById(R.id.vp_content);
         mBottomBarLayout = (BottomBarLayout) findViewById(R.id.bbl);
     }
 
