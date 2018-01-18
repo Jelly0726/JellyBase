@@ -6,19 +6,20 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 
 import com.base.addressmodel.Address;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
-import com.base.view.FragmentAdapter;
 import com.base.config.IntentAction;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
+import com.base.view.FragmentAdapter;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
@@ -230,9 +231,9 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     public void setSelectedFragment(BaseFragment selectedFragment) {
         this.mBaseFragment = selectedFragment;
     }
-
     @Override
     public void onBackPressed() {
+        BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(mBottomBarLayout.getCurrentItem());
         if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
             if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                 super.onBackPressed();
@@ -240,5 +241,28 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
                 getSupportFragmentManager().popBackStack();
             }
         }
+    }
+    //go back
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        try {
+            // Check if the key event was the Back button and if there's history
+            if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+                BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(mBottomBarLayout.getCurrentItem());
+                if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
+                    if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+                        super.onBackPressed();
+                    }else{
+                        getSupportFragmentManager().popBackStack();
+                    }
+                    return super.onKeyDown(keyCode, event);
+
+                } else  return true;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

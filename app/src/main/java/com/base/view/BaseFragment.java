@@ -83,6 +83,7 @@ public abstract class BaseFragment extends Fragment{
         isFirstVisible = true;
         isFragmentVisible = false;
         isReuseView = true;
+        rootView=null;
     }
 
     /**
@@ -139,7 +140,7 @@ public abstract class BaseFragment extends Fragment{
             }
         }
         Log.i("SSSS","onViewCreated====="+this+"  rootView="+rootView);
-        super.onViewCreated(isReuseView ? rootView : view, savedInstanceState);
+        super.onViewCreated(isReuseView && rootView != null ? rootView : view, savedInstanceState);
     }
 
     @android.support.annotation.Nullable
