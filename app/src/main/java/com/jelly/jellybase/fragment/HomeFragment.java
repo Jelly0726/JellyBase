@@ -32,7 +32,10 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
-
+        if (isVisible) {
+            webView.setVisible(isVisible);
+            webView.loadUrl("https://www.baidu.com");
+        }
     }
 
     @Override
@@ -63,6 +66,7 @@ public class HomeFragment extends BaseFragment {
         iniData();
     }
     private void iniData(){
+        webView.setVisible(getUserVisibleHint());
         webView.loadUrl("https://www.baidu.com");
     }
 }
