@@ -165,6 +165,9 @@
         <activity android:name=".userInfo.SetPWDActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
         </activity>
+        <activity android:name=".userInfo.PersonalInforActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden">
+        </activity>
         <activity
             android:name="com.base.bgabanner.GuideActivity"
             android:screenOrientation="portrait">

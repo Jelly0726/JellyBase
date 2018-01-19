@@ -12,6 +12,7 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
+import com.base.httpmvp.databean.PersonalInfo;
 import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.function.HttpFunctions;
@@ -313,6 +314,25 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void updatePhone(Object paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).updatePhone(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpFunctions<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 获取个人资料
+	 * @param subscriber
+	 */
+	public void findBuyerInfo(ObservableTransformer composer,Observer<HttpResultData<PersonalInfo>> subscriber){
+		Observable observable =  getProxy(IApiService.class).findBuyerInfo(GlobalToken.getToken().getToken())
+				.flatMap(new HttpFunctions<HttpResultData<PersonalInfo>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 完善个人资料
+	 * @param subscriber
+	 */
+	public void updateBuyerInfo(Object paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).updateBuyerInfo(GlobalToken.getToken().getToken(),
+				paramMap)
 				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}

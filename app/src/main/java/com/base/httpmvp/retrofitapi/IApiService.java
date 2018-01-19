@@ -5,6 +5,7 @@ import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
+import com.base.httpmvp.databean.PersonalInfo;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.jelly.jellybase.datamodel.RecevierAddress;
@@ -59,6 +60,13 @@ public interface IApiService {
 	//检查版本
 	@POST("JFF/appuser/getAppversionList.doAdminJJ")
 	Observable<HttpResultData<AppVersion>> getAppversionList(@Header("token") String token);
+	//获取个人资料
+	@POST("zhongbo/user/getMeuserList.doAdminJJ")
+	Observable<HttpResultData<PersonalInfo>> findBuyerInfo(@Header("Authorization") String token);
+	//完善个人资料
+	@POST("zhongbo/user/operateMeuser.doAdminJJ")
+	Observable<HttpResult> updateBuyerInfo(@Header("Authorization") String token,
+										   @Query("data") Object jsonObject);
 
 	//获取所属银行
 	@POST("SLD/buyersInfo/getBankLogo.doAdminJJ")
