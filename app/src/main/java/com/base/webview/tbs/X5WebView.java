@@ -188,7 +188,6 @@ public class X5WebView extends WebView {
 		if (progressDialog != null) {
 			progressDialog.dismiss();
 		}
-		progressDialog=null;
 		super.onDetachedFromWindow();
 	}
 	@SuppressLint("SetJavaScriptEnabled")

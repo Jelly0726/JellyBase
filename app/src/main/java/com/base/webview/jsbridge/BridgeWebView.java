@@ -223,7 +223,6 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         if (bridgeWebViewClient != null) {
             bridgeWebViewClient.progressDialogDismiss();
         }
-        bridgeWebViewClient=null;
         super.onDetachedFromWindow();
     }
     protected BridgeWebViewClient generateBridgeWebViewClient(Context context) {

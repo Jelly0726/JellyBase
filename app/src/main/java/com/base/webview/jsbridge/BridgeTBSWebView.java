@@ -502,7 +502,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         if (bridgeWebViewClient != null) {
             bridgeWebViewClient.progressDialogDismiss();
         }
-        bridgeWebViewClient=null;
         super.onDetachedFromWindow();
     }
     public void loadUrl(String jsUrl, CallBackFunction returnCallback) {
