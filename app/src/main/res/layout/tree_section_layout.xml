@@ -25,15 +25,15 @@
             android:text="垃圾"
             android:textColor="@android:color/black"
             android:textSize="14sp" />
-        <Button
-            android:id="@+id/toggle_button_section"
+        <CheckBox
+            android:id="@+id/toggle_section"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/tree_selector_section_toggle"
+            android:button="@null"
+            android:background="@drawable/tree_section_toggle"
             android:contentDescription="Change state of section"
             android:padding="7dp"
-            android:textOff=""
-            android:textOn="" />
+         />
 
         <TextView
             android:id="@+id/section_size"

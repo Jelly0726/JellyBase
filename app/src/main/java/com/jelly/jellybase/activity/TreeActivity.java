@@ -36,9 +36,9 @@ public class TreeActivity extends AppCompatActivity {
     public void findView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
         mHelper = new SectionExpandHelper(TreeActivity.this, mRecyclerView, new IMultipleItem() {
-            private static final int VIEW_TYPE_ITEM = R.layout.tree_two_layout;
+            private static final int VIEW_TYPE_TWO = R.layout.tree_two_layout;
             private static final int VIEW_TYPE_SECTION = R.layout.tree_section_layout;
-            private static final int VIEW_TYPE_APK = R.layout.tree_three_layout;
+            private static final int VIEW_TYPE_THREE = R.layout.tree_three_layout;
 
             @Override
             public int getItemLayout(BaseItem baseItem) {
@@ -46,9 +46,9 @@ public class TreeActivity extends AppCompatActivity {
                 if (baseItem instanceof Section)
                     layoutId = VIEW_TYPE_SECTION;
                 else if (baseItem instanceof Item)
-                    layoutId = VIEW_TYPE_ITEM;
+                    layoutId = VIEW_TYPE_TWO;
                 else if (baseItem instanceof GrandSon)
-                    layoutId = VIEW_TYPE_APK;
+                    layoutId = VIEW_TYPE_THREE;
                 return layoutId;
             }
 
@@ -58,10 +58,10 @@ public class TreeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void bindData(ViewHolder holder, int position, final BaseItem item) {
+            public void bindData(final ViewHolder holder, int position, final BaseItem item) {
                 CheckBox checkBox = null;
                 switch (getItemLayout(item)) {
-                    case VIEW_TYPE_APK:
+                    case VIEW_TYPE_THREE:
                         holder.setText(R.id.appName, item.getName());
                         holder.setViewOnclick(R.id.apkIcon, new View.OnClickListener() {
                             @Override
@@ -82,8 +82,17 @@ public class TreeActivity extends AppCompatActivity {
                         });
                         checkBox = holder.getView(R.id.section_checkbox);
                         checkBox.setChecked(item.isChecked());
+
+                        ((CheckBox)holder.getView(R.id.toggle_section))
+                                .setChecked(item.isExpanded());
+                        holder.setViewOnclick(R.id.toggle_section, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mHelper.expandStateChange(item);
+                            }
+                        });
                         break;
-                    case VIEW_TYPE_ITEM:
+                    case VIEW_TYPE_TWO:
                         holder.setText(R.id.text_item, item.getName());
                         checkBox = holder.getView(R.id.item_checkbox);
                         checkBox.setChecked(item.isChecked());
