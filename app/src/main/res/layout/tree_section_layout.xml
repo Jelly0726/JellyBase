@@ -14,17 +14,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/text_section"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
-            android:padding="7dp"
-            android:text="垃圾"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
         <CheckBox
             android:id="@+id/toggle_section"
             android:layout_width="40dp"
@@ -33,7 +22,18 @@
             android:background="@drawable/tree_section_toggle"
             android:contentDescription="Change state of section"
             android:padding="7dp"
-         />
+            />
+        <TextView
+            android:id="@+id/text_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:padding="7dp"
+            android:text="垃圾"
+            android:textColor="@android:color/black"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/section_size"

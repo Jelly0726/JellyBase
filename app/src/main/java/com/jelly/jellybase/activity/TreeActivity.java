@@ -61,17 +61,6 @@ public class TreeActivity extends AppCompatActivity {
             public void bindData(final ViewHolder holder, int position, final BaseItem item) {
                 CheckBox checkBox = null;
                 switch (getItemLayout(item)) {
-                    case VIEW_TYPE_THREE:
-                        holder.setText(R.id.appName, item.getName());
-                        holder.setViewOnclick(R.id.apkIcon, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mHelper.expandStateChange(item);
-                            }
-                        });
-                        checkBox = holder.getView(R.id.apk_checkbox);
-                        checkBox.setChecked(item.isChecked());
-                        break;
                     case VIEW_TYPE_SECTION:
                         holder.setText(R.id.text_section, item.getName());
                         holder.setViewOnclick(R.id.text_section, new View.OnClickListener() {
@@ -102,6 +91,26 @@ public class TreeActivity extends AppCompatActivity {
                                 mHelper.expandStateChange(item);
                             }
                         });
+
+                        ((CheckBox)holder.getView(R.id.toggle_section))
+                                .setChecked(item.isExpanded());
+                        holder.setViewOnclick(R.id.toggle_section, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mHelper.expandStateChange(item);
+                            }
+                        });
+                        break;
+                    case VIEW_TYPE_THREE:
+                        holder.setText(R.id.appName, item.getName());
+                        holder.setViewOnclick(R.id.apkIcon, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mHelper.expandStateChange(item);
+                            }
+                        });
+                        checkBox = holder.getView(R.id.apk_checkbox);
+                        checkBox.setChecked(item.isChecked());
                         break;
                 }
                 if (checkBox != null)
