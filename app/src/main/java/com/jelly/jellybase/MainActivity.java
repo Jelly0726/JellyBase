@@ -44,6 +44,7 @@ import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
+import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
@@ -289,6 +290,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 23://手机通讯录
                     intent=new Intent(MyApplication.getMyApp(), ContactsActivity.class);
+                    startActivity(intent);
+                    break;
+                case 24://多级树形
+                    intent=new Intent(MyApplication.getMyApp(), TreeActivity.class);
                     startActivity(intent);
                     break;
             }
