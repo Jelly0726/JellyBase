@@ -47,6 +47,7 @@ import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
+import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
@@ -294,6 +295,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 24://多级树形
                     intent=new Intent(MyApplication.getMyApp(), TreeActivity.class);
+                    startActivity(intent);
+                    break;
+                case 25://RecyclerView侧滑菜单
+                    intent=new Intent(MyApplication.getMyApp(), XSwipeMainActivity.class);
                     startActivity(intent);
                     break;
             }

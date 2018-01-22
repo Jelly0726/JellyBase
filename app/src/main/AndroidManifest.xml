@@ -315,6 +315,104 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".swipeRefresh.activity.XSwipeMainActivity"
+            android:label="Item中的菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.MenuActivity"
+            android:label="Item中的菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.ListActivity"
+            android:label="List形式菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.GridActivity"
+            android:label="Grid形式菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.ViewTypeActivity"
+            android:label="ViewType菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.VerticalActivity"
+            android:label="竖向排布的菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.menu.DefineActivity"
+            android:label="自定义菜单"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <!-- -->
+        <activity
+            android:name=".swipeRefresh.activity.move.MoveActivity"
+            android:label="Item拖拽和侧滑删除"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.move.DragSwipeListActivity"
+            android:label="ListItem拖拽/侧滑"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.move.DragGridActivity"
+            android:label="GridItem拖拽"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.move.DragTouchListActivity"
+            android:label="触摸即拖拽"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.move.DefineActivity"
+            android:label="自定义拖拽/侧滑"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <!-- -->
+        <activity
+            android:name=".swipeRefresh.activity.header.HeaderViewActivity"
+            android:label="Header和Footer"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <!-- -->
+        <activity
+            android:name=".swipeRefresh.activity.load.RefreshLoadActivity"
+            android:label="刷新和加载更多"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.load.DefaultActivity"
+            android:label="默认LoadMore"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.load.DefineActivity"
+            android:label="自定义LoadMore"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <!-- -->
+        <activity
+            android:name=".swipeRefresh.activity.nested.NestedActivity"
+            android:label="滑动布局嵌套使用"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.nested.CardViewActivity"
+            android:label="CardView"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.nested.DrawerActivity"
+            android:label="DrawerLayout"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.nested.ViewPagerActivity"
+            android:label="ViewPager"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <!-- -->
+        <activity
+            android:name=".swipeRefresh.activity.group.GroupActivity"
+            android:label="Sticky分组效果"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.group.LayoutActivity"
+            android:label="普通布局中Sticky"
+            android:theme="@style/XSwipe_AppTheme"/>
+        <activity
+            android:name=".swipeRefresh.activity.group.MenuActivity"
+            android:label="Item菜单Sticky分组"
+            android:theme="@style/XSwipe_AppTheme"/>
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
         <service
             android:name="com.base.checkVersion.DemoService"

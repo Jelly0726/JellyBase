@@ -253,5 +253,8 @@ dependencies {
     //Android图表视图/图形视图库
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     compile files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
+    //RecyclerView侧滑菜单
+    compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+
     implementation files('libs/zxing-core-3.3.1.jar')
 }

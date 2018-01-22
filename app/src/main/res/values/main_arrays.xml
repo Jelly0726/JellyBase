@@ -26,5 +26,6 @@
         <item>SystemBar一体化，状态栏和导航栏</item>
         <item>手机通讯录</item>
         <item>多级树形</item>
+        <item>RecyclerView侧滑菜单</item>
     </string-array>
 </resources>
