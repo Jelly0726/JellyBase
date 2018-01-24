@@ -3,14 +3,12 @@ package com.jelly.jellybase.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
 import com.base.addressmodel.Address;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.PermissionUtil;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
 import com.base.config.IntentAction;
@@ -155,32 +153,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
     }
-
-
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        PermissionUtil.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
-    }
-    private PermissionUtil.PermissionGrant mPermissionGrant = new PermissionUtil.PermissionGrant() {
-        @Override
-        public void onPermissionGranted(int requestCode) {
-            switch (requestCode) {
-                case PermissionUtil.CODE_ACCESS_COARSE_LOCATION:
-                    if (entity!=null){
-                        //开启定位服务
-                        Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
-                        startService(stateGuardService);
-                    }
-                    break;
-            }
-        }
-    };
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -24,6 +24,7 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
+import com.base.permission.PermissionUtils;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
 import com.base.xrefreshview.XRefreshView;
@@ -61,8 +62,6 @@ import com.yanzhenjie.permission.RationaleListener;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_PERMISSION_MULTI = 101;
-    private static final int REQUEST_CODE_SETTING = 300;
 
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
@@ -86,16 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
         // 申请权限。
         AndPermission.with(MainActivity.this)
-                .requestCode(REQUEST_CODE_PERMISSION_MULTI)
+                .requestCode(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
                 .permission(Permission.MICROPHONE,
                         Permission.STORAGE,
                         Permission.CALENDAR,
                         Permission.CAMERA,
                         Permission.CONTACTS,
                         Permission.LOCATION,
-                        Permission.PHONE,
                         Permission.SENSORS,
                         Permission.SMS)
+                .permission(
+                        android.Manifest.permission.READ_PHONE_STATE,
+                        android.Manifest.permission.CALL_PHONE
+                )
                 .callback(this)
                 // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
                 // 这样避免用户勾选不再提示，导致以后无法申请权限。
@@ -198,25 +200,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
     }
-    /**
-     * Callback received when a permissions request has been completed.
-     */
-//    @Override
-//    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        PermissionUtil.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
-//    }
-//    private PermissionUtil.PermissionGrant mPermissionGrant = new PermissionUtil.PermissionGrant() {
-//        @Override
-//        public void onPermissionGranted(int requestCode) {
-//            switch (requestCode) {
-//                case PermissionUtil.CODE_ACCESS_COARSE_LOCATION:
-//                    break;
-//            }
-//        }
-//    };
     /**
      *申请权限。 Rationale支持，这里自定义对话框。
      */
@@ -242,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
      * 申请权限。
      * @param grantedPermissions
      */
-    @PermissionYes(REQUEST_CODE_PERMISSION_MULTI)
+    @PermissionYes(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
     private void getMultiYes(@NonNull List<String> grantedPermissions) {
         Toast.makeText(this, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
     }
@@ -251,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
      * 申请权限。
      * @param deniedPermissions
      */
-    @PermissionNo(REQUEST_CODE_PERMISSION_MULTI)
+    @PermissionNo(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
     private void getMultiNo(@NonNull List<String> deniedPermissions) {
         Toast.makeText(this, R.string.permission_failure, Toast.LENGTH_SHORT).show();
         if(AndPermission.hasPermission(this,deniedPermissions)) {
@@ -260,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
             // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
             if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
-                AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
+                AndPermission.defaultSettingDialog(this, PermissionUtils.REQUEST_CODE_SETTING)
                         .setTitle(R.string.permission_title_dialog)
                         .setMessage(R.string.message_permission_failed)
                         .setPositiveButton(R.string.permission_ok)
@@ -276,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CODE_SETTING: {
+            case PermissionUtils.REQUEST_CODE_SETTING: {
                 Toast.makeText(this, R.string.message_setting_back, Toast.LENGTH_LONG).show();
                 break;
             }
