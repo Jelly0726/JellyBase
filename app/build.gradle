@@ -252,6 +252,7 @@ dependencies {
     compile files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
     //RecyclerView侧滑菜单
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-
+    //权限申请
+    //compile 'com.yanzhenjie:permission:1.1.2'
     implementation files('libs/zxing-core-3.3.1.jar')
 }
