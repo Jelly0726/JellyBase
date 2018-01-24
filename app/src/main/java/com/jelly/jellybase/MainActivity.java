@@ -12,12 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.PermissionUtil;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
@@ -51,8 +51,19 @@ import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_PERMISSION_MULTI = 101;
+    private static final int REQUEST_CODE_SETTING = 300;
+
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
@@ -72,6 +83,25 @@ public class MainActivity extends AppCompatActivity {
         BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
         //开启保活服务
         CommonStaticUtil.startService(MyApplication.getMyApp());
+
+        // 申请权限。
+        AndPermission.with(MainActivity.this)
+                .requestCode(REQUEST_CODE_PERMISSION_MULTI)
+                .permission(Permission.MICROPHONE,
+                        Permission.STORAGE,
+                        Permission.CALENDAR,
+                        Permission.CAMERA,
+                        Permission.CONTACTS,
+                        Permission.LOCATION,
+                        Permission.PHONE,
+                        Permission.SENSORS,
+                        Permission.SMS)
+                .callback(this)
+                // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
+                // 这样避免用户勾选不再提示，导致以后无法申请权限。
+                // 你也可以不设置。
+                .rationale(rationaleListener)
+                .start();
     }
     private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
         /**
@@ -168,25 +198,90 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
+        //PermissionUtil.requestMultiPermissions(this,mPermissionGrant);
     }
-
-
     /**
      * Callback received when a permissions request has been completed.
      */
-    @Override
-    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        PermissionUtil.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
-    }
-    private PermissionUtil.PermissionGrant mPermissionGrant = new PermissionUtil.PermissionGrant() {
+//    @Override
+//    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        PermissionUtil.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
+//    }
+//    private PermissionUtil.PermissionGrant mPermissionGrant = new PermissionUtil.PermissionGrant() {
+//        @Override
+//        public void onPermissionGranted(int requestCode) {
+//            switch (requestCode) {
+//                case PermissionUtil.CODE_ACCESS_COARSE_LOCATION:
+//                    break;
+//            }
+//        }
+//    };
+    /**
+     *申请权限。 Rationale支持，这里自定义对话框。
+     */
+    private RationaleListener rationaleListener = new RationaleListener() {
         @Override
-        public void onPermissionGranted(int requestCode) {
-            switch (requestCode) {
-            }
+        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
+            // 这里使用自定义对话框，如果不想自定义，用AndPermission默认对话框：
+            //AndPermission.rationaleDialog(Context, Rationale).show();
+            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            AndPermission.rationaleDialog(MainActivity.this, rationale)
+                    .setTitle(R.string.permission_title_dialog)
+                    .setMessage(R.string.message_permission_failed)
+                    .setPositiveButton(R.string.permission_ok)
+                    .setNegativeButton(R.string.permission_no, null)
+                    .show();
+            // 更多自定dialog，请看上面。
+            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
         }
     };
+
+    /**
+     * 申请权限。
+     * @param grantedPermissions
+     */
+    @PermissionYes(REQUEST_CODE_PERMISSION_MULTI)
+    private void getMultiYes(@NonNull List<String> grantedPermissions) {
+        Toast.makeText(this, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 申请权限。
+     * @param deniedPermissions
+     */
+    @PermissionNo(REQUEST_CODE_PERMISSION_MULTI)
+    private void getMultiNo(@NonNull List<String> deniedPermissions) {
+        Toast.makeText(this, R.string.permission_failure, Toast.LENGTH_SHORT).show();
+        if(AndPermission.hasPermission(this,deniedPermissions)) {
+            // TODO 执行拥有权限时的下一步。
+        } else {
+            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
+                AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
+                        .setTitle(R.string.permission_title_dialog)
+                        .setMessage(R.string.message_permission_failed)
+                        .setPositiveButton(R.string.permission_ok)
+                        .setNegativeButton(R.string.permission_no, null)
+                        .show();
+                // 更多自定dialog，请看上面。
+            }
+            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SETTING: {
+                Toast.makeText(this, R.string.message_setting_back, Toast.LENGTH_LONG).show();
+                break;
+            }
+        }
+    }
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){
 
         @Override

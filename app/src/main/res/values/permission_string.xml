@@ -34,4 +34,35 @@
     <string name="permission_read_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_READ_EXTERNAL_STORAGE</string>
     <string name="permission_white_external_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_WRITE_EXTERNAL_STORAGE</string>
     <string name="permission_recode_audio_hint">没有此权限，无法开启这个功能，请开启权限。PERMISSION_RECORD_AUDIO</string>
+
+
+
+    <string name="permission_ok">OK</string>
+    <string name="permission_no">NO</string>
+
+    <string name="permission_calendar">Calendar</string>
+    <string name="permission_calendar_storage">Microphone, Storage</string>
+
+    <string name="permission_camera">Camera</string>
+    <string name="permission_contact_sms">Contact, SMS</string>
+
+    <string name="permission_phone">Phone State, Location</string>
+    <string name="describe_anywhere">Where the permission application is not in the Activity/Fragment call, but commissioned a class to call.</string>
+
+    <string name="permission_sensors">Sensors</string>
+    <string name="describe_rationale">Please first deny a permission, and then apply again when you can see the rationale effect.</string>
+
+    <string name="title_annotation_request">Annotation callback result</string>
+    <string name="title_listener_request">Listener callback result</string>
+    <string name="title_other_request">Request Anywhere</string>
+    <string name="title_rationale_request">Rationale before request</string>
+
+    <string name="message_setting_back">The user came back from the settings</string>
+
+    <string name="permission_successfully">Successful</string>
+    <string name="permission_failure">Failure</string>
+
+    <string name="permission_title_dialog">Tips</string>
+    <string name="message_permission_failed">We need some of the necessary authority to be prohibited, please authorize us.</string>
+
 </resources>

@@ -352,5 +352,10 @@ public class TTSController implements MyNaviListener {
 
 	}
 
+	@Override
+	public void onStopNavi() {
+
+	}
+
 
 }
