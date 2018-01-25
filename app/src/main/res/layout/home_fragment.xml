@@ -11,11 +11,11 @@
         android:layout_height="wrap_content"
         android:background="@color/navi_color"/>
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
-    <com.base.webview.jsbridge.BridgeTBSWebView
+    <com.base.webview.jsbridge.tbs.BridgeTBSWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-    </com.base.webview.jsbridge.BridgeTBSWebView>
+    </com.base.webview.jsbridge.tbs.BridgeTBSWebView>
 </LinearLayout>

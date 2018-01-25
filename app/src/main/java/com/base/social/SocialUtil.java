@@ -1,5 +1,7 @@
 package com.base.social;
 
+import com.base.config.BaseConfig;
+
 import net.arvin.socialhelper.SocialHelper;
 
 /**
@@ -12,11 +14,11 @@ public class SocialUtil {
 
     private SocialUtil() {
         socialHelper = new SocialHelper.Builder()
-                .setQqAppId("qqAppId")
-                .setWxAppId("wxAppId")
-                .setWxAppSecret("wxAppSecret")
-                .setWbAppId("wbAppId")
-                .setWbRedirectUrl("wbRedirectUrl")
+                .setQqAppId(BaseConfig.QQ_APP_ID)
+                .setWxAppId(BaseConfig.WechatPay_APP_ID)
+                .setWxAppSecret(BaseConfig.WechatPay_APP_SECRET)
+                .setWbAppId(BaseConfig.WB_APP_ID)
+                .setWbRedirectUrl(BaseConfig.WB_REDIRECT_URL)
                 .build();
     }
 

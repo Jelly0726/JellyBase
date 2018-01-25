@@ -445,6 +445,11 @@
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信支付回调↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓微信登录回调↓↓↓↓↓↓↓-->
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+        <!--↑↑↑↑↑↑↑↑微信登录回调↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
         <activity
             android:name="com.base.screenCapture.ScreenShotActivity"

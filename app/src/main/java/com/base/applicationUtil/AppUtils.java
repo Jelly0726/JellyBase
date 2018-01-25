@@ -51,10 +51,7 @@ import android.widget.Toast;
 import com.base.config.BaseConfig;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -89,45 +86,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AppUtils {
-    public static String Accessibility="com.android.settings.AccessibilitySettings"; //辅助功能设置
-    public static String ActivityPicker="com.android.settings.ActivityPicker"; //选择活动
-    public static String Apn="com.android.settings.ApnSettings"; //APN设置
-    public static String Application="com.android.settings.ApplicationSettings"; //应用程序设置
-    public static String BandMode="com.android.settings.BandMode"; //设置GSM/UMTS波段
-    public static String BatteryInfo="com.android.settings.BatteryInfo"; //电池信息
-    //public static String DATE_TIME="com.android.settings.DateTimeSettings"; //日期和坝上旅游网时间设置
-    public static String DateTime="com.android.settings.DateTimeSettingsSetupWizard"; //日期和时间设置
-    public static String Development="com.android.settings.DevelopmentSettings"; //应用程序设置=》开发设置
-    public static String DeviceAdmin="com.android.settings.DeviceAdminSettings"; //设备管理器
-    public static String DeviceInfo="com.android.settings.DeviceInfoSettings"; //关于手机
-    //public static String Display="com.android.settings.Display"; //显示——设置显示字体大小及预览
-    public static String Display="com.android.settings.DisplaySettings"; //显示设置
-    public static String Dock="com.android.settings.DockSettings"; //底座设置
-    public static String IccLock="com.android.settings.IccLockSettings"; //SIM卡锁定设置
-    public static String InstalledAppDetails="com.android.settings.InstalledAppDetails"; //语言和键盘设置
-    public static String Language="com.android.settings.LanguageSettings"; //语言和键盘设置
-    //public static String LocalePicker="com.android.settings.LocalePicker"; //选择手机语言
-    public static String LocalePicker="com.android.settings.LocalePickerInSetupWizard"; //选择手机语言
-    public static String ManageApplications="com.android.settings.ManageApplications"; //已下载（安装）软件列表
-    public static String MasterClear="com.android.settings.MasterClear"; //恢复出厂设置
-    public static String MediaFormat="com.android.settings.MediaFormat"; //格式化手机闪存
-    public static String PhysicalKeyboard="com.android.settings.PhysicalKeyboardSettings"; //设置键盘
-    public static String Privacy="com.android.settings.PrivacySettings"; //隐私设置
-    public static String ProxySelector="com.android.settings.ProxySelector"; //代理设置
-    public static String RadioInfo="com.android.settings.RadioInfo"; //手机信息
-    public static String RunningServices="com.android.settings.RunningServices"; //正在运行的程序（服务）
-    public static String Security="com.android.settings.SecuritySettings"; //位置和安全设置
-    //public static String Location="com.android.settings.LocationAccessSettings"; //位置
-    public static String Settings="com.android.settings.Settings"; //系统设置
-    public static String SafetyLegal="com.android.settings.SettingsSafetyLegalActivity"; //安全信息
-    public static String Sound="com.android.settings.SoundSettings"; //声音设置
-    public static String Testing="com.android.settings.TestingSettings"; //测试——显示手机信息、电池信息、使用情况统计、Wifi information、服务信息
-    public static String Tether="com.android.settings.TetherSettings"; //绑定与便携式热点
-    public static String TextToSpeech="com.android.settings.TextToSpeechSettings"; //文字转语音设置
-    public static String UsageStats="com.android.settings.UsageStats"; //使用情况统计
-    public static String UserDictionary="com.android.settings.UserDictionarySettings"; //用户词典
-    public static String VoiceInputOutput="com.android.settings.VoiceInputOutputSettings"; //语音输入与输出设置
-    public static String Wireless="com.android.settings.WirelessSettings"; //无线和网络设置
     //保证该类不能被实例化
     private AppUtils() {
 
@@ -415,69 +373,6 @@ public class AppUtils {
                 break;
         }
     }
-
-    /**
-     * 判断是否具有某权限
-     * @param context  上下文
-     * @param mission  权限名
-     * @param packageName  应用包名
-     * @return
-     */
-    public static boolean isPermission(Context context, String mission, String packageName){
-        PackageManager pm = context.getPackageManager();
-        boolean permission = (PackageManager.PERMISSION_GRANTED ==
-                pm.checkPermission(mission,packageName));
-        return permission;
-    }
-
-    /**
-     * 获取清单文件里的权限
-     * @param context  上下文
-     * @param packageName  应用包名
-     * @return       返回清单权限数组
-     */
-    public static String[] getManifestPermission(Context context, String packageName){
-        String[] permissionStrings=null;
-        try {
-            PackageManager pm = context.getPackageManager();
-            PackageInfo pack = pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
-            permissionStrings = pack.requestedPermissions;
-            return permissionStrings;
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return permissionStrings;
-    }
-
-    /**
-     * 判断清单文件里的权限是否授权
-     * @param context
-     * @param packageName
-     * @return
-     */
-    public static String isManifestPermission(Context context,
-                                              String packageName){
-        String[] permission=getManifestPermission(context,packageName);
-        for(int i=0;i<permission.length;i++){
-            if(!isPermission(context,permission[i],packageName)){
-                // Log.i("WF","permission[i]="+permission[i]);
-                if(permission[i].equals("android.permission.ACCESS_COARSE_LOCATION")||
-                        permission[i].equals("android.permission.ACCESS_FINE_LOCATION")||
-                        permission[i].equals("android.permission.ACCESS_LOCATION_EXTRA_COMMANDS")){
-                    return "定位权限被限制，请去安全软件的权限管理里打开";
-                }
-                if(permission[i].equals("android.permission.ACCESS_WIFI_STATE")||
-                        permission[i].equals("android.permission.ACCESS_NETWORK_STATE")||
-                        permission[i].equals("android.permission.CHANGE_WIFI_STATE")||
-                        permission[i].equals("android.permission.INTERNET")){
-                    return "网络权限被限制，请去安全软件的权限管理里打开";
-                }
-            }
-
-        }
-
-        return null;
-    }
     /**
      * 判断邮箱是否合法
      * @param email
@@ -579,64 +474,6 @@ public class AppUtils {
             }
         }, new IntentFilter("SENT_SMS_ACTION"));
     }
-
-    /**
-     * Umeng集成测试
-     * @param context
-     * @return
-     */
-    public static String getDeviceInfo(Context context) {
-        try{
-            JSONObject json = new JSONObject();
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            String device_id = tm.getDeviceId();
-            WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            String mac = wifi.getConnectionInfo().getMacAddress();
-            json.put("mac", mac);
-
-            if( TextUtils.isEmpty(device_id) ){
-                device_id = mac;
-            }
-
-            if( TextUtils.isEmpty(device_id) ){
-                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
-            }
-            json.put("device_id", device_id);
-
-            return json.toString();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Dialog
-     * @param context
-     * @param iconId
-     * @param title
-     * @param message
-     * @param positiveBtnName
-     * @param negativeBtnName
-     * @param positiveBtnListener
-     * @param negativeBtnListener
-     * @return
-     */
-    public static Dialog createConfirmDialog(Context context, int iconId, String title, String message,
-                                             String positiveBtnName, String negativeBtnName,
-                                             android.content.DialogInterface.OnClickListener positiveBtnListener,
-                                             android.content.DialogInterface.OnClickListener negativeBtnListener){
-        Dialog dialog = null;
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setIcon(iconId);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton(positiveBtnName, positiveBtnListener);
-        builder.setNegativeButton(negativeBtnName, negativeBtnListener);
-        dialog = builder.create();
-        return dialog;
-    }
-
     /**
      * 获取屏幕的宽
      * @param context

@@ -10,20 +10,18 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import com.base.social.SocialUtil;
+import com.base.config.BaseConfig;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.weixinpay.PayUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 
-/**
+/**微信支付回调
  * Created by BYPC006 on 2016/8/24.
  */
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
@@ -37,7 +35,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 		setContentView(R.layout.weixinpay_activity);
 
 		initView();
-		mApi = WXAPIFactory.createWXAPI(this, PayUtil.WeiXinPay_APP_ID);
+		mApi = WXAPIFactory.createWXAPI(this, BaseConfig.WechatPay_APP_ID);
 		mApi.handleIntent(getIntent(), this);
 	}
 
@@ -56,21 +54,12 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
 	@Override
 	public void onReq(BaseReq baseReq) {
-		switch (baseReq.getType()) {
-			case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
-				goToGetMsg();
-				break;
-			case ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX:
-				goToShowMsg((ShowMessageFromWX.Req) baseReq);
-				break;
-			default:
-				break;
-		}
 	}
 
 	@Override
 	public void onResp(final BaseResp baseResp) {
 		int result = 0;
+		Log.i("WXEntryActivity", "baseResp.getType()="+baseResp.getType());
 		if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX){
 			AlertDialog dialog = new AlertDialog.Builder(this)
 					.setTitle(R.string.wx_pay_notify)
@@ -106,35 +95,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 			}
 			dialog.setMessage(getResources().getString(result));
 			dialog.show();
-		}else {
-			//登录
-			Log.d("WXEntryActivity", baseResp.errCode + baseResp.errStr);
-			if (baseResp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {
-				if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
-					String code = ((SendAuth.Resp) baseResp).code;
-					SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, code);
-				} else {
-					SocialUtil.getInstance().socialHelper().sendAuthBackBroadcast(this, null);
-				}
-			} else if (baseResp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {
-				if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
-					SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, true);
-				} else {
-					SocialUtil.getInstance().socialHelper().sendShareBackBroadcast(this, false);
-				}
-			}
-			onBackPressed();
 		}
 	}
-
-	private void goToGetMsg() {;
-		finish();
-	}
-
-	private void goToShowMsg(ShowMessageFromWX.Req showReq) {
-		finish();
-	}
-
 	private View.OnClickListener mListener = new View.OnClickListener() {
 		@Override
 		public void onClick(View view) {

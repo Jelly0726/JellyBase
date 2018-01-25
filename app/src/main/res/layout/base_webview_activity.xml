@@ -2,8 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/main_bg">
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.yanzhenjie.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navi_color"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
+    <LinearLayout
+        android:id="@+id/topNav_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1px"
+        android:background="@color/navi_color">
+        <LinearLayout
+            android:id="@+id/left_back"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_back"/>
+        </LinearLayout>
 
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="30px"
+            android:text=""
+            android:textColor="#313131"/>
+        <LinearLayout
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </LinearLayout>
     <com.tencent.smtt.sdk.WebView
         android:id="@+id/forum_context"
         android:layout_width="fill_parent"

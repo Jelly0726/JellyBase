@@ -3,12 +3,17 @@ package com.base.applicationUtil;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.MapUtil.LocationTask;
+import com.base.bgabanner.GuideActivity;
+import com.base.config.IntentAction;
 import com.base.crashlog.CrashApphandler;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.okGo.OkGoApp;
 import com.base.sqldao.DBConfig;
 import com.base.sqldao.MySQLiteOpenHelper;
@@ -136,6 +141,51 @@ public class MyApplication extends OkGoApp {
             myApp=new MyApplication();
         }
         return myApp;
+    }
+    public boolean isLogin(){
+        if (!TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * 进入登陆界面
+     */
+    public void goLoginActivity() {
+        try{
+            Intent intent = new Intent();
+            //intent.setClass(this, LoginActivity.class);
+            intent.setAction(IntentAction.ACTION_LOGIN);
+            startActivity(intent);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 进入主界面
+     */
+    public void goMainActivity() {
+        try{
+            Intent intent = new Intent();
+            //intent.setClass(this, MainActivity.class);
+            intent.setAction(IntentAction.ACTION_MAIN);
+            startActivity(intent);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 进入引导页界面
+     */
+    public void goGuideActivity() {
+        try{
+            Intent intent = new Intent();
+            intent.setClass(this, GuideActivity.class);
+            startActivity(intent);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     public ExecutorService getThread() {
         if(getThread==null){

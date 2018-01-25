@@ -12,16 +12,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.base.social.SocialUtil;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.multiClick.AntiShake;
+import com.base.social.SocialUtil;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
 import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
+import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
@@ -131,7 +132,9 @@ public class LoginActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        MyApplication.getMyApp().exit();
+        if(BuildConfig.IS_MUST_LOGIN){//是否必须登录
+            MyApplication.getMyApp().exit();
+        }
     }
     @Override
     protected void onDestroy() {

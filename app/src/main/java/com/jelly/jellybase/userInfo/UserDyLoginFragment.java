@@ -71,6 +71,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     private String phone="";
     private String password;
     private double from=-1;
+    private ThirdInfoEntity openInfo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null)
@@ -166,7 +167,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                 SocialUtil.getInstance().socialHelper().loginWX(getActivity(), new SocialLoginCallback() {
                     @Override
                     public void loginSuccess(ThirdInfoEntity info) {
-
+                        openInfo=info;
                     }
 
                     @Override
@@ -179,7 +180,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                 SocialUtil.getInstance().socialHelper().loginQQ(getActivity(), new SocialLoginCallback() {
                     @Override
                     public void loginSuccess(ThirdInfoEntity info) {
-
+                        openInfo=info;
                     }
 
                     @Override
@@ -196,10 +197,24 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     }
     @Override
     public Object getLoginParam() {
+        //↓↓↓↓↓↓极光ID↓↓↓↓↓↓
+        String RegistrationID= AppPrefs.getString(MyApplication.getMyApp(), ConfigKey.JPUSHID);
+        if (TextUtils.isEmpty(RegistrationID)){
+            RegistrationID= JPushInterface.getRegistrationID(MyApplication.getMyApp());
+            AppPrefs.putString(MyApplication.getMyApp(), ConfigKey.JPUSHID,RegistrationID);
+        }
+        //↑↑↑↑↑↑极光ID↑↑↑↑↑↑
         password= MD5.MD5Encode(password);
         Map map=new TreeMap();
         map.put("salesphone",phone);
         map.put("password",password);
+//        if (openInfo.getPlatform().equals(ThirdInfoEntity.PLATFORM_QQ)){
+//            map.put("openid",openInfo.getOpenId());
+//            map.put("type",2);//openid的类型（1：微信2：qq）
+//        }else {
+//            map.put("openid",openInfo.getUnionId());
+//            map.put("type",1);//openid的类型（1：微信2：qq）
+//        }
         return map;
     }
 
@@ -222,13 +237,6 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
             }
         }
         //↑↑↑↑↑↑极光设置tag↑↑↑↑↑↑
-        //↓↓↓↓↓↓极光ID↓↓↓↓↓↓
-        String RegistrationID= AppPrefs.getString(MyApplication.getMyApp(), ConfigKey.JPUSHID);
-        if (TextUtils.isEmpty(RegistrationID)){
-            RegistrationID= JPushInterface.getRegistrationID(MyApplication.getMyApp());
-            AppPrefs.putString(MyApplication.getMyApp(), ConfigKey.JPUSHID,RegistrationID);
-        }
-        //↑↑↑↑↑↑极光ID↑↑↑↑↑↑
         TokenModel tokenModel=new TokenModel();
         tokenModel.setTokenExpirationTime(login.getTokenExpirationTime());
         tokenModel.setToken(login.getToken());

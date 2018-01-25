@@ -7,16 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.text.TextUtils;
 import android.view.Menu;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
-import com.base.bgabanner.GuideActivity;
 import com.base.config.ConfigKey;
-import com.base.config.IntentAction;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.view.BaseActivity;
+import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.WokeService;
 
@@ -47,58 +44,22 @@ public class LauncherActivity extends BaseActivity{
 		}
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
-				if (!TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
-					//goLoginActivity();
-					goMainActivity();//进入主界面
-					//goGuideActivity();//进入引导页界面
+				if (MyApplication.getMyApp().isLogin()){
+					//MyApplication.getMyApp().goLoginActivity();
+					MyApplication.getMyApp().goMainActivity();//进入主界面
+					//MyApplication.getMyApp().goGuideActivity();//进入引导页界面
+					finish();
 				}else{
-					//goLoginActivity();
-					//goGuideActivity();//进入引导页界面
-					goMainActivity();//进入主界面
+					if(BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+						MyApplication.getMyApp().goLoginActivity();
+					}else {
+						MyApplication.getMyApp().goMainActivity();//进入主界面
+					}
+					//MyApplication.getMyApp().goGuideActivity();//进入引导页界面
+					finish();
 				}
 			}
 		},1000);
-	}
-	/**
-	 * 进入登陆界面
-	 */
-	public void goLoginActivity() {
-		try{
-			Intent intent = new Intent();
-			//intent.setClass(this, LoginActivity.class);
-			intent.setAction(IntentAction.ACTION_LOGIN);
-			startActivity(intent);
-			finish();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * 进入主界面
-	 */
-	public void goMainActivity() {
-		try{
-			Intent intent = new Intent();
-			//intent.setClass(this, MainActivity.class);
-			intent.setAction(IntentAction.ACTION_MAIN);
-			startActivity(intent);
-			finish();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	/**
-	 * 进入引导页界面
-	 */
-	public void goGuideActivity() {
-		try{
-			Intent intent = new Intent();
-			intent.setClass(this, GuideActivity.class);
-			startActivity(intent);
-			finish();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

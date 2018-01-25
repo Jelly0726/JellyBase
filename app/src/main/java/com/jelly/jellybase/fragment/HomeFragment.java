@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
-import com.base.webview.jsbridge.BridgeTBSWebView;
+import com.base.webview.jsbridge.tbs.BridgeTBSWebView;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

@@ -1,10 +1,11 @@
-package com.base.webview.jsbridge;
+package com.base.webview.jsbridge.tbs;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.base.mprogressdialog.MProgressUtil;
+import com.base.webview.jsbridge.Message;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
@@ -22,7 +23,7 @@ import java.net.URLDecoder;
 public class BridgeTBSWebViewClient extends WebViewClient {
     private BridgeTBSWebView webView;
     private MProgressDialog progressDialog;
-    private TBSWebViewClientCallBack webViewClientCallBack;
+    private TBSClientCallBack webViewClientCallBack;
 
     public void setVisible(boolean visible) {
         isVisible = visible;
@@ -42,7 +43,9 @@ public class BridgeTBSWebViewClient extends WebViewClient {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.shouldOverrideUrlLoading(view,url);
+        }
         if (url.startsWith(BridgeTBSUtil.YY_RETURN_DATA)) { // 如果是返回数据
             webView.handlerReturnData(url);
             return true;
@@ -94,6 +97,9 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     @Override
     public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
         super.doUpdateVisitedHistory(view, url, isReload);
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.doUpdateVisitedHistory(view, url, isReload);
+        }
         WebHistoryItem webHistoryItem = webView.copyBackForwardList().getItemAtIndex(0);
         String uu = webHistoryItem.getOriginalUrl();
         //Log.i("msg","url="+url+" isReload="+isReload+" uu="+uu);
@@ -106,6 +112,10 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
         Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
         super.onReceivedHttpError(view, request, error);
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.onReceivedHttpError(view, request, error);
+        }
+        progressDialogDismiss();
 
     }
     @Override
@@ -115,6 +125,10 @@ public class BridgeTBSWebViewClient extends WebViewClient {
         //Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
         //网络未连接
         webView.showErrorPage();
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.onReceivedError(view, errorCode, description, failingUrl);
+        }
+        progressDialogDismiss();
     }
 
     //处理网页加载失败时
@@ -124,6 +138,10 @@ public class BridgeTBSWebViewClient extends WebViewClient {
         //6.0以上执行
         //Log.i(TAG, "onReceivedError: ");
         webView.showErrorPage();//显示错误页面
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.onReceivedError(view, request, error);
+        }
+        progressDialogDismiss();
     }
 
     public void progressDialogDismiss() {
@@ -132,15 +150,7 @@ public class BridgeTBSWebViewClient extends WebViewClient {
         }
     }
 
-    public void setWebViewClientCallBack(TBSWebViewClientCallBack webViewClientCallBack) {
+    public void setClientCallBack(TBSClientCallBack webViewClientCallBack) {
         this.webViewClientCallBack = webViewClientCallBack;
-    }
-
-    public interface TBSWebViewClientCallBack {
-        public boolean shouldOverrideUrlLoading(WebView view, String url);
-
-        public void onPageStarted(WebView view, String url, Bitmap favicon);
-
-        public void onPageFinished(WebView view, String url);
     }
 }

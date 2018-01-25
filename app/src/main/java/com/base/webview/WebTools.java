@@ -11,7 +11,7 @@ public class WebTools implements Parcelable {
     private static final String URL = "http://www.baidu.com/";                  //地址
     private static final String TITLE = "0";                                    //台头
     public String url;
-    public String title;
+    public String title="";
     private int from = 0;
 
     public WebTools() {

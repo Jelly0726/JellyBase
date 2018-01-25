@@ -31,6 +31,7 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
     private final String TAG = "BridgeWebView";
     private BridgeWebViewClient bridgeWebViewClient;
     private OpenFileCallBack openFileCallBack;
+    private ClientCallBack clientCallBack;
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
     Map<String, BridgeHandler> messageHandlers = new HashMap<String, BridgeHandler>();
@@ -123,6 +124,9 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
             public void onReceivedIcon(WebView view, Bitmap icon) {
                 Log.i("msg", "onReceivedIcon");
                 super.onReceivedIcon(view, icon);
+                if (clientCallBack!=null){
+                    clientCallBack.onReceivedIcon(view, icon);
+                }
 
             }
 
@@ -131,29 +135,43 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                 Log.i("msg", "origin=" + origin);
                 callback.invoke(origin, true, false);
                 super.onGeolocationPermissionsShowPrompt(origin, callback);
-
+                if (clientCallBack!=null){
+                    clientCallBack.onGeolocationPermissionsShowPrompt(origin, callback);
+                }
             }
 
             @Override
             public void onGeolocationPermissionsHidePrompt() {
                 Log.i("msg", "onGeolocationPermissionsHidePrompt=");
                 super.onGeolocationPermissionsHidePrompt();
+                if (clientCallBack!=null){
+                    clientCallBack.onGeolocationPermissionsHidePrompt();
+                }
             }
 
             @Override
             public void onPermissionRequest(PermissionRequest request) {
                 Log.i("msg", "request=" + request);
                 super.onPermissionRequest(request);
+                if (clientCallBack!=null){
+                    clientCallBack.onPermissionRequest(request);
+                }
             }
 
             @Override
             public void onPermissionRequestCanceled(PermissionRequest request) {
                 Log.i("msg", "onPermissionRequestCanceled=" + request);
                 super.onPermissionRequestCanceled(request);
+                if (clientCallBack!=null){
+                    clientCallBack.onPermissionRequestCanceled(request);
+                }
             }
 
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                if (clientCallBack!=null){
+                    clientCallBack.onShowFileChooser(webView, filePathCallback, fileChooserParams);
+                }
                 if (openFileCallBack != null) {
                     return openFileCallBack.onShowFileChooser(filePathCallback);
                 }
@@ -164,17 +182,26 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                 if (openFileCallBack != null) {
                     openFileCallBack.openFileChooser(uploadFile, acceptType);
                 }
+                if (clientCallBack!=null){
+                    clientCallBack.openFileChooser(uploadFile, acceptType,capture);
+                }
             }
 
             public void openFileChooser(ValueCallback<Uri> uploadMsg) {
                 if (openFileCallBack != null) {
                     openFileCallBack.openFileChooser(uploadMsg, "");
                 }
+                if (clientCallBack!=null){
+                    clientCallBack.openFileChooser(uploadMsg);
+                }
             }
 
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
                 if (openFileCallBack != null) {
                     openFileCallBack.openFileChooser(uploadMsg, acceptType);
+                }
+                if (clientCallBack!=null){
+                    clientCallBack.openFileChooser(uploadMsg, acceptType);
                 }
             }
             @Override
@@ -184,7 +211,9 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                 if (arg1.contains("404")){
                     showErrorPage();
                 }
-
+                if (clientCallBack!=null){
+                    clientCallBack.onReceivedTitle(arg0, arg1);
+                }
             }
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -194,6 +223,9 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                     if (bridgeWebViewClient != null) {
                         bridgeWebViewClient.progressDialogDismiss();
                     }
+                }
+                if (clientCallBack!=null){
+                    clientCallBack.onProgressChanged(view, newProgress);
                 }
             }
         });
@@ -229,10 +261,10 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
         return new BridgeWebViewClient(this, context);
     }
 
-    public void setWebViewClientCallBack(BridgeWebViewClient.
-                                                 WebViewClientCallBack webViewClientCallBack) {
+    public void setClientCallBack(ClientCallBack webViewClientCallBack) {
+        clientCallBack=webViewClientCallBack;
         if (bridgeWebViewClient != null) {
-            bridgeWebViewClient.setWebViewClientCallBack(webViewClientCallBack);
+            bridgeWebViewClient.setClientCallBack(webViewClientCallBack);
         }
         ;
     }

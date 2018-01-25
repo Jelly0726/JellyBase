@@ -1,4 +1,4 @@
-package com.base.webview.jsbridge;
+package com.base.webview.jsbridge.tbs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +15,11 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
 import com.base.applicationUtil.MyApplication;
+import com.base.webview.jsbridge.BridgeHandler;
+import com.base.webview.jsbridge.CallBackFunction;
+import com.base.webview.jsbridge.DefaultHandler;
+import com.base.webview.jsbridge.Message;
+import com.base.webview.jsbridge.WebViewJavascriptBridge;
 import com.base.webview.jsbridge.utils.WebViewJavaScriptFunction;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
@@ -37,6 +42,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
     private final String TAG = "BridgeWebView";
     private BridgeTBSWebViewClient bridgeWebViewClient;
     private OpenFileCallBack openFileCallBack;
+    private TBSClientCallBack tbsClientCallBack;
     public static final String toLoadJs = "WebViewJavascriptBridge.js";
     Map<String, CallBackFunction> responseCallbacks = new HashMap<String, CallBackFunction>();
     Map<String, BridgeHandler> messageHandlers = new HashMap<String, BridgeHandler>();
@@ -169,10 +175,10 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             bridgeWebViewClient.setVisible(visible);
         }
     }
-    public void setWebViewClientCallBack(BridgeTBSWebViewClient.
-                                                 TBSWebViewClientCallBack webViewClientCallBack) {
+    public void setClientCallBack(TBSClientCallBack webViewClientCallBack) {
+        tbsClientCallBack=webViewClientCallBack;
         if (bridgeWebViewClient != null) {
-            bridgeWebViewClient.setWebViewClientCallBack(webViewClientCallBack);
+            bridgeWebViewClient.setClientCallBack(webViewClientCallBack);
         }
         ;
     }
@@ -366,6 +372,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         @Override
         public boolean onJsConfirm(WebView arg0, String arg1, String arg2, JsResult arg3) {
             Log.i("msg onJsConfirm", "arg1=" + arg1 + " arg2=" + arg2 + " JsResult=" + arg3);
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onJsConfirm(arg0, arg1, arg2, arg3);
+            }
             return super.onJsConfirm(arg0, arg1, arg2, arg3);
         }
 
@@ -381,6 +390,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
          */
         @Override
         public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onShowCustomView(view, customViewCallback);
+            }
         }
 
         @Override
@@ -394,6 +406,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
                 viewGroup.removeView(myVideoView);
                 viewGroup.addView(myNormalView);
             }
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onHideCustomView();
+            }
         }
 
         @Override
@@ -401,6 +416,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
                                          ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
             // TODO Auto-generated method stub
             Log.e("app", "onShowFileChooser");
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onShowFileChooser(arg0, arg1, arg2);
+            }
             if (openFileCallBack != null) {
                 return openFileCallBack.onShowFileChooser(arg1);
             }
@@ -412,6 +430,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             if (openFileCallBack != null) {
                 openFileCallBack.openFileChooser(uploadFile, acceptType);
             }
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.openFileChooser(uploadFile, acceptType, captureType);
+            }
         }
 
 
@@ -422,6 +443,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
              * 这里写入你自定义的window alert
              */
             Log.i("yuanhaizhou", "setX5webview = null");
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onJsAlert(arg0, arg1, arg2,arg3);
+            }
             return true;
         }
 
@@ -436,13 +460,18 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             if (arg1.contains("404")){
                 showErrorPage();
             }
-
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onReceivedTitle(arg0, arg1);
+            }
         }
 
         @Override
         public void onGeolocationPermissionsHidePrompt() {
             super.onGeolocationPermissionsHidePrompt();
             Log.i("onGeolocat", "onGeolocationPermissionsHidePrompt");
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onGeolocationPermissionsHidePrompt();
+            }
         }
 
         @Override
@@ -451,6 +480,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             Log.i("onGeolocat", "s=" + s);
             geolocationPermissionsCallback.invoke(s, true, false);
             super.onGeolocationPermissionsShowPrompt(s, geolocationPermissionsCallback);
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onGeolocationPermissionsShowPrompt(s, geolocationPermissionsCallback);
+            }
         }
 
 
@@ -460,6 +492,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             if (openFileCallBack != null) {
                 openFileCallBack.openFileChooser(uploadMsg, "");
             }
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.openFileChooser(uploadMsg);
+            }
         }
 
         public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
@@ -467,6 +502,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
 //			take();
             if (openFileCallBack != null) {
                 openFileCallBack.openFileChooser(uploadMsg, acceptType);
+            }
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.openFileChooser(uploadMsg, acceptType);
             }
         }
         @Override
@@ -477,6 +515,9 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
                 if (bridgeWebViewClient != null) {
                     bridgeWebViewClient.progressDialogDismiss();
                 }
+            }
+            if (tbsClientCallBack!=null){
+                tbsClientCallBack.onProgressChanged(view, newProgress);
             }
         }
     };

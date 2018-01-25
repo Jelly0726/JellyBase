@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import com.base.applicationUtil.MyApplication;
+import com.base.config.BaseConfig;
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -19,8 +20,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class PayUtil {
 	public static final int SDK_PAY_FLAG = 1;
 	public static final int SDK_AUTH_FLAG = 2;
-	// APP_ID 替换为你的应用从微信官方网站申请到的合法appId
-	public static final String WeiXinPay_APP_ID = "wx2d869b6924a790fb";
 	//微信支付
 	public static final String WX_RECHARGE_SUCCESS = MyApplication.getMyApp().getPackageName()+".WX_RECHARGE_SUCCESS";
 
@@ -41,9 +40,9 @@ public class PayUtil {
 					mInstance = new PayUtil();
 					mInstance.mContext = context;
 					// 通过WXAPIFactory工厂，获取IWXAPI的实例
-					mInstance.mApi = WXAPIFactory.createWXAPI(context, WeiXinPay_APP_ID);
+					mInstance.mApi = WXAPIFactory.createWXAPI(context, BaseConfig.WechatPay_APP_ID);
 					// 将该app注册到微信
-					mInstance.mApi.registerApp(WeiXinPay_APP_ID);
+					mInstance.mApi.registerApp(BaseConfig.WechatPay_APP_ID);
 					// 初始化UI Handler
 					mInstance.mHandler = new Handler(Looper.getMainLooper());
 				}else {

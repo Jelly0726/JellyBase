@@ -22,7 +22,7 @@ import java.net.URLDecoder;
 public class BridgeWebViewClient extends WebViewClient {
     private BridgeWebView webView;
     private MProgressDialog progressDialog;
-    private WebViewClientCallBack webViewClientCallBack;
+    private ClientCallBack webViewClientCallBack;
 
     public void setVisible(boolean visible) {
         isVisible = visible;
@@ -42,7 +42,9 @@ public class BridgeWebViewClient extends WebViewClient {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.shouldOverrideUrlLoading(view,url);
+        }
         if (url.startsWith(BridgeUtil.YY_RETURN_DATA)) { // 如果是返回数据
             webView.handlerReturnData(url);
             return true;
@@ -58,7 +60,7 @@ public class BridgeWebViewClient extends WebViewClient {
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         if (progressDialog != null&&isVisible) {
-                progressDialog.show();
+            progressDialog.show();
         }
         if (webViewClientCallBack != null) {
             webViewClientCallBack.onPageStarted(view, url, favicon);
@@ -106,7 +108,7 @@ public class BridgeWebViewClient extends WebViewClient {
     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
         Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
         super.onReceivedHttpError(view, request, error);
-
+        progressDialogDismiss();
     }
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -115,6 +117,7 @@ public class BridgeWebViewClient extends WebViewClient {
         //Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
         //网络未连接
         webView.showErrorPage();
+        progressDialogDismiss();
     }
 
     //处理网页加载失败时
@@ -124,22 +127,15 @@ public class BridgeWebViewClient extends WebViewClient {
         //6.0以上执行
         //Log.i(TAG, "onReceivedError: ");
         webView.showErrorPage();//显示错误页面
+        progressDialogDismiss();
     }
     public void progressDialogDismiss() {
         if (progressDialog != null) {
-                progressDialog.dismiss();
+            progressDialog.dismiss();
         }
     }
 
-    public void setWebViewClientCallBack(WebViewClientCallBack webViewClientCallBack) {
+    public void setClientCallBack(ClientCallBack webViewClientCallBack) {
         this.webViewClientCallBack = webViewClientCallBack;
-    }
-
-    public interface WebViewClientCallBack {
-        public boolean shouldOverrideUrlLoading(WebView view, String url);
-
-        public void onPageStarted(WebView view, String url, Bitmap favicon);
-
-        public void onPageFinished(WebView view, String url);
     }
 }
