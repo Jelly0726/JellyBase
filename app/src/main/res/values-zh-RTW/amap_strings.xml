@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--高德地图-->
+    <string name="app_id">输入您讯飞的appid</string>
+    <string name="preference_default_tts_role">xiaoyan</string>
+    <string name="preference_key_tts_speed">tts_speed</string>
+    <string name="preference_key_tts_volume">tts_volume</string>
+    <string name="preference_key_tts_pitch">tts_pitch</string>
+    <string name="navi_empty_car">"驾   车"</string>
+    <string name="navi_empty_foot">"步   行"</string>
+    <string name="navi_start">"起    点"</string>
+    <string name="navi_middle">途经点</string>
+    <string name="navi_end">"终    点"</string>
+    <string name="navi_route">路径规划</string>
+    <string name="navi_navi">模拟导航</string>
+    <string name="navibar_title">路径规划</string>
+    <string name="start_navi_navi">实时导航</string>
+    <string name="locationing">正在定位....</string>
+    <string name="search">搜索</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="province">省</string>
+    <string name="city">市</string>
+    <string name="district">区/县</string>
+    <string name="all_offline">所有城市</string>
+    <string name="download_offline">下载管理</string>
+    <string name="city_name">城市名称</string>
+    <string name="city_size">城市大小</string>
+    <string name="download_progress">0%</string>
+    <string name="my_city">当前城市</string>
+    <string name="sso_complete">完成</string>
+    <string name="star">起点:</string>
+    <string name="star_select">点选起点</string>
+    <string name="end_select">点选终点</string>
+    <string name="more_route">多路径算路</string>
+    <string name="cra_route">路径计算</string>
+    <string name="route_select">点我选路</string>
+    <string name="simulation_navigation">进入模拟导航</string>
+    <string name="gps_navigation">进入GPS导航</string>
+    <string name="not_route">抱歉,沒有找到对应线路</string>
+    <string name="starOrend_isnull">起点和终点不能为空!</string>
+    <!--高德地图-->
+    <!--高德定位错误码-->
+    <string name="location_error_code_1">一些重要参数为空，如context</string>
+    <string name="location_error_code_2">定位失败，由于仅扫描到单个wifi，且没有基站信息</string>
+    <string name="location_error_code_3">获取到的请求参数为空，可能获取过程中出现异常</string>
+    <string name="location_error_code_4">请求服务器过程中的异常，多为网络情况差，链路不通导致</string>
+    <string name="location_error_code_5">请求被恶意劫持，定位结果解析失败</string>
+    <string name="location_error_code_6">定位服务返回定位失败</string>
+    <string name="location_error_code_7">KEY鉴权失败</string>
+    <string name="location_error_code_8">Android exception常规错误</string>
+    <string name="location_error_code_9">定位初始化时出现异常</string>
+    <string name="location_error_code_10">定位客户端启动失败</string>
+    <string name="location_error_code_11">定位时的基站信息错误</string>
+    <string name="location_error_code_12">缺少定位权限</string>
+    <string name="location_error_code_13">定位失败，由于设备未开启WIFI模块或未插入SIM卡，且GPS当前不可用</string>
+    <string name="location_error_code_14">GPS 定位失败，由于设备当前 GPS 状态差</string>
+</resources>

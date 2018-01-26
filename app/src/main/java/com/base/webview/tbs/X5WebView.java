@@ -45,6 +45,7 @@ public class X5WebView extends WebView {
 	RelativeLayout.LayoutParams layoutParams;
 	private RelativeLayout refreshRela;
 	TextView title;
+	private TBSClientCallBack tbsClientCallBack;
 	private MProgressDialog progressDialog;
 	private boolean isVisible=true;//视图是否可见
 	private WebViewClient client = new WebViewClient() {
@@ -53,20 +54,29 @@ public class X5WebView extends WebView {
 		 */
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
 			view.loadUrl(url);
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.shouldOverrideUrlLoading(view, url);
+			}
 			return false;
 		}
 		public void onReceivedHttpAuthRequest(WebView webview,
-											  com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost, String host,
+											  com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost,
+											  String host,
 											  String realm) {
 			boolean flag = httpAuthHandlerhost.useHttpAuthUsernamePassword();
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onReceivedHttpAuthRequest(webview, httpAuthHandlerhost,host,realm);
+			}
 		}
 		@Override
 		public WebResourceResponse shouldInterceptRequest(WebView view,
-														  WebResourceRequest request) {
+                                                          WebResourceRequest request) {
 			// TODO Auto-generated method stub
 
 			Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
-
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.shouldInterceptRequest(view, request);
+			}
 			return super.shouldInterceptRequest(view, request);
 		}
 
@@ -76,16 +86,25 @@ public class X5WebView extends WebView {
 			if (progressDialog != null&&isVisible) {
 				progressDialog.show();
 			}
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onPageStarted(view, url, favicon);
+			}
 		}
 		@Override
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onPageFinished(view, url);
+			}
 
 		}
 	};
 	private WebChromeClient chromeClient = new WebChromeClient() {
 		@Override
 		public boolean onJsConfirm(WebView arg0, String arg1, String arg2, JsResult arg3) {
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onJsConfirm(arg0, arg1, arg2, arg3);
+			}
 			return super.onJsConfirm(arg0, arg1, arg2, arg3);
 		}
 
@@ -100,6 +119,9 @@ public class X5WebView extends WebView {
 		 */
 		@Override
 		public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onShowCustomView(view, customViewCallback);
+			}
 		}
 		@Override
 		public void onProgressChanged(WebView view, int newProgress) {
@@ -109,6 +131,9 @@ public class X5WebView extends WebView {
 				if (progressDialog != null) {
 					progressDialog.dismiss();
 				}
+			}
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onProgressChanged(view, newProgress);
 			}
 		}
 		@Override
@@ -126,14 +151,20 @@ public class X5WebView extends WebView {
 
 		@Override
 		public boolean onShowFileChooser(WebView arg0,
-										 ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
+                                         ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
 			// TODO Auto-generated method stub
 			Log.e("app", "onShowFileChooser");
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onShowFileChooser(arg0, arg1, arg2);
+			}
 			return super.onShowFileChooser(arg0, arg1, arg2);
 		}
 
 		@Override
 		public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.openFileChooser(uploadFile,acceptType,  captureType);
+			}
 		}
 
 
@@ -157,6 +188,9 @@ public class X5WebView extends WebView {
 			// arg3.confirm();
 			// return true;
 			Log.i("yuanhaizhou", "setX5webview = null");
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onJsAlert(null, "www.baidu.com", "aa", arg3);
+			}
 			return super.onJsAlert(null, "www.baidu.com", "aa", arg3);
 		}
 
@@ -169,6 +203,9 @@ public class X5WebView extends WebView {
 		public void onReceivedTitle(WebView arg0, final String arg1) {
 			super.onReceivedTitle(arg0, arg1);
 			Log.i("yuanhaizhou", "webpage title is " + arg1);
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onReceivedTitle(arg0,arg1);
+			}
 
 		}
 	};
@@ -332,5 +369,9 @@ public class X5WebView extends WebView {
 
 	protected boolean tbs_onTouchEvent(MotionEvent event, View view) {
 		return super_onTouchEvent(event);
+	}
+
+	public void setClientCallBack(TBSClientCallBack tbsClientCallBack) {
+		this.tbsClientCallBack = tbsClientCallBack;
 	}
 }

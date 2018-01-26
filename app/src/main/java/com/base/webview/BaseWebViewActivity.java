@@ -3,18 +3,16 @@ package com.base.webview;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.view.BaseActivity;
-import com.base.webview.jsbridge.tbs.BridgeTBSWebView;
-import com.base.webview.jsbridge.tbs.TBSClientCallBack;
+import com.base.webview.tbs.TBSClientCallBack;
+import com.base.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
-import com.tencent.smtt.export.external.interfaces.WebResourceError;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
@@ -28,7 +26,7 @@ import butterknife.OnClick;
 public class BaseWebViewActivity extends BaseActivity {
     private WebTools webTools;
     @BindView(R.id.forum_context)
-    BridgeTBSWebView Web;
+    X5WebView Web;
     @BindView(R.id.topNav_layout)
     LinearLayout topNav_layout;
     @BindView(R.id.left_back)
@@ -57,26 +55,22 @@ public class BaseWebViewActivity extends BaseActivity {
         Web.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                topNav_layout.setVisibility(View.GONE);
+                topNav_layout.setVisibility(View.VISIBLE);
+                Log.i("SSSS","onPageStarted  url="+url);
+            }
+
+            @Override
+            public void onReceivedTitle(WebView arg0, String arg1) {
+                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
+                if (!arg1.contains("Page Error")){
+                    topNav_layout.setVisibility(View.GONE);
+                }else {
+                    topNav_layout.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                topNav_layout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                topNav_layout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
-                topNav_layout.setVisibility(View.VISIBLE);
             }
         });
     }

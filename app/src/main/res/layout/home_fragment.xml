@@ -11,11 +11,22 @@
         android:layout_height="wrap_content"
         android:background="@color/navi_color"/>
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
-    <com.base.webview.jsbridge.tbs.BridgeTBSWebView
+    <com.base.xrefreshview.XRefreshView
+        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/custom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        xrefreshview:isHeightMatchParent="true"
+        xrefreshview:isWidthMatchParent="true" >
+    <com.base.webview.tbs.BridgeTBSWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layerType="hardware"
         android:scrollbars="none">
 
-    </com.base.webview.jsbridge.tbs.BridgeTBSWebView>
+    </com.base.webview.tbs.BridgeTBSWebView>
+    </com.base.xrefreshview.XRefreshView>
 </LinearLayout>

@@ -7,8 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
-import com.base.webview.jsbridge.tbs.BridgeTBSWebView;
+import com.base.webview.tbs.BridgeTBSWebView;
+import com.base.webview.tbs.TBSClientCallBack;
+import com.base.xrefreshview.XRefreshView;
+import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
+import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +26,8 @@ public class HomeFragment extends BaseFragment {
     private Unbinder mUnbinder;
     @BindView(R.id.webView)
     BridgeTBSWebView webView;
+    @BindView(R.id.custom_view)
+    XRefreshView custom_view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null)
@@ -68,5 +74,41 @@ public class HomeFragment extends BaseFragment {
     private void iniData(){
         webView.setVisible(getUserVisibleHint());
         webView.loadUrl("https://www.baidu.com");
+        webView.setClientCallBack(new TBSClientCallBack(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress>=100){
+                    webView.setVisible(true);
+                    custom_view.stopRefresh();
+                }
+            }
+        });
+        custom_view.setPullLoadEnable(false);
+        custom_view.setAutoRefresh(false);
+        custom_view.setAutoLoadMore(false);
+        custom_view.setPinnedTime(1000);
+        custom_view.setOnTopRefreshTime(new OnTopRefreshTime() {
+
+            @Override
+            public boolean isTop() {
+                if (webView.getWebScrollY() == 0) {
+                    View firstVisibleChild = webView.getChildAt(0);
+                    return firstVisibleChild.getTop() >= 0;
+                }
+                return false;
+            }
+        });
+        custom_view.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
+
+            @Override
+            public void onRefresh(boolean isPullDown) {
+                webView.setVisible(false);
+                webView.reload();
+            }
+
+            @Override
+            public void onLoadMore(boolean isSilence) {
+            }
+        });
     }
 }

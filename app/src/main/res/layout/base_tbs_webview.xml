@@ -51,9 +51,22 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.base.webview.jsbridge.tbs.BridgeTBSWebView
+    <com.base.xrefreshview.XRefreshView
+        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/custom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        xrefreshview:isHeightMatchParent="true"
+        xrefreshview:isWidthMatchParent="true" >
+    <com.base.webview.tbs.BridgeTBSWebView
         android:id="@+id/web_filechooser"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"></com.base.webview.jsbridge.tbs.BridgeTBSWebView>
+        android:layerType="hardware"
+        android:scrollbars="none">
+
+    </com.base.webview.tbs.BridgeTBSWebView>
+    </com.base.xrefreshview.XRefreshView>
 </LinearLayout>

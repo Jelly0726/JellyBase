@@ -1,4 +1,4 @@
-package com.base.webview.jsbridge.tbs;
+package com.base.webview.tbs;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -71,9 +71,6 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        if (webViewClientCallBack != null) {
-            webViewClientCallBack.onPageFinished(view, url);
-        }
         if (BridgeTBSWebView.toLoadJs != null) {
             BridgeTBSUtil.webViewLoadLocalJs(view, BridgeTBSWebView.toLoadJs);
         }
@@ -84,6 +81,9 @@ public class BridgeTBSWebViewClient extends WebViewClient {
                 webView.dispatchMessage(m);
             }
             webView.setStartupMessage(null);
+        }
+        if (webViewClientCallBack != null) {
+            webViewClientCallBack.onPageFinished(view, url);
         }
     }
 
@@ -97,15 +97,15 @@ public class BridgeTBSWebViewClient extends WebViewClient {
     @Override
     public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
         super.doUpdateVisitedHistory(view, url, isReload);
-        if (webViewClientCallBack!=null){
-            webViewClientCallBack.doUpdateVisitedHistory(view, url, isReload);
-        }
         WebHistoryItem webHistoryItem = webView.copyBackForwardList().getItemAtIndex(0);
         String uu = webHistoryItem.getOriginalUrl();
         //Log.i("msg","url="+url+" isReload="+isReload+" uu="+uu);
         if (url.contains(uu)) {
             //webView.clearHistory();//清除历史记录
             //Log.i("msg","list="+list.getSize());
+        }
+        if (webViewClientCallBack!=null){
+            webViewClientCallBack.doUpdateVisitedHistory(view, url, isReload);
         }
     }
     @Override

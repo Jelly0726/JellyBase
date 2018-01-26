@@ -2,6 +2,10 @@ package com.base.webview;
 
 import android.net.Uri;
 
+import com.tencent.smtt.sdk.CacheManager;
+
+import java.io.File;
+
 /**
  * Created by Administrator on 2018/1/12.
  */
@@ -38,5 +42,43 @@ public class Utils {
         Uri uri = Uri.parse(url);
         result= uri.getQueryParameter(name);
         return result;
+    }
+
+    /**
+     * 删除在此之前的缓存
+     * @param dir
+     * @param numDays
+     * @return
+     */
+    public static int clearCacheFolder(File dir, long numDays) {
+        int deletedFiles = 0;
+        if (dir!= null && dir.isDirectory()) {
+            try {
+                for (File child:dir.listFiles()) {
+                    if (child.isDirectory()) {
+                        deletedFiles += clearCacheFolder(child,numDays);
+                    }
+                    if (child.lastModified()< numDays) {
+                        if (child.delete()) {
+                            deletedFiles++;
+                        }
+                    }
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return deletedFiles;
+    }
+
+    /**
+     * 退出清除缓存
+     */
+    public static void exitClearCache(){
+        File file = CacheManager.getCacheFileBaseDir();
+        if (file != null && file.exists() && file.isDirectory()) {
+            for (File item : file.listFiles()) {
+                item.delete();}
+            file.delete();}
     }
 }

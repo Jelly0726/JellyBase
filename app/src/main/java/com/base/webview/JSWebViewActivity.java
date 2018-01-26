@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,11 @@ import com.base.applicationUtil.ToastUtils;
 import com.base.view.BaseActivity;
 import com.base.webview.jsbridge.BridgeHandler;
 import com.base.webview.jsbridge.CallBackFunction;
-import com.base.webview.jsbridge.tbs.BridgeTBSWebView;
-import com.base.webview.jsbridge.tbs.TBSClientCallBack;
+import com.base.webview.tbs.BridgeTBSWebView;
+import com.base.webview.tbs.TBSClientCallBack;
+import com.base.xrefreshview.XRefreshView;
+import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
-import com.tencent.smtt.export.external.interfaces.WebResourceError;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.WebView;
 
@@ -44,6 +44,8 @@ public class JSWebViewActivity extends BaseActivity {
     TextView title_tv;
     @BindView(R.id.web_filechooser)
     BridgeTBSWebView mWebView;
+    @BindView(R.id.custom_view)
+    XRefreshView custom_view;
     private WebTools webTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,33 @@ public class JSWebViewActivity extends BaseActivity {
     }
 
     private void init() {
+        custom_view.setPullLoadEnable(false);
+        custom_view.setAutoRefresh(false);
+        custom_view.setAutoLoadMore(false);
+        custom_view.setPinnedTime(0);
+        custom_view.setOnTopRefreshTime(new OnTopRefreshTime() {
+
+            @Override
+            public boolean isTop() {
+                if (mWebView.getWebScrollY() == 0) {
+                    View firstVisibleChild = mWebView.getChildAt(0);
+                    return firstVisibleChild.getTop() >= 0;
+                }
+                return false;
+            }
+        });
+        custom_view.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
+
+            @Override
+            public void onRefresh(boolean isPullDown) {
+                mWebView.setVisible(false);
+                mWebView.reload();
+            }
+
+            @Override
+            public void onLoadMore(boolean isSilence) {
+            }
+        });
         if (webTools != null) {
             if (!TextUtils.isEmpty(webTools.url)) {
                 mWebView.loadUrl(webTools.url);
@@ -68,25 +97,26 @@ public class JSWebViewActivity extends BaseActivity {
         mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                topNav_layout.setVisibility(View.GONE);
+                topNav_layout.setVisibility(View.VISIBLE);
+                Log.i("SSSS","onPageStarted  url="+url);
+            }
+
+            @Override
+            public void onReceivedTitle(WebView arg0, String arg1) {
+                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
+                if (!arg1.contains("Page Error")){
+                    topNav_layout.setVisibility(View.GONE);
+                }else {
+                    topNav_layout.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-            }
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                topNav_layout.setVisibility(View.VISIBLE);
-            }
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                topNav_layout.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
-                topNav_layout.setVisibility(View.VISIBLE);
+                if (newProgress>=100){
+                    mWebView.setVisible(true);
+                    custom_view.stopRefresh();
+                }
             }
         });
         mWebView.registerHandler("reginboxid", new BridgeHandler() {

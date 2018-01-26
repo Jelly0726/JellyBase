@@ -51,10 +51,11 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.tencent.smtt.sdk.WebView
+    <com.base.webview.tbs.X5WebView
         android:id="@+id/forum_context"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layerType="hardware"
         android:scrollbars="none"/>
 
 </LinearLayout>

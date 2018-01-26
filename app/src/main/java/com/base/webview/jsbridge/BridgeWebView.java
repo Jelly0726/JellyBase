@@ -12,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -48,7 +49,14 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
     }
 
     private long uniqueId = 0;
+    public boolean isBottom() {
+        return computeVerticalScrollRange() == getHeight() + getScrollY();
+    }
 
+    @Override
+    public int computeVerticalScrollRange() {
+        return super.computeVerticalScrollRange();
+    }
     public BridgeWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -227,6 +235,14 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge {
                 if (clientCallBack!=null){
                     clientCallBack.onProgressChanged(view, newProgress);
                 }
+            }
+
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                if (clientCallBack!=null){
+                    clientCallBack.onJsAlert(view, url, message, result);
+                }
+                return super.onJsAlert(view, url, message, result);
             }
         });
     }

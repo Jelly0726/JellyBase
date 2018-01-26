@@ -3,6 +3,7 @@ package com.base.webview.jsbridge;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.webkit.GeolocationPermissions;
+import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -52,5 +53,8 @@ public class ClientCallBack {
     }
 
     public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+    }
+    public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package com.base.webview.jsbridge.tbs;
+package com.base.webview.tbs;
 
 import android.content.Context;
 

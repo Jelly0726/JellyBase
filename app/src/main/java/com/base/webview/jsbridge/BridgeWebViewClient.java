@@ -103,12 +103,18 @@ public class BridgeWebViewClient extends WebViewClient {
             //webView.clearHistory();//清除历史记录
             //Log.i("msg","list="+list.getSize());
         }
+        if (webViewClientCallBack != null) {
+            webViewClientCallBack.doUpdateVisitedHistory(view, url, isReload);
+        }
     }
     @Override
     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
         Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
         super.onReceivedHttpError(view, request, error);
         progressDialogDismiss();
+        if (webViewClientCallBack != null) {
+            webViewClientCallBack.onReceivedHttpError(view, request, error);
+        }
     }
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -118,6 +124,9 @@ public class BridgeWebViewClient extends WebViewClient {
         //网络未连接
         webView.showErrorPage();
         progressDialogDismiss();
+        if (webViewClientCallBack != null) {
+            webViewClientCallBack.onReceivedError(view, errorCode, description, failingUrl);
+        }
     }
 
     //处理网页加载失败时
@@ -128,6 +137,9 @@ public class BridgeWebViewClient extends WebViewClient {
         //Log.i(TAG, "onReceivedError: ");
         webView.showErrorPage();//显示错误页面
         progressDialogDismiss();
+        if (webViewClientCallBack != null) {
+            webViewClientCallBack.onReceivedError(view, request, error);
+        }
     }
     public void progressDialogDismiss() {
         if (progressDialog != null) {

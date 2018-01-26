@@ -1,4 +1,4 @@
-package com.base.webview.jsbridge.tbs;
+package com.base.webview.tbs;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -22,7 +22,15 @@ public class TBSClientCallBack {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
        return false;
     }
+    public void onReceivedHttpAuthRequest(WebView webview,
+                                          com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost, String host,
+                                          String realm) {
 
+    }
+    public WebResourceResponse shouldInterceptRequest(WebView view,
+                                                      WebResourceRequest request) {
+        return null;
+    }
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
     }
 
@@ -65,14 +73,13 @@ public class TBSClientCallBack {
     public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
     }
 
-
+    /**
+     * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
+     */
     public boolean onJsAlert(WebView arg0, String arg1, String arg2, JsResult arg3) {
         return true;
     }
 
-    /**
-     * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
-     */
 
     public void onReceivedTitle(WebView arg0, final String arg1) {
 

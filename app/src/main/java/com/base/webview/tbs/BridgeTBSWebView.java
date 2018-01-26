@@ -1,10 +1,9 @@
-package com.base.webview.jsbridge.tbs;
+package com.base.webview.tbs;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -12,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.webview.jsbridge.BridgeHandler;
@@ -20,7 +18,6 @@ import com.base.webview.jsbridge.CallBackFunction;
 import com.base.webview.jsbridge.DefaultHandler;
 import com.base.webview.jsbridge.Message;
 import com.base.webview.jsbridge.WebViewJavascriptBridge;
-import com.base.webview.jsbridge.utils.WebViewJavaScriptFunction;
 import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -54,40 +51,17 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
         return startupMessage;
     }
 
-    private int num = 0;
-    private String msg = "Hello world!";
-    private static final int MSG = 0;
-    private static final int NUM = 1;
-    private static final int MSG_SUBMIT = 2;
-    Handler handler = new Handler(Looper.myLooper()) {
-
-
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            // TODO Auto-generated method stub
-            switch (msg.what) {
-                case NUM:
-                    //JavaToJsActivity.this.textView.setText(String.valueOf(num));
-                    break;
-                case MSG:
-                    //JavaToJsActivity.this.editText.setText(JavaToJsActivity.this.msg);
-                    break;
-                case MSG_SUBMIT:
-                    //JavaToJsActivity.this.msg=JavaToJsActivity.this.editText.getEditableText().toString();
-                    break;
-            }
-            super.handleMessage(msg);
-
-        }
-
-
-    };
-
-
     public void setStartupMessage(List<Message> startupMessage) {
         this.startupMessage = startupMessage;
     }
+    public boolean isBottom() {
+        return computeVerticalScrollRange() == getHeight() + getScrollY();
+    }
 
+    @Override
+    public int computeVerticalScrollRange() {
+        return super.computeVerticalScrollRange();
+    }
     private long uniqueId = 0;
 
     public BridgeTBSWebView(Context context, AttributeSet attrs) {
@@ -157,10 +131,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
 
 
         this.setWebChromeClient(webChromeClient);
-        /**
-         * javascript与Android 交互
-         */
-        this.addJavascriptInterface(webViewJavaScriptFunction, "Android");
     }
 
     protected BridgeTBSWebViewClient generateBridgeWebViewClient(Context context) {
@@ -303,70 +273,6 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             });
         }
     }
-
-    /**
-     * js与android交互
-     */
-    private WebViewJavaScriptFunction webViewJavaScriptFunction = new WebViewJavaScriptFunction() {
-
-        @Override
-        public void onJsFunctionCalled(String tag) {
-            // TODO Auto-generated method stub
-
-        }
-
-        ///////////////////////////////////////////////
-        //javascript to java methods  js调用java方法
-        @JavascriptInterface
-        public void onSubmit(String s) {
-            Log.i("jsToAndroid", "onSubmit happend!");
-//				JavaToJsActivity.this.msg=s;
-            android.os.Message.obtain(handler, MSG).sendToTarget();
-        }
-
-        @JavascriptInterface
-        public void onSubmitNum(String s) {
-            Log.i("jsToAndroid", "onSubmitNum happend!");
-//				JavaToJsActivity.this.num=Integer.parseInt(s);
-            android.os.Message.obtain(handler, NUM).sendToTarget();
-        }
-
-        /**
-         * java 调用 js方法 并且 传值
-         * 步骤：1、调用 js函数  2、js回调一个android方法得到参数  3、js处理函数
-         * @return
-         */
-        @JavascriptInterface
-        public String getAndroidMsg() {
-            Log.i("jsToAndroid", "onSubmitNum happend!");
-            //return JavaToJsActivity.this.msg;
-            return null;
-        }
-
-        @JavascriptInterface
-        public String getAndroidNum() {
-            Log.i("jsToAndroid", "onSubmitNum happend!");
-            //return String.valueOf(JavaToJsActivity.this.num);
-            return null;
-        }
-
-        /**
-         * 各种类型的传递
-         */
-        @JavascriptInterface
-        public void getManyValue(String key, String value) {
-
-            Log.i("jsToAndroid", "get key is:" + key + "  value is:" + value);
-        }
-
-        /**
-         * 关闭当前的窗口
-         */
-        @JavascriptInterface
-        public void closeCurrentWindow() {
-            //JavaToJsActivity.this.finish();
-        }
-    };
     private WebChromeClient webChromeClient = new WebChromeClient() {
 
         @Override
@@ -446,7 +352,7 @@ public class BridgeTBSWebView extends WebView implements WebViewJavascriptBridge
             if (tbsClientCallBack!=null){
                 tbsClientCallBack.onJsAlert(arg0, arg1, arg2,arg3);
             }
-            return true;
+            return super.onJsAlert(arg0, arg1, arg2, arg3);
         }
 
         /**
