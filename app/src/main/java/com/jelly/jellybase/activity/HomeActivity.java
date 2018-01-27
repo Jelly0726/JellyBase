@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -18,8 +19,10 @@ import android.widget.Toast;
 
 import com.base.MapUtil.DestinationActivity;
 import com.base.applicationUtil.MyApplication;
+import com.base.applicationUtil.ToastUtils;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
+import com.base.httpmvp.databean.ScanResult;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XScrollView;
@@ -28,6 +31,7 @@ import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.HomeAdapter;
 import com.jelly.jellybase.datamodel.CurrentItem;
@@ -96,7 +100,7 @@ public class HomeActivity extends BaseActivity {
     private TopMiddlePopup topMiddlePopup;
 
     private BGABanner banner;
-
+    private ScanResult scanResult;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -323,7 +327,13 @@ public class HomeActivity extends BaseActivity {
         }
         //扫描
         if(requestCode==zxingRequestCode && resultCode== ZXingUtils.resultCode){
-            //Log.i("ss","data="+data.getStringExtra("result"));
+            String result=data.getStringExtra(ZXingUtils.ScanResult);
+            Log.i("ss","result="+result);
+            scanResult=new Gson().fromJson(result,ScanResult.class);
+            if (!MyApplication.getMyApp().isLogin()){
+                ToastUtils.showToast(this,"请先登录!");
+                return;
+            }
         }
         //地址
         if(requestCode==addressRequestCode && resultCode== addressRequestCode){

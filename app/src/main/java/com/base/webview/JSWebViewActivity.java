@@ -1,7 +1,5 @@
 package com.base.webview;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,18 +7,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.MapUtil.DestinationActivity;
-import com.base.MapUtil.RouteTask;
-import com.base.applicationUtil.ToastUtils;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.view.BaseActivity;
-import com.base.webview.jsbridge.BridgeHandler;
-import com.base.webview.jsbridge.CallBackFunction;
-import com.base.webview.tbs.BridgeTBSWebView;
 import com.base.webview.tbs.TBSClientCallBack;
+import com.base.webview.tbs.WebViewJavaScriptFunction;
+import com.base.webview.tbs.X5WebView;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
@@ -43,7 +38,7 @@ public class JSWebViewActivity extends BaseActivity {
     @BindView(R.id.title_tv)
     TextView title_tv;
     @BindView(R.id.web_filechooser)
-    BridgeTBSWebView mWebView;
+    X5WebView mWebView;
     @BindView(R.id.custom_view)
     XRefreshView custom_view;
     private WebTools webTools;
@@ -119,41 +114,43 @@ public class JSWebViewActivity extends BaseActivity {
                 }
             }
         });
-        mWebView.registerHandler("reginboxid", new BridgeHandler() {
-
+        //js交互
+        mWebView.addJavascriptInterface(new WebViewJavaScriptFunction() {
             @Override
-            public void handler(String data, CallBackFunction function) {
-                if (RouteTask.getInstance(getApplicationContext()).getStartPoint() == null) {
-                    ToastUtils.showToast(JSWebViewActivity.this, "定位异常！请检查网络与定位权限是否允许！");
-                    return;
+            public void onJsFunctionCalled(String tag) {
+                // TODO Auto-generated method stub
+
+            }
+            @JavascriptInterface
+            public void onSkipPage(String data){
+                Log.i("SSSS","data="+data);
+            }
+            @JavascriptInterface
+            public void onBack(){
+                Log.i("SSSSS","onBack");
+                if (mWebView != null && mWebView.canGoBack()) {
+                    mWebView.goBack();
+                }else {
+                    finish();
                 }
-                if (TextUtils.isEmpty(RouteTask.getInstance(getApplicationContext()).getStartPoint().city)) {
-                    ToastUtils.showToast(JSWebViewActivity.this, "定位异常！请检查网络与定位权限是否允许！");
-                    return;
-                }
-                Intent intent = new Intent(JSWebViewActivity.this, DestinationActivity.class);
-                startActivity(intent);
-                //function.onCallBack("submitFromWeb exe, response data 中文 from Java");
             }
-
-        });
-        mWebView.registerHandler("again_postion", new BridgeHandler() {
-
-            @Override
-            public void handler(String data, CallBackFunction function) {
+            /**
+             * java 调用 js方法 并且 传值
+             * 步骤：1、调用 js函数  2、js回调一个android方法得到参数  3、js处理函数
+             * @return
+             */
+            @JavascriptInterface
+            public String getToken(){
+                return GlobalToken.getToken().getToken();
             }
-
-        });
-        mWebView.registerHandler("search_btn", new BridgeHandler() {
-
-            @Override
-            public void handler(String data, CallBackFunction function) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mWebView.getWindowToken(), 0); //强制隐藏键盘
+            /**
+             * 关闭当前的窗口
+             */
+            @JavascriptInterface
+            public void closeCurrentWindow(){
+                //JavaToJsActivity.this.finish();
             }
-
-        });
-
+        }, "Android");
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
     }

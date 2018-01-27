@@ -60,13 +60,13 @@
         android:orientation="vertical"
         xrefreshview:isHeightMatchParent="true"
         xrefreshview:isWidthMatchParent="true" >
-    <com.base.webview.tbs.BridgeTBSWebView
+    <com.base.webview.tbs.X5WebView
         android:id="@+id/web_filechooser"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layerType="hardware"
         android:scrollbars="none">
 
-    </com.base.webview.tbs.BridgeTBSWebView>
+    </com.base.webview.tbs.X5WebView>
     </com.base.xrefreshview.XRefreshView>
 </LinearLayout>

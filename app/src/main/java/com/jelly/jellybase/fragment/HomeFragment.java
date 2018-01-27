@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.view.BaseFragment;
-import com.base.webview.tbs.BridgeTBSWebView;
 import com.base.webview.tbs.TBSClientCallBack;
+import com.base.webview.tbs.X5WebView;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
@@ -25,7 +25,7 @@ import butterknife.Unbinder;
 public class HomeFragment extends BaseFragment {
     private Unbinder mUnbinder;
     @BindView(R.id.webView)
-    BridgeTBSWebView webView;
+    X5WebView webView;
     @BindView(R.id.custom_view)
     XRefreshView custom_view;
     @Override
