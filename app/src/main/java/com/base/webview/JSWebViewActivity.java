@@ -60,6 +60,7 @@ public class JSWebViewActivity extends BaseActivity {
         custom_view.setAutoRefresh(false);
         custom_view.setAutoLoadMore(false);
         custom_view.setPinnedTime(0);
+        custom_view.setMoveForHorizontal(true);
         custom_view.setOnTopRefreshTime(new OnTopRefreshTime() {
 
             @Override

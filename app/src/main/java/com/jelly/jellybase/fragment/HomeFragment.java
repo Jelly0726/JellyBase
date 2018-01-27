@@ -87,6 +87,7 @@ public class HomeFragment extends BaseFragment {
         custom_view.setAutoRefresh(false);
         custom_view.setAutoLoadMore(false);
         custom_view.setPinnedTime(1000);
+        custom_view.setMoveForHorizontal(true);
         custom_view.setOnTopRefreshTime(new OnTopRefreshTime() {
 
             @Override
