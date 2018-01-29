@@ -34,6 +34,16 @@ public class SocialUtil {
     }
 
     public SocialHelper socialHelper() {
+        if (socialHelper==null){
+            synchronized (SocialUtil.class) {
+                if (socialHelper == null) {
+                    socialHelper = new SocialHelper.Builder()
+                            .setWxAppId(BaseConfig.WechatPay_APP_ID)
+                            .setWxAppSecret(BaseConfig.WechatPay_APP_SECRET)
+                            .build();
+                }
+            }
+        }
         return socialHelper;
     }
 }
