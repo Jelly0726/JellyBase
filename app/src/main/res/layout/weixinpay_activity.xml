@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#ffc0c0c0">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffc0c0c0">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
     <com.yanzhenjie.sofia.StatusView
         android:id="@+id/status_view"
@@ -13,15 +13,15 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_marginBottom="1px"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:gravity="center_vertical"
             android:paddingLeft="20px">
             <ImageView
@@ -35,14 +35,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="16sp"
             android:text="微信支付"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="10dp">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

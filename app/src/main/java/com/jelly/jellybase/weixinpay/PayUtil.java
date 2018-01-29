@@ -65,7 +65,7 @@ public class PayUtil {
 	 * 微信支付接口
 	 * @param payStruct
 	 */
-	public void wxinPay(WeixinPayInfoGson.DataBean payStruct){
+	public void wxinPay(WeixinPayInfo payStruct){
 		PayReq request = new PayReq();
 
 		request.appId = payStruct.getAppid();
