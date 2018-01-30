@@ -18,6 +18,7 @@ import com.base.mprogressdialog.MProgressUtil;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
+import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.ValueCallback;
@@ -83,7 +84,7 @@ public class X5WebView extends WebView {
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
-			if (progressDialog != null&&isVisible&&isActivated()) {
+			if (progressDialog != null&&isVisible) {
 				progressDialog.show();
 			}
 			if (tbsClientCallBack!=null){
@@ -98,7 +99,54 @@ public class X5WebView extends WebView {
 			}
 
 		}
+		@Override
+		public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
+			Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
+			super.onReceivedHttpError(view, request, error);
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onReceivedHttpError(view, request, error);
+			}
+			if (progressDialog != null) {
+				progressDialog.dismiss();
+			}
+
+		}
+		@Override
+		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+			super.onReceivedError(view, errorCode, description, failingUrl);
+			//6.0以下执行
+			//Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
+			//网络未连接
+			showErrorPage();
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onReceivedError(view, errorCode, description, failingUrl);
+			}
+			if (progressDialog != null) {
+				progressDialog.dismiss();
+			}
+		}
+
+		//处理网页加载失败时
+		@Override
+		public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+			super.onReceivedError(view, request, error);
+			//6.0以上执行
+			//Log.i(TAG, "onReceivedError: ");
+			showErrorPage();//显示错误页面
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.onReceivedError(view, request, error);
+			}
+			if (progressDialog != null) {
+				progressDialog.dismiss();
+			}
+		}
 	};
+	/**
+	 * 显示自定义错误提示页面，用一个View覆盖在WebView
+	 */
+	public void showErrorPage() {
+		loadUrl("file:///android_asset/webpage/404.html");
+	}
 	private WebChromeClient chromeClient = new WebChromeClient() {
 		@Override
 		public boolean onJsConfirm(WebView arg0, String arg1, String arg2, JsResult arg3) {
@@ -206,7 +254,9 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedTitle(arg0,arg1);
 			}
-
+			if (arg1.contains("404")){
+				showErrorPage();
+			}
 		}
 	};
 	/**
