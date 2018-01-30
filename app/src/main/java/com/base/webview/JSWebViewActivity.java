@@ -126,14 +126,19 @@ public class JSWebViewActivity extends BaseActivity {
             public void onSkipPage(String data){
                 Log.i("SSSS","data="+data);
             }
+            /**
+             * js调用java的返回事件
+             * 注意：WebView的方法不能在其他线程操作
+             */
             @JavascriptInterface
             public void onBack(){
-                Log.i("SSSSS","onBack");
-                if (mWebView != null && mWebView.canGoBack()) {
-                    mWebView.goBack();
-                }else {
-                    finish();
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onBackPressed();
+                    }
+                });
+
             }
             /**
              * java 调用 js方法 并且 传值

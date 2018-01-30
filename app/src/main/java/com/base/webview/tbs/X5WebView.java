@@ -23,6 +23,7 @@ import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebHistoryItem;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
@@ -98,6 +99,27 @@ public class X5WebView extends WebView {
 				tbsClientCallBack.onPageFinished(view, url);
 			}
 
+		}
+		/**
+		 * 更新历史记录
+		 *
+		 * @param view
+		 * @param url
+		 * @param isReload
+		 */
+		@Override
+		public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+			super.doUpdateVisitedHistory(view, url, isReload);
+			if (tbsClientCallBack!=null){
+				tbsClientCallBack.doUpdateVisitedHistory(view, url, isReload);
+			}
+			WebHistoryItem webHistoryItem = copyBackForwardList().getItemAtIndex(0);
+			String uu = webHistoryItem.getOriginalUrl();
+			//Log.i("msg","url="+url+" isReload="+isReload+" uu="+uu);
+			if (url.contains(uu)) {
+				//webView.clearHistory();//清除历史记录
+				//Log.i("msg","list="+list.getSize());
+			}
 		}
 		@Override
 		public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
