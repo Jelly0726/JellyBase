@@ -83,7 +83,7 @@ public class X5WebView extends WebView {
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
-			if (progressDialog != null&&isVisible) {
+			if (progressDialog != null&&isVisible&&isActivated()) {
 				progressDialog.show();
 			}
 			if (tbsClientCallBack!=null){
