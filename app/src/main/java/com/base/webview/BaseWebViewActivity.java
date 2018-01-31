@@ -62,7 +62,8 @@ public class BaseWebViewActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView arg0, String arg1) {
                 Log.i("SSSS","onReceivedTitle  arg1="+arg1);
-                if (!arg1.contains("Page Error")){
+                if (!arg1.contains("Page Error")
+                        &&!arg1.contains("about:blank")){
                     topNav_layout.setVisibility(View.GONE);
                 }else {
                     topNav_layout.setVisibility(View.VISIBLE);

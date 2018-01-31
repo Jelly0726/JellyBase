@@ -201,7 +201,7 @@ public class X5WebView extends WebView {
 		WebHistoryItem webHistoryItem = webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-1);
 		String uu = webHistoryItem.getOriginalUrl();
 		if (uu.contains("android_asset/webpage/404.html")) {
-			uu=webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-2).getOriginalUrl();
+			uu=webBackForwardList.getItemAtIndex(0).getOriginalUrl();
 			//goBack();
 			clearHistory();
 			loadUrl(uu);

@@ -84,37 +84,6 @@ public class JSWebViewActivity extends BaseActivity {
             public void onLoadMore(boolean isSilence) {
             }
         });
-        if (webTools != null) {
-            if (!TextUtils.isEmpty(webTools.url)) {
-                mWebView.loadUrl(webTools.url);
-            }
-            title_tv.setText(webTools.title);
-        }
-        mWebView.setClientCallBack(new TBSClientCallBack(){
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                topNav_layout.setVisibility(View.VISIBLE);
-                Log.i("SSSS","onPageStarted  url="+url);
-            }
-
-            @Override
-            public void onReceivedTitle(WebView arg0, String arg1) {
-                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
-                if (!arg1.contains("Page Error")){
-                    topNav_layout.setVisibility(View.GONE);
-                }else {
-                    topNav_layout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress>=100){
-                    mWebView.setVisible(true);
-                    custom_view.stopRefresh();
-                }
-            }
-        });
         //js交互
         mWebView.addJavascriptInterface(new WebViewJavaScriptFunction() {
             @Override
@@ -157,6 +126,39 @@ public class JSWebViewActivity extends BaseActivity {
                 //JavaToJsActivity.this.finish();
             }
         }, "Android");
+        if (webTools != null) {
+            if (!TextUtils.isEmpty(webTools.url)) {
+                mWebView.setVisible(true);
+                mWebView.loadUrl(webTools.url);
+            }
+            title_tv.setText(webTools.title);
+        }
+        mWebView.setClientCallBack(new TBSClientCallBack(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                topNav_layout.setVisibility(View.VISIBLE);
+                Log.i("SSSS","onPageStarted  url="+url);
+            }
+
+            @Override
+            public void onReceivedTitle(WebView arg0, String arg1) {
+                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
+                if (!arg1.contains("Page Error")
+                        &&!arg1.contains("about:blank")){
+                    topNav_layout.setVisibility(View.GONE);
+                }else {
+                    topNav_layout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress>=100){
+                    mWebView.setVisible(true);
+                    custom_view.stopRefresh();
+                }
+            }
+        });
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
     }
