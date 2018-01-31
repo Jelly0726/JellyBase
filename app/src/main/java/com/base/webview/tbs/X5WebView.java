@@ -22,6 +22,7 @@ import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
 import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebBackForwardList;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebHistoryItem;
 import com.tencent.smtt.sdk.WebSettings;
@@ -164,6 +165,50 @@ public class X5WebView extends WebView {
 		}
 	};
 	/**
+	 * 加载
+	 */
+	@Override
+	public void loadUrl(String var1) {
+		if (var1.contains("android_asset/webpage/404.html")){
+			super.loadUrl(var1);
+			return;
+		}
+		WebBackForwardList webBackForwardList=copyBackForwardList();
+		if (webBackForwardList.getSize()==0){
+			super.loadUrl(var1);
+			return;
+		}
+		WebHistoryItem webHistoryItem = webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-1);
+		String uu = webHistoryItem.getOriginalUrl();
+		if (uu.contains("android_asset/webpage/404.html")
+				||!uu.equals(var1)) {
+			if (uu.contains("android_asset/webpage/404.html")){
+				clearHistory();
+			}
+			super.loadUrl(var1);
+		}
+	}
+	/**
+	 * 重新加载
+	 */
+	@Override
+	public void reload() {
+		WebBackForwardList webBackForwardList=copyBackForwardList();
+		if (webBackForwardList.getSize()<=1){
+			super.reload();
+			return;
+		}
+		WebHistoryItem webHistoryItem = webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-1);
+		String uu = webHistoryItem.getOriginalUrl();
+		if (uu.contains("android_asset/webpage/404.html")) {
+			uu=webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-2).getOriginalUrl();
+			//goBack();
+			clearHistory();
+			loadUrl(uu);
+		}else
+			super.reload();
+	}
+	/**
 	 * 显示自定义错误提示页面，用一个View覆盖在WebView
 	 */
 	public void showErrorPage() {
@@ -276,7 +321,7 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedTitle(arg0,arg1);
 			}
-			if (arg1.contains("404")){
+			if (arg1.contains("网页无法打开")){
 				showErrorPage();
 			}
 		}

@@ -40,13 +40,15 @@ public class HomeFragment extends BaseFragment {
     public void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
             webView.setVisible(isVisible);
+            webView.setVisible(isVisible);
             webView.loadUrl("https://www.baidu.com");
         }
     }
 
     @Override
     public void onFragmentFirstVisible() {
-
+        webView.setVisible(true);
+        webView.loadUrl("https://www.baidu.com");
     }
 
     @Override
