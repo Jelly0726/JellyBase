@@ -44,6 +44,7 @@ public class BaseActivity extends AutoLayoutActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getExtra();
         mRecevier = new InnerRecevier();
         mFilter = new IntentFilter();
         mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -56,7 +57,19 @@ public class BaseActivity extends AutoLayoutActivity {
             registerReceiver(mRecevier, mFilter);
         }
     }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);//must store the new intent unless getIntent() will return the old one
+        getExtra();
+    }
 
+    /**
+     * 获取Intent传值
+     */
+    public void getExtra(){
+
+    }
     @Override
     public void setContentView(View view) {
         FrameLayout frameLayout=new FrameLayout(this);

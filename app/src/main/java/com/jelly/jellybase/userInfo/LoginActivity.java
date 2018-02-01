@@ -58,14 +58,19 @@ public class LoginActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_login_activity);
         ButterKnife.bind(this);
-        phone=getIntent().getStringExtra("phone");
-        password=getIntent().getStringExtra("password");
-        from=getIntent().getIntExtra("from",-1);
         iniView();
-
         AppPrefs.remove(getApplicationContext(),
                 ConfigKey.DEFAULT_BANK);
     }
+
+    @Override
+    public void getExtra() {
+        super.getExtra();
+        phone=getIntent().getStringExtra("phone");
+        password=getIntent().getStringExtra("password");
+        from=getIntent().getIntExtra("from",-1);
+    }
+
     private void iniView (){
 
         mVpContent.setOnPageChangeListener(this);
@@ -130,6 +135,14 @@ public class LoginActivity extends BaseActivity implements
         }
     }
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("s'ss","intent="+intent);
+        if (SocialUtil.getInstance() != null) {
+            SocialUtil.getInstance().socialHelper().onNewIntent(intent);
+        }
+    }
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(BuildConfig.IS_MUST_LOGIN){//是否必须登录
@@ -183,14 +196,6 @@ public class LoginActivity extends BaseActivity implements
         Log.i("s'ss","intent  ss="+data);
         if (data != null && SocialUtil.getInstance() != null) {//qq分享如果选择留在qq，通过home键退出，再进入app则不会有回调
             SocialUtil.getInstance().socialHelper().onActivityResult(requestCode, resultCode, data);
-        }
-    }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.i("s'ss","intent="+intent);
-        if (SocialUtil.getInstance() != null) {
-            SocialUtil.getInstance().socialHelper().onNewIntent(intent);
         }
     }
 }

@@ -44,7 +44,6 @@ public class MyApplication extends OkGoApp {
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
-    private ArrayList<Activity> activities=new ArrayList<Activity>();
     private ArrayList<Object> locationEvent=new ArrayList<Object>();//定位的event接收器管理
     public static boolean isMainState() {
         return mainState;
@@ -255,32 +254,24 @@ public class MyApplication extends OkGoApp {
     //添加Activity到容器中
     public void addActivity(Activity activity)
     {
-        activities.add(activity);
+        AppManager.getAppManager().addActivity(activity);
     }
     public void deleteActivity(Activity activity){
-        activities.remove(activity);
+        AppManager.getAppManager().finishActivity(activity);
     }
     public void finishAllActivity(){
-        for(Activity activity:activities){
-            activity.finish();
-        }
-        activities.clear();
+        AppManager.getAppManager().finishAllActivity();
     }
     /**
      * 退出
      */
     public void exit() {
         try{
-            for(Activity activity:activities){
-                activity.finish();
-            }
-            activities.clear();
             locationEvent.clear();
             locationEvent=null;
-            activities=null;
             LocationTask.getInstance(this).onDestroy();//销毁定位
             HermesEventBus.getDefault().destroy();
-            System.exit(0);
+            AppManager.getAppManager().AppExit(this);
         }catch(Exception e){
             e.printStackTrace();
         }

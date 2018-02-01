@@ -130,7 +130,8 @@
         <meta-data
             android:name="circle_dialog_design_height" android:value="1920"/>
         <!--↑↑↑↑↑↑↑↑circle_dialog↑↑↑↑↑↑↑↑-->
-        <activity android:name="com.base.LauncherActivity">
+        <activity android:name="com.base.LauncherActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -140,6 +141,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
             <intent-filter>
                 <action android:name="${applicationId}.action.ACTION_MAIN" />
@@ -149,6 +151,7 @@
         <activity
             android:name=".userInfo.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnchanged|stateHidden">
             <intent-filter>
                 <action android:name="${applicationId}.action.ACTION_LOGIN" />

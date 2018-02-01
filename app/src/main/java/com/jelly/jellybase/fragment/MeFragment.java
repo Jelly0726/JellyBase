@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
+import com.base.httpmvp.databean.MyInfo;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XNestedScrollView;
@@ -35,6 +36,8 @@ public class MeFragment extends BaseFragment {
     XRefreshView xRefreshView;
     @BindView(R.id.nestedScroll_view)
     XNestedScrollView scrollView;
+    @BindView(R.id.name_tv)
+    TextView name_tv;
     @BindView(R.id.balance_layout)
     LinearLayout balance_layout;
     @BindView(R.id.balance_tv)
@@ -43,6 +46,7 @@ public class MeFragment extends BaseFragment {
     LinearLayout bankcard_layout;
     @BindView(R.id.banksqy_tv)
     TextView banksqy_tv;
+    private MyInfo myInfo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null)
@@ -65,6 +69,29 @@ public class MeFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         iniXRefreshView();
+        if (getActivity()!=null){
+            if (MyApplication.getMyApp().isLogin()){
+                if (myInfo==null){
+                    //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+                }
+            }else {
+                name_tv.setText("未登录");
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity()!=null){
+            if (MyApplication.getMyApp().isLogin()){
+                if (myInfo==null){
+                    //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+                }
+            }else {
+                name_tv.setText("未登录");
+            }
+        }
     }
 
     @Override
