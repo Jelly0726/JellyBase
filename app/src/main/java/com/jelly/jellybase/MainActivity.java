@@ -90,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
                         Permission.CONTACTS,
                         Permission.LOCATION,
                         Permission.SENSORS,
-                        Permission.SMS)
-                .permission(
-                        android.Manifest.permission.READ_PHONE_STATE,
-                        android.Manifest.permission.CALL_PHONE
-                )
+                        Permission.SMS,
+                        new String[]{
+                                android.Manifest.permission.READ_PHONE_STATE,
+                                android.Manifest.permission.CALL_PHONE
+                        })
                 .callback(this)
                 // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
                 // 这样避免用户勾选不再提示，导致以后无法申请权限。

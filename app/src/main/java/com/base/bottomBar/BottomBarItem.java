@@ -180,7 +180,7 @@ public class BottomBarItem extends LinearLayout {
         textLayoutParams.gravity=Gravity.CENTER;
         mTextView.setLayoutParams(textLayoutParams);
 
-        MarginLayoutParams imLayoutParams= (MarginLayoutParams) image_flayout.getLayoutParams();
+        FrameLayout.LayoutParams imLayoutParams= (FrameLayout.LayoutParams) image_flayout.getLayoutParams();
         imLayoutParams.bottomMargin=mMarginBottom+mTextViewHeight;
         image_flayout.setLayoutParams(imLayoutParams);
 

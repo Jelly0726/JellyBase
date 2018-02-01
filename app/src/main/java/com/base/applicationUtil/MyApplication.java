@@ -157,6 +157,8 @@ public class MyApplication extends OkGoApp {
             Intent intent = new Intent();
             //intent.setClass(this, LoginActivity.class);
             intent.setAction(IntentAction.ACTION_LOGIN);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }catch(Exception e){
             e.printStackTrace();
@@ -170,6 +172,8 @@ public class MyApplication extends OkGoApp {
             Intent intent = new Intent();
             //intent.setClass(this, MainActivity.class);
             intent.setAction(IntentAction.ACTION_MAIN);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }catch(Exception e){
             e.printStackTrace();
@@ -182,6 +186,8 @@ public class MyApplication extends OkGoApp {
         try{
             Intent intent = new Intent();
             intent.setClass(this, GuideActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }catch(Exception e){
             e.printStackTrace();

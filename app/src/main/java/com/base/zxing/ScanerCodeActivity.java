@@ -264,6 +264,7 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.mo_scanner_preview_view);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
+		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		if (hasSurface) {
 			initCamera(surfaceHolder);
 		} else {

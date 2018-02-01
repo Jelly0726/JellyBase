@@ -127,7 +127,9 @@ private Parameters parameter;
    */
   public void openDriver(SurfaceHolder holder) throws IOException {
     if (camera == null) {
-      camera = Camera.open();
+      if (!previewing) {
+        camera = Camera.open(0);
+      }
       if (camera == null) {
         throw new IOException();
       }

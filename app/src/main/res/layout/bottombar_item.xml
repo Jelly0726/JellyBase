@@ -6,6 +6,25 @@
     android:gravity="bottom"
     android:orientation="vertical"
     >
+
+    <LinearLayout
+        android:id="@+id/mLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center|bottom"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="123"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            />
+    </LinearLayout>
     <FrameLayout
         android:id="@+id/image_flayout"
         android:layout_width="match_parent"
@@ -60,22 +79,4 @@
             android:visibility="gone" />
 
     </FrameLayout>
-    <LinearLayout
-        android:id="@+id/mLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:gravity="center|bottom"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:id="@+id/tv_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="123"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            />
-    </LinearLayout>
 </FrameLayout>
