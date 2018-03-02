@@ -1,4 +1,4 @@
-package com.alipay.sdk.pay;
+package com.jelly.jellybase.alipay;
 /**
  * 征游支付结果监听
  * @author Administrator

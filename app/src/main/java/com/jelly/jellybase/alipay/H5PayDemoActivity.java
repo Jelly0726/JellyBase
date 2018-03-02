@@ -1,4 +1,4 @@
-package com.alipay.sdk.pay;
+package com.jelly.jellybase.alipay;
 
 import android.app.Activity;
 import android.app.AlertDialog;

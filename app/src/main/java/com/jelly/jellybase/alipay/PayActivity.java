@@ -1,4 +1,4 @@
-package com.alipay.sdk.pay;
+package com.jelly.jellybase.alipay;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
-import com.alipay.sdk.pay.util.AuthResult;
-import com.alipay.sdk.pay.util.OrderInfoUtil2_0;
-import com.alipay.sdk.pay.util.PayResult;
+import com.base.alipay.AuthResult;
+import com.base.alipay.OrderInfoUtil2_0;
+import com.base.alipay.PayResult;
 import com.jelly.jellybase.R;
 
 import java.util.Map;

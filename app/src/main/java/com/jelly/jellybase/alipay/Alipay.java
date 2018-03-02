@@ -1,4 +1,4 @@
-package com.alipay.sdk.pay;
+package com.jelly.jellybase.alipay;
 
 /**
  * Created by Administrator on 2016/6/6.
@@ -9,7 +9,7 @@ import android.app.ProgressDialog;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
-import com.alipay.sdk.pay.util.PayResult;
+import com.base.alipay.PayResult;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

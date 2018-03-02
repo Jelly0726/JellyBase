@@ -1,4 +1,4 @@
-package com.alipay.sdk.pay;
+package com.jelly.jellybase.alipay;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
