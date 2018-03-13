@@ -356,6 +356,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 26://高德地图
                     intent=new Intent(MyApplication.getMyApp(), AMapActivity.class);
+                    intent.putExtra("name","怡富花园二期-东门");
+                    intent.putExtra("address","福建省厦门市思明区莲前西路314号");
+                    intent.putExtra("latitude",24.4771500111);
+                    intent.putExtra("longitude",118.1387329102);
                     startActivity(intent);
                     break;
             }

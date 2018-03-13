@@ -64,6 +64,8 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         AMap.OnMapLoadedListener,LocationSource,AMap.OnMarkerClickListener{
     @BindView(R.id.left_back)
     LinearLayout left_back;
+    @BindView(R.id.starNavi_layout)
+    LinearLayout starNavi_layout;
     @BindView(R.id.aMapView)
     MapView aMapView;                                    //高德地图
     private AMap aMap;
@@ -76,9 +78,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     private RouteOverLay mRouteOverLay;
     private ArrayList<RouteOverLay> routeOverLays = new ArrayList<RouteOverLay>();
     private boolean mIsCalculateRouteSuccess = false;           // 是否计算成功的标志
-    //起点终点
-    private NaviLatLng mNaviStart;
-    private NaviLatLng mNaviEnd;
     //起点终点列表
     private ArrayList<NaviLatLng> mStartPoints = new ArrayList<NaviLatLng>();
     private ArrayList<NaviLatLng> mEndPoints = new ArrayList<NaviLatLng>();
@@ -96,9 +95,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         longitude=getIntent().getDoubleExtra("longitude",0d);
         address=getIntent().getStringExtra("address");
         name=getIntent().getStringExtra("name");
-        Log.i("SSS","latitude="+latitude);
-        Log.i("SSS","longitude="+longitude);
-        Log.i("SSS","address="+address);
         HermesEventBus.getDefault().register(this);
         MyApplication.getMyApp().addEvent(this);
         setContentView(R.layout.amap_activity);
@@ -158,11 +154,22 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
     }
-    @OnClick({R.id.left_back})
+    @OnClick({R.id.left_back,R.id.starNavi_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:
                 finish();
+                break;
+            case R.id.starNavi_layout:
+                if (mStartPoints.size()<=0){
+                    ToastUtils.showToast(this,"定位中...");
+                    return;
+                }
+                if (latitude==0d||longitude==0d){
+                    ToastUtils.showToast(this,"门店经纬度异常！");
+                    return;
+                }
+                calculateDriveRoute();
                 break;
         }
     }
@@ -209,13 +216,10 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
      */
 
     private void calculateDriveRoute() {
-        mEndPoints.clear();
-        mStartPoints.clear();
         if (progressDialog != null) {
             progressDialog.show();
         }
-        NaviLatLng  mStart = new NaviLatLng(latitude,longitude);
-        mStartPoints.add(mStart);
+        mEndPoints.clear();
         NaviLatLng  mNaviEnd = new NaviLatLng(latitude,longitude);
         mEndPoints.add(mNaviEnd);
         try {
@@ -265,15 +269,17 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
      */
     @Override
     public void onMapLoaded() {
-        MarkerOptions markerOption = new MarkerOptions();
-        markerOption.position(new LatLng(latitude, longitude));
-        markerOption.title(name).snippet(address);
+        if (latitude!=0d||longitude!=0d){
+            MarkerOptions markerOption = new MarkerOptions();
+            markerOption.position(new LatLng(latitude, longitude));
+            markerOption.title(name).snippet(address);
 
-        markerOption.draggable(false);//设置Marker可拖动
-        markerOption.icon(BitmapDescriptorFactory.defaultMarker());
-        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(false);//设置marker平贴地图效果
-        aMap.addMarker(markerOption);
+            markerOption.draggable(false);//设置Marker可拖动
+            markerOption.icon(BitmapDescriptorFactory.defaultMarker());
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+            markerOption.setFlat(false);//设置marker平贴地图效果
+            aMap.addMarker(markerOption);
+        }
     }
     /**
      * 导航初始化失败时的回调函数。
@@ -636,6 +642,9 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
                 AMapLocation aMapLocation = (AMapLocation) netEvent.getEvent();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
                 isFirstTime=false;
+                mStartPoints.clear();
+                NaviLatLng  mStart = new NaviLatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                mStartPoints.add(mStart);
             }
         }
     }
