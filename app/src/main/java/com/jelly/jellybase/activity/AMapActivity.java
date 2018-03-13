@@ -1,7 +1,6 @@
 package com.jelly.jellybase.activity;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -271,8 +270,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         markerOption.title(name).snippet(address);
 
         markerOption.draggable(true);//设置Marker可拖动
-        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                .decodeResource(getResources(),R.drawable.ic_place_24dp)));
+        markerOption.icon(BitmapDescriptorFactory.defaultMarker());
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         markerOption.setFlat(false);//设置marker平贴地图效果
         aMap.addMarker(markerOption);
