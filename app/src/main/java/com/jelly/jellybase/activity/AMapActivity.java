@@ -269,7 +269,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         markerOption.position(new LatLng(latitude, longitude));
         markerOption.title(name).snippet(address);
 
-        markerOption.draggable(true);//设置Marker可拖动
+        markerOption.draggable(false);//设置Marker可拖动
         markerOption.icon(BitmapDescriptorFactory.defaultMarker());
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         markerOption.setFlat(false);//设置marker平贴地图效果
