@@ -505,6 +505,11 @@ public class AMapNaviTask implements AMapNaviListener {
     public void showLaneInfo(AMapLaneInfo[] aMapLaneInfos, byte[] bytes, byte[] bytes1) {
     }
 
+    @Override
+    public void showLaneInfo(AMapLaneInfo aMapLaneInfo) {
+
+    }
+
     /**
      * 关闭道路信息回调。
      */
@@ -566,6 +571,11 @@ public class AMapNaviTask implements AMapNaviListener {
 
     @Override
     public void updateCameraInfo(AMapNaviCameraInfo[] aMapNaviCameraInfos) {
+
+    }
+
+    @Override
+    public void updateIntervalCameraInfo(AMapNaviCameraInfo aMapNaviCameraInfo, AMapNaviCameraInfo aMapNaviCameraInfo1, int i) {
 
     }
 }

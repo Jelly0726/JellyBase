@@ -319,7 +319,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-
+        <activity android:name=".activity.AMapActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".swipeRefresh.activity.XSwipeMainActivity"
             android:label="Item中的菜单"

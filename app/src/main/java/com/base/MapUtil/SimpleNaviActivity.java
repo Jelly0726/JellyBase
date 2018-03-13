@@ -214,6 +214,11 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 
 	}
 
+	@Override
+	public void updateIntervalCameraInfo(AMapNaviCameraInfo aMapNaviCameraInfo, AMapNaviCameraInfo aMapNaviCameraInfo1, int i) {
+
+	}
+
 	/**
 	 * 服务区信息回调函数
 	 * @param amapServiceAreaInfos
@@ -281,6 +286,11 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 
 	@Override
 	public void showLaneInfo(AMapLaneInfo[] aMapLaneInfos, byte[] bytes, byte[] bytes1) {
+
+	}
+
+	@Override
+	public void showLaneInfo(AMapLaneInfo aMapLaneInfo) {
 
 	}
 

@@ -28,6 +28,7 @@ import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.ItemDecoration;
+import com.jelly.jellybase.activity.AMapActivity;
 import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
@@ -351,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 25://RecyclerView侧滑菜单
                     intent=new Intent(MyApplication.getMyApp(), XSwipeMainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 26://高德地图
+                    intent=new Intent(MyApplication.getMyApp(), AMapActivity.class);
                     startActivity(intent);
                     break;
             }

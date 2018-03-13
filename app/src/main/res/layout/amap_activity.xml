@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg">
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.yanzhenjie.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_bg"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
+    <RelativeLayout
+        android:id="@+id/now_map_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:background="#467646">
+        <com.amap.api.maps.MapView
+            android:id="@+id/aMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            android:clickable="true"
+        </com.amap.api.maps.MapView>
+        <LinearLayout
+            android:id="@+id/left_back"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:paddingLeft="0px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/fanhui2"/>
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

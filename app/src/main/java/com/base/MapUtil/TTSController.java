@@ -261,6 +261,11 @@ public class TTSController implements MyNaviListener {
 	}
 
 	@Override
+	public void updateIntervalCameraInfo(AMapNaviCameraInfo aMapNaviCameraInfo, AMapNaviCameraInfo aMapNaviCameraInfo1, int i) {
+
+	}
+
+	@Override
 	public void onServiceAreaUpdate(AMapServiceAreaInfo[] infoArray) {
 
 	}
@@ -277,6 +282,11 @@ public class TTSController implements MyNaviListener {
 
 	@Override
 	public void showLaneInfo(AMapLaneInfo[] laneInfos, byte[] laneBackgroundInfo, byte[] laneRecommendedInfo) {
+
+	}
+
+	@Override
+	public void showLaneInfo(AMapLaneInfo aMapLaneInfo) {
 
 	}
 
