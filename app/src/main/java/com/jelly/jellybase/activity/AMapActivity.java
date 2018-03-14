@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -131,8 +132,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
 
             aMap.setOnMapLoadedListener(this);
             aMap.setLocationSource(this);
-            aMap.getUiSettings().setZoomControlsEnabled(true);
-            aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
             aMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
             aMap.setOnCameraChangeListener(this);
             aMap.setOnMarkerClickListener(this);//设置标记点击监听
@@ -144,6 +143,12 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
 //                }
 //            });
 //            aMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));//设置缩放级别
+
+            aMap.getUiSettings().setZoomControlsEnabled(true);//缩放按钮控件是否显示
+            aMap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
+            aMap.getUiSettings().setCompassEnabled(true);//指南针控件是否显示
+            aMap.getUiSettings().setScaleControlsEnabled(true);//控制比例尺控件是否显示
+            aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_LEFT);//设置logo位置
         }
     }
     private void initNavi(){
