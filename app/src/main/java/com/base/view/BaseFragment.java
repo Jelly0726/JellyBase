@@ -26,6 +26,8 @@ public abstract class BaseFragment extends Fragment{
     private boolean isReuseView=true;
     //是否第一次可见
     private boolean isFirstVisible;
+    //是否连接过服务器
+    private boolean isConnected=false;
     public abstract void setData(String json);
     public BackInterface mBackInterface;
 
@@ -199,5 +201,13 @@ public abstract class BaseFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         Log.i("SSSS","onDetach====="+this);
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
     }
 }
