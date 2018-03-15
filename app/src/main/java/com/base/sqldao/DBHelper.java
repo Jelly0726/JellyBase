@@ -124,8 +124,9 @@ public class DBHelper {
                         }
                         Class cl = setfb[i].getType();    // 属性的类型
                         if(cl.toString()
-                                .equals("interface com.android.tools" +
-                                        ".fd.runtime.IncrementalChange"))
+                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
+                                ||cl.toString()
+                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
                             continue;
                         int md = setfb[i].getModifiers();    // 属性的修饰域
                         Field f = getTemp.getDeclaredField(setfb[i].getName());// 属性的值
@@ -144,8 +145,9 @@ public class DBHelper {
                         }
                         Class cl = setfb[i].getType();    // 属性的类型
                         if(cl.toString()
-                                .equals("interface com.android.tools" +
-                                        ".fd.runtime.IncrementalChange"))
+                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
+                                ||cl.toString()
+                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
                             continue;
                         int md = setfb[i].getModifiers();    // 属性的修饰域
                         Field f = setTemp.getDeclaredField(setfb[i].getName());// 属性的值

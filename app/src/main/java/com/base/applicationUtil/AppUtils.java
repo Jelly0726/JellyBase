@@ -5,8 +5,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,7 +49,6 @@ import android.widget.Toast;
 import com.base.config.BaseConfig;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -1248,8 +1245,9 @@ public class AppUtils {
                         }
                         Class cl = setfb[i].getType();    // 属性的类型
                         if(cl.toString()
-                                .equals("interface com.android.tools" +
-                                        ".fd.runtime.IncrementalChange"))
+                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
+                                ||cl.toString()
+                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
                             continue;
                         int md = setfb[i].getModifiers();    // 属性的修饰域
                         Field f = getTemp.getDeclaredField(setfb[i].getName());// 属性的值
@@ -1268,8 +1266,9 @@ public class AppUtils {
                         }
                         Class cl = setfb[i].getType();    // 属性的类型
                         if(cl.toString()
-                                .equals("interface com.android.tools" +
-                                        ".fd.runtime.IncrementalChange"))
+                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
+                                ||cl.toString()
+                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
                             continue;
                         int md = setfb[i].getModifiers();    // 属性的修饰域
                         Field f = setTemp.getDeclaredField(setfb[i].getName());// 属性的值
