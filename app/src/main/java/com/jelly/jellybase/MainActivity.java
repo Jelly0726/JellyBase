@@ -84,17 +84,17 @@ public class MainActivity extends AppCompatActivity {
         // 申请权限。
         AndPermission.with(MainActivity.this)
                 .requestCode(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
-                .permission(Permission.MICROPHONE,
-                        Permission.STORAGE,
-                        Permission.CALENDAR,
-                        Permission.CAMERA,
-                        Permission.CONTACTS,
-                        Permission.LOCATION,
-                        Permission.SENSORS,
-                        Permission.SMS,
+                .permission(Permission.MICROPHONE,//扩音器，麦克风
+                        Permission.STORAGE,//存储
+                        Permission.CALENDAR,//日历
+                        Permission.CAMERA,//照相机
+                        Permission.CONTACTS,//联系人
+                        Permission.LOCATION,//定位
+                        //Permission.SENSORS,//传感器，感应器；感测器
+                        Permission.SMS,//短信
                         new String[]{
-                                android.Manifest.permission.READ_PHONE_STATE,
-                                android.Manifest.permission.CALL_PHONE
+                                android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
+                                android.Manifest.permission.CALL_PHONE//拨打电话
                         })
                 .callback(this)
                 // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
