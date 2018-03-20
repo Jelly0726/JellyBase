@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017/9/21.
+ * 当Fragment包含ViewPage+Fragment时FragmentAdapter不要继承FragmentStatePagerAdapter
  */
 
 public class FragmentStateAdapter extends FragmentStatePagerAdapter {
