@@ -16,7 +16,7 @@ import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
-import com.base.view.FragmentAdapter;
+import com.base.view.FragmentStateAdapter;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BottomBarActivity;
@@ -48,7 +48,7 @@ public class WalletFragment extends BaseFragment{
     ViewPager mVpContent;
     @BindView(R.id.bbl)
     MiddleBarLayout mBottomBarLayout;
-    private FragmentAdapter myAdapter;
+    private FragmentStateAdapter myAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class WalletFragment extends BaseFragment{
     }
 
     private void initViewPagerListener() {
-        myAdapter= new FragmentAdapter(getChildFragmentManager(),mFragmentList);
+        myAdapter= new FragmentStateAdapter(getChildFragmentManager(),mFragmentList);
         mVpContent.setAdapter(myAdapter);
         mBottomBarLayout.setViewPager(mVpContent);
         mBottomBarLayout.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {

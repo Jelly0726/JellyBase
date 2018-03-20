@@ -19,7 +19,7 @@ import com.base.multiClick.AntiShake;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
-import com.base.view.FragmentAdapter;
+import com.base.view.FragmentStateAdapter;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
@@ -60,7 +60,7 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     ViewPager mVpContent;
     @BindView(R.id.bbl)
     MiddleBarLayout mBottomBarLayout;
-    private FragmentAdapter myAdapter;
+    private FragmentStateAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     @BindView(R.id.shangou_layout)
@@ -183,7 +183,7 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     }
 
     private void initViewPagerListener() {
-        myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
+        myAdapter= new FragmentStateAdapter(getSupportFragmentManager(),mFragmentList);
         mVpContent.setAdapter(myAdapter);
         mBottomBarLayout.setViewPager(mVpContent);
         mBottomBarLayout.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {

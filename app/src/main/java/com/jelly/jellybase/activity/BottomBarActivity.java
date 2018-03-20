@@ -17,7 +17,7 @@ import com.base.sqldao.DBHelper;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
-import com.base.view.FragmentAdapter;
+import com.base.view.FragmentStateAdapter;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
@@ -45,7 +45,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     private final int zxingRequestCode=1;
     private ViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
-    private FragmentAdapter myAdapter;
+    private FragmentStateAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     private Login login;
@@ -131,7 +131,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     }
 
     private void initListener() {
-        myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
+        myAdapter= new FragmentStateAdapter(getSupportFragmentManager(),mFragmentList);
         mVpContent.setAdapter(myAdapter);
         mBottomBarLayout.setViewPager(mVpContent);
         mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
