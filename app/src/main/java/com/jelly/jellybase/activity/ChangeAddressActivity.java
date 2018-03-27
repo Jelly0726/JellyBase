@@ -33,6 +33,7 @@ import systemdb.PositionEntity;
 
 /**
  * Created by Administrator on 2018/1/11.
+ * 地址选择
  */
 
 public class ChangeAddressActivity extends BaseActivity {
