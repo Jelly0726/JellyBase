@@ -229,6 +229,18 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 			@Override
 			public void run() {
 				final Result result = ZXingUtils.syncDecodeQRCode(photo);
+				if (result==null){
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							// 数据返回
+							Intent data = new Intent();
+							setResult(ZXingUtils.resultCode, data);
+							finish();
+						}
+					});
+					return;
+				}
 				final BarcodeFormat type = result.getBarcodeFormat();
 				final String realContent = ZXingUtils.recode(result.toString());
 				if (BarcodeFormat.QR_CODE.equals(type)) {
