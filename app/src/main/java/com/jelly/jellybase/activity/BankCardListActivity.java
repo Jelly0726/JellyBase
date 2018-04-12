@@ -1,10 +1,11 @@
 package com.jelly.jellybase.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.base.applicationUtil.ToastUtils;
@@ -14,12 +15,17 @@ import com.base.httpmvp.presenter.BankListPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.BankCardListAdapter;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +48,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     LinearLayout top_right;
 
     @BindView(R.id.recycler_view_test_rv)
-    RecyclerView recyclerView;
+    SwipeMenuRecyclerView recyclerView;
     @BindView(R.id.xrefreshview)
     XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
@@ -50,7 +56,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     private List<BankCardInfo> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
-
+    private BankCardInfo bankCardInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +93,19 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
         xRefreshView.setPullLoadEnable(true);
         //recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
+        recyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+//        recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
+//        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+        recyclerView.setSwipeMenuCreator(swipeMenuCreator);
+        recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
         recyclerView.setAdapter(adapter);
         xRefreshView.setPinnedTime(1000);
         xRefreshView.setMoveForHorizontal(true);
-        adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
+       // adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
         adapter.setOnItemClickListener(onItemClickListener);
         xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
     }
@@ -146,7 +158,61 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
 //            startActivity(intent);
         }
     };
+    /**
+     * 菜单创建器，在Item要创建菜单的时候调用。
+     */
+    private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+        @Override
+        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+            int width = getResources().getDimensionPixelSize(R.dimen.xswipe_dp_70);
 
+            // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
+            // 2. 指定具体的高，比如80;
+            // 3. WRAP_CONTENT，自身高度，不推荐;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+            // 添加左侧的，如果不添加，则左侧不会出现菜单。
+            {
+
+            }
+
+            // 添加右侧的，如果不添加，则右侧不会出现菜单。
+            {
+                SwipeMenuItem deleteItem = new SwipeMenuItem(BankCardListActivity.this)
+                        .setBackground(R.drawable.xswipe_selector_red)
+                        .setImage(R.mipmap.xswipe_action_delete)
+                        .setText("删除")
+                        .setTextColor(Color.WHITE)
+                        .setWidth(width)
+                        .setHeight(height);
+                swipeRightMenu.addMenuItem(deleteItem);// 添加菜单到右侧。
+            }
+        }
+    };
+
+    /**
+     * RecyclerView的Item的Menu点击监听。
+     */
+    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+        @Override
+        public void onItemClick(SwipeMenuBridge menuBridge) {
+            menuBridge.closeMenu();
+
+            int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
+            int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+            int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
+
+            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+                if (adapterPosition<mList.size()){
+                    bankCardInfo=mList.get(adapterPosition);
+                    if (bankCardInfo!=null){
+                      //  presenter.deleteBank(lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+                    }
+                }
+            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+            }
+        }
+    };
     @Override
     public Object getBankListParam() {
         Map map=new TreeMap();
