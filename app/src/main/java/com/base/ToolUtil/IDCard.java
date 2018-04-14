@@ -17,6 +17,20 @@ import java.util.regex.Pattern;
 
 public class IDCard {
     /**
+     * 限制Edittext只输入身份证号包含的字符========
+     * edittext.setKeyListener(new NumberKeyListener() {
+    @Override
+    public int getInputType() {
+    return android.text.InputType.TYPE_CLASS_PHONE;
+    }
+
+    @Override
+    protected char[] getAcceptedChars() {
+    char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
+    return numberChars;
+    }
+    });
+     限制Edittext只输入身份证号包含的字符========
      * 功能：身份证的有效验证
      *
      * @param IDStr
