@@ -33,8 +33,7 @@ public class IDCard {
      限制Edittext只输入身份证号包含的字符========
      * 功能：身份证的有效验证
      *
-     * @param IDStr
-     *            身份证号
+     * @param IDStr 身份证号
      * @return true 有效：false 无效
      * @throws ParseException
      */
