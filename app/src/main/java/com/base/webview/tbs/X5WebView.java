@@ -264,6 +264,21 @@ public class X5WebView extends WebView {
 			}
 		}
 
+		/**
+		 * 告诉客户端显示一个文件选择器。获取Android本地文件
+		 该方法的作用，告诉当前APP，打开一个文件选择器，比如：打开相册、启动拍照或打开本地文件管理器，
+		 实际上更好的理解，WebView加载包含上传文件的表单按钮，HTML定义了input标签，同时input的type类型为file，
+		 手指点击该按钮，回调onShowFileChooser这个方法，在这个重写的方法里面打开相册、启动照片或打开本地文件管理器，
+		 甚至做其他任何的逻辑处理，点击一次回调一次的前提是请求被取消，而取消该请求回调的方法：
+		 给ValueCallback接口的onReceiveValue抽象方法传入null，同时onShowFileChooser方法返回true；
+		 ValueCallback的抽象方法被回调onShowFileChooser方法返回true；反之返回false；
+		 * @param arg0  启动请求的WebView实例。
+		 * @param arg1  结果回调，将选取的文件回传给HTML  如果用户按下“选择文件”按钮，调用此回调以提供要上载的文件路径列表，
+		 *                    或取消则回调filePathCallback.onReceiveValue(null)传NULL。
+		 *              onReceiveValue传入Uri对象数组
+		 * @param arg2  描述要打开的文件选择器的模式，以及与之一起使用的选项。
+		 * @return     返回true，如果filePathCallback将被调用，false使用默认处理。用户按下“选择文件”按钮。
+		 */
 		@Override
 		public boolean onShowFileChooser(WebView arg0,
                                          ValueCallback<Uri[]> arg1, FileChooserParams arg2) {
@@ -274,7 +289,19 @@ public class X5WebView extends WebView {
 			}
 			return super.onShowFileChooser(arg0, arg1, arg2);
 		}
-
+		/**
+		 * 获取Android本地文件
+		 在所有发布的SDK版本中，openFileChooser是一个隐藏的方法，
+		 使用onShowFileChooser代替，
+		 但是最好同时重写showFileChooser和openFileChooser方法，
+		 Android 4.4.X以上的系统回调onShowFileChooser方法，
+		 低于或等于Android 4.4.X的系统回调openFileChooser方法，
+		 只重写onShowFileChooser或openFileChooser造成在有的系统可以正常回调，在有的系统点击没有反应。
+		 * @param uploadFile  结果回调，将选取的文件回传给HTML  onReceiveValue传入一个Uri对象
+		 * @param acceptType
+		 * @param captureType
+		 * @return
+		 */
 		@Override
 		public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
 			if (tbsClientCallBack!=null){
