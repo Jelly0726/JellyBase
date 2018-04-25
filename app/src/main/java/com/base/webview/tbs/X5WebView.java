@@ -38,6 +38,8 @@ import java.util.Map;
 //import com.tencent.smtt.sdk.WebViewDatabase;
 
 public class X5WebView extends WebView {
+	//webview的滑动回调
+	private OnScrollChangedCallback mOnScrollChangedCallback;
 	public static final int FILE_CHOOSER = 0;
 	private String resourceUrl = "";
 	private WebView smallWebView;
@@ -491,8 +493,15 @@ public class X5WebView extends WebView {
 
 	protected void tbs_onScrollChanged(int l, int t, int oldl, int oldt, View view) {
 		super_onScrollChanged(l, t, oldl, oldt);
+		//X5WebView 父类屏蔽了 onScrollChanged 方法 要用该方法
+		if (mOnScrollChangedCallback != null) mOnScrollChangedCallback.onScroll(l, t);
 	}
-
+	@Override
+	protected void onScrollChanged(final int l, final int t, final int oldl, final int oldt) {
+		super.onScrollChanged(l, t, oldl, oldt);
+		//普通webview用这个
+		if (mOnScrollChangedCallback != null) mOnScrollChangedCallback.onScroll(l, t);
+	}
 	protected void tbs_onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY, View view) {
 		super_onOverScrolled(scrollX, scrollY, clampedX, clampedY);
 	}
@@ -517,5 +526,19 @@ public class X5WebView extends WebView {
 
 	public void setClientCallBack(TBSClientCallBack tbsClientCallBack) {
 		this.tbsClientCallBack = tbsClientCallBack;
+	}
+	public OnScrollChangedCallback getOnScrollChangedCallback() {
+		return mOnScrollChangedCallback;
+	}
+
+	public void setOnScrollChangedCallback(final OnScrollChangedCallback onScrollChangedCallback) {
+		mOnScrollChangedCallback = onScrollChangedCallback;
+	}
+
+	/**
+	 * webview 滑动回调
+	 */
+	public interface OnScrollChangedCallback {
+		void onScroll(int l, int t);
 	}
 }
