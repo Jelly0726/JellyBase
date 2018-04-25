@@ -2,6 +2,7 @@ package com.base.webview;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,8 +17,6 @@ import com.base.view.BaseActivity;
 import com.base.webview.tbs.TBSClientCallBack;
 import com.base.webview.tbs.WebViewJavaScriptFunction;
 import com.base.webview.tbs.X5WebView;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.WebView;
@@ -39,8 +38,8 @@ public class JSWebViewActivity extends BaseActivity {
     TextView title_tv;
     @BindView(R.id.web_filechooser)
     X5WebView mWebView;
-    @BindView(R.id.custom_view)
-    XRefreshView custom_view;
+    @BindView(R.id.refresh_layout)
+    SwipeRefreshLayout mRefreshLayout;
     private WebTools webTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,32 +55,21 @@ public class JSWebViewActivity extends BaseActivity {
     }
 
     private void init() {
-        custom_view.setPullLoadEnable(false);
-        custom_view.setAutoRefresh(false);
-        custom_view.setAutoLoadMore(false);
-        custom_view.setPinnedTime(0);
-        custom_view.setMoveForHorizontal(true);
-        custom_view.setOnTopRefreshTime(new OnTopRefreshTime() {
-
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public boolean isTop() {
-                if (mWebView.getWebScrollY() == 0) {
-                    View firstVisibleChild = mWebView.getChildAt(0);
-                    return firstVisibleChild.getTop() >= 0;
-                }
-                return false;
-            }
-        });
-        custom_view.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
-
-            @Override
-            public void onRefresh(boolean isPullDown) {
+            public void onRefresh() {
                 mWebView.setVisible(false);
                 mWebView.reload();
             }
-
-            @Override
-            public void onLoadMore(boolean isSilence) {
+        }); // 刷新监听。
+        mWebView.setOnScrollChangedCallback(new X5WebView.OnScrollChangedCallback() {
+            public void onScroll(int l, int t) {
+                //Log.d(TAG, "We Scrolled etc..." + l + " t =" + t);
+                if (t == 0) {//webView在顶部
+                    mRefreshLayout.setEnabled(true);
+                } else {//webView不是顶部
+                    mRefreshLayout.setEnabled(false);
+                }
             }
         });
         //js交互
@@ -155,7 +143,7 @@ public class JSWebViewActivity extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress>=100){
                     mWebView.setVisible(true);
-                    custom_view.stopRefresh();
+                    mRefreshLayout.setRefreshing(false);
                 }
             }
         });

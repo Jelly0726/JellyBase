@@ -51,15 +51,11 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.base.xrefreshview.XRefreshView
-        xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/custom_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:orientation="vertical"
-        xrefreshview:isHeightMatchParent="true"
-        xrefreshview:isWidthMatchParent="true" >
+        android:layout_height="wrap_content"
+        >
     <com.base.webview.tbs.X5WebView
         android:id="@+id/web_filechooser"
         android:layout_width="fill_parent"
@@ -68,5 +64,5 @@
         android:scrollbars="none">
 
     </com.base.webview.tbs.X5WebView>
-    </com.base.xrefreshview.XRefreshView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
