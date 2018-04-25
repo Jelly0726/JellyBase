@@ -45,6 +45,7 @@ import com.jelly.jellybase.activity.ScreenShortActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
+import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
@@ -360,6 +361,10 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("address","福建省厦门市思明区莲前西路314号");
                     intent.putExtra("latitude",24.4771500111);
                     intent.putExtra("longitude",118.1387329102);
+                    startActivity(intent);
+                    break;
+                case 27://NFC
+                    intent=new Intent(MyApplication.getMyApp(), NFCMainActivity.class);
                     startActivity(intent);
                     break;
             }
