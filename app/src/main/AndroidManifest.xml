@@ -432,10 +432,6 @@
         <!--↓↓↓↓↓↓↓nfc实例↓↓↓↓↓↓↓-->
         <activity android:name=".nfc.NFCMainActivity"
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".nfc.NdefActivity"
             android:launchMode="singleTop"
@@ -458,6 +454,19 @@
             <meta-data  android:name="android.nfc.action.TECH_DISCOVERED"
                 android:resource="@xml/tech_list"
                 />
+        </activity>
+        <activity
+            android:name=".nfc.NoNDEFActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+            </intent-filter>
+            <meta-data android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/tech_list" />
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <!--↑↑↑↑↑↑↑↑nfc实例↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->

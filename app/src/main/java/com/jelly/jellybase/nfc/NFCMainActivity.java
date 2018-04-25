@@ -21,6 +21,7 @@ public class NFCMainActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.nfc_main_activity);
         findViewById(R.id.button).setOnClickListener(this);
         findViewById(R.id.button2).setOnClickListener(this);
+        findViewById(R.id.button3).setOnClickListener(this);
     }
 
     @Override
@@ -31,6 +32,9 @@ public class NFCMainActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.button2://读写MifareClassic格式
                 startActivity(new Intent(this,MifareClassicActivity.class));
+                break;
+            case R.id.button3://读写非标准的NDEF格式数据
+                startActivity(new Intent(this,NoNDEFActivity.class));
                 break;
         }
     }
