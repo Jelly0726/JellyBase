@@ -17,6 +17,7 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.applicationUtil.MyApplication;
+import com.base.applicationUtil.ToastUtils;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.multiClick.AntiShake;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] mList;
     private int startRownumber=0;
     private int pageSize=10;
-
+    private long clickTime=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +121,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCheckComplete() {
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis()-clickTime)>5000){
+            clickTime=System.currentTimeMillis();
+            ToastUtils.showToast(this,"再按一次，返回桌面");
+            return;
+        }
+        super.onBackPressed();
 
     }
     private void iniXRefreshView(){
