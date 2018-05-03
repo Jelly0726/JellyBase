@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if ((System.currentTimeMillis()-clickTime)>5000){
             clickTime=System.currentTimeMillis();
-            ToastUtils.showToast(this,"再按一次，返回桌面");
+            ToastUtils.showShort(this,"再按一次，返回桌面");
             return;
         }
         super.onBackPressed();
