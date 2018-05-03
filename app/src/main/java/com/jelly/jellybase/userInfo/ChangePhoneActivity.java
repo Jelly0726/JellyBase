@@ -73,8 +73,6 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                     return;
                 }
                 presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
-                get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-                get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
         });
     }
@@ -126,6 +124,8 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
+        get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
     }
 
     @Override

@@ -137,8 +137,6 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     return;
                 }
                 presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
-                get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-                get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
             }
         });
     }
@@ -266,6 +264,8 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(getContext(),httpResultAll.getMsg());
+        get_ver_btn.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        get_ver_btn.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
     }
 
     @Override
