@@ -49,7 +49,8 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 		if (isGps)
 			mAMapNavi.startNavi(NaviType.GPS);
 		else {
-			mAMapNavi.startNavi(NaviType.EMULATOR);
+            mAMapNavi.setEmulatorNaviSpeed(50);
+            mAMapNavi.startNavi(NaviType.EMULATOR);
 		}
 	}
 
