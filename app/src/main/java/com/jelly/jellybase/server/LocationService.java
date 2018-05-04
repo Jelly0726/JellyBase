@@ -176,6 +176,9 @@ public class LocationService extends Service {
                     HermesEventBus.getDefault().post(netEvent1);
                 }
             }
+            NetEvent netEvent = new NetEvent();
+            netEvent.setEvent(amapLocation.clone());
+            HermesEventBus.getDefault().post(netEvent);
         }
 
         /**
