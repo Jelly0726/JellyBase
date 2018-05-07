@@ -23,6 +23,7 @@ import com.base.bgabanner.GuideActivity;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.permission.PermissionUtils;
+import com.base.view.FloatingDraftButton;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
 import com.base.xrefreshview.XRefreshView;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private MainAdapter adapter;
     private TextView textView;
+    private FloatingDraftButton floatingDraftButton;
     private String[] mList;
     private int startRownumber=0;
     private int pageSize=10;
@@ -134,6 +136,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void iniXRefreshView(){
+        floatingDraftButton=findViewById(R.id.floatingActionButton);
+        floatingDraftButton.setScreenEdge(true);
+        floatingDraftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               ToastUtils.showShort(MainActivity.this,"自定义悬浮按钮");
+            }
+        });
         mList= getResources().getStringArray(R.array.mainArray);
         adapter=new MainAdapter(this,mList);
         xRefreshView = (XRefreshView) findViewById(R.id.xrefreshview);
