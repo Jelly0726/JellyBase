@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         iniXRefreshView();
         //百度智能更新 SDK 的 AAR 文件
-        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback());
+        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
         //开启保活服务
         CommonStaticUtil.startService(MyApplication.getMyApp());
 
