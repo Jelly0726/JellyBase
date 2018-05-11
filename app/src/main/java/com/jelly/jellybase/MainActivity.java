@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onCheckComplete() {
-            ToastUtils.showToast(MainActivity.this,"正在下载中...");
         }
 
     }
