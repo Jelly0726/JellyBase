@@ -107,6 +107,40 @@ public class AppUtils {
         return Double.parseDouble(df.format(amount));
     }
     /**
+     *保留多位小数
+     * @param amount  原数据
+     * @param num     小数位
+     * @return
+     */
+    public static float getDecimal(float amount,int num){
+        if (num<=0){
+           return amount;
+        }
+        String deci="######0.";
+        for (int i=0;i<num;i++){
+            deci+="0";
+        }
+        DecimalFormat df= new DecimalFormat(deci);
+        return Float.parseFloat(df.format(amount));
+    }
+    /**
+     *保留多位小数
+     * @param amount  原数据
+     * @param num     小数位
+     * @return
+     */
+    public static double getDecimal(double amount,int num){
+        if (num<=0){
+           return amount;
+        }
+        String deci="######0.";
+        for (int i=0;i<num;i++){
+            deci+="0";
+        }
+        DecimalFormat df= new DecimalFormat(deci);
+        return Double.parseDouble(df.format(amount));
+    }
+    /**
      *
      * @param str 需要正则表达式判断的字符串
      * @param regex 正则表达式
