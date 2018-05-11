@@ -66,6 +66,7 @@ import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -87,7 +88,24 @@ public class AppUtils {
     private AppUtils() {
 
     }
-
+    /**
+     *保留两位小数
+     * @param amount
+     * @return
+     */
+    public static float getTwoDecimal(float amount){
+        DecimalFormat df= new DecimalFormat("######0.00");
+        return Float.parseFloat(df.format(amount));
+    }
+    /**
+     *保留两位小数
+     * @param amount
+     * @return
+     */
+    public static double getTwoDecimal(double amount){
+        DecimalFormat df= new DecimalFormat("######0.00");
+        return Double.parseDouble(df.format(amount));
+    }
     /**
      *
      * @param str 需要正则表达式判断的字符串
