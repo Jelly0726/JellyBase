@@ -63,6 +63,8 @@ public class MyApplication extends OkGoApp {
         }
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
+        //多语言切换初始化
+        ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {
             //butterknife注解式绑定id
             ButterKnife.setDebug(BuildConfig.DEBUG);
