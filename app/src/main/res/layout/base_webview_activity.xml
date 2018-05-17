@@ -51,11 +51,10 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.base.webview.tbs.X5WebView
-        android:id="@+id/forum_context"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layerType="hardware"
-        android:scrollbars="none"/>
+    <FrameLayout
+        android:id="@+id/webfilechooser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </LinearLayout>

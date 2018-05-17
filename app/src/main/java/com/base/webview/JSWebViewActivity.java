@@ -1,6 +1,8 @@
 package com.base.webview;
 
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -9,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,14 +39,26 @@ public class JSWebViewActivity extends BaseActivity {
     LinearLayout left_back;
     @BindView(R.id.title_tv)
     TextView title_tv;
-    @BindView(R.id.web_filechooser)
-    X5WebView mWebView;
+    private X5WebView mWebView;
+    @BindView(R.id.webfilechooser)
+    ViewGroup mViewParent;
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
     private WebTools webTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        try {
+            if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
+                getWindow()
+                        .setFlags(
+                                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.base_tbs_webview);
         ButterKnife.bind(this);
         webTools = (WebTools) getIntent().getParcelableExtra(WebConfig.CONTENT);
@@ -62,6 +77,14 @@ public class JSWebViewActivity extends BaseActivity {
                 mWebView.reload();
             }
         }); // 刷新监听。
+        mWebView = new X5WebView(this, null);
+        mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
+        mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
+        mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
+        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.FILL_PARENT,
+                FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setOnScrollChangedCallback(new X5WebView.OnScrollChangedCallback() {
             public void onScroll(int l, int t) {
                 //Log.d(TAG, "We Scrolled etc..." + l + " t =" + t);

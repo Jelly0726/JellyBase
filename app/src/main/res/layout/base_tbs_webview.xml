@@ -56,13 +56,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
-    <com.base.webview.tbs.X5WebView
-        android:id="@+id/web_filechooser"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layerType="hardware"
-        android:scrollbars="none">
-
-    </com.base.webview.tbs.X5WebView>
+        <FrameLayout
+            android:id="@+id/webfilechooser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

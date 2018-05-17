@@ -1,11 +1,14 @@
 package com.base.webview;
 
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,8 +28,9 @@ import butterknife.OnClick;
 
 public class BaseWebViewActivity extends BaseActivity {
     private WebTools webTools;
-    @BindView(R.id.forum_context)
-    X5WebView Web;
+    private X5WebView mWebView;
+    @BindView(R.id.webfilechooser)
+    ViewGroup mViewParent;
     @BindView(R.id.topNav_layout)
     LinearLayout topNav_layout;
     @BindView(R.id.left_back)
@@ -36,6 +40,17 @@ public class BaseWebViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+        try {
+            if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
+                getWindow()
+                        .setFlags(
+                                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.base_webview_activity);
         ButterKnife.bind(this);
         webTools = getIntent().getParcelableExtra(WebConfig.CONTENT);
@@ -47,12 +62,20 @@ public class BaseWebViewActivity extends BaseActivity {
 
     private void iniWebView() {
         //WebView
-        Web.setVisible(true);
+        mWebView = new X5WebView(this, null);
+        mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
+        mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
+        mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
+        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.FILL_PARENT,
+                FrameLayout.LayoutParams.FILL_PARENT));
+        mWebView.setVisible(true);
         if (!TextUtils.isEmpty(webTools.url)) {
-            Web.loadUrl(webTools.url);
+            mWebView.loadUrl(webTools.url);
         }
         title_tv.setText(webTools.title);
-        Web.setClientCallBack(new TBSClientCallBack(){
+        mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 topNav_layout.setVisibility(View.VISIBLE);
@@ -85,8 +108,8 @@ public class BaseWebViewActivity extends BaseActivity {
     }
     @Override
     public void onBackPressed() {
-        if (Web != null && Web.canGoBack()) {
-            Web.goBack();
+        if (mWebView != null && mWebView.canGoBack()) {
+            mWebView.goBack();
             return;
         }
         super.onBackPressed();
@@ -97,8 +120,8 @@ public class BaseWebViewActivity extends BaseActivity {
         try {
             // Check if the key event was the Back button and if there's history
             if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-                if (Web != null && Web.canGoBack()) {
-                    Web.goBack();
+                if (mWebView != null && mWebView.canGoBack()) {
+                    mWebView.goBack();
                     return true;
                 } else
                     return super.onKeyDown(keyCode, event);

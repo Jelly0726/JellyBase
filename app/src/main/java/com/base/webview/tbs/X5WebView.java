@@ -10,11 +10,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.MyApplication;
 import com.base.mprogressdialog.MProgressUtil;
+import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -228,16 +230,32 @@ public class X5WebView extends WebView {
 		View myVideoView;
 		View myNormalView;
 		IX5WebChromeClient.CustomViewCallback callback;
-
-		///////////////////////////////////////////////////////////
-		//
 		/**
 		 * 全屏播放配置
 		 */
 		@Override
 		public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
+			FrameLayout normalView = (FrameLayout) findViewById(R.id.web_filechooser);
+			ViewGroup viewGroup = (ViewGroup) normalView.getParent();
+			viewGroup.removeView(normalView);
+			viewGroup.addView(view);
+			myVideoView = view;
+			myNormalView = normalView;
+			callback = customViewCallback;
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onShowCustomView(view, customViewCallback);
+			}
+		}
+		@Override
+		public void onHideCustomView() {
+			if (callback != null) {
+				callback.onCustomViewHidden();
+				callback = null;
+			}
+			if (myVideoView != null) {
+				ViewGroup viewGroup = (ViewGroup) myVideoView.getParent();
+				viewGroup.removeView(myVideoView);
+				viewGroup.addView(myNormalView);
 			}
 		}
 		@Override
@@ -251,18 +269,6 @@ public class X5WebView extends WebView {
 			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onProgressChanged(view, newProgress);
-			}
-		}
-		@Override
-		public void onHideCustomView() {
-			if (callback != null) {
-				callback.onCustomViewHidden();
-				callback = null;
-			}
-			if (myVideoView != null) {
-				ViewGroup viewGroup = (ViewGroup) myVideoView.getParent();
-				viewGroup.removeView(myVideoView);
-				viewGroup.addView(myNormalView);
 			}
 		}
 
