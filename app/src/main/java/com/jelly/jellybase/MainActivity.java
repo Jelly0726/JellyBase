@@ -13,13 +13,21 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.core.AllenChecker;
+import com.allenliu.versionchecklib.core.VersionParams;
+import com.allenliu.versionchecklib.core.http.HttpHeaders;
+import com.baidu.autoupdatesdk.AppUpdateInfo;
+import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
-import com.baidu.autoupdatesdk.UICheckUpdateCallback;
+import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
+import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.applicationUtil.MyApplication;
 import com.base.applicationUtil.ToastUtils;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
+import com.base.checkVersion.CheckVersionActivity;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.permission.PermissionUtils;
@@ -53,6 +61,7 @@ import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
+import com.trello.rxlifecycle2.android.BuildConfig;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 import com.yanzhenjie.permission.PermissionNo;
@@ -75,13 +84,13 @@ public class MainActivity extends AppCompatActivity {
     private int startRownumber=0;
     private int pageSize=10;
     private long clickTime=0;
+
+    private String apkPath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         iniXRefreshView();
-        //百度智能更新 SDK 的 AAR 文件
-        BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
         //开启保活服务
         CommonStaticUtil.startService(MyApplication.getMyApp());
 
@@ -106,25 +115,102 @@ public class MainActivity extends AppCompatActivity {
                 // 你也可以不设置。
                 .rationale(rationaleListener)
                 .start();
+        //百度智能更新 SDK 的 AAR 文件
+        //BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
+        //百度智能更新 SDK 的 AAR 文件
+        //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
+        BDAutoUpdateSDK.cpUpdateCheck(this,new MyCheckUpdateCallback(),false);
     }
-    private class MyUICheckUpdateCallback implements UICheckUpdateCallback {
+    //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。
+    private class MyCheckUpdateCallback implements CPCheckUpdateCallback {
+        @Override
+        public void onCheckUpdateCallback(AppUpdateInfo appUpdateInfo, AppUpdateInfoForInstall appUpdateInfoForInstall) {
+
+            if (appUpdateInfo!=null){
+                HttpHeaders httpHeaders=new HttpHeaders();
+                httpHeaders.put("token",GlobalToken.getToken().getToken());
+                String title="当前版本已是最新版本";
+                String message="";
+                String downloadUrl="";
+                VersionParams.Builder builder = new VersionParams.Builder();
+                Bundle paramBundle=new Bundle();
+                paramBundle.putBoolean("isUpdate",true);
+                //demoService.showVersionDialog(appVersion.getIP()+appVersion.getUrl(), "检测到新版本","",paramBundle);
+                title="检测到新版本";
+                message=appUpdateInfo.getAppChangeLog();
+                downloadUrl=appUpdateInfo.getAppUrl();
+                //如果仅使用下载功能，downloadUrl是必须的
+                builder.setOnlyDownload(true)
+                        .setDownloadUrl(downloadUrl)
+                        .setTitle(title)
+                        .setUpdateMsg(message)
+                        .setPauseRequestTime(-1)
+                        .setCustomDownloadActivityClass(CheckVersionActivity.class)
+                        .setForceRedownload(false)
+                        .setParamBundle(paramBundle);
+                AllenChecker.init(BuildConfig.DEBUG);
+                AllenChecker.startVersionCheck(MainActivity.this, builder.build());
+            }else if (appUpdateInfoForInstall!=null){
+                BDAutoUpdateSDK.cpUpdateInstall(MainActivity.this,appUpdateInfoForInstall.getInstallPath());
+            }else {
+
+            }
+
+
+        }
+    }
+    //下载回调
+    private CPUpdateDownloadCallback cpUpdateDownloadCallback=new CPUpdateDownloadCallback(){
         /**
-         * 当检测到无版本更新时会触发回调该方法
+         * 当 cpUpdateDownload 被调用时会
+         触发回调该方法
          */
         @Override
-        public void onNoUpdateFound() {
-
+        public void onStart() {
         }
 
         /**
-         * 当检测到无版本更新或者用户关闭版本更新ᨀ示框
-         或者用户点击了升级下载时会触发回调该方法
+         * 下载进度通过该方法通知应用
+         * @param Percent： 进度百分比
+         @param rcvLen：已下载文件大
+         小
+         @param fileSize:文件总大小
+         下载进度通过该方法通知应用
          */
         @Override
-        public void onCheckComplete() {
+        public void onPercent(int Percent, long rcvLen, long fileSize) {
         }
 
-    }
+        /**
+         * 下载完成后本地的 APK 包路径回调
+         接口
+         * @param apkPath：下载完成后的apk 包路径
+         */
+        @Override
+        public void onDownloadComplete(String apkPath) {
+            MainActivity.this.apkPath=apkPath;
+        }
+
+        /**
+         * 下载失败或者发送错误时回调此接
+         口
+         * @param Error： 异常信息
+         @param Content： 异常提示
+         *
+         */
+        @Override
+        public void onFail(Throwable Error, String Content) {
+            ToastUtils.showShort(MainActivity.this,Content);
+        }
+
+        /**
+         * 下载流程结束后统一调此接口
+         */
+        @Override
+        public void onStop() {
+            BDAutoUpdateSDK.cpUpdateInstall(MainActivity.this,apkPath);
+        }
+    };
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis()-clickTime)>5000){

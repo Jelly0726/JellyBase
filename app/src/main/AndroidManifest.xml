@@ -245,12 +245,12 @@
         </activity>
         <activity
             android:name="com.base.webview.JSWebViewActivity"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name="com.base.webview.BaseWebViewActivity"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
