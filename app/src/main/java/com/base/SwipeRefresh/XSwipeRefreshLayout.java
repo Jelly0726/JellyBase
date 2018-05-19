@@ -1,4 +1,4 @@
-package com.base.xSwipeRefresh;
+package com.base.SwipeRefresh;
 
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;

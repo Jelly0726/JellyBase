@@ -63,6 +63,7 @@ public class BaseWebViewActivity extends BaseActivity {
     private void iniWebView() {
         //WebView
         mWebView = new X5WebView(this, null);
+        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
         mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
@@ -105,6 +106,23 @@ public class BaseWebViewActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        if (mWebView != null) {
+            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            mWebView.clearHistory();
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mViewParent.removeAllViews();
+            mWebView.stopLoading();
+            mWebView.removeAllViews();
+            mWebView.destroy();
+            mWebView = null;
+            mViewParent = null;
+        }
+        super.onDestroy();
     }
     @Override
     public void onBackPressed() {

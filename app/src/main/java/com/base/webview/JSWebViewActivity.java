@@ -2,7 +2,6 @@ package com.base.webview;
 
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -78,6 +77,7 @@ public class JSWebViewActivity extends BaseActivity {
             }
         }); // 刷新监听。
         mWebView = new X5WebView(this, null);
+        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
         mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
@@ -227,8 +227,12 @@ public class JSWebViewActivity extends BaseActivity {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mViewParent.removeAllViews();
+            mWebView.stopLoading();
+            mWebView.removeAllViews();
             mWebView.destroy();
             mWebView = null;
+            mViewParent = null;
         }
         super.onDestroy();
     }

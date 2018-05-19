@@ -93,33 +93,37 @@ public class MainActivity extends AppCompatActivity {
         iniXRefreshView();
         //开启保活服务
         CommonStaticUtil.startService(MyApplication.getMyApp());
-
-        // 申请权限。
-        AndPermission.with(MainActivity.this)
-                .requestCode(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
-                .permission(Permission.MICROPHONE,//扩音器，麦克风
-                        Permission.STORAGE,//存储
-                        Permission.CALENDAR,//日历
-                        Permission.CAMERA,//照相机
-                        Permission.CONTACTS,//联系人
-                        Permission.LOCATION,//定位
-                        //Permission.SENSORS,//传感器，感应器；感测器
-                        Permission.SMS,//短信
-                        new String[]{
-                                android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
-                                android.Manifest.permission.CALL_PHONE//拨打电话
-                        })
-                .callback(this)
-                // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
-                // 这样避免用户勾选不再提示，导致以后无法申请权限。
-                // 你也可以不设置。
-                .rationale(rationaleListener)
-                .start();
-        //百度智能更新 SDK 的 AAR 文件
-        //BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
-        //百度智能更新 SDK 的 AAR 文件
-        //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
-        BDAutoUpdateSDK.cpUpdateCheck(this,new MyCheckUpdateCallback(),false);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 申请权限。
+                AndPermission.with(MainActivity.this)
+                        .requestCode(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
+                        .permission(Permission.MICROPHONE,//扩音器，麦克风
+                                Permission.STORAGE,//存储
+                                Permission.CALENDAR,//日历
+                                Permission.CAMERA,//照相机
+                                Permission.CONTACTS,//联系人
+                                Permission.LOCATION,//定位
+                                //Permission.SENSORS,//传感器，感应器；感测器
+                                Permission.SMS,//短信
+                                new String[]{
+                                        android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
+                                        android.Manifest.permission.CALL_PHONE//拨打电话
+                                })
+                        .callback(this)
+                        // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
+                        // 这样避免用户勾选不再提示，导致以后无法申请权限。
+                        // 你也可以不设置。
+                        .rationale(rationaleListener)
+                        .start();
+                //百度智能更新 SDK 的 AAR 文件
+                //BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
+                //百度智能更新 SDK 的 AAR 文件
+                //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
+                BDAutoUpdateSDK.cpUpdateCheck(this,new MyCheckUpdateCallback(),false);
+            }
+        });
     }
     //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。
     private class MyCheckUpdateCallback implements CPCheckUpdateCallback {
@@ -227,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         floatingDraftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               ToastUtils.showShort(MainActivity.this,"自定义悬浮按钮");
+                ToastUtils.showShort(MainActivity.this,"自定义悬浮按钮");
             }
         });
         mList= getResources().getStringArray(R.array.mainArray);
