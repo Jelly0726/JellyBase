@@ -33,14 +33,18 @@
                 android:textColor="@android:color/black"
                 android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/tv_msg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
-                android:text=""
-                android:textColor="#666"
-                android:textSize="12sp" />
+                android:layout_height="70dp">
+                <TextView
+                    android:id="@+id/tv_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:textColor="#666"
+                    android:textSize="12sp" />
+            </ScrollView>
 
             <Button
                 android:layout_marginTop="10dp"

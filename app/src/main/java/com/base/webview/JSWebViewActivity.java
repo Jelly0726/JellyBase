@@ -2,6 +2,7 @@ package com.base.webview;
 
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.base.webview.tbs.WebViewJavaScriptFunction;
 import com.base.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.CookieSyncManager;
+import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
@@ -77,7 +79,7 @@ public class JSWebViewActivity extends BaseActivity {
             }
         }); // 刷新监听。
         mWebView = new X5WebView(this, null);
-        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
+//        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
         mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
@@ -186,7 +188,6 @@ public class JSWebViewActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
     }
-
     //go back
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -218,6 +219,18 @@ public class JSWebViewActivity extends BaseActivity {
     protected void onPause() {
         //mWebView.loadUrl("about:blank");
         super.onPause();
+        // 因为该方法在 Android 4.4 版本才可使用，所以使用时需进行版本判断
+        //vue 的方法要在 created() { window.onPause=this.onPause;}
+        if (Build.VERSION.SDK_INT < 18) {
+            mWebView.loadUrl("javascript:onPause()");
+        } else {
+            mWebView.evaluateJavascript("javascript:onPause()", new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String value) {
+                    //此处为 js 返回的结果
+                }
+            });
+        }
     }
 
     @Override
