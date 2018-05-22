@@ -45,6 +45,7 @@ import com.base.eventBus.NetEvent;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.server.LocationService;
 import com.maning.mndialoglibrary.MProgressDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -96,6 +97,10 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         longitude=getIntent().getDoubleExtra("longitude",0d);
         address=getIntent().getStringExtra("address");
         name=getIntent().getStringExtra("name");
+
+        Intent intent=new Intent(this, LocationService.class);
+        startService(intent);
+
         HermesEventBus.getDefault().register(this);
         MyApplication.getMyApp().addEvent(this);
         setContentView(R.layout.amap_activity);
@@ -650,6 +655,10 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
                 mStartPoints.clear();
                 NaviLatLng  mStart = new NaviLatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
                 mStartPoints.add(mStart);
+                if (aMapLocation.getLatitude()!=0d&&aMapLocation.getLongitude()!=0d){
+                    Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+                    MyApplication.getMyApp().stopService(stateGuardService);
+                }
             }
         }
     }
