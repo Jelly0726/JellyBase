@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.MD5;
 import com.base.applicationUtil.MyApplication;
+import com.base.applicationUtil.PwdCheckUtil;
 import com.base.applicationUtil.ToastUtils;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SetPwdContact;
@@ -68,6 +69,10 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
                 String password1=password1_edit.getText().toString().trim();
                 if (TextUtils.isEmpty(password)||TextUtils.isEmpty(password1)){
                     ToastUtils.showToast(this,"请输入密码!");
+                    return;
+                }
+                if (!PwdCheckUtil.validPwd4(password)){
+                    ToastUtils.showShort(this,"请输入6-16位非纯数字、字母、符号新密码!");
                     return;
                 }
                 if (!password.equals(password1)){

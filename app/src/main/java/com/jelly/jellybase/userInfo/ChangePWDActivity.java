@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.MD5;
+import com.base.applicationUtil.PwdCheckUtil;
 import com.base.applicationUtil.ToastUtils;
 import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.presenter.UpdatePasswordPresenter;
@@ -77,6 +78,10 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
             case R.id.commit_tv:
                 String newPwd=new_pwd.getText().toString().trim();
                 String newPwd1=new_pwd1.getText().toString().trim();
+                if (!PwdCheckUtil.validPwd4(newPwd)){
+                    ToastUtils.showShort(this,"请输入6-16位非纯数字、字母、符号新密码!");
+                    return;
+                }
                 if (!newPwd.equals(newPwd1)){
                     ToastUtils.showToast(this,"两次密码不一致，请重新输入!");
                     return;
