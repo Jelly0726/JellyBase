@@ -13,6 +13,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.enums.NaviType;
+import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapCongestionLink;
 import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
@@ -561,6 +562,16 @@ public class AMapNaviTask implements AMapNaviListener {
 
     @Override
     public void onPlayRing(int i) {
+
+    }
+
+    @Override
+    public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
+
+    }
+
+    @Override
+    public void onCalculateRouteFailure(AMapCalcRouteResult aMapCalcRouteResult) {
 
     }
 

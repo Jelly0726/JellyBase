@@ -7,6 +7,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.amap.api.navi.MyNaviListener;
+import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
@@ -20,6 +21,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.AmapCarLocation;
 import com.amap.api.navi.model.InnerNaviInfo;
 import com.amap.api.navi.model.NaviInfo;
+import com.autonavi.ae.guide.model.NaviCongestionInfo;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
@@ -336,6 +338,16 @@ public class TTSController implements MyNaviListener {
 
 	}
 
+	@Override
+	public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
+
+	}
+
+	@Override
+	public void onCalculateRouteFailure(AMapCalcRouteResult aMapCalcRouteResult) {
+
+	}
+
 
 	@Override
 	public void carProjectionChange(AmapCarLocation mCarProjectionChange) {
@@ -354,6 +366,11 @@ public class TTSController implements MyNaviListener {
 
 	@Override
 	public void onInnerNaviInfoUpdate(InnerNaviInfo innerNaviInfo) {
+
+	}
+
+	@Override
+	public void onUpdateTmcStatus(NaviCongestionInfo naviCongestionInfo) {
 
 	}
 

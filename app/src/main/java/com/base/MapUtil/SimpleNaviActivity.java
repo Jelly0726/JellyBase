@@ -8,6 +8,7 @@ import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewListener;
 import com.amap.api.navi.enums.NaviType;
+import com.amap.api.navi.model.AMapCalcRouteResult;
 import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
@@ -354,6 +355,16 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 	 */
 	@Override
 	public void onPlayRing(int i) {
+
+	}
+
+	@Override
+	public void onCalculateRouteSuccess(AMapCalcRouteResult aMapCalcRouteResult) {
+
+	}
+
+	@Override
+	public void onCalculateRouteFailure(AMapCalcRouteResult aMapCalcRouteResult) {
 
 	}
 
