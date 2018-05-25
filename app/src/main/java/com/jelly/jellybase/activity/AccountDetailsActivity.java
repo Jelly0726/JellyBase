@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.httpmvp.contact.AccountDetailContact;
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.presenter.AccountDetailPresenter;

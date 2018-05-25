@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.ForgetPwdContact;
 import com.base.httpmvp.presenter.ForgetPasswordPresenter;

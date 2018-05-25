@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Scroller;
 
-import com.base.ToolUtil.UtilTools;
+import com.base.Utils.UtilTools;
 
 
 /**

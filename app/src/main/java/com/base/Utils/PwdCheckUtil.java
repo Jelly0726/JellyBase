@@ -1,4 +1,4 @@
-package com.base.applicationUtil;
+package com.base.Utils;
 
 import android.content.Context;
 import android.widget.EditText;

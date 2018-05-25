@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.base.MapUtil.DestinationActivity;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
 import com.base.httpmvp.databean.ScanResult;

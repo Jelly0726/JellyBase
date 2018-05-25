@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.contact.BankCartListContact;
 import com.base.httpmvp.presenter.BankListPresenter;

@@ -1,4 +1,4 @@
-package com.base.ToolUtil;
+package com.base.Utils;
 
 /**
  *  推送消息接口

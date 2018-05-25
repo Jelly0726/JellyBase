@@ -1,8 +1,9 @@
-package com.base.applicationUtil;
+package com.base.Utils;
 
 import android.os.Environment;
 import android.util.Log;
 
+import com.base.applicationUtil.AppUtils;
 import com.jelly.jellybase.BuildConfig;
 
 import org.apache.commons.lang3.time.DateFormatUtils;

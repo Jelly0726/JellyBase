@@ -13,9 +13,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MD5;
+import com.base.Utils.MD5;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.LoginContact;

@@ -1,4 +1,4 @@
-package com.base.ToolUtil;
+package com.base.Utils;
 
 import android.Manifest;
 import android.app.Activity;

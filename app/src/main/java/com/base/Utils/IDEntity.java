@@ -1,4 +1,4 @@
-package com.base.applicationUtil;
+package com.base.Utils;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- *身份证验证用正则表达式.
+ *身份证验证
  */
-public class Identity {
+public class IDEntity {
     //    位权值数组
     private static byte[] Wi=new byte[17];
     //    身份证前部分字符数
@@ -93,7 +93,7 @@ public class Identity {
     //旧身份证转换成新身份证号码
     public static String getNewIDCard(final String oldIDCard){
         //初始化方法
-        Identity.setWiBuffer();
+        IDEntity.setWiBuffer();
         if(!checkIDCard(oldIDCard)){
             return oldIDCard;
         }
@@ -108,7 +108,7 @@ public class Identity {
     //新身份证转换成旧身份证号码
     public static String getOldIDCard(final String newIDCard){
         //初始化方法
-        Identity.setWiBuffer();
+        IDEntity.setWiBuffer();
         if(!checkIDCard(newIDCard)){
             return newIDCard;
         }
@@ -120,7 +120,7 @@ public class Identity {
     //判断身份证号码的合法性
     public static boolean checkIDCard(final String idCard){
         //初始化方法
-        Identity.setWiBuffer();
+        IDEntity.setWiBuffer();
         boolean isNew = false;
         //String message = "";
         if (!checkLength(idCard,isNew)){
@@ -146,7 +146,7 @@ public class Identity {
     //获取一个随机的"伪"身份证号码
     public static String getRandomIDCard(final boolean idNewID){
         //初始化方法
-        Identity.setWiBuffer();
+        IDEntity.setWiBuffer();
         Random ran = new Random();
         String idCard = getAddressCode(ran)+getRandomDate(ran,idNewID)+getIDOrder(ran);
         if(idNewID){
@@ -208,7 +208,7 @@ public class Identity {
         }
     }
 
-    public Identity(){
+    public IDEntity(){
         setWiBuffer();
     }
 }

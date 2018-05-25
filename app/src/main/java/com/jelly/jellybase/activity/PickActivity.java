@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.base.ToolUtil.MyDate;
+import com.base.Utils.MyDate;
 import com.base.androidPicker.AddressPickTask;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.jelly.jellybase.R;
 
 import cn.qqtheme.framework.entity.City;

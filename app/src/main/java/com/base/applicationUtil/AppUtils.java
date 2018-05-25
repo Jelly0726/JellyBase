@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.annotation.NonNull;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -46,6 +47,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.base.Utils.CPResourceUtil;
+import com.base.Utils.MD5;
+import com.base.Utils.ResourceReader;
 import com.base.config.BaseConfig;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -88,74 +92,7 @@ public class AppUtils {
     private AppUtils() {
 
     }
-    /**
-     *保留两位小数
-     * @param amount
-     * @return
-     */
-    public static float getTwoDecimal(float amount){
-        DecimalFormat df= new DecimalFormat("######0.00");
-        return Float.parseFloat(df.format(amount));
-    }
-    /**
-     *保留两位小数
-     * @param amount
-     * @return
-     */
-    public static double getTwoDecimal(double amount){
-        DecimalFormat df= new DecimalFormat("######0.00");
-        return Double.parseDouble(df.format(amount));
-    }
-    /**
-     *保留多位小数
-     * @param amount  原数据
-     * @param num     小数位
-     * @return
-     */
-    public static float getDecimal(float amount,int num){
-        if (num<=0){
-           return amount;
-        }
-        String deci="######0.";
-        for (int i=0;i<num;i++){
-            deci+="0";
-        }
-        DecimalFormat df= new DecimalFormat(deci);
-        return Float.parseFloat(df.format(amount));
-    }
-    /**
-     *保留多位小数
-     * @param amount  原数据
-     * @param num     小数位
-     * @return
-     */
-    public static double getDecimal(double amount,int num){
-        if (num<=0){
-           return amount;
-        }
-        String deci="######0.";
-        for (int i=0;i<num;i++){
-            deci+="0";
-        }
-        DecimalFormat df= new DecimalFormat(deci);
-        return Double.parseDouble(df.format(amount));
-    }
-    /**
-     *
-     * @param str 需要正则表达式判断的字符串
-     * @param regex 正则表达式
-     * @param bool 是否区分大小写
-     * @return
-     */
-    public static boolean like(String str,String regex,boolean bool)
-    {
-        regex = regex.replaceAll("\\*", ".*");
-        regex = regex.replaceAll("\\?", ".");
-        Pattern pattern = Pattern.compile(regex,bool?Pattern.CASE_INSENSITIVE:0);
-        Matcher matcher = pattern.matcher(str);
-        return matcher.find();
 
-    }
 
     /**
      * 判断是否有存储卡，有返回TRUE，否则FALSE
@@ -341,7 +278,7 @@ public class AppUtils {
         }
         stringBuffer.append("&key=").append(BaseConfig.KEY);
         //Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
-        map.put("sign",MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+        map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
         return map;
         //return MD5(stringBuffer.toString()).toUpperCase();
     }
@@ -423,19 +360,6 @@ public class AppUtils {
         }
     }
     /**
-     * 判断邮箱是否合法
-     * @param email
-     * @return
-     */
-    public static boolean isEmail(String email){
-        if (null==email || "".equals(email)) return false;
-//      Pattern p = Pattern.compile("\\w+@(\\w+.)+[a-z]{2,3}"); //简单匹配
-        Pattern p =  Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");//复杂匹配
-        Matcher m = p.matcher(email);
-        return m.matches();
-    }
-
-    /**
      * 判断应用否是处于运行状态.
      * @param context
      * @return
@@ -479,14 +403,6 @@ public class AppUtils {
         }
         return false;
     }
-    /**
-     * 取double数据后面两位小数的上界
-     */
-    public static double getValueWith2Suffix(double dbl){
-        BigDecimal bg = new BigDecimal(dbl);
-        return bg.setScale(1, BigDecimal.ROUND_CEILING).doubleValue();
-    }
-
     /**
      * 发送短信
      *
@@ -821,21 +737,6 @@ public class AppUtils {
             }
         }
         return null;
-    }
-    /**
-     * 字符串非空判断
-     * @param string
-     * @return
-     */
-    public static String isNull(String string){
-        String ss="";
-        if(string!=null){
-            if(!string.trim().equals("null")){
-                ss=string;
-            }
-        }
-
-        return ss;
     }
     /**
      * 异步获取外网ip

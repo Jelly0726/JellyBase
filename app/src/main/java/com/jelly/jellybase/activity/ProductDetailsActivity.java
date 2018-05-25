@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.ToolUtil.MyDate;
+import com.base.Utils.MyDate;
 import com.base.bgabanner.BGABanner;
 import com.base.circledialog.AddCartDialog;
 import com.base.eventBus.NetEvent;

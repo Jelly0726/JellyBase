@@ -41,7 +41,7 @@ import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.TTSController;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.eventBus.NetEvent;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;

@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.bankcard.BandCardEditText;
 import com.base.httpmvp.contact.AddBankCartContact;
 import com.base.httpmvp.presenter.AddBankPresenter;

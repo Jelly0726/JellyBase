@@ -1,4 +1,4 @@
-package com.base.applicationUtil;
+package com.base.Utils;
 
 import java.util.HashMap;
 import java.util.Iterator;

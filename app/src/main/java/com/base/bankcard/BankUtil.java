@@ -64,6 +64,31 @@ public class BankUtil {
         }
         return builder.toString();
     }
+    /**
+     * 隐藏并格式化银行卡卡号
+     * @param bankcardid
+     * @return
+     */
+    public static String getBankCardID(@NonNull String bankcardid,int star,int end){
+        String str =bankcardid.trim().replaceAll(" ", "");
+        int len = str.length();
+        if (star<1 || star>len ||end<1 ||end<star ||end>len){
+            return  str;
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            if (i>=star-1 && i <=end-1)
+                builder.append("*");
+            else
+                builder.append(str.charAt(i));
+
+            if (i == 3 || i == 7 || i == 11 || i == 15) {
+                if (i != len - 1)
+                    builder.append(" ");
+            }
+        }
+        return builder.toString();
+    }
     //BIN号
     private final static String[] bankBin = {
             "621098", "622150", "622151", "622181", "622188", "955100", "621095", "620062", "621285", "621798", "621799",

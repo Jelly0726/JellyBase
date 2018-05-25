@@ -16,7 +16,7 @@ import com.allenliu.versionchecklib.callback.CommitClickListener;
 import com.allenliu.versionchecklib.callback.DialogDismissListener;
 import com.allenliu.versionchecklib.core.VersionDialogActivity;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.jelly.jellybase.R;
 
 import java.io.File;

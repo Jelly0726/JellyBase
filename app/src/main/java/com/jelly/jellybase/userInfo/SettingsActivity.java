@@ -12,7 +12,7 @@ import com.allenliu.versionchecklib.core.http.HttpHeaders;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.MyApplication;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.ToastUtils;
 import com.base.checkVersion.CheckVersionActivity;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;

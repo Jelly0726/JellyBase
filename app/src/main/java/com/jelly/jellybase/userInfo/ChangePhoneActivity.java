@@ -8,8 +8,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.MD5;
-import com.base.applicationUtil.ToastUtils;
+import com.base.Utils.MD5;
+import com.base.Utils.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;

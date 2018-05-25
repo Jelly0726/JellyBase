@@ -1,11 +1,10 @@
-package com.base.ToolUtil;
+package com.base.Utils;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 
 import com.amap.api.maps.model.LatLng;
-import com.base.applicationUtil.MD5;
 import com.base.config.BaseConfig;
 
 import java.io.BufferedReader;
