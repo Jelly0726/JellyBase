@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 paramBundle.putBoolean("isUpdate",true);
                 //demoService.showVersionDialog(appVersion.getIP()+appVersion.getUrl(), "检测到新版本","",paramBundle);
                 title="检测到新版本";
-                message=appUpdateInfo.getAppChangeLog();
+                message=appUpdateInfo.getAppChangeLog().replaceAll("<br>","\n");;
                 downloadUrl=appUpdateInfo.getAppUrl();
                 //如果仅使用下载功能，downloadUrl是必须的
                 builder.setOnlyDownload(true)

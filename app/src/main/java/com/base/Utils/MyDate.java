@@ -161,7 +161,7 @@ public class MyDate {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return 0;
+		return 1;
 	}
 	/**
 	 * 将字符串转为MM
@@ -177,7 +177,7 @@ public class MyDate {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return 0;
+		return 1;
 	}
 	/**
 	 * 将字符串转为 dd
@@ -193,7 +193,7 @@ public class MyDate {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		return 0;
+		return 1;
 	}
 	/**
 	 * 将字符串转为 HH

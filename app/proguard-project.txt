@@ -1,0 +1,683 @@
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in E:\ADT Eclipse\adt-bundle-windows-x86_64-20140702\sdk/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the proguardFiles
+# directive in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+###############################通用混淆规则begin##########################################
+#指定代码的压缩级别
+-optimizationpasses 5
+#包明不混合大小写
+-dontusemixedcaseclassnames
+#不去忽略非公共的库类
+-dontskipnonpubliclibraryclasses
+ #优化  不优化输入的类文件
+-dontoptimize
+ #预校验
+-dontpreverify
+ #混淆时是否记录日志
+-verbose
+ # 混淆时所采用的算法
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+#保护注解
+-keepattributes *Annotation*
+# 保持哪些类不被混淆
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+#如果有引用v4包可以添加下面这行
+-keep public class * extends android.support.v4.app.Fragment
+#忽略警告
+#-ignorewarning
+#####################记录生成的日志数据,gradle build时在本项目根目录输出################
+#apk 包内所有 class 的内部结构
+-dump class_files.txt
+#未混淆的类和成员
+-printseeds seeds.txt
+#列出从 apk 中删除的代码
+-printusage unused.txt
+#混淆前后的映射
+-printmapping mapping.txt
+#####################记录生成的日志数据，gradle build时 在本项目根目录输出-end################
+
+#如果引用了v4或者v7包
+-dontwarn android.support.**
+############<span></span>混淆保护自己项目的部分代码以及引用的第三方jar包library-end##################
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+}
+#保持 native 方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+#保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+#保持 Parcelable 不被混淆
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+#保持 Serializable 不被混淆
+-keepnames class * implements java.io.Serializable
+#保持 Serializable 不被混淆并且enum 类也不被混淆
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    !private <fields>;
+    !private <methods>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+#保持枚举 enum 类不被混淆 如果混淆报错，建议直接使用上面的 -keepclassmembers class * implements java.io.Serializable即可
+#-keepclassmembers enum * {
+#  public static **[] values();
+#  public static ** valueOf(java.lang.String);
+#}
+-keepclassmembers class * {
+    public void *ButtonClicked(android.view.View);
+}
+#不混淆资源类
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+#避免混淆泛型 如果混淆报错建议关掉
+-keepattributes Signature
+#保持WEB接口不被混淆
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+-keep class com.buyun.zbphone.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
+#移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
+#-assumenosideeffects class android.util.Log {
+#    public static boolean isLoggable(java.lang.String, int);
+#    public static int v(...);
+#    public static int i(...);
+#    public static int w(...);
+#    public static int d(...);
+#    public static int e(...);
+#}
+###############################通用混淆规则end##########################################
+
+###############################自己的混淆规则begin##########################################
+################<span></span>混淆保护自己项目的部分代码以及引用的第三方jar包library#########################
+#-libraryjars libs/umeng-analytics-v5.2.4.jar
+#-libraryjars libs/alipaysd<span></span>k.jar
+#<span></span>-libraryjars libs/alipaysecsdk.jar
+#-libraryjars libs/alipayutdid.jar
+#-libraryjars libs/wup-1.0.0-SNAPSHOT.jar
+#-libraryjars libs/weibosdkcore.jar
+#三星应用市场需要添加:sdk-v1.0.0.jar,look-v1.0.1.jar
+#-libraryjars libs/sdk-v1.0.0.jar
+#-libraryjars libs/look-v1.0.1.jar
+#我是以libaray的形式引用了一个图片加载框架,如果不想混淆 keep 掉
+#-keep class com.nostra13.universalimageloader.** { *; }
+#友盟
+#-keep class com.umeng.**{*;}
+#==============支付宝======================
+# 支付宝支付
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.sdk.app.H5PayCallback {
+    <fields>;
+    <methods>;
+}
+-keep class com.alipay.android.phone.mrpc.core.** { *; }
+-keep class com.alipay.apmobilesecuritysdk.** { *; }
+-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+-keep class com.alipay.tscenter.biz.rpc.** { *; }
+-keep class org.json.alipay.** { *; }
+-keep class com.alipay.tscenter.** { *; }
+-keep class com.ta.utdid2.** { *;}
+-keep class com.ut.device.** { *;}
+
+# 报错后新增的
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
+#===========微信支付=====================
+-keep class com.tencent.** { *;}
+-keep class org.dom4j.** {*;}
+-dontwarn android.databinding.**
+-dontwarn com.tencent.smtt.export.external.**
+#===========微信支付=====================
+#===============sharesdk混淆注意================
+-keep class android.net.http.SslError
+-keep class android.webkit.**{*;}
+-keep class cn.sharesdk.**{*;}
+-keep class com.sina.**{*;}
+-keep class m.framework.**{*;}
+#====================Gson混淆配置=================
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.**{*;}
+-keepattributes *Annotation*
+-keep class sun.misc.Unsafe { *; }
+-keep class com.idea.fifaalarmclock.entity.***
+-keep class com.google.gson.stream.** { *; }
+# ================极光推送====================
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+#====================apache====================
+ -dontwarn org.apache.commons.beanutils.**
+ -keep class org.apache.commons.beanutils.**{ *;}
+ -dontwarn org.apache.commons.lang3.**
+ -keep class org.apache.commons.lang3.**{ *;}
+ -dontwarn org.apache.commons.logging.**
+ -keep class org.apache.commons.logging.**{ *;}
+ -dontwarn org.apache.http.conn.ssl.**
+  -keep class org.apache.http.conn.ssl.SSLSocketFactory.**{ *;}
+ #======================高德地图==================
+ -dontwarn com.amap.api.**
+ -dontwarn com.a.a.**
+ -dontwarn com.autonavi.**
+ -keep class com.amap.api.**{*;}
+ -keep class com.autonavi.**{*;}
+ -keep class com.a.a.**{*;}
+ -dontwarn com.iflytek.**
+ -keep class com.iflytek.**{*;}
+ -dontwarn com.amap.api.services.**
+ -keep class com.amap.api.services.**{*;}
+ #======================picasso====================
+ -dontwarn com.squareup.picasso.**
+ -keep class com.squareup.picasso.**{*;}
+ #================mobcommons====================
+ -dontwarn com.mob.commons.**
+ -keep class com.mob.commons.**{*;}
+ #=====================mobtool===============
+ -dontwarn com.mob.tools.**
+ -keep class com.mob.tools.**{*;}
+ #=================slidingmenu=====================
+ -dontwarn com.jeremyfeinstein.slidingmenu.lib.**
+ -keep class com.jeremyfeinstein.slidingmenu.lib.**{*;}
+ #==================smssdk=====================
+ -dontwarn cn.smssdk.**
+ -keep class cn.smssdk.**{*;}
+ #=====================universal_img================
+ -dontwarn com.nostra13.universalimageloader.**
+ -keep class com.nostra13.universalimageloader.**{*;}
+ #==================zxing=============
+ -dontwarn com.google.zxing.**
+ -keep class com.google.zxing.**{*;}
+ #====================百度自动更新==================
+ -dontwarn com.baidu.**
+ -keep class com.baidu.**{*;}
+-dontwarn com.baidu.autoupdatesdk.**
+ -keep class com.baidu.autoupdatesdk.**{*;}
+-dontwarn com.baidu.android.bba.common.**
+ -keep class com.baidu.android.bba.common.**{*;}
+-dontwarn com.baidu.appsearch.patchupdate.**
+ -keep class com.baidu.appsearch.patchupdate.**{*;}
+ ### ====================greenDAO 3====================
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+
+-keep class org.greenrobot.greendao.**{*;}
+-keep public interface org.greenrobot.greendao.**
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+-keep class net.sqlcipher.database.**{*;}
+-keep public interface net.sqlcipher.database.**
+-dontwarn net.sqlcipher.database.**
+-dontwarn org.greenrobot.greendao.**
+ #====================Rxjava RxAndroid====================
+  # If you do not use RxJava:
+ -dontwarn rx.*
+ -dontwarn sun.misc.**
+ -keepclassmembers class rx.internal.util.unsafe.*ArrayQuene*Field*{
+ long producerIndex;
+ long consumerIndex;
+ }
+
+ -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode producerNode;
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
+ }
+ -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+ rx.internal.util.atomic.LinkedQueueNode consumerNode;
+ }
+ #====================TrayPreferences====================
+  # If you do not use TrayPreferences:
+ -dontwarn net.grandcentrix.tray.*
+ -keep class net.grandcentrix.tray.**{*;}
+ #====================rxlifecycle2====================
+  # If you do not use rxlifecycle2:
+ -dontwarn ncom.trello.rxlifecycle2.*
+ -keep class ncom.trello.rxlifecycle2.**{*;}
+ #====================retrofit2====================
+# Retrofit
+-dontnote retrofit2.Platform
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+-dontwarn retrofit2.Platform$Java8
+-keepattributes Signature
+-keepattributes Exceptions
+# 保留实体类和成员不被混淆
+ -keep public class com.base.httpmvp.databean.** {
+     public void set*(***);
+     public *** get*();
+     public *** is*();
+ }
+  #====================fastjson====================
+ -keepattributes Signature
+ -dontwarn com.alibaba.fastjson.**
+ -keep class com.alibaba.fastjson.**{*; }
+  #====================AndroidPicker====================
+-keepattributes InnerClasses,Signature
+-keepattributes *Annotation*
+ -dontwarn cn.qqtheme.framework.entity.**
+ -keep class cn.qqtheme.framework.entity.** { *;}
+ -dontwarn cn.qqtheme.framework.picker.**
+ -keep class cn.qqtheme.framework.picker.** { *;}
+ -dontwarn cn.qqtheme.framework.util.**
+ -keep class cn.qqtheme.framework.util.** { *;}
+  #====================autolayout====================
+ -dontwarn com.zhy.autolayout.**
+  #====================daemon====================
+ -dontwarn com.coolerfall.daemon.**
+  #====================SimpleRatingBar====================
+ -dontwarn com.willy.ratingbar.**
+  #====================glide====================
+  -keep public class * implements com.bumptech.glide.module.GlideModule
+  -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+  #====================socialhelper====================
+#qq
+#-keep class com.tencent.**{*;}
+#微博
+-keep class com.sina.weibo.sdk.** { *; }
+#微信
+#-keep class com.tencent.mm.opensdk.** { *; }
+#-keep class packageName.wxapi.** { *; }
+#Gson
+#-keep class com.google.gson.** {*;}
+#-keep class com.google.**{*;}
+#-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+#-keep class com.google.gson.examples.android.model.** { *; }
+#Socialhelper
+-keep class net.arvin.socialhelper.**{*;}
+#=======================album====================
+-dontwarn com.yanzhenjie.album.**
+-dontwarn com.yanzhenjie.mediascanner.**
+#=======================sofia====================
+-dontwarn com.yanzhenjie.sofia.**
+#=======================MNProgressHUD====================
+-dontwarn com.maning.mndialoglibrary.**
+#=======================versionchecklib====================
+-dontwarn com.allenliu.versionchecklib.**
+#=======================richtext====================
+-dontwarn com.zzhoujay.richtext.**
+#=======================MPAndroidChart====================
+-dontwarn com.github.PhilJay.**
+#=======================recyclerviewswipe====================
+-keepclasseswithmembers class android.support.v7.widget.RecyclerView$ViewHolder {
+   public final View *;
+}
+-dontwarn com.yanzhenjie.recyclerview.swipe.**
+-keep class com.yanzhenjie.recyclerview.swipe.** {*;}
+#=======================permission====================
+-dontwarn com.yanzhenjie.permission.**
+#=======================butterknife====================
+ -keep class butterknife.** { *; }
+ -dontwarn butterknife.internal.**
+ -keep class **$$ViewBinder { *; }
+ -keepclasseswithmembernames class * {
+  @butterknife.* <fields>;
+ }
+ -keepclasseswithmembernames class * {
+ @butterknife.* <methods>;
+ }
+
+#=======================eventbus 3.0=======================
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+#=======================EventBus=======================
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+-keepclassmembers class ** {
+public void xxxxxx(**);
+}
+# ------------------ Keep LineNumbers and properties ---------------- #
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-renamesourcefileattribute TbsSdkJava
+-keepattributes SourceFile,LineNumberTable
+#@proguard_debug_end
+
+# --------------------------------------------------------------------------
+# Addidional for x5.sdk classes for apps
+
+-keep class com.tencent.smtt.export.external.**{
+    *;
+}
+
+-keep class com.tencent.tbs.video.interfaces.IUserStateChangedListener {
+	*;
+}
+
+-keep class com.tencent.smtt.sdk.CacheManager {
+	public *;
+}
+
+-keep class com.tencent.smtt.sdk.CookieManager {
+	public *;
+}
+
+-keep class com.tencent.smtt.sdk.WebHistoryItem {
+	public *;
+}
+
+-keep class com.tencent.smtt.sdk.WebViewDatabase {
+	public *;
+}
+
+-keep class com.tencent.smtt.sdk.WebBackForwardList {
+	public *;
+}
+
+-keep public class com.tencent.smtt.sdk.WebView {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebView {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebView$HitTestResult {
+	public static final <fields>;
+	public java.lang.String getExtra();
+	public int getType();
+}
+-keep public class com.tencent.smtt.sdk.WebView$WebViewTransport {
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.WebView$PictureListener {
+	public <fields>;
+	public <methods>;
+}
+
+-keepattributes InnerClasses
+-keep public enum com.tencent.smtt.sdk.WebSettings$** {
+    *;
+}
+-keep public enum com.tencent.smtt.sdk.QbSdk$** {
+    *;
+}
+-keep public class com.tencent.smtt.sdk.WebSettings {
+    public *;
+}
+-keepattributes Signature
+-keep public class com.tencent.smtt.sdk.ValueCallback {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.ValueCallback {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebViewClient {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebViewClient {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.DownloadListener {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.DownloadListener {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebChromeClient {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebChromeClient {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebChromeClient$FileChooserParams {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebChromeClient$FileChooserParams {
+   public void *(android.view.View);
+}
+-keep class com.tencent.smtt.sdk.SystemWebChromeClient{
+	public *;
+}
+# 1. extension interfaces should be apparent
+-keep public class com.tencent.smtt.export.external.extension.interfaces.* {
+	public protected *;
+}
+# 2. interfaces should be apparent
+-keep public class com.tencent.smtt.export.external.interfaces.* {
+	public protected *;
+}
+-keep public class com.tencent.smtt.sdk.WebViewCallbackClient {
+	public protected *;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebViewCallbackClient {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebStorage$QuotaUpdater {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.WebIconDatabase {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebIconDatabase {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.WebStorage {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.WebStorage {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.DownloadListener {
+	public <fields>;
+	public <methods>;
+}
+#保持自定义控件类不被混淆
+-keepclassmembers class * extends com.tencent.smtt.sdk.DownloadListener {
+   public void *(android.view.View);
+}
+-keep public class com.tencent.smtt.sdk.QbSdk {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.QbSdk$PreInitCallback {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.CookieSyncManager {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.Tbs* {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.utils.LogFileUtils {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.utils.TbsLog {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.utils.TbsLogClient {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.CookieSyncManager {
+	public <fields>;
+	public <methods>;
+}
+# Added for game demos
+-keep public class com.tencent.smtt.sdk.TBSGamePlayer {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.TBSGamePlayerClient* {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.TBSGamePlayerClientExtension {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.TBSGamePlayerService* {
+	public <fields>;
+	public <methods>;
+}
+-keep public class com.tencent.smtt.utils.Apn {
+	public <fields>;
+	public <methods>;
+}
+# end
+-keep public class com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension {
+	public <fields>;
+	public <methods>;
+}
+-keep class MTT.ThirdAppInfoNew {
+	*;
+}
+-keep class com.tencent.mtt.MttTraceEvent {
+	*;
+}
+# Game related
+-keep public class com.tencent.smtt.gamesdk.* {
+	public protected *;
+}
+-keep public class com.tencent.smtt.sdk.TBSGameBooter {
+        public <fields>;
+        public <methods>;
+}
+-keep public class com.tencent.smtt.sdk.TBSGameBaseActivity {
+	public protected *;
+}
+-keep public class com.tencent.smtt.sdk.TBSGameBaseActivityProxy {
+	public protected *;
+}
+-keep public class com.tencent.smtt.gamesdk.internal.TBSGameServiceClient {
+	public *;
+}
+#---------------------------------------------------------------------------
+#=======================信鸽推送====================
+#-keep class com.tencent.android.tpush.**  {* ;}
+#-keep class com.tencent.mid.**  {* ;}
+#自己项目特殊处理代码
+#忽略警告
+#-dontwarn com.veidy.mobile.common.**
+#保留一个完整的包
+#-keep class com.veidy.mobile.common.** {
+#    *;
+# }
+#-keep class  com.veidy.activity.login.WebLoginActivity{*;}
+#-keep class  com.veidy.activity.UserInfoFragment{*;}
+#-keep class  com.veidy.activity.HomeFragmentActivity{*;}
+#-keep class  com.veidy.activity.CityActivity{*;}
+#-keep class  com.veidy.activity.ClinikActivity{*;}
+-keep class com.amap.api.** { *; }
+-keep class vi.com.gdi.bgl.android.**{*;}
+-keep class com.google.android.gms.** { *; }
+-keep class android.support.v4.** { *; }
+-keep class org.apache.commons.net.** { *; }
+-keep public class javax.**{ *; }
+-keep public class java.**{ *; }
+-keep class **$$ViewInjector { *; }
+-keep public class com.google.gson.**{ *; }
+-keep public class com.amap.**{ *; }
+-keep public class com.autonavi.amap.**{ *; }
+-keep public class org.codehaus.**{ *; }
+-keep class com.tencent.mm.sdk.openapi.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
+
+-keep class com.base.sqldao.**{*;}
+ -keep class systemdb.**{*;}
+ -keep class com.base.eventBus.**{*;}
+#-keep public class java.**
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+-dontwarn javax.**
+-dontwarn butterknife.internal.**
+-dontwarn java.**
+-dontwarn com.google.gson.**
+-dontwarn com.amap.**
+-dontwarn com.autonavi.amap.**
+-dontwarn org.codehaus.**
+-dontwarn butterknife.Views$InjectViewProcessor
+-dontwarn com.google.android.gms.**
+-dontwarn android.support.v4.**
+-dontwarn org.apache.commons.net.**
+-dontwarn android.support.**
+-dontwarn com.google.code.**
+-dontwarn com.jakewharton.**
+-dontwarn com.android.support.**
+-keepnames class * { @butterknife.InjectView *;}
+###############################自己的混淆规则end##########################################
