@@ -6,14 +6,17 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.androidPicker.AddressPickTask;
+import com.base.Utils.PwdCheckUtil;
+import com.base.Utils.StringUtil;
 import com.base.Utils.ToastUtils;
+import com.base.androidPicker.AddressPickTask;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.callback.ConfigText;
@@ -111,11 +114,22 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
             name_edit.setText(recevierAddress.getName());
             if (!TextUtils.isEmpty(recevierAddress.getName()))
                 name_edit.setSelection(recevierAddress.getName().length());
-            phone_edit.setText(recevierAddress.getPhone());
+            phone_edit.setText(StringUtil.getReplace(recevierAddress.getPhone(),4,8));
             if (!TextUtils.isEmpty(recevierAddress.getPhone()))
                 phone_edit.setSelection(recevierAddress.getPhone().length());
             default_checkBox.setChecked(recevierAddress.isDefault());
         }
+        phone_edit.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
+                if(keyCode == KeyEvent.KEYCODE_DEL) {
+                    //this is for backspace
+                    phone_edit.getText().clear();
+                }
+                return false;
+            }
+        });
     }
     @OnClick({R.id.left_back,R.id.address_tv,R.id.commit_layout,R.id.delete_address})
     public void onClick(View v) {
@@ -131,8 +145,16 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
                 String phone=phone_edit.getText().toString().trim();
                 String name=name_edit.getText().toString();
                 String address=address_tvs.getText().toString();
-                if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(name)||TextUtils.isEmpty(address)){
-                    ToastUtils.showToast(this,"姓名、电话、收货地址不能为空!");
+                if (TextUtils.isEmpty(name)){
+                    ToastUtils.showToast(this,"姓名不能为空!");
+                    return;
+                }
+                if (TextUtils.isEmpty(phone)){
+                    ToastUtils.showToast(this,"电话不能为空!");
+                    return;
+                }
+                if (TextUtils.isEmpty(address)){
+                    ToastUtils.showToast(this,"收货地址不能为空!");
                     return;
                 }
                 presenter.operaAddress(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
@@ -229,6 +251,9 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
     @Override
     public Object operaAddressParam() {
         String phone = phone_edit.getText().toString().trim();
+        if (!PwdCheckUtil.isDigit2(phone)){
+            phone=recevierAddress.getPhone();
+        }
         String name = name_edit.getText().toString();
         String address = address_tvs.getText().toString();
         Map map = new TreeMap();
