@@ -32,9 +32,16 @@
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 #保护注解
 -keepattributes *Annotation*
+-dontskipnonpubliclibraryclassmembers
+-dontwarn dalvik.**
+-dontwarn com.tencent.smtt.**
+#-overloadaggressively
 # 保持哪些类不被混淆
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity
+-keep public class * extends com.zhy.autolayout.AutoLayoutActivity
+-keep public class * extends android.support.v7.app.ActionBarActivity
+-keep public class * extends android.support.v7.app.AppCompatActivity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -78,9 +85,21 @@
 -keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
-#保持自定义控件类不被混淆
--keepclassmembers class * extends android.app.Activity {
-   public void *(android.view.View);
+-keep public class * extends android.app.Activity{
+	public <fields>;
+	public <methods>;
+}
+-keep public class * extends android.support.v7.app.AppCompatActivity{
+	public <fields>;
+	public <methods>;
+}
+-keep public class * extends android.support.v7.app.ActionBarActivity{
+	public <fields>;
+	public <methods>;
+}
+-keep public class * extends android.app.Application{
+	public <fields>;
+	public <methods>;
 }
 #保持 Parcelable 不被混淆
 -keep class * implements android.os.Parcelable {
@@ -101,10 +120,10 @@
     java.lang.Object readResolve();
 }
 #保持枚举 enum 类不被混淆 如果混淆报错，建议直接使用上面的 -keepclassmembers class * implements java.io.Serializable即可
-#-keepclassmembers enum * {
-#  public static **[] values();
-#  public static ** valueOf(java.lang.String);
-#}
+-keepclassmembers enum * {
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
+}
 -keepclassmembers class * {
     public void *ButtonClicked(android.view.View);
 }
@@ -119,6 +138,7 @@
    public *;
 }
 -keep class com.buyun.zbphone.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
+-keep class com.base.webview.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
 #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
 #-assumenosideeffects class android.util.Log {
 #    public static boolean isLoggable(java.lang.String, int);
@@ -128,6 +148,16 @@
 #    public static int d(...);
 #    public static int e(...);
 #}
+#------------------  下方是共性的排除项目         ----------------
+# 方法名中含有“JNI”字符的，认定是Java Native Interface方法，自动排除
+# 方法名中含有“JRI”字符的，认定是Java Reflection Interface方法，自动排除
+-keepclasseswithmembers class * {
+    ... *JNI*(...);
+}
+-keepclasseswithmembernames class * {
+	... *JRI*(...);
+}
+-keep class **JNI* {*;}
 ###############################通用混淆规则end##########################################
 
 ###############################自己的混淆规则begin##########################################
@@ -187,7 +217,6 @@
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.**{*;}
--keepattributes *Annotation*
 -keep class sun.misc.Unsafe { *; }
 -keep class com.idea.fifaalarmclock.entity.***
 -keep class com.google.gson.stream.** { *; }
@@ -306,7 +335,6 @@ public static java.lang.String TABLENAME;
  -keep class com.alibaba.fastjson.**{*; }
   #====================AndroidPicker====================
 -keepattributes InnerClasses,Signature
--keepattributes *Annotation*
  -dontwarn cn.qqtheme.framework.entity.**
  -keep class cn.qqtheme.framework.entity.** { *;}
  -dontwarn cn.qqtheme.framework.picker.**
@@ -374,7 +402,6 @@ public static java.lang.String TABLENAME;
  }
 
 #=======================eventbus 3.0=======================
--keepattributes *Annotation*
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
 }
@@ -390,14 +417,11 @@ public static java.lang.String TABLENAME;
 public void xxxxxx(**);
 }
 # ------------------ Keep LineNumbers and properties ---------------- #
--keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
 -renamesourcefileattribute TbsSdkJava
 -keepattributes SourceFile,LineNumberTable
-#@proguard_debug_end
-
 # --------------------------------------------------------------------------
 # Addidional for x5.sdk classes for apps
-
 -keep class com.tencent.smtt.export.external.**{
     *;
 }
@@ -409,31 +433,33 @@ public void xxxxxx(**);
 -keep class com.tencent.smtt.sdk.CacheManager {
 	public *;
 }
-
+#保持自定义控件类不被混淆
+-keep class * extends com.tencent.smtt.sdk.CacheManager{*;}
 -keep class com.tencent.smtt.sdk.CookieManager {
 	public *;
 }
-
+#保持自定义控件类不被混淆
+-keep class * extends com.tencent.smtt.sdk.CookieManager{*;}
 -keep class com.tencent.smtt.sdk.WebHistoryItem {
 	public *;
 }
-
+#保持自定义控件类不被混淆
+-keep class * extends com.tencent.smtt.sdk.WebHistoryItem{*;}
 -keep class com.tencent.smtt.sdk.WebViewDatabase {
 	public *;
 }
-
+#保持自定义控件类不被混淆
+-keep class * extends com.tencent.smtt.sdk.WebViewDatabase{*;}
 -keep class com.tencent.smtt.sdk.WebBackForwardList {
 	public *;
 }
-
+-dontwarn com.tencent.smtt.sdk.WebView.**
 -keep public class com.tencent.smtt.sdk.WebView {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebView {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebView{*;}
 -keep public class com.tencent.smtt.sdk.WebView$HitTestResult {
 	public static final <fields>;
 	public java.lang.String getExtra();
@@ -463,41 +489,31 @@ public void xxxxxx(**);
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.ValueCallback {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.ValueCallback{*;}
 -keep public class com.tencent.smtt.sdk.WebViewClient {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebViewClient {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebViewClient{*;}
 -keep public class com.tencent.smtt.sdk.DownloadListener {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.DownloadListener {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.DownloadListener{*;}
 -keep public class com.tencent.smtt.sdk.WebChromeClient {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebChromeClient {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebChromeClient{*;}
 -keep public class com.tencent.smtt.sdk.WebChromeClient$FileChooserParams {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebChromeClient$FileChooserParams {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebChromeClient$FileChooserParams{*;}
 -keep class com.tencent.smtt.sdk.SystemWebChromeClient{
 	public *;
 }
@@ -513,9 +529,7 @@ public void xxxxxx(**);
 	public protected *;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebViewCallbackClient {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebViewCallbackClient{*;}
 -keep public class com.tencent.smtt.sdk.WebStorage$QuotaUpdater {
 	public <fields>;
 	public <methods>;
@@ -525,25 +539,19 @@ public void xxxxxx(**);
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebIconDatabase {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebIconDatabase{*;}
 -keep public class com.tencent.smtt.sdk.WebStorage {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.WebStorage {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.WebStorage{*;}
 -keep public class com.tencent.smtt.sdk.DownloadListener {
 	public <fields>;
 	public <methods>;
 }
 #保持自定义控件类不被混淆
--keepclassmembers class * extends com.tencent.smtt.sdk.DownloadListener {
-   public void *(android.view.View);
-}
+-keep class * extends com.tencent.smtt.sdk.DownloadListener{*;}
 -keep public class com.tencent.smtt.sdk.QbSdk {
 	public <fields>;
 	public <methods>;
@@ -661,7 +669,7 @@ public void xxxxxx(**);
  -keep class com.base.eventBus.**{*;}
 #-keep public class java.**
 -dontwarn com.google.android.maps.**
--dontwarn android.webkit.WebView
+-dontwarn android.webkit.WebView.**
 -dontwarn com.tencent.weibo.sdk.**
 -dontwarn com.facebook.**
 -dontwarn javax.**
@@ -674,10 +682,13 @@ public void xxxxxx(**);
 -dontwarn butterknife.Views$InjectViewProcessor
 -dontwarn com.google.android.gms.**
 -dontwarn android.support.v4.**
+-dontwarn android.support.v7.**
 -dontwarn org.apache.commons.net.**
 -dontwarn android.support.**
 -dontwarn com.google.code.**
 -dontwarn com.jakewharton.**
 -dontwarn com.android.support.**
+-dontwarn com.base.webview.**
+-dontwarn android.webkit.**
 -keepnames class * { @butterknife.InjectView *;}
 ###############################自己的混淆规则end##########################################
