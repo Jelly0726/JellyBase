@@ -1,11 +1,11 @@
 package systemdb;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 
 import java.io.Serializable;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * ClassName:PositionEntity <br/>
@@ -18,7 +18,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * @see
  */
 @Entity
-public class PositionEntity implements Serializable {
+public class PositionEntity implements Serializable ,Cloneable{
 	private static final long serialVersionUID=1L;
 	@Id(autoincrement = true)
 	public Long id;
@@ -137,5 +137,16 @@ public class PositionEntity implements Serializable {
 
 	public void setDistrict(String district) {
 		this.district = district;
+	}
+
+	@Override
+	public PositionEntity clone()  {
+		try {
+			return (PositionEntity) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+			return (PositionEntity) new PositionEntity(id, latitue, longitude, address,
+					province, city, adCode, district, type, from);
+		}
 	}
 }
