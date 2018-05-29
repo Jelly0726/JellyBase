@@ -1,7 +1,9 @@
 package com.base.webview.tbs;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
@@ -68,6 +70,20 @@ public class X5WebView extends WebView {
 				tbsClientCallBack.shouldOverrideUrlLoading(view, url);
 			}
 			return false;
+		}
+		@Override
+		public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+			try {
+				if (url.startsWith("http") || url.startsWith("https")) { //http和https协议开头的执行正常的流程
+					return super.shouldInterceptRequest(view, url);
+				} else { //其他的URL则会开启一个Acitity然后去调用原生APP
+					Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+					MyApplication.getMyApp().startActivity(in);
+					return null;
+				}
+			}catch (ActivityNotFoundException e){
+				return super.shouldInterceptRequest(view, url);
+			}
 		}
 		public void onReceivedHttpAuthRequest(WebView webview,
 											  com.tencent.smtt.export.external.interfaces.HttpAuthHandler httpAuthHandlerhost,
