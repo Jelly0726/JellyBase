@@ -10,7 +10,6 @@ import android.view.WindowManager;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.appservicelive.toolsUtil.ScreenManager;
-import com.base.config.IntentAction;
 
 
 /**
@@ -34,10 +33,10 @@ public class LiveActivity extends Activity {
         int from=AppPrefs.getInt(this,"from",0);
         if (from==1) {
             finish();
-            Intent intent = new Intent();
-            intent.setAction(IntentAction.JPUSH_CLICK);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+//            Intent intent = new Intent();
+//            intent.setAction(IntentAction.JPUSH_CLICK);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
             return;
         }
         Window window = getWindow();
