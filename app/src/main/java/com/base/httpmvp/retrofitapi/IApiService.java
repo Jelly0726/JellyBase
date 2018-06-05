@@ -5,6 +5,7 @@ import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
+import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.databean.PersonalInfo;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
@@ -103,4 +104,12 @@ public interface IApiService {
 	@POST("SLD/buyerAddress/getAddressList.doAdminJJ")
 	Observable<HttpResultList<RecevierAddress>> getAddressList(@Header("token") String token,
 																			  @Query("data") Object jsonObject);
+	//消息通知列表
+	@POST("JFF/fish/transfer/getFishTransferList.doAdminJJ")
+	Observable<HttpResultList<Message>> getMessage(@Header("token") String token,
+																  @Query("data") Object jsonObject);
+	//消息通知详情
+	@POST("JFF/fish/transfer/getFishTransferList.doAdminJJ")
+	Observable<HttpResultData<Message>> getMessageDetails(@Header("token") String token,
+																		 @Query("data") Object jsonObject);
 }

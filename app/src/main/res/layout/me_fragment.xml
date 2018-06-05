@@ -133,6 +133,44 @@
                     android:src="@mipmap/ic_launcher"
                     />
             </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/message_layout"
+                android:layout_width="match_parent"
+                android:layout_height="88px"
+                android:orientation="horizontal"
+                android:paddingRight="40px"
+                android:paddingLeft="40px"
+                android:gravity="center_vertical"
+                android:background="#ffffff"
+                android:layout_marginTop="1px">
+                <ImageView
+                    android:layout_width="52px"
+                    android:layout_height="52px"
+                    android:src="@mipmap/me_message"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textSize="28px"
+                    android:textColor="#313131"
+                    android:layout_marginLeft="20px"
+                    android:text="消息通知"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/tv_point"
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/bottombar_shape_notify_point"
+                    android:gravity="center"
+                    android:textSize="6sp"
+                    android:visibility="gone" />
+                <ImageView
+                    android:layout_width="30px"
+                    android:layout_height="30px"
+                    android:src="@mipmap/right_next"/>
+            </LinearLayout>
         </LinearLayout>
     </com.base.xrefreshview.XNestedScrollView>
 </com.base.xrefreshview.XRefreshView>

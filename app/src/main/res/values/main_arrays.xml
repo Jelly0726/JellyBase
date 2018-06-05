@@ -29,5 +29,6 @@
         <item>RecyclerView侧滑菜单</item>
         <item>高的地图</item>
         <item>NFC示例</item>
+        <item>消息通知</item>
     </string-array>
 </resources>

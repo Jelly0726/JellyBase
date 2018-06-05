@@ -47,6 +47,7 @@ import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
 import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
+import com.jelly.jellybase.activity.MessageActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
@@ -476,6 +477,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 27://NFC
                     intent=new Intent(MyApplication.getMyApp(), NFCMainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 28://消息通知
+                    intent=new Intent(MyApplication.getMyApp(), MessageActivity.class);
                     startActivity(intent);
                     break;
             }

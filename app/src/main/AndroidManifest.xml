@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jelly.jellybase">
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -429,6 +430,14 @@
             android:name=".swipeRefresh.activity.group.MenuActivity"
             android:label="Item菜单Sticky分组"
             android:theme="@style/XSwipe_AppTheme"/>
+        <activity android:name=".activity.MessageActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.MessageDetailsActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓nfc实例↓↓↓↓↓↓↓-->
         <activity android:name=".nfc.NFCMainActivity"
             >
@@ -692,6 +701,21 @@
         <service android:name=".server.LocationService"
             android:enabled="true"
             />
+        <!--↓↓↓极光推送↓↓↓-->
+        <receiver
+            android:name="com.base.jiguang.PushReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+        <!--↑↑↑极光推送↑↑↑-->
     </application>
 
 </manifest>

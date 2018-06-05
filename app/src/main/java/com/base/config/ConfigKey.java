@@ -22,4 +22,5 @@ public class ConfigKey {
     public static final String IS_SET_TAG="IS_SET_TAG";//是否设置了极光tag
     public static final String JPUSHID="JPUSHID";//极光ID
     public static final String UNIQUEID="UNIQUEID";//设备唯一ID
+    public static final String NEWMESSAGE="NEWMESSAGE";//新消息
 }

@@ -12,6 +12,7 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.databean.AccountDetail;
 import com.base.httpmvp.databean.AppVersion;
+import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.databean.PersonalInfo;
 import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
@@ -450,6 +451,25 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpFunctions<HttpResultList<RecevierAddress>>());
 		toSubscribe(observable, subscriber,composer);
 	}
+	/***
+	 * 消息通知列表
+	 * @param subscriber
+	 */
+	public void getMessage(Object paramMap,ObservableTransformer composer,Observer<HttpResultList<Message>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getMessage(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpFunctions<HttpResultList<Message>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+	/***
+	 * 消息通知详情
+	 * @param subscriber
+	 */
+	public void getMessageDetails(Object paramMap,ObservableTransformer composer,Observer<HttpResultData<Message>> subscriber){
+		Observable observable =  getProxy(IApiService.class).getMessageDetails(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpFunctions<HttpResultData<Message>>());
+		toSubscribe(observable, subscriber,composer);
+	}
+
 
 	/***
 	 * 统一异步,同步处理

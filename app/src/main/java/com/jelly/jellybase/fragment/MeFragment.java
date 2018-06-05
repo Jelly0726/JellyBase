@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
+import com.base.config.ConfigKey;
 import com.base.httpmvp.databean.MyInfo;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
@@ -20,6 +22,7 @@ import com.base.xrefreshview.XRefreshView;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BalanceActivity;
 import com.jelly.jellybase.activity.BankCardListActivity;
+import com.jelly.jellybase.activity.MessageActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,10 @@ public class MeFragment extends BaseFragment {
     TextView name_tv;
     @BindView(R.id.balance_layout)
     LinearLayout balance_layout;
+    @BindView(R.id.message_layout)
+    LinearLayout message_layout;
+    @BindView(R.id.tv_point)
+    TextView tv_point;
     @BindView(R.id.balance_tv)
     TextView balance_tv;
     @BindView(R.id.bankcard_layout)
@@ -90,6 +97,11 @@ public class MeFragment extends BaseFragment {
                 }
             }else {
                 name_tv.setText("未登录");
+            }
+            if (AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.NEWMESSAGE)){
+                tv_point.setVisibility(View.GONE);
+            }else {
+                tv_point.setVisibility(View.GONE);
             }
         }
     }
@@ -155,7 +167,7 @@ public class MeFragment extends BaseFragment {
             }, 1000);
         }
     };
-    @OnClick({R.id.balance_layout,R.id.bankcard_layout})
+    @OnClick({R.id.balance_layout,R.id.bankcard_layout,R.id.message_layout})
     public void onClick(View view){
         if (AntiShake.check(view.getId()))return;
         Intent intent;
@@ -167,6 +179,10 @@ public class MeFragment extends BaseFragment {
                 break;
             case R.id.bankcard_layout:
                 intent=new Intent(MyApplication.getMyApp(), BankCardListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.message_layout:
+                intent=new Intent(MyApplication.getMyApp(), MessageActivity.class);
                 startActivity(intent);
                 break;
         }
