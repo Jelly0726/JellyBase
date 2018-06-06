@@ -65,15 +65,12 @@ public interface IApiService {
 	Observable<HttpResult> updatePhone(@Header("token") String token,
                                                       @Field("data") String jsonString);
 	//关于我们
-	@FormUrlEncoded
 	@POST("SLD/buyersInfo/aboutUs.doAdminJJ")
 	Observable<HttpResultData<AboutUs>> aboutUs(@Header("token") String token);
 	//检查版本
-	@FormUrlEncoded
 	@POST("JFF/appuser/getAppversionList.doAdminJJ")
 	Observable<HttpResultData<AppVersion>> getAppversionList(@Header("token") String token);
 	//获取个人资料
-	@FormUrlEncoded
 	@POST("zhongbo/user/getMeuserList.doAdminJJ")
 	Observable<HttpResultData<PersonalInfo>> findBuyerInfo(@Header("Authorization") String token);
 	//完善个人资料
