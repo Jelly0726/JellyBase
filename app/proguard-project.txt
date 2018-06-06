@@ -105,6 +105,10 @@
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
+-keepclassmembers class * implements android.os.Parcelable {
+ public <fields>;
+ private <fields>;
+}
 #保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
 #保持 Serializable 不被混淆并且enum 类也不被混淆
