@@ -111,7 +111,7 @@ public class ProxyHandler implements InvocationHandler {
                 // call the refresh token api.
                     Map<String,String> map=new TreeMap<>();
                     //map.put("saleid",login.getUserID()+"");
-                    HttpMethods.getInstance().getToken(JSON.toJSON(map),null
+                    HttpMethods.getInstance().getToken(JSON.toJSON(map).toString(),null
                             ,new Observer<HttpResultData<TokenModel>>() {
 
                                 @Override
