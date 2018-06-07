@@ -1,7 +1,8 @@
-package com.base.Utils;
+package com.base.encrypt;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.ByteArrayOutputStream;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -26,48 +27,82 @@ import javax.crypto.spec.SecretKeySpec;
 
 /**
  * @ClassName: EncryptUtils
- * @Description: 加密、解密、压缩工具
+ * @Description: AES、RSA加密、解密
  * @author: liuyx
  * @date: 2016年5月10日上午9:07:42
  */
 public class EncryptUtils extends Base64 {
 
-//    public static void main(String[] args) {
-//        String str = "981hf98w7`9h5fdjk09qy56hty4gahguewqpg{}d[}]df2,,,1,4";
-//        System.out.println("原字符串："+str);
-//        String aesKey = EncryptUtils.getAESRandomKeyString();
-//        String aesEncryptedStr = EncryptUtils.encryptByAESAndBase64(aesKey, str);
-//        System.out.println("AES加密后："+aesEncryptedStr);
-//        String aesDecryptedStr = EncryptUtils.decryptByAESAndBase64(aesKey, aesEncryptedStr);
-//        System.out.println("AES解密后："+aesDecryptedStr);
-//
-//        Map<String,String> keyPair = EncryptUtils.getRSARandomKeyPair();
-//        String publicRSAKey = keyPair.get(EncryptUtils.PUBLIC_KEY);
-//        String privateRSAKey = keyPair.get(EncryptUtils.PRIVATE_KEY);
-//
-//        String encryptedStr = EncryptUtils.encryptByRSAPublicKeyAndBase64(publicRSAKey, str);
-//        System.out.println("公钥加密后:"+encryptedStr);
-//        String decryptedStr = EncryptUtils.decryptByRSAPrivateKeyAndBase64(privateRSAKey, encryptedStr);
-//        System.out.println("私钥解密后:"+decryptedStr);
-//
-//        encryptedStr = EncryptUtils.encryptByRSAPrivateKeyAndBase64(privateRSAKey, str);
-//        System.out.println("私钥加密后:"+encryptedStr);
-//
-//        String sign = EncryptUtils.getSignFromEncryptedDataWithPrivateKey(privateRSAKey, encryptedStr);
-//        System.out.println("签名:"+sign);
-//        boolean verifyResult = EncryptUtils.verifySign(publicRSAKey, sign, encryptedStr);
-//        System.out.println("签名验证结果："+verifyResult);
-//
-//        decryptedStr = EncryptUtils.decryptByRSAPublicKeyAndBase64(publicRSAKey, encryptedStr);
-//        System.out.println("公钥解密后:"+decryptedStr);
-//    }
+    public static void main(String[] args) {
+        String str = "{\"returnState\":true,\"data\":{\"message\":\"查询成功\",\"statue\":1,\"data\":[{\"id\":119,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013544_2NMT8YWAW0.jpg\"},{\"id\":120,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013552_43YDAAMOFU.jpg\"},{\"id\":121,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226015552_LNF8PQUNYN.jpg\"}]}}";
+        System.out.println("原字符串："+str);
+        long star=System.currentTimeMillis();
+        /*AES相关------start*/
+        String aesKey = EncryptUtils.getAESRandomKeyString();
+        System.out.println("生成AES秘钥时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        String aesEncryptedStr = EncryptUtils.encryptByAESAndBase64(aesKey, str);
+        System.out.println("AES加密后："+aesEncryptedStr);
+        System.out.println("AES加密时间："+(System.currentTimeMillis()-star)+"ms");
+        star=System.currentTimeMillis();
+        String aesDecryptedStr = EncryptUtils.decryptByAESAndBase64(aesKey, aesEncryptedStr);
+        System.out.println("AES解密后："+aesDecryptedStr);
+        System.out.println("AES解密时间："+(System.currentTimeMillis()-star)+"ms");
+        /*AES相关------end*/
+        /*RSA相关------start*/
+        star=System.currentTimeMillis();
+        Map<String,String> keyPair = EncryptUtils.getRSARandomKeyPair();
+        String publicRSAKey = keyPair.get(EncryptUtils.PUBLIC_KEY);
+        String privateRSAKey = keyPair.get(EncryptUtils.PRIVATE_KEY);
+        System.out.println("生成秘钥时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        String encryptedStr = EncryptUtils.encryptByRSAPublicKeyAndBase64(publicRSAKey, str);
+        System.out.println("公钥加密后:"+encryptedStr);
+        System.out.println("公钥加密时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        String decryptedStr = EncryptUtils.decryptByRSAPrivateKeyAndBase64(privateRSAKey, encryptedStr);
+        System.out.println("私钥解密后:"+decryptedStr);
+        System.out.println("私钥解密时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        encryptedStr = EncryptUtils.encryptByRSAPrivateKeyAndBase64(privateRSAKey, str);
+        System.out.println("私钥加密后:"+encryptedStr);
+        System.out.println("私钥加密时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        String sign = EncryptUtils.getSignFromEncryptedDataWithPrivateKey(privateRSAKey, encryptedStr);
+        System.out.println("签名:"+sign);
+        System.out.println("签名时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        boolean verifyResult = EncryptUtils.verifySign(publicRSAKey, sign, encryptedStr);
+        System.out.println("签名验证结果："+verifyResult);
+        System.out.println("签名验证时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        decryptedStr = EncryptUtils.decryptByRSAPublicKeyAndBase64(publicRSAKey, encryptedStr);
+        System.out.println("公钥解密后:"+decryptedStr);
+        System.out.println("公钥解密时间："+(System.currentTimeMillis()-star)+"ms");
+        /*RSA相关------end*/
+    }
 
     public static final String KEY_ALGORITHM_RSA = "RSA";
     public static final String KEY_ALGORITHM_AES = "AES";
 
     private static final String PUBLIC_KEY = "RSAPublicKey";
     private static final String PRIVATE_KEY = "RSAPrivateKey";
+    /** *//**
+     * RSA最大加密明文大小
+     */
+    private static final int MAX_ENCRYPT_BLOCK = 117;
 
+    /** *//**
+     * RSA最大解密密文大小
+     */
+    private static final int MAX_DECRYPT_BLOCK = 128;
     public static final String SIGNATURE_ALGORITHM_MD5_RSA = "MD5withRSA";
     /**
      *
@@ -107,6 +142,7 @@ public class EncryptUtils extends Base64 {
         } catch (NoSuchAlgorithmException e) {
             // TODO Auto-generated catch block
             // e.printStackTrace();
+            System.out.println("getAESRandomKeyString="+e);
             return null;
         }
 
@@ -136,6 +172,7 @@ public class EncryptUtils extends Base64 {
             return encryptedDataStr;
         } catch (Exception e) {
             // e.printStackTrace();
+            System.out.println("encryptByAESAndBase64="+e);
             return null;
         }
     }
@@ -161,6 +198,7 @@ public class EncryptUtils extends Base64 {
             return decryptedDataStr;
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println("decryptByAESAndBase64="+e);
             return null;
         }
 
@@ -199,7 +237,7 @@ public class EncryptUtils extends Base64 {
         KeyPairGenerator keyPairGen;
         try {
             keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM_RSA);
-            keyPairGen.initialize(512);
+            keyPairGen.initialize(1024);
             KeyPair keyPair = keyPairGen.generateKeyPair();
             // 公钥
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
@@ -215,6 +253,7 @@ public class EncryptUtils extends Base64 {
             return keyMap;
         } catch (NoSuchAlgorithmException e) {
             //e.printStackTrace();
+            System.out.println("getRSARandomKeyPair="+e);
             return null;
         }
 
@@ -240,11 +279,30 @@ public class EncryptUtils extends Base64 {
         try {
             cipher = Cipher.getInstance(KEY_ALGORITHM_RSA);
             cipher.init(Cipher.ENCRYPT_MODE, decodePublicKey);
-            byte[] encodedData = cipher.doFinal(data);
-            String encodedDataStr = encodeBase64String(encodedData);
+            //byte[] encodedData = cipher.doFinal(data);
+            int inputLen = data.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段加密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
+                    cache = cipher.doFinal(data, offSet, MAX_ENCRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(data, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * MAX_ENCRYPT_BLOCK;
+            }
+            byte[] encryptedData = out.toByteArray();
+            out.close();
+            String encodedDataStr = encodeBase64String(encryptedData);
             return encodedDataStr;
         } catch (Exception e) {
             // TODO Auto-generated catch block
+            System.out.println("encryptByRSAPublicKeyAndBase64="+e);
             return null;
         }
 
@@ -265,11 +323,33 @@ public class EncryptUtils extends Base64 {
         try {
             Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_RSA);
             cipher.init(Cipher.DECRYPT_MODE, decodePublicKey);
-            byte[] decodedData = cipher.doFinal(Base64.decodeBase64(encryptedDataStr));
-            String decodedDataStr = new String(decodedData);
+            //byte[] decodedData = cipher.doFinal();
+            byte[] decodedData = Base64.decodeBase64(encryptedDataStr);
+            int inputLen = decodedData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段解密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
+                    cache = cipher.doFinal(decodedData, offSet, MAX_DECRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(decodedData, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * MAX_DECRYPT_BLOCK;
+            }
+            byte[] decryptedData = out.toByteArray();
+            out.close();
+
+
+            String decodedDataStr = new String(decryptedData);
             return decodedDataStr;
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println("decryptByRSAPublicKeyAndBase64="+e);
             return null;
         }
 
@@ -299,7 +379,7 @@ public class EncryptUtils extends Base64 {
             return sign;
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("getSignFromEncryptedDataWithPrivateKey="+e);
             return null;
         }
 
@@ -329,7 +409,7 @@ public class EncryptUtils extends Base64 {
             return ret;
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("verifySign="+e);
         }
 
         return false;
@@ -355,11 +435,30 @@ public class EncryptUtils extends Base64 {
         try {
             cipher = Cipher.getInstance(KEY_ALGORITHM_RSA);
             cipher.init(Cipher.ENCRYPT_MODE, decodePrivateKey);
-            byte[] encodedData = cipher.doFinal(data);
-            String encodedDataStr = encodeBase64String(encodedData);
+            //byte[] encodedData = cipher.doFinal(data);
+            int inputLen = data.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段加密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
+                    cache = cipher.doFinal(data, offSet, MAX_ENCRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(data, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * MAX_ENCRYPT_BLOCK;
+            }
+            byte[] encryptedData = out.toByteArray();
+            out.close();
+            String encodedDataStr = encodeBase64String(encryptedData);
             return encodedDataStr;
         } catch (Exception e) {
             // TODO Auto-generated catch block
+            System.out.println("encryptByRSAPrivateKeyAndBase64="+e);
             return null;
         }
 
@@ -381,11 +480,32 @@ public class EncryptUtils extends Base64 {
         try {
             Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_RSA);
             cipher.init(Cipher.DECRYPT_MODE, decodePrivateKey);
-            byte[] decodedData = cipher.doFinal(Base64.decodeBase64(encryptedDataStr));
-            String decodedDataStr = new String(decodedData);
+           // byte[] decodedData = cipher.doFinal(Base64.decodeBase64(encryptedDataStr));
+            byte[] encryptedData = Base64.decodeBase64(encryptedDataStr);
+            int inputLen = encryptedData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+            byte[] cache;
+            int i = 0;
+            // 对数据分段解密
+            while (inputLen - offSet > 0) {
+                if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
+                    cache = cipher.doFinal(encryptedData, offSet, MAX_DECRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(encryptedData, offSet, inputLen - offSet);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offSet = i * MAX_DECRYPT_BLOCK;
+            }
+            byte[] decryptedData = out.toByteArray();
+            out.close();
+
+            String decodedDataStr = new String(decryptedData);
             return decodedDataStr;
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println("decryptByRSAPrivateKeyAndBase64="+e);
             return null;
         }
 
@@ -403,7 +523,7 @@ public class EncryptUtils extends Base64 {
             publicKey = keyFactory.generatePublic(x509KeySpec);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("获取base64加密后的字符串的原始公钥="+e);
         }
         return publicKey;
     }
@@ -422,7 +542,7 @@ public class EncryptUtils extends Base64 {
             privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("获取base64加密后的字符串的原始私钥="+e);
         }
         return privateKey;
     }
