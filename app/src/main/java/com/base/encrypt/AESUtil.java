@@ -16,6 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AESUtil  extends Base64 {
     public static final String KEY_ALGORITHM_AES = "AES";
+    public static final String ALGORITHM_AES = "AES/ECB/PKCS5Padding";////"算法/模式/补码方式"
     /*AES相关------start*/
     /**
      *
@@ -62,7 +63,7 @@ public class AESUtil  extends Base64 {
         // 初始化加密组件
         Cipher cipher;
         try {
-            cipher = Cipher.getInstance(KEY_ALGORITHM_AES);
+            cipher = Cipher.getInstance(ALGORITHM_AES);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 加密后的数据，首先将字符串转为byte数组，然后加密，为便于保存先转为base64
 
@@ -88,7 +89,7 @@ public class AESUtil  extends Base64 {
         //如果的到的是16进制密文，别忘了先转为2进制再解密
         SecretKey secretKey = restoreAESKey(base64EncodedAESKey);
         try {
-            Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_AES);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_AES);
             // 将加密组件的模式改为解密
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             // 和上面的加密相反，先解base64，再解密，最后将byte数组转为字符串
@@ -118,7 +119,7 @@ public class AESUtil  extends Base64 {
         // 初始化加密组件
         Cipher cipher;
         try {
-            cipher = Cipher.getInstance(KEY_ALGORITHM_AES);
+            cipher = Cipher.getInstance(ALGORITHM_AES);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 加密后的数据，首先将字符串转为byte数组，然后加密，为便于保存先转为base64
 
@@ -146,7 +147,7 @@ public class AESUtil  extends Base64 {
         byte[] twoStrResult = ParseSystemUtil.parseHexStr2Byte(encryptedDataStr);
         SecretKey secretKey = restoreAESKey(base64EncodedAESKey);
         try {
-            Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_AES);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_AES);
             // 将加密组件的模式改为解密
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             // 和上面的加密相反，先解base64，再解密，最后将byte数组转为字符串
