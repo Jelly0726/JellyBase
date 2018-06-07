@@ -165,7 +165,9 @@ public class RSAUtil {
         /** 得到Cipher对象来实现对源数据的RSA加密 */
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, key);
+        // 模长
         int MaxBlockSize = KEYSIZE / 8;
+        // 加密数据长度 <= 模长-11
         int len = (MaxBlockSize - 11) / 8;
         String[] datas = splitString(source, len);
         StringBuffer mi = new StringBuffer();
@@ -175,7 +177,34 @@ public class RSAUtil {
         return mi.toString();
 
     }
-
+    /**
+     * 解密
+     *
+     * @param cryptograph
+     *            :密文
+     * @return 解密后的明文
+     * @throws Exception
+     */
+    public static String decrypt(String cryptograph) throws Exception {
+        generateKeyPair();
+        /** 将文件中的私钥对象读出 */
+        @SuppressWarnings("resource")
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
+        Key key = (Key) ois.readObject();
+        /** 得到Cipher对象对已用公钥加密的数据进行RSA解密 */
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        // 模长
+        int key_len = KEYSIZE / 8;
+        byte[] bytes = cryptograph.getBytes();
+        byte[] bcd = ASCII2BCD(bytes, bytes.length);
+        StringBuffer sBuffer = new StringBuffer();
+        byte[][] arrays = splitArray(bcd, key_len);
+        for (byte[] arr : arrays) {
+            sBuffer.append(new String(cipher.doFinal(arr)));
+        }
+        return sBuffer.toString();
+    }
     /**
      * 字符串分片
      *
@@ -221,34 +250,6 @@ public class RSAUtil {
             temp[i * 2 + 1] = (char) (val > 9 ? val + 'A' - 10 : val + '0');
         }
         return new String(temp);
-    }
-
-    /**
-     * 解密
-     *
-     * @param cryptograph
-     *            :密文
-     * @return 解密后的明文
-     * @throws Exception
-     */
-    public static String decrypt(String cryptograph) throws Exception {
-        generateKeyPair();
-        /** 将文件中的私钥对象读出 */
-        @SuppressWarnings("resource")
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-        Key key = (Key) ois.readObject();
-        /** 得到Cipher对象对已用公钥加密的数据进行RSA解密 */
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        int key_len = KEYSIZE / 8;
-        byte[] bytes = cryptograph.getBytes();
-        byte[] bcd = ASCII2BCD(bytes, bytes.length);
-        StringBuffer sBuffer = new StringBuffer();
-        byte[][] arrays = splitArray(bcd, key_len);
-        for (byte[] arr : arrays) {
-            sBuffer.append(new String(cipher.doFinal(arr)));
-        }
-        return sBuffer.toString();
     }
 
     /**
