@@ -202,22 +202,16 @@ public class FilesUtil {
      * @param strFile
      * @return
      */
-    public boolean fileIsExists(String strFile)
-    {
-        try
-        {
+    public boolean fileIsExists(String strFile){
+        try{
             File f=new File(strFile);
-            if(!f.exists())
-            {
+            if(!f.exists()|| f.isDirectory()){
                 return false;
             }
 
-        }
-        catch (Exception e)
-        {
+        }catch (Exception e){
             return false;
         }
-
         return true;
     }
     /**

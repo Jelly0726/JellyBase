@@ -97,7 +97,7 @@ public class RSAUtil {
     private static boolean fileIsExists(String strFile){
         try{
             File f=new File(strFile);
-            if(!f.exists()){
+            if(!f.exists()|| f.isDirectory()){
                 return false;
             }
         }

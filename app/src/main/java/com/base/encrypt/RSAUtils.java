@@ -41,7 +41,7 @@ public class RSAUtils {
     private static final String KEY_ALGORITHM = "RSA";
 
     /**保存生成的密钥对的文件名称。 */
-    private static final String RSA_PAIR_FILENAME = "/__RSA_PAIR.txt";
+    private static final String RSA_PAIR_FILENAME = "_RsaKey";
 
     /** 默认的安全服务提供者 */
     private static final Provider DEFAULT_PROVIDER = new BouncyCastleProvider();
@@ -59,7 +59,8 @@ public class RSAUtils {
             keyFactory = KeyFactory.getInstance(KEY_ALGORITHM, DEFAULT_PROVIDER);
         } catch (NoSuchAlgorithmException ex) {
         }
-        rsaPairFile = new File(getRSAPairFilePath());
+//        rsaPairFile = new File(getRSAPairFilePath());
+        rsaPairFile = new File(RSA_PAIR_FILENAME);
     }
 
     /**
@@ -82,6 +83,7 @@ public class RSAUtils {
      */
     private static String getRSAPairFilePath() {
         String urlPath = RSAUtils.class.getResource("/").getPath();
+        System.err.println(urlPath);
         return (new File(urlPath).getParent() + RSA_PAIR_FILENAME);
     }
 
