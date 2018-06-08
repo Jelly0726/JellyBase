@@ -33,8 +33,7 @@ import javax.crypto.Cipher;
  * 用4位二进制数来表示1位十进制数中的0~9这10个数码。
  * 是一种二进制的数字编码形式，用二进制编码的十进制代码。
  * 注：日常所说的BCD码大都是指8421BCD码形式
- * 注意：【此代码用了RSA/ECB/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
- * /None/NoPadding】
+ * 注意：【此代码用了RSA/ECB/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
  * @author Ming
  *
  */
@@ -179,9 +178,7 @@ public class RSAUtil {
     }
     /**
      * 使用模和指数生成RSA公钥
-     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
-     * /None/NoPadding】
-     *
+     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
      * @param modulus 模
      * @param exponent 指数
      * @return
@@ -201,9 +198,7 @@ public class RSAUtil {
 
     /**
      * 使用模和指数生成RSA私钥
-     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
-     * /None/NoPadding】
-     *
+     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
      * @param modulus    模
      * @param exponent   指数
      * @return

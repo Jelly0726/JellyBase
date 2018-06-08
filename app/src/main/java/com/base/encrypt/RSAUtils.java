@@ -27,8 +27,7 @@ import javax.crypto.Cipher;
 
 /**
  * java实现RSA加密和解密  加密结果为 BCD码
- * 注意：【此代码用了RSA/ECB/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
- * /None/NoPadding】
+ * 注意：【此代码用了RSA/ECB/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
  */
 public class RSAUtils {
     /** 指定加密算法为RSA */
@@ -167,13 +166,9 @@ public class RSAUtils {
     }
     /**
      * 使用模和指数生成RSA公钥
-     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
-     * /None/NoPadding】
-     *
-     * @param modulus
-     *            模
-     * @param exponent
-     *            指数
+     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
+     * @param modulus   模
+     * @param exponent  指数
      * @return
      */
     public static RSAPublicKey getPublicKey(String modulus, String exponent) {
@@ -191,13 +186,9 @@ public class RSAUtils {
 
     /**
      * 使用模和指数生成RSA私钥
-     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
-     * /None/NoPadding】
-     *
-     * @param modulus
-     *            模
-     * @param exponent
-     *            指数
+     * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA/None/NoPadding】
+     * @param modulus   模
+     * @param exponent  指数
      * @return
      */
     public static RSAPrivateKey getPrivateKey(String modulus, String exponent) {
@@ -216,10 +207,9 @@ public class RSAUtils {
     /**
      * 公钥加密
      *
-     * @param data
-     * @param publicKey
-     * @return
-     * @throws Exception
+     * @param data        数据源
+     * @param publicKey   公钥
+     * @return            加密后的密文
      */
     public static String encryptByPublicKey(String data, RSAPublicKey publicKey)
             throws Exception {
@@ -241,10 +231,9 @@ public class RSAUtils {
     /**
      * 私钥解密
      *
-     * @param data
-     * @param privateKey
-     * @return
-     * @throws Exception
+     * @param data          密文
+     * @param privateKey    私钥
+     * @return              解密后的明文
      */
     public static String decryptByPrivateKey(String data, RSAPrivateKey privateKey)
             throws Exception {
