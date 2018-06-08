@@ -26,8 +26,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
+ *
  * @ClassName: EncryptUtils
- * @Description: AES、RSA加密、解密
+ * @Description: AES、RSA加密、解密  加密结果为base64编码格式
  * @author: liuyx
  * @date: 2016年5月10日上午9:07:42
  */

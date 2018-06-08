@@ -620,18 +620,6 @@ public class AppUtils {
         }
         return uuid;
     }
-    /**
-     * 检查是否存在SDCard
-     * @return
-     */
-    public static boolean hasSdcard(){
-        String state = Environment.getExternalStorageState();
-        if(state.equals(Environment.MEDIA_MOUNTED)){
-            return true;
-        }else{
-            return false;
-        }
-    }
     //文件存储根目录
     public static String getFileRoot(Context context) {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -1174,24 +1162,7 @@ public class AppUtils {
         Intent intent = new Intent(settings);
         activity.startActivityForResult(intent , 0);
     }
-    /**
-     * 删除指定的文件或目录（无限递归删除，返回是否删除成功）
-     * @param FileOrDirectory    文件路径
-     * @return
-     */
-    public static boolean DeleteFileOrDirectory(File FileOrDirectory) {
-        if (FileOrDirectory.exists()) {
-            if (FileOrDirectory.isFile()) {
-                return FileOrDirectory.delete();
-            } else if (FileOrDirectory.isDirectory()) {
-                File files[] = FileOrDirectory.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    DeleteFileOrDirectory(files[i]);
-                }
-            }
-        }
-        return false;
-    }
+
     /**
      * 给对象的变量赋值
      * @param set   要赋值的对象 不能为空

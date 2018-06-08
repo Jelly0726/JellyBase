@@ -198,6 +198,29 @@ public class FilesUtil {
     }
 
     /**
+     * 判断文件是否存在
+     * @param strFile
+     * @return
+     */
+    public boolean fileIsExists(String strFile)
+    {
+        try
+        {
+            File f=new File(strFile);
+            if(!f.exists())
+            {
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    /**
      * 删除文件夹以及目录下的文件
      * @param   filePath 被删除目录的文件路径
      * @return  目录删除成功返回true，否则返回false
@@ -230,7 +253,24 @@ public class FilesUtil {
         //删除当前空目录
         return dirFile.delete();
     }
-
+    /**
+     * 删除指定的文件或目录（无限递归删除，返回是否删除成功）
+     * @param FileOrDirectory    文件路径
+     * @return
+     */
+    public static boolean DeleteFileOrDirectory(File FileOrDirectory) {
+        if (FileOrDirectory.exists()) {
+            if (FileOrDirectory.isFile()) {
+                return FileOrDirectory.delete();
+            } else if (FileOrDirectory.isDirectory()) {
+                File files[] = FileOrDirectory.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    DeleteFileOrDirectory(files[i]);
+                }
+            }
+        }
+        return false;
+    }
     /**
      *  根据路径删除指定的目录或文件，无论存在与否
      *@param filePath  要删除的目录或文件

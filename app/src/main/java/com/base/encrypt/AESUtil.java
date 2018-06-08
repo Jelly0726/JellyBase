@@ -1,6 +1,7 @@
 package com.base.encrypt;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -12,7 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * AES加密解密工具
+ * AES加密解密工具  加密结果为base64 、16进制编码格式
  */
 public class AESUtil  extends Base64 {
     public static final String KEY_ALGORITHM_AES = "AES";
@@ -123,7 +124,7 @@ public class AESUtil  extends Base64 {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 加密后的数据，首先将字符串转为byte数组，然后加密，为便于保存先转为base64
 
-            String encryptedDataStr = ParseSystemUtil.parseByte2HexStr(cipher.doFinal(dataStr.getBytes()));
+            String encryptedDataStr = Hex.encodeHexString(cipher.doFinal(dataStr.getBytes()));
             return encryptedDataStr;
         } catch (Exception e) {
             // e.printStackTrace();
@@ -144,9 +145,9 @@ public class AESUtil  extends Base64 {
      */
     public static String decryptByAESAndHexStr(String base64EncodedAESKey, String encryptedDataStr) {
         //如果的到的是16进制密文，别忘了先转为2进制再解密
-        byte[] twoStrResult = ParseSystemUtil.parseHexStr2Byte(encryptedDataStr);
-        SecretKey secretKey = restoreAESKey(base64EncodedAESKey);
         try {
+            byte[] twoStrResult = Hex.decodeHex(encryptedDataStr);
+            SecretKey secretKey = restoreAESKey(base64EncodedAESKey);
             Cipher cipher = Cipher.getInstance(ALGORITHM_AES);
             // 将加密组件的模式改为解密
             cipher.init(Cipher.DECRYPT_MODE, secretKey);

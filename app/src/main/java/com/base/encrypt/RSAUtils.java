@@ -1,10 +1,22 @@
 package com.base.encrypt;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.security.InvalidParameterException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.SecureRandom;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPrivateKeySpec;
@@ -14,63 +26,141 @@ import java.util.HashMap;
 import javax.crypto.Cipher;
 
 /**
- * java实现RSA加密和解密
- * 注意：【此代码用了默认补位方式，为RSA/None/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
+ * java实现RSA加密和解密  加密结果为 BCD码
+ * 注意：【此代码用了RSA/ECB/PKCS1Padding，不同JDK默认的补位方式可能不同，如Android默认是RSA
  * /None/NoPadding】
  */
 public class RSAUtils {
     /** 指定加密算法为RSA */
-    private static String ALGORITHM = "RSA";
+    private static String ALGORITHM = "RSA/ECB/PKCS1Padding";
     /** 指定key的大小 */
     private static int KEYSIZE = 1024;
     /** 指定公钥存放文件 */
     private static String PUBLIC_KEY_FILE = "PublicKey";
     /** 指定私钥存放文件 */
     private static String PRIVATE_KEY_FILE = "PrivateKey";
-    public static final String KEY_ALGORITHM = "RSA";
+    private static final String KEY_ALGORITHM = "RSA";
 
-    public static void main(String[] args) throws Exception {
-        // TODO Auto-generated method stub
-        HashMap<String, Object> map = RSAUtils.getKeys();
-        //生成公钥和私钥
-        RSAPublicKey publicKey = (RSAPublicKey) map.get(PUBLIC_KEY_FILE);
-        RSAPrivateKey privateKey = (RSAPrivateKey) map.get(PRIVATE_KEY_FILE);
+    /**保存生成的密钥对的文件名称。 */
+    private static final String RSA_PAIR_FILENAME = "/__RSA_PAIR.txt";
 
-        //模
-        String modulus = publicKey.getModulus().toString();
-        System.err.println("模:"+modulus);
-        //公钥指数
-        String public_exponent = publicKey.getPublicExponent().toString();
-        System.err.println("公钥指数:"+public_exponent);
-        //私钥指数
-        String private_exponent = privateKey.getPrivateExponent().toString();
-        System.err.println("私钥指数:"+private_exponent);
-        //明文
-        String ming = "{\"returnState\":true,\"data\":{\"message\":\"查询成功\",\"statue\":1,\"data\":[{\"id\":119,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013544_2NMT8YWAW0.jpg\"},{\"id\":120,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013552_43YDAAMOFU.jpg\"},{\"id\":121,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226015552_LNF8PQUNYN.jpg\"}]}}";
-        ming=ming+ming;
-        //使用模和指数生成公钥和私钥
-        RSAPublicKey pubKey = RSAUtils.getPublicKey(modulus, public_exponent);
-        RSAPrivateKey priKey = RSAUtils.getPrivateKey(modulus, private_exponent);
-        //加密后的密文
-        String mi = RSAUtils.encryptByPublicKey(ming, pubKey);
-        System.err.println("加密后的密文:"+mi);
-        //解密后的明文
-        String mings = RSAUtils.decryptByPrivateKey(mi, priKey);
-        System.err.println("解密后的明文:"+mings);
+    /** 默认的安全服务提供者 */
+    private static final Provider DEFAULT_PROVIDER = new BouncyCastleProvider();
+    private static KeyPairGenerator keyPairGen = null;
+
+    private static KeyFactory keyFactory = null;
+
+    /** 缓存的密钥对。 */
+    private static KeyPair oneKeyPair = null;
+
+    private static File rsaPairFile = null;
+    static {
+        try {
+            keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM, DEFAULT_PROVIDER);
+            keyFactory = KeyFactory.getInstance(KEY_ALGORITHM, DEFAULT_PROVIDER);
+        } catch (NoSuchAlgorithmException ex) {
+        }
+        rsaPairFile = new File(getRSAPairFilePath());
     }
 
     /**
+     * 生成并返回RSA密钥对。
+     */
+    private static synchronized KeyPair generateKeyPair() {
+        try {
+            keyPairGen.initialize(KEYSIZE, new SecureRandom());
+            oneKeyPair = keyPairGen.generateKeyPair();
+            saveKeyPair(oneKeyPair);
+            return oneKeyPair;
+        } catch (InvalidParameterException ex) {
+        } catch (NullPointerException ex) {
+        }
+        return null;
+    }
+
+    /**
+     * 返回生成/读取的密钥对文件的路径。
+     */
+    private static String getRSAPairFilePath() {
+        String urlPath = RSAUtils.class.getResource("/").getPath();
+        return (new File(urlPath).getParent() + RSA_PAIR_FILENAME);
+    }
+
+    /**
+     * 若需要创建新的密钥对文件，则返回 {@code true}，否则 {@code false}。
+     */
+    private static boolean isCreateKeyPairFile() {
+        // 是否创建新的密钥对文件
+        boolean createNewKeyPair = false;
+        if (!rsaPairFile.exists() || rsaPairFile.isDirectory()) {
+            createNewKeyPair = true;
+        }
+        return createNewKeyPair;
+    }
+
+    /**
+     * 将指定的RSA密钥对以文件形式保存。
+     *
+     * @param keyPair 要保存的密钥对。
+     */
+    private static void saveKeyPair(KeyPair keyPair) {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+        try {
+            fos = FileUtils.openOutputStream(rsaPairFile);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(keyPair);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(oos);
+            IOUtils.closeQuietly(fos);
+        }
+    }
+
+    /**
+     * 返回RSA密钥对。
+     */
+    private static KeyPair getKeyPair() {
+        // 首先判断是否需要重新生成新的密钥对文件
+        if (isCreateKeyPairFile()) {
+            // 直接强制生成密钥对文件，并存入缓存。
+            return generateKeyPair();
+        }
+        if (oneKeyPair != null) {
+            return oneKeyPair;
+        }
+        return readKeyPair();
+    }
+
+    // 同步读出保存的密钥对
+    private static KeyPair readKeyPair() {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = FileUtils.openInputStream(rsaPairFile);
+            ois = new ObjectInputStream(fis);
+            oneKeyPair = (KeyPair) ois.readObject();
+            return oneKeyPair;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(ois);
+            IOUtils.closeQuietly(fis);
+        }
+        return null;
+    }
+    /**
      * 生成公钥和私钥
-     * @throws NoSuchAlgorithmException
      *
      */
-    public static HashMap<String, Object> getKeys() throws NoSuchAlgorithmException{
+    public static HashMap<String, Object> getKeys() {
         HashMap<String, Object> map = new HashMap<String, Object>();
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        keyPairGen.initialize(KEYSIZE);
-        KeyPair keyPair = keyPairGen.generateKeyPair();
-        RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-        RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+//        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
+//        keyPairGen.initialize(KEYSIZE);
+//        KeyPair keyPair = keyPairGen.generateKeyPair();
+        RSAPublicKey publicKey = (RSAPublicKey) getKeyPair().getPublic();
+        RSAPrivateKey privateKey = (RSAPrivateKey) getKeyPair().getPrivate();
         map.put(PUBLIC_KEY_FILE, publicKey);
         map.put(PRIVATE_KEY_FILE, privateKey);
         return map;
@@ -90,7 +180,7 @@ public class RSAUtils {
         try {
             BigInteger b1 = new BigInteger(modulus);
             BigInteger b2 = new BigInteger(exponent);
-            KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+            //KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             RSAPublicKeySpec keySpec = new RSAPublicKeySpec(b1, b2);
             return (RSAPublicKey) keyFactory.generatePublic(keySpec);
         } catch (Exception e) {
@@ -114,7 +204,7 @@ public class RSAUtils {
         try {
             BigInteger b1 = new BigInteger(modulus);
             BigInteger b2 = new BigInteger(exponent);
-            KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+            //KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
             RSAPrivateKeySpec keySpec = new RSAPrivateKeySpec(b1, b2);
             return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
         } catch (Exception e) {
@@ -176,7 +266,7 @@ public class RSAUtils {
      * ASCII码转BCD码
      *
      */
-    public static byte[] ASCII_To_BCD(byte[] ascii, int asc_len) {
+    private static byte[] ASCII_To_BCD(byte[] ascii, int asc_len) {
         byte[] bcd = new byte[asc_len / 2];
         int j = 0;
         for (int i = 0; i < (asc_len + 1) / 2; i++) {
@@ -185,7 +275,7 @@ public class RSAUtils {
         }
         return bcd;
     }
-    public static byte asc_to_bcd(byte asc) {
+    private static byte asc_to_bcd(byte asc) {
         byte bcd;
 
         if ((asc >= '0') && (asc <= '9'))
@@ -201,7 +291,7 @@ public class RSAUtils {
     /**
      * BCD转字符串
      */
-    public static String bcd2Str(byte[] bytes) {
+    private static String bcd2Str(byte[] bytes) {
         char temp[] = new char[bytes.length * 2], val;
 
         for (int i = 0; i < bytes.length; i++) {
@@ -216,7 +306,7 @@ public class RSAUtils {
     /**
      * 拆分字符串
      */
-    public static String[] splitString(String string, int len) {
+    private static String[] splitString(String string, int len) {
         int x = string.length() / len;
         int y = string.length() % len;
         int z = 0;
@@ -238,7 +328,7 @@ public class RSAUtils {
     /**
      *拆分数组
      */
-    public static byte[][] splitArray(byte[] data,int len){
+    private static byte[][] splitArray(byte[] data,int len){
         int x = data.length / len;
         int y = data.length % len;
         int z = 0;
@@ -257,5 +347,58 @@ public class RSAUtils {
             arrays[i] = arr;
         }
         return arrays;
+    }
+    public static void main(String[] args) throws Exception {
+        // TODO Auto-generated method stub
+        //明文
+        String ming = "{\"returnState\":true,\"data\":{\"message\":\"查询成功\",\"statue\":1,\"data\":[{\"id\":119,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013544_2NMT8YWAW0.jpg\"},{\"id\":120,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226013552_43YDAAMOFU.jpg\"},{\"id\":121,\"status\":1,\"IP\":\"http://yolowebimage.oss-cn-hangzhou.aliyuncs.com/iamge/\",\"imgurl\":\"20171226015552_LNF8PQUNYN.jpg\"}]}}";
+        ming=ming+ming;
+
+        long star=System.currentTimeMillis();
+        HashMap<String, Object> map = getKeys();
+        //生成公钥和私钥
+        RSAPublicKey publicKey = (RSAPublicKey) map.get(PUBLIC_KEY_FILE);
+        RSAPrivateKey privateKey = (RSAPrivateKey) map.get(PRIVATE_KEY_FILE);
+        System.out.println("生成秘钥时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        //加密后的密文
+        String mi = encryptByPublicKey(ming, publicKey);
+        System.out.println("公钥加密时间："+(System.currentTimeMillis()-star)+"ms");
+        System.err.println("公钥加密后的密文:"+mi);
+
+        star=System.currentTimeMillis();
+        //解密后的明文
+        String mings = decryptByPrivateKey(mi, privateKey);
+        System.out.println("私钥解密时间："+(System.currentTimeMillis()-star)+"ms");
+        System.err.println("私钥解密后的明文:"+mings);
+
+        //模
+        String modulus = publicKey.getModulus().toString();
+        System.err.println("模:"+modulus);
+        //公钥指数
+        String public_exponent = publicKey.getPublicExponent().toString();
+        System.err.println("公钥指数:"+public_exponent);
+        //私钥指数
+        String private_exponent = privateKey.getPrivateExponent().toString();
+        System.err.println("私钥指数:"+private_exponent);
+
+        star=System.currentTimeMillis();
+        //使用模和指数生成公钥和私钥
+        RSAPublicKey pubKey = getPublicKey(modulus, public_exponent);
+        RSAPrivateKey priKey = getPrivateKey(modulus, private_exponent);
+        System.out.println("模生成秘钥时间："+(System.currentTimeMillis()-star)+"ms");
+
+        star=System.currentTimeMillis();
+        //加密后的密文
+        mi = encryptByPublicKey(ming, pubKey);
+        System.out.println("公钥加密时间："+(System.currentTimeMillis()-star)+"ms");
+        System.err.println("公钥加密后的密文:"+mi);
+
+        star=System.currentTimeMillis();
+        //解密后的明文
+        mings = decryptByPrivateKey(mi, priKey);
+        System.out.println("私钥解密时间："+(System.currentTimeMillis()-star)+"ms");
+        System.err.println("私钥解密后的明文:"+mings);
     }
 }
