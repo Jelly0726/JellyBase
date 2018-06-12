@@ -96,4 +96,52 @@ public class StringUtil {
 
         return ss;
     }
+
+    /**
+     * 判断字符串是否全为汉字
+     * @param string      待判定的字符串
+     * @return
+     */
+    public static boolean isAllChina(String string){
+        String reg = "[\\u4e00-\\u9fa5]+";
+        return string.matches(reg);
+    }
+
+    /**
+     * 提取字符串中的汉字
+     * @param string     源字符串
+     * @return           全是汉字的字符串
+     */
+    public static String getChina(String string){
+        String reg = "[^\u4e00-\u9fa5]";
+        string = string.replaceAll(reg, " ");
+        return string;
+    }
+
+    /**
+     * 判断字符串中是否含有汉字
+     * @param string     源字符串
+     * @return  true:无汉字  false:有汉字
+     */
+    public static boolean isContainChina(String string){
+        return (string.length() == string.getBytes().length);
+    }
+
+    /**
+     * 获取字符串中汉字的个数
+     * @param string      源字符串
+     * @return           汉字的个数
+     */
+    public static int haveChinaNum(String string){
+        int count = 0;
+        String reg = "[\\u4e00-\\u9fa5]";
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(string);
+        while (m.find()) {
+            for (int i = 0; i <= m.groupCount(); i++) {
+                count = count + 1;
+            }
+        }
+        return count;
+    }
 }
