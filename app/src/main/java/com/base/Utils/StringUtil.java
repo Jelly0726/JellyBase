@@ -86,15 +86,14 @@ public class StringUtil {
      * @param string
      * @return
      */
-    public static String isNull(String string){
-        String ss="";
-        if(string!=null){
-            if(!string.trim().equals("null")){
-                ss=string;
+    public static boolean isEmpty(String string){
+        if (string!=null){
+            if (!string.toLowerCase().equals("null")
+                    &&string.trim().length()>0){
+                return false;
             }
         }
-
-        return ss;
+        return true;
     }
 
     /**
