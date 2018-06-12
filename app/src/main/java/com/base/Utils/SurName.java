@@ -7,7 +7,7 @@ public class SurName {
     /**
      * 判断姓氏是否正确，是复姓还是单姓
      * @param name   待判断的姓名
-     * @return       0 姓名不正确  1 姓氏正确且为单姓 2 姓氏正确且为复姓 3 姓氏正确且为三姓 4 姓氏正确且为四姓 5 姓氏正确且为五姓
+     * @return       0 姓名不正确  其他值都是姓氏的位数
      */
     public static int ClearName(String name){
         if(name=="" || name==null){
@@ -272,8 +272,86 @@ public class SurName {
         return 0;
 
     }
+
+    /**
+     * 替换姓名为*
+     * @param name   原姓名
+     * @return       替换后的姓名
+     */
+    public static String replaceName(String name){
+        int i=ClearName(name);
+        if (i==0){
+            return name;
+        }
+        if (name.trim().length()-i==1){
+            return name.substring(0,i)+"*";
+        }else {
+            String nn=name.substring(0,i);
+            for (int j = 0;j<name.trim().length()-i;j++){
+                nn=nn+"*";
+            }
+            nn=nn+name.substring(name.trim().length()-1,name.trim().length());
+            return nn;
+        }
+    }
+
+    /**
+     * 替换姓名并指定替换内容
+     * @param name      原姓名
+     * @param str       替换的字符
+     * @return          替换后的姓名
+     */
+    public static String replaceName(String name,String str){
+        int i=ClearName(name);
+        if (i==0){
+            return name;
+        }
+        if (name.trim().length()-i==1){
+            return name.substring(0,i)+str;
+        }else {
+            String nn=name.substring(0,i);
+            for (int j = 0;j<name.trim().length()-i;j++){
+                nn=nn+str;
+            }
+            nn=nn+name.substring(name.trim().length()-1,name.trim().length());
+            return nn;
+        }
+    }
+
+    /**
+     * 指定替换内容并保留姓名末尾几位数替换姓名
+     * @param name   原姓名
+     * @param str    替换字符
+     * @param num    名字末尾保留字数
+     * @return       替换后的姓名
+     */
+    public static String replaceName(String name,String str,int num){
+        int i=ClearName(name);
+        if (i==0){
+            return name;
+        }
+        if (num>=name.trim().length()-i){
+            return name;
+        }
+        if (num<=0){
+            return name.substring(0,i)+str;
+        }
+        if (name.trim().length()-i==1){
+            return name.substring(0,i)+str;
+        }else {
+            String nn=name.substring(0,i);
+            for (int j = 0;j<name.trim().length()-i-num;j++){
+                nn=nn+str;
+            }
+            nn=nn+name.substring(name.trim().length()-num,name.trim().length());
+            return nn;
+        }
+    }
     public static void main(String[] args) {
-        String name = "宗正张三";//柀Ψ?   ¤
+        String name = "张三岑";//柀Ψ?   ¤
         System.out.println(ClearName(name));
+        System.out.println(replaceName(name));
+        System.out.println(replaceName(name,"%"));
+        System.out.println(replaceName(name,"师傅",0));
     }
 }
