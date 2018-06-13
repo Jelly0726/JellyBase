@@ -348,7 +348,7 @@ public class SurName {
         }
     }
     public static void main(String[] args) {
-        String name = "张三岑";//柀Ψ?   ¤
+        String name = "札拉楚特山岑";//柀Ψ?   ¤
         System.out.println(ClearName(name));
         System.out.println(replaceName(name));
         System.out.println(replaceName(name,"%"));

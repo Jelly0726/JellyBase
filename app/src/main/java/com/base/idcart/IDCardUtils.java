@@ -1,4 +1,4 @@
-package com.base.Utils;
+package com.base.idcart;
 
 /**
  * Copyright (C) 2009-2010 Yichuan, Fuchun All rights reserved.

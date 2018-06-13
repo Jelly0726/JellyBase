@@ -1,4 +1,4 @@
-package com.base.Utils;
+package com.base.idcart;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
