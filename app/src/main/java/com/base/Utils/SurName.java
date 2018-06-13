@@ -9,7 +9,7 @@ public class SurName {
      * @param name   待判断的姓名
      * @return       0 姓名不正确  其他值都是姓氏的位数
      */
-    public static int ClearName(String name){
+    public static int onCheckName(String name){
         if(name=="" || name==null){
             return 0;
         }
@@ -279,7 +279,7 @@ public class SurName {
      * @return       替换后的姓名
      */
     public static String replaceName(String name){
-        int i=ClearName(name);
+        int i= onCheckName(name);
         if (i==0){
             return name;
         }
@@ -287,7 +287,7 @@ public class SurName {
             return name.substring(0,i)+"*";
         }else {
             String nn=name.substring(0,i);
-            for (int j = 0;j<name.trim().length()-i;j++){
+            for (int j = 0;j<name.trim().length()-i-1;j++){
                 nn=nn+"*";
             }
             nn=nn+name.substring(name.trim().length()-1,name.trim().length());
@@ -302,7 +302,7 @@ public class SurName {
      * @return          替换后的姓名
      */
     public static String replaceName(String name,String str){
-        int i=ClearName(name);
+        int i= onCheckName(name);
         if (i==0){
             return name;
         }
@@ -310,7 +310,7 @@ public class SurName {
             return name.substring(0,i)+str;
         }else {
             String nn=name.substring(0,i);
-            for (int j = 0;j<name.trim().length()-i;j++){
+            for (int j = 0;j<name.trim().length()-i-1;j++){
                 nn=nn+str;
             }
             nn=nn+name.substring(name.trim().length()-1,name.trim().length());
@@ -326,7 +326,7 @@ public class SurName {
      * @return       替换后的姓名
      */
     public static String replaceName(String name,String str,int num){
-        int i=ClearName(name);
+        int i= onCheckName(name);
         if (i==0){
             return name;
         }
@@ -349,7 +349,7 @@ public class SurName {
     }
     public static void main(String[] args) {
         String name = "札拉楚特山岑";//柀Ψ?   ¤
-        System.out.println(ClearName(name));
+        System.out.println(onCheckName(name));
         System.out.println(replaceName(name));
         System.out.println(replaceName(name,"%"));
         System.out.println(replaceName(name,"师傅",0));
