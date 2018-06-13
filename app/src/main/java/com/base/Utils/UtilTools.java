@@ -6,6 +6,7 @@ import android.util.DisplayMetrics;
 
 import com.amap.api.maps.model.LatLng;
 import com.base.config.BaseConfig;
+import com.base.encrypt.MD5;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

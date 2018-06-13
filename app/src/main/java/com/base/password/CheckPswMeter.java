@@ -1,4 +1,4 @@
-package com.base.Utils;
+package com.base.password;
 
 import java.util.HashMap;
 import java.util.Iterator;

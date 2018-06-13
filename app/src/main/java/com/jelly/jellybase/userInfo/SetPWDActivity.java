@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.Utils.MD5;
+import com.base.encrypt.MD5;
 import com.base.applicationUtil.MyApplication;
-import com.base.Utils.PwdCheckUtil;
+import com.base.password.PwdCheckUtil;
 import com.base.Utils.ToastUtils;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SetPwdContact;

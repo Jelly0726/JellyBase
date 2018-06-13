@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.Utils.MD5;
+import com.base.encrypt.MD5;
 import com.base.applicationUtil.MyApplication;
 import com.base.Utils.ToastUtils;
 import com.base.config.ConfigKey;
