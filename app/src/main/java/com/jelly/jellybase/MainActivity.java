@@ -22,8 +22,8 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
-import com.base.applicationUtil.MyApplication;
 import com.base.Utils.ToastUtils;
+import com.base.applicationUtil.MyApplication;
 import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.CheckVersionActivity;
@@ -55,6 +55,7 @@ import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
+import com.jelly.jellybase.activity.UniqueIDActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
@@ -481,6 +482,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 28://消息通知
                     intent=new Intent(MyApplication.getMyApp(), MessageActivity.class);
+                    startActivity(intent);
+                    break;
+                case 29://获取安卓设备唯一编码
+                    intent=new Intent(MyApplication.getMyApp(), UniqueIDActivity.class);
                     startActivity(intent);
                     break;
             }

@@ -438,6 +438,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.UniqueIDActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓nfc实例↓↓↓↓↓↓↓-->
         <activity android:name=".nfc.NFCMainActivity"
             >

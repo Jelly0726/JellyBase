@@ -30,5 +30,6 @@
         <item>高的地图</item>
         <item>NFC示例</item>
         <item>消息通知</item>
+        <item>获取Android设备唯一编码</item>
     </string-array>
 </resources>
