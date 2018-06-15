@@ -31,5 +31,6 @@
         <item>NFC示例</item>
         <item>消息通知</item>
         <item>获取Android设备唯一编码</item>
+        <item>视频播放器gsyVideoPlayer</item>
     </string-array>
 </resources>

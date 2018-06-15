@@ -442,6 +442,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.GSYVideoActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓nfc实例↓↓↓↓↓↓↓-->
         <activity android:name=".nfc.NFCMainActivity"
             >

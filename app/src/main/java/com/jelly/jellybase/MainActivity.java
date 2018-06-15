@@ -44,6 +44,7 @@ import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
+import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
 import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
@@ -486,6 +487,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 29://获取安卓设备唯一编码
                     intent=new Intent(MyApplication.getMyApp(), UniqueIDActivity.class);
+                    startActivity(intent);
+                    break;
+                case 30://视频播放器gsyVideoPlayer
+                    intent=new Intent(MyApplication.getMyApp(), GSYVideoActivity.class);
                     startActivity(intent);
                     break;
             }
