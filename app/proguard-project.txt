@@ -277,6 +277,9 @@
  -keep class com.baidu.android.bba.common.**{*;}
 -dontwarn com.baidu.appsearch.patchupdate.**
  -keep class com.baidu.appsearch.patchupdate.**{*;}
+  #====================百度文字识别（身份证、银行卡）==================
+ -keep class com.baidu.ocr.sdk.**{*;}
+ -dontwarn com.baidu.ocr.**
  ### ====================greenDAO 3====================
 -keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
 public static java.lang.String TABLENAME;

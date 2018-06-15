@@ -446,6 +446,13 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <!--↓↓↓↓↓↓↓百度文字识别↓↓↓↓↓↓↓-->
+        <activity android:name=".bdocr.OCRMainActivity" >
+        </activity>
+        <activity android:name=".bdocr.IDCardActivity"
+            android:label="@string/idCardLabel">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑百度文字识别↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓nfc实例↓↓↓↓↓↓↓-->
         <activity android:name=".nfc.NFCMainActivity"
             >

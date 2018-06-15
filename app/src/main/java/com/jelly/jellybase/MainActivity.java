@@ -58,6 +58,7 @@ import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.activity.UniqueIDActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
+import com.jelly.jellybase.bdocr.OCRMainActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
@@ -491,6 +492,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 30://视频播放器gsyVideoPlayer
                     intent=new Intent(MyApplication.getMyApp(), GSYVideoActivity.class);
+                    startActivity(intent);
+                    break;
+                case 31://百度文字识别（身份证等）
+                    intent=new Intent(MyApplication.getMyApp(), OCRMainActivity.class);
                     startActivity(intent);
                     break;
             }

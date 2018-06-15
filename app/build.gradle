@@ -263,17 +263,21 @@ dependencies {
 
     //权限申请
     compile 'com.yanzhenjie:permission:1.1.2'
+
     //Java加密解密所需工具
     compile 'org.bouncycastle:bcprov-jdk15on:1.59'
-    //视频播放器gsyVideoPlayer
-    compile ('com.shuyu:gsyVideoPlayer-java:5.0.0-beta'){
-        exclude group: 'com.android.support'
-    }
-    compile ('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta'){
-        exclude group: 'com.android.support'
-    }
 
+    //视频播放器gsyVideoPlayer
+    compile('com.shuyu:gsyVideoPlayer-java:5.0.0-beta') {
+        exclude group: 'com.android.support'
+    }
+    compile('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta') {
+        exclude group: 'com.android.support'
+    }
     implementation files('libs/zxing-core-3.3.1.jar')
     implementation files('libs/commons-codec-1.11.jar')
     implementation files('libs/commons-io-2.6.jar')
+    //百度文字识别(身份证、银行卡等)
+    implementation files('libs/ocr-sdk.jar')
+    compile project(path: ':ocr_ui')
 }
