@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
-import com.base.appservicelive.service.LiveService;
+import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.callback.ConfigText;
@@ -189,8 +189,7 @@ public class BaseActivity extends AutoLayoutActivity {
                     if (reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
                         // 短按home键
                         AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISHOME,true);
-                        Intent intent1=new Intent(context, LiveService.class);
-                        startService(intent1);
+                        CommonStaticUtil.startService(MyApplication.getMyApp());
                     } else if (reason
                             .equals(SYSTEM_DIALOG_REASON_RECENT_APPS)) {
                         // 长按home键
