@@ -10,9 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationManagerCompat;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.base.appservicelive.receiver.PushAlarmReceiver;
@@ -150,12 +148,6 @@ public class CommonStaticUtil {
         ServiceManager serviceManager = new ServiceManager(context);
         serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
         serviceManager.stopService();
-        //删除配置文件
-//        SharedPreferences preferences = context
-//                .getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-//        Editor editor = preferences.edit();
-//        editor.clear();
-//        editor.commit();
     }
 
     /**
@@ -175,24 +167,6 @@ public class CommonStaticUtil {
         }else {
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), ALARM_INTERVAL, pendingIntent);
         }
-    }
-
-
-
-    /**
-     * 获取设备的deviceId用来做推送username
-     * @param context
-     * @return 返回设备的DeviceID号
-     */
-    public static String getDeiviceID(Context context){
-
-        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        /*
-         * 唯一的设备ID：
-         * GSM手机的 IMEI 和 CDMA手机的 MEID.
-         * Return null if device ID is not available.
-         */
-        return tm.getDeviceId();
     }
 
     /**
