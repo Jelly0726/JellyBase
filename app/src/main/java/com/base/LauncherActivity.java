@@ -11,8 +11,9 @@ import android.view.Menu;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.config.ConfigKey;
+import com.base.daemon.DaemonEnv;
+import com.jelly.jellybase.server.TraceServiceImpl;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
@@ -32,7 +33,8 @@ public class LauncherActivity extends BaseActivity{
 		}
 		setContentView(R.layout.base_activity_launcher);
 		//开启服务
-		CommonStaticUtil.startService(MyApplication.getMyApp());
+		TraceServiceImpl.sShouldStopService = false;
+		DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
 
 		if (AppPrefs.getBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,true)) {
 			if(!hasShortcut()){

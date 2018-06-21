@@ -13,6 +13,8 @@ import com.base.MapUtil.LocationTask;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
 import com.base.crashlog.CrashApphandler;
+import com.base.daemon.DaemonEnv;
+import com.jelly.jellybase.server.TraceServiceImpl;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.okGo.OkGoApp;
 import com.base.sqldao.DBConfig;
@@ -61,6 +63,10 @@ public class MyApplication extends OkGoApp {
                 &&!"com.base.appservicelive.guard".equals(getCurProcessName())) {
             HermesEventBus.getDefault().init(this);
         }
+
+        //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
+        DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
+
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
         //多语言切换初始化

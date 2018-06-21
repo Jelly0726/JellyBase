@@ -24,9 +24,10 @@ import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.MyApplication;
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.CheckVersionActivity;
+import com.base.daemon.DaemonEnv;
+import com.base.daemon.service.WatchDogService;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
@@ -95,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         iniXRefreshView();
-        //开启保活服务
-        CommonStaticUtil.startService(MyApplication.getMyApp());
+        //启动守护服务，运行在:watch子进程中
+        DaemonEnv.startServiceMayBind(WatchDogService.class);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

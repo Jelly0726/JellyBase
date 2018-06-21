@@ -1,4 +1,4 @@
-package com.base.appservicelive.service;
+package com.base.daemon.service;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -12,7 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
+import com.base.daemon.DaemonEnv;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -38,7 +38,8 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Log.i("ss","onNotificationPosted sbn="+sbn);
-        CommonStaticUtil.startService(this);
+        //启动守护服务，运行在:watch子进程中
+        DaemonEnv.startServiceMayBind(WatchDogService.class);
         // 如果该通知的包名不是微信，那么 pass 掉
 //        if (!"com.tencent.mm".equals(sbn.getPackageName())) {
 //            return;
@@ -89,7 +90,8 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         Log.i("ss","onNotificationRemoved sbn="+sbn);
-        CommonStaticUtil.startService(this);
+        //启动守护服务，运行在:watch子进程中
+        DaemonEnv.startServiceMayBind(WatchDogService.class);
         //super.onNotificationRemoved(sbn);
     }
     /**

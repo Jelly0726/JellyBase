@@ -574,23 +574,15 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-        <!--↓↓↓保活服务↓↓↓-->
-        <activity android:name="com.base.appservicelive.LiveActivity"
-            android:theme="@style/LiveStyle"/>
-        <!-- 定时开启服务的广播 -->
+        <!--↓↓↓daemon保活服务↓↓↓-->
         <receiver
-            android:name="com.base.appservicelive.receiver.PushAlarmReceiver"
-            android:exported="true"
-            android:enabled="true" />
-        <!-- 手机重启的广播 -->
-        <receiver android:name="com.base.appservicelive.receiver.PushStartupReceiver"
-            android:exported="true"
-            android:enabled="true">
-            <intent-filter android:priority="2147483647" >
-                <!-- 解锁完成后会调用 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 网络状态变化：-->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            android:name="com.base.daemon.receiver.WakeUpReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="com.xdandroid.hellodaemon.CANCEL_JOB_ALARM_SUB"/>
                 <!-- wifi信号变化：-->
                 <action android:name="android.net.wifi.RSSI_CHANGED" />
                 <!-- wifi连接状态变化：-->
@@ -601,97 +593,39 @@
                 <action android:name="android.intent.action.SIG_STR"></action>
                 <!-- 电话服务的状态已经改变。(调为飞行模式可观察到变化) -->
                 <action android:name="android.intent.action.SERVICE_STATE"></action>
-                <!-- 与充电器或USB连接时触发 -->
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
-                <action android:name="android.intent.action.POWER_USAGE_SUMMARY"></action>
-                <action android:name="android.intent.action.ACTION_SHUTDOWN"></action>
             </intent-filter>
         </receiver>
-        <!-- 手机解锁的广播 -->
-        <receiver android:name="com.base.appservicelive.receiver.PresentReceiver"
-            android:exported="true"
-            android:enabled="true">
-            <intent-filter android:priority="2147483647" >
-                <!--<category android:name="android.intent.category.HOME" />-->
-                <!-- 解锁完成后会调用 -->
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 网络状态变化：-->
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <!-- 电话的信号强度已经改变。 -->
-                <action android:name="android.intent.action.SIG_STR"></action>
-                <!-- 电话服务的状态已经改变。(调为飞行模式可观察到变化) -->
-                <action android:name="android.intent.action.SERVICE_STATE"></action>
-                <!-- 与充电器或USB连接时触发 -->
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"></action>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"></action>
-                <action android:name="android.intent.action.POWER_USAGE_SUMMARY"></action>
-                <action android:name="android.intent.action.ACTION_SHUTDOWN"></action>
-            </intent-filter>
-        </receiver>
-        <receiver android:enabled="true" android:exported="true"
-            android:name="com.base.appservicelive.receiver.StarReceiver"
-            >
-            <intent-filter android:priority="2147483647">
-                <category android:name="android.intent.category.HOME" />
-                <!-- 开机自启动,需要android.permission.RECEIVE_BOOT_COMPLETED -->
+        <receiver
+            android:name="com.base.daemon.receiver.WakeUpReceiver$WakeUpAutoStartReceiver"
+            android:process=":watch">
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
-                <action android:name="android.intent.action.PHONE_STATE"/>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
-        <!--&lt;!&ndash; ↓↓↓↓↓User defined. 用户自定义的极光广播接收器↓↓↓↓↓↓↓&ndash;&gt;-->
-        <!--<receiver-->
-            <!--android:name="com.base.jiguang.PushReceiver"-->
-            <!--android:enabled="true">-->
-            <!--<intent-filter>-->
-                <!--&lt;!&ndash;Required 用户注册SDK的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.REGISTRATION" />-->
-                <!--&lt;!&ndash;Required 用户接收SDK消息的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />-->
-                <!--&lt;!&ndash;Required 用户接收SDK通知栏信息的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />-->
-                <!--&lt;!&ndash;Required 用户打开自定义通知栏的intent&ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />-->
-                <!--&lt;!&ndash; 接收网络变化 连接/断开 since 1.6.3 &ndash;&gt;-->
-                <!--<action android:name="cn.jpush.android.intent.CONNECTION" />-->
-                <!--<category android:name="${applicationId}" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-        <!--&lt;!&ndash; ↑↑↑↑↑↑↑↑User defined. 用户自定义的极光广播接收器↑↑↑↑↑↑↑↑&ndash;&gt;-->
-        <!--&lt;!&ndash;↓↓↓↓↓↓↓极光用户自定义接收消息器↓↓↓↓↓↓↓↓&ndash;&gt;-->
-        <!--&lt;!&ndash; User defined.  For test only  用户自定义接收消息器,3.0.7开始支持,-->
-        <!--目前新tag/alias接口设置结果会在该广播接收器对应的方法中回调&ndash;&gt;-->
-        <!--<receiver android:name="com.base.jiguang.MyJPushMessageReceiver">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />-->
-                <!--<category android:name="${applicationId}"></category>-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
-        <!--&lt;!&ndash;↑↑↑↑↑↑↑↑极光用户自定义接收消息器↑↑↑↑↑↑↑↑&ndash;&gt;-->
-        <service android:name="com.base.appservicelive.service.LiveService"
+        <service android:name="com.base.daemon.service.AbsWorkService$WorkNotificationService"/>
+        <service
+            android:name="com.base.daemon.service.JobSchedulerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true"
             android:exported="true"
-            android:process="com.base.appservicelive.life" >
-        </service>
-        <service android:name="com.base.appservicelive.service.LiveService$DaemonInnerService"
-            android:enabled="true"
-            android:exported="true"
-            android:process="com.base.appservicelive.life">
-        </service>
-        <service android:name="com.base.appservicelive.service.GuardService"
-            android:enabled="true"
-            android:exported="true"
-            android:process="com.base.appservicelive.guard" />
-        <service android:name="com.base.appservicelive.service.StartLiveActivity"
-            android:enabled="true"/>
+            android:process=":watch"/>
+        <service
+            android:name="com.base.daemon.service.WatchDogService"
+            android:process=":watch"/>
+        <service
+            android:name="com.base.daemon.service.WatchDogService$WatchDogNotificationService"
+            android:process=":watch"/>
         <service
             android:enabled="true"
             android:exported="true"
             android:label="@string/app_name"
-            android:name="com.base.appservicelive.service.NotificationService"
+            android:name="com.base.daemon.service.NotificationService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
@@ -700,13 +634,9 @@
             <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
             <!--</intent-filter>-->
         </service>
-        <service android:name="com.base.appservicelive.service.StartService"
-            android:enabled="true"
-            />
-        <!--↑↑↑保活服务↑↑↑-->
-        <service android:name=".server.JobSchedulerService"
-            android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <service android:name=".server.TraceServiceImpl"/>
+        <!--↑↑↑daemon保活服务↑↑↑-->
         <service android:name=".server.WokeService"
             android:enabled="true"
             />

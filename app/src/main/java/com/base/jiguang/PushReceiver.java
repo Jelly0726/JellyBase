@@ -9,9 +9,10 @@ import android.util.Log;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
+import com.base.daemon.DaemonEnv;
+import com.base.daemon.service.WatchDogService;
 
 import org.json.JSONObject;
 
@@ -68,8 +69,8 @@ public class PushReceiver extends BroadcastReceiver {
         }else {
             Log.d(TAG, "Unhandled intent - " + intent.getAction());
         }
-        //检测服务是否开启
-        CommonStaticUtil.startService(MyApplication.getMyApp());
+        //启动守护服务，运行在:watch子进程中
+        DaemonEnv.startServiceMayBind(WatchDogService.class);
     }
     private void receivingNotification(Context context, Bundle bundle){
         String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);

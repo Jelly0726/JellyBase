@@ -1,9 +1,7 @@
-package com.base.appservicelive.toolsUtil;
+package com.base.daemon;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +11,8 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
-import com.base.appservicelive.receiver.PushAlarmReceiver;
-import com.base.appservicelive.service.AccessibilityServices;
-import com.base.appservicelive.service.GuardService;
-import com.base.appservicelive.service.LiveService;
-import com.base.appservicelive.service.NotificationService;
-import com.jelly.jellybase.R;
+import com.base.daemon.service.AccessibilityServices;
+import com.base.daemon.service.NotificationService;
 
 import java.util.List;
 import java.util.Set;
@@ -98,77 +92,6 @@ public class CommonStaticUtil {
         }
         return false;
     }
-
-    /**
-     * 开启后台推送服务
-     * @param context 上下文
-     */
-    public static void startService(Context context){
-        //Log.i(TAG, "----startService-class----------------");
-        if(!CommonStaticUtil.isServiceRunning(context
-                , LiveService.class.getName())){
-            //Log.i(TAG, "Service 没有开启，开启推送服务........>");
-            ServiceManager serviceManager = new ServiceManager(context);
-            serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
-            serviceManager.startService();
-        }else{
-            // Log.i(TAG, "Service 推送服务已开启........>");
-//            ServiceManager serviceManager = new ServiceManager(context);
-//            serviceManager.setNotificationIcon(R.drawable.touxiang);
-//            serviceManager.startService();
-        }
-    }
-    /**
-     * 开启后台服务
-     */
-    public static void startLiveService(Context context){
-        Intent a = new Intent(context, LiveService.class);
-        // 当 API > 18 时，使用 context.startForegroundService()启动前台服务
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(a);
-        }else {
-            context.startService(a);
-        }
-    }
-    /**
-     * 开启后台服务
-     */
-    public static void startGuardService(Context context){
-        Intent a = new Intent(context, GuardService.class);
-        context.startService(a);
-    }
-
-    /**
-     * 关闭 推送服务
-     * @param context 上下文
-     */
-    public static void stopService(Context context){
-        // Log.i(TAG, "关闭 推送服务........");
-        // 关闭推送服务
-        ServiceManager serviceManager = new ServiceManager(context);
-        serviceManager.setNotificationIcon(R.mipmap.ic_launcher);
-        serviceManager.stopService();
-    }
-
-    /**
-     * 开启广播监听，每一分钟检测一次开启推送服务
-     * @param context 上下文传递
-     */
-    public static void startReceiver(Context context){
-        //Log.i(TAG, "开启广播监听........");
-        AlarmManager alarmManager = (AlarmManager)context
-                .getSystemService(Context.ALARM_SERVICE);
-        Intent intent2 = new Intent(context, PushAlarmReceiver.class);
-        //发送一个广播
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-        //1分钟定时重复发送--：即一分钟检测一次服务有没有开启，没有开启就开启服务
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            alarmManager.setWindow(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), ALARM_INTERVAL , pendingIntent);
-        }else {
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), ALARM_INTERVAL, pendingIntent);
-        }
-    }
-
     /**
      * 开启知监听服务
      * @param context

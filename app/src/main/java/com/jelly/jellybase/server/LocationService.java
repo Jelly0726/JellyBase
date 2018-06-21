@@ -84,6 +84,9 @@ public class LocationService extends Service {
         return Service.START_STICKY;
     }
 
+    /**
+     * onDestroy 方法只在 设置 -> 开发者选项 -> 正在运行的服务 里停止服务时才会回调。
+     */
     @Override
     public void onDestroy() {
         if (mLocationTask != null) {
@@ -95,6 +98,21 @@ public class LocationService extends Service {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
     }
+    /**
+     * 前台服务和后台服务被划掉卡片时，回调的都是 onTaskRemoved 方法。
+     * @param rootIntent
+     */
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        if (mLocationTask != null) {
+            mLocationTask.RemoveListener(onLocationGetListener);
+            mLocationTask.stopLocate();
+        }
+        HermesEventBus.getDefault().unregister(LocationService.this);
+        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,false);
+        super.onTaskRemoved(rootIntent);
+    }
+
     private OnLocationGetListener onLocationGetListener=new OnLocationGetListener(){
         /**
          * 定位回调

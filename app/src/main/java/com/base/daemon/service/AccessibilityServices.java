@@ -1,4 +1,4 @@
-package com.base.appservicelive.service;
+package com.base.daemon.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.TargetApi;
@@ -12,7 +12,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.RemoteViews;
 
-import com.base.appservicelive.toolsUtil.CommonStaticUtil;
+import com.base.daemon.DaemonEnv;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -31,7 +31,8 @@ public class AccessibilityServices extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         Log.i("ss","AccessibilityServices event="+event);
-        CommonStaticUtil.startService(this);
+        //启动守护服务，运行在:watch子进程中
+        DaemonEnv.startServiceMayBind(WatchDogService.class);
 //        if (Build.VERSION.SDK_INT < 18) {
 //            Notification notification = (Notification) event.getParcelableData();
 //            List<String> textList = getText(notification);
