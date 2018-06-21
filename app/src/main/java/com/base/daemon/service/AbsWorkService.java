@@ -85,13 +85,7 @@ public abstract class AbsWorkService extends Service {
                     NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     manager.createNotificationChannel(channel);
 
-                    Intent notificationIntent = new Intent();
-                    notificationIntent.setAction(IntentAction.JPUSH_CLICK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                            0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     Notification notification = new Notification.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID).build();
-                    notification.contentIntent=pendingIntent;
-                    notification.flags |= Notification.FLAG_AUTO_CANCEL; // FLAG_AUTO_CANCEL表明当通知被用户点击时，通知将被清除。
                     startForeground(BaseConfig.SERVICE_ID, notification);
                 }else {
                     Intent notificationIntent = new Intent();
