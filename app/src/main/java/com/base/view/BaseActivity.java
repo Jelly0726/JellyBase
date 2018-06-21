@@ -189,7 +189,7 @@ public class BaseActivity extends AutoLayoutActivity {
                     if (reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
                         // 短按home键
                         AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISHOME,true);
-                        CommonStaticUtil.startService(MyApplication.getMyApp());
+                        CommonStaticUtil.startLiveService(MyApplication.getMyApp());
                     } else if (reason
                             .equals(SYSTEM_DIALOG_REASON_RECENT_APPS)) {
                         // 长按home键

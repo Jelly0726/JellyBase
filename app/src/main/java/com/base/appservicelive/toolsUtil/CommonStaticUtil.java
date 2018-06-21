@@ -16,6 +16,7 @@ import android.text.TextUtils;
 
 import com.base.appservicelive.receiver.PushAlarmReceiver;
 import com.base.appservicelive.service.AccessibilityServices;
+import com.base.appservicelive.service.GuardService;
 import com.base.appservicelive.service.LiveService;
 import com.base.appservicelive.service.NotificationService;
 import com.jelly.jellybase.R;
@@ -117,6 +118,20 @@ public class CommonStaticUtil {
 //            serviceManager.setNotificationIcon(R.drawable.touxiang);
 //            serviceManager.startService();
         }
+    }
+    /**
+     * 开启后台服务
+     */
+    public static void startLiveService(Context context){
+        Intent a = new Intent(context, LiveService.class);
+        context.startService(a);
+    }
+    /**
+     * 开启后台服务
+     */
+    public static void startGuardService(Context context){
+        Intent a = new Intent(context, GuardService.class);
+        context.startService(a);
     }
 
     /**
