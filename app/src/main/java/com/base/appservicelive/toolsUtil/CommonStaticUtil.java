@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationManagerCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -124,7 +125,12 @@ public class CommonStaticUtil {
      */
     public static void startLiveService(Context context){
         Intent a = new Intent(context, LiveService.class);
-        context.startService(a);
+        // 当 API > 18 时，使用 context.startForegroundService()启动前台服务
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(a);
+        }else {
+            context.startService(a);
+        }
     }
     /**
      * 开启后台服务
@@ -181,11 +187,11 @@ public class CommonStaticUtil {
     public static String getDeiviceID(Context context){
 
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-              /*
-               * 唯一的设备ID：
-               * GSM手机的 IMEI 和 CDMA手机的 MEID.
-               * Return null if device ID is not available.
-               */
+        /*
+         * 唯一的设备ID：
+         * GSM手机的 IMEI 和 CDMA手机的 MEID.
+         * Return null if device ID is not available.
+         */
         return tm.getDeviceId();
     }
 

@@ -20,8 +20,8 @@ public class BaseConfig {
     //新浪微博RedirectUrl
     public static final String WB_REDIRECT_URL="";
 
-    public static final int SERVICE_ID=01;
-    //服务器ip
+    public static final int SERVICE_ID=01;//前台服务ID
+    public static final String CHANNEL_ID="0101";// NotificationChannel 的Id.
     public static String SERVICE_IP="driver.4000000144.com";
     public static final String KEY="appdc9622f8c3f62f68";
 }

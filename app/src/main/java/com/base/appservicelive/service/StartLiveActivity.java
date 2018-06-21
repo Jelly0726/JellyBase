@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import com.base.appservicelive.toolsUtil.ScreenManager;
-
 
 /**
  * Created by Administrator on 2017/3/27.
@@ -24,9 +22,9 @@ public class StartLiveActivity extends IntentService{
     protected void onHandleIntent(@Nullable Intent intent) {
         int Screen=intent.getIntExtra("Screen",0);
         if(Screen==0){
-            ScreenManager.instance.startActivity(StartLiveActivity.this);
+            //ScreenManager.instance.startActivity(StartLiveActivity.this);
         }else {
-            ScreenManager.instance.finishActivity();
+            //ScreenManager.instance.finishActivity();
         }
     }
 }

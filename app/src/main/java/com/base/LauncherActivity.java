@@ -11,11 +11,11 @@ import android.view.Menu;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.MyApplication;
+import com.base.appservicelive.toolsUtil.CommonStaticUtil;
 import com.base.config.ConfigKey;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.server.WokeService;
 
 public class LauncherActivity extends BaseActivity{
 	@Override
@@ -32,8 +32,7 @@ public class LauncherActivity extends BaseActivity{
 		}
 		setContentView(R.layout.base_activity_launcher);
 		//开启服务
-		Intent stateGuardService =  new Intent(MyApplication.getMyApp(), WokeService.class);
-		startService(stateGuardService);
+		CommonStaticUtil.startService(MyApplication.getMyApp());
 
 		if (AppPrefs.getBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,true)) {
 			if(!hasShortcut()){
