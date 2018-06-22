@@ -43,6 +43,7 @@ import com.jelly.jellybase.activity.AMapActivity;
 import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
+import com.jelly.jellybase.activity.AutoTextAvtivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GSYVideoActivity;
@@ -497,6 +498,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 31://百度文字识别（身份证等）
                     intent=new Intent(MyApplication.getMyApp(), OCRMainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 32://AutoComleteTextView自动补齐
+                    intent=new Intent(MyApplication.getMyApp(), AutoTextAvtivity.class);
                     startActivity(intent);
                     break;
             }
