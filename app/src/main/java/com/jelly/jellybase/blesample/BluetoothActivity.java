@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.base.bluetooth.BleManager;
@@ -66,7 +65,7 @@ public class BluetoothActivity extends BaseActivity {
     @BindView(R.id.layout_setting)
     LinearLayout layout_setting;
     @BindView(R.id.txt_setting)
-    TextView txt_setting;
+    Button txt_setting;
     @BindView(R.id.btn_scan)
     Button btn_scan;
     @BindView(R.id.et_name)
