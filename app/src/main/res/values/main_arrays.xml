@@ -34,5 +34,6 @@
         <item>视频播放器gsyVideoPlayer</item>
         <item>百度文字识别（身份证等）</item>
         <item>AutoComleteTextView自动补齐</item>
+        <item>蓝牙配对</item>
     </string-array>
 </resources>

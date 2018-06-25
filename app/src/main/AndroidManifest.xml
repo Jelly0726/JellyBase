@@ -28,8 +28,10 @@
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_OWNER_DATA"/>
@@ -450,6 +452,16 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
+        <activity android:name=".blesample.BluetoothActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".blesample.operation.OperationActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑蓝牙配对↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓百度文字识别↓↓↓↓↓↓↓-->
         <activity android:name=".bdocr.OCRMainActivity" >
         </activity>

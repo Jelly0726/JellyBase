@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/main_bg">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
     <com.yanzhenjie.sofia.StatusView
@@ -31,12 +32,13 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/title_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="30px"
-            android:text="自动补齐"
+            android:text="蓝牙配对"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
@@ -50,18 +52,9 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <AutoCompleteTextView
-        android:id="@+id/autoText_ed"
+    <FrameLayout
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:background="#ffff"
-        android:hint="自动补齐"/>
-    <AutoCompleteTextView
-        android:id="@+id/autoText_eds"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:background="#ffff"
-        android:hint="自动匹配"/>
+        android:layout_height="match_parent" />
+
 </LinearLayout>
