@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Looper;
+
 import com.base.bluetooth.bluetooth.BleBluetooth;
 import com.base.bluetooth.bluetooth.MultipleBluetoothController;
 import com.base.bluetooth.bluetooth.SplitWriter;
@@ -33,6 +34,7 @@ import com.base.bluetooth.exception.OtherException;
 import com.base.bluetooth.scan.BleScanRuleConfig;
 import com.base.bluetooth.scan.BleScanner;
 import com.base.bluetooth.utils.BleLog;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -276,7 +278,14 @@ public class BleManager {
         BleLog.isPrint = enable;
         return this;
     }
-
+    /**
+     * scan device around
+     */
+    public void beginDiscovery() {
+        if (bluetoothAdapter!=null&&bluetoothAdapter.isDiscovering() != true) {
+            bluetoothAdapter.startDiscovery();
+        }
+    }
     /**
      * scan device around
      *
@@ -301,7 +310,6 @@ public class BleManager {
 
         BleScanner.getInstance().scan(serviceUuids, deviceNames, deviceMac, fuzzy, timeOut, callback);
     }
-
     /**
      * scan device then connect
      *
@@ -761,6 +769,7 @@ public class BleManager {
     }
 
     public List<BleDevice> getAllConnectedDevice() {
+
         if (multipleBluetoothController == null)
             return null;
         return multipleBluetoothController.getDeviceList();

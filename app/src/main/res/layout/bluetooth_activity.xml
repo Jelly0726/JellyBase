@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg"
+    >
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.yanzhenjie.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navi_color"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1px"
+        android:background="@color/navi_color">
+        <LinearLayout
+            android:id="@+id/left_back"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical"
+            android:paddingLeft="20px">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_back"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="30px"
+            android:text="蓝牙配对"
+            android:textColor="#313131"/>
+        <LinearLayout
+            android:id="@+id/top_right"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:gravity="center_vertical|right"
+            android:paddingRight="20px">
+            <ImageView
+                android:layout_width="42px"
+                android:layout_height="42px"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/ck_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:button="@null"
+            android:checked="false"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track"
+            android:text="蓝牙"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_discovery"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="名称"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="地址"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="状态"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

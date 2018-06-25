@@ -1,4 +1,4 @@
-package com.jelly.jellybase.blesample.comm;
+package com.jelly.jellybase.bluetoothsample.comm;
 
 
 import com.base.bluetooth.data.BleDevice;

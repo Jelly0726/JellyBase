@@ -1,4 +1,4 @@
-package com.jelly.jellybase.blesample;
+package com.jelly.jellybase.bluetoothsample;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -16,7 +16,6 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,9 +41,9 @@ import com.base.bluetooth.scan.BleScanRuleConfig;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.blesample.adapter.DeviceAdapter;
-import com.jelly.jellybase.blesample.comm.ObserverManager;
-import com.jelly.jellybase.blesample.operation.OperationActivity;
+import com.jelly.jellybase.bluetoothsample.adapter.DeviceAdapter;
+import com.jelly.jellybase.bluetoothsample.comm.ObserverManager;
+import com.jelly.jellybase.bluetoothsample.operation.OperationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,11 +138,7 @@ public class BluetoothActivity extends BaseActivity {
     }
 
     private void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         btn_scan.setText(getString(R.string.start_scan));
-
         layout_setting.setVisibility(View.GONE);
         txt_setting.setText(getString(R.string.expand_search_settings));
 
@@ -236,6 +231,10 @@ public class BluetoothActivity extends BaseActivity {
 
     private void startScan() {
         BleManager.getInstance().scan(new BleScanCallback() {
+            /**
+             * // 开始扫描（主线程）
+             * @param success
+             */
             @Override
             public void onScanStarted(boolean success) {
                 mDeviceAdapter.clearScanDevice();
@@ -250,12 +249,20 @@ public class BluetoothActivity extends BaseActivity {
                 super.onLeScan(bleDevice);
             }
 
+            /**
+             * 扫描到一个符合扫描规则的BLE设备（主线程）
+             * @param bleDevice
+             */
             @Override
             public void onScanning(BleDevice bleDevice) {
                 mDeviceAdapter.addDevice(bleDevice);
                 mDeviceAdapter.notifyDataSetChanged();
             }
 
+            /**
+             * 扫描结束，列出所有扫描到的符合扫描规则的BLE设备（主线程）
+             * @param scanResultList
+             */
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
                 img_loading.clearAnimation();

@@ -453,11 +453,15 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
-        <activity android:name=".blesample.BluetoothActivity"
+        <activity android:name=".bluetoothsample.BluetoothActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".blesample.operation.OperationActivity"
+        <activity android:name=".bluetoothtest.BluetoothActivityT"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".bluetoothsample.operation.OperationActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>

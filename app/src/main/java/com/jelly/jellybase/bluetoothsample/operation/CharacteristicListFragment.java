@@ -1,4 +1,4 @@
-package com.jelly.jellybase.blesample.operation;
+package com.jelly.jellybase.bluetoothsample.operation;
 
 
 import android.annotation.TargetApi;

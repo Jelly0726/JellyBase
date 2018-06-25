@@ -1,4 +1,4 @@
-package com.jelly.jellybase.blesample.operation;
+package com.jelly.jellybase.bluetoothsample.operation;
 
 
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -16,8 +16,8 @@ import com.base.bluetooth.data.BleDevice;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.blesample.comm.Observer;
-import com.jelly.jellybase.blesample.comm.ObserverManager;
+import com.jelly.jellybase.bluetoothsample.comm.Observer;
+import com.jelly.jellybase.bluetoothsample.comm.ObserverManager;
 
 import java.util.ArrayList;
 import java.util.List;

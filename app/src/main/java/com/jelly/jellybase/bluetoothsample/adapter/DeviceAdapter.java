@@ -1,4 +1,4 @@
-package com.jelly.jellybase.blesample.adapter;
+package com.jelly.jellybase.bluetoothsample.adapter;
 
 
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.base.bluetooth.BleManager;
 import com.base.bluetooth.data.BleDevice;
+import com.base.bluetooth.utils.BleLog;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
