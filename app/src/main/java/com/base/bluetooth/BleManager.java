@@ -161,6 +161,14 @@ public class BleManager {
     }
 
     /**
+     * Low power bluetooth support
+     * @return
+     */
+    public boolean isBLEBluetooeh(){
+        // 是否支持蓝牙低功耗广播（4.3+）
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+    }
+    /**
      * Get operate timeout
      *
      * @return
@@ -280,6 +288,7 @@ public class BleManager {
     }
     /**
      * scan device around
+     * 扫传统蓝牙
      */
     public void beginDiscovery() {
         if (bluetoothAdapter!=null&&bluetoothAdapter.isDiscovering() != true) {
@@ -288,7 +297,16 @@ public class BleManager {
     }
     /**
      * scan device around
-     *
+     * 取消扫传统蓝牙
+     */
+    public void cancelDiscovery() {
+        if (bluetoothAdapter.isDiscovering() == true) {
+            bluetoothAdapter.cancelDiscovery();
+        }
+    }
+    /**
+     * scan device around
+     * 扫低功耗蓝牙
      * @param callback
      */
     public void scan(BleScanCallback callback) {
@@ -312,7 +330,7 @@ public class BleManager {
     }
     /**
      * scan device then connect
-     *
+     * 扫低功耗蓝牙
      * @param callback
      */
     public void scanAndConnect(BleScanAndConnectCallback callback) {
@@ -384,6 +402,7 @@ public class BleManager {
 
     /**
      * Cancel scan
+     * 取消扫低功耗蓝牙
      */
     public void cancelScan() {
         BleScanner.getInstance().stopLeScan();
@@ -596,7 +615,26 @@ public class BleManager {
             bleBluetooth.newBleConnector().readRemoteRssi(callback);
         }
     }
-
+    /**
+     * 功能：根据rssi计算距离 返回数据单位为m
+     * 计算公式：
+     d = 10^((abs(RSSI) - A) / (10 * n))
+     其中：
+     d - 计算所得距离
+     RSSI - 接收信号强度（负值）
+     A - 发射端和接收端相隔1米时的信号强度
+     n - 环境衰减因子
+     * @param rssi
+     * @return
+     */
+    //A和n的值，需要根据实际环境进行检测得出
+    private static final double A_Value=50;/**A - 发射端和接收端相隔1米时的信号强度*/
+    private static final double n_Value=2.5;/** n - 环境衰减因子*/
+    public double getDistance(int rssi){
+        int iRssi = Math.abs(rssi);
+        double power = (iRssi-A_Value)/(10*n_Value);
+        return Math.pow(10,power);
+    }
     /**
      * set Mtu
      *

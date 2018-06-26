@@ -52,7 +52,7 @@
                 android:id="@+id/txt_rssi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <ImageView
                 android:layout_width="18dp"
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="@string/connect"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/connected"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/btn_disconnect"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="@string/disconnect"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <Button
                 android:id="@+id/btn_detail"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="@string/enter"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 

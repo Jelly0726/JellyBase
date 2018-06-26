@@ -10,6 +10,17 @@ public class BleDevice implements Parcelable {
 
     private BluetoothDevice mDevice;
     private byte[] mScanRecord;
+    /**
+     * 一般情况下，经典蓝牙强度
+     -50 ~ 0dBm 信号强
+     -70 ~-50dBm信号中
+     <-70dBm      信号弱
+     低功耗蓝牙分四级
+     -60 ~ 0   4
+     -70 ~ -60 3
+     -80 ~ -70  2
+     <-80 1
+     */
     private int mRssi;
     private long mTimestampNanos;
 

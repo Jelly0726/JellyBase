@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothsample;
+package com.jelly.jellybase.blebluetooth;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -41,9 +41,9 @@ import com.base.bluetooth.scan.BleScanRuleConfig;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.bluetoothsample.adapter.DeviceAdapter;
-import com.jelly.jellybase.bluetoothsample.comm.ObserverManager;
-import com.jelly.jellybase.bluetoothsample.operation.OperationActivity;
+import com.jelly.jellybase.blebluetooth.adapter.DeviceAdapter;
+import com.jelly.jellybase.blebluetooth.comm.ObserverManager;
+import com.jelly.jellybase.blebluetooth.operation.OperationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +53,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 扫描低功率蓝牙
+ */
+public class BluetoothBLEActivity extends BaseActivity {
 
-public class BluetoothActivity extends BaseActivity {
-
-    private static final String TAG = BluetoothActivity.class.getSimpleName();
+    private static final String TAG = BluetoothBLEActivity.class.getSimpleName();
     private static final int REQUEST_CODE_OPEN_GPS = 1;
     private static final int REQUEST_CODE_PERMISSION_LOCATION = 2;
     @BindView(R.id.left_back)
@@ -95,6 +97,8 @@ public class BluetoothActivity extends BaseActivity {
                 .setReConnectCount(1, 5000)
                 .setConnectOverTime(20000)
                 .setOperateTimeout(5000);
+
+
     }
 
     @Override
@@ -166,7 +170,7 @@ public class BluetoothActivity extends BaseActivity {
             @Override
             public void onDetail(BleDevice bleDevice) {
                 if (BleManager.getInstance().isConnected(bleDevice)) {
-                    Intent intent = new Intent(BluetoothActivity.this, OperationActivity.class);
+                    Intent intent = new Intent(BluetoothBLEActivity.this, OperationActivity.class);
                     intent.putExtra(OperationActivity.KEY_DATA, bleDevice);
                     startActivity(intent);
                 }
@@ -285,7 +289,7 @@ public class BluetoothActivity extends BaseActivity {
                 img_loading.setVisibility(View.INVISIBLE);
                 btn_scan.setText(getString(R.string.start_scan));
                 progressDialog.dismiss();
-                Toast.makeText(BluetoothActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
+                Toast.makeText(BluetoothBLEActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -303,9 +307,9 @@ public class BluetoothActivity extends BaseActivity {
                 mDeviceAdapter.notifyDataSetChanged();
 
                 if (isActiveDisConnected) {
-                    Toast.makeText(BluetoothActivity.this, getString(R.string.active_disconnected), Toast.LENGTH_LONG).show();
+                    Toast.makeText(BluetoothBLEActivity.this, getString(R.string.active_disconnected), Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(BluetoothActivity.this, getString(R.string.disconnected), Toast.LENGTH_LONG).show();
+                    Toast.makeText(BluetoothBLEActivity.this, getString(R.string.disconnected), Toast.LENGTH_LONG).show();
                     ObserverManager.getInstance().notifyObserver(bleDevice);
                 }
 

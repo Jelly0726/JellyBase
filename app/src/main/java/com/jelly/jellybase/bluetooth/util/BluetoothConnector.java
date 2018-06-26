@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothtest.util;
+package com.jelly.jellybase.bluetooth.util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

@@ -61,8 +61,8 @@ import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.activity.UniqueIDActivity;
 import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.bdocr.OCRMainActivity;
-import com.jelly.jellybase.bluetoothsample.BluetoothActivity;
-import com.jelly.jellybase.bluetoothtest.BluetoothActivityT;
+import com.jelly.jellybase.blebluetooth.BluetoothBLEActivity;
+import com.jelly.jellybase.bluetooth.BluetoothActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
@@ -506,12 +506,12 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(MyApplication.getMyApp(), AutoTextAvtivity.class);
                     startActivity(intent);
                     break;
-                case 33://蓝牙配对
-                    intent=new Intent(MyApplication.getMyApp(), BluetoothActivity.class);
+                case 33://低功率蓝牙
+                    intent=new Intent(MyApplication.getMyApp(), BluetoothBLEActivity.class);
                     startActivity(intent);
                     break;
-                case 34://蓝牙配对T
-                    intent=new Intent(MyApplication.getMyApp(), BluetoothActivityT.class);
+                case 34://传统蓝牙
+                    intent=new Intent(MyApplication.getMyApp(), BluetoothActivity.class);
                     startActivity(intent);
                     break;
             }

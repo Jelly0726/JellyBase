@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothtest.task;
+package com.jelly.jellybase.bluetooth.task;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.jelly.jellybase.bluetoothtest.util.BluetoothConnector;
+import com.jelly.jellybase.bluetooth.util.BluetoothConnector;
 
 
 public class BlueConnectTask extends AsyncTask<BluetoothDevice, Void, BluetoothSocket> {

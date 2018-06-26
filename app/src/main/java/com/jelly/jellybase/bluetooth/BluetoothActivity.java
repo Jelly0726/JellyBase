@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothtest;
+package com.jelly.jellybase.bluetooth;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,23 +31,26 @@ import android.widget.Toast;
 
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.bluetoothtest.adapter.BlueListAdapter;
-import com.jelly.jellybase.bluetoothtest.bean.BlueDevice;
-import com.jelly.jellybase.bluetoothtest.task.BlueAcceptTask;
-import com.jelly.jellybase.bluetoothtest.task.BlueConnectTask;
-import com.jelly.jellybase.bluetoothtest.task.BlueReceiveTask;
-import com.jelly.jellybase.bluetoothtest.util.BluetoothUtil;
-import com.jelly.jellybase.bluetoothtest.widget.InputDialogFragment;
+import com.jelly.jellybase.bluetooth.adapter.DeviceAdapter;
+import com.jelly.jellybase.bluetooth.bean.BlueDevice;
+import com.jelly.jellybase.bluetooth.task.BlueAcceptTask;
+import com.jelly.jellybase.bluetooth.task.BlueConnectTask;
+import com.jelly.jellybase.bluetooth.task.BlueReceiveTask;
+import com.jelly.jellybase.bluetooth.util.BluetoothUtil;
+import com.jelly.jellybase.bluetooth.widget.InputDialogFragment;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-public class BluetoothActivityT extends BaseActivity implements
+/**
+ * 扫描传统蓝牙
+ */
+public class BluetoothActivity extends BaseActivity implements
         OnItemClickListener, OnCheckedChangeListener,
         BlueConnectTask.BlueConnectListener, InputDialogFragment.InputCallbacks, BlueAcceptTask.BlueAcceptListener {
     private static final String TAG = "BluetoothActivity";
@@ -59,6 +63,7 @@ public class BluetoothActivityT extends BaseActivity implements
     @BindView(R.id.lv_bluetooth)
     ListView lv_bluetooth;
     private BluetoothAdapter mBluetooth;
+    private DeviceAdapter adapter;
     private ArrayList<BlueDevice> mDeviceList = new ArrayList<BlueDevice>();
 
     @Override
@@ -77,6 +82,72 @@ public class BluetoothActivityT extends BaseActivity implements
             Toast.makeText(this, "本机未找到蓝牙功能", Toast.LENGTH_SHORT).show();
             finish();
         }
+        adapter=new DeviceAdapter(getApplicationContext(),mDeviceList);
+        adapter.setOnDeviceClickListener(new DeviceAdapter.OnDeviceClickListener() {
+            @Override
+            public void onConnect(BlueDevice bleDevice,int position) {
+                cancelDiscovery();
+                BluetoothDevice device = mBluetooth.getRemoteDevice(bleDevice.getAddress());
+                if (device.getBondState() == BluetoothDevice.BOND_NONE) {
+                    Method createBondMethod = null;
+                    try {
+                        createBondMethod = BluetoothDevice.class.getMethod("createBond");
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG, "开始配对");
+                    try {
+                        Boolean result = (Boolean) createBondMethod.invoke(device);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
+                        bleDevice.getState() != DeviceAdapter.CONNECTED) {
+                    tv_discovery.setText("开始连接");
+                    BlueConnectTask connectTask = new BlueConnectTask(bleDevice.getAddress());
+                    connectTask.setBlueConnectListener(BluetoothActivity.this);
+                    connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
+                }
+            }
+
+            @Override
+            public void onDisConnect(final BlueDevice bleDevice,int position) {
+                cancelDiscovery();
+                tv_discovery.setText("连接已断开");
+                mBlueSocket=null;
+                if (bleDevice.getSocket() != null) {
+                    try {
+                        bleDevice.getSocket().close();
+                        bleDevice.setSocket(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                bleDevice.setState(DeviceAdapter.BINDING);
+                mDeviceList.set(position,bleDevice);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onDetail(BlueDevice bleDevice,int position) {
+                cancelDiscovery();
+                BluetoothDevice device = mBluetooth.getRemoteDevice(bleDevice.getAddress());
+                if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
+                        bleDevice.getState() == DeviceAdapter.CONNECTED) {
+                    mBlueSocket=bleDevice.getSocket();
+                    if (mBlueSocket!=null) {
+                        tv_discovery.setText("正在发送消息");
+                        InputDialogFragment dialog = InputDialogFragment.newInstance(
+                                "", 0, "请输入要发送的消息");
+                        String fragTag = getResources().getString(R.string.app_name);
+                        dialog.show(getFragmentManager(), fragTag);
+                    }
+                }
+            }
+        });
+        lv_bluetooth.setAdapter(adapter);
     }
 
     // 定义获取基于地理位置的动态权限
@@ -123,8 +194,7 @@ public class BluetoothActivityT extends BaseActivity implements
                 cancelDiscovery();
                 BluetoothUtil.setBlueToothStatus(this, false);
                 mDeviceList.clear();
-                BlueListAdapter adapter = new BlueListAdapter(this, mDeviceList);
-                lv_bluetooth.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         }
     }
@@ -134,7 +204,7 @@ public class BluetoothActivityT extends BaseActivity implements
         public void run() {
             if (mBluetooth.getState() == BluetoothAdapter.STATE_ON) {
                 BlueAcceptTask acceptTask = new BlueAcceptTask(true);
-                acceptTask.setBlueAcceptListener(BluetoothActivityT.this);
+                acceptTask.setBlueAcceptListener(BluetoothActivity.this);
                 acceptTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else {
                 mHandler.postDelayed(this, 1000);
@@ -177,8 +247,7 @@ public class BluetoothActivityT extends BaseActivity implements
     private void beginDiscovery() {
         if (mBluetooth.isDiscovering() != true) {
             mDeviceList.clear();
-            BlueListAdapter adapter = new BlueListAdapter(BluetoothActivityT.this, mDeviceList);
-            lv_bluetooth.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
             tv_discovery.setText("正在搜索蓝牙设备");
             mBluetooth.startDiscovery();
         }
@@ -198,9 +267,11 @@ public class BluetoothActivityT extends BaseActivity implements
         mHandler.postDelayed(mRefresh, 50);
         blueReceiver = new BluetoothReceiver();
         //需要过滤多个动作，则调用IntentFilter对象的addAction添加新动作
-        IntentFilter foundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        foundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        foundFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        IntentFilter foundFilter = new IntentFilter(BluetoothDevice.ACTION_FOUND);//搜索发现设备
+        foundFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);//搜索完成
+        foundFilter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);//状态改变
+        foundFilter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);//行动扫描模式改变了
+        foundFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);//动作状态发生了变化
         registerReceiver(blueReceiver, foundFilter);
     }
 
@@ -221,22 +292,22 @@ public class BluetoothActivityT extends BaseActivity implements
             // 获得已经搜索到的蓝牙设备
             if (action.equals(BluetoothDevice.ACTION_FOUND)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (mDeviceList.size()==0){
-                    BlueDevice item = new BlueDevice(device.getName(), device.getAddress(), device.getBondState() - 10);
-                    mDeviceList.add(item);
-                    BlueListAdapter adapter = new BlueListAdapter(BluetoothActivityT.this, mDeviceList);
-                    lv_bluetooth.setAdapter(adapter);
-                    lv_bluetooth.setOnItemClickListener(BluetoothActivityT.this);
-                }else {
-                    for (int i=0;i<mDeviceList.size();i++) {
-                        if (!mDeviceList.get(i).address.equals(device.getAddress())) {
-                            BlueDevice item = new BlueDevice(device.getName(), device.getAddress(), device.getBondState() - 10);
-                            mDeviceList.add(item);
-                            BlueListAdapter adapter = new BlueListAdapter(BluetoothActivityT.this, mDeviceList);
-                            lv_bluetooth.setAdapter(adapter);
-                            lv_bluetooth.setOnItemClickListener(BluetoothActivityT.this);
-                        }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    if (device.getType()!=BluetoothDevice.DEVICE_TYPE_CLASSIC){
+                        return;
                     }
+                }
+                short rssi=intent.getExtras().getShort(BluetoothDevice.EXTRA_RSSI);//获取额外rssi值
+                int num=0;
+                for (int i=0;i<mDeviceList.size();i++) {
+                    if (mDeviceList.get(i).getAddress().equals(device.getAddress())) {
+                        num++;
+                    }
+                }
+                if (num==0){
+                    BlueDevice item = new BlueDevice(device, device.getBondState() - 10,rssi);
+                    mDeviceList.add(item);
+                    adapter.notifyDataSetChanged();
                 }
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 mHandler.removeCallbacks(mRefresh);
@@ -259,20 +330,20 @@ public class BluetoothActivityT extends BaseActivity implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         cancelDiscovery();
         BlueDevice item = mDeviceList.get(position);
-        BluetoothDevice device = mBluetooth.getRemoteDevice(item.address);
+        BluetoothDevice device = mBluetooth.getRemoteDevice(item.getAddress());
         try {
             if (device.getBondState() == BluetoothDevice.BOND_NONE) {
                 Method createBondMethod = BluetoothDevice.class.getMethod("createBond");
                 Log.d(TAG, "开始配对");
                 Boolean result = (Boolean) createBondMethod.invoke(device);
             } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
-                    item.state != BlueListAdapter.CONNECTED) {
+                    item.getState() != DeviceAdapter.CONNECTED) {
                 tv_discovery.setText("开始连接");
-                BlueConnectTask connectTask = new BlueConnectTask(item.address);
+                BlueConnectTask connectTask = new BlueConnectTask(item.getAddress());
                 connectTask.setBlueConnectListener(this);
                 connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
             } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
-                    item.state == BlueListAdapter.CONNECTED) {
+                    item.getState() == DeviceAdapter.CONNECTED) {
                 tv_discovery.setText("正在发送消息");
                 InputDialogFragment dialog = InputDialogFragment.newInstance(
                         "", 0, "请输入要发送的消息");
@@ -290,7 +361,9 @@ public class BluetoothActivityT extends BaseActivity implements
     public void onInput(String title, String message, int type) {
         Log.d(TAG, "onInput message=" + message);
         Log.d(TAG, "mBlueSocket is " + (mBlueSocket == null ? "null" : "not null"));
-        BluetoothUtil.writeOutputStream(mBlueSocket, message);
+        if (mBlueSocket!=null) {
+            BluetoothUtil.writeOutputStream(mBlueSocket, message);
+        }
     }
 
     private BluetoothSocket mBlueSocket;
@@ -298,23 +371,38 @@ public class BluetoothActivityT extends BaseActivity implements
     //客户端主动连接
     @Override
     public void onBlueConnect(String address, BluetoothSocket socket) {
+        if (socket==null){
+            tv_discovery.setText("连接失败");
+            return;
+        }
         mBlueSocket = socket;
         tv_discovery.setText("连接成功");
-        refreshAddress(address);
+        refreshAddress(address,socket);
     }
-
     //刷新已连接的状态
-    private void refreshAddress(String address) {
+    private void refreshAddress(String address, BluetoothSocket socket) {
         for (int i = 0; i < mDeviceList.size(); i++) {
             BlueDevice item = mDeviceList.get(i);
-            if (item.address.equals(address) == true) {
-                item.state = BlueListAdapter.CONNECTED;
+            if (item.getAddress().equals(address) == true) {
+                item.setState(DeviceAdapter.CONNECTED);
+                item.setSocket(socket);
+                mDeviceList.set(i, item);
+            }else {
+                if (item.getSocket()!=null){
+                    try {
+                        item.getSocket().close();
+                        item.setSocket(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                item.setState(item.getmDevice().getBondState() - 10);
                 mDeviceList.set(i, item);
             }
         }
-        BlueListAdapter adapter = new BlueListAdapter(this, mDeviceList);
-        lv_bluetooth.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
+
 
     //服务端侦听到连接
     @Override
@@ -323,8 +411,8 @@ public class BluetoothActivityT extends BaseActivity implements
         if (socket != null) {
             mBlueSocket = socket;
             BluetoothDevice device = mBlueSocket.getRemoteDevice();
-            refreshAddress(device.getAddress());
-            BlueReceiveTask receive = new BlueReceiveTask(mBlueSocket, mHandler);
+            refreshAddress(device.getAddress(),socket);
+            BlueReceiveTask receive = new BlueReceiveTask(socket, mHandler);
             receive.start();
         }
     }
@@ -337,7 +425,7 @@ public class BluetoothActivityT extends BaseActivity implements
                 byte[] readBuf = (byte[]) msg.obj;
                 String readMessage = new String(readBuf, 0, msg.arg1);
                 Log.d(TAG, "handleMessage readMessage=" + readMessage);
-                AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothActivityT.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(BluetoothActivity.this);
                 builder.setTitle("我收到消息啦").setMessage(readMessage).setPositiveButton("确定", null);
                 builder.create().show();
             }
@@ -347,12 +435,6 @@ public class BluetoothActivityT extends BaseActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBlueSocket != null) {
-            try {
-                mBlueSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        adapter.close();
     }
 }

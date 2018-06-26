@@ -31,6 +31,10 @@
     <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--表示此app只支持拥有BLE的设备上运行
+    如果你不确定你的app使用的设备是否支持低功耗蓝牙，但又想让支持的设备使用低功耗蓝牙，把标志位改为 false，同时去代码中判断设备是否支持BLE：
+    -->
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
     <!-- 蓝牙权限 -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
@@ -453,15 +457,15 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
-        <activity android:name=".bluetoothsample.BluetoothActivity"
+        <activity android:name=".blebluetooth.BluetoothBLEActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bluetoothtest.BluetoothActivityT"
+        <activity android:name=".bluetooth.BluetoothActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".bluetoothsample.operation.OperationActivity"
+        <activity android:name=".blebluetooth.operation.OperationActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>

@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothtest.task;
+package com.jelly.jellybase.bluetooth.task;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;

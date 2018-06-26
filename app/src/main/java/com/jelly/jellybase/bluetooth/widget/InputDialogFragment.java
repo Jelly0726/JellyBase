@@ -1,4 +1,4 @@
-package com.jelly.jellybase.bluetoothtest.widget;
+package com.jelly.jellybase.bluetooth.widget;
 
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
