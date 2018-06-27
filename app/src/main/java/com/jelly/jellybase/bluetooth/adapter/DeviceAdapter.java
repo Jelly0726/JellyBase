@@ -2,6 +2,7 @@ package com.jelly.jellybase.bluetooth.adapter;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -86,14 +87,16 @@ public class DeviceAdapter extends BaseAdapter {
             holder.txt_mac.setText(mac);
             holder.txt_rssi.setText(String.valueOf(bleDevice.getmRssi()));
             if (isConnected) {
-                holder.img_blue.setImageResource(R.mipmap.blue_ic_connected);
-                holder.txt_name.setTextColor(0xFF1DE9B6);
-                holder.txt_mac.setTextColor(0xFF1DE9B6);
+                holder.img_blue.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext()
+                        ,R.drawable.bluetooth_connected_24dp));
+                holder.txt_name.setTextColor(0xFF3466FC);
+                holder.txt_mac.setTextColor(0xFF3466FC);
                 holder.layout_idle.setVisibility(View.GONE);
                 holder.layout_connected.setVisibility(View.VISIBLE);
                 //holder.btn_disconnect.setVisibility(View.GONE);
             } else {
-                holder.img_blue.setImageResource(R.mipmap.blue_ic_remote);
+                holder.img_blue.setImageDrawable(ContextCompat.getDrawable(context.getApplicationContext()
+                        ,R.drawable.bluetooth_diconnect_24dp));
                 holder.txt_name.setTextColor(0xFF000000);
                 holder.txt_mac.setTextColor(0xFF000000);
                 holder.layout_idle.setVisibility(View.VISIBLE);

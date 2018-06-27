@@ -303,7 +303,8 @@ public class BluetoothBLEActivity extends BaseActivity {
             public void onDisConnected(boolean isActiveDisConnected, BleDevice bleDevice, BluetoothGatt gatt, int status) {
                 progressDialog.dismiss();
 
-                mDeviceAdapter.removeDevice(bleDevice);
+               // mDeviceAdapter.removeDevice(bleDevice);
+                mDeviceAdapter.addDevice(bleDevice);
                 mDeviceAdapter.notifyDataSetChanged();
 
                 if (isActiveDisConnected) {

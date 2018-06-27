@@ -5,6 +5,9 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.base.Utils.StringUtil;
+import com.base.bluetooth.ClsUtils;
+
 
 public class BleDevice implements Parcelable {
 
@@ -68,8 +71,14 @@ public class BleDevice implements Parcelable {
     };
 
     public String getName() {
-        if (mDevice != null)
-            return mDevice.getName();
+        if (mDevice != null) {
+            String deviceName = mDevice.getName();
+            if(StringUtil.isEmpty(deviceName)){
+                BleAdvertisedData badata = ClsUtils.parseAdertisedData(mScanRecord);
+                deviceName = badata.getName();
+            }
+            return deviceName;
+        }
         return null;
     }
 
