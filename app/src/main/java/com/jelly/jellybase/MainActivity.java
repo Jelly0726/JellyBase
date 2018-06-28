@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                         .setForceRedownload(false)
                         .setParamBundle(paramBundle);
                 AllenChecker.init(BuildConfig.DEBUG);
-                AllenChecker.startVersionCheck(MainActivity.this, builder.build());
+                AllenChecker.startVersionCheck(MyApplication.getMyApp(), builder.build());
             }else if (appUpdateInfoForInstall!=null){
                 BDAutoUpdateSDK.cpUpdateInstall(MainActivity.this,appUpdateInfoForInstall.getInstallPath());
             }else {

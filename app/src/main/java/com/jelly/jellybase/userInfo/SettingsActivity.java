@@ -214,7 +214,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                 .setForceRedownload(false)
                 .setParamBundle(paramBundle);
         AllenChecker.init(BuildConfig.DEBUG);
-        AllenChecker.startVersionCheck(this, builder.build());
+        AllenChecker.startVersionCheck(MyApplication.getMyApp(), builder.build());
     }
 
     @Override
