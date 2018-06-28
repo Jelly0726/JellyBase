@@ -471,6 +471,16 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpFunctions<HttpResultData<Message>>());
 		toSubscribe(observable, subscriber,composer);
 	}
+	/***
+	 * 取消订单
+	 * @param subscriber
+	 */
+	public void cancelOrder(String paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
+		Observable observable =  getProxy(IApiService.class).cancelOrder(GlobalToken.getToken().getToken(),paramMap)
+				.flatMap(new HttpFunctions<HttpResult>());
+		toSubscribe(observable, subscriber,composer);
+	}
+
 
 
 	/***
