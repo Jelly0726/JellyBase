@@ -132,4 +132,9 @@ public interface IApiService {
 	@POST("JFF/fish/transfer/getFishTransferList.doAdminJJ")
 	Observable<HttpResultData<Message>> getMessageDetails(@Header("token") String token,
 																		 @Field("data") String jsonString);
+	//取消订单
+	@FormUrlEncoded
+	@POST("JFF/fish/transfer/cancelOrder.doAdminJJ")
+	Observable<HttpResultData<HttpResult>> cancelOrder(@Header("token") String token,
+													  @Field("data") String jsonString);
 }

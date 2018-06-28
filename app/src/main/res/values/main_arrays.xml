@@ -36,5 +36,12 @@
         <item>AutoComleteTextView自动补齐</item>
         <item>低功率蓝牙</item>
         <item>传统蓝牙</item>
+        <item>取消订单</item>
+    </string-array>
+
+    <string-array name="cause">
+        <item>选错了</item>
+        <item>不想要了</item>
+        <item>其他</item>
     </string-array>
 </resources>
