@@ -26,7 +26,7 @@ public class IDCard {
 
     @Override
     protected char[] getAcceptedChars() {
-    char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
+    char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X','x' };
     return numberChars;
     }
     });

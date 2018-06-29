@@ -48,7 +48,7 @@
 
             <Button
                 android:layout_marginTop="10dp"
-                android:id="@+id/btn_update"
+                android:id="@+id/versionchecklib_version_dialog_commit"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/checkversion_shape_corner"

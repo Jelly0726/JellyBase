@@ -1,19 +1,25 @@
 package com.jelly.jellybase.userInfo;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.allenliu.versionchecklib.core.AllenChecker;
-import com.allenliu.versionchecklib.core.VersionParams;
-import com.allenliu.versionchecklib.core.http.HttpHeaders;
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
+import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
+import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.AppUtils;
 import com.base.applicationUtil.MyApplication;
-import com.base.Utils.ToastUtils;
-import com.base.checkVersion.CheckVersionActivity;
+import com.base.checkVersion.BaseDialog;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.DialogParams;
@@ -26,7 +32,6 @@ import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.BuildConfig;
 
 /**
  * Created by Administrator on 2017/9/27.
@@ -185,36 +190,45 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
     @Override
     public void getAppversionSuccess( Object mCallBackVo) {
         AppVersion appVersion= (AppVersion) mCallBackVo;
-
-        HttpHeaders httpHeaders=new HttpHeaders();
-        httpHeaders.put("token", GlobalToken.getToken().getToken());
-
-        String title="当前版本已是最新版本";
-        String message="";
-        String downloadUrl="";
-        VersionParams.Builder builder = new VersionParams.Builder();
-        Bundle paramBundle=new Bundle();
-        paramBundle.putBoolean("isUpdate",false);
+        UIData uiData = UIData.create();
         if (appVersion!=null){
             if (AppUtils.getVersionCode(MyApplication.getMyApp())<appVersion.getAppversion()){
-                paramBundle.putBoolean("isUpdate",true);
-                //demoService.showVersionDialog(appVersion.getIP()+appVersion.getUrl(), "检测到新版本","",paramBundle);
-                title="检测到新版本";
-                message="";
-                downloadUrl=appVersion.getIP()+appVersion.getUrl();
+                uiData.setTitle("检测到新版本");
+                uiData.setDownloadUrl(appVersion.getIP()+appVersion.getUrl());
+                uiData.setContent("");
             }
         }
-        //如果仅使用下载功能，downloadUrl是必须的
-        builder.setOnlyDownload(true)
-                .setDownloadUrl(downloadUrl)
-                .setTitle(title)
-                .setUpdateMsg(message)
-                .setPauseRequestTime(-1)
-                .setCustomDownloadActivityClass(CheckVersionActivity.class)
-                .setForceRedownload(false)
-                .setParamBundle(paramBundle);
-        AllenChecker.init(BuildConfig.DEBUG);
-        AllenChecker.startVersionCheck(MyApplication.getMyApp(), builder.build());
+        DownloadBuilder builder= AllenVersionChecker
+                .getInstance()
+                .downloadOnly(uiData);
+        //自定义显示更新界面
+        builder.setCustomVersionDialogListener(new CustomVersionDialogListener(){
+            @Override
+            public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
+                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
+                TextView textView = baseDialog.findViewById(R.id.tv_msg);
+                textView.setText(versionBundle.getContent());
+                baseDialog.setCanceledOnTouchOutside(true);
+                return baseDialog;
+            }
+        });
+        //自定义下载中对话框界面
+        builder.setCustomDownloadingDialogListener(new CustomDownloadingDialogListener() {
+            @Override
+            public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
+                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_download_layout);
+                return baseDialog;
+            }
+            //下载中会不断回调updateUI方法
+            @Override
+            public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
+                TextView tvProgress = dialog.findViewById(R.id.tv_progress);
+                ProgressBar progressBar = dialog.findViewById(R.id.pb);
+                progressBar.setProgress(progress);
+                tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
+            }
+        });
+        builder.excuteMission(SettingsActivity.this);
     }
 
     @Override

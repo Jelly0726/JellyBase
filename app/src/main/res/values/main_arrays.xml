@@ -37,6 +37,7 @@
         <item>低功率蓝牙</item>
         <item>传统蓝牙</item>
         <item>取消订单</item>
+        <item>身份证校验</item>
     </string-array>
 
     <string-array name="cause">

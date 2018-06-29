@@ -460,6 +460,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.IDCartActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
         <activity android:name=".blebluetooth.BluetoothBLEActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
@@ -522,14 +526,6 @@
         </activity>
         <!--↑↑↑↑↑↑↑↑nfc实例↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
-        <service
-            android:name="com.base.checkVersion.DemoService"
-            android:enabled="true"
-            android:exported="true" />
-        <activity
-            android:name="com.base.checkVersion.CheckVersionActivity"
-            android:theme="@style/versionCheckLibvtransparentTheme"
-            android:launchMode="singleTask"/>
         <!--↑↑↑↑↑↑↑↑版本检查↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓qq配置开始↓↓↓↓↓↓↓-->
         <activity

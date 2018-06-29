@@ -1,5 +1,7 @@
 package com.jelly.jellybase;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -10,12 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.allenliu.versionchecklib.core.AllenChecker;
-import com.allenliu.versionchecklib.core.VersionParams;
-import com.allenliu.versionchecklib.core.http.HttpHeaders;
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
+import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.baidu.autoupdatesdk.AppUpdateInfo;
 import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
@@ -25,10 +30,9 @@ import com.base.Contacts.ContactsActivity;
 import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
-import com.base.checkVersion.CheckVersionActivity;
+import com.base.checkVersion.BaseDialog;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.service.WatchDogService;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.permission.PermissionUtils;
@@ -50,6 +54,7 @@ import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
 import com.jelly.jellybase.activity.HomeActivity;
+import com.jelly.jellybase.activity.IDCartActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.MessageActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
@@ -70,7 +75,6 @@ import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
-import com.trello.rxlifecycle2.android.BuildConfig;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 import com.yanzhenjie.permission.PermissionNo;
@@ -140,29 +144,41 @@ public class MainActivity extends AppCompatActivity {
         public void onCheckUpdateCallback(AppUpdateInfo appUpdateInfo, AppUpdateInfoForInstall appUpdateInfoForInstall) {
 
             if (appUpdateInfo!=null){
-                HttpHeaders httpHeaders=new HttpHeaders();
-                httpHeaders.put("token",GlobalToken.getToken().getToken());
-                String title="当前版本已是最新版本";
-                String message="";
-                String downloadUrl="";
-                VersionParams.Builder builder = new VersionParams.Builder();
-                Bundle paramBundle=new Bundle();
-                paramBundle.putBoolean("isUpdate",true);
-                //demoService.showVersionDialog(appVersion.getIP()+appVersion.getUrl(), "检测到新版本","",paramBundle);
-                title="检测到新版本";
-                message=appUpdateInfo.getAppChangeLog().replaceAll("<br>","\n");;
-                downloadUrl=appUpdateInfo.getAppUrl();
-                //如果仅使用下载功能，downloadUrl是必须的
-                builder.setOnlyDownload(true)
-                        .setDownloadUrl(downloadUrl)
-                        .setTitle(title)
-                        .setUpdateMsg(message)
-                        .setPauseRequestTime(-1)
-                        .setCustomDownloadActivityClass(CheckVersionActivity.class)
-                        .setForceRedownload(false)
-                        .setParamBundle(paramBundle);
-                AllenChecker.init(BuildConfig.DEBUG);
-                AllenChecker.startVersionCheck(MyApplication.getMyApp(), builder.build());
+                UIData uiData = UIData.create();
+                uiData.setTitle("检测到新版本");
+                uiData.setDownloadUrl(appUpdateInfo.getAppUrl());
+                uiData.setContent(appUpdateInfo.getAppChangeLog().replaceAll("<br>","\n"));
+                DownloadBuilder builder= AllenVersionChecker
+                        .getInstance()
+                        .downloadOnly(uiData);
+                //自定义显示更新界面
+                builder.setCustomVersionDialogListener(new CustomVersionDialogListener(){
+                    @Override
+                    public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
+                        BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
+                        TextView textView = baseDialog.findViewById(R.id.tv_msg);
+                        textView.setText(versionBundle.getContent());
+                        baseDialog.setCanceledOnTouchOutside(true);
+                        return baseDialog;
+                    }
+                });
+                //自定义下载中对话框界面
+                builder.setCustomDownloadingDialogListener(new CustomDownloadingDialogListener() {
+                    @Override
+                    public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
+                        BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_download_layout);
+                        return baseDialog;
+                    }
+                    //下载中会不断回调updateUI方法
+                    @Override
+                    public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
+                        TextView tvProgress = dialog.findViewById(R.id.tv_progress);
+                        ProgressBar progressBar = dialog.findViewById(R.id.pb);
+                        progressBar.setProgress(progress);
+                        tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
+                    }
+                });
+                builder.excuteMission(MainActivity.this);
             }else if (appUpdateInfoForInstall!=null){
                 BDAutoUpdateSDK.cpUpdateInstall(MainActivity.this,appUpdateInfoForInstall.getInstallPath());
             }else {
@@ -517,6 +533,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 35://取消订单
                     intent=new Intent(MyApplication.getMyApp(), CancelOrderActivity.class);
+                    startActivity(intent);
+                    break;
+                case 36://身份证校验
+                    intent=new Intent(MyApplication.getMyApp(), IDCartActivity.class);
                     startActivity(intent);
                     break;
             }
