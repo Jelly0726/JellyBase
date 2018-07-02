@@ -138,10 +138,8 @@ public class MainActivity extends AppCompatActivity {
                         .rationale(rationaleListener)
                         .start();
                 //百度智能更新 SDK 的 AAR 文件
-                //BDAutoUpdateSDK.uiUpdateAction(this, new MyUICheckUpdateCallback(),false);
-                //百度智能更新 SDK 的 AAR 文件
                 //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
-                BDAutoUpdateSDK.cpUpdateCheck(MainActivity.this,new MyCheckUpdateCallback(),false);
+//                BDAutoUpdateSDK.cpUpdateCheck(MainActivity.this,new MyCheckUpdateCallback(),false);
                 //检查更新
                 TMSelfUpdateManager.getInstance().checkSelfUpdate();
             }
