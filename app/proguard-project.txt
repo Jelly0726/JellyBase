@@ -423,6 +423,20 @@ public static java.lang.String TABLENAME;
 -keepclassmembers class ** {
 public void xxxxxx(**);
 }
+#---------------------腾讯自动更新----------------------
+-dontwarn com.tencent.**
+-keep class com.tencent.beaconselfupdate.** {*;}
+-keep class com.tencent.hlyyb.** {*;}
+-keep class com.tencent.tmapkupdatesdk.** {*;}
+-keep class com.tencent.tmassistantbase.** {*;}
+-keep class com.tencent.tmdownloader.** {*;}
+-keep class com.tencent.tmassistantsdk.** {*;}
+-keep class com.tencent.tmselfupdatesdk.** {*;}
+-keep class com.tencent.yybsdk.apkpatch.** {*;}
+-keep class com.tencent.assistant.sdk.remote.**{public protected private *;}
+-keep public interface com.tencent.tmassistantbase.common.download.ITMAssistantDownloadClientListener{*;}
+-keep class com.qq.** {*;}
+
 # ------------------ Keep LineNumbers and properties ---------------- #
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,EnclosingMethod
 -renamesourcefileattribute TbsSdkJava

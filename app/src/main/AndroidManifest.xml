@@ -526,6 +526,12 @@
         </activity>
         <!--↑↑↑↑↑↑↑↑nfc实例↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓版本检查↓↓↓↓↓↓↓-->
+        <!--省流量更新SDK的下载服务，必须注册-->
+        <service
+            android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
+            android:exported="false"
+            android:process=":TMAssistantDownloadSDKService" >
+        </service>
         <!--↑↑↑↑↑↑↑↑版本检查↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓qq配置开始↓↓↓↓↓↓↓-->
         <activity

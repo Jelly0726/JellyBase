@@ -19,7 +19,11 @@ public class BaseConfig {
     public static final String WB_APP_SECRET="";
     //新浪微博RedirectUrl
     public static final String WB_REDIRECT_URL="";
-
+    /**
+     * 应用宝渠道号（SELF_UPDATE_CHANNEL）用于应用宝侧统计接入方集成的省流量更新SDK为应用宝带来的新增量。
+     * 如果需要特殊区分你们带来的新增，则需要联系省流量更新SDK产品分配一个，如果不用区分，则使用以上默认值（1003143）即可。
+     */
+    public static final String SELF_UPDATE_CHANNEL="1003143";
     public static final int SERVICE_ID=01;//前台服务ID
     public static final String CHANNEL_ID="0101";// NotificationChannel 的Id.
     public static String SERVICE_IP="driver.4000000144.com";

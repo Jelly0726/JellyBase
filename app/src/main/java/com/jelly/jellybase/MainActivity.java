@@ -31,6 +31,7 @@ import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.BaseDialog;
+import com.base.config.BaseConfig;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.service.WatchDogService;
 import com.base.multiClick.AntiShake;
@@ -75,6 +76,9 @@ import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
+import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
+import com.tencent.tmselfupdatesdk.TMSelfUpdateManager;
+import com.tencent.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 import com.yanzhenjie.permission.PermissionNo;
@@ -106,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
         iniXRefreshView();
         //启动守护服务，运行在:watch子进程中
         DaemonEnv.startServiceMayBind(WatchDogService.class);
+        //初始化省流量更新SDK，传入的Context必须为ApplicationContext
+        TMSelfUpdateManager.getInstance().init(getApplicationContext(), BaseConfig.SELF_UPDATE_CHANNEL, mSelfUpdateListener,
+                null, null);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -135,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 //百度智能更新 SDK 的 AAR 文件
                 //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
                 BDAutoUpdateSDK.cpUpdateCheck(MainActivity.this,new MyCheckUpdateCallback(),false);
+                //检查更新
+                TMSelfUpdateManager.getInstance().checkSelfUpdate();
             }
         });
     }
@@ -240,6 +249,105 @@ public class MainActivity extends AppCompatActivity {
             BDAutoUpdateSDK.cpUpdateInstall(MainActivity.this,apkPath);
         }
     };
+    /**
+     * 自更新任务监听，包括检查更新回调和下载状态回调
+     */
+    private ITMSelfUpdateListener mSelfUpdateListener = new ITMSelfUpdateListener() {
+        /**
+         * 更新时的下载状态回调
+         * @param state 状态码
+         * @param errorCode 错误码
+         * @param errorMsg 错误信息
+         */
+        @Override
+        public void onDownloadAppStateChanged(int state, int errorCode, String errorMsg) {
+            //TODO更新包下载状态变化的处理逻辑
+        }
+
+        /**
+         * 点击普通更新时的下载进度回调
+         * @param receiveDataLen 已经接收的数据长度
+         * @param totalDataLen 全部需要接收的数据长度（如果无法获取目标文件的总长度，此参数返回-1）
+         */
+        @Override
+        public void onDownloadAppProgressChanged(final long receiveDataLen, final long totalDataLen) {
+            //TODO 更新包下载进度发生变化的处理逻辑
+        }
+
+        /**
+         * 检查更新返回更新信息回调
+         * @param tmSelfUpdateUpdateInfo 更新信息结构体
+         */
+        @Override
+        public void onUpdateInfoReceived(TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
+            //TODO 收到更新信息的处理逻辑
+            if (null != tmSelfUpdateUpdateInfo) {
+                int state = tmSelfUpdateUpdateInfo.getStatus();
+                if (state == TMSelfUpdateUpdateInfo.STATUS_CHECKUPDATE_FAILURE) {
+                    ToastUtils.showShort(MainActivity.this, "检查更新失败");
+                    return;
+                }
+                switch (tmSelfUpdateUpdateInfo.getUpdateMethod()) {
+                    case TMSelfUpdateUpdateInfo.UpdateMethod_NoUpdate:
+                        //无更新
+//                        ToastUtils.showShort(SettingsActivity.this, "已是最新版本(" + tmSelfUpdateUpdateInfo.versionname+")");
+                        break;
+                    case TMSelfUpdateUpdateInfo.UpdateMethod_Normal:
+                        //普通更新
+                        UIData uiData = UIData.create();
+                        uiData.setTitle("检测到新版本");
+                        uiData.setDownloadUrl(tmSelfUpdateUpdateInfo.getUpdateDownloadUrl());
+                        uiData.setContent(tmSelfUpdateUpdateInfo.getNewFeature().replaceAll("<br>","\n"));
+                        DownloadBuilder builder= AllenVersionChecker
+                                .getInstance()
+                                .downloadOnly(uiData);
+                        //自定义显示更新界面
+                        builder.setCustomVersionDialogListener(new CustomVersionDialogListener(){
+                            @Override
+                            public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
+                                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
+                                TextView textView = baseDialog.findViewById(R.id.tv_msg);
+                                textView.setText(versionBundle.getContent());
+                                baseDialog.setCanceledOnTouchOutside(true);
+                                return baseDialog;
+                            }
+                        });
+                        //自定义下载中对话框界面
+                        builder.setCustomDownloadingDialogListener(new CustomDownloadingDialogListener() {
+                            @Override
+                            public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
+                                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_download_layout);
+                                return baseDialog;
+                            }
+                            //下载中会不断回调updateUI方法
+                            @Override
+                            public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
+                                TextView tvProgress = dialog.findViewById(R.id.tv_progress);
+                                ProgressBar progressBar = dialog.findViewById(R.id.pb);
+                                progressBar.setProgress(progress);
+                                tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
+                            }
+                        });
+                        builder.excuteMission(MainActivity.this);
+                        break;
+                    case TMSelfUpdateUpdateInfo.UpdateMethod_ByPatch:
+                        //省流量更新
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        //释放
+        TMSelfUpdateManager.getInstance().destroy();
+        super.onDestroy();
+    }
+
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis()-clickTime)>5000){
