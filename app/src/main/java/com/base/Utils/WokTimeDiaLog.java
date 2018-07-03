@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 

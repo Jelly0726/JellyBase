@@ -15,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.base.appManager.AppSubject;
+import com.base.appManager.MyApplication;
+import com.base.appManager.Observer;
+import com.base.appManager.Subject;
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.callback.ConfigText;
@@ -35,11 +38,12 @@ import cn.jpush.android.api.JPushInterface;
  * Created by Administrator on 2017/12/5.
  */
 
-public class BaseActivity extends AutoLayoutActivity {
+public class BaseActivity extends AutoLayoutActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +52,7 @@ public class BaseActivity extends AutoLayoutActivity {
         mFilter = new IntentFilter();
         mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         mFilter.addAction(IntentAction.TOKEN_NOT_EXIST);
-        MyApplication.getMyApp().addActivity(this);
+        AppSubject.getAppSubject().attach(this);
         /**
          * 开始监听，注册广播
          */
@@ -139,7 +143,7 @@ public class BaseActivity extends AutoLayoutActivity {
         if (mRecevier != null) {
             unregisterReceiver(mRecevier);
         }
-        MyApplication.getMyApp().deleteActivity(this);
+        AppSubject.getAppSubject().detach(this);
         super.onDestroy();
         if (circleDialog!=null){
             circleDialog.onDismiss();
@@ -236,7 +240,7 @@ public class BaseActivity extends AutoLayoutActivity {
                                             public void onClick(View v) {
                                                 circleDialog = null;
                                                 GlobalToken.removeToken();
-                                                MyApplication.getMyApp().finishAllActivity();
+                                                AppSubject.getAppSubject().detachAll();
                                                 Intent intent1 = new Intent();
                                                 //intent.setClass(this, LoginActivity.class);
                                                 intent1.setAction(IntentAction.ACTION_LOGIN);
@@ -254,4 +258,23 @@ public class BaseActivity extends AutoLayoutActivity {
 
         }
     };
+    @Override
+    public void finish() {
+        // TODO Auto-generated method stub
+        AppSubject.getAppSubject().detach(this);
+        super.finish();
+    }
+
+    /**
+     * 关闭程序
+     */
+    public void close() {
+        AppSubject.getAppSubject().exit();
+    };
+
+    @Override
+    public void update(Subject subject) {
+        // TODO Auto-generated method stub
+        this.finish();
+    }
 }

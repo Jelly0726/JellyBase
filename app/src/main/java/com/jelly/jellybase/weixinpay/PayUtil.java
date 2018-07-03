@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.config.BaseConfig;
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelpay.PayReq;

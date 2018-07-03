@@ -17,9 +17,10 @@ import com.base.MapUtil.LocationTask;
 import com.base.MapUtil.OnLocationGetListener;
 import com.base.MapUtil.RegeocodeTask;
 import com.base.MapUtil.RouteTask;
+import com.base.appManager.MyApplication;
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
 import com.base.config.ConfigKey;
+import com.base.eventBus.HermesManager;
 import com.base.eventBus.LocationTypeEvent;
 import com.base.eventBus.NetEvent;
 import com.jelly.jellybase.R;
@@ -188,7 +189,7 @@ public class LocationService extends Service {
                 entity.district = district;
                 entity.adCode=adCode;
                 RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
-                if (MyApplication.getMyApp().getEventSize()>0) {
+                if (HermesManager.getHermesManager().getEventSize()>0) {
                     NetEvent netEvent1 = new NetEvent();
                     netEvent1.setEvent(entity);
                     HermesEventBus.getDefault().post(netEvent1);
@@ -228,7 +229,7 @@ public class LocationService extends Service {
             entity.city = district;
             entity.adCode=adCode;
             RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
-            if (MyApplication.getMyApp().getEventSize()>0) {
+            if (HermesManager.getHermesManager().getEventSize()>0) {
                 NetEvent netEvent = new NetEvent();
                 netEvent.setEvent(entity);
                 HermesEventBus.getDefault().post(netEvent);
@@ -317,7 +318,7 @@ public class LocationService extends Service {
                 break;
         }
         entity.address = errorMessage;
-        if (MyApplication.getMyApp().getEventSize()>0) {
+        if (HermesManager.getHermesManager().getEventSize()>0) {
             NetEvent netEvent = new NetEvent();
             netEvent.setEvent(entity);
             HermesEventBus.getDefault().post(netEvent);

@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.mprogressdialog.MProgressUtil;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;

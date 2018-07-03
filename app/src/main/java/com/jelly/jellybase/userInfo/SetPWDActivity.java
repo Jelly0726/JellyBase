@@ -8,8 +8,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.appManager.AppSubject;
 import com.base.encrypt.MD5;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.password.PwdCheckUtil;
 import com.base.Utils.ToastUtils;
 import com.base.config.IntentAction;
@@ -107,7 +108,7 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
     @Override
     public void excuteSuccess( Object mCallBackVo) {
         DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
-        MyApplication.getMyApp().finishAllActivity();
+        AppSubject.getAppSubject().detachAll();
         String password=password_edit.getText().toString().trim();
         Intent intent = new Intent();
         //intent.setClass(this, LoginActivity.class);

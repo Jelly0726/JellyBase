@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.encrypt.MD5;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.Utils.ToastUtils;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;

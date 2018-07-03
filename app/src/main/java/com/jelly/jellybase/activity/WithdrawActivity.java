@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.Utils.ToastUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.ConfigKey;

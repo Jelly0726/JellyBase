@@ -28,7 +28,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 
 import java.util.List;
 import java.util.Timer;

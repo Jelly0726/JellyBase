@@ -1,6 +1,5 @@
-package com.base.applicationUtil;
+package com.base.appManager;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,21 +9,22 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.MapUtil.LocationTask;
+import com.base.applicationUtil.ChangeLanguageHelper;
 import com.base.bgabanner.GuideActivity;
 import com.base.config.IntentAction;
 import com.base.crashlog.CrashApphandler;
 import com.base.daemon.DaemonEnv;
-import com.jelly.jellybase.server.TraceServiceImpl;
+import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.okGo.OkGoApp;
 import com.base.sqldao.DBConfig;
 import com.base.sqldao.MySQLiteOpenHelper;
 import com.jelly.jellybase.BuildConfig;
+import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,7 +46,6 @@ public class MyApplication extends OkGoApp {
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
-    private ArrayList<Object> locationEvent=new ArrayList<Object>();//定位的event接收器管理
     public static boolean isMainState() {
         return mainState;
     }
@@ -59,19 +58,16 @@ public class MyApplication extends OkGoApp {
     public void onCreate() {
         super.onCreate();
         myApp=this;
-        if(!"com.base.appservicelive.life".equals(getCurProcessName())
-                &&!"com.base.appservicelive.guard".equals(getCurProcessName())) {
-            HermesEventBus.getDefault().init(this);
-        }
-
-        //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
-        DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
-
         //初始化一下就行了，别忘记了  --奔溃日志
         CrashApphandler.getInstance().init(this);
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {
+
+            HermesEventBus.getDefault().init(this);
+            //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
+            DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
+
             //butterknife注解式绑定id
             ButterKnife.setDebug(BuildConfig.DEBUG);
             // AutoLayout适配
@@ -259,52 +255,28 @@ public class MyApplication extends OkGoApp {
     public void setThread(ExecutorService getordrth) {
         this.getThread = getordrth;
     }
-    //添加Activity到容器中
-    public void addActivity(Activity activity)
-    {
-        AppManager.getAppManager().addActivity(activity);
-    }
-    public void deleteActivity(Activity activity){
-        AppManager.getAppManager().finishActivity(activity);
-    }
-    public void finishAllActivity(){
-        AppManager.getAppManager().finishAllActivity();
-    }
     /**
      * 退出
      */
     public void exit() {
         try{
-            locationEvent.clear();
-            locationEvent=null;
+            HermesManager.getHermesManager().clear();
             LocationTask.getInstance(this).onDestroy();//销毁定位
-            HermesEventBus.getDefault().destroy();
-            AppManager.getAppManager().AppExit(this);
+            if (getPackageName().equals(getCurProcessName())) {
+                HermesEventBus.getDefault().destroy();
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
     }
-    public int getEventSize(){
-        if (locationEvent!=null)
-       return locationEvent.size();
-        else
-            return 0;
-    }
-    public void addEvent(Object event){
-        if (locationEvent!=null)
-        if (!locationEvent.contains(event)){
-            locationEvent.add(event);
-        }
-    }
-    public void removeEvent(Object event){
-        if (locationEvent!=null)
-        locationEvent.remove(event);
-    }
+
     @Override
     public void onTerminate() {
         // 程序终止的时候执行
         LocationTask.getInstance(this).onDestroy();//销毁定位
-        HermesEventBus.getDefault().destroy();
+        if (getPackageName().equals(getCurProcessName())) {
+            HermesEventBus.getDefault().destroy();
+        }
         super.onTerminate();
     }
     @Override

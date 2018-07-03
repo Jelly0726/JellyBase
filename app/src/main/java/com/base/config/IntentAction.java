@@ -1,6 +1,6 @@
 package com.base.config;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 
 /**
  * Created by Administrator on 2017/9/7.

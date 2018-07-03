@@ -18,7 +18,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.MediaStore;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 
 import java.io.File;
 import java.lang.ref.SoftReference;

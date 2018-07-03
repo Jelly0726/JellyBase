@@ -40,8 +40,9 @@ import com.amap.api.navi.view.RouteOverLay;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.TTSController;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.Utils.ToastUtils;
+import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;
@@ -103,7 +104,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         startService(intent);
 
         HermesEventBus.getDefault().register(this);
-        MyApplication.getMyApp().addEvent(this);
+        HermesManager.getHermesManager().addEvent(this);
         setContentView(R.layout.amap_activity);
         ButterKnife.bind(this);
         progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
@@ -212,7 +213,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         aMapView=null;
         mListener = null;
         HermesEventBus.getDefault().unregister(this);
-        MyApplication.getMyApp().removeEvent(this);
+        HermesManager.getHermesManager().removeEvent(this);
         super.onDestroy();
     }
 

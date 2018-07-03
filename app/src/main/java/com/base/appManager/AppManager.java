@@ -1,4 +1,4 @@
-package com.base.applicationUtil;
+package com.base.appManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,9 +14,7 @@ import java.util.Stack;
 public class AppManager {
     private static Stack<Activity> activityStack;
     private volatile static AppManager instance;
-
     private AppManager() {}
-
     /**
      * 单一实例
      */
@@ -127,6 +125,7 @@ public class AppManager {
      */
     public void AppExit(Context context) {
         try {
+            MyApplication.getMyApp().exit();
             finishAllActivity();
             // 杀死该应用进程
             android.os.Process.killProcess(android.os.Process.myPid());

@@ -8,10 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
 import com.base.addressmodel.Address;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
 import com.base.config.IntentAction;
+import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
 import com.base.sqldao.DBHelper;
 import com.base.view.BackInterface;
@@ -62,7 +63,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         initView();
         initData();
         initListener();
-        MyApplication.getMyApp().addEvent(this);
+        HermesManager.getHermesManager().addEvent(this);
         //开启定位服务
         Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
         startService(stateGuardService);
@@ -73,7 +74,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         if(HermesEventBus.getDefault().isRegistered(this)){
             HermesEventBus.getDefault().unregister(this);
         }
-        MyApplication.getMyApp().removeEvent(this);
+        HermesManager.getHermesManager().removeEvent(this);
         super.onDestroy();
     }
 

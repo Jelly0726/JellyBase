@@ -3,7 +3,7 @@ package com.base.httpmvp.retrofitapi.token;
 import android.text.TextUtils;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 
 /**
  * Created by Administrator on 2017/11/7.

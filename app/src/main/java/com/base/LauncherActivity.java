@@ -10,7 +10,7 @@ import android.os.Parcelable;
 import android.view.Menu;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.jelly.jellybase.server.TraceServiceImpl;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.RichText;

@@ -49,6 +49,7 @@ import android.widget.Toast;
 
 import com.base.Utils.CPResourceUtil;
 import com.base.Utils.ResourceReader;
+import com.base.appManager.MyApplication;
 import com.base.config.BaseConfig;
 import com.base.encrypt.MD5;
 
@@ -392,7 +393,7 @@ public class AppUtils {
         }
         try{
             //检查Service状态
-            ActivityManager manager = (ActivityManager)MyApplication.getMyApp().getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager manager = (ActivityManager) MyApplication.getMyApp().getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningServiceInfo service :manager.getRunningServices(Integer.MAX_VALUE)) {
                 if(myPackageName.equals(service.service.getClassName()))
 

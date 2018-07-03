@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.httpmvp.databean.MyInfo;
 import com.base.multiClick.AntiShake;

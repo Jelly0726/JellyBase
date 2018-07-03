@@ -5,7 +5,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.config.IntentAction;

@@ -23,7 +23,7 @@ import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.AppUtils;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.BaseDialog;
 import com.base.config.BaseConfig;

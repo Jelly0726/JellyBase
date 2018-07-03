@@ -7,7 +7,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.MyApplication;
+import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 
 import java.util.Locale;

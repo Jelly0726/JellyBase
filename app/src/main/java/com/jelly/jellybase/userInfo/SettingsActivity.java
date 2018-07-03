@@ -1,25 +1,14 @@
 package com.jelly.jellybase.userInfo;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.allenliu.versionchecklib.core.AllenChecker;
-import com.allenliu.versionchecklib.v2.AllenVersionChecker;
-import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
-import com.allenliu.versionchecklib.v2.builder.UIData;
-import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
-import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.Utils.ToastUtils;
-import com.base.applicationUtil.AppUtils;
-import com.base.applicationUtil.MyApplication;
-import com.base.checkVersion.BaseDialog;
+import com.base.appManager.AppSubject;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.DialogParams;
@@ -54,7 +43,6 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
 
     @Override
     protected void onDestroy() {
-        AllenChecker.cancelMission();
         super.onDestroy();
     }
 
@@ -136,7 +124,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                                 public void onClick(View v) {
                                     GlobalToken.removeToken();
 
-                                    MyApplication.getMyApp().finishAllActivity();
+                                    AppSubject.getAppSubject().detachAll();
                                     Intent intent = new Intent();
                                     //intent.setClass(this, LoginActivity.class);
                                     intent.setAction(IntentAction.ACTION_LOGIN);
