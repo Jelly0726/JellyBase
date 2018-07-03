@@ -12,7 +12,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 
-import com.base.daemon.CommonStaticUtil;
 import com.base.daemon.DaemonEnv;
 
 import java.util.concurrent.TimeUnit;
@@ -77,21 +76,6 @@ public class WatchDogService extends Service {
                         throwable.printStackTrace();
                     }
                 });
-
-        // 当 API > 18 时，使用 extras 获取通知的详细信息
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (!CommonStaticUtil.isServiceRunning(this
-                    , NotificationService.class.getName())) {
-                //Log.i(TAG, "Service 没有开启，开启NotificationService服务........>");
-                CommonStaticUtil.starNotificationService(this);
-            }
-        }else {
-            if (!CommonStaticUtil.isServiceRunning(this
-                    , AccessibilityServices.class.getName())) {
-                //Log.i(TAG, "Service 没有开启，开启NotificationService服务........>");
-                CommonStaticUtil.starAccessibilityService(this);
-            }
-        }
 
         //守护 Service 组件的启用状态, 使其不被 MAT 等工具禁用
         getPackageManager().setComponentEnabledSetting(new ComponentName(getPackageName(), DaemonEnv.sServiceClass.getName()),
