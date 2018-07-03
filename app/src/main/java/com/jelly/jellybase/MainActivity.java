@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onDownloadAppStateChanged(int state, int errorCode, String errorMsg) {
-            //TODO更新包下载状态变化的处理逻辑
+            //TODO 更新包下载状态变化的处理逻辑
         }
 
         /**
