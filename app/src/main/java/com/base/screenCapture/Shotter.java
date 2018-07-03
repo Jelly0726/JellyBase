@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.os.AsyncTaskCompat;
 
 import com.base.applicationUtil.MyApplication;
 

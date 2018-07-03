@@ -246,7 +246,7 @@ dependencies {
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
 
     //检查版本
-    compile 'com.allenliu.versionchecklib:library:2.0.5'
+    //compile 'com.allenliu.versionchecklib:library:2.0.5'
 
     //Android平台下的富文本解析器，支持Html和Markdown
     compile 'com.zzhoujay.richtext:richtext:3.0.4'

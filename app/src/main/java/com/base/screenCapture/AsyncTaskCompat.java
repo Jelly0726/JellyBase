@@ -1,15 +1,10 @@
-package android.support.v4.os;
+package com.base.screenCapture;
 
 import android.os.AsyncTask;
 
-import java.util.concurrent.Executor;
-
 /**
  * Helper for accessing features in {@link android.os.AsyncTask}.
- *
- * @deprecated Use {@link android.os.AsyncTask} directly.
  */
-@Deprecated
 public final class AsyncTaskCompat {
 
     /**
@@ -19,10 +14,7 @@ public final class AsyncTaskCompat {
      * @param task The {@link android.os.AsyncTask} to execute.
      * @param params The parameters of the task.
      * @return the instance of AsyncTask.
-     *
-     * @deprecated Use {@link android.os.AsyncTask#executeOnExecutor(Executor, Object[])} directly.
      */
-    @Deprecated
     public static <Params, Progress, Result> AsyncTask<Params, Progress, Result> executeParallel(
             AsyncTask<Params, Progress, Result> task,
             Params... params) {

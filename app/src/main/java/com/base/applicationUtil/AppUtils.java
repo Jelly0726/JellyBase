@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.content.FileProvider;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -47,9 +48,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.base.Utils.CPResourceUtil;
-import com.base.encrypt.MD5;
 import com.base.Utils.ResourceReader;
 import com.base.config.BaseConfig;
+import com.base.encrypt.MD5;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
 
@@ -182,14 +183,19 @@ public class AppUtils {
      * 安装一个新的apk
      * @param file
      */
-    public static void installApk(File file, Context context) {
+    public static void installApk(Context context,File file) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction("android.intent.action.VIEW");
-        intent.addCategory("android.intent.category.DEFAULT");
-//		intent.setType("application/vnd.android.package-archive");
-//		intent.setData(Uri.fromFile(file));
-        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        intent.setDataAndType(uri,
+                "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
 

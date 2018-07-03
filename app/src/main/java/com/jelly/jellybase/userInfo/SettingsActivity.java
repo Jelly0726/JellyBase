@@ -190,45 +190,6 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
     @Override
     public void getAppversionSuccess( Object mCallBackVo) {
         AppVersion appVersion= (AppVersion) mCallBackVo;
-        UIData uiData = UIData.create();
-        if (appVersion!=null){
-            if (AppUtils.getVersionCode(MyApplication.getMyApp())<appVersion.getAppversion()){
-                uiData.setTitle("检测到新版本");
-                uiData.setDownloadUrl(appVersion.getIP()+appVersion.getUrl());
-                uiData.setContent("");
-            }
-        }
-        DownloadBuilder builder= AllenVersionChecker
-                .getInstance()
-                .downloadOnly(uiData);
-        //自定义显示更新界面
-        builder.setCustomVersionDialogListener(new CustomVersionDialogListener(){
-            @Override
-            public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
-                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
-                TextView textView = baseDialog.findViewById(R.id.tv_msg);
-                textView.setText(versionBundle.getContent());
-                baseDialog.setCanceledOnTouchOutside(true);
-                return baseDialog;
-            }
-        });
-        //自定义下载中对话框界面
-        builder.setCustomDownloadingDialogListener(new CustomDownloadingDialogListener() {
-            @Override
-            public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
-                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_download_layout);
-                return baseDialog;
-            }
-            //下载中会不断回调updateUI方法
-            @Override
-            public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
-                TextView tvProgress = dialog.findViewById(R.id.tv_progress);
-                ProgressBar progressBar = dialog.findViewById(R.id.pb);
-                progressBar.setProgress(progress);
-                tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
-            }
-        });
-        builder.excuteMission(SettingsActivity.this);
     }
 
     @Override
