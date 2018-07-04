@@ -1,26 +1,45 @@
 package com.base.appManager;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Subject {
-    private Stack<Observer> observers = new Stack<Observer>();
-
+    private List<Observer> observers = new ArrayList<Observer>();
+    private static boolean isOver=true;
     public void attach(Observer observer){
-        observers.add(observer);
+        if (isOver) {
+            isOver=false;
+            observers.add(observer);
+            isOver=true;
+        }
     }
 
     public void detach(Observer observer){
-        observers.remove(observer);
+        if (isOver) {
+            isOver=false;
+            observers.remove(observer);
+            isOver=true;
+        }
     }
     public void detachAll(){
-        for(Observer observer : observers){
-            observer.update(this);
+        if (isOver) {
+            isOver=false;
+            for (Observer observer : observers) {
+                observer.update(this);
+            }
+            observers.clear();
+            isOver=true;
         }
     }
 
     protected void notifyObservers(){
-        for(Observer observer : observers){
-            observer.update(this);
+        if (isOver) {
+            isOver=false;
+            for (Observer observer : observers) {
+                observer.update(this);
+            }
+            observers.clear();
+            isOver=true;
         }
     }
 }

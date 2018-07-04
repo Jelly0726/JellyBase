@@ -265,13 +265,6 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
         super.finish();
     }
 
-    /**
-     * 关闭程序
-     */
-    public void close() {
-        AppSubject.getAppSubject().exit();
-    };
-
     @Override
     public void update(Subject subject) {
         // TODO Auto-generated method stub

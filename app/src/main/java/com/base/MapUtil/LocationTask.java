@@ -143,6 +143,7 @@ public class LocationTask implements  AMapLocationListener,
 	 * 结束定位，可以跟多次定位配合使用
 	 */
 	public void stopLocate() {
+		if (mLocationClient!=null)
 		mLocationClient.stopLocation();//停止定位
 		isStar = false;
 		//PostDriverXY.postErrorMessage(MyApplication.mDriverId, "定位停止");
