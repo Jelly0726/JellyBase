@@ -92,6 +92,11 @@ public class LocationTask implements  AMapLocationListener,
 //		}
 		if(mLocationClient!=null) {
 			mLocationClient.stopLocation();//停止定位
+		}else {
+			//初始化定位
+			mLocationClient = new AMapLocationClient(mContext);
+			//设置定位回调监听
+			mLocationClient.setLocationListener(this);
 		}
 		//声明mLocationOption对象
 		AMapLocationClientOption
