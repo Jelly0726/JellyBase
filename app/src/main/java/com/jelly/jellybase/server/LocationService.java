@@ -131,13 +131,14 @@ public class LocationService extends Service {
             //定位次数判断是否定位成功的标记
             //util.setLocatConnt(util.getLocatConnt()+1);
             //定位模式修改;当卫星数大于3,则开启gps定位,否则开启高精度定位
-            if (amapLocation.getErrorCode() != 0){
-                locationError(amapLocation.getErrorCode());
-                return;
-            }
-            if (!getLocationType(amapLocation)){
-                return;
-            }
+            try {
+                if (amapLocation.getErrorCode() != 0) {
+                    locationError(amapLocation.getErrorCode());
+                    return;
+                }
+                if (!getLocationType(amapLocation)) {
+                    return;
+                }
 //            if(MyApplication.orderNu.equals("0") ) {
 //                if ( mLocationTypeEvent.getType() != LocationTypeEvent.sTYPE_LBS){
 //                    // 开启lbs模式
@@ -169,35 +170,39 @@ public class LocationService extends Service {
 //            entity.longitude = amapLocation.getLongitude();
 ////            PostDriverXY.postErrorMessage(MyApplication.mDriverId, "x:"+MyApplication.latitude+"y:"+MyApplication.longitude);
 //            //Log.i("msg","getProvider()="+amapLocation.getProvider()+" getLocationType="+amapLocation.getLocationType());
-            entity.latitue = amapLocation.getLatitude();
-            entity.longitude = amapLocation.getLongitude();
-            if (amapLocation.getProvider().equals("gps")) {
-                mLatLngNow = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
-                float distance = AMapUtils.calculateLineDistance(mLatLngNow, mLatLngPre);
-                if (distance > 50){            // 距离上一个坐标点大于 50m才进行地址解析
-                    regeocodeTask.search(amapLocation.getLatitude(), amapLocation.getLongitude());
-                    mLatLngPre = mLatLngNow;
+                entity.latitue = amapLocation.getLatitude();
+                entity.longitude = amapLocation.getLongitude();
+                if (amapLocation.getProvider().equals("gps")) {
+                    mLatLngNow = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                    float distance = AMapUtils.calculateLineDistance(mLatLngNow, mLatLngPre);
+                    if (distance > 50) {            // 距离上一个坐标点大于 50m才进行地址解析
+                        regeocodeTask.search(amapLocation.getLatitude(), amapLocation.getLongitude());
+                        mLatLngPre = mLatLngNow;
+                    }
+                } else {
+                    address = amapLocation.getAddress();
+                    city = amapLocation.getCity();
+                    adCode = amapLocation.getAdCode().substring(0, 6);
+                    district = amapLocation.getDistrict();
+                    entity.address = address;
+                    entity.province = amapLocation.getProvince();
+                    entity.city = city;
+                    entity.district = district;
+                    entity.adCode = adCode;
+                    RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
+                    if (HermesManager.getHermesManager().getEventSize() > 0) {
+                        NetEvent netEvent1 = new NetEvent();
+                        netEvent1.setEvent(entity);
+                        HermesEventBus.getDefault().post(netEvent1);
+                    }
                 }
-            } else {
-                address = amapLocation.getAddress();
-                city = amapLocation.getCity();
-                adCode = amapLocation.getAdCode().substring(0, 6);
-                district = amapLocation.getDistrict();
-                entity.address = address;
-                entity.province = amapLocation.getProvince();
-                entity.city = city;
-                entity.district = district;
-                entity.adCode=adCode;
-                RouteTask.getInstance(getApplicationContext()).setStartPoint(entity);
-                if (HermesManager.getHermesManager().getEventSize()>0) {
-                    NetEvent netEvent1 = new NetEvent();
-                    netEvent1.setEvent(entity);
-                    HermesEventBus.getDefault().post(netEvent1);
-                }
+                NetEvent netEvent = new NetEvent();
+                netEvent.setEvent(amapLocation.clone());
+                HermesEventBus.getDefault().post(netEvent);
+            }catch (Exception e){
+                //System.out.println("eeee=" + e);
+                e.printStackTrace();
             }
-            NetEvent netEvent = new NetEvent();
-            netEvent.setEvent(amapLocation.clone());
-            HermesEventBus.getDefault().post(netEvent);
         }
 
         /**

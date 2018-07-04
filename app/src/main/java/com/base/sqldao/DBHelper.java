@@ -3,8 +3,6 @@ package com.base.sqldao;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.base.appManager.MyApplication;
-
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -28,8 +26,12 @@ import systemdb.SearchHistoryDao;
 public class DBHelper {
 
     private static Context mContext;
-
-    private static DBHelper instance;
+    /**
+     * 但是jdk 1.5 以后java 编译器允许乱序执行 。所以执行顺序可能是1-3-2 或者 1-2-3.如果是前者先执行3 的话
+     * 切换到其他线程，instance 此时 已经是非空了，此线程就会直接取走instance ，直接使用，这样就回出错。DCL 失效。
+     * 解决方法 SUN 官方已经给我们了。将instance 定义成 private volatile static Singleton instance =null: 即可
+     */
+    private volatile static DBHelper instance;
     private LoginDao loginDao;
     private PositionEntityDao positionEntityDao;
     private SearchHistoryDao searchHistoryDao;
@@ -37,17 +39,25 @@ public class DBHelper {
     private DBHelper(){
 
     }
+    /**
+     * 单一实例
+     */
     public  static DBHelper getInstance(Context context){
-        if(instance ==null){
-            instance=new DBHelper();
-            if(mContext == null){
-                mContext = context;
+        if(instance ==null) {
+            synchronized (DBHelper.class) {
+                if (instance == null) {
+                    instance = new DBHelper();
+                    if (mContext == null) {
+                        mContext = context.getApplicationContext();
+                    }
+                    //数据库对象
+                    DaoSession daoSession = DBManager.getDBManager().getDaoSession(mContext);
+                    instance.loginDao = daoSession.getLoginDao();
+                    instance.positionEntityDao = daoSession.getPositionEntityDao();
+                    instance.searchHistoryDao = daoSession.getSearchHistoryDao();
+                }
             }
-            //数据库对象
-            DaoSession daoSession = MyApplication.getDaoSession(mContext);
-            instance.loginDao = daoSession.getLoginDao();
-            instance.positionEntityDao=daoSession.getPositionEntityDao();
-            instance.searchHistoryDao=daoSession.getSearchHistoryDao();
+            return  instance;
         }
         return  instance;
     }

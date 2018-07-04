@@ -17,6 +17,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.RegeocodeResult;
 
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +36,10 @@ public class LocationTask implements  AMapLocationListener,
 
 	//声明AMapLocationClient类对象
 	public AMapLocationClient mLocationClient = null;
-	private static LocationTask mLocationTask;
-	private Context mContext;
 	private RegeocodeTask mRegecodeTask;
 	private boolean isStar=false;
 	private List<OnLocationGetListener> mListeners;
-
+	private static Context mContext;
 	private LocationTask(Context context) {
 		//初始化定位
 		mLocationClient = new AMapLocationClient(context);
@@ -48,7 +47,6 @@ public class LocationTask implements  AMapLocationListener,
 		mLocationClient.setLocationListener(this);
 		mRegecodeTask = new RegeocodeTask(context);
 		mRegecodeTask.setOnLocationGetListener(this);
-		mContext = context;
 		mListeners =new ArrayList<OnLocationGetListener>();
 	}
 
@@ -61,14 +59,24 @@ public class LocationTask implements  AMapLocationListener,
 			mListeners.add(onGetLocationListener);
 		}
 	}
-
-	public static LocationTask getInstance(Context context) {
-		if (mLocationTask == null) {
-			mLocationTask = new LocationTask(context);
-		}
-		return mLocationTask;
+	/**
+	 * 内部类，在装载该内部类时才会去创建单利对象
+	 */
+	private static class SingletonHolder{
+		private static final LocationTask instance =new LocationTask(mContext);
 	}
-
+	public static LocationTask getInstance(Context context) {
+		mContext=context.getApplicationContext();
+		return SingletonHolder.instance;
+	}
+	/**
+	 * 要杜绝单例对象在反序列化时重新生成对象，那么必须加入如下方法：
+	 * @return
+	 * @throws ObjectStreamException
+	 */
+	private Object readResolve() throws ObjectStreamException {
+		return SingletonHolder.instance;
+	}
 	/**
 	 * 开启定位
 	 * @param time  定位间隔  单位 毫秒  ms
@@ -171,7 +179,7 @@ public class LocationTask implements  AMapLocationListener,
 	@Override
 	public void onLocationChanged(AMapLocation amapLocation) {
 		if (amapLocation != null) {
-			Log.i("WF","amapLocatio="+amapLocation.getLatitude());
+			Log.i("WF","amapLocatio="+amapLocation.clone().getLatitude());
 			for (OnLocationGetListener listener:mListeners) {
 				((OnLocationGetListener) listener).onLocationGet(amapLocation);
 			}

@@ -100,16 +100,16 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         address=getIntent().getStringExtra("address");
         name=getIntent().getStringExtra("name");
 
-        Intent intent=new Intent(this, LocationService.class);
-        startService(intent);
-
-        HermesEventBus.getDefault().register(this);
-        HermesManager.getHermesManager().addEvent(this);
         setContentView(R.layout.amap_activity);
         ButterKnife.bind(this);
         progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
         initAmap(savedInstanceState);
         initNavi();
+
+        HermesEventBus.getDefault().register(this);
+        HermesManager.getHermesManager().addEvent(this);
+        Intent intent=new Intent(this, LocationService.class);
+        startService(intent);
     }
     private void initAmap(Bundle savedInstanceState){
         aMapView.onCreate(savedInstanceState);//必须写

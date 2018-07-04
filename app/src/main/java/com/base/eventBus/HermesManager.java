@@ -1,29 +1,43 @@
 package com.base.eventBus;
 
-import java.util.Stack;
+import android.content.Intent;
+
+import com.base.MapUtil.LocationTask;
+import com.base.appManager.MyApplication;
+import com.jelly.jellybase.server.LocationService;
+
+import java.io.ObjectStreamException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HermesManager {
-    private Stack<Object> locationEvent=new Stack<Object>();//定位的event接收器管理
-    private volatile static HermesManager instance;
+    private volatile static List<Object> locationEvent = new ArrayList<>();//定位的event接收器管理
+    /**
+     * 内部类，在装载该内部类时才会去创建单利对象
+     */
+    private static class SingletonHolder{
+        private static final HermesManager instance = new HermesManager();
+    }
+
     private HermesManager() {}
     /**
      * 单一实例
      */
-    public static HermesManager getHermesManager() {
-        if (instance == null) {
-            synchronized (HermesManager.class) {
-                if (instance == null) {
-                    instance = new HermesManager();
-                }
-            }
-            return instance;
-        }
-        return instance;
+    public synchronized static HermesManager getHermesManager() {
+        return SingletonHolder.instance;
+    }
+    /**
+     * 要杜绝单例对象在反序列化时重新生成对象，那么必须加入如下方法：
+     * @return
+     * @throws ObjectStreamException
+     */
+    private Object readResolve() throws ObjectStreamException {
+        return SingletonHolder.instance;
     }
     public int getEventSize(){
-        if (locationEvent!=null)
+        if (locationEvent!=null) {
             return locationEvent.size();
-        else
+        }else
             return 0;
     }
     public void addEvent(Object event){
@@ -33,8 +47,14 @@ public class HermesManager {
             }
     }
     public void removeEvent(Object event){
-        if (locationEvent!=null)
+        if (locationEvent!=null) {
             locationEvent.remove(event);
+            if (getEventSize()<=0){
+                Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
+                MyApplication.getMyApp().stopService(intent);
+                LocationTask.getInstance(MyApplication.getMyApp()).onDestroy();
+            }
+        }
     }
     public void clear(){
         locationEvent.clear();

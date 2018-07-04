@@ -17,8 +17,6 @@ import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.okGo.OkGoApp;
-import com.base.sqldao.DBConfig;
-import com.base.sqldao.MySQLiteOpenHelper;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
@@ -303,53 +301,6 @@ public class MyApplication extends OkGoApp {
 
     public void setBackStage(boolean backStage) {
         this.backStage = backStage;
-    }
-    private static systemdb.DaoMaster daoMaster;
-    private static systemdb.DaoSession daoSession;
-    /**
-     * 取得DaoMaster
-     *
-     * @param context
-     * @return
-     */
-    public static systemdb.DaoMaster getDaoMaster(Context context)
-    {
-        if (daoMaster == null)
-        {
-//            //获取数据库路径
-//            String path=context.getDatabasePath("NuoMember").getPath();
-//            File file=new File(path);
-//            //判断数据库文件是否存在
-//            if(file.exists()){//存在就清除
-//                //清除应用所有数据库
-//                AppUtils.cleanDatabases(context);
-//            }
-
-            MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, DBConfig.DBNAME,
-                    null);
-            daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
-            //DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context,Config.DBNAME, null);
-            daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
-        }
-        return daoMaster;
-    }
-    /**
-     * 取得DaoSession
-     *
-     * @param context
-     * @return
-     */
-    public static systemdb.DaoSession getDaoSession(Context context)
-    {
-        if (daoSession == null)
-        {
-            if (daoMaster == null)
-            {
-                daoMaster = getDaoMaster(context);
-            }
-            daoSession = daoMaster.newSession();
-        }
-        return daoSession;
     }
 }
 

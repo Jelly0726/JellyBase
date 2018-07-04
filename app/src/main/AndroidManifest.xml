@@ -335,10 +335,17 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <!--↓↓↓↓高德地图↓↓↓↓-->
         <activity android:name=".activity.AMapActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name="com.base.MapUtil.SimpleNaviActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↑↑↑↑↑高德地图↑↑↑↑↑-->
         <activity
             android:name=".swipeRefresh.activity.XSwipeMainActivity"
             android:label="Item中的菜单"

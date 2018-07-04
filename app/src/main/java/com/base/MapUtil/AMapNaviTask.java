@@ -30,6 +30,7 @@ import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.appManager.MyApplication;
 
+import java.io.ObjectStreamException;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,7 +40,6 @@ import java.util.TimerTask;
  * Created by Administrator on 2016/8/25.
  */
 public class AMapNaviTask implements AMapNaviListener {
-    private static AMapNaviTask aMapNaviTask;
     private AMapNavi mAMapNavi;
     private AMap aMap;
     private Marker myLocationMarker;
@@ -60,11 +60,22 @@ public class AMapNaviTask implements AMapNaviListener {
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
     }
+    /**
+     * 内部类，在装载该内部类时才会去创建单利对象
+     */
+    private static class SingletonHolder{
+        private static final AMapNaviTask instance = new AMapNaviTask();
+    }
     public static synchronized AMapNaviTask getInstance(){
-        if(aMapNaviTask==null){
-            aMapNaviTask=new AMapNaviTask();
-        }
-        return aMapNaviTask;
+        return SingletonHolder.instance;
+    }
+    /**
+     * 要杜绝单例对象在反序列化时重新生成对象，那么必须加入如下方法：
+     * @return
+     * @throws ObjectStreamException
+     */
+    private Object readResolve() throws ObjectStreamException {
+        return SingletonHolder.instance;
     }
     /**
      * 开始导航
