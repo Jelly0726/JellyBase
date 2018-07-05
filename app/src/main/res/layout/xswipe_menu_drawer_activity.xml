@@ -23,59 +23,64 @@
     android:fitsSystemWindows="true">
 
     <include layout="@layout/xswipe_toolbar_scroll"/>
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-            android:id="@+id/recycler_view"
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/xswipe_white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_launcher"/>
-
-            <TextView
+            <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:layout_marginTop="20dp"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/app_name"/>
+                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/app_name"/>
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/xswipe_white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/app_name"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_launcher"/>
 
-        </LinearLayout>
-    </android.support.v4.widget.DrawerLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:layout_marginTop="20dp"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/app_name"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/app_name"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="?actionBarSize"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="@string/app_name"/>
+
+            </LinearLayout>
+        </android.support.v4.widget.DrawerLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
