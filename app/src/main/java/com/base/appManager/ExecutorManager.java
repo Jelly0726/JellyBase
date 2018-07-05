@@ -14,7 +14,7 @@ public class ExecutorManager {
     private static ExecutorService fixedThreadPool ;//创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待
     private static ScheduledExecutorService scheduledThreadPool;//定长线程池，支持定时及周期性任务执行
     private static ExecutorService singleThreadExecutor;//单线线程池 线程会在队列中等待
-    private static ExecutorService getThread;//线程池
+    private static ExecutorService executorService;//线程池
 
     private ExecutorManager(){
     };
@@ -101,9 +101,13 @@ public class ExecutorManager {
         return singleThreadExecutor;
     }
     public ExecutorService getThread() {
-        if(getThread==null){
-            getThread = Executors.newCachedThreadPool();
+         /*
+        例代码如下：
+        executorService.execute(runnable)
+         */
+        if(executorService ==null){
+            executorService = Executors.newCachedThreadPool();
         }
-        return getThread;
+        return executorService;
     }
 }
