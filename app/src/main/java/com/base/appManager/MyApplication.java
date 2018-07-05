@@ -1,6 +1,7 @@
 package com.base.appManager;
 
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,7 +17,6 @@ import com.base.crashlog.CrashApphandler;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.okGo.OkGoApp;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
@@ -30,7 +30,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 /**
  * Created by Administrator on 2015/10/8.
  */
-public class MyApplication extends OkGoApp {
+public class MyApplication extends Application {
     private static MyApplication myApp;
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
