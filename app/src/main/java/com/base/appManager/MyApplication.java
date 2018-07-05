@@ -23,10 +23,6 @@ import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import xiaofei.library.hermeseventbus.HermesEventBus;
@@ -36,11 +32,6 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  */
 public class MyApplication extends OkGoApp {
     private static MyApplication myApp;
-    private ExecutorService cachedThreadPool;//可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程
-    private ExecutorService fixedThreadPool ;//创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待
-    private ScheduledExecutorService scheduledThreadPool;//定长线程池，支持定时及周期性任务执行
-    private ExecutorService singleThreadExecutor;//单线线程池 线程会在队列中等待
-    private static ExecutorService getThread;//线程池
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
@@ -102,13 +93,6 @@ public class MyApplication extends OkGoApp {
                 }
             });
             QbSdk.initX5Environment(getApplicationContext(), cb);
-
-
-            getThread = Executors.newCachedThreadPool();
-            cachedThreadPool = Executors.newCachedThreadPool();
-            fixedThreadPool = Executors.newFixedThreadPool(2);
-            scheduledThreadPool = Executors.newScheduledThreadPool(2);
-            singleThreadExecutor = Executors.newSingleThreadExecutor();
             //极光推送
             JPushInterface.setDebugMode(true);
             JPushInterface.init(this);
@@ -193,65 +177,6 @@ public class MyApplication extends OkGoApp {
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
-    public ExecutorService getThread() {
-        if(getThread==null){
-            getThread = Executors.newCachedThreadPool();
-        }
-        return getThread;
-    }
-    /**
-     * 可缓存线程池
-     * @return
-     */
-    public ExecutorService getCachedThread() {
-        /*
-        例代码如下：
-        cachedThreadPool.execute(runnable)
-         */
-        return cachedThreadPool;
-    }
-
-    /**
-     * 定长线程池，可控制线程最大并发数
-     * @return
-     */
-    public ExecutorService getFixedThread() {
-         /*
-        例代码如下：
-        fixedThreadPool.execute(runnable)
-        */
-        return fixedThreadPool;
-    }
-    /**
-     *定长线程池，支持定时及周期性任务执行
-     */
-    public ExecutorService getScheduledThread() {
-
-        /*
-         * 延迟执行示例代码如下：
-         * scheduledThreadPool.schedule(runnable, 3, TimeUnit.SECONDS);
-         表示延迟3秒执行
-         * 定期执行示例代码如下：
-         scheduledThreadPool.scheduleAtFixedRate(runnable, 1, 3, TimeUnit.SECONDS);
-         表示延迟1秒后每3秒执行一次。
-         */
-        return scheduledThreadPool;
-    }
-
-    /**
-     * 单线线程池 线程会在队列中等待
-     * @return
-     */
-    public ExecutorService getSingleThread() {
-        /*
-        例代码如下：
-        singleThreadExecutor.execute(runnable)
-         */
-        return singleThreadExecutor;
-    }
-    public void setThread(ExecutorService getordrth) {
-        this.getThread = getordrth;
     }
     /**
      * 退出
