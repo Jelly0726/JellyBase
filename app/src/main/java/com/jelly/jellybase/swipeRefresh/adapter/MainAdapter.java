@@ -61,7 +61,7 @@ public class MainAdapter extends BaseAdapter<MainAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_content);
         }
 
         public void setData(String title) {

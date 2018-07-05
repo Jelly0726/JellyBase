@@ -168,14 +168,21 @@ public class MenuActivity extends AppCompatActivity {
     private static class GroupViewHolder extends RecyclerView.ViewHolder {
 
         private TextView text;
+        private TextView tv_content;
 
         GroupViewHolder(View itemView) {
             super(itemView);
             text = (TextView) itemView.findViewById(R.id.tv_title);
+            tv_content = (TextView) itemView.findViewById(R.id.tv_content);
         }
 
         void bind(ListItem item) {
-            text.setText(item.text);
+            if (item instanceof StickyListItem){
+                text.setText(((StickyListItem) item).title);
+            }else {
+                tv_content.setText(item.text);
+            }
+
         }
     }
 
@@ -189,8 +196,10 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private static class StickyListItem extends ListItem {
-        StickyListItem(String text) {
+        protected String title;
+        public StickyListItem(String text) {
             super(text);
+            this.title="第"+text+"组";
         }
     }
 
