@@ -46,6 +46,7 @@ import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.AutoTextAvtivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.CancelOrderActivity;
+import com.jelly.jellybase.activity.CopyActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
@@ -627,6 +628,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 36://身份证校验
                     intent=new Intent(MyApplication.getMyApp(), IDCartActivity.class);
+                    startActivity(intent);
+                    break;
+                case 37://复制、粘贴
+                    intent=new Intent(MyApplication.getMyApp(), CopyActivity.class);
                     startActivity(intent);
                     break;
             }
