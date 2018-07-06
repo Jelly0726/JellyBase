@@ -150,8 +150,11 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="IntentAction.JPUSH_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" /><!--必须加上这个，否则下面无法直接使用自定的action-->
             </intent-filter>
         </activity>
         <activity

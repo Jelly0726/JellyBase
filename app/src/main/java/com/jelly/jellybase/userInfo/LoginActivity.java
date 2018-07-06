@@ -3,6 +3,7 @@ package com.jelly.jellybase.userInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,10 +13,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppPrefs;
 import com.base.appManager.MyApplication;
+import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.multiClick.AntiShake;
+import com.base.permission.PermissionUtils;
 import com.base.social.SocialUtil;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
@@ -24,6 +26,12 @@ import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.PermissionNo;
+import com.yanzhenjie.permission.PermissionYes;
+import com.yanzhenjie.permission.Rationale;
+import com.yanzhenjie.permission.RationaleListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +69,30 @@ public class LoginActivity extends BaseActivity implements
         iniView();
         AppPrefs.remove(getApplicationContext(),
                 ConfigKey.DEFAULT_BANK);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 申请权限。
+                AndPermission.with(LoginActivity.this)
+                        .requestCode(com.base.permission.PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
+                        .permission(
+                                Permission.STORAGE,
+                                Permission.CALENDAR,
+                                Permission.CAMERA,
+                                Permission.LOCATION,
+                                new String[]{
+                                        android.Manifest.permission.READ_PHONE_STATE,
+                                        android.Manifest.permission.CALL_PHONE
+                                })
+                        .callback(this)
+                        // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
+                        // 这样避免用户勾选不再提示，导致以后无法申请权限。
+                        // 你也可以不设置。
+                        .rationale(rationaleListener)
+                        .start();
+            }
+        });
     }
 
     @Override
@@ -87,9 +119,6 @@ public class LoginActivity extends BaseActivity implements
         });
     }
     private void iniData(){
-        Log.i("ss","phone="+phone);
-        Log.i("ss","password="+password);
-        Log.i("ss","from="+from);
         Map map=new HashMap();
         map.put("phone",phone);
         map.put("password",password);
@@ -141,6 +170,61 @@ public class LoginActivity extends BaseActivity implements
         if (SocialUtil.getInstance() != null) {
             SocialUtil.getInstance().socialHelper().onNewIntent(intent);
         }
+    }
+    /**
+     *申请权限。 Rationale支持，这里自定义对话框。
+     */
+    private RationaleListener rationaleListener = new RationaleListener() {
+        @Override
+        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
+            // 这里使用自定义对话框，如果不想自定义，用AndPermission默认对话框：
+            //AndPermission.rationaleDialog(Context, Rationale).show();
+            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            AndPermission.rationaleDialog(LoginActivity.this, rationale)
+                    .setTitle(R.string.permission_title_dialog)
+                    .setMessage(R.string.message_permission_failed)
+                    .setPositiveButton(R.string.permission_ok)
+                    .setNegativeButton(R.string.permission_no, null)
+                    .show();
+            // 更多自定dialog，请看上面。
+            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
+        }
+    };
+
+    /**
+     * 申请权限。
+     * @param grantedPermissions
+     */
+    @PermissionYes(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
+    private void getMultiYes(@NonNull List<String> grantedPermissions) {
+        //Toast.makeText(this, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 申请权限。
+     * @param deniedPermissions
+     */
+    @PermissionNo(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
+    private void getMultiNo(@NonNull List<String> deniedPermissions) {
+        //Toast.makeText(this, R.string.permission_failure, Toast.LENGTH_SHORT).show();
+        if(AndPermission.hasPermission(this,deniedPermissions)) {
+            // TODO 执行拥有权限时的下一步。
+        } else {
+            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
+                AndPermission.defaultSettingDialog(this, PermissionUtils.REQUEST_CODE_SETTING)
+                        .setTitle(R.string.permission_title_dialog)
+                        .setMessage(R.string.message_permission_failed)
+                        .setPositiveButton(R.string.permission_ok)
+                        .setNegativeButton(R.string.permission_no, null)
+                        .show();
+                // 更多自定dialog，请看上面。
+            }
+            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
+        }
+
     }
     @Override
     public void onBackPressed() {
