@@ -35,7 +35,7 @@ public class UpdateManger {
     private String apkUrl = null;
     private Dialog noticeDialog;// 提示有软件更新的对话框
     private Dialog downloadDialog;// 下载对话框
-    private  String savePath =Environment.getExternalStorageDirectory()+"/update/";// 保存apk的文件夹
+    private  String savePath =Environment.getExternalStorageDirectory()+"/onUpdate/";// 保存apk的文件夹
     private   String saveFileName = savePath + "driversystemUpdate.apk";
     // 进度条与通知UI刷新的handler和msg常量
     private ProgressBar mProgress;
@@ -65,10 +65,10 @@ public class UpdateManger {
         this.mContext = context;
         this.apkUrl=apkUrl;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            savePath =Environment.getExternalStorageDirectory()+"/update/";// 保存apk的文件夹
+            savePath =Environment.getExternalStorageDirectory()+"/onUpdate/";// 保存apk的文件夹
         }
         else{
-            savePath = Environment.getExternalStorageState()+"/update/";// 保存apk的文件夹
+            savePath = Environment.getExternalStorageState()+"/onUpdate/";// 保存apk的文件夹
         }
         File apkfile = new File(saveFileName);
         if (apkfile.exists()) {

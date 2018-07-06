@@ -17,8 +17,8 @@ import android.widget.FrameLayout;
 
 import com.base.appManager.AppSubject;
 import com.base.appManager.MyApplication;
+import com.base.appManager.Observable;
 import com.base.appManager.Observer;
-import com.base.appManager.Subject;
 import com.base.applicationUtil.AppPrefs;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
@@ -264,9 +264,8 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
         AppSubject.getAppSubject().detach(this);
         super.finish();
     }
-
     @Override
-    public void update(Subject subject) {
+    public void onUpdate(Observable observable, Object data) {
         // TODO Auto-generated method stub
         this.finish();
     }

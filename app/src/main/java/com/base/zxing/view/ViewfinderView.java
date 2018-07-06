@@ -140,7 +140,7 @@ public final class ViewfinderView extends View {
 //        }
 //      }
 
-      // Request another update at the animation interval, but only repaint the laser line,
+      // Request another onUpdate at the animation interval, but only repaint the laser line,
       // not the entire viewfinder mask.
       postInvalidateDelayed(ANIMATION_DELAY, frame.left, frame.top, frame.right, frame.bottom);
     }

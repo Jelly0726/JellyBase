@@ -425,7 +425,7 @@ public class AppUtils {
         } else {
             smsManager.sendTextMessage(mobile, null, content, sentIntent, null);
         }
-        // register the Broadcast Receivers
+        // attach the Broadcast Receivers
         context.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

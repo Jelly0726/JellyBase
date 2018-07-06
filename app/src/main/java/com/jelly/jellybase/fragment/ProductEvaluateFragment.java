@@ -75,7 +75,7 @@ public class ProductEvaluateFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //HermesEventBus.getDefault().register(this);
+        //HermesEventBus.getDefault().attach(this);
 
         iniXRefreshView();
     }
