@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.base.appManager.AppSubject;
 import com.base.applicationUtil.AppPrefs;
 import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.service.WatchDogService;
+import com.jelly.jellybase.MainActivity;
 
 import org.json.JSONObject;
 
@@ -53,7 +55,11 @@ public class PushReceiver extends BroadcastReceiver {
             //openNotification(context,bundle);
             //打开自定义的Activity
             Intent i = new Intent();
-            i.setAction(IntentAction.JPUSH_CLICK);
+            if (AppSubject.getAppSubject().isRegistered(MainActivity.class)){
+                i.setAction(MyApplication.getMyApp().getPackageName()+".action.ACTION_MAIN");
+            }else {
+                i.setAction(IntentAction.JPUSH_CLICK);
+            }
             i.putExtras(bundle);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
             context.startActivity(i);

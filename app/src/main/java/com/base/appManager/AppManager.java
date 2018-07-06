@@ -1,7 +1,6 @@
 package com.base.appManager;
 
 import android.app.Activity;
-import android.content.Context;
 
 import java.io.ObjectStreamException;
 import java.util.Stack;
@@ -116,7 +115,7 @@ public class AppManager {
      *
      * @author kymjs
      */
-    public static Activity getActivity(Class<?> cls) {
+    public Activity getActivity(Class<?> cls) {
         if (activityStack != null)
             for (Activity activity : activityStack) {
                 if (activity.getClass().equals(cls)) {
@@ -125,17 +124,24 @@ public class AppManager {
             }
         return null;
     }
-
+    public boolean isRegistered(Class<?> clas){
+        if (activityStack==null){
+            return false;
+        }
+        for (Activity activity : activityStack) {
+            if (activity.getClass().equals(clas)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * 退出应用程序
      */
-    public void AppExit(Context context) {
+    public void AppExit() {
         try {
-            MyApplication.getMyApp().exit();
             finishAllActivity();
-            // 杀死该应用进程
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            MyApplication.getMyApp().exit();
         } catch (Exception e) {
         }
     }

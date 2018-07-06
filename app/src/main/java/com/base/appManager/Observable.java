@@ -27,6 +27,14 @@ public class Observable<T> {
     public boolean isRegistered(Observer<T> observer){
         return observers.contains(observer);
     }
+    public boolean isRegistered(Class<?> clas){
+        for (Observer<T> observer : observers) {
+            if (observer.getClass().equals(clas)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void notifyObservers(T data) {
         for (Observer<T> observer : observers) {
