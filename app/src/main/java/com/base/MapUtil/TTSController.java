@@ -14,6 +14,7 @@ import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
 import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.navi.model.AMapNaviRouteNotifyData;
 import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
 import com.amap.api.navi.model.AMapServiceAreaInfo;
 import com.amap.api.navi.model.AimLessModeCongestionInfo;
@@ -348,6 +349,11 @@ public class TTSController implements MyNaviListener {
 
 	}
 
+	@Override
+	public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+	}
+
 
 	@Override
 	public void carProjectionChange(AmapCarLocation mCarProjectionChange) {
@@ -381,6 +387,11 @@ public class TTSController implements MyNaviListener {
 
 	@Override
 	public void onStopNavi() {
+
+	}
+
+	@Override
+	public void onSelectRouteId(int i) {
 
 	}
 

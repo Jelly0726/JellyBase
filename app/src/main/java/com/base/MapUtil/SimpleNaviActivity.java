@@ -15,6 +15,7 @@ import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
 import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.navi.model.AMapNaviRouteNotifyData;
 import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
 import com.amap.api.navi.model.AMapServiceAreaInfo;
 import com.amap.api.navi.model.AimLessModeCongestionInfo;
@@ -368,6 +369,11 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 
 	}
 
+	@Override
+	public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+	}
+
 	/**
 	 * 界面右下角功能设置按钮的回调接口。
 	 */
@@ -440,6 +446,16 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 	 */
 	@Override
 	public void onNaviViewLoaded() {
+
+	}
+
+	@Override
+	public void onMapTypeChanged(int i) {
+
+	}
+
+	@Override
+	public void onNaviViewShowMode(int i) {
 
 	}
 }
