@@ -21,7 +21,7 @@ public class OrderFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null)
-            rootView = inflater.inflate(R.layout.loca_fragment, container, false);
+            rootView = inflater.inflate(R.layout.wallet_fragment, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }

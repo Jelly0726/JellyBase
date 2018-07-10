@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <!--实心，设置形状的填充色-->
+            <!--<solid android:color="#e5e5e5"/>-->
+            <!--边框，描边-->
+            <!--<stroke android:width="0.2dp" android:color="#e5e5e5"/>-->
+            <!--圆角,radius是半径-->
+            <!--<corners android:radius="5dp" />-->
+            <corners android:topRightRadius="15dp"
+                android:topLeftRadius="15dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+
+            <!--渐变
+            android:angle 代表渐变颜色的角度， 0 is left to right, 90 is bottom to top. 必须是45的整数倍.
+            默认是 0.该属性只有在type=linear情况下起作用，默认的type为linear。
+            默认情况下，从左到右：
+            android:startColor
+            Color. 颜色渐变的开始颜色，如angle=270中的 android:startColor="#000000"
+            android:endColor
+            Color. 颜色渐变的结束颜色，如angle=270中的  android:endColor="#ffffff"
+            android:centerColor
+            Color.  颜色渐变的中间颜色，主要用于多彩。
+            android:centerX
+            Float.(0 - 1.0) 相对X的渐变位置。
+            android:centerY
+            Float.(0 - 1.0) 相对Y的渐变位置。
+            这两个属性只有在type不为linear情况下起作用。
+            android:gradientRadius
+            Float. 渐变颜色的半径，单位应该是像素点. 需要 android:type="radial".
+            如果android:type="radial"，没有设置android:gradientRadius，将会报错，error inflating class.
+            android:type
+            "linear"	线性渐变.可以理解为 y=kx+b.
+            "radial"	A radial gradient.圆形渐变，起始颜色从cenralX,centralY点开始。
+            "sweep"	A sweeping line gradient.
+            -->
+            <gradient android:angle="315"
+            android:startColor="#5eccec"
+                android:endColor="#5e82ec"/>
+            <!--边距-->
+            <padding android:bottom="0dp"
+                android:top="0dp"
+                android:right="0dp"
+                android:left="0dp"/>
+        </shape>
+    </item>
+</selector>
