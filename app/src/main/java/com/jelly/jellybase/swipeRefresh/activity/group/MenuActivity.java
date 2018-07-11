@@ -24,18 +24,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.base.SwipeRefresh.StickyAdapter;
+import com.base.SwipeRefresh.StickyItemDecoration;
+import com.base.SwipeRefresh.StickyRecyclerView;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,16 +62,14 @@ public class MenuActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        SwipeMenuRecyclerView recyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        StickyRecyclerView recyclerView = (StickyRecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DefaultItemDecoration(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
         recyclerView.setSwipeMenuCreator(mSwipeMenuCreator);
-
         GroupAdapter adapter = new GroupAdapter();
         recyclerView.setAdapter(adapter);
-
         adapter.setListItems(createDataList());
+        recyclerView.addItemDecoration(new StickyItemDecoration(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
     }
 
     /**
@@ -106,7 +106,8 @@ public class MenuActivity extends AppCompatActivity {
         }
     };
 
-    private static class GroupAdapter extends RecyclerView.Adapter<GroupViewHolder> {
+//    private static class GroupAdapter extends RecyclerView.Adapter<GroupViewHolder> {
+    private static class GroupAdapter extends StickyAdapter<GroupViewHolder> {
 
         static final int VIEW_TYPE_NON_STICKY = R.layout.xswipe_menu_main_item;
         static final int VIEW_TYPE_STICKY = R.layout.xswipe_menu_sticky_item;
@@ -162,6 +163,12 @@ public class MenuActivity extends AppCompatActivity {
                 }
             }
             notifyDataSetChanged();
+        }
+
+        @Override
+        public boolean isPinnedPosition(int position) {
+            Log.i("SSSS", (getItemViewType(position) == VIEW_TYPE_STICKY)+"");
+            return getItemViewType(position) == VIEW_TYPE_STICKY;
         }
     }
 
