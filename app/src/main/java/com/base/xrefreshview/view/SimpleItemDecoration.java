@@ -1,6 +1,11 @@
 package com.base.xrefreshview.view;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +13,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 /**
  * 项目名称：RefreshAndLoad
@@ -27,6 +33,7 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
     public static final int ALL_HAVE=2;//表示都有
     public static final int LR=3;//表示左右边距为0
     private int type=-1;//-1 表示都没有 0 表示第一个item是head 1表示最后一个item是foot 2表示都有
+    private Drawable mDivider;
     /**
      *
      * @param space 代表item距离左右以及上下的距离
@@ -34,11 +41,72 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
      * @param type 代表是否有head、foot、间距类型
      */
     public SimpleItemDecoration(int space, int span, int type) {
+        this(space,span,type, Color.argb(0,153, 153, 153));
+    }
+    /**
+     *
+     * @param space 代表item距离左右以及上下的距离
+     * @param span  代表item的列数
+     * @param type 代表是否有head、foot、间距类型
+     * @param color 分割线颜色
+     */
+    public SimpleItemDecoration(int space, int span, int type, @ColorInt int color) {
         this.space = space;
         this.span = span;
         this.type=type;
+        mDivider = new ColorDrawable(color);
     }
 
+    @Override
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            drawHorizontal(c, parent);
+        } else if (layoutManager instanceof GridLayoutManager) {
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        } else {
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        }
+    }
+
+    public void drawHorizontal(Canvas c, RecyclerView parent) {
+        c.save();
+        int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            int childPosition = parent.getChildAdapterPosition(child);
+            if (childPosition < 0) continue;
+            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            final int left = child.getLeft();
+            final int top = child.getBottom();
+            final int right = child.getRight();
+            final int bottom = top + space;
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
+        c.restore();
+    }
+
+    public void drawVertical(Canvas c, RecyclerView parent) {
+        c.save();
+        final int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            int childPosition = parent.getChildAdapterPosition(child);
+            if (childPosition < 0) continue;
+            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            final int left =  child.getRight();
+            final int top = child.getTop();
+            final int right = left + space;
+            final int bottom = child.getBottom();
+
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
+        c.restore();
+    }
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.bottom = space;
