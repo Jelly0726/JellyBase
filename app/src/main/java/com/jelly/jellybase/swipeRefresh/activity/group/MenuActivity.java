@@ -18,6 +18,7 @@ package com.jelly.jellybase.swipeRefresh.activity.group;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -66,10 +67,10 @@ public class MenuActivity extends AppCompatActivity {
         recyclerView.setSwipeMenuCreator(mSwipeMenuCreator);
 
         GroupAdapter adapter = new GroupAdapter();
-//        recyclerView.addItemDecoration(StickItemDecoration.builder().adapterProvider(adapter)
-//                .build(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
         recyclerView.addItemDecoration(StickItemDecoration.builder().adapterProvider(adapter)
-                .build());
+                .build(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
+//        recyclerView.addItemDecoration(StickItemDecoration.builder().adapterProvider(adapter)
+//                .build());
 
         recyclerView.setAdapter(adapter);
         adapter.setListItems(createDataList());

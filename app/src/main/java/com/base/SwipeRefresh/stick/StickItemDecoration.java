@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Region;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,7 +30,7 @@ import java.util.Map;
  *
  * @author wubo
  */
-public class StickItemDecoration extends DefaultItemDecoration {
+public class StickItemDecoration extends RecyclerView.ItemDecoration {
 
     private final static String TAG = StickItemDecoration.class.getSimpleName();
 
@@ -56,16 +60,27 @@ public class StickItemDecoration extends DefaultItemDecoration {
     private Rect mClipBounds;
     private Builder mBuilder;
     private int mFirstVisiblePosition;
+
+    private Drawable mDivider;
+    private int mDividerWidth;
+    private int mDividerHeight;
+    private List<Integer> mViewTypeList = new ArrayList<>();
     private StickItemDecoration(Builder builder) {
-        super(Color.argb(0,153, 153, 153));
-        mBuilder = builder;
+        this(builder,Color.argb(0,153, 153, 153));
+        //mBuilder = builder;
     }
     private StickItemDecoration(Builder builder,@ColorInt int color) {
-        super(color);
-        mBuilder = builder;
+        this(builder,color, 2, 2, -1);
+        //mBuilder = builder;
     }
     private StickItemDecoration(Builder builder,@ColorInt int color, int dividerWidth, int dividerHeight, int... excludeViewType) {
-        super(color,dividerWidth,dividerHeight,excludeViewType);
+        //super(color,dividerWidth,dividerHeight,excludeViewType);
+        mDivider = new ColorDrawable(color);
+        mDividerWidth = dividerWidth;
+        mDividerHeight = dividerHeight;
+        for (int i : excludeViewType) {
+            mViewTypeList.add(i);
+        }
         mBuilder = builder;
     }
 
@@ -76,7 +91,18 @@ public class StickItemDecoration extends DefaultItemDecoration {
      */
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        super.onDraw(c,parent,state);
+        //super.onDraw(c,parent,state);
+        final RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager instanceof LinearLayoutManager) {
+            drawHorizontal(c, parent);
+        } else if (layoutManager instanceof GridLayoutManager) {
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        } else {
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        }
+
         createPinnedHeader(parent);
 
         if (mPinnedHeaderView != null) {
@@ -95,10 +121,48 @@ public class StickItemDecoration extends DefaultItemDecoration {
             }
             mClipBounds = c.getClipBounds();
             mClipBounds.top = mPinnedHeaderTop + mPinnedHeaderView.getHeight();
+
             c.clipRect(mClipBounds);
         }
     }
+    public void drawHorizontal(Canvas c, RecyclerView parent) {
+        c.save();
+        int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            int childPosition = parent.getChildAdapterPosition(child);
+            if (childPosition < 0) continue;
+            if (mViewTypeList.contains(parent.getAdapter().getItemViewType(childPosition))) continue;
+            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            final int left = child.getLeft();
+            final int top = child.getBottom();
+            final int right = child.getRight();
+            final int bottom = top + mDividerHeight;
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
+        c.restore();
+    }
 
+    public void drawVertical(Canvas c, RecyclerView parent) {
+        c.save();
+        final int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            int childPosition = parent.getChildAdapterPosition(child);
+            if (childPosition < 0) continue;
+            if (mViewTypeList.contains(parent.getAdapter().getItemViewType(childPosition))) continue;
+            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            final int left =  child.getRight();
+            final int top = child.getTop();
+            final int right = left + mDividerWidth;
+            final int bottom = child.getBottom();
+
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
+        c.restore();
+    }
 
     /**
      * @param c
@@ -109,8 +173,8 @@ public class StickItemDecoration extends DefaultItemDecoration {
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         if (mPinnedHeaderView != null && !isHeaderView(mFirstVisiblePosition)) {
             c.save();
-
             mClipBounds.top = 0;
+
             c.clipRect(mClipBounds, Region.Op.UNION);
             c.translate(0, mPinnedHeaderTop);
             mPinnedHeaderView.draw(c);
