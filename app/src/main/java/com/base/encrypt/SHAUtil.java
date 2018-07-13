@@ -38,4 +38,7 @@ public class SHAUtil {
         }
         return str;
     }
+    public static void main(String[] args){
+        System.out.println("SHA1Encode="+SHAUtil.SHA1Encode("123456"));
+    }
 }
