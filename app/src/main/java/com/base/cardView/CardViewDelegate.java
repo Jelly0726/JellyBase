@@ -4,11 +4,12 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 /**
- * Interface provided by CardView to implementations.
- * <p>
- * Necessary to resolve circular dependency between base CardView and platform implementations.
+ * create by bigman
+ * create date == 2018/7/10
+ * create time == 11:01
  */
-interface CardViewDelegate {
+
+ interface CardViewDelegate {
     void setCardBackground(Drawable drawable);
     Drawable getCardBackground();
     boolean getUseCompatPadding();

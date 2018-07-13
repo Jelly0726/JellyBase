@@ -11,6 +11,8 @@ interface CardViewImpl {
     void initialize(CardViewDelegate cardView, Context context, ColorStateList backgroundColor,
                     float radius, float elevation, float maxElevation);
 
+    void initialize(CardViewDelegate cardView, Context context, ColorStateList backgroundColor,
+                    float radius, float elevation, float maxElevation, int startColor, int endColor);
     void setRadius(CardViewDelegate cardView, float radius);
 
     float getRadius(CardViewDelegate cardView);

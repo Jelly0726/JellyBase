@@ -1,11 +1,10 @@
-package com.base.view;
+package com.base.cardView;
 
 /**
  * Created by Administrator on 2017/9/20.
  */
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 
 import com.zhy.autolayout.AutoFrameLayout;

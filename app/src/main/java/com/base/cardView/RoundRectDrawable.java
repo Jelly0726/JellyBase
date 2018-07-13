@@ -48,7 +48,6 @@ class RoundRectDrawable extends Drawable {
         mBoundsF = new RectF();
         mBoundsI = new Rect();
     }
-
     private void setBackground(ColorStateList color) {
         mBackground = (color == null) ?  ColorStateList.valueOf(Color.TRANSPARENT) : color;
         mPaint.setColor(mBackground.getColorForState(getState(), mBackground.getDefaultColor()));

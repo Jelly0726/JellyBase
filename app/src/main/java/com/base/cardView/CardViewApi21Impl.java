@@ -20,6 +20,18 @@ class CardViewApi21Impl implements CardViewImpl {
         view.setElevation(elevation);
         setMaxElevation(cardView, maxElevation);
     }
+    @Override
+    public void initialize(CardViewDelegate cardView, Context context,
+                           ColorStateList backgroundColor, float radius, float elevation, float maxElevation
+            , int startColor, int endColor) {
+        final RoundRectDrawable background = new RoundRectDrawable(backgroundColor, radius);
+        cardView.setCardBackground(background);
+
+        View view = cardView.getCardView();
+        view.setClipToOutline(true);
+        view.setElevation(elevation);
+        setMaxElevation(cardView, maxElevation);
+    }
 
     @Override
     public void setRadius(CardViewDelegate cardView, float radius) {

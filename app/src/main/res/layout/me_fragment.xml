@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="410px"
                 android:background="@mipmap/wode_db">
-                <com.base.view.AutoCardView
+                <com.base.cardView.AutoCardView
                     android:layout_width="620px"
                     android:layout_height="260px"
                     android:layout_centerHorizontal="true"
@@ -119,7 +119,7 @@
                                 android:text="0"/>
                         </LinearLayout>
                     </LinearLayout>
-                </com.base.view.AutoCardView>
+                </com.base.cardView.AutoCardView>
                 <com.base.view.CircleImageView
                     android:id="@+id/photo"
                     android:layout_width="150px"
