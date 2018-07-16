@@ -92,6 +92,7 @@ public class CardView extends FrameLayout {
     final Rect mContentPadding = new Rect();
     final Rect mShadowBounds = new Rect();
     private int mEndColor = 0;
+    private int centreColor = 0;
     private int mStartColor = 0;
     public CardView(Context context) {
         super(context);
@@ -255,13 +256,16 @@ public class CardView extends FrameLayout {
                     case R.styleable.CardViewShadow_endColor :
                         mEndColor = a.getColor(attr, getResources().getColor(R.color.cardview_shadow_end_color));
                         break;
+                    case R.styleable.CardViewShadow_centreColor :
+                        centreColor = a.getColor(attr, getResources().getColor(R.color.cardview_shadow_start_color));
+                        break;
                     case R.styleable.CardViewShadow_startColor :
                         mStartColor = a.getColor(attr, getResources().getColor(R.color.cardview_shadow_start_color));
                         break;
                 }
             }
             IMPL.initialize(mCardViewDelegate, context, backgroundColor, radius,
-                    elevation, maxElevation, mStartColor, mEndColor);
+                    elevation, maxElevation, mStartColor,centreColor, mEndColor);
         } else {
             IMPL.initialize(mCardViewDelegate, context, backgroundColor, radius,
                     elevation, maxElevation);

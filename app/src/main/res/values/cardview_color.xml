@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="card47ec5e5e">#47ec5e5e</color>
+    <color name="card20ec5e5e">#20ec5e5e</color>
     <color name="card475e82ec">#475e82ec</color>
-    <color name="cardview_shadow_end">#ffffff</color>
+    <color name="card205e82ec">#205e82ec</color>
+    <color name="cardview_shadow_end">#eeeeee</color>
 </resources>

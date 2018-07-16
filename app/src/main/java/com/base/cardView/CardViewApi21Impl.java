@@ -23,7 +23,7 @@ class CardViewApi21Impl implements CardViewImpl {
     @Override
     public void initialize(CardViewDelegate cardView, Context context,
                            ColorStateList backgroundColor, float radius, float elevation, float maxElevation
-            , int startColor, int endColor) {
+            , int startColor, int centreColor, int endColor) {
         final RoundRectDrawable background = new RoundRectDrawable(backgroundColor, radius);
         cardView.setCardBackground(background);
 

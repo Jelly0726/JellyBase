@@ -4,6 +4,8 @@
         <!-- Default Paint Color (color). -->
         <attr name="startColor" format="reference|color"/>
         <!-- Selected Paint Color (color). -->
+        <attr name="centreColor" format="reference|color"/>
+        <!-- Selected Paint Color (color). -->
         <attr name="endColor" format="reference|color"/>
     </declare-styleable>
 </resources>

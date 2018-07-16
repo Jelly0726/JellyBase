@@ -34,7 +34,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="12dp"
-                card_view:cardBackgroundColor="#1cec5e5e"
+                card_view:startColor="@color/card47ec5e5e"
+                card_view:centreColor="@color/card20ec5e5e"
+                card_view:endColor="@color/cardview_shadow_end"
                 card_view:cardCornerRadius="15dp"
                 card_view:cardElevation="4dp"
                 card_view:contentPaddingBottom="0dp">
@@ -202,7 +204,9 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
-                card_view:cardBackgroundColor="#1cec5e5e"
+                card_view:startColor="@color/card475e82ec"
+                card_view:centreColor="@color/card205e82ec"
+                card_view:endColor="@color/cardview_shadow_end"
                 card_view:cardCornerRadius="15dp"
                 card_view:cardElevation="4dp"
                 card_view:contentPaddingBottom="0dp">
