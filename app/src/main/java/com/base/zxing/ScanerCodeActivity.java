@@ -31,11 +31,14 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.base.Utils.ToastUtils;
+import com.base.gson.GsonUtils;
 import com.base.zxing.camera.CameraManager;
 import com.base.zxing.decoding.CaptureActivityHandler;
 import com.base.zxing.decoding.InactivityTimer;
 import com.base.zxing.decoding.ZXingUtils;
 import com.base.zxing.view.ViewfinderView;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.jelly.jellybase.R;
@@ -257,12 +260,26 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 						if (TextUtils.isEmpty(realContent)) {
 							Toast.makeText(ScanerCodeActivity.this, R.string.libraryzxing_get_pic_fail, Toast.LENGTH_SHORT).show();
 						} else {
-							// 数据返回
-							Intent data = new Intent();
-							data.putExtra(ZXingUtils.ScanResult, realContent);
-							data.putExtra(ZXingUtils.ScanResultType, type);
-							setResult(ZXingUtils.resultCode, data);
-							finish();
+							if (GsonUtils.isJSONValid3(realContent)&&GsonUtils.isJsonObject(realContent)){
+								Gson gson=new Gson();
+								ScanResult scanRes =gson.fromJson(realContent,ScanResult.class);
+								if (scanRes ==null){
+									ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+									return;
+								}
+								if (TextUtils.isEmpty(scanRes.getResult())){
+									ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+									return;
+								}
+								// 数据返回
+								Intent data = new Intent();
+								data.putExtra(ZXingUtils.ScanResult, realContent);
+								data.putExtra(ZXingUtils.ScanResultType, type);
+								setResult(ZXingUtils.resultCode, data);
+								finish();
+							}else {
+								ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+							}
 						}
 					}
 				});
@@ -376,12 +393,26 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 			//rxDialogSure.setTitle("扫描结果");
 		}
 		Log.i("ss","result="+recode);
-		// 数据返回
-		Intent data = new Intent();
-		data.putExtra(ZXingUtils.ScanResult, recode);
-		data.putExtra(ZXingUtils.ScanResultType, type);
-		setResult(ZXingUtils.resultCode, data);
-		finish();
+		if (GsonUtils.isJSONValid3(recode)&&GsonUtils.isJsonObject(recode)){
+			Gson gson=new Gson();
+			ScanResult scanRes =gson.fromJson(recode,ScanResult.class);
+			if (scanRes ==null){
+				ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+				return;
+			}
+			if (TextUtils.isEmpty(scanRes.getResult())){
+				ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+				return;
+			}
+			// 数据返回
+			Intent data = new Intent();
+			data.putExtra(ZXingUtils.ScanResult, recode);
+			data.putExtra(ZXingUtils.ScanResultType, type);
+			setResult(ZXingUtils.resultCode, data);
+			finish();
+		}else {
+			ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+		}
 	}
 
 	private void initBeepSound() {
