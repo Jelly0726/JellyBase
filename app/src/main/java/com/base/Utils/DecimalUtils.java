@@ -77,17 +77,16 @@ public class DecimalUtils {
      * @return
      */
     public static String getDecimal1(float amount,int num){
-        if (num<=0){
-            return amount+"";
-        }
 //        BigDecimal bg = new BigDecimal(amount);
 //        amount = bg.setScale(num, BigDecimal.ROUND_HALF_UP).floatValue();
-        String deci="######0.";
-        for (int i=0;i<num;i++){
-            deci+="0";
+        if(num == 0){
+            return new DecimalFormat("0").format(amount);
         }
-        DecimalFormat df= new DecimalFormat(deci);
-        return df.format(amount);
+        String formatStr = "#####0.";
+        for(int i=0;i<num;i++){
+            formatStr = formatStr + "0";
+        }
+        return new DecimalFormat(formatStr).format(amount);
     }
     /**
      *保留多位小数
@@ -115,16 +114,15 @@ public class DecimalUtils {
      * @return
      */
     public static String getDecimal1(double amount,int num){
-        if (num<=0){
-            return amount+"";
-        }
 //        BigDecimal bg = new BigDecimal(amount);
 //        amount = bg.setScale(num, BigDecimal.ROUND_HALF_UP).doubleValue();
-        String deci="######0.";
-        for (int i=0;i<num;i++){
-            deci+="0";
+        if(num == 0){
+            return new DecimalFormat("0").format(amount);
         }
-        DecimalFormat df= new DecimalFormat(deci);
-        return df.format(amount);
+        String formatStr = "#####0.";
+        for(int i=0;i<num;i++){
+            formatStr = formatStr + "0";
+        }
+        return new DecimalFormat(formatStr).format(amount);
     }
 }
