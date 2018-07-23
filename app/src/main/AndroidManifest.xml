@@ -569,11 +569,55 @@
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信支付回调↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓微信自动抢红包↓↓↓↓↓↓↓-->
+        <service android:name="com.base.NotifyService.RedPacketService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessible_service_config"></meta-data>
+        </service>
+        <!--↑↑↑↑↑↑↑↑微信自动抢红包↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信登录回调↓↓↓↓↓↓↓-->
         <activity android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信登录回调↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓微信消息监听↓↓↓↓↓↓↓-->
+        <service android:name="com.base.NotifyService.WeChatLogService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessible_service_config"></meta-data>
+        </service>
+        <!--↑↑↑↑↑↑↑↑微信消息监听↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓通知栏监听↓↓↓↓↓↓↓-->
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:name="com.base.NotifyService.NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
+            <!--</intent-filter>-->
+            <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
+        </service>
+        <!--↑↑↑↑↑↑↑↑通知栏监听↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
         <activity
             android:name="com.base.screenCapture.ScreenShotActivity"

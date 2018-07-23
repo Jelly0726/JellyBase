@@ -7,11 +7,20 @@ canRetrieveWindowContent:表示该服务能否访问活动窗口中的内容.也
 notificationTimeout:接受事件的时间间隔,通常将其设置为100即可.
 packageNames:表示对该服务是用来监听哪个包的产生的事件
 -->
+<!--<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:accessibilityEventTypes="typeNotificationStateChanged"-->
+    <!--android:accessibilityFeedbackType="feedbackAllMask"-->
+    <!--android:accessibilityFlags="flagIncludeNotImportantViews"-->
+    <!--android:canRetrieveWindowContent="true"-->
+    <!--android:description="@string/app_name"-->
+    <!--android:notificationTimeout="100"-->
+    <!--android:packageNames="com.tencent.mm" />-->
+
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
-    android:accessibilityEventTypes="typeNotificationStateChanged"
-    android:accessibilityFeedbackType="feedbackAllMask"
-    android:accessibilityFlags="flagIncludeNotImportantViews"
-    android:canRetrieveWindowContent="true"
-    android:description="@string/app_name"
-    android:notificationTimeout="100"
-    android:packageNames="com.tencent.mm" />
+android:accessibilityEventTypes="typeAllMask"
+android:accessibilityFeedbackType="feedbackGeneric"
+android:accessibilityFlags="flagDefault"
+android:canRetrieveWindowContent="true"
+android:description="@string/app_name"
+android:notificationTimeout="100"
+android:packageNames="com.tencent.mm" />

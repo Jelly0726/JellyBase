@@ -21,6 +21,7 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
+import com.base.NotifyService.NotifyManger;
 import com.base.Utils.ToastUtils;
 import com.base.applicationUtil.AppUtils;
 import com.base.appManager.MyApplication;
@@ -402,6 +403,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!NotifyManger.notificationListenerEnable()){
+            ToastUtils.showShort(this, "通知权限未开启！");
+            NotifyManger.gotoNotificationAccessSetting(MyApplication.getMyApp());
+        }else {
+            //重新触发通知绑定
+            NotifyManger.toggleNotificationListenerService();
+        }
     }
     /**
      *申请权限。 Rationale支持，这里自定义对话框。
