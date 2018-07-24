@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,14 +25,16 @@
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <ImageView
+        <com.base.view.RoundImageView
             android:layout_marginBottom="5dp"
             android:id="@+id/goods_image"
             android:layout_marginTop="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/shopcar_cmaz"
             android:layout_width="184px"
-            android:layout_height="184px"/>
+            android:layout_height="184px"
+            app:roundType="round"
+            app:radius="2dp"/>
 
         <RelativeLayout
             android:padding="2dp"

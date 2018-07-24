@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RoundImageView">
-        <attr name="round_type">
+        <attr name="roundType">
             <flag name="circle" value="0" />
             <flag name="round" value="1" />
             <flag name="oval" value="2" />

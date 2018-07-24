@@ -62,8 +62,8 @@ public class RoundImageView extends ImageView {
     public RoundImageView(Context context, AttributeSet attrs, int defStyle){
         super(context,attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView, defStyle, 0);
-        mType = a.getInt(R.styleable.RoundImageView_round_type, TYPE_CIRCLE);
-        mRoundRadius= a.getDimensionPixelSize(R.styleable.CircleImageView_border_widthf, DEFAUT_ROUND_RADIUS);
+        mType = a.getInt(R.styleable.RoundImageView_roundType, TYPE_ROUND);
+        mRoundRadius= a.getDimensionPixelSize(R.styleable.RoundImageView_radius, DEFAUT_ROUND_RADIUS);
         initView();
     }
 
