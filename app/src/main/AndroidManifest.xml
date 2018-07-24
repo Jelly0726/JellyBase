@@ -570,38 +570,38 @@
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信支付回调↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信自动抢红包↓↓↓↓↓↓↓-->
-        <service android:name="com.base.NotifyService.RedPacketService"
+        <activity android:name="com.base.redpacket.GuideActivity">
+        </activity>
+        <service
+            android:name="com.base.redpacket.service.RedPacketService"
             android:enabled="true"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="@string/service_name"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
-                android:resource="@xml/accessible_service_config"></meta-data>
+                android:resource="@xml/red_packet_service_config" />
         </service>
+        <service
+            android:name="com.base.redpacket.service.NotificationService"
+            android:label="@string/service_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <activity android:name="com.base.redpacket.StartActivity">
+        </activity>
         <!--↑↑↑↑↑↑↑↑微信自动抢红包↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信登录回调↓↓↓↓↓↓↓-->
         <activity android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信登录回调↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓微信消息监听↓↓↓↓↓↓↓-->
-        <service android:name="com.base.NotifyService.WeChatLogService"
-            android:enabled="true"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessible_service_config"></meta-data>
-        </service>
-        <!--↑↑↑↑↑↑↑↑微信消息监听↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓通知栏监听↓↓↓↓↓↓↓-->
         <service
             android:enabled="true"
