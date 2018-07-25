@@ -28,7 +28,7 @@ public class GuideActivity extends AppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    private String[] imgs = new String[]{"guide_1.png", "guide_2.png", "guide_3.png", "guide_4.png", "guide_5.png"};
+    private String[] imgs = new String[]{"guide_1.jpg", "guide_2.jpg", "guide_3.jpg", "guide_4.jpg", "guide_5.jpg"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
