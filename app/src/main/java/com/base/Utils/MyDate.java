@@ -442,7 +442,6 @@ public class MyDate {
 			retStr = "" + i;
 		return retStr;
 	}
-
 	/**
 	 * string型时间转换
 	 *
@@ -738,5 +737,18 @@ public class MyDate {
 			// 显示天
 			return "" + day + "天";
 		}
+	}
+	public static String reTimeT(String timeT){
+		String time="00-00-00 00:00:00";
+		try{
+			if(timeT!=null) {
+				time = timeT.replace("T", " ");
+			}else{
+				return time;
+			}
+		}catch (Exception e){
+			return "00-00-00 00:00:00";
+		}
+		return time;
 	}
 }

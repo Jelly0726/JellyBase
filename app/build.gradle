@@ -11,6 +11,7 @@ android {
         versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
 
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
@@ -104,6 +105,10 @@ android {
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
+    }
+    aaptOptions {
+        //采用低版本构建生成PNG图片的兼容方式；
+        //additionalParameters "--no-version-vectors"
     }
 }
 //greendao配置

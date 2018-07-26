@@ -92,7 +92,6 @@ public class AppUtils {
 
     }
 
-
     /**
      * 判断是否有存储卡，有返回TRUE，否则FALSE
      *
@@ -201,15 +200,6 @@ public class AppUtils {
     }
 
     /**
-     * 判断字符串是不是手机号码
-     * @param paramString
-     * @return
-     */
-    public static boolean isMobileNO(String paramString) {
-        return Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$").matcher(paramString).matches();
-    }
-
-    /**
      * 获取本机号码
      * @return
      */
@@ -246,73 +236,6 @@ public class AppUtils {
 //        this.startActivity(intent);
 //    }
     }
-
-    /**
-     *
-     * 获取签名字符串
-     * @param map  参数
-     * @param type  0 无随机 1随机
-     * @return
-     */
-    public static Map<String, String> getSign(Map<String, String> map, int type){
-        if(type==1) {
-            String uuid = UUID.randomUUID().toString()
-                    .replaceAll("-", "").substring(0, 20).toUpperCase();
-            map.put("nonce_str",uuid);
-        }
-        map=sortMapByKey(map);
-        StringBuffer stringBuffer=new StringBuffer("");
-        Iterator iterator=map.entrySet().iterator();
-        while(iterator.hasNext()){
-            LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
-            String key= (String) entent.getKey();
-            String value= (String) entent.getValue();
-            if(!TextUtils.isEmpty(value)) {
-                stringBuffer
-                        .append(key)
-                        .append("=")
-                        .append(value);
-                if (iterator.hasNext()) {
-                    stringBuffer.append("&");
-                }
-            }
-        }
-        if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
-            stringBuffer.deleteCharAt(stringBuffer.length()-1);
-        }
-        stringBuffer.append("&key=").append(BaseConfig.KEY);
-        //Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
-        map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
-        return map;
-        //return MD5(stringBuffer.toString()).toUpperCase();
-    }
-    /**
-     * 使用 Map按key进行排序
-     * @param map
-     * @return
-     */
-    public static Map<String, String> sortMapByKey(Map<String, String> map) {
-        if (map == null || map.isEmpty()) {
-            return null;
-        }
-
-        Map<String, String> sortMap = new TreeMap<String, String>(
-                new MapKeyComparator());
-
-        sortMap.putAll(map);
-
-        return sortMap;
-    }
-    //比较器类
-
-    private static class MapKeyComparator implements Comparator<String> {
-        @Override
-        public int compare(String str1, String str2) {
-
-            return str1.compareTo(str2);
-        }
-    }
-
     /**
      * 将文本内容放到系统剪贴板里
      * @param str
@@ -635,101 +558,9 @@ public class AppUtils {
 
         return context.getFilesDir().getAbsolutePath();
     }
-    /**
-     整数(秒数)转换为时分秒格式(xx:xx:xx)
-     */
-    public static String secToTime(int time) {
-        String timeStr = null;
-        int hour = 0;//时
-        int minute = 0;//分
-        int second = 0;//秒
-        int minse=0;   //毫秒
-        if (time <= 0)
-            return "00:00:00";
-        else {
-            minute = time / 6000;//分
-            if (minute <60) {
-                if (second <60) {
-                    second=(time%6000)/100;   //秒
-                    minse = (time%6000) %100;   //毫秒
-                    timeStr =unitFormat(minute) +":"+unitFormat(second) +":" + unitFormat(minse);
-                }else{
 
-                }
-            } else {
-                hour = minute / 60;
-                if (hour > 99)
-                    return "99:59:59";
-                minute = minute % 60;
-                second = time - hour * 3600 - minute * 60;
-                timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second)+":" + unitFormat(minse);
-            }
-        }
-        return timeStr;
-    }
-    public static String unitFormat(int i) {
-        String retStr = null;
-        if (i >= 0 && i < 10)
-            retStr = "0" + Integer.toString(i);
-        else
-            retStr = "" + i;
-        return retStr;
-    }
-    /**
-     * 保存HTML文件
-     * @param context
-     * @param ss
-     */
-    public static void saveFileHtml(Context context, String ss) {
-        try{
-            String sdd= Environment.getDataDirectory()+"/files/index.html";
-            InputStream in =getStringStream(ss);
-            int lenght = in.available();
-            //创建byte数组
-            byte[]  buffer = new byte[lenght];
-            //将文件中的数据读到byte数组中
-            in.read(buffer);
-            FileOutputStream outStream = context.openFileOutput(sdd, Context.MODE_PRIVATE);
-            outStream.write(buffer);
-            outStream.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    /**
-     * 将一个字符串转化为输入流
-     */
-    public static InputStream getStringStream(String sInputString){
-        if (sInputString != null && !sInputString.trim().equals("")){
-            try{
-                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
-                return tInputStringStream;
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-        return null;
-    }
 
-    /**
-     * 将一个输入流转化为字符串
-     */
-    public static String getStreamString(InputStream tInputStream){
-        if (tInputStream != null){
-            try{
-                BufferedReader tBufferedReader = new BufferedReader(new InputStreamReader(tInputStream));
-                StringBuffer tStringBuffer = new StringBuffer();
-                String sTempOneLine = new String("");
-                while ((sTempOneLine = tBufferedReader.readLine()) != null){
-                    tStringBuffer.append(sTempOneLine);
-                }
-                return tStringBuffer.toString();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-        return null;
-    }
+
     /**
      * 异步获取外网ip
      * @param  type I ip格式 Z 中文格式 H 组合格式
@@ -921,19 +752,6 @@ public class AppUtils {
             //Log.e("WifiPreference IpAddress", ex.toString());
         }
         return "127.0.0.1";
-    }
-    public static String reTimeT(String timeT){
-        String time="00-00-00 00:00:00";
-        try{
-            if(timeT!=null) {
-                time = timeT.replace("T", " ");
-            }else{
-                return time;
-            }
-        }catch (Exception e){
-            return "00-00-00 00:00:00";
-        }
-        return time;
     }
     /** * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * * @param context */
     public static void cleanInternalCache(Context context) {
@@ -1128,29 +946,7 @@ public class AppUtils {
         }
         return false;
     }
-    /**
-     * 添加选中下划线
-     * @param activity  activity
-     * @param button    选中的按钮  Button
-     * @param linearLayout  父容器 LinearLayout
-     */
-    public static void setTabSelected(Activity activity, Button button, LinearLayout linearLayout) {
-        Drawable selectedDrawable = ResourceReader.readDrawable(activity,
-                CPResourceUtil.getDrawableId(activity,"radiobutton_bottom_line"));
-        int screenWidth = AppUtils.getScreenSize(activity)[0];
-        int size = linearLayout.getChildCount();
-        int right =(int)((screenWidth /size)*0.6);
-        //前两个是组件左上角在容器中的坐标 后两个是组件的宽度和高度
-        selectedDrawable.setBounds(0, 0,right, AppUtils.dipTopx(activity,1));
-        button.setSelected(true);
-        button.setCompoundDrawables(null, null, null, selectedDrawable);
-        for (int i = 0; i < size; i++) {
-            if (button.getId() != linearLayout.getChildAt(i).getId()) {
-                linearLayout.getChildAt(i).setSelected(false);
-                ((Button) linearLayout.getChildAt(i)).setCompoundDrawables(null, null, null, null);
-            }
-        }
-    }
+
 
     /***
      * 打开系统设置
@@ -1261,86 +1057,6 @@ public class AppUtils {
             context.startActivity(viewIntent);
         }
     }
-    /**
-     * ping
-     * @return ip地址是否可用
-     */
-    public static final boolean ping(String ip) {
-        String result = null;
-        try {
-            //String ip = "www.baidu.com";// 除非百度挂了，否则用这个应该没问题~
-            Process p = Runtime.getRuntime().exec("ping -c 3 -w 100 " + ip);//ping3次
-            // 读取ping的内容，可不加。
-//            InputStream input = p.getInputStream();
-//            BufferedReader in = new BufferedReader(new InputStreamReader(input));
-//            StringBuffer stringBuffer = new StringBuffer();
-//            String content = "";
-//            while ((content = in.readLine()) != null) {
-//                stringBuffer.append(content);
-//            }
-//            Log.i("TTT", "result content : " + stringBuffer.toString());
-            // PING的状态
-            int status = p.waitFor();
-            if (status == 0) {
-                result = "successful~";
-                return true;
-            } else {
-                result = "failed~ cannot reach the IP address";
-            }
 
-        } catch (IOException e) {
-            result = "failed~ IOException";
-        } catch (InterruptedException e) {
-            result = "failed~ InterruptedException";
-        } finally {
-            Log.i("TTT", "result = " + result);
-        }
-        return false;
-    }
-    /**
-     * 关键字高亮显示
-     *
-     * @param target  需要高亮的关键字
-     * @param text	     需要显示的文字
-     * @param color      颜色
-     * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
-     */
-    public static SpannableStringBuilder highlight(String text, String target,int color) {
-        SpannableStringBuilder spannable = new SpannableStringBuilder(text);
-        CharacterStyle span = null;
 
-        Pattern p = Pattern.compile(target);
-        Matcher m = p.matcher(text);
-        while (m.find()) {
-            span = new ForegroundColorSpan(MyApplication.getMyApp().getResources().getColor(color));// 需要重复！
-            spannable.setSpan(span, m.start(), m.end(),
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        return spannable;
-    }
-    /**
-     * 根据值, 设置spinner默认选中:
-     * @param spinner
-     * @param value
-     */
-    public static void setSpinnerItemSelectedByValue(Spinner spinner, String value, String modle){
-        BaseAdapter apsAdapter= (BaseAdapter) spinner.getAdapter(); //得到SpinnerAdapter对象
-        int k= apsAdapter.getCount();
-        try {
-            for (int i = 0; i < k; i++) {
-                Object obj = apsAdapter.getItem(i);
-                Class cla = obj.getClass();
-                Field f = cla.getDeclaredField(modle);// 属性的值
-                f.setAccessible(true);    // Very Important
-                Object valu = (Object) f.get(obj);
-                //Log.i("msg","value="+value+" valu="+valu);
-                if (value.trim().equals(valu.toString().trim())) {
-                    spinner.setSelection(i,true);// 默认选中项
-                    break;
-                }
-            }
-        }catch (Exception e){
-            //Log.i("msg","e="+e.toString());
-        }
-    }
 }

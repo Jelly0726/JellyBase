@@ -1,7 +1,21 @@
 package com.base.Utils;
 
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 
+import com.base.appManager.MyApplication;
+import com.base.applicationUtil.AppUtils;
+
+import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,5 +156,82 @@ public class StringUtil {
             }
         }
         return count;
+    }
+    /**
+     * 判断字符串是不是手机号码
+     * @param paramString
+     * @return
+     */
+    public static boolean isMobileNO(String paramString) {
+        return Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$").matcher(paramString).matches();
+    }
+    /**
+     * 关键字高亮显示
+     *
+     * @param target  需要高亮的关键字
+     * @param text	     需要显示的文字
+     * @param color      颜色
+     * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
+     */
+    public static SpannableStringBuilder highlight(String text, String target, int color) {
+        SpannableStringBuilder spannable = new SpannableStringBuilder(text);
+        CharacterStyle span = null;
+
+        Pattern p = Pattern.compile(target);
+        Matcher m = p.matcher(text);
+        while (m.find()) {
+            span = new ForegroundColorSpan(MyApplication.getMyApp().getResources().getColor(color));// 需要重复！
+            spannable.setSpan(span, m.start(), m.end(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannable;
+    }
+    /**
+     * 根据值, 设置spinner默认选中:
+     * @param spinner
+     * @param value
+     */
+    public static void setSpinnerItemSelectedByValue(Spinner spinner, String value, String modle){
+        BaseAdapter apsAdapter= (BaseAdapter) spinner.getAdapter(); //得到SpinnerAdapter对象
+        int k= apsAdapter.getCount();
+        try {
+            for (int i = 0; i < k; i++) {
+                Object obj = apsAdapter.getItem(i);
+                Class cla = obj.getClass();
+                Field f = cla.getDeclaredField(modle);// 属性的值
+                f.setAccessible(true);    // Very Important
+                Object valu = (Object) f.get(obj);
+                //Log.i("msg","value="+value+" valu="+valu);
+                if (value.trim().equals(valu.toString().trim())) {
+                    spinner.setSelection(i,true);// 默认选中项
+                    break;
+                }
+            }
+        }catch (Exception e){
+            //Log.i("msg","e="+e.toString());
+        }
+    }
+    /**
+     * 添加选中下划线
+     * @param activity  activity
+     * @param button    选中的按钮  Button
+     * @param linearLayout  父容器 LinearLayout
+     */
+    public static void setTabSelected(Activity activity, Button button, LinearLayout linearLayout) {
+        Drawable selectedDrawable = ResourceReader.readDrawable(activity,
+                CPResourceUtil.getDrawableId(activity,"radiobutton_bottom_line"));
+        int screenWidth = AppUtils.getScreenSize(activity)[0];
+        int size = linearLayout.getChildCount();
+        int right =(int)((screenWidth /size)*0.6);
+        //前两个是组件左上角在容器中的坐标 后两个是组件的宽度和高度
+        selectedDrawable.setBounds(0, 0,right, AppUtils.dipTopx(activity,1));
+        button.setSelected(true);
+        button.setCompoundDrawables(null, null, null, selectedDrawable);
+        for (int i = 0; i < size; i++) {
+            if (button.getId() != linearLayout.getChildAt(i).getId()) {
+                linearLayout.getChildAt(i).setSelected(false);
+                ((Button) linearLayout.getChildAt(i)).setCompoundDrawables(null, null, null, null);
+            }
+        }
     }
 }

@@ -1,7 +1,10 @@
 package com.base.Utils;
 
+import android.util.Log;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -92,5 +95,40 @@ public final class RootCmd {
         }
         return false;
     }
+    /**
+     * ping
+     * @return ip地址是否可用
+     */
+    public static final boolean ping(String ip) {
+        String result = null;
+        try {
+            //String ip = "www.baidu.com";// 除非百度挂了，否则用这个应该没问题~
+            Process p = Runtime.getRuntime().exec("ping -c 3 -w 100 " + ip);//ping3次
+            // 读取ping的内容，可不加。
+//            InputStream input = p.getInputStream();
+//            BufferedReader in = new BufferedReader(new InputStreamReader(input));
+//            StringBuffer stringBuffer = new StringBuffer();
+//            String content = "";
+//            while ((content = in.readLine()) != null) {
+//                stringBuffer.append(content);
+//            }
+//            Log.i("TTT", "result content : " + stringBuffer.toString());
+            // PING的状态
+            int status = p.waitFor();
+            if (status == 0) {
+                result = "successful~";
+                return true;
+            } else {
+                result = "failed~ cannot reach the IP address";
+            }
 
+        } catch (IOException e) {
+            result = "failed~ IOException";
+        } catch (InterruptedException e) {
+            result = "failed~ InterruptedException";
+        } finally {
+            Log.i("TTT", "result = " + result);
+        }
+        return false;
+    }
 }

@@ -2,7 +2,7 @@ package com.jelly.jellybase.alipay;
 
 import android.content.Context;
 
-import com.base.applicationUtil.AppUtils;
+import com.base.Utils.UtilTools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +50,7 @@ public class PostExpense {
 			map.put("orderno",exOrderNo);
 			map.put("subject",subject);
 			map.put("amount", price);
-			map= AppUtils.getSign(map,1);
+			map= UtilTools.getSign(map,1);
 		}catch(Exception e){
 			if(aliListener!=null){
 				aliListener.onFailure(04, "e="+e.toString());

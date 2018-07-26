@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Scroller;
 
-import com.base.Utils.UtilTools;
+import com.base.applicationUtil.AppUtils;
 
 
 /**
@@ -65,7 +65,7 @@ public class MoveView extends View {
         mScroller = new Scroller(context);
         mHeight = getBackground().getIntrinsicHeight();
         mWidth = getBackground().getIntrinsicWidth();
-        mMaxD = UtilTools.dip2px(getContext(), sLINE_DISTANCE);
+        mMaxD = AppUtils.dipTopx(getContext(), sLINE_DISTANCE);
 //        mCircleRadius = UtilTools.dip2px(getContext(), sCIRCLE_RADIUS);
         mBubblePaint = new Paint();                                                                 // 创建画笔
         mBubblePaint.setColor(Color.RED);

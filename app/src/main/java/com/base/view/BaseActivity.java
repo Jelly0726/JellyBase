@@ -43,7 +43,10 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
     private IntentFilter mFilter;
     private boolean isResume=false;
     private Toolbar mToolbar;
-
+    static {
+        //使你的app使用矢量图support library；
+        //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

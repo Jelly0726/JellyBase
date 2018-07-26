@@ -2,16 +2,19 @@ package com.base.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Environment;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -283,5 +286,60 @@ public class FilesUtil {
                 return deleteDirectory(filePath);
             }
         }
+    }
+    /**
+     * 保存HTML文件
+     * @param context
+     * @param ss
+     */
+    public static void saveFileHtml(Context context, String ss) {
+        try{
+            String sdd= Environment.getDataDirectory()+"/files/index.html";
+            InputStream in =getStringStream(ss);
+            int lenght = in.available();
+            //创建byte数组
+            byte[]  buffer = new byte[lenght];
+            //将文件中的数据读到byte数组中
+            in.read(buffer);
+            FileOutputStream outStream = context.openFileOutput(sdd, Context.MODE_PRIVATE);
+            outStream.write(buffer);
+            outStream.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 将一个字符串转化为输入流
+     */
+    public static InputStream getStringStream(String sInputString){
+        if (sInputString != null && !sInputString.trim().equals("")){
+            try{
+                ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
+                return tInputStringStream;
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 将一个输入流转化为字符串
+     */
+    public static String getStreamString(InputStream tInputStream){
+        if (tInputStream != null){
+            try{
+                BufferedReader tBufferedReader = new BufferedReader(new InputStreamReader(tInputStream));
+                StringBuffer tStringBuffer = new StringBuffer();
+                String sTempOneLine = new String("");
+                while ((sTempOneLine = tBufferedReader.readLine()) != null){
+                    tStringBuffer.append(sTempOneLine);
+                }
+                return tStringBuffer.toString();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        return null;
     }
 }

@@ -1,8 +1,6 @@
 package com.base.Utils;
 
-import android.content.Context;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 
 import com.amap.api.maps.model.LatLng;
 import com.base.config.BaseConfig;
@@ -19,6 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,41 +26,6 @@ import java.util.concurrent.Future;
 import okhttp3.OkHttpClient;
 
 public class UtilTools {
-	public static int getScreenWidth(Context context) {
-		DisplayMetrics dm = new DisplayMetrics();
-		dm = context.getResources().getDisplayMetrics();
-		return dm.widthPixels;
-	}
-
-	public static int getScreenHeight(Context context) {
-		DisplayMetrics dm = new DisplayMetrics();
-		dm = context.getResources().getDisplayMetrics();
-		return dm.heightPixels;
-	}
-
-	public static float getScreenDensity(Context context,int i) {
-		int dp=0;
-		DisplayMetrics dm = new DisplayMetrics();
-		dm = context.getResources().getDisplayMetrics();
-		dp=(int) (i*dm.density);
-		return dp;
-	}
-
-	/**
-	 * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
-	 */
-	public static int dip2px(Context context, float dpValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dpValue * scale + 0.5f);
-	}
-
-	/**
-	 * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-	 */
-	public static int px2dip(Context context, float pxValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (pxValue / scale + 0.5f);
-	}
 	/**
 	 * 获取一个网络连接客户端
 	 */
@@ -179,29 +143,22 @@ public class UtilTools {
 		return new LatLng(x,y);
 	}
 
-	/***
-	 * 获取签名字符串,并把map排序,加入sign
-	 * @param map:          限制条件:必须为升序排序(TreeMap或者自己排序)
+	/**
+	 *
+	 * 获取签名字符串
+	 * @param map  参数
+	 * @param type  0 无随机 1随机
 	 * @return
 	 */
-	public static String getSign(Map<String, String> map){
-		String sign;
-		Map<String, String> sortMap;
-		String uuid = java.util.UUID.randomUUID().toString()
-				.replaceAll("-", "").substring(0, 20).toUpperCase();
-		map.put("nonce_str",uuid);
-		// 过来map中为空的参数
-		Iterator<Map.Entry<String,String>> it = map.entrySet().iterator();
-		while (it.hasNext()){
-			Map.Entry<String,String> entry = it.next();
-			if (entry.getValue().length() == 0){
-				it.remove();
-			}
+	public static Map<String, String> getSign(Map<String, String> map, int type){
+		if(type==1) {
+			String uuid = UUID.randomUUID().toString()
+					.replaceAll("-", "").substring(0, 20).toUpperCase();
+			map.put("nonce_str",uuid);
 		}
-//		sortMap = sortMapByKey(map);
-		sortMap = map;
+		map=sortMapByKey(map);
 		StringBuffer stringBuffer=new StringBuffer("");
-		Iterator iterator=sortMap.entrySet().iterator();
+		Iterator iterator=map.entrySet().iterator();
 		while(iterator.hasNext()){
 			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
 			String key= (String) entent.getKey();
@@ -220,11 +177,10 @@ public class UtilTools {
 			stringBuffer.deleteCharAt(stringBuffer.length()-1);
 		}
 		stringBuffer.append("&key=").append(BaseConfig.KEY);
-		//Log.i("msg","签名前="+stringBuffer.toString());
-		// map.put("SIGN",MD5(stringBuffer.toString()).toUpperCase());
-		sign = MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase();
-		map.put("sign", sign);
-		return sign;
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+		return map;
+		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
 	/**
 	 * 使用 Map按key进行排序
