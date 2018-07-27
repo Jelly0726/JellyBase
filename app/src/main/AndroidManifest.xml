@@ -105,6 +105,8 @@
     <uses-permission android:name="android.permission.DEVICE_POWER"/>
     <uses-permission android:name="android.permission.MODIFY_PHONE_STATE"/>
     <uses-permission android:name="android.permission.PERSISTENT_ACTIVITY"/>
+    <!--android 8.0安装apk需要请求未知来源权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <!--API level 9只包含有限的tag支持,包括：
         .通过ACTION_TAG_DISCOVERED来发布Tag信息
         .只有通过EXTRA_NDEF_MESSAGES扩展来访问NDEF消息

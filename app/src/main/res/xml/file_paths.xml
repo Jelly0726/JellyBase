@@ -6,8 +6,8 @@
             path="" />
     </paths>
     <!-- ↓↓↓↓↓↓↓百度自动更新↓↓↓↓↓↓↓ -->
-    <external-files-path name="extfiles" path="autoupdatecache/" />
-    <external-cache-path name="extcachs" path="autoupdatecache/" />
-    <cache-path name="intcachs" path="autoupdatecache/" />
+    <external-files-path name="files" path="" />
+    <external-cache-path name="extcachs" path="" />
+    <cache-path name="intcachs" path="" />
     <!-- ↑↑↑↑↑↑↑百度自动更新↑↑↑↑↑↑↑ -->
 </resources>
