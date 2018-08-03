@@ -1,5 +1,7 @@
 package com.jelly.jellybase;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -17,6 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
+import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
+import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.baidu.autoupdatesdk.AppUpdateInfo;
 import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
@@ -316,32 +324,56 @@ public class MainActivity extends AppCompatActivity {
                     case TMSelfUpdateUpdateInfo.UpdateMethod_Normal:
                         isDownload=false;
                         //普通更新
-                        final BaseDialog baseDialog = new BaseDialog(MainActivity.this, R.style.BaseDialog
-                                , R.layout.checkversion_dialog_layout);
-                        TextView textView = baseDialog.findViewById(R.id.tv_msg);
-                        textView.setText(tmSelfUpdateUpdateInfo.getNewFeature().replaceAll("<br>","\n"));
-                        Button commit=baseDialog.findViewById(R.id.versionchecklib_version_dialog_commit);
-                        commit.setOnClickListener(new View.OnClickListener() {
+                        UIData uiData = UIData.create();
+                        uiData.setTitle("检测到新版本");
+                        uiData.setDownloadUrl(tmSelfUpdateUpdateInfo.getUpdateDownloadUrl());
+                        uiData.setContent(tmSelfUpdateUpdateInfo.getNewFeature().replaceAll("<br>","\n"));
+                        final DownloadBuilder builder= AllenVersionChecker
+                                .getInstance()
+                                .downloadOnly(uiData);
+                        builder.setForceRedownload(true); //下载忽略本地缓存 默认false
+                        //自定义显示更新界面
+                        builder.setCustomVersionDialogListener(new CustomVersionDialogListener(){
                             @Override
-                            public void onClick(View v) {
-                                isDownload=true;
-                                baseDialog.dismiss();
-                                //普通更新方式isUseYYB=false;
-                                TMSelfUpdateManager.getInstance().startSelfUpdate(false);
+                            public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
+                                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
+                                TextView textView = baseDialog.findViewById(R.id.tv_msg);
+                                textView.setText(versionBundle.getContent());
+                                baseDialog.setCanceledOnTouchOutside(true);
+                                return baseDialog;
                             }
                         });
-                        baseDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        //自定义下载中对话框界面
+                        builder.setCustomDownloadingDialogListener(new CustomDownloadingDialogListener() {
                             @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                if(!isDownload){
-                                    if (tmSelfUpdateUpdateInfo.versionname.contains("F")){
-                                        baseDialog.show();
+                            public Dialog getCustomDownloadingDialog(Context context, int progress, UIData versionBundle) {
+                                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_download_layout);
+                                baseDialog.setCanceledOnTouchOutside(false);
+                                baseDialog.setCancelable(false);
+                                return baseDialog;
+                            }
+                            //下载中会不断回调updateUI方法
+                            @Override
+                            public void updateUI(Dialog dialog, int progress, UIData versionBundle) {
+                                isDownload=true;
+                                TextView tvProgress = dialog.findViewById(R.id.tv_progress);
+                                ProgressBar progressBar = dialog.findViewById(R.id.pb);
+                                progressBar.setProgress(progress);
+                                tvProgress.setText(getString(R.string.versionchecklib_progress, progress));
+                            }
+                        });
+                        //设置此listener即代表需要强制更新，会在用户想要取消下载的时候回调 需要你自己关闭所有界面
+                        builder.setForceUpdateListener(new ForceUpdateListener() {
+                            @Override
+                            public void onShouldForceUpdate() {
+                                if (!isDownload) {
+                                    if (tmSelfUpdateUpdateInfo.versionname.contains("F")) {
+                                        builder.excuteMission(MainActivity.this);
                                     }
                                 }
                             }
                         });
-                        baseDialog.setCanceledOnTouchOutside(true);
-                        baseDialog.show();
+                        builder.excuteMission(MainActivity.this);
                         break;
                     case TMSelfUpdateUpdateInfo.UpdateMethod_ByPatch:
                         //省流量更新
