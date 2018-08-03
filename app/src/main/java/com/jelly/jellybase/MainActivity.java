@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -248,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onStop() {
             baseDialog.dismiss();
+            if (!TextUtils.isEmpty(apkPath))
             AppUtils.installApk(MainActivity.this,new File(apkPath));
         }
     };
@@ -356,6 +358,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         //释放
         TMSelfUpdateManager.getInstance().destroy();
+        if (cpUpdateDownloadCallback!=null)
+            cpUpdateDownloadCallback.onStop();
         super.onDestroy();
     }
 
