@@ -1,5 +1,6 @@
 package com.jelly.jellybase;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -144,10 +145,12 @@ public class MainActivity extends AppCompatActivity {
     }
     //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。
     private class MyCheckUpdateCallback implements CPCheckUpdateCallback {
+        private boolean isDownload=false;//是否点击下载
         @Override
         public void onCheckUpdateCallback(final AppUpdateInfo appUpdateInfo, AppUpdateInfoForInstall appUpdateInfoForInstall) {
 
             if (appUpdateInfo!=null){
+                isDownload=false;
                final BaseDialog baseDialog = new BaseDialog(MainActivity.this, R.style.BaseDialog
                         , R.layout.checkversion_dialog_layout);
                 TextView textView = baseDialog.findViewById(R.id.tv_msg);
@@ -156,8 +159,19 @@ public class MainActivity extends AppCompatActivity {
                 commit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        isDownload=true;
                         baseDialog.dismiss();
                         BDAutoUpdateSDK.cpUpdateDownload(MainActivity.this, appUpdateInfo, cpUpdateDownloadCallback);
+                    }
+                });
+                baseDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if(!isDownload){
+                            if (appUpdateInfo.getAppVersionName().contains("F")){
+                                baseDialog.show();
+                            }
+                        }
                     }
                 });
                 baseDialog.setCanceledOnTouchOutside(true);
@@ -248,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
          * @param errorMsg 错误信息
          */
         private BaseDialog baseDialog;
+        private boolean isDownload=false;//是否点击下载
         @Override
         public void onDownloadAppStateChanged(int state, int errorCode, String errorMsg) {
             //TODO 更新包下载状态变化的处理逻辑
@@ -283,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
          * @param tmSelfUpdateUpdateInfo 更新信息结构体
          */
         @Override
-        public void onUpdateInfoReceived(TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
+        public void onUpdateInfoReceived(final TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
             //TODO 收到更新信息的处理逻辑
             if (null != tmSelfUpdateUpdateInfo) {
                 int state = tmSelfUpdateUpdateInfo.getStatus();
@@ -297,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
 //                        ToastUtils.showShort(SettingsActivity.this, "已是最新版本(" + tmSelfUpdateUpdateInfo.versionname+")");
                         break;
                     case TMSelfUpdateUpdateInfo.UpdateMethod_Normal:
+                        isDownload=false;
                         //普通更新
                         final BaseDialog baseDialog = new BaseDialog(MainActivity.this, R.style.BaseDialog
                                 , R.layout.checkversion_dialog_layout);
@@ -306,9 +322,20 @@ public class MainActivity extends AppCompatActivity {
                         commit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                isDownload=true;
                                 baseDialog.dismiss();
                                 //普通更新方式isUseYYB=false;
                                 TMSelfUpdateManager.getInstance().startSelfUpdate(false);
+                            }
+                        });
+                        baseDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                if(!isDownload){
+                                    if (tmSelfUpdateUpdateInfo.versionname.contains("F")){
+                                        baseDialog.show();
+                                    }
+                                }
                             }
                         });
                         baseDialog.setCanceledOnTouchOutside(true);
