@@ -188,6 +188,7 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
                     count=number;
                     num.setText(String.valueOf(number));
                     //child.setCount(number);
+                    goodsNum.setText(String.valueOf(number));
                     dialog.dismiss();
                 }
             }
