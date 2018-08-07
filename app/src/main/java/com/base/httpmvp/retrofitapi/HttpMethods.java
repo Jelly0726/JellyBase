@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.appManager.MyApplication;
+import com.base.applicationUtil.AppUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
@@ -99,14 +100,21 @@ public class HttpMethods implements IGlobalManager {
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
 											//.addHeader("Connection", "close")
+											.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
 											.build();
 								}else {
 									//在请求头中加入：强制使用缓存，不访问网络
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
+											.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
 											.build();
 								}
 								Log.i("sss","no network");
+							}else {
+								//请求头添加参数version
+								request = request.newBuilder()
+										.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
+										.build();
 							}
 							Response response = chain.proceed(request);
 							//网络可用
