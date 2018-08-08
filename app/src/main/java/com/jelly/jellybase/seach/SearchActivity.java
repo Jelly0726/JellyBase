@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.appManager.MyApplication;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.multiClick.OnMultiClickListener;
 import com.base.sqldao.DBHelper;
 import com.base.view.BaseActivity;

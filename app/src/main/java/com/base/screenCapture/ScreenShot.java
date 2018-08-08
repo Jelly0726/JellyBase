@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.view.View;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 
 /**
  * Created by Administrator on 2017/10/10.

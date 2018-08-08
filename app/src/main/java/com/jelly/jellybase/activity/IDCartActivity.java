@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.idcart.IDCard;
 import com.base.idcart.IDCardUtils;
 import com.base.idcart.IDEntity;

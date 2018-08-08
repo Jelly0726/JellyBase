@@ -16,7 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import com.base.Utils.StringUtil;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 
 import java.lang.reflect.Method;
 import java.security.MessageDigest;

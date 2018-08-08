@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.callback.ConfigText;

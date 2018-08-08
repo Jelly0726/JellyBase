@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.MessageContact;
 import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.presenter.MessagePresenter;

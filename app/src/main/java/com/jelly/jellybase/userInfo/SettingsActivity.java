@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.appManager.AppSubject;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigDialog;

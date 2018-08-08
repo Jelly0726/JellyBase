@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.base.encrypt.MD5;
 import com.base.password.PwdCheckUtil;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;

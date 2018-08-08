@@ -12,7 +12,7 @@ import com.base.appManager.AppSubject;
 import com.base.encrypt.MD5;
 import com.base.appManager.MyApplication;
 import com.base.password.PwdCheckUtil;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SetPwdContact;
 import com.base.httpmvp.presenter.SetPassWordActivityPresenter;

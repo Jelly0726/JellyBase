@@ -26,7 +26,7 @@ import com.base.Contacts.model.SortToken;
 import com.base.Contacts.utils.CharacterParser;
 import com.base.Contacts.utils.PinyinComparator;
 import com.base.Contacts.view.SideBar;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;

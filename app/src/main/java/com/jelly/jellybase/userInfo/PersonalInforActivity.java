@@ -15,7 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigButton;
 import com.base.circledialog.callback.ConfigDialog;

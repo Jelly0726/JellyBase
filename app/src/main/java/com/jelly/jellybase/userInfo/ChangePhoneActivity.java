@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.encrypt.MD5;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;

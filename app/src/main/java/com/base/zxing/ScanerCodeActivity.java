@@ -31,7 +31,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.gson.GsonUtils;
 import com.base.zxing.camera.CameraManager;
 import com.base.zxing.decoding.CaptureActivityHandler;

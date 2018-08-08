@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.appManager.MyApplication;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.ConfigKey;
 import com.base.httpmvp.contact.WithdrawalsContact;

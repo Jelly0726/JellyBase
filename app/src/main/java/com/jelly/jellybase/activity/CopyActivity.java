@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;

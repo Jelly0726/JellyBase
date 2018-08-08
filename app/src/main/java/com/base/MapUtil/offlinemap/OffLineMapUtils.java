@@ -1,4 +1,4 @@
-package com.base.Utils;
+package com.base.MapUtil.offlinemap;
 
 import android.content.Context;
 import android.os.Environment;

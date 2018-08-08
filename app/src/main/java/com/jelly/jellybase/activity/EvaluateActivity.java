@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseActivity;

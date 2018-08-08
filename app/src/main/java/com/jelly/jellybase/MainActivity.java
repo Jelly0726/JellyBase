@@ -31,7 +31,7 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
-import com.base.Utils.ToastUtils;
+import com.base.toast.ToastUtils;
 import com.base.appManager.MyApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.bgabanner.GuideActivity;
