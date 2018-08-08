@@ -25,11 +25,13 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
+import hugo.weaving.DebugLog;
 import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2015/10/8.
  */
+@DebugLog
 public class MyApplication extends Application {
     private static MyApplication myApp;
     private static  boolean backStage=true;//后台运行

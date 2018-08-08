@@ -96,6 +96,9 @@ import com.yanzhenjie.permission.RationaleListener;
 import java.io.File;
 import java.util.List;
 
+import hugo.weaving.DebugLog;
+
+@DebugLog
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;

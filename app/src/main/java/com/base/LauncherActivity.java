@@ -9,15 +9,18 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.view.Menu;
 
-import com.base.applicationUtil.AppPrefs;
 import com.base.appManager.MyApplication;
+import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
-import com.jelly.jellybase.server.TraceServiceImpl;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.server.TraceServiceImpl;
 
+import hugo.weaving.DebugLog;
+
+@DebugLog
 public class LauncherActivity extends BaseActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
