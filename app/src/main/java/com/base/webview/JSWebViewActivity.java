@@ -1,5 +1,7 @@
 package com.base.webview;
 
+import android.app.DownloadManager;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -46,6 +48,7 @@ public class JSWebViewActivity extends BaseActivity {
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
     private WebTools webTools;
+    private DownloadCompleteReceiver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,12 @@ public class JSWebViewActivity extends BaseActivity {
         if (webTools == null) {
             webTools = new WebTools();
         }
+        // 文件下载成功广播接受者
+        receiver = new DownloadCompleteReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        registerReceiver(receiver, intentFilter);
+
         //WebView
         init();
     }
@@ -183,7 +192,6 @@ public class JSWebViewActivity extends BaseActivity {
                 break;
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -247,6 +255,7 @@ public class JSWebViewActivity extends BaseActivity {
             mWebView = null;
             mViewParent = null;
         }
+        unregisterReceiver(receiver);
         super.onDestroy();
     }
 }

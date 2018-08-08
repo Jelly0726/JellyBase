@@ -1,10 +1,17 @@
 package com.base.webview;
 
+import android.app.DownloadManager;
 import android.net.Uri;
+import android.os.Environment;
+import android.webkit.URLUtil;
 
+import com.base.appManager.MyApplication;
+import com.base.log.DebugLog;
 import com.tencent.smtt.sdk.CacheManager;
 
 import java.io.File;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  * Created by Administrator on 2018/1/12.
@@ -80,5 +87,45 @@ public class Utils {
             for (File item : file.listFiles()) {
                 item.delete();}
             file.delete();}
+    }
+
+    /**
+     * 使用系统的下载服务
+     DownloadManager 是系统提供的用于处理下载的服务，使用者只需提供下载 URI 和存储路径，并进行简单的设置。
+     DownloadManager 会在后台进行下载，并且在下载失败、网络切换以及系统重启后尝试重新下载。
+     * @param url                       下载地址
+     * @param contentDisposition
+     * @param mimeType
+     */
+    public static void downloadBySystem(String url, String contentDisposition, String mimeType) {
+        // 指定下载地址
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        // 允许媒体扫描，根据下载的文件类型被加入相册、音乐等媒体库
+        request.allowScanningByMediaScanner();
+        // 设置通知的显示类型，下载进行时和完成后显示通知
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        // 设置通知栏的标题，如果不设置，默认使用文件名
+//        request.setTitle("This is title");
+        // 设置通知栏的描述
+//        request.setDescription("This is description");
+        // 允许在计费流量下下载
+        request.setAllowedOverMetered(false);
+        // 允许该记录在下载管理界面可见
+        request.setVisibleInDownloadsUi(false);
+        // 允许漫游时下载
+        request.setAllowedOverRoaming(true);
+        // 允许下载的网路类型
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        // 设置下载文件保存的路径和文件名
+        String fileName  = URLUtil.guessFileName(url, contentDisposition, mimeType);
+        DebugLog.i("fileName:{}", fileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+//        另外可选一下方法，自定义下载路径
+//        request.setDestinationUri()
+//        request.setDestinationInExternalFilesDir()
+        final DownloadManager downloadManager = (DownloadManager) MyApplication.getMyApp().getSystemService(DOWNLOAD_SERVICE);
+        // 添加一个下载任务
+        long downloadId = downloadManager.enqueue(request);
+        DebugLog.i("downloadId:{}", downloadId+"");
     }
 }

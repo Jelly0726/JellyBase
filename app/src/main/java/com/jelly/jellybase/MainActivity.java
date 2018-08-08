@@ -31,7 +31,6 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
-import com.base.toast.ToastUtils;
 import com.base.appManager.MyApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.bgabanner.GuideActivity;
@@ -43,9 +42,12 @@ import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.permission.PermissionUtils;
 import com.base.redpacket.StartActivity;
+import com.base.toast.ToastUtils;
 import com.base.view.FloatingDraftButton;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
+import com.base.webview.WebConfig;
+import com.base.webview.WebTools;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
@@ -710,6 +712,14 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 38://自动抢红包
                     intent=new Intent(MyApplication.getMyApp(), StartActivity.class);
+                    startActivity(intent);
+                    break;
+                case 39://webView下载文件
+                    intent=new Intent(MyApplication.getMyApp(), JSWebViewActivity.class);
+                    WebTools webTools=new WebTools();
+                    webTools.title="文件下载";
+                    webTools.url="https://www.easyicon.net/1521-blue_box_info_information_icon.html";
+                    intent.putExtra(WebConfig.CONTENT, webTools);
                     startActivity(intent);
                     break;
             }

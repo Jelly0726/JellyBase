@@ -1,12 +1,14 @@
 package com.base.webview.tbs;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,7 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.appManager.MyApplication;
+import com.base.log.DebugLog;
 import com.base.mprogressdialog.MProgressUtil;
+import com.base.webview.Utils;
+import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
@@ -26,6 +31,7 @@ import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
 import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.DownloadListener;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebBackForwardList;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -145,9 +151,17 @@ public class X5WebView extends WebView {
 				//Log.i("msg","list="+list.getSize());
 			}
 		}
+
+		/**
+		 * 当服务器返回一个HTTP ERROR并且它的status code>=400时，该方法便会回调。这个方法的作用域并不局限于
+		 * Main Frame，任何资源的加载引发HTTP ERROR都会引起该方法的回调
+		 * @param view
+		 * @param request
+		 * @param error
+		 */
 		@Override
 		public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
-			Log.i("msg onReceivedHttpError", "request=" + request + " error=" + error);
+			DebugLog.i("msg onReceivedHttpError", "request=" + new Gson().toJson(request) + " error=" + new Gson().toJson(error));
 			super.onReceivedHttpError(view, request, error);
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedHttpError(view, request, error);
@@ -157,13 +171,22 @@ public class X5WebView extends WebView {
 			}
 
 		}
+
+		/**
+		 * 这个方法只在与服务器无法正常连接时调用，类似于服务器返回错误码的那种错误（即HTTP ERROR），该方法是不会回调的
+		 * @param view
+		 * @param errorCode
+		 * @param description
+		 * @param failingUrl
+		 */
 		@Override
 		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			super.onReceivedError(view, errorCode, description, failingUrl);
 			//6.0以下执行
-			//Log.i(TAG, "onReceivedError: ------->errorCode" + errorCode + ":" + description);
-			//网络未连接
-			showErrorPage();
+			DebugLog.i("onReceivedError: ------->errorCode" + errorCode + ",description=" + description);
+			if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+				showErrorPage();//显示错误页面
+			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedError(view, errorCode, description, failingUrl);
 			}
@@ -172,13 +195,22 @@ public class X5WebView extends WebView {
 			}
 		}
 
-		//处理网页加载失败时
+
+		/**
+		 * 处理网页加载失败时
+		 在页面局部加载发生错误时也会被调用（比如页面里两个子Tab或者一张图片）
+		 新版本，只会在Android6及以上调用
+		 */
+		@TargetApi(Build.VERSION_CODES.M)
 		@Override
 		public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 			super.onReceivedError(view, request, error);
 			//6.0以上执行
-			//Log.i(TAG, "onReceivedError: ");
-			showErrorPage();//显示错误页面
+			DebugLog.i("onReceivedError: ------->request="+new Gson().toJson(request)+",error"+ new Gson().toJson(error));
+			DebugLog.i("onReceivedError: ------->isForMainFrame="+request.isForMainFrame());
+			if(request.isForMainFrame()) {// 在这里加上个判断  或者： if(request.getUrl().toString() .equals(getUrl()))
+				showErrorPage();//显示错误页面
+			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedError(view, request, error);
 			}
@@ -192,7 +224,8 @@ public class X5WebView extends WebView {
 	 */
 	@Override
 	public void loadUrl(String var1) {
-		if (var1.contains("android_asset/webpage/404.html")){
+		if (var1.contains("android_asset/webpage/404.html")
+				||var1.contains("android_asset/webpage/err404.html")){
 			super.loadUrl(var1);
 			return;
 		}
@@ -201,11 +234,20 @@ public class X5WebView extends WebView {
 			super.loadUrl(var1);
 			return;
 		}
-		WebHistoryItem webHistoryItem = webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-1);
-		String uu = webHistoryItem.getOriginalUrl();
+		//当前页面在历史队列中的位置
+		int currentIndex = webBackForwardList.getCurrentIndex();
+		if (currentIndex==0){
+			super.loadUrl(var1);
+			return;
+		}
+		//获取上一个页面
+		WebHistoryItem historyItem =webBackForwardList.getItemAtIndex(currentIndex - 1);
+		String uu = historyItem.getOriginalUrl();
 		if (uu.contains("android_asset/webpage/404.html")
+				||uu.contains("android_asset/webpage/err404.html")
 				||!uu.equals(var1)) {
-			if (uu.contains("android_asset/webpage/404.html")){
+			if (uu.contains("android_asset/webpage/404.html")
+					||uu.contains("android_asset/webpage/err404.html")){
 				clearHistory();
 			}
 			super.loadUrl(var1);
@@ -224,22 +266,91 @@ public class X5WebView extends WebView {
 			super.reload();
 			return;
 		}
-		WebHistoryItem webHistoryItem = webBackForwardList.getItemAtIndex(webBackForwardList.getSize()-1);
-		String uu = webHistoryItem.getOriginalUrl();
-		if (uu.contains("android_asset/webpage/404.html")) {
-			uu=webBackForwardList.getItemAtIndex(0).getOriginalUrl();
-			//goBack();
-			clearHistory();
-			loadUrl(uu);
+		//当前页面在历史队列中的位置
+		int currentIndex = webBackForwardList.getCurrentIndex();
+		if (currentIndex==0){
+			super.reload();
+			return;
+		}
+		//获取上一个页面
+		WebHistoryItem historyItem =webBackForwardList.getItemAtIndex(currentIndex - 1);
+		String uu = historyItem.getOriginalUrl();
+		if (uu.contains("android_asset/webpage/404.html")
+				||uu.contains("android_asset/webpage/err404.html")) {
+			goBack();
+//			uu=webBackForwardList.getItemAtIndex(0).getOriginalUrl();
+//			clearHistory();
+//			loadUrl(uu);
 		}else
 			super.reload();
 	}
+
+	/**
+	 * 后退
+	 */
 	@Override
 	public void goBack() {
 		//返回使用缓存
 		getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		super.goBack();
+		WebBackForwardList backForwardList =copyBackForwardList();
+		if (backForwardList!=null) {
+			//当前页面在历史队列中的位置
+			int currentIndex = backForwardList.getCurrentIndex();
+			if (currentIndex==0){
+				super.goBack();
+				return;
+			}
+			for (int i = currentIndex-1; i >=0; i--) {
+				WebHistoryItem webHistoryItem =backForwardList.getItemAtIndex(i);
+				String uu = webHistoryItem.getOriginalUrl();
+				if (!uu.contains("android_asset/webpage/404.html")
+						&&!uu.contains("android_asset/webpage/err404.html")) {
+					goBackOrForward(i-currentIndex);
+					return;
+				}
+
+			}
+			super.goBack();
+		}else
+			super.goBack();
 	}
+
+	/**
+	 * 前进
+	 */
+	@Override
+	public void goForward() {
+		//返回使用缓存
+		getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+		WebBackForwardList backForwardList =copyBackForwardList();
+		if (backForwardList!=null) {
+			int sz=backForwardList.getSize();
+			//当前页面在历史队列中的位置
+			int currentIndex = backForwardList.getCurrentIndex();
+			for (int i = currentIndex; i <sz; i++) {
+				WebHistoryItem webHistoryItem =backForwardList.getItemAtIndex(i);
+				String uu = webHistoryItem.getOriginalUrl();
+				if (!uu.contains("android_asset/webpage/404.html")
+						&&!uu.contains("android_asset/webpage/err404.html")) {
+					goBackOrForward(i-currentIndex);
+					return;
+				}
+
+			}
+			super.goForward();
+		}else
+			super.goForward();
+	}
+
+	/**
+	 * 以当前页面为起始点，前进或后退历史记录中指定的步数，正数为前进，负数为后退。
+	 * @param i
+	 */
+	@Override
+	public void goBackOrForward(int i) {
+		super.goBackOrForward(i);
+	}
+
 	/**
 	 * 显示自定义错误提示页面，用一个View覆盖在WebView
 	 */
@@ -384,9 +495,9 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedTitle(arg0,arg1);
 			}
-			if (arg1.contains("网页无法打开")){
-				showErrorPage();
-			}
+//			if (arg1.contains("网页无法打开")){
+//				showErrorPage();
+//			}
 		}
 	};
 	/**
@@ -425,6 +536,15 @@ public class X5WebView extends WebView {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				return false;
+			}
+		});
+		// 设置下载监听器  每当有文件需要下载时，该方法就会被回调，下载的 URL 通过方法参数传递
+		// 网页不能够下载。解决办法就是将这个下载链接新开一个页签
+		setDownloadListener(new DownloadListener() {
+			@Override
+			public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
+				// TODO: 2017-5-6 处理下载事件
+				Utils.downloadBySystem(url, contentDisposition, mimeType);
 			}
 		});
 		progressDialog = MProgressUtil.getInstance().getMProgressDialog(arg0);
@@ -549,7 +669,8 @@ public class X5WebView extends WebView {
 		//webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
 		webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
 		webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
-		 this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
+		if (this.getSettingsExtension()!=null)
+			this.getSettingsExtension().setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);//extension
 		// settings 的设计
 	}
 
