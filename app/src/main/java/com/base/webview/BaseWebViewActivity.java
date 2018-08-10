@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.log.DebugLog;
 import com.base.view.BaseActivity;
 import com.base.webview.tbs.TBSClientCallBack;
 import com.base.webview.tbs.X5WebView;
@@ -197,6 +198,7 @@ public class BaseWebViewActivity extends BaseActivity {
             if (arg1 != null) {
                 onActivityResultAboveL(requestCode, resultCode, data);
             } else if (uploadFile != null) {
+                DebugLog.i("文件路径"+data.getData().getPath());
                 uploadFile.onReceiveValue(result);
                 uploadFile = null;
             }
@@ -223,6 +225,7 @@ public class BaseWebViewActivity extends BaseActivity {
                     results = new Uri[]{Uri.parse(dataString)};
             }
         }
+        DebugLog.i("文件路径"+results[0].getPath());
         arg1.onReceiveValue(results);
         arg1 = null;
     }

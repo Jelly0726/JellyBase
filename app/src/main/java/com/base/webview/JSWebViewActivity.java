@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.base.log.DebugLog;
 import com.base.view.BaseActivity;
 import com.base.webview.tbs.TBSClientCallBack;
 import com.base.webview.tbs.WebViewJavaScriptFunction;
@@ -287,6 +288,7 @@ public class JSWebViewActivity extends BaseActivity {
             if (arg1 != null) {
                 onActivityResultAboveL(requestCode, resultCode, data);
             } else if (uploadFile != null) {
+                DebugLog.i("文件路径"+data.getData().getPath());
                 uploadFile.onReceiveValue(result);
                 uploadFile = null;
             }
@@ -313,6 +315,7 @@ public class JSWebViewActivity extends BaseActivity {
                     results = new Uri[]{Uri.parse(dataString)};
             }
         }
+        DebugLog.i("文件路径"+results[0].getPath());
         arg1.onReceiveValue(results);
         arg1 = null;
     }
