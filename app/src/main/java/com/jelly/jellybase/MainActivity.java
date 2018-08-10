@@ -227,10 +227,12 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onPercent(int Percent, long rcvLen, long fileSize) {
-            TextView tvProgress = baseDialog.findViewById(R.id.tv_progress);
-            ProgressBar progressBar = baseDialog.findViewById(R.id.pb);
-            progressBar.setProgress(Percent);
-            tvProgress.setText(getString(R.string.versionchecklib_progress, Percent));
+            if (baseDialog!=null) {
+                TextView tvProgress = baseDialog.findViewById(R.id.tv_progress);
+                ProgressBar progressBar = baseDialog.findViewById(R.id.pb);
+                progressBar.setProgress(Percent);
+                tvProgress.setText(getString(R.string.versionchecklib_progress, Percent));
+            }
         }
 
         /**
@@ -252,7 +254,9 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onFail(Throwable Error, String Content) {
-            baseDialog.dismiss();
+            if (baseDialog!=null) {
+                baseDialog.dismiss();
+            }
             ToastUtils.showShort(MainActivity.this,Content);
         }
 
@@ -261,7 +265,9 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public void onStop() {
-            baseDialog.dismiss();
+            if (baseDialog!=null) {
+                baseDialog.dismiss();
+            }
             if (!TextUtils.isEmpty(apkPath))
             AppUtils.installApk(MainActivity.this,new File(apkPath));
         }
