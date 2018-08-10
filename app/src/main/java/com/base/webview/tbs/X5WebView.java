@@ -466,8 +466,8 @@ public class X5WebView extends WebView {
 			intent.setType("*/*");
 			try
 			{
-				((Activity) (X5WebView.this.getContext())).startActivityForResult(Intent.createChooser(intent, "choose files"),
-						X5WebView.FILE_CHOOSER);
+				((Activity) (X5WebView.this.getContext())).startActivityForResult(Intent.createChooser(intent,
+						"选择文件"),X5WebView.FILE_CHOOSER);
 			}
 			catch (android.content.ActivityNotFoundException ex)
 			{
