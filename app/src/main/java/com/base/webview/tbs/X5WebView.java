@@ -163,6 +163,10 @@ public class X5WebView extends WebView {
 		public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse error) {
 			DebugLog.i("msg onReceivedHttpError", "request=" + new Gson().toJson(request) + " error=" + new Gson().toJson(error));
 			super.onReceivedHttpError(view, request, error);
+			if(request.isForMainFrame()) {// 在这里加上个判断  或者： if(request.getUrl().toString() .equals(getUrl()))
+				if (error.getStatusCode()==404||error.getStatusCode()==500)
+					showErrorPage();//显示错误页面
+			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedHttpError(view, request, error);
 			}
