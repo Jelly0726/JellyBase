@@ -2,6 +2,7 @@ package com.base.webview.tbs;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -455,6 +456,23 @@ public class X5WebView extends WebView {
 		 */
 		@Override
 		public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
+			Intent intent = new Intent();
+			if (Build.VERSION.SDK_INT < 19) {
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+			} else {
+				intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+			}
+//			intent.setType("image/*");
+			intent.setType("*/*");
+			try
+			{
+				((Activity) (X5WebView.this.getContext())).startActivityForResult(Intent.createChooser(intent, "choose files"),
+						X5WebView.FILE_CHOOSER);
+			}
+			catch (android.content.ActivityNotFoundException ex)
+			{
+
+			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.openFileChooser(uploadFile,acceptType,  captureType);
 			}

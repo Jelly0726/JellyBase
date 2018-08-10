@@ -1,7 +1,12 @@
 package com.base.webview;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +23,7 @@ import com.base.webview.tbs.TBSClientCallBack;
 import com.base.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
@@ -39,6 +45,9 @@ public class BaseWebViewActivity extends BaseActivity {
     LinearLayout left_back;
     @BindView(R.id.title_tv)
     TextView title_tv;
+
+    private ValueCallback<Uri> uploadFile;
+    private ValueCallback<Uri[]> arg1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +107,17 @@ public class BaseWebViewActivity extends BaseActivity {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+            }
+            @Override
+            public boolean onShowFileChooser(WebView arg0, ValueCallback<Uri[]> arg1, WebChromeClient.FileChooserParams arg2) {
+                BaseWebViewActivity.this.arg1=arg1;
+                return false;
+            }
+
+            @Override
+            public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
+                super.openFileChooser(uploadFile, acceptType, captureType);
+                BaseWebViewActivity.this.uploadFile=uploadFile;
             }
         });
     }
@@ -167,5 +187,43 @@ public class BaseWebViewActivity extends BaseActivity {
             e.printStackTrace();
         }
         return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == X5WebView.FILE_CHOOSER) {
+            if (null == uploadFile && null == arg1) return;
+            Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
+            if (arg1 != null) {
+                onActivityResultAboveL(requestCode, resultCode, data);
+            } else if (uploadFile != null) {
+                uploadFile.onReceiveValue(result);
+                uploadFile = null;
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void onActivityResultAboveL(int requestCode, int resultCode, Intent intent) {
+        if (requestCode != X5WebView.FILE_CHOOSER || arg1 == null)
+            return;
+        Uri[] results = null;
+        if (resultCode == Activity.RESULT_OK) {
+            if (intent != null) {
+                String dataString = intent.getDataString();
+                ClipData clipData = intent.getClipData();
+                if (clipData != null) {
+                    results = new Uri[clipData.getItemCount()];
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        ClipData.Item item = clipData.getItemAt(i);
+                        results[i] = item.getUri();
+                    }
+                }
+                if (dataString != null)
+                    results = new Uri[]{Uri.parse(dataString)};
+            }
+        }
+        arg1.onReceiveValue(results);
+        arg1 = null;
     }
 }
