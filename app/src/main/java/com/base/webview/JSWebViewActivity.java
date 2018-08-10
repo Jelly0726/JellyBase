@@ -284,11 +284,13 @@ public class JSWebViewActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == X5WebView.FILE_CHOOSER) {
             if (null == uploadFile && null == arg1) return;
+            if (data!=null){
+                DebugLog.i("文件路径"+data.getData());
+            }
             Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
             if (arg1 != null) {
                 onActivityResultAboveL(requestCode, resultCode, data);
             } else if (uploadFile != null) {
-                DebugLog.i("文件路径"+data.getData().getPath());
                 uploadFile.onReceiveValue(result);
                 uploadFile = null;
             }
@@ -315,7 +317,7 @@ public class JSWebViewActivity extends BaseActivity {
                     results = new Uri[]{Uri.parse(dataString)};
             }
         }
-        DebugLog.i("文件路径"+results[0].getPath());
+
         arg1.onReceiveValue(results);
         arg1 = null;
     }
