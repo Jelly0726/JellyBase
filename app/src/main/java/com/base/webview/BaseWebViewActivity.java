@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,12 +91,12 @@ public class BaseWebViewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 topNav_layout.setVisibility(View.VISIBLE);
-                Log.i("SSSS","onPageStarted  url="+url);
+                DebugLog.i("onPageStarted  url="+url);
             }
 
             @Override
             public void onReceivedTitle(WebView arg0, String arg1) {
-                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
+                DebugLog.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
                     topNav_layout.setVisibility(View.GONE);
