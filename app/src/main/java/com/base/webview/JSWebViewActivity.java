@@ -11,9 +11,9 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +90,7 @@ public class JSWebViewActivity extends BaseActivity {
     }
 
     private void init() {
+        //mRefreshLayout.setEnabled(false);//关闭滑动刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,6 +98,16 @@ public class JSWebViewActivity extends BaseActivity {
                 mWebView.reload();
             }
         }); // 刷新监听。
+        // 设置子视图是否允许滚动到顶部
+        mRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+            @Override//返回true 就是子布局手势，false 就是自己使用
+            public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
+                DebugLog.i("getScrollY()="+child.getScrollY());
+                if (child.getScrollY() > 0)
+                    return true;
+                return false;
+            }
+        });
         mWebView = new X5WebView(this, null);
 //        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
         mWebView.setHorizontalScrollBarEnabled(false);//水平不显示
@@ -108,7 +119,7 @@ public class JSWebViewActivity extends BaseActivity {
                 FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setOnScrollChangedCallback(new X5WebView.OnScrollChangedCallback() {
             public void onScroll(int l, int t) {
-                //Log.d(TAG, "We Scrolled etc..." + l + " t =" + t);
+                //DebugLog.d("We Scrolled etc..." + l + " t =" + t);
                 if (t == 0) {//webView在顶部
                     mRefreshLayout.setEnabled(true);
                 } else {//webView不是顶部
@@ -125,7 +136,7 @@ public class JSWebViewActivity extends BaseActivity {
             }
             @JavascriptInterface
             public void onSkipPage(String data){
-                Log.i("SSSS","data="+data);
+                DebugLog.i("data="+data);
             }
             /**
              * js调用java的返回事件
@@ -169,12 +180,12 @@ public class JSWebViewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 topNav_layout.setVisibility(View.VISIBLE);
-                Log.i("SSSS","onPageStarted  url="+url);
+                DebugLog.i("onPageStarted  url="+url);
             }
 
             @Override
             public void onReceivedTitle(WebView arg0, String arg1) {
-                Log.i("SSSS","onReceivedTitle  arg1="+arg1);
+                DebugLog.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
                     topNav_layout.setVisibility(View.GONE);

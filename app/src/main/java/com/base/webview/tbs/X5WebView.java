@@ -3,13 +3,18 @@ package com.base.webview.tbs;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,10 +23,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.base.appManager.MyApplication;
 import com.base.log.DebugLog;
 import com.base.mprogressdialog.MProgressUtil;
+import com.base.webview.DownPicUtil;
 import com.base.webview.Utils;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
@@ -42,6 +49,7 @@ import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 //import com.tencent.smtt.sdk.WebBackForwardList;
@@ -569,9 +577,129 @@ public class X5WebView extends WebView {
 				Utils.downloadBySystem(url, contentDisposition, mimeType);
 			}
 		});
+		// 长按点击事件 保存图片方法一
+		this.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view) {
+				final WebView.HitTestResult hitTestResult = X5WebView.this.getHitTestResult();
+				// 如果是图片类型或者是带有图片链接的类型
+				if(hitTestResult.getType()== WebView.HitTestResult.IMAGE_TYPE||
+						hitTestResult.getType()== WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE){
+					final Handler handler =new Handler(){
+						@Override
+						public void handleMessage(Message msg) {
+							super.handleMessage(msg);
+							String picFile = (String) msg.obj;
+							String[] split = picFile.split("/");
+							String fileName = split[split.length-1];
+							try {
+								MediaStore.Images.Media.insertImage(((Activity) (X5WebView.this.getContext()))
+										.getApplicationContext().getContentResolver(), picFile, fileName, null);
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							}
+							// 最后通知图库更新
+							((Activity) (X5WebView.this.getContext())).getApplicationContext()
+									.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + picFile)));
+							Toast.makeText(((Activity) (X5WebView.this.getContext())),"图片保存图库成功",Toast.LENGTH_LONG).show();
+						}
+					};
+					// 弹出保存图片的对话框
+					AlertDialog.Builder builder = new AlertDialog.Builder(((Activity) (X5WebView.this.getContext())));
+					builder.setTitle("提示");
+					builder.setMessage("保存图片到本地");
+					builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							String url = hitTestResult.getExtra();
+							// 下载图片到本地
+							DownPicUtil.downPic(url, new DownPicUtil.DownFinishListener(){
+
+								@Override
+								public void getDownPath(String s) {
+									Toast.makeText(((Activity) (X5WebView.this.getContext())),"下载完成",Toast.LENGTH_LONG).show();
+									Message msg = Message.obtain();
+									msg.obj=s;
+									handler.sendMessage(msg);
+								}
+							});
+
+						}
+					});
+					builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+						// 自动dismiss
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+						}
+					});
+					AlertDialog dialog = builder.create();
+					dialog.show();
+				}
+				return true;
+			}
+		});
+		//保存图片方法二
+//		this.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+//			@Override
+//			public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+//				final Activity activity = ((Activity) (X5WebView.this.getContext()));
+//				if(activity == null){
+//					return;
+//				}
+//				final WebView.HitTestResult hitTestResult = X5WebView.this.getHitTestResult();
+//				if(hitTestResult == null){
+//					return;
+//				}
+//				// 如果是图片类型或者是带有图片链接的类型
+//				if (hitTestResult.getType() == WebView.HitTestResult.IMAGE_TYPE ||
+//						hitTestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+//					final Handler handler =new Handler(){
+//						@Override
+//						public void handleMessage(Message msg) {
+//							super.handleMessage(msg);
+//							String picFile = (String) msg.obj;
+//							String[] split = picFile.split("/");
+//							String fileName = split[split.length-1];
+//							try {
+//								MediaStore.Images.Media.insertImage(((Activity) (X5WebView.this.getContext()))
+//										.getApplicationContext().getContentResolver(), picFile, fileName, null);
+//							} catch (FileNotFoundException e) {
+//								e.printStackTrace();
+//							}
+//							// 最后通知图库更新
+//							((Activity) (X5WebView.this.getContext())).getApplicationContext()
+//									.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + picFile)));
+//							Toast.makeText(((Activity) (X5WebView.this.getContext())),"图片保存图库成功",Toast.LENGTH_LONG).show();
+//						}
+//					};
+//					AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//					builder.setTitle(null);
+//					builder.setItems(new String[]{"保存图片到本地"}, new DialogInterface.OnClickListener() {
+//						@Override
+//						public void onClick(DialogInterface dialogInterface, int i) {
+//							String url = hitTestResult.getExtra();
+//							// 下载图片到本地
+//							DownPicUtil.downPic(url, new DownPicUtil.DownFinishListener(){
+//
+//								@Override
+//								public void getDownPath(String s) {
+//									Toast.makeText(((Activity) (X5WebView.this.getContext())),"下载完成",Toast.LENGTH_LONG).show();
+//									Message msg = Message.obtain();
+//									msg.obj=s;
+//									handler.sendMessage(msg);
+//								}
+//							});
+//
+//						}
+//					});
+//					builder.show();
+//				}else {
+//					return;
+//				}
+//			}
+//		});
 		progressDialog = MProgressUtil.getInstance().getMProgressDialog(arg0);
 	}
-
 	private void initWebViewSettings() {
 		//android:scrollbars="none"   隐藏滚动条
 		WebSettings webSetting = this.getSettings();
@@ -753,7 +881,7 @@ public class X5WebView extends WebView {
 	// TBS: Do not use @Override to avoid false calls
 	public boolean tbs_dispatchTouchEvent(MotionEvent ev, View view) {
 		boolean r = super.super_dispatchTouchEvent(ev);
-		Log.d("Bran", "dispatchTouchEvent " + ev.getAction() + " " + r);
+		DebugLog.d("dispatchTouchEvent " + ev.getAction() + " " + r);
 		return r;
 	}
 
@@ -762,7 +890,15 @@ public class X5WebView extends WebView {
 		boolean r = super.super_onInterceptTouchEvent(ev);
 		return r;
 	}
-
+	protected boolean tbs_onTouchEvent(MotionEvent event, View view) {
+		switch (event.getAction()){
+			case MotionEvent.ACTION_DOWN:
+				if(this.getScrollY() <= 0)
+					this.scrollTo(0,1);
+				break;
+		}
+		return super_onTouchEvent(event);
+	}
 	protected void tbs_onScrollChanged(int l, int t, int oldl, int oldt, View view) {
 		super_onScrollChanged(l, t, oldl, oldt);
 		//X5WebView 父类屏蔽了 onScrollChanged 方法 要用该方法
@@ -790,10 +926,6 @@ public class X5WebView extends WebView {
 
 	public void setTitle(TextView title) {
 		this.title = title;
-	}
-
-	protected boolean tbs_onTouchEvent(MotionEvent event, View view) {
-		return super_onTouchEvent(event);
 	}
 
 	public void setClientCallBack(TBSClientCallBack tbsClientCallBack) {

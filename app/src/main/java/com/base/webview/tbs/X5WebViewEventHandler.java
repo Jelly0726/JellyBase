@@ -4,12 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.ValueCallback;
 
+import com.base.log.DebugLog;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebChromeClientExtension;
 import com.tencent.smtt.export.external.extension.interfaces.IX5WebViewExtension;
 import com.tencent.smtt.export.external.extension.proxy.ProxyWebViewClientExtension;
@@ -110,7 +110,7 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension implement
 	public void onHitTestResultFinished(IX5WebViewExtension arg0,
 			HitTestResult arg1) {
 		// TODO Auto-generated method stub
-		Log.i("yuanhaizhou", "onHitTestResultFinished");
+		DebugLog.i("onHitTestResultFinished");
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension implement
                                                  HitTestResult arg1, Bundle arg2) {
 		// TODO Auto-generated method stub
 		arg1.getData();
-		Log.i("yuanhaizhou", "onHitTestResultForPluginFinished");
+		DebugLog.i("onHitTestResultForPluginFinished");
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension implement
 		
 		@Override
 		public boolean onTouchEvent(MotionEvent event, View view) {
-			Log.i("yuanhaizhou", "tbs_onTouchEvent view is " + view.getClass().toString());
+			DebugLog.i("tbs_onTouchEvent view is " + view.getClass().toString());
 			return webView.tbs_onTouchEvent(event, view);			
 		}
 
