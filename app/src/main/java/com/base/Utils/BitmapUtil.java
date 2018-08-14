@@ -328,7 +328,7 @@ public class BitmapUtil {
      * @return 返回Bitmap对象
      * add by csj 13-11-6
      */
-    public Bitmap getViewBitmap(View comBitmap, int width, int height) {
+    public static Bitmap getViewBitmap(View comBitmap, int width, int height) {
         Bitmap bitmap = null;
         if (comBitmap != null) {
             comBitmap.clearFocus();
@@ -374,7 +374,7 @@ public class BitmapUtil {
      * @param v
      * @return
      */
-    private Bitmap getViewBitmap(View v) {
+    public static Bitmap getViewBitmap(View v) {
         v.clearFocus();
         v.setPressed(false);
 
