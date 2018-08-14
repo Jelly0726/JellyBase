@@ -14,15 +14,15 @@ import com.base.toast.ToastUtils;
  *  .只截取自己应用内部界面
  */
 
-public class ScreenShot {
-    private static ScreenShot screenShot;
-    public static synchronized ScreenShot getInstance(){
-        if (screenShot==null) {
-            screenShot=new ScreenShot();
+public class ScreenUtils {
+    private static ScreenUtils screenUtils;
+    public static synchronized ScreenUtils getInstance(){
+        if (screenUtils ==null) {
+            screenUtils =new ScreenUtils();
         }
-        return screenShot;
+        return screenUtils;
     }
-    private ScreenShot(){}
+    private ScreenUtils(){}
     /**
      * 截取整个屏幕包括状态栏
      * 只支持android 5.0以后

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.base.screenCapture.ScreenShot;
+import com.base.screenCapture.ScreenUtils;
 import com.base.zxing.CreateQRImage;
 import com.jelly.jellybase.R;
 
@@ -70,7 +70,7 @@ public class QRDialogLogout extends BaseCircleDialog implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save_btn:
-                ScreenShot.getInstance().ScreenShot(this.getContext(), getView());
+                ScreenUtils.getInstance().ScreenShot(this.getContext(), getView());
                 break;
             case R.id.rebuild_btn:
                 CreateQRImage.createQRImage("12346546465", imageView);
