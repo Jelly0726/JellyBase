@@ -716,12 +716,6 @@
 
         <service android:name=".server.TraceServiceImpl"/>
         <!--↑↑↑daemon保活服务↑↑↑-->
-        <service android:name=".server.WokeService"
-            android:enabled="true"
-            />
-        <service android:name=".server.PushService"
-            android:enabled="true"
-            />
         <service android:name=".server.LocationService"
             android:enabled="true"
             />

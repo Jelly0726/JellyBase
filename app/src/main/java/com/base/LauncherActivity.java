@@ -36,7 +36,7 @@ public class LauncherActivity extends BaseActivity{
 		}
 		setContentView(R.layout.base_activity_launcher);
 		//开启服务
-		TraceServiceImpl.sShouldStopService = false;
+		TraceServiceImpl.sShouldStopService = true;
 		DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
 
 		if (AppPrefs.getBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,true)) {

@@ -423,6 +423,8 @@ public static java.lang.String TABLENAME;
 -keepclassmembers class ** {
 public void xxxxxx(**);
 }
+#=======================GalleryRecyclerView====================
+-dontwarn com.ryan.baselib.util.**
 #---------------------腾讯自动更新----------------------
 -dontwarn com.tencent.**
 -keep class com.tencent.beaconselfupdate.** {*;}
