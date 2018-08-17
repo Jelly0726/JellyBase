@@ -119,6 +119,7 @@
     <uses-permission android:name="android.permission.NFC" />
     <!-- 要求当前设备必须要有NFC芯片 -->
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
+    <!--加android:extractNativeLibs="false" 会导致加固后不能安装-->
     <application
         android:name="com.base.appManager.MyApplication"
         android:allowBackup="true"
