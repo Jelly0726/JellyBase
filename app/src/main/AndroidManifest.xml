@@ -120,6 +120,7 @@
     <!-- 要求当前设备必须要有NFC芯片 -->
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <application
+        android:extractNativeLibs="false"
         android:name="com.base.appManager.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

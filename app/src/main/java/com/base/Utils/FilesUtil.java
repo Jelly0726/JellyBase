@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 /**
@@ -166,7 +169,69 @@ public class FilesUtil {
         }
         return sb;
     }
+    /**
+     * 解压zip文件
+     */
+    public static void unzipFile(File zipFile, String destination) throws IOException {
+        FileInputStream fileStream = null;
+        BufferedInputStream bufferedStream = null;
+        ZipInputStream zipStream = null;
+        try {
+            fileStream = new FileInputStream(zipFile);
+            bufferedStream = new BufferedInputStream(fileStream);
+            zipStream = new ZipInputStream(bufferedStream);
+            ZipEntry entry;
 
+            File destinationFolder = new File(destination);
+            if (destinationFolder.exists()) {
+                deleteDirectory(destinationFolder);
+            }
+
+            destinationFolder.mkdirs();
+
+            byte[] buffer = new byte[1024];
+            while ((entry = zipStream.getNextEntry()) != null) {
+                String fileName = entry.getName();
+                File file = new File(destinationFolder, fileName);
+                if (entry.isDirectory()) {
+                    file.mkdirs();
+                } else {
+                    File parent = file.getParentFile();
+                    if (!parent.exists()) {
+                        parent.mkdirs();
+                    }
+
+                    FileOutputStream fout = new FileOutputStream(file);
+                    try {
+                        int numBytesRead;
+                        while ((numBytesRead = zipStream.read(buffer)) != -1) {
+                            fout.write(buffer, 0, numBytesRead);
+                        }
+                    } finally {
+                        fout.close();
+                    }
+                }
+                long time = entry.getTime();
+                if (time > 0) {
+                    file.setLastModified(time);
+                }
+            }
+        } finally {
+            try {
+                if (zipStream != null) {
+                    zipStream.close();
+                }
+                if (bufferedStream != null) {
+                    bufferedStream.close();
+                }
+                if (fileStream != null) {
+                    fileStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     /**
      * 删除文件
      */
@@ -249,6 +314,24 @@ public class FilesUtil {
         if (!flag) return false;
         //删除当前空目录
         return dirFile.delete();
+    }
+    /**
+     * 删除指定的文件或目录（无限递归删除，返回是否删除成功）
+     * @param FileOrDirectory    文件
+     * @return
+     */
+    public static boolean deleteDirectory(File FileOrDirectory) {
+        if (FileOrDirectory.exists()) {
+            if (FileOrDirectory.isFile()) {
+                return FileOrDirectory.delete();
+            } else if (FileOrDirectory.isDirectory()) {
+                File files[] = FileOrDirectory.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    DeleteFileOrDirectory(files[i]);
+                }
+            }
+        }
+        return false;
     }
     /**
      * 删除指定的文件或目录（无限递归删除，返回是否删除成功）

@@ -30,6 +30,42 @@ android {
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
         buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
+        //Android Studio 内置一个名为 Vector Asset Studio 的工具，在低版本SDK上编译APK期间，
+        // 针对VectorDrawable脚本自动生成一组PNG位图资源BitmapDrawable，取代矢量图形（在5.0及以后的手机上运行时会正常引用VectorDrawable）。
+        vectorDrawables.generatedDensities = ['hdpi','xxhdpi']
+        vectorDrawables.useSupportLibrary = true
+        /*
+        兼容包在矢量资源引用、代码调用时，存在一定限制
+        在 ImageView 等引用 VectorDrawable 资源时，需要使用app:srcCompat取代android:src
+        代码中使用setImageResource()指定资源 id 时，无需更改代码
+        将 VectorDrawable 用于 View 背景时，需要通过以下代码设定：
+        Resources resources = context.getResources(Resources, int, Theme);
+        Theme theme = context.getTheme();
+        Drawable drawable = VectorDrawableCompat.create(resources, R.drawable.vector_drawable, theme);
+        view.setBackground(drawable);
+        代码中需要进行Drawable的实现类型转换时，可使用以下代码段执行：
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            VectorDrawable vectorDrawable =  (VectorDrawable) drawable;
+        } else {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        }
+
+        创建好的 VectorDrawable 动画资源，需要通过代码方式加载到 View 容器内，并指定执行动画
+
+        使用原生支持的代码设定（5.0 LOLLIPOP, API 21）
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        AnimatedVectorDrawable vectorDrawable = (AnimatedVectorDrawable) getResources().getDrawable(AnimatedVectorDrawableRes, Theme);
+        imageView.setImageDrawable(vectorDrawable);
+        vectorDrawable.start();
+        使用 Support Library 时的动画设置
+        矢量动画要求最低SDK为Android 3.0，并且不支持<path>路径类型的变换
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        AnimatedVectorDrawableCompat drawableCompat = AnimatedVectorDrawableCompat.create(context, AnimatedVectorDrawableRes);
+        imageView.setImageDrawable(drawableCompat);
+        drawableCompat.start();
+        * */
     }
     signingConfigs {
         release  {
@@ -133,7 +169,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'//VectorDrawable需要Support Library 23.2+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 

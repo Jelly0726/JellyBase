@@ -12,9 +12,9 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.ImageView;
 
 import com.jelly.jellybase.R;
 
@@ -24,7 +24,7 @@ import com.jelly.jellybase.R;
  * @author zq
  *
  */
-public class RoundImageView extends ImageView {
+public class RoundImageView extends AppCompatImageView {
     public static final int TYPE_CIRCLE = 0;// 圆形
     public static final int TYPE_ROUND = 1;// 圆角矩形
     public static final int TYPE_OVAL = 2;//椭圆形
