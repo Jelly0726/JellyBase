@@ -3,11 +3,11 @@ package com.base.bottomBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.base.view.NoPreloadViewPager;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.utils.AutoLayoutHelper;
 
@@ -19,13 +19,13 @@ import java.util.List;
  * @description: 底部页签根节点
  * @date 2017/6/23  11:02
  */
-public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageChangeListener {
+public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.OnPageChangeListener {
 
     private static final String STATE_INSTANCE = "instance_state";
     private static final String STATE_ITEM = "state_item";
 
 
-    private ViewPager mViewPager;
+    private NoPreloadViewPager mViewPager;
     private int mChildCount;//子条目个数
     private List<BottomBarItem> mItemViews = new ArrayList<>();
     private int mCurrentItem;//当前条目的索引
@@ -67,7 +67,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
         super.setOrientation(orientation);
     }
 
-    public void setViewPager(ViewPager mViewPager) {
+    public void setViewPager(NoPreloadViewPager mViewPager) {
         this.mViewPager = mViewPager;
         init();
     }
@@ -103,7 +103,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int position) {
-        if(!mItemViews.get(position).getIsHeave()) {//判断是否为凸起，若为凸起则跳过
+        if(!mItemViews.get(position).getIsSkip()) {//判断是否跳过
             mCurrentItem = position;//记录当前位置
             resetState();
             mItemViews.get(position).setStatus(true);
@@ -139,7 +139,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
             if (onItemSelectedListener != null) {
                 onItemSelectedListener.onItemSelected(getBottomItem(currentIndex),currentIndex);
             }
-            if(!mItemViews.get(currentIndex).getIsHeave()){
+            if(!mItemViews.get(currentIndex).getIsSkip()){
                 //点击前先重置所有按钮的状态
                 resetState();
                 mItemViews.get(currentIndex).setStatus(true);//设置为选中状态
@@ -191,14 +191,7 @@ public class BottomBarLayout extends LinearLayout implements ViewPager.OnPageCha
     public void hideMsg(int position){
         mItemViews.get(position).hideMsg();
     }
-    /**
-     * 设置底部标签的文字
-     * @param position 底部标签的下标
-     * @param msg 文字
-     */
-    public void setText(int position,String msg){
-        mItemViews.get(position).setText(msg);
-    }
+
     /**
      * 显示提示的小红点
      * @param position 底部标签的下标

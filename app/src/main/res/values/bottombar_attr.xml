@@ -25,6 +25,8 @@
         <attr name="touchDrawable" format="reference"/>
         <!--是否是凸起项-->
         <attr name="isHeave" format="boolean"/>
+        <!--是否跳过项-->
+        <attr name="isSkip" format="boolean"/>
         <!--设置图标的宽度-->
         <attr name="iconWidth" format="dimension"/>
         <!--设置图标的高度-->

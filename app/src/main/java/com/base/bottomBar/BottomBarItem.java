@@ -40,6 +40,7 @@ public class BottomBarItem extends LinearLayout {
     private boolean mOpenTouchBg = false;// 是否开启触摸背景，默认关闭
     private Drawable mTouchDrawable;//触摸时的背景
     private boolean mIsHeave = false;// 是否凸起项,默认关闭
+    private boolean mIsSkip = false;// 是否跳过项,默认关闭
     private int mIconWidth;//图标的宽度
     private int mIconHeight;//图标的高度
     private int mItemPadding;//BottomBarItem的padding
@@ -105,6 +106,7 @@ public class BottomBarItem extends LinearLayout {
                 UIUtils.dip2Px(mContext, mTextViewHeight));
 
         mIsHeave = ta.getBoolean(R.styleable.BottomBarItem_isHeave, mIsHeave);
+        mIsSkip = ta.getBoolean(R.styleable.BottomBarItem_isSkip, mIsSkip);
         mOpenTouchBg = ta.getBoolean(R.styleable.BottomBarItem_openTouchBg, mOpenTouchBg);
         mTouchDrawable = ta.getDrawable(R.styleable.BottomBarItem_touchDrawable);
 
@@ -180,7 +182,7 @@ public class BottomBarItem extends LinearLayout {
         textLayoutParams.gravity=Gravity.CENTER;
         mTextView.setLayoutParams(textLayoutParams);
 
-        FrameLayout.LayoutParams imLayoutParams= (FrameLayout.LayoutParams) image_flayout.getLayoutParams();
+        MarginLayoutParams imLayoutParams= (MarginLayoutParams) image_flayout.getLayoutParams();
         imLayoutParams.bottomMargin=mMarginBottom+mTextViewHeight;
         image_flayout.setLayoutParams(imLayoutParams);
 
@@ -198,6 +200,10 @@ public class BottomBarItem extends LinearLayout {
     }
     public boolean getIsHeave(){
         return mIsHeave;
+    }
+
+    public boolean getIsSkip() {
+        return mIsSkip;
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -251,10 +257,7 @@ public class BottomBarItem extends LinearLayout {
         setTvVisiable(mTvMsg);
         mTvMsg.setText(msg);
     }
-    public void setText(String msg){
-        mText=msg;
-        mTextView.setText(mText);//设置标签文字
-    }
+
     public void hideMsg(){
         mTvMsg.setVisibility(GONE);
     }
