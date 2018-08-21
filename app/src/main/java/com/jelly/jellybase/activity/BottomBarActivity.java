@@ -19,6 +19,7 @@ import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
 import com.base.view.FragmentStateAdapter;
+import com.base.view.NoPreloadViewPager;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
 import com.jelly.jellybase.R;
@@ -44,7 +45,7 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
 public class BottomBarActivity extends BaseActivity implements BackInterface {
     private static final int areaRresultCode=0;
     private final int zxingRequestCode=1;
-    private ViewPager mVpContent;
+    private NoPreloadViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
     private FragmentStateAdapter myAdapter;
 
@@ -109,7 +110,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         }
     }
     private void initView() {
-        mVpContent = (ViewPager) findViewById(R.id.vp_content);
+        mVpContent = (NoPreloadViewPager) findViewById(R.id.vp_content);
         mBottomBarLayout = (BottomBarLayout) findViewById(R.id.bbl);
     }
 

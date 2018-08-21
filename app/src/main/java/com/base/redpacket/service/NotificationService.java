@@ -32,6 +32,7 @@ public class NotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(final StatusBarNotification sbn) {
+        //NotifyManger.onNotificationPosted(sbn);
         if(!getConfig().isEnableNotificationService()) {
             return;
         }

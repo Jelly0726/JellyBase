@@ -191,7 +191,14 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
     public void hideMsg(int position){
         mItemViews.get(position).hideMsg();
     }
-
+    /**
+     * 设置底部标签的文字
+     * @param position 底部标签的下标
+     * @param msg 文字
+     */
+    public void setText(int position,String msg){
+        mItemViews.get(position).setText(msg);
+    }
     /**
      * 显示提示的小红点
      * @param position 底部标签的下标

@@ -261,7 +261,10 @@ public class BottomBarItem extends LinearLayout {
     public void hideMsg(){
         mTvMsg.setVisibility(GONE);
     }
-
+    public void setText(String msg){
+        mText=msg;
+        mTextView.setText(mText);//设置标签文字
+    }
     public void showNotify(){
         setTvVisiable(mTvNotify);
     }
