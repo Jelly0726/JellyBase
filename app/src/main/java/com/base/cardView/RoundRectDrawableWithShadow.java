@@ -333,7 +333,7 @@ class RoundRectDrawableWithShadow extends Drawable {
         mEdgeShadowPaint.setShader(new LinearGradient(0, -mCornerRadius + mShadowSize, 0,
                 -mCornerRadius - mShadowSize,
                 new int[]{mShadowStartColor, mShadowCentreColor, mShadowEndColor},
-                new float[]{0f, .001f, 1f}, Shader.TileMode.CLAMP));
+                new float[]{0f, 0f, 1f}, Shader.TileMode.CLAMP));
         mEdgeShadowPaint.setAntiAlias(false);
     }
 

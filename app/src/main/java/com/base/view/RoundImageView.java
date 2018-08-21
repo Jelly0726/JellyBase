@@ -20,7 +20,7 @@ import com.jelly.jellybase.R;
 
 
 /**自定义ImageView类
- * 实现圆形、圆角，椭圆等自定义图片View。
+ * 实现圆形、圆角，椭圆等自定义图片View。无边框
  * @author zq
  *
  */
@@ -63,7 +63,7 @@ public class RoundImageView extends AppCompatImageView {
         super(context,attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView, defStyle, 0);
         mType = a.getInt(R.styleable.RoundImageView_roundType, TYPE_ROUND);
-        mRoundRadius= a.getDimensionPixelSize(R.styleable.RoundImageView_radius, DEFAUT_ROUND_RADIUS);
+        mRoundRadius= a.getDimensionPixelSize(R.styleable.RoundImageView_roundRadius, DEFAUT_ROUND_RADIUS);
         initView();
     }
 
@@ -137,7 +137,8 @@ public class RoundImageView extends AppCompatImageView {
         // 设置变换矩阵
         mBitmapShader.setLocalMatrix(mMatrix);
         mPaint.setShader(mBitmapShader);
-
+        if (!bitmap.isRecycled())
+            bitmap.recycle();
     }
 
     /**

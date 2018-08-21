@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<resources>  
+    <attr name="ivpType">
+        <enum name="none" value="0" />  
+        <enum name="circle" value="1" />  
+        <enum name="round" value="2" />
+        <enum name="oval" value="3" />
+    </attr>
+    <attr name="ivpBorderColor" format="color" />
+    <attr name="ivpBorderWidth" format="dimension" />
+    <attr name="ivpRadius" format="dimension" />
+
+    <declare-styleable name="ImageViewPlus">  
+        <attr name="ivpType" />
+        <attr name="ivpBorderColor" />
+        <attr name="ivpBorderWidth" />
+        <attr name="ivpRadius" />
+    </declare-styleable>
+</resources>  

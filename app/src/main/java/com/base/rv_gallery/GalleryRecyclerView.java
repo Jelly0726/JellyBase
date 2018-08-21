@@ -15,7 +15,7 @@ import android.view.View;
 
 import com.base.rv_gallery.util.DLog;
 import com.base.rv_gallery.util.ThreadUtils;
-import com.wealthy.integratewealthy.R;
+import com.jelly.jellybase.R;
 
 /**
  * @author RyanLee

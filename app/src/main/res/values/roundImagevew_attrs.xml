@@ -6,7 +6,7 @@
             <flag name="round" value="1" />
             <flag name="oval" value="2" />
         </attr>
-        <attr name="radius" format="dimension">
+        <attr name="roundRadius" format="dimension">
 
         </attr>
     </declare-styleable>

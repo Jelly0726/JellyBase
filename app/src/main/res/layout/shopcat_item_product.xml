@@ -34,7 +34,7 @@
             android:layout_width="184px"
             android:layout_height="184px"
             app:roundType="round"
-            app:radius="2dp"/>
+            app:roundRadius="2dp"/>
 
         <RelativeLayout
             android:padding="2dp"
