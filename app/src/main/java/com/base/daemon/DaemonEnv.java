@@ -20,7 +20,7 @@ public final class DaemonEnv {
     public static Class<? extends AbsWorkService> sServiceClass;
     private static int sWakeUpInterval = DEFAULT_WAKE_UP_INTERVAL;
     public static boolean sInitialized;
-    public static boolean sForeground=false;//是否前台服务
+    public static boolean sForeground=true;//是否前台服务
 
     public static final Map<Class<? extends Service>, ServiceConnection> BIND_STATE_MAP = new HashMap<>();
 
@@ -66,8 +66,8 @@ public final class DaemonEnv {
         try {
             // 当 API >= 26 时，使用 context.startForegroundService()启动前台服务
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //sApp.startForegroundService(i);
-                sApp.startService(i);
+                sApp.startForegroundService(i);
+                //sApp.startService(i);
             }else {
                 sApp.startService(i);
             }

@@ -3,7 +3,6 @@ package com.base.daemon.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,7 +13,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.base.config.BaseConfig;
-import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.receiver.WakeUpReceiver;
 import com.jelly.jellybase.R;
@@ -68,14 +66,6 @@ public abstract class AbsWorkService extends Service {
 
         if (mFirstStarted) {
             mFirstStarted = false;
-            //启动前台服务而不显示通知的漏洞已在 API Level 25 修复，大快人心！
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-                //利用漏洞在 API Level 17 及以下的 Android 系统中，启动前台服务而不显示通知
-                startForeground(HASH_CODE, new Notification());
-                //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                    DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
-            }
             if(DaemonEnv.sForeground) {//是否前台服务
                 //======================启动前台服务========================//
                 // 当 API >= 26  时，使用context.startForegroundService()启动前台服务 需要在onCreate（）时调用startForeground（）
@@ -86,21 +76,19 @@ public abstract class AbsWorkService extends Service {
                     manager.createNotificationChannel(channel);
 
                     Notification notification = new Notification.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID).build();
-                    startForeground(BaseConfig.SERVICE_ID, notification);
-                }else {
-                    Intent notificationIntent = new Intent();
-                    notificationIntent.setAction(IntentAction.JPUSH_CLICK);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                            0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    Notification noti = new Notification.Builder(this)
-                            .setContentTitle(getString(R.string.app_name))
-                            .setContentText(getString(R.string.app_name))
-                            //.setSmallIcon(R.mipmap.icon_logo)
-                            .setContentIntent(pendingIntent)
-                            .build();
-                    noti.flags |= Notification.FLAG_AUTO_CANCEL; // FLAG_AUTO_CANCEL表明当通知被用户点击时，通知将被清除。
-                    startForeground(BaseConfig.SERVICE_ID, noti);
-                }
+                    startForeground(HASH_CODE, notification);
+
+                    //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
+                    DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
+
+                }else if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+                        //启动前台服务而不显示通知的漏洞已在 API Level 25 修复，大快人心！
+                        //利用漏洞在 API Level 17 及以下的 Android 系统中，启动前台服务而不显示通知
+                        startForeground(HASH_CODE, new Notification());
+                        //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+                            DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
+                    }
                 //======================启动前台服务========================//
             }
             getPackageManager().setComponentEnabledSetting(new ComponentName(getPackageName(), WatchDogService.class.getName()),
@@ -172,13 +160,27 @@ public abstract class AbsWorkService extends Service {
     }
 
     public static class WorkNotificationService extends Service {
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(BaseConfig.CHANNEL_ID, getString(R.string.app_name),
+                        NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.createNotificationChannel(channel);
+                Notification notification = new Notification.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID).build();
+                startForeground(HASH_CODE, notification);
+            }else {
+                startForeground(HASH_CODE, new Notification());
+            }
+        }
 
         /**
          * 利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
          */
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
-            startForeground(AbsWorkService.HASH_CODE, new Notification());
+            stopForeground(true);
             stopSelf();
             return START_STICKY;
         }
