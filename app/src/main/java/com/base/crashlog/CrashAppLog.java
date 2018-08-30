@@ -13,9 +13,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.base.Utils.FilesUtil;
 import com.base.appManager.ExecutorManager;
-import com.base.log.DebugLog;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,12 +24,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,10 +61,6 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
      * 系统默认的异常类
      */
     private Thread.UncaughtExceptionHandler mUncaughtExceptionHandler;
-    /**
-     * 待删除文件
-     */
-    private List delete ;
     /**
      * 抽象方法，
      * 在该类初始化的时候使用
@@ -121,27 +113,16 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
                 if (file.exists()) {
                     if (file != null && file.isDirectory()) {
                         File[] files = file.listFiles(new CrashLogFliter());
-                        for (int i = 0; i < files.length; i++) {
-                            sendCrashLogToServer(file,files[i]);
-                        }
-                        if (delete!=null)
-                        for (int i = 0; i < delete.size(); i++) {
-                            File d= (File) delete.get(i);
-                            boolean is= FilesUtil.getInstance().deleteDirectory(d);
-                            DebugLog.i("is="+is);
+                        if (files!=null) {
+                            for (int i = 0; i < files.length; i++) {
+                                sendCrashLogToServer(file, files[i]);
+                            }
                         }
                     }
                 }
             }
         });
     }
-    public void delete(File file){
-        if (delete==null){
-            delete = new ArrayList<>();
-        }
-        delete.add(file);
-    }
-
     /**
      * 此类是当应用出现异常的时候执行该方法
      * @param thread

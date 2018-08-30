@@ -76,7 +76,8 @@ public class CrashApphandler extends CrashAppLog{
                             DebugLog.i("response="+ss);
                             JSONObject object=new JSONObject(ss);
                             if (object.getInt("errcode")==0){
-                                delete(file);
+                                boolean is= FilesUtil.getInstance().deleteDirectory(file);
+                                DebugLog.i("is="+is);
                             }
                         }
                     } catch (IOException e) {
