@@ -13,6 +13,10 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.base.Utils.FilesUtil;
+import com.base.appManager.ExecutorManager;
+import com.base.log.DebugLog;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
@@ -22,10 +26,12 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +65,10 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
      * 系统默认的异常类
      */
     private Thread.UncaughtExceptionHandler mUncaughtExceptionHandler;
+    /**
+     * 待删除文件
+     */
+    private List delete ;
     /**
      * 抽象方法，
      * 在该类初始化的时候使用
@@ -103,7 +113,34 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
         }
 
     }
-
+    public void sendCrash(){
+        ExecutorManager.getExecutorManager().getSingleThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                File file = new File(CAHCE_CRASH_LOG);
+                if (file.exists()) {
+                    if (file != null && file.isDirectory()) {
+                        File[] files = file.listFiles(new CrashLogFliter());
+                        for (int i = 0; i < files.length; i++) {
+                            sendCrashLogToServer(file,files[i]);
+                        }
+                        if (delete!=null)
+                        for (int i = 0; i < delete.size(); i++) {
+                            File d= (File) delete.get(i);
+                            boolean is= FilesUtil.getInstance().deleteDirectory(d);
+                            DebugLog.i("is="+is);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    public void delete(File file){
+        if (delete==null){
+            delete = new ArrayList<>();
+        }
+        delete.add(file);
+    }
 
     /**
      * 此类是当应用出现异常的时候执行该方法
@@ -261,8 +298,8 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
             if (crashAppLog != null && crashAppLog.size() >0) {
 
                 for (Map.Entry<String, String> entry:crashAppLog.entrySet()) {
-
-                    buffer.append(entry.getKey()+":"+entry.getValue()+"\n");
+                    buffer.append(entry.getKey()+":"+entry.getValue());
+                    buffer.append("\r\n");
                 }
             }
 
@@ -281,10 +318,9 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
 
             String result = writer.toString();
 
-            buffer.append("Exception:+\n");
-
+            buffer.append("Exception:+\r\n");
             buffer.append(result);
-
+            buffer.append("\r\n");
             writerToFile(buffer.toString());
 
         }catch (Exception e) {
@@ -329,7 +365,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
             bufferedWriter.flush();
             bufferedWriter.close();
 
-            sendCrashLogToServer(folder, file);
+            //sendCrashLogToServer(folder, file);
 
         }catch (Exception e) {
             Log.e(TAG, "writerToFile - "+e.getMessage());
@@ -357,7 +393,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
                     String versionName = packageInfo.versionName;
                     String versionCode = ""+packageInfo.versionCode;
                     String packName = packageInfo.packageName;
-
+                    crashAppLog.put("崩溃时间",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
                     crashAppLog.put("versionName",versionName);
                     crashAppLog.put("versionCode",versionCode);
                     crashAppLog.put("packName",packName);
@@ -369,7 +405,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
             /**
              * 获取手机型号，系统版本，以及SDK版本
              */
-            crashAppLog.put("手机型号:", android.os.Build.MODEL);
+            crashAppLog.put("手机型号", android.os.Build.MODEL);
             crashAppLog.put("系统版本", ""+android.os.Build.VERSION.SDK);
             crashAppLog.put("Android版本", android.os.Build.VERSION.RELEASE);
 

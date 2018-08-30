@@ -106,7 +106,10 @@ public class FilesUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             while ((readline = br.readLine()) != null) {
-                sb.append(readline);
+                if (!StringUtil.isEmpty(readline)) {
+                    sb.append(readline);
+                    sb.append("\r\n");
+                }
             }
             br.close();
         } catch (Exception e) {
@@ -124,7 +127,10 @@ public class FilesUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             while ((readline = br.readLine()) != null) {
-                sb.append(readline);
+                if (!StringUtil.isEmpty(readline)) {
+                    sb.append(readline);
+                    sb.append("\r\n");
+                }
             }
             br.close();
         } catch (Exception e) {
@@ -150,7 +156,10 @@ public class FilesUtil {
                 BufferedReader bfr = new BufferedReader(isr);
                 String in = "";
                 while ((in = bfr.readLine()) != null) {
-                    sb.append(in);
+                    if (!StringUtil.isEmpty(in)) {
+                        sb.append(in);
+                        sb.append("\r\n");
+                    }
                 }
 //            byte[] bytes = new byte[1024];
 //            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
@@ -172,7 +181,7 @@ public class FilesUtil {
     /**
      * 解压zip文件
      */
-    public static void unzipFile(File zipFile, String destination) throws IOException {
+    public void unzipFile(File zipFile, String destination) throws IOException {
         FileInputStream fileStream = null;
         BufferedInputStream bufferedStream = null;
         ZipInputStream zipStream = null;
@@ -320,7 +329,7 @@ public class FilesUtil {
      * @param FileOrDirectory    文件
      * @return
      */
-    public static boolean deleteDirectory(File FileOrDirectory) {
+    public boolean deleteDirectory(File FileOrDirectory) {
         if (FileOrDirectory.exists()) {
             if (FileOrDirectory.isFile()) {
                 return FileOrDirectory.delete();
@@ -335,10 +344,10 @@ public class FilesUtil {
     }
     /**
      * 删除指定的文件或目录（无限递归删除，返回是否删除成功）
-     * @param FileOrDirectory    文件路径
+     * @param FileOrDirectory    文件
      * @return
      */
-    public static boolean DeleteFileOrDirectory(File FileOrDirectory) {
+    public boolean DeleteFileOrDirectory(File FileOrDirectory) {
         if (FileOrDirectory.exists()) {
             if (FileOrDirectory.isFile()) {
                 return FileOrDirectory.delete();

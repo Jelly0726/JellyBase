@@ -41,6 +41,7 @@
         <item>复制、粘贴</item>
         <item>自动抢红包</item>
         <item>webView下载文件</item>
+        <item>崩溃日志</item>
     </string-array>
 
     <string-array name="cause">

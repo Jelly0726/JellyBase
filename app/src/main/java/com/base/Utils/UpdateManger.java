@@ -72,7 +72,7 @@ public class UpdateManger {
         }
         File apkfile = new File(saveFileName);
         if (apkfile.exists()) {
-            FilesUtil.DeleteFileOrDirectory(apkfile);
+            FilesUtil.getInstance().DeleteFileOrDirectory(apkfile);
         }
     }
     // 显示更新程序对话框，供主程序调用

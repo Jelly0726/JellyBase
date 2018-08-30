@@ -11,23 +11,45 @@ import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Field;
+import retrofit2.http.Url;
 import systemdb.Login;
 
 /**
  * Created by BYPC006 on 2017/3/6.
+ url被转义:http://api.mydemo.com/api%2Fnews%2FnewsList?
+
+@POST()
+Call<HttpResult<News>> post(@Url String url, @QueryMap Map<String, String> map);
+ @POST("api/{url}/newsList")
+ Call<HttpResult<News>> login(@Path("url") String url, @Body News post);
+
+ 第一种是直接使用@Url,它相当于直接替换了@POST()里面的请求地址
+ 第二种是使用@Path("url"),它只替换了@POST("api/{url}/newsList")中的{url}
+ 如果你用下面这样写的话,就会出现url被转义
+ @POST("{url}")
+ Call<HttpResult<News>> post(@Path("url") String url);
+ 你如果执意要用@Path,也不是不可以,需要这样写
+ @POST("{url}")
+ Call<HttpResult<News>> post(@Path(value = "url", encoded = true) String url);
  */
 
 public interface IApiService {
+	//发送崩溃信息
+	@POST()
+	Observable<HttpResultJson> sendError(@Url String url, @Body Map jsonString);
 	//获取token
 	@FormUrlEncoded
 	@GET("SLD/token/getToken.doAdminJJ")

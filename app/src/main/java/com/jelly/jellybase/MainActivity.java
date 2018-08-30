@@ -60,6 +60,7 @@ import com.jelly.jellybase.activity.AutoTextAvtivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.CancelOrderActivity;
 import com.jelly.jellybase.activity.CopyActivity;
+import com.jelly.jellybase.activity.CrashActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
@@ -726,6 +727,10 @@ public class MainActivity extends AppCompatActivity {
                     webTools.title="文件下载";
                     webTools.url="https://www.easyicon.net/1521-blue_box_info_information_icon.html";
                     intent.putExtra(WebConfig.CONTENT, webTools);
+                    startActivity(intent);
+                    break;
+                case 40://崩溃日志
+                    intent=new Intent(MyApplication.getMyApp(), CrashActivity.class);
                     startActivity(intent);
                     break;
             }

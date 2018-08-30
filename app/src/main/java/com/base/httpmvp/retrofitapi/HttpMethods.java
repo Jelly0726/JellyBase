@@ -29,6 +29,7 @@ import com.jelly.jellybase.datamodel.RecevierAddress;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Proxy;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -254,6 +255,14 @@ public class HttpMethods implements IGlobalManager {
 		T t = retrofit.create(tClass);
 		return (T) Proxy.newProxyInstance(tClass.getClassLoader(), new Class<?>[] { tClass },
 				new ProxyHandler(t, this));
+	}
+	/***
+	 *发送崩溃信息
+	 */
+	public void sendError(String url, Map paramMap, ObservableTransformer composer, Observer<HttpResultJson> subscriber){
+		Observable observable = get(IApiService.class).sendError(url,paramMap)
+				.flatMap(new HttpFunctions<HttpResultJson>());
+		toSubscribe(observable,subscriber,composer);
 	}
 	/***
 	 *获取Token
