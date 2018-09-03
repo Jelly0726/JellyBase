@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
 import com.base.addressmodel.Address;
@@ -14,7 +13,7 @@ import com.base.bottomBar.BottomBarLayout;
 import com.base.config.IntentAction;
 import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
-import com.base.sqldao.DBHelper;
+import com.base.sqldao.LoginDaoUtils;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
@@ -57,7 +56,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         HermesEventBus.getDefault().register(this);
-        login= DBHelper.getInstance(getApplicationContext())
+        login= LoginDaoUtils.getInstance(getApplicationContext())
                 .getLogin();
         setContentView(R.layout.bottombar_activity);
         ButterKnife.bind(this);

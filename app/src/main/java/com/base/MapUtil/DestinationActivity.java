@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import com.amap.api.maps.offlinemap.OfflineMapCity;
 import com.base.config.BaseBroadcast;
-import com.base.sqldao.DBHelper;
+import com.base.sqldao.PositionDaoUtils;
 import com.jelly.jellybase.R;
 
 import java.io.Serializable;
@@ -102,7 +102,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 				return false;
 			}
 		});
-		posList= DBHelper.getInstance(this).getPositionList();
+		posList= PositionDaoUtils.getInstance(this).getPositionList();
 		mRecomandAdapter=new RecomandAdapter(getApplicationContext());
 		mRecommendList.setAdapter(mRecomandAdapter);
 		mRecommendList.setOnItemClickListener(this);
@@ -196,7 +196,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 	}
 	private void upPosition(PositionEntity positionEntity){
 		if(posList!=null){
-			DBHelper.getInstance(this).clearPosition();
+			PositionDaoUtils.getInstance(this).clearPosition();
 			for (int i=0;i<posList.size();i++){
 				PositionEntity positionEntity1=posList.get(i);
 				if(positionEntity.city.equals(positionEntity1.city)
@@ -212,7 +212,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 			posList.clear();
 			posList.add(0,positionEntity);
 			posList.addAll(list);
-			DBHelper.getInstance(this).addToPositionListfoTable(posList);
+			PositionDaoUtils.getInstance(this).addToPositionListfoTable(posList);
 			list.clear();
 			list=null;
 		}

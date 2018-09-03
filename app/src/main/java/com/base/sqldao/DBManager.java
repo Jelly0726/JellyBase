@@ -2,7 +2,13 @@ package com.base.sqldao;
 
 import android.content.Context;
 
+import com.base.appManager.MyApplication;
+
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.io.ObjectStreamException;
+
+import systemdb.DaoMaster;
 
 public class DBManager {
     /**
@@ -30,19 +36,16 @@ public class DBManager {
      */
     private Object readResolve() throws ObjectStreamException{
         return SingletonHolder.instance;
-   }
-    private static systemdb.DaoMaster daoMaster;
+    }
     private static systemdb.DaoSession daoSession;
+    private static MySQLiteOpenHelper helper;
     /**
-     * 取得DaoMaster
-     *
+     * 配置数据库 取得DaoMaster
      * @param context
      * @return
      */
-    public systemdb.DaoMaster getDaoMaster(Context context)
+    public void init(Context context)
     {
-        if (daoMaster == null)
-        {
 //            //获取数据库路径
 //            String path=context.getDatabasePath("NuoMember").getPath();
 //            File file=new File(path);
@@ -52,30 +55,54 @@ public class DBManager {
 //                AppUtils.cleanDatabases(context);
 //            }
 
-            MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, DBConfig.DBNAME,
-                    null);
-            daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
-            //DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context,Config.DBNAME, null);
-            daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
-        }
-        return daoMaster;
+        helper = new MySQLiteOpenHelper(context, DBConfig.DBNAME,
+                null);
+        DaoMaster daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
+        //获取dao对象管理者
+        daoSession = daoMaster.newSession();
+        //DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context,Config.DBNAME, null);
+        //daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
     }
     /**
      * 取得DaoSession
-     *
-     * @param context
      * @return
      */
-    public systemdb.DaoSession getDaoSession(Context context)
+    public systemdb.DaoSession getDaoSession()
     {
         if (daoSession == null)
         {
-            if (daoMaster == null)
-            {
-                daoMaster = getDaoMaster(context);
-            }
-            daoSession = daoMaster.newSession();
+            //throw new SQLException("Call init initializing the configuration database in the onCreate of the Application");
+            init(MyApplication.getMyApp());
         }
         return daoSession;
+    }
+    /**
+     * 打开输出日志，默认关闭
+     */
+    public void setDebug(){
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
+    }
+
+    /**
+     * 关闭所有的操作，数据库开启后，使用完毕要关闭
+     */
+    public void closeConnection(){
+        closeHelper();
+        closeDaoSession();
+    }
+
+    public void closeHelper(){
+        if(helper != null){
+            helper.close();
+            helper = null;
+        }
+    }
+
+    public void closeDaoSession(){
+        if(daoSession != null){
+            daoSession.clear();
+            daoSession = null;
+        }
     }
 }

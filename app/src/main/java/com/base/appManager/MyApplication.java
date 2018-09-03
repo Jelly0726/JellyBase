@@ -17,6 +17,7 @@ import com.base.crashlog.CrashApphandler;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.base.sqldao.DBManager;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
@@ -55,7 +56,8 @@ public class MyApplication extends Application {
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {
-
+            //初始化数据库
+            DBManager.getDBManager().init(this);
             HermesEventBus.getDefault().init(this);
             //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
             DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);

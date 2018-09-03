@@ -14,16 +14,12 @@ import java.util.List;
 import systemdb.DaoSession;
 import systemdb.Login;
 import systemdb.LoginDao;
-import systemdb.PositionEntity;
-import systemdb.PositionEntityDao;
-import systemdb.SearchHistory;
-import systemdb.SearchHistoryDao;
 
 
-/**
+/**用户数据
  * Created by Administrator on 2016/4/12.
  */
-public class DBHelper {
+public class LoginDaoUtils {
 
     private static Context mContext;
     /**
@@ -31,30 +27,26 @@ public class DBHelper {
      * 切换到其他线程，instance 此时 已经是非空了，此线程就会直接取走instance ，直接使用，这样就回出错。DCL 失效。
      * 解决方法 SUN 官方已经给我们了。将instance 定义成 private volatile static Singleton instance =null: 即可
      */
-    private volatile static DBHelper instance;
+    private volatile static LoginDaoUtils instance;
     private LoginDao loginDao;
-    private PositionEntityDao positionEntityDao;
-    private SearchHistoryDao searchHistoryDao;
     private Login login;
-    private DBHelper(){
+    private LoginDaoUtils(){
 
     }
     /**
      * 单一实例
      */
-    public  static DBHelper getInstance(Context context){
+    public  static LoginDaoUtils getInstance(Context context){
         if(instance ==null) {
-            synchronized (DBHelper.class) {
+            synchronized (LoginDaoUtils.class) {
                 if (instance == null) {
-                    instance = new DBHelper();
+                    instance = new LoginDaoUtils();
                     if (mContext == null) {
                         mContext = context.getApplicationContext();
                     }
                     //数据库对象
-                    DaoSession daoSession = DBManager.getDBManager().getDaoSession(mContext);
+                    DaoSession daoSession = DBManager.getDBManager().getDaoSession();
                     instance.loginDao = daoSession.getLoginDao();
-                    instance.positionEntityDao = daoSession.getPositionEntityDao();
-                    instance.searchHistoryDao = daoSession.getSearchHistoryDao();
                 }
             }
             return  instance;
@@ -271,198 +263,4 @@ public class DBHelper {
         loginDao.deleteAll();
     }
     //===========↑↑↑↑↑↑↑↑↑用户数据↑↑↑↑↑↑↑↑↑=================
-    //===========↓↓↓↓↓↓↓搜索记录↓↓↓↓↓↓↓↓=================
-    /**
-     添加搜索记录数据
-     */
-    public void addToHistoryListfoTable(List<SearchHistory> item){
-        for(SearchHistory searchHistory:item){
-            addToHistoryfoTable(searchHistory);
-        }
-    }
-    /**
-     添加搜索记录数据
-     */
-    public long addToHistoryfoTable(SearchHistory item){
-        long id=searchHistoryDao.insert(item);
-        return id;
-    }
-
-    /**
-     * 取出所有搜索记录数据
-     * @return      所有搜索记录数据信息
-     */
-    public List<SearchHistory> getHistory() {
-        try {
-            QueryBuilder<SearchHistory> qb = searchHistoryDao.queryBuilder();
-            // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
-            qb.orderDesc(SearchHistoryDao.Properties.Time);
-            return qb.list();
-        }catch (Exception e){
-            return null;
-        }
-    }
-    /**
-     * 根据查询条件,返回搜索记录数据列表
-     * @param where        条件
-     * @param params       参数
-     * @return             数据列表
-     */
-    public List<SearchHistory> queryHistory(String where, String... params){
-        return searchHistoryDao.queryRaw(where, params);
-    }
-
-
-    /**
-     * 根据搜索记录,插入或修改信息
-     * @param item  搜索记录
-     * @return 插入或修改的搜索记录id
-     */
-    public long updatePosition(SearchHistory item){
-        return searchHistoryDao.insertOrReplace(item);
-    }
-
-
-    /**
-     * 批量插入或修改搜索记录
-     * @param list      搜索记录列表
-     */
-    public void updateHistory(final List<SearchHistory> list){
-        if(list == null || list.isEmpty()){
-            return;
-        }
-        for(int i=0; i<list.size(); i++){
-            SearchHistory item = list.get(i);
-            searchHistoryDao.insertOrReplace(item);
-        }
-//        positionEntityDao.getSession().runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                for(int i=0; i<list.size(); i++){
-//                    PositionEntity positionEntity = list.get(i);
-//                    positionEntityDao.insertOrReplace(positionEntity);
-//                }
-//            }
-//        });
-    }
-
-    /**
-     * 根据id,删除数据
-     * @param id      搜索记录id
-     */
-    public void deleteHistory(long id){
-        searchHistoryDao.deleteByKey(id);
-    }
-    /**
-     * 根据搜索记录,删除信息
-     * @param searchHistory    搜索记录
-     */
-    public void deleteHistory(SearchHistory searchHistory){
-        searchHistoryDao.delete(searchHistory);
-    }
-    /**
-     删除全部搜索记录
-     */
-    public void clearHistory(){
-        searchHistoryDao.deleteAll();
-    }
-    //===========↑↑↑↑↑↑↑↑↑搜索记录↑↑↑↑↑↑↑↑↑=================
-    //===========↓↓↓↓↓↓↓地址搜索记录↓↓↓↓↓↓↓↓↓=================
-    /**
-     添加地址搜索记录数据
-     */
-    public void addToPositionListfoTable(List<PositionEntity> item){
-        for(PositionEntity positionEntity:item){
-            addToPositionfoTable(positionEntity);
-        }
-    }
-    /**
-     添加地址搜索记录数据
-     */
-    public long addToPositionfoTable(PositionEntity item){
-        long id=positionEntityDao.insert(item);
-        return id;
-    }
-
-    /**
-     * 取出所有地址搜索记录数据
-     * @return      所有地址搜索记录数据信息
-     */
-    public List<PositionEntity> getPositionList() {
-        try {
-            QueryBuilder<PositionEntity> qb = positionEntityDao.queryBuilder();
-            // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
-            qb.orderDesc(PositionEntityDao.Properties.Id);
-            return qb.list();
-        }catch (Exception e){
-            return null;
-        }
-    }
-    /**
-     * 根据查询条件,返回地址搜索记录数据列表
-     * @param where        条件
-     * @param params       参数
-     * @return             数据列表
-     */
-    public List<PositionEntity> queryPosition(String where, String... params){
-        return positionEntityDao.queryRaw(where, params);
-    }
-
-
-    /**
-     * 根据地址搜索记录,插入或修改信息
-     * @param positionEntity  地址搜索记录
-     * @return 插入或修改的地址搜索记录id
-     */
-    public long updatePosition(PositionEntity positionEntity){
-        return positionEntityDao.insertOrReplace(positionEntity);
-    }
-
-
-    /**
-     * 批量插入或修改地址搜索记录
-     * @param list      地址搜索记录列表
-     */
-    public void updatePositionLists(final List<PositionEntity> list){
-        if(list == null || list.isEmpty()){
-            return;
-        }
-        for(int i=0; i<list.size(); i++){
-            PositionEntity positionEntity = list.get(i);
-            positionEntityDao.insertOrReplace(positionEntity);
-        }
-//        positionEntityDao.getSession().runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                for(int i=0; i<list.size(); i++){
-//                    PositionEntity positionEntity = list.get(i);
-//                    positionEntityDao.insertOrReplace(positionEntity);
-//                }
-//            }
-//        });
-    }
-
-    /**
-     * 根据id,删除数据
-     * @param id      地址搜索记录id
-     */
-    public void deletePosition(long id){
-        positionEntityDao.deleteByKey(id);
-    }
-
-    /**
-     * 根据地址搜索记录,删除信息
-     * @param positionEntity    地址搜索记录
-     */
-    public void deletePosition(PositionEntity positionEntity){
-        positionEntityDao.delete(positionEntity);
-    }
-
-    /**
-     删除全部地址搜索记录
-     */
-    public void clearPosition(){
-        positionEntityDao.deleteAll();
-    }
-    //===========↑↑↑↑↑↑↑↑↑地址搜索记录↑↑↑↑↑↑↑↑↑=================
 }

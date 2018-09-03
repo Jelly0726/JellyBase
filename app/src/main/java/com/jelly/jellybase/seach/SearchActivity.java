@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.appManager.MyApplication;
-import com.base.toast.ToastUtils;
 import com.base.multiClick.OnMultiClickListener;
-import com.base.sqldao.DBHelper;
+import com.base.sqldao.HistoryDaoUtils;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.base.view.FlowLayout;
 import com.jelly.jellybase.R;
@@ -54,7 +54,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history = new SearchHistory();
                         history.setTime(System.currentTimeMillis());
                         history.setHistory(search);
-                        DBHelper.getInstance(MyApplication.getMyApp()).addToHistoryfoTable(history);
+                        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).addToHistoryfoTable(history);
                     }
                     setBackData(search);
                     return true;
@@ -79,7 +79,7 @@ public class SearchActivity extends BaseActivity {
         if(search_history.getChildCount()>0){
             search_history.removeAllViewsInLayout();
         }
-        List<SearchHistory> historyList= DBHelper.getInstance(MyApplication.getMyApp()).getHistory();
+        List<SearchHistory> historyList= HistoryDaoUtils.getInstance(MyApplication.getMyApp()).getHistory();
         if(historyList!=null){
             for (int i = 0; i < historyList.size(); i++) {
                 TextView tv = (TextView) getLayoutInflater().inflate(
@@ -93,7 +93,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history= (SearchHistory) v.getTag();
 
                         history.setTime(System.currentTimeMillis());
-                        DBHelper.getInstance(MyApplication.getMyApp()).updatePosition(history);
+                        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).updatePosition(history);
 
                         setBackData(history.getHistory());
                     }
@@ -110,7 +110,7 @@ public class SearchActivity extends BaseActivity {
         finish();
     }
     private void clearHistory(){
-        DBHelper.getInstance(MyApplication.getMyApp()).clearHistory();
+        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).clearHistory();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 iniHistory();

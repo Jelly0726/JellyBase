@@ -18,7 +18,7 @@ import com.base.httpmvp.contact.SetPwdContact;
 import com.base.httpmvp.presenter.SetPassWordActivityPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
-import com.base.sqldao.DBHelper;
+import com.base.sqldao.LoginDaoUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
@@ -107,7 +107,7 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
 
     @Override
     public void excuteSuccess( Object mCallBackVo) {
-        DBHelper.getInstance(MyApplication.getMyApp()).clearLogin();
+        LoginDaoUtils.getInstance(MyApplication.getMyApp()).clearLogin();
         AppSubject.getAppSubject().detachAll();
         String password=password_edit.getText().toString().trim();
         Intent intent = new Intent();
