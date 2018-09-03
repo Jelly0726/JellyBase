@@ -17,6 +17,7 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +96,11 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
                         .centerCrop()
                         .into(holder.bank_logo);
                 return;
+            }else {
+                holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.yinlian));
             }
+        }else {
+            holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.yinlian));
         }
         holder.bank_logo.setImageResource(mList.get(position).getBankDraw());
 
