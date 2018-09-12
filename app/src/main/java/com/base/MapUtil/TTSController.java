@@ -22,6 +22,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.AmapCarLocation;
 import com.amap.api.navi.model.InnerNaviInfo;
 import com.amap.api.navi.model.NaviInfo;
+import com.amap.api.navi.model.NaviPath;
 import com.autonavi.ae.guide.model.NaviCongestionInfo;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.iflytek.cloud.ErrorCode;
@@ -392,6 +393,36 @@ public class TTSController implements MyNaviListener {
 
 	@Override
 	public void onSelectRouteId(int i) {
+
+	}
+
+	@Override
+	public void onChangeNaviPath(int i) {
+
+	}
+
+	@Override
+	public void onDeletePath(long[] longs) {
+
+	}
+
+	@Override
+	public void updateBackupPath(NaviPath[] naviPaths) {
+
+	}
+
+	@Override
+	public void onSelectMainPathStatus(long l) {
+
+	}
+
+	@Override
+	public void onInnerNaviInfoUpdate(InnerNaviInfo[] innerNaviInfos) {
+
+	}
+
+	@Override
+	public void onSuggestChangePath(long l, long l1, int i) {
 
 	}
 

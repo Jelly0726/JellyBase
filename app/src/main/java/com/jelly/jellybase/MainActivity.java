@@ -38,6 +38,7 @@ import com.base.checkVersion.BaseDialog;
 import com.base.config.BaseConfig;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.service.WatchDogService;
+import com.base.mic.MicService;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
 import com.base.permission.PermissionUtils;
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         iniXRefreshView();
         //启动守护服务，运行在:watch子进程中
         DaemonEnv.startServiceMayBind(WatchDogService.class);
+       startService(new Intent(this, MicService.class));
         //初始化省流量更新SDK，传入的Context必须为ApplicationContext
         TMSelfUpdateManager.getInstance().init(getApplicationContext(), BaseConfig.SELF_UPDATE_CHANNEL, mSelfUpdateListener,
                 null, null);

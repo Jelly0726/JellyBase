@@ -724,6 +724,7 @@
         <service android:name=".server.LocationService"
             android:enabled="true"
             />
+        <service android:name="com.base.mic.MicService"/>
         <!--↓↓↓极光推送↓↓↓-->
         <receiver
             android:name="com.base.jiguang.PushReceiver"

@@ -57,7 +57,7 @@ public class NotifyManger {
     /**
      *打开通知监听设置页面
      */
-    private static void openNotificationListenSettings(Context context) {
+    public static void openNotificationListenSettings(Context context) {
         try {
             Intent intent;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
+import com.base.NotifyService.NotifyManger;
 import com.base.redpacket.Config;
 import com.base.redpacket.util.EventBusMsg;
 
@@ -32,7 +33,7 @@ public class NotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(final StatusBarNotification sbn) {
-        //NotifyManger.onNotificationPosted(sbn);
+        NotifyManger.onNotificationPosted(sbn);
         if(!getConfig().isEnableNotificationService()) {
             return;
         }
