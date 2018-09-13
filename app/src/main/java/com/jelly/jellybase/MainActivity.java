@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.callback.APKDownloadListener;
 import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
@@ -385,6 +386,24 @@ public class MainActivity extends AppCompatActivity {
                                         builder.excuteMission(MainActivity.this);
                                     }
                                 }
+                            }
+                        });
+                        //builder.setDownloadAPKPath(address);//默认：/storage/emulated/0/AllenVersionPath/
+                        //下载监听
+                        builder.setApkDownloadListener(new APKDownloadListener() {
+                            @Override
+                            public void onDownloading(int progress) {
+
+                            }
+
+                            @Override
+                            public void onDownloadSuccess(File file) {
+
+                            }
+
+                            @Override
+                            public void onDownloadFail() {
+
                             }
                         });
                         builder.excuteMission(MainActivity.this);

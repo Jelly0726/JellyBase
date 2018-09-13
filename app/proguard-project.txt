@@ -35,6 +35,9 @@
 -dontskipnonpubliclibraryclassmembers
 -dontwarn dalvik.**
 -dontwarn com.tencent.smtt.**
+-dontwarn android.content.res.**
+-dontwarn org.apache.http.conn.scheme.**
+-dontwarn org.apache.http.params.**
 #-overloadaggressively
 # 保持哪些类不被混淆
 -keep public class * extends android.app.Fragment
@@ -330,6 +333,13 @@ public static java.lang.String TABLENAME;
 -dontwarn retrofit2.Platform$Java8
 -keepattributes Signature
 -keepattributes Exceptions
+# 使用 proguard-android-optimize 后要添加
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+-keepclasseswithmembers interface * {
+    @retrofit2.* <methods>;
+}
 # 保留实体类和成员不被混淆
  -keep public class com.base.httpmvp.databean.** {
      public void set*(***);
@@ -384,7 +394,8 @@ public static java.lang.String TABLENAME;
 #=======================MNProgressHUD====================
 -dontwarn com.maning.mndialoglibrary.**
 #=======================versionchecklib====================
--dontwarn com.allenliu.versionchecklib.**
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+-keep class com.allenliu.versionchecklib.**{*;}
 #=======================richtext====================
 -dontwarn com.zzhoujay.richtext.**
 #=======================MPAndroidChart====================

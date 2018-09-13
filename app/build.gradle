@@ -133,10 +133,13 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
 //解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
+//        doNotStrip "*/arm64-v8a/*.so"
         doNotStrip "*/armeabi/*.so"
         doNotStrip "*/armeabi-v7a/*.so"
         doNotStrip "*/x86/*.so"
         doNotStrip "*/mips/*.so"
+//        doNotStrip "*/mips64/*.so"
+//        doNotStrip "*/x86_64/*.so"
     }
 //    dexOptions {
 //        //jumboMode= true
@@ -291,7 +294,7 @@ dependencies {
     compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
 
     //检查版本
-    compile 'com.allenliu.versionchecklib:library:2.0.5'
+    compile 'com.allenliu.versionchecklib:library:2.0.8'
 
     //Android平台下的富文本解析器，支持Html和Markdown
     compile 'com.zzhoujay.richtext:richtext:3.0.4'
