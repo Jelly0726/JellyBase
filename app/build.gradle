@@ -307,7 +307,7 @@ dependencies {
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
 
     //权限申请
-    compile 'com.yanzhenjie:permission:1.1.2'
+    compile 'com.yanzhenjie:permission:2.0.0-rc12'
 
     //Java加密解密所需工具
     compile 'org.bouncycastle:bcprov-jdk15on:1.59'

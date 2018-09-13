@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,15 +90,9 @@ import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
 import com.tencent.tmselfupdatesdk.TMSelfUpdateManager;
 import com.tencent.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
-import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
-import com.yanzhenjie.permission.PermissionNo;
-import com.yanzhenjie.permission.PermissionYes;
-import com.yanzhenjie.permission.Rationale;
-import com.yanzhenjie.permission.RationaleListener;
 
 import java.io.File;
-import java.util.List;
 
 import hugo.weaving.DebugLog;
 
@@ -133,26 +126,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 申请权限。
-                AndPermission.with(MainActivity.this)
-                        .requestCode(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
-                        .permission(Permission.MICROPHONE,//扩音器，麦克风
-                                Permission.STORAGE,//存储
-                                Permission.CALENDAR,//日历
-                                Permission.CAMERA,//照相机
-                                Permission.CONTACTS,//联系人
-                                Permission.LOCATION,//定位
-                                //Permission.SENSORS,//传感器，感应器；感测器
-                                Permission.SMS,//短信
-                                new String[]{
-                                        android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
-                                        android.Manifest.permission.CALL_PHONE//拨打电话
-                                })
-                        .callback(this)
-                        // rationale作用是：用户拒绝一次权限，再次申请时先征求用户同意，再打开授权对话框；
-                        // 这样避免用户勾选不再提示，导致以后无法申请权限。
-                        // 你也可以不设置。
-                        .rationale(rationaleListener)
-                        .start();
+                PermissionUtils.getInstance().requestPermission(MainActivity.this,
+                        Permission.Group.MICROPHONE,//扩音器，麦克风
+                        Permission.Group.STORAGE,//存储
+                        Permission.Group.CALENDAR,//日历
+                        Permission.Group.CAMERA,//照相机
+                        Permission.Group.CONTACTS,//联系人
+                        Permission.Group.LOCATION,//定位
+                        //Permission.SENSORS,//传感器，感应器；感测器
+                        Permission.Group.SMS,//短信
+                        new String[]{
+                                android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
+                                android.Manifest.permission.CALL_PHONE//拨打电话
+                        });
                 //百度智能更新 SDK 的 AAR 文件
                 //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
 //                BDAutoUpdateSDK.cpUpdateCheck(MainActivity.this,new MyCheckUpdateCallback(),false);
@@ -506,61 +492,6 @@ public class MainActivity extends AppCompatActivity {
 //            //重新触发通知绑定
 //            NotifyManger.toggleNotificationListenerService();
 //        }
-    }
-    /**
-     *申请权限。 Rationale支持，这里自定义对话框。
-     */
-    private RationaleListener rationaleListener = new RationaleListener() {
-        @Override
-        public void showRequestPermissionRationale(int requestCode, final Rationale rationale) {
-            // 这里使用自定义对话框，如果不想自定义，用AndPermission默认对话框：
-            //AndPermission.rationaleDialog(Context, Rationale).show();
-            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
-            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
-            AndPermission.rationaleDialog(MainActivity.this, rationale)
-                    .setTitle(R.string.permission_title_dialog)
-                    .setMessage(R.string.message_permission_failed)
-                    .setPositiveButton(R.string.permission_ok)
-                    .setNegativeButton(R.string.permission_no, null)
-                    .show();
-            // 更多自定dialog，请看上面。
-            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
-        }
-    };
-
-    /**
-     * 申请权限。
-     * @param grantedPermissions
-     */
-    @PermissionYes(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
-    private void getMultiYes(@NonNull List<String> grantedPermissions) {
-        Toast.makeText(this, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 申请权限。
-     * @param deniedPermissions
-     */
-    @PermissionNo(PermissionUtils.REQUEST_CODE_PERMISSION_MULTI)
-    private void getMultiNo(@NonNull List<String> deniedPermissions) {
-        Toast.makeText(this, R.string.permission_failure, Toast.LENGTH_SHORT).show();
-        if(AndPermission.hasPermission(this,deniedPermissions)) {
-            // TODO 执行拥有权限时的下一步。
-        } else {
-            // 使用AndPermission提供的默认设置dialog，用户点击确定后会打开App的设置页面让用户授权。
-            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
-            if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
-                AndPermission.defaultSettingDialog(this, PermissionUtils.REQUEST_CODE_SETTING)
-                        .setTitle(R.string.permission_title_dialog)
-                        .setMessage(R.string.message_permission_failed)
-                        .setPositiveButton(R.string.permission_ok)
-                        .setNegativeButton(R.string.permission_no, null)
-                        .show();
-                // 更多自定dialog，请看上面。
-            }
-            // 建议：自定义这个Dialog，提示具体需要开启什么权限，自定义Dialog具体实现上面有示例代码。
-        }
-
     }
 
     @Override
