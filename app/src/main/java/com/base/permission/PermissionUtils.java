@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -146,6 +145,7 @@ public class PermissionUtils {
                 .start();
     }
     //电池优化白名单
+    private AlertDialog alertDialog;
     public void requestPowerPermission(final Context context) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
@@ -161,47 +161,51 @@ public class PermissionUtils {
         String packageName = context.getPackageName();
         boolean ignoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(packageName);
         if (!ignoringBatteryOptimizations) {
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    AlertDialog alertDialog = new AlertDialog.Builder(context)
-                            .setTitle(R.string.alert_for_doze_mode_title)
-                            .setMessage(R.string.alert_for_doze_mode_content)
-                            .setPositiveButton(R.string.alert_for_doze_mode_yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+            if (alertDialog==null)
+                alertDialog = new AlertDialog.Builder(context)
+                        .setTitle(R.string.alert_for_doze_mode_title)
+                        .setMessage(R.string.alert_for_doze_mode_content)
+                        .setPositiveButton(R.string.alert_for_doze_mode_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    context.startActivity(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                                            Uri.parse("package:" + context.getPackageName())));
+                                } catch (ActivityNotFoundException ignored) {
+                                    // ActivityNotFoundException on some devices.
                                     try {
-                                        context.startActivity(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
-                                                Uri.parse("package:" + context.getPackageName())));
-                                    } catch (ActivityNotFoundException ignored) {
-                                        // ActivityNotFoundException on some devices.
-                                        try {
-                                            context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
-                                        } catch (Throwable e) {
-                                            PreferenceManager.getDefaultSharedPreferences(context)
-                                                    .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
-                                        }
+                                        context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
                                     } catch (Throwable e) {
                                         PreferenceManager.getDefaultSharedPreferences(context)
                                                 .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
                                     }
-                                }
-                            })
-                            .setNegativeButton(R.string.alert_for_doze_mode_no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                } catch (Throwable e) {
                                     PreferenceManager.getDefaultSharedPreferences(context)
                                             .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
                                 }
-                            }).create();
-                    try {
-                        alertDialog.show();
-                    } catch (Throwable ignored) {
-                        ignored.printStackTrace();
-                    }
-                }
-            }, 1000);
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_for_doze_mode_no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                PreferenceManager.getDefaultSharedPreferences(context)
+                                        .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
+                            }
+                        })
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                alertDialog=null;
+                            }
+                        })
+                        .create();
+            try {
+                if (alertDialog!=null)
+                if (!alertDialog.isShowing())
+                    alertDialog.show();
+            } catch (Throwable ignored) {
+                ignored.printStackTrace();
+            }
         }
     }
 }
