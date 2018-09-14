@@ -108,7 +108,7 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
     @Override
     public void excuteSuccess( Object mCallBackVo) {
         LoginDaoUtils.getInstance(MyApplication.getMyApp()).clearLogin();
-        AppSubject.getAppSubject().detachAll();
+        AppSubject.getInstance().detachAll();
         String password=password_edit.getText().toString().trim();
         Intent intent = new Intent();
         //intent.setClass(this, LoginActivity.class);

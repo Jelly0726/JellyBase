@@ -106,7 +106,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
 
     }
     public void sendCrash(){
-        ExecutorManager.getExecutorManager().getSingleThread().execute(new Runnable() {
+        ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
             @Override
             public void run() {
                 File file = new File(CAHCE_CRASH_LOG);

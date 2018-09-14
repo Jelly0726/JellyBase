@@ -23,7 +23,7 @@ public class AppManager {
     /**
      * 单一实例
      */
-    public static AppManager getAppManager() {
+    public static AppManager getInstance() {
         return SingletonHolder.instance;
     }
     /**

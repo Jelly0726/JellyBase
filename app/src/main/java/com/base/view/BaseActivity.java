@@ -55,7 +55,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
         mFilter = new IntentFilter();
         mFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         mFilter.addAction(IntentAction.TOKEN_NOT_EXIST);
-        AppSubject.getAppSubject().attach(this);
+        AppSubject.getInstance().attach(this);
         /**
          * 开始监听，注册广播
          */
@@ -146,7 +146,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
         if (mRecevier != null) {
             unregisterReceiver(mRecevier);
         }
-        AppSubject.getAppSubject().detach(this);
+        AppSubject.getInstance().detach(this);
         super.onDestroy();
         if (circleDialog!=null){
             circleDialog.onDismiss();
@@ -243,7 +243,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
                                             public void onClick(View v) {
                                                 circleDialog = null;
                                                 GlobalToken.removeToken();
-                                                AppSubject.getAppSubject().detachAll();
+                                                AppSubject.getInstance().detachAll();
                                                 Intent intent1 = new Intent();
                                                 //intent.setClass(this, LoginActivity.class);
                                                 intent1.setAction(IntentAction.ACTION_LOGIN);
@@ -264,7 +264,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
     @Override
     public void finish() {
         // TODO Auto-generated method stub
-        AppSubject.getAppSubject().detach(this);
+        AppSubject.getInstance().detach(this);
         super.finish();
     }
     @Override

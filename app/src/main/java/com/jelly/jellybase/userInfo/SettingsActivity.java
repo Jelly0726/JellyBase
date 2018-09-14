@@ -124,7 +124,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                                 public void onClick(View v) {
                                     GlobalToken.removeToken();
 
-                                    AppSubject.getAppSubject().detachAll();
+                                    AppSubject.getInstance().detachAll();
                                     Intent intent = new Intent();
                                     //intent.setClass(this, LoginActivity.class);
                                     intent.setAction(IntentAction.ACTION_LOGIN);

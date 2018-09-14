@@ -55,7 +55,7 @@ public class PushReceiver extends BroadcastReceiver {
             //openNotification(context,bundle);
             //打开自定义的Activity
             Intent i = new Intent();
-            if (AppSubject.getAppSubject().isRegistered(MainActivity.class)){
+            if (AppSubject.getInstance().isRegistered(MainActivity.class)){
                 i.setAction(MyApplication.getMyApp().getPackageName()+".action.ACTION_MAIN");
             }else {
                 i.setAction(IntentAction.JPUSH_CLICK);

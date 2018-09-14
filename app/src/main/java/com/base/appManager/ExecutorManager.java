@@ -27,7 +27,7 @@ public class ExecutorManager {
     /**
      * 单一实例
      */
-    public static ExecutorManager getExecutorManager(){
+    public static ExecutorManager getInstance(){
         return SingletonHolder.instance;
     }
     /**

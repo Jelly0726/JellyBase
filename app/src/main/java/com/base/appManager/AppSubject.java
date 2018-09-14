@@ -21,7 +21,7 @@ public class AppSubject extends Subject {
     /**
      * 单一实例
      */
-    public static AppSubject getAppSubject() {
+    public static AppSubject getInstance() {
         return SingletonHolder.instance;
     }
     /**

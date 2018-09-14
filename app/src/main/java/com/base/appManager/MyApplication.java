@@ -189,7 +189,7 @@ public class MyApplication extends Application {
     public void exit() {
         try{
             HermesManager.getHermesManager().clear();
-            AppSubject.getAppSubject().detachAll();
+            AppSubject.getInstance().detachAll();
             LocationTask.getInstance(this).onDestroy();//销毁定位
             if (getPackageName().equals(getCurProcessName())) {
                 HermesEventBus.getDefault().destroy();
