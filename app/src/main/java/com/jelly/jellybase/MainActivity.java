@@ -498,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case PermissionUtils.REQUEST_CODE_SETTING: {
-                Toast.makeText(this, R.string.message_setting_back, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.message_setting_comeback, Toast.LENGTH_LONG).show();
                 break;
             }
         }

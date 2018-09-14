@@ -1,8 +1,16 @@
 package com.base.permission;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -16,6 +24,8 @@ import com.yanzhenjie.permission.Setting;
 import java.io.ObjectStreamException;
 import java.util.List;
 
+import static android.content.Context.POWER_SERVICE;
+
 /**
  * Created by Administrator on 2018/1/24.
  */
@@ -23,6 +33,7 @@ import java.util.List;
 public class PermissionUtils {
     //设置请求码
     public static final int REQUEST_CODE_SETTING = 300;
+    private static final String SHOW_DOZE_ALERT_KEY = "SHOW_DOZE_ALERT_KEY";
     private PermissionUtils(){
     }
     /**
@@ -134,5 +145,63 @@ public class PermissionUtils {
                 })
                 .start();
     }
+    //电池优化白名单
+    public void requestPowerPermission(final Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+        PowerManager powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
+        if (powerManager == null) {
+            return;
+        }
+        boolean showAlert = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(SHOW_DOZE_ALERT_KEY, true);
+        if (!showAlert) {
+            return;
+        }
+        String packageName = context.getPackageName();
+        boolean ignoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(packageName);
+        if (!ignoringBatteryOptimizations) {
 
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog alertDialog = new AlertDialog.Builder(context)
+                            .setTitle(R.string.alert_for_doze_mode_title)
+                            .setMessage(R.string.alert_for_doze_mode_content)
+                            .setPositiveButton(R.string.alert_for_doze_mode_yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    try {
+                                        context.startActivity(new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                                                Uri.parse("package:" + context.getPackageName())));
+                                    } catch (ActivityNotFoundException ignored) {
+                                        // ActivityNotFoundException on some devices.
+                                        try {
+                                            context.startActivity(new Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS));
+                                        } catch (Throwable e) {
+                                            PreferenceManager.getDefaultSharedPreferences(context)
+                                                    .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
+                                        }
+                                    } catch (Throwable e) {
+                                        PreferenceManager.getDefaultSharedPreferences(context)
+                                                .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.alert_for_doze_mode_no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    PreferenceManager.getDefaultSharedPreferences(context)
+                                            .edit().putBoolean(SHOW_DOZE_ALERT_KEY, false).apply();
+                                }
+                            }).create();
+                    try {
+                        alertDialog.show();
+                    } catch (Throwable ignored) {
+                        ignored.printStackTrace();
+                    }
+                }
+            }, 1000);
+        }
+    }
 }
