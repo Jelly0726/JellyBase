@@ -27,6 +27,8 @@ public class AlipayPassWordActivity extends AppCompatActivity{
     private void iniView(){
         mKeypad = new PasswordKeypad();
         mKeypad.setPasswordCount(6);
+        mKeypad.setMsgCount(4);//短信验证码长度
+        mKeypad.setKeyType(0);//0 只用支付密码，1 只用短信验证码 2使用支付密码或短信验证码
         mKeypad.setCallback(new Callback() {
             @Override
             public void onForgetPassword() {
@@ -34,7 +36,7 @@ public class AlipayPassWordActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onInputCompleted(CharSequence password) {
+            public void onInputCompleted(boolean type,CharSequence password) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
