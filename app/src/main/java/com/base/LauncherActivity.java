@@ -34,7 +34,8 @@ public class LauncherActivity extends BaseActivity{
 				return;
 			}
 		}
-		setContentView(R.layout.base_activity_launcher);
+		//下面为纯色背景启动图标  若使用背景图片(styles)注释下面即可
+//		setContentView(R.layout.base_activity_launcher);
 		//开启服务
 		TraceServiceImpl.sShouldStopService = true;
 		DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
