@@ -318,6 +318,12 @@ public static java.lang.String TABLENAME;
  -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
  rx.internal.util.atomic.LinkedQueueNode consumerNode;
  }
+  #===============================okhttp
+  -dontwarn okhttp3.**
+  -keep class okhttp3.**{*;}
+  #================================okio
+  -dontwarn okio.**
+  -keep class okio.**{*;}
  #====================TrayPreferences====================
   # If you do not use TrayPreferences:
  -dontwarn net.grandcentrix.tray.*

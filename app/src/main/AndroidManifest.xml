@@ -124,12 +124,14 @@
     <!-- 要求当前设备必须要有NFC芯片 -->
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <!--加android:extractNativeLibs="false" 会导致加固后不能安装-->
+    <!--本工程的属性和第三方工程里的属性名称相同  加 tools:replace="android:icon, android:theme"-->
     <application
         android:name="com.base.appManager.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        tools:replace="android:icon, android:theme"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--↓↓↓↓↓ 高德地图 ↓↓↓↓↓-->
