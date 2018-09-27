@@ -14,8 +14,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.ConnectivityManager;
@@ -33,34 +33,20 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.ClipboardManager;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.CharacterStyle;
-import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.base.Utils.CPResourceUtil;
-import com.base.Utils.ResourceReader;
 import com.base.appManager.MyApplication;
-import com.base.config.BaseConfig;
-import com.base.encrypt.MD5;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -70,14 +56,13 @@ import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -1058,5 +1043,63 @@ public class AppUtils {
         }
     }
 
+    /**
+     * 获取本应用的签名信息
+     * @param context
+     * @return
+     */
+    public static String getSign(Context context) {
+        PackageManager pm = context.getPackageManager();
+        List<PackageInfo> apps = pm.getInstalledPackages(PackageManager.GET_SIGNATURES);
+        Iterator<PackageInfo> iter = apps.iterator();
+        while (iter.hasNext()) {
+            PackageInfo packageinfo = iter.next();
+            String packageName = packageinfo.packageName;
+            if (packageName.equals(context.getPackageName())) {
+                // MediaApplication.logD(DownloadApk.class, packageinfo.signatures[0].toCharsString());
+                return  parseSignature(packageinfo.signatures[0].toByteArray());
+                //return packageinfo.signatures[0].toCharsString();
+            }
+        }
+        return null;
+    }
 
+    /**
+     * 根据包名获取PAK的签名信息
+     * @param context
+     * @param packageName
+     */
+    public static String getSingInfo(Context context,String packageName) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+            return parseSignature(sign.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     * 获取APk签名信息
+     * @return
+     */
+    private static String parseSignature(byte[] signature) {
+        try {
+            CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
+            X509Certificate cert = (X509Certificate) certFactory.generateCertificate(new ByteArrayInputStream(signature));
+            String pubKey = cert.getPublicKey().toString();
+            String signNumber = cert.getSerialNumber().toString();
+            String[] str = cert.getSubjectDN().toString().split(",");
+            int num=str[0].indexOf("=");
+            String locationx = str[0].substring(num+1, str[0].length());
+            String ss="signName:" + cert.getSigAlgName()+",pubKey:" + pubKey+
+                    ",signNumber:" + signNumber+",subjectDN:" + cert.getSubjectDN().toString()
+                    +",姓名="+locationx;
+            return locationx;
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
