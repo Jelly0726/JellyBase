@@ -40,7 +40,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         return crashHandler;
     }
     public void init(Context context) {
-        if (isDebuggable()) {
+        if (isSendErr()) {
             mContext = context;
             defaultCrashHandler = Thread.getDefaultUncaughtExceptionHandler();
             //设置系统的默认异常处理器
@@ -59,11 +59,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             System.exit(0);
         }
     }
-    private boolean isDebuggable() {
+    private boolean isSendErr() {
         return BuildConfig.LOG_DEBUG;
     }
     public void sendError() {
-        if (isDebuggable()) {
+        if (isSendErr()) {
             final SharedPreferences sp = mContext.getSharedPreferences("errorInfo", Context.MODE_PRIVATE);
             String data = sp.getString("data", "");
             if (!TextUtils.isEmpty(data)) {

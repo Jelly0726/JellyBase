@@ -46,14 +46,14 @@ public class CrashApphandler extends CrashAppLog{
             crashAppLog.setLIMIT_LOG_COUNT(5);
         }
     }
-    private boolean isDebuggable() {
-        return BuildConfig.LOG_DEBUG;
+    private boolean isSendErr() {
+        return BuildConfig.SEND_ERR;
     }
     @Override
     public void sendCrashLogToServer(File folder,final File file) {
         //发送服务端
         DebugLog.e("*********", "文件夹:"+folder.getAbsolutePath()+" - "+file.getAbsolutePath()+"");
-        if (isDebuggable()) {
+        if (isSendErr()) {
             String data = FilesUtil.getInstance().read(file).toString();
             if (!TextUtils.isEmpty(data)) {
                 JSONObject map=new JSONObject();
