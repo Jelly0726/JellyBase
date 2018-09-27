@@ -494,6 +494,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.SingMD5Activity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
         <activity android:name=".blebluetooth.BluetoothBLEActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"

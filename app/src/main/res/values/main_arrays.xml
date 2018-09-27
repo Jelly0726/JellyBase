@@ -42,6 +42,7 @@
         <item>自动抢红包</item>
         <item>webView下载文件</item>
         <item>崩溃日志</item>
+        <item>获取应用签名MD5值</item>
     </string-array>
 
     <string-array name="cause">

@@ -40,6 +40,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.base.appManager.MyApplication;
+import com.base.encrypt.MD5;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
 
@@ -48,6 +49,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
@@ -63,6 +65,8 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -1057,7 +1061,54 @@ public class AppUtils {
             String packageName = packageinfo.packageName;
             if (packageName.equals(context.getPackageName())) {
                 // MediaApplication.logD(DownloadApk.class, packageinfo.signatures[0].toCharsString());
-                return  parseSignature(packageinfo.signatures[0].toByteArray());
+                Map map=parseSignature(packageinfo.signatures[0].toByteArray());
+                String ss="SigAlgName：" + map.get("SigAlgName")
+                        +"\npubKey：" + map.get("pubKey")+
+                        "\nsignNumber：" + map.get("signNumber")
+                        +"\nsubjectDN：" +map.get("subjectDN")
+                        +"\n姓名："+map.get("name")
+                        +"\nIssuerDN："+map.get("IssuerDN")
+                        +"\n有效期开始："+map.get("NotBefore")
+                        +"\n有效期限："+map.get("NotAfter")
+                        +"\nTBSCertificate："+map.get("TBSCertificate")
+                        +"\nSignature："+map.get("Signature")
+                        +"\nSigAlgOID："+map.get("SigAlgOID")
+                        +"\nSigAlgParams："+map.get("SigAlgParams")
+                        ;
+                return  ss;
+                //return packageinfo.signatures[0].toCharsString();
+            }
+        }
+        return null;
+    }
+    /**
+     * 根据包名获取的签名信息
+     * @param context
+     * @return
+     */
+    public static String getSign(Context context,String packageName) {
+        PackageManager pm = context.getPackageManager();
+        List<PackageInfo> apps = pm.getInstalledPackages(PackageManager.GET_SIGNATURES);
+        Iterator<PackageInfo> iter = apps.iterator();
+        while (iter.hasNext()) {
+            PackageInfo packageinfo = iter.next();
+            if (packageName.equals(context.getPackageName())) {
+                // MediaApplication.logD(DownloadApk.class, packageinfo.signatures[0].toCharsString());
+                Map map=parseSignature(packageinfo.signatures[0].toByteArray());
+                String ss="SigAlgName：" + map.get("SigAlgName")
+                        +"\npubKey：" + map.get("pubKey")+
+                        "\nsignNumber：" + map.get("signNumber")
+                        +"\nsubjectDN：" +map.get("subjectDN")
+                        +"\n姓名："+map.get("name")
+                        +"\nIssuerDN："+map.get("IssuerDN")
+                        +"\n有效期开始："+map.get("NotBefore")
+                        +"\n有效期限："+map.get("NotAfter")
+                        +"\nTBSCertificate："+map.get("TBSCertificate")
+                        +"\nSignature："+map.get("Signature")
+                        +"\nSigAlgOID："+map.get("SigAlgOID")
+                        +"\nSigAlgParams："+map.get("SigAlgParams")
+                        ;
+                return  ss;
                 //return packageinfo.signatures[0].toCharsString();
             }
         }
@@ -1065,11 +1116,26 @@ public class AppUtils {
     }
 
     /**
+     * 获取PAK的签名信息
+     * @param context
+     */
+    public static Map getSingInfo(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+            return parseSignature(sign.toByteArray());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
      * 根据包名获取PAK的签名信息
      * @param context
      * @param packageName
      */
-    public static String getSingInfo(Context context,String packageName) {
+    public static Map getSingInfo(Context context,String packageName) {
         try {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
             Signature[] signs = packageInfo.signatures;
@@ -1084,7 +1150,8 @@ public class AppUtils {
      * 获取APk签名信息
      * @return
      */
-    private static String parseSignature(byte[] signature) {
+    private static Map parseSignature(byte[] signature) {
+        Map map=new TreeMap();
         try {
             CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
             X509Certificate cert = (X509Certificate) certFactory.generateCertificate(new ByteArrayInputStream(signature));
@@ -1093,13 +1160,143 @@ public class AppUtils {
             String[] str = cert.getSubjectDN().toString().split(",");
             int num=str[0].indexOf("=");
             String locationx = str[0].substring(num+1, str[0].length());
-            String ss="signName:" + cert.getSigAlgName()+",pubKey:" + pubKey+
-                    ",signNumber:" + signNumber+",subjectDN:" + cert.getSubjectDN().toString()
-                    +",姓名="+locationx;
-            return locationx;
+            map.put("name", locationx);
+            map.put("SigAlgName",  cert.getSigAlgName());
+            map.put("pubKey", pubKey);
+            map.put("signNumber", signNumber);
+            map.put("subjectDN", cert.getSubjectDN());
+            map.put("IssuerDN", cert.getIssuerDN());
+            map.put("NotBefore", cert.getNotBefore());
+            map.put("NotAfter", cert.getNotAfter());
+            map.put("TBSCertificate", new String(cert.getTBSCertificate()));
+            map.put("Signature", new String(cert.getSignature()));
+            map.put("SigAlgOID", cert.getSigAlgOID());
+            map.put("SigAlgParams", new String(cert.getSigAlgParams()));
+            return map;
         } catch (CertificateException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    /**
+     * 获取app签名md5值,与“keytool -list -keystore D:\Desktop\app_key”‘keytool -printcert
+     * *file D:\Desktop\CERT.RSA’获取的md5值一样
+     */
+    public static String getSignMd5Str(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(
+                    context.getPackageName(), PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+            String signStr = MD5.MD5Encode(sign.toByteArray());
+            return signStr;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    /**
+     * 获取app签名md5值,与“keytool -list -keystore D:\Desktop\app_key”‘keytool -printcert
+     * *file D:\Desktop\CERT.RSA’获取的md5值一样
+     */
+    public static String getSignMd5Str(Context context,String packageName) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(
+                    packageName, PackageManager.GET_SIGNATURES);
+            Signature[] signs = packageInfo.signatures;
+            Signature sign = signs[0];
+            String signStr = MD5.MD5Encode(sign.toByteArray());
+            return signStr;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 获取未安装Apk的签名
+     *
+     * @param apkPath
+     * @return
+     */
+    public static String getApkSignature(String apkPath) {
+        String PATH_PackageParser = "android.content.pm.PackageParser";
+        try {
+            // apk包的文件路径
+            // 这是一个Package 解释器, 是隐藏的
+            // 构造函数的参数只有一个, apk文件的路径
+            Class<?> pkgParserCls = Class.forName(PATH_PackageParser);
+            Class<?>[] typeArgs = new Class[1];
+            typeArgs[0] = String.class;
+            Object[] valueArgs = new Object[1];
+            valueArgs[0] = apkPath;
+            Object pkgParser;
+            if (Build.VERSION.SDK_INT > 19) {
+                pkgParser = pkgParserCls.newInstance();
+            } else {
+                Constructor constructor = pkgParserCls.getConstructor(typeArgs);
+                pkgParser = constructor.newInstance(valueArgs);
+            }
+
+            // 这个是与显示有关的, 里面涉及到一些像素显示等等, 我们使用默认的情况
+            DisplayMetrics metrics = new DisplayMetrics();
+            metrics.setToDefaults();
+            // PackageParser.Package mPkgInfo = packageParser.parsePackage(new
+            // File(apkPath), apkPath,
+            // metrics, 0);
+            Object pkgParserPkg = null;
+            if (Build.VERSION.SDK_INT > 19) {
+                valueArgs = new Object[2];
+                valueArgs[0] = new File(apkPath);
+                valueArgs[1] = PackageManager.GET_SIGNATURES;
+                Method pkgParser_parsePackageMtd = pkgParserCls.getDeclaredMethod(
+                        "parsePackage", typeArgs);
+                pkgParser_parsePackageMtd.setAccessible(true);
+
+                typeArgs = new Class[2];
+                typeArgs[0] = File.class;
+                typeArgs[1] = int.class;
+                pkgParserPkg = pkgParser_parsePackageMtd.invoke(pkgParser,
+                        valueArgs);
+            } else {
+                typeArgs = new Class[4];
+                typeArgs[0] = File.class;
+                typeArgs[1] = String.class;
+                typeArgs[2] = DisplayMetrics.class;
+                typeArgs[3] = int.class;
+
+                Method pkgParser_parsePackageMtd = pkgParserCls.getDeclaredMethod(
+                        "parsePackage", typeArgs);
+                pkgParser_parsePackageMtd.setAccessible(true);
+
+                valueArgs = new Object[4];
+                valueArgs[0] = new File(apkPath);
+                valueArgs[1] = apkPath;
+                valueArgs[2] = metrics;
+                valueArgs[3] = PackageManager.GET_SIGNATURES;
+                pkgParserPkg = pkgParser_parsePackageMtd.invoke(pkgParser,
+                        valueArgs);
+            }
+
+
+            typeArgs = new Class[2];
+            typeArgs[0] = pkgParserPkg.getClass();
+            typeArgs[1] = int.class;
+            Method pkgParser_collectCertificatesMtd = pkgParserCls.getDeclaredMethod("collectCertificates", typeArgs);
+            valueArgs = new Object[2];
+            valueArgs[0] = pkgParserPkg;
+            valueArgs[1] = PackageManager.GET_SIGNATURES;
+            pkgParser_collectCertificatesMtd.invoke(pkgParser, valueArgs);
+            // 应用程序信息包, 这个公开的, 不过有些函数, 变量没公开
+            Field packageInfoFld = pkgParserPkg.getClass().getDeclaredField(
+                    "mSignatures");
+            Signature[] info = (Signature[]) packageInfoFld.get(pkgParserPkg);
+            return info[0].toCharsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 }

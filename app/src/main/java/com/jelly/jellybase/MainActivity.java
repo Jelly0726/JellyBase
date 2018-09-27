@@ -74,6 +74,7 @@ import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
+import com.jelly.jellybase.activity.SingMD5Activity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
 import com.jelly.jellybase.activity.UniqueIDActivity;
@@ -683,6 +684,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 40://崩溃日志
                     intent=new Intent(MyApplication.getMyApp(), CrashActivity.class);
+                    startActivity(intent);
+                    break;
+                case 41://获取应用签名MD5值
+                    intent=new Intent(MyApplication.getMyApp(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
             }
