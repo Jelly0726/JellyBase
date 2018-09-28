@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.widget.BaseAdapter;
@@ -32,6 +33,7 @@ public class StringUtil {
      * @return
      */
     public static String getReplace(@NonNull String str , int star, int end, String ss){
+        if (TextUtils.isEmpty(str)||TextUtils.isEmpty(ss))return str;
         String sr =str.trim().replaceAll(" ", "");
         int len = sr.length();
         if (star<1 || star>len ||end<1 ||end<star ||end>len){
@@ -54,6 +56,7 @@ public class StringUtil {
      * @return
      */
     public static String getReplace(@NonNull String str ,int star,int end){
+        if (TextUtils.isEmpty(str))return str;
         String sr =str.trim().replaceAll(" ", "");
         int len = sr.length();
         if (star<1 || star>len ||end<1 ||end<star ||end>len){
@@ -77,6 +80,7 @@ public class StringUtil {
      */
     public static boolean like(String str,String regex,boolean bool)
     {
+        if (TextUtils.isEmpty(str)||TextUtils.isEmpty(regex))return false;
         regex = regex.replaceAll("\\*", ".*");
         regex = regex.replaceAll("\\?", ".");
         Pattern pattern = Pattern.compile(regex,bool?Pattern.CASE_INSENSITIVE:0);
@@ -116,6 +120,7 @@ public class StringUtil {
      * @return
      */
     public static boolean isAllChina(String string){
+        if (TextUtils.isEmpty(string))return false;
         String reg = "[\\u4e00-\\u9fa5]+";
         return string.matches(reg);
     }
@@ -126,6 +131,7 @@ public class StringUtil {
      * @return           全是汉字的字符串
      */
     public static String getChina(String string){
+        if (TextUtils.isEmpty(string))return string;
         String reg = "[^\u4e00-\u9fa5]";
         string = string.replaceAll(reg, " ");
         return string;
@@ -137,6 +143,7 @@ public class StringUtil {
      * @return  true:无汉字  false:有汉字
      */
     public static boolean isContainChina(String string){
+        if (TextUtils.isEmpty(string))return false;
         return (string.length() == string.getBytes().length);
     }
 
@@ -146,6 +153,7 @@ public class StringUtil {
      * @return           汉字的个数
      */
     public static int haveChinaNum(String string){
+        if (TextUtils.isEmpty(string))return 0;
         int count = 0;
         String reg = "[\\u4e00-\\u9fa5]";
         Pattern p = Pattern.compile(reg);
@@ -163,6 +171,7 @@ public class StringUtil {
      * @return
      */
     public static boolean isMobileNO(String paramString) {
+        if (TextUtils.isEmpty(paramString))return false;
         return Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$").matcher(paramString).matches();
     }
     /**
@@ -174,6 +183,7 @@ public class StringUtil {
      * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
      */
     public static SpannableStringBuilder highlight(String text, String target, int color) {
+        if (TextUtils.isEmpty(text)||TextUtils.isEmpty(target))return null;
         SpannableStringBuilder spannable = new SpannableStringBuilder(text);
         CharacterStyle span = null;
 
@@ -192,6 +202,7 @@ public class StringUtil {
      * @param value
      */
     public static void setSpinnerItemSelectedByValue(Spinner spinner, String value, String modle){
+        if (TextUtils.isEmpty(value)||TextUtils.isEmpty(modle))return;
         BaseAdapter apsAdapter= (BaseAdapter) spinner.getAdapter(); //得到SpinnerAdapter对象
         int k= apsAdapter.getCount();
         try {
