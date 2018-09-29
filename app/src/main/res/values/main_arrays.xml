@@ -43,6 +43,7 @@
         <item>webView下载文件</item>
         <item>崩溃日志</item>
         <item>获取应用签名MD5值</item>
+        <item>NDK(.so)测试</item>
     </string-array>
 
     <string-array name="cause">

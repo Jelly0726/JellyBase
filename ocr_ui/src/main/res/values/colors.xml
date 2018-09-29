@@ -3,7 +3,7 @@
   ~ Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
   -->
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ff3F51B5</color>
+    <color name="colorPrimaryDark">#ff303F9F</color>
+    <color name="colorAccent">#ffFF4081</color>
 </resources>

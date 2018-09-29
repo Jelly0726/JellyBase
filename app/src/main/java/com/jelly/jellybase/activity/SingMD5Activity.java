@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
+import com.base.nativeUtil.NativeUtils;
 import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -42,6 +43,12 @@ public class SingMD5Activity extends BaseActivity{
     Button otherApk_copy;
     @BindView(R.id.otherApk_tv)
     TextView otherApk_tv;
+    @BindView(R.id.ndk_btn)
+    Button ndk_btn;
+    @BindView(R.id.ndk_copy)
+    Button ndk_copy;
+    @BindView(R.id.ndk_tv)
+    TextView ndk_tv;
 
     private ClipboardManager mClipboardManager;
     @Override
@@ -54,7 +61,8 @@ public class SingMD5Activity extends BaseActivity{
     private void iniView(){
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
     }
-    @OnClick({R.id.left_back,R.id.thisApk_btn,R.id.thisApk_copy,R.id.thisInfo_btn,R.id.otherApk_btn,R.id.otherApk_copy,R.id.otherInfo_btn})
+    @OnClick({R.id.left_back,R.id.thisApk_btn,R.id.thisApk_copy,R.id.thisInfo_btn,R.id.otherApk_btn
+            ,R.id.otherApk_copy,R.id.otherInfo_btn,R.id.ndk_copy,R.id.ndk_btn})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:
@@ -92,6 +100,15 @@ public class SingMD5Activity extends BaseActivity{
                     return;
                 }
                 otherApk_tv.setText(AppUtils.getSign(this,pas));
+                break;
+            case R.id.ndk_copy:
+                String s=ndk_tv.getText().toString();
+                ClipData mClipDa =ClipData.newPlainText("Label", s);         //‘Label’这是任意文字标签
+                mClipboardManager.setPrimaryClip(mClipDa);
+                ToastUtils.showShort(this, "复制成功，可以发给朋友们了。");
+                break;
+            case R.id.ndk_btn:
+                ndk_tv.setText(NativeUtils.getNativeString());
                 break;
         }
     }

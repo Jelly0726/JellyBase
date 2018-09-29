@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.base.appManager.MyApplication;
 import com.base.applicationUtil.AppUtils;
+import com.base.nativeUtil.NativeUtils;
 
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
@@ -244,5 +245,8 @@ public class StringUtil {
                 ((Button) linearLayout.getChildAt(i)).setCompoundDrawables(null, null, null, null);
             }
         }
+    }
+    public static void main(String[] arg){
+        System.out.println(NativeUtils.getNativeString());
     }
 }

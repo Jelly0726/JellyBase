@@ -690,6 +690,10 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(MyApplication.getMyApp(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
+                case 42://NDK(.so)测试
+                    intent=new Intent(MyApplication.getMyApp(), SingMD5Activity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }
