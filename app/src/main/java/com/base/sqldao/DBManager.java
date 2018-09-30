@@ -2,7 +2,7 @@ package com.base.sqldao;
 
 import android.content.Context;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -72,7 +72,7 @@ public class DBManager {
         if (daoSession == null)
         {
             //throw new SQLException("Call init initializing the configuration database in the onCreate of the Application");
-            init(MyApplication.getMyApp());
+            init(BaseApplication.getInstance());
         }
         return daoSession;
     }

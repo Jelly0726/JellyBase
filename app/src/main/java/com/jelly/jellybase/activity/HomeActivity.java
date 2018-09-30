@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.base.MapUtil.DestinationActivity;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
@@ -216,7 +216,7 @@ public class HomeActivity extends BaseActivity {
         items.add(new BaseItem("集团客户",-1));
         items.add(new BaseItem("集团客户",-1));
         topMiddlePopup = new TopMiddlePopup(this,
-                Util.getScreenWidth(MyApplication.getMyApp()), Util.getScreenHeight(MyApplication.getMyApp()),
+                Util.getScreenWidth(BaseApplication.getInstance()), Util.getScreenHeight(BaseApplication.getInstance()),
                 onPopItem,items, type);
     }
     private boolean oNcount=false;
@@ -330,7 +330,7 @@ public class HomeActivity extends BaseActivity {
             String result=data.getStringExtra(ZXingUtils.ScanResult);
             Log.i("ss","result="+result);
             scanResult=new Gson().fromJson(result,ScanResult.class);
-            if (!MyApplication.getMyApp().isLogin()){
+            if (!BaseApplication.getInstance().isLogin()){
                 ToastUtils.showToast(this,"请先登录!");
                 return;
             }
@@ -349,15 +349,15 @@ public class HomeActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.saomiao_img:
-                    intent=new Intent(MyApplication.getMyApp(), ScanerCodeActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ScanerCodeActivity.class);
                     startActivityForResult(intent,zxingRequestCode);
                     break;
                 case R.id.left_address:
-                    intent=new Intent(MyApplication.getMyApp(), DestinationActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), DestinationActivity.class);
                     startActivityForResult(intent,addressRequestCode);
                     break;
                 case R.id.home_search:
-                    intent=new Intent(MyApplication.getMyApp(), SearchActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), SearchActivity.class);
                     //startActivityForResult(intent,addressRequestCode);
                     startActivity(intent);
                     break;

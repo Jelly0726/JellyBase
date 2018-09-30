@@ -18,7 +18,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.MediaStore;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
@@ -138,8 +138,8 @@ public class Shotter {
 //                        File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/"+System.currentTimeMillis()+".jpg");
 //                        mLocalUrl = fileUri.getPath();
 ////                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-////                            mLocalUrl = FileProvider.getUriForFile(MyApplication.getMyApp(),
-////                                    MyApplication.getMyApp().getPackageName()+".fileprovider", fileUri).getPath();//通过FileProvider创建一个content类型的Uri
+////                            mLocalUrl = FileProvider.getUriForFile(BaseApplication.getInstance(),
+////                                    BaseApplication.getInstance().getPackageName()+".fileprovider", fileUri).getPath();//通过FileProvider创建一个content类型的Uri
 ////                        mLocalUrl = getContext().getExternalFilesDir("screenshot").getAbsoluteFile()
 ////                                +
 ////                                "/"
@@ -157,12 +157,12 @@ public class Shotter {
 //                        out.close();
 //                    }
                     //保存到系统相册
-                    MediaStore.Images.Media.insertImage(MyApplication.getMyApp().getContentResolver(), bitmap, "title", "description");
+                    MediaStore.Images.Media.insertImage(BaseApplication.getInstance().getContentResolver(), bitmap, "title", "description");
 //                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 //                    Uri uri = Uri.fromFile(fileImage);
 //                    intent.setData(uri);
 //                    //这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
-//                    MyApplication.getMyApp().sendBroadcast(intent);
+//                    BaseApplication.getInstance().sendBroadcast(intent);
 //                } catch (FileNotFoundException e) {
 //                    e.printStackTrace();
 //                    fileImage = null;

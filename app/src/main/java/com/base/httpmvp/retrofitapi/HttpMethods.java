@@ -5,7 +5,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
@@ -79,7 +79,7 @@ public class HttpMethods implements IGlobalManager {
 			synchronized (mRetrofitLock) {
 				if (retrofit == null) {
 					//设置缓存目录
-					File cacheFile = new File(MyApplication.getMyApp().getExternalCacheDir(), CACHE_NAME);
+					File cacheFile = new File(BaseApplication.getInstance().getExternalCacheDir(), CACHE_NAME);
 					//生成缓存，50M
 					Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
 					//应用拦截器
@@ -88,7 +88,7 @@ public class HttpMethods implements IGlobalManager {
 						public Response intercept(Chain chain) throws IOException {
 							Request request = chain.request();
 							//网络不可用
-							if (!NetworkUtils.isAvailable(MyApplication.getMyApp())) {
+							if (!NetworkUtils.isAvailable(BaseApplication.getInstance())) {
 								if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
 									//在请求头中加入：强制使用缓存，不访问网络
 								/*
@@ -101,25 +101,25 @@ public class HttpMethods implements IGlobalManager {
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
 											//.addHeader("Connection", "close")
-											.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
+											.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
 											.build();
 								}else {
 									//在请求头中加入：强制使用缓存，不访问网络
 									request = request.newBuilder()
 											.cacheControl(CacheControl.FORCE_CACHE)
-											.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
+											.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
 											.build();
 								}
 								Log.i("sss","no network");
 							}else {
 								//请求头添加参数version
 								request = request.newBuilder()
-										.addHeader("version", AppUtils.getVersionCode(MyApplication.getMyApp()) + "")
+										.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
 										.build();
 							}
 							Response response = chain.proceed(request);
 							//网络可用
-							if (NetworkUtils.isAvailable(MyApplication.getMyApp())) {
+							if (NetworkUtils.isAvailable(BaseApplication.getInstance())) {
 								int maxAge = 0;
 								// 有网络时 在响应头中加入：设置缓存超时时间0个小时
 								response.newBuilder()
@@ -201,7 +201,7 @@ public class HttpMethods implements IGlobalManager {
 
 		Intent intent=new Intent();
 		intent.setAction(IntentAction.TOKEN_NOT_EXIST);
-		MyApplication.getMyApp().sendBroadcast(intent);
+		BaseApplication.getInstance().sendBroadcast(intent);
 	}
 	//以下下为配合RxJava2+retrofit2使用的
 	//将所有正在处理的Subscription都添加到CompositeSubscription中。统一退出的时候注销观察

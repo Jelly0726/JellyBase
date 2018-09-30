@@ -33,7 +33,7 @@ public class AppSubject extends Subject {
         return SingletonHolder.instance;
     }
     public void exit(){
-        MyApplication.getMyApp().exit();
+        BaseApplication.getInstance().exit();
         notifyObservers();
     }
 }

@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.toast.ToastUtils;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.httpmvp.contact.MessageDetailsContact;
 import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.presenter.MessageDetailsPresenter;
@@ -92,7 +92,7 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
         Message message= (Message) mCallBackVo;
         if (message==null)return;
         // 设置为Html
-        RichText.initCacheDir(MyApplication.getMyApp());
+        RichText.initCacheDir(BaseApplication.getInstance());
         RichText.fromHtml(message.toString())
                 .bind(this)
                 .autoFix(true) // 是否自动修复，默认true

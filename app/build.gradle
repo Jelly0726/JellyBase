@@ -15,26 +15,30 @@ android {
         multiDexEnabled true
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+            }
+        }
         //ndk编译生成.so文件
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-
-            moduleName "testjni"         //生成的so名字
+//            moduleName "testjni"         //生成的so名字
             abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
-
-            //极光推送选择要添加的对应cpu类型的.so库。
-            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+//            //极光推送选择要添加的对应cpu类型的.so库。
+//            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
+//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
         //极光推送
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "你的appkey", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
         buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
         //Android Studio 内置一个名为 Vector Asset Studio 的工具，在低版本SDK上编译APK期间，
         // 针对VectorDrawable脚本自动生成一组PNG位图资源BitmapDrawable，取代矢量图形（在5.0及以后的手机上运行时会正常引用VectorDrawable）。
-        vectorDrawables.generatedDensities = ['hdpi','xxhdpi']
+        vectorDrawables.generatedDensities = ['hdpi', 'xxhdpi']
         vectorDrawables.useSupportLibrary = true
         /*
         兼容包在矢量资源引用、代码调用时，存在一定限制
@@ -70,7 +74,7 @@ android {
         * */
     }
     signingConfigs {
-        release  {
+        release {
             storeFile file("Jelly.jks")
             storePassword "1207qw"
             keyAlias "jelly"
@@ -78,7 +82,7 @@ android {
             //v1SigningEnabled false
             // v2SigningEnabled false
         }
-        debug  {
+        debug {
             storeFile file("Jelly.jks")
             storePassword "1207qw"
             keyAlias "jelly"
@@ -160,6 +164,24 @@ android {
         //采用低版本构建生成PNG图片的兼容方式；
         //additionalParameters "--no-version-vectors"
     }
+    //cmake，全新定义cmake脚本
+    externalNativeBuild {
+        cmake {
+           path 'CMakeLists.txt'
+        }
+    }
+//ndk-build,已有Android.mk
+//    externalNativeBuild {
+//        ndkBuild {
+//            path 'src/main/jni/Android.mk'
+//        }
+//    }
+//ndk-build,有多个项目多个Android.mk,指向总脚本Android-config.mk
+//        externalNativeBuild {
+//            ndkBuild {
+//                path 'Android-config.mk'
+//            }
+//        }
 }
 //greendao配置
 greendao {

@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.httpmvp.databean.Message;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
@@ -72,7 +72,7 @@ public class MessageAdapter extends BaseRecyclerAdapter<MessageAdapter.ViewHolde
             @Override
             public void onClick(View v) {
                 Message message=mList.get((Integer) v.getTag());
-                Intent intent=new Intent(MyApplication.getMyApp(), MessageDetailsActivity.class);
+                Intent intent=new Intent(BaseApplication.getInstance(), MessageDetailsActivity.class);
                 intent.putExtra("message",message);
                 context.startActivity(intent);
             }

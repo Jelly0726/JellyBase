@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.ConfigKey;
@@ -79,7 +79,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
             }
         }.setDigits(2));
         Gson gson=new Gson();
-        String json= AppPrefs.getString(MyApplication.getMyApp(),
+        String json= AppPrefs.getString(BaseApplication.getInstance(),
                 ConfigKey.DEFAULT_BANK);
         bankInfo=gson.fromJson(json,BankCardInfo.class);
         if (bankInfo==null){

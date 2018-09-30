@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -47,8 +47,8 @@ public class NotifyManger {
      */
     public static boolean notificationListenerEnable() {
         boolean enable = false;
-        String packageName = MyApplication.getMyApp().getPackageName();
-        String flat= Settings.Secure.getString( MyApplication.getMyApp().getContentResolver(),"enabled_notification_listeners");
+        String packageName = BaseApplication.getInstance().getPackageName();
+        String flat= Settings.Secure.getString( BaseApplication.getInstance().getContentResolver(),"enabled_notification_listeners");
         if (flat != null) {
             enable= flat.contains(packageName);
         }
@@ -102,10 +102,10 @@ public class NotifyManger {
      * 重新触发系统的 rebind 操作
      */
     public static void toggleNotificationListenerService() {
-        PackageManager pm = MyApplication.getMyApp().getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName(MyApplication.getMyApp(),NotificationService.class),
+        PackageManager pm = BaseApplication.getInstance().getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(BaseApplication.getInstance(),NotificationService.class),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-        pm.setComponentEnabledSetting(new ComponentName(MyApplication.getMyApp(),NotificationService.class),
+        pm.setComponentEnabledSetting(new ComponentName(BaseApplication.getInstance(),NotificationService.class),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
     }
     /**

@@ -39,7 +39,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.encrypt.MD5;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -305,7 +305,7 @@ public class AppUtils {
         }
         try{
             //检查Service状态
-            ActivityManager manager = (ActivityManager) MyApplication.getMyApp().getSystemService(Context.ACTIVITY_SERVICE);
+            ActivityManager manager = (ActivityManager) BaseApplication.getInstance().getSystemService(Context.ACTIVITY_SERVICE);
             for (ActivityManager.RunningServiceInfo service :manager.getRunningServices(Integer.MAX_VALUE)) {
                 if(myPackageName.equals(service.service.getClassName()))
 
@@ -497,7 +497,7 @@ public class AppUtils {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     private static String getSimIccId() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) { //大于等于Android 5.1.0 L版本
-            SubscriptionManager sub = (SubscriptionManager) MyApplication.getMyApp()
+            SubscriptionManager sub = (SubscriptionManager) BaseApplication.getInstance()
                     .getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
             List<SubscriptionInfo> info = sub.getActiveSubscriptionInfoList();
             int count = sub.getActiveSubscriptionInfoCount();
@@ -517,7 +517,7 @@ public class AppUtils {
                 return getUUID();
             }
         } else { //小于5.1.0 以下的版本
-            TelephonyManager tm = (TelephonyManager) MyApplication.getMyApp()
+            TelephonyManager tm = (TelephonyManager) BaseApplication.getInstance()
                     .getSystemService(Context.TELEPHONY_SERVICE);
             String SerialNumber  =tm.getSimSerialNumber();
             if (TextUtils.isEmpty(SerialNumber)){
@@ -529,10 +529,10 @@ public class AppUtils {
     }
     private static String getUUID(){
         //如果上面都没有， 则生成一个id：随机码
-        String uuid = AppPrefs.getString(MyApplication.getMyApp(),"UUID","");
+        String uuid = AppPrefs.getString(BaseApplication.getInstance(),"UUID","");
         if(TextUtils.isEmpty(uuid)){
             uuid = UUID.randomUUID().toString();
-            AppPrefs.putString(MyApplication.getMyApp(),"UUID",uuid);
+            AppPrefs.putString(BaseApplication.getInstance(),"UUID",uuid);
         }
         return uuid;
     }

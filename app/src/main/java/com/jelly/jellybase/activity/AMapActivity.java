@@ -41,7 +41,7 @@ import com.amap.api.navi.view.RouteOverLay;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.TTSController;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
@@ -664,8 +664,8 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     public void onEvent(NetEvent netEvent){
         Log.i("SSSS","netEvent.getEventType()="+netEvent.getEventType());
         if (netEvent.getEventType().equals(AMapLocation.class.getName())){
-//            Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
-//            MyApplication.getMyApp().stopService(intent);
+//            Intent intent=new Intent(BaseApplication.getInstance(), LocationService.class);
+//            BaseApplication.getInstance().stopService(intent);
             if(isFirstTime) {
                 AMapLocation aMapLocation = (AMapLocation) netEvent.getEvent();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
@@ -674,8 +674,8 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
                 NaviLatLng  mStart = new NaviLatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
                 mStartPoints.add(mStart);
                 if (aMapLocation.getLatitude()!=0d&&aMapLocation.getLongitude()!=0d){
-                    Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
-                    MyApplication.getMyApp().stopService(stateGuardService);
+                    Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
+                    BaseApplication.getInstance().stopService(stateGuardService);
                 }
             }
         }

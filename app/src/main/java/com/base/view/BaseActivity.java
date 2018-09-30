@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.base.appManager.AppSubject;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.appManager.Observable;
 import com.base.appManager.Observer;
 import com.base.applicationUtil.AppPrefs;
@@ -194,7 +194,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
                     //Log.i("msg", "action:" + action + ",reason:" + reason);
                     if (reason.equals(SYSTEM_DIALOG_REASON_HOME_KEY)) {
                         // 短按home键
-                        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISHOME,true);
+                        AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISHOME,true);
                     } else if (reason
                             .equals(SYSTEM_DIALOG_REASON_RECENT_APPS)) {
                         // 长按home键
@@ -217,7 +217,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
             switch (msg.arg1){
                 case 0:
                     if (circleDialog == null) {
-                        synchronized (MyApplication.getMyApp()) {
+                        synchronized (BaseApplication.getInstance()) {
                             if (circleDialog == null) {
                                 circleDialog=new CircleDialog.Builder(BaseActivity.this)
                                         .configDialog(new ConfigDialog() {
@@ -249,7 +249,7 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
                                                 intent1.setAction(IntentAction.ACTION_LOGIN);
                                                 intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                                         | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                MyApplication.getMyApp().startActivity(intent1);
+                                                BaseApplication.getInstance().startActivity(intent1);
                                             }
                                         });
                                 circleDialog.show();

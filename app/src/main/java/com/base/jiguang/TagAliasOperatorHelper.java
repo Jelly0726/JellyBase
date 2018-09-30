@@ -7,7 +7,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.config.ConfigKey;
 
 import java.util.Locale;
@@ -201,7 +201,7 @@ public class TagAliasOperatorHelper {
             String logs = getActionStr(tagAliasBean.action)+" tags success";
             Log.i(TAG,logs);
             //ExampleUtil.showToast(logs, context);
-            AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,true);
+            AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.IS_SET_TAG,true);
         }else{
             String logs = "Failed to " + getActionStr(tagAliasBean.action)+" tags";
             if(jPushMessage.getErrorCode() == 6018){
@@ -213,7 +213,7 @@ public class TagAliasOperatorHelper {
             if(!RetryActionIfNeeded(jPushMessage.getErrorCode(),tagAliasBean)) {
                 ExampleUtil.showToast(logs, context);
             }
-            AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,false);
+            AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.IS_SET_TAG,false);
         }
     }
     public void onCheckTagOperatorResult(Context context, JPushMessage jPushMessage){

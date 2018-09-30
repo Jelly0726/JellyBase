@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.RichText;
@@ -46,7 +46,7 @@ public class ResolveHtmlActivity extends AppCompatActivity implements View.OnCli
                 "&sec=1513612039447&di=2b72984467a03a7cfb0bb40ffe008388&imgtype=0" +
                 "&src=http%3A%2F%2Foss.laohucaijing.com%2FUserFiles%2FImage%2F201603%2F20160330111155221.png' />";
         // 设置为Html
-        RichText.initCacheDir(MyApplication.getMyApp());
+        RichText.initCacheDir(BaseApplication.getInstance());
         RichText.fromHtml(html)
                 .bind(this)
                 .autoFix(true) // 是否自动修复，默认true

@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.httpmvp.databean.MyInfo;
 import com.base.multiClick.AntiShake;
@@ -77,7 +77,7 @@ public class MeFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         iniXRefreshView();
         if (getActivity()!=null){
-            if (MyApplication.getMyApp().isLogin()){
+            if (BaseApplication.getInstance().isLogin()){
                 if (myInfo==null){
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
@@ -91,14 +91,14 @@ public class MeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (getActivity()!=null){
-            if (MyApplication.getMyApp().isLogin()){
+            if (BaseApplication.getInstance().isLogin()){
                 if (myInfo==null){
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
             }else {
                 name_tv.setText("未登录");
             }
-            if (AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.NEWMESSAGE)){
+            if (AppPrefs.getBoolean(BaseApplication.getInstance(), ConfigKey.NEWMESSAGE)){
                 tv_point.setVisibility(View.GONE);
             }else {
                 tv_point.setVisibility(View.GONE);
@@ -173,16 +173,16 @@ public class MeFragment extends BaseFragment {
         Intent intent;
         switch (view.getId()){
             case R.id.balance_layout:
-                intent=new Intent(MyApplication.getMyApp(), BalanceActivity.class);
+                intent=new Intent(BaseApplication.getInstance(), BalanceActivity.class);
                 intent.putExtra("Balance",balance_tv.getText().toString().trim());
                 startActivity(intent);
                 break;
             case R.id.bankcard_layout:
-                intent=new Intent(MyApplication.getMyApp(), BankCardListActivity.class);
+                intent=new Intent(BaseApplication.getInstance(), BankCardListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.message_layout:
-                intent=new Intent(MyApplication.getMyApp(), MessageActivity.class);
+                intent=new Intent(BaseApplication.getInstance(), MessageActivity.class);
                 startActivity(intent);
                 break;
         }

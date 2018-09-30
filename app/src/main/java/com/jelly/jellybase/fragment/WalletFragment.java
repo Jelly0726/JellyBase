@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.addressmodel.Address;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
@@ -99,7 +99,7 @@ public class WalletFragment extends BaseFragment{
         Intent intent;
         switch (v.getId()){
             case R.id.changeAddress_tv:
-                intent=new Intent(MyApplication.getMyApp(),ChangeAddressActivity.class);
+                intent=new Intent(BaseApplication.getInstance(),ChangeAddressActivity.class);
                 intent.putExtra("entity",entity);
                 intent.putExtra("address",address);
                 intent.putExtra("rresultCode",areaRresultCode);

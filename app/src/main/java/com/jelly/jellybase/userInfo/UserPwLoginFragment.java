@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.AppPrefs;
 import com.base.encrypt.MD5;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
@@ -141,7 +141,7 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                 presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 break;
             case R.id.forget_pwd:
-                intent=new Intent(MyApplication.getMyApp(), ForgetActivity.class);
+                intent=new Intent(BaseApplication.getInstance(), ForgetActivity.class);
                 startActivity(intent);
                 break;
             case R.id.wechat_tv:
@@ -179,10 +179,10 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     @Override
     public Object getLoginParam() {
         //↓↓↓↓↓↓极光ID↓↓↓↓↓↓
-        String RegistrationID= AppPrefs.getString(MyApplication.getMyApp(), ConfigKey.JPUSHID);
+        String RegistrationID= AppPrefs.getString(BaseApplication.getInstance(), ConfigKey.JPUSHID);
         if (TextUtils.isEmpty(RegistrationID)){
-            RegistrationID= JPushInterface.getRegistrationID(MyApplication.getMyApp());
-            AppPrefs.putString(MyApplication.getMyApp(), ConfigKey.JPUSHID,RegistrationID);
+            RegistrationID= JPushInterface.getRegistrationID(BaseApplication.getInstance());
+            AppPrefs.putString(BaseApplication.getInstance(), ConfigKey.JPUSHID,RegistrationID);
         }
         //↑↑↑↑↑↑极光ID↑↑↑↑↑↑
         password= MD5.MD5Encode(password);
@@ -206,7 +206,7 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
         Login login= (Login) mCallBackVo;
 
         //↓↓↓↓↓↓极光设置tag↓↓↓↓↓↓
-        if (!AppPrefs.getBoolean(MyApplication.getMyApp(), ConfigKey.IS_SET_TAG,false)){
+        if (!AppPrefs.getBoolean(BaseApplication.getInstance(), ConfigKey.IS_SET_TAG,false)){
             if (!TextUtils.isEmpty(login.getCompanyno())){
                 Set<String> tagSet = new LinkedHashSet<String>();
                 tagSet.add(login.getCompanyno());

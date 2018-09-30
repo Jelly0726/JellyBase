@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 
 import com.base.addressmodel.Address;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.bottomBar.BottomBarItem;
 import com.base.bottomBar.BottomBarLayout;
 import com.base.config.IntentAction;
@@ -65,7 +65,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         initListener();
         HermesManager.getHermesManager().addEvent(this);
         //开启定位服务
-        Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+        Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
         startService(stateGuardService);
         //isLogin();
     }
@@ -184,8 +184,8 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             baseFragment.setData(currentItem.getData());
         }
         if (netEvent.getEventType().equals(PositionEntity.class.getName())){
-            Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
-            MyApplication.getMyApp().stopService(intent);
+            Intent intent=new Intent(BaseApplication.getInstance(), LocationService.class);
+            BaseApplication.getInstance().stopService(intent);
             PositionEntity entity= (PositionEntity) netEvent.getEvent();
             if (entity.latitue!=0d&&entity.longitude!=0d) {
                 this.entity=entity;
@@ -195,7 +195,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
                     mBottomBarLayout.setText(3,entity.district);//设置第三个页签显示的文字
                 }
                 //停止定位服务
-                Intent stateGuardService =  new Intent(MyApplication.getMyApp(), LocationService.class);
+                Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
                 stopService(stateGuardService);
             }
         }

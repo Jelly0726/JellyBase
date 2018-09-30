@@ -29,7 +29,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 
 import java.io.ObjectStreamException;
 import java.util.List;
@@ -56,8 +56,8 @@ public class AMapNaviTask implements AMapNaviListener {
     //屏幕静止DELAY_TIME之后，再次跟随
     private long DELAY_TIME = 5000;
     private AMapNaviTask(){
-        mTtsManager = TTSController.getInstance(MyApplication.getMyApp());
-        mAMapNavi = AMapNavi.getInstance(MyApplication.getMyApp());
+        mTtsManager = TTSController.getInstance(BaseApplication.getInstance());
+        mAMapNavi = AMapNavi.getInstance(BaseApplication.getInstance());
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
     }

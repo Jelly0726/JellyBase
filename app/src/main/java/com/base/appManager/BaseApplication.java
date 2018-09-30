@@ -33,8 +33,8 @@ import xiaofei.library.hermeseventbus.HermesEventBus;
  * Created by Administrator on 2015/10/8.
  */
 @DebugLog
-public class MyApplication extends Application {
-    private static MyApplication myApp;
+public class BaseApplication extends Application {
+    private static BaseApplication myApp;
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     }
 
     public static void setMainState(boolean mainState) {
-        MyApplication.mainState = mainState;
+        BaseApplication.mainState = mainState;
     }
 
     @Override
@@ -126,9 +126,9 @@ public class MyApplication extends Application {
      *
      * @return 返回一个本类的context
      */
-    public static MyApplication getMyApp(){
+    public static BaseApplication getInstance(){
         if(myApp==null){
-            myApp=new MyApplication();
+            myApp=new BaseApplication();
         }
         return myApp;
     }

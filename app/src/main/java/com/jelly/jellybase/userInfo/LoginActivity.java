@@ -12,7 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.multiClick.AntiShake;
@@ -161,7 +161,7 @@ public class LoginActivity extends BaseActivity implements
     public void onBackPressed() {
         super.onBackPressed();
         if(BuildConfig.IS_MUST_LOGIN){//是否必须登录
-            MyApplication.getMyApp().exit();
+            BaseApplication.getInstance().exit();
         }
     }
     @Override

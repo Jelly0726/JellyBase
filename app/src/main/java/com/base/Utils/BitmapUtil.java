@@ -43,7 +43,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Toast;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.log.DebugLog;
 
 import java.io.ByteArrayOutputStream;
@@ -212,7 +212,7 @@ public class BitmapUtil {
      * @return
      */
     public static Drawable bitmap2Drawable(final Bitmap bitmap) {
-        return bitmap == null ? null : new BitmapDrawable(MyApplication.getMyApp().getResources(), bitmap);
+        return bitmap == null ? null : new BitmapDrawable(BaseApplication.getInstance().getResources(), bitmap);
     }
 
     /**

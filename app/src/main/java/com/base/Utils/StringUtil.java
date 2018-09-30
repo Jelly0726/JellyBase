@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.nativeUtil.NativeUtils;
 
@@ -191,7 +191,7 @@ public class StringUtil {
         Pattern p = Pattern.compile(target);
         Matcher m = p.matcher(text);
         while (m.find()) {
-            span = new ForegroundColorSpan(MyApplication.getMyApp().getResources().getColor(color));// 需要重复！
+            span = new ForegroundColorSpan(BaseApplication.getInstance().getResources().getColor(color));// 需要重复！
             spannable.setSpan(span, m.start(), m.end(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }

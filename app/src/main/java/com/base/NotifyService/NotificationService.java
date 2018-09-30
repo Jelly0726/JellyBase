@@ -13,7 +13,7 @@ import android.util.Log;
  * 需要开启通知权限
  if (!NotifyManger.notificationListenerEnable()){
  ToastUtils.showShort(this, "通知权限未开启！");
- NotifyManger.gotoNotificationAccessSetting(MyApplication.getMyApp());
+ NotifyManger.gotoNotificationAccessSetting(BaseApplication.getMyApp());
  }else {
  //重新触发通知绑定
  NotifyManger.toggleNotificationListenerService();

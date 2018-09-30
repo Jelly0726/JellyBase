@@ -126,7 +126,7 @@
     <!--加android:extractNativeLibs="false" 会导致加固后不能安装-->
     <!--本工程的属性和第三方工程里的属性名称相同  加 tools:replace="android:icon, android:theme"-->
     <application
-        android:name="com.base.appManager.MyApplication"
+        android:name="com.base.appManager.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -495,6 +495,10 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activity.SingMD5Activity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".encrypt.EncryptActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>

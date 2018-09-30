@@ -31,7 +31,7 @@ import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.BaseDialog;
@@ -82,6 +82,7 @@ import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.bdocr.OCRMainActivity;
 import com.jelly.jellybase.blebluetooth.BluetoothBLEActivity;
 import com.jelly.jellybase.bluetooth.BluetoothActivity;
+import com.jelly.jellybase.encrypt.EncryptActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
@@ -488,7 +489,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 //        if (!NotifyManger.notificationListenerEnable()){
 //            ToastUtils.showShort(this, "通知权限未开启！");
-//            NotifyManger.gotoNotificationAccessSetting(MyApplication.getMyApp());
+//            NotifyManger.gotoNotificationAccessSetting(BaseApplication.getInstance());
 //        }else {
 //            //重新触发通知绑定
 //            NotifyManger.toggleNotificationListenerService();
@@ -514,112 +515,112 @@ public class MainActivity extends AppCompatActivity {
             Intent intent;
             switch (position){
                 case 0://轻量底部导航栏
-                    intent=new Intent(MyApplication.getMyApp(), BottomBarActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), BottomBarActivity.class);
                     startActivity(intent);
                     break;
                 case 1://购物车
-                    intent=new Intent(MyApplication.getMyApp(), ShopCartActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ShopCartActivity.class);
                     startActivity(intent);
                     break;
                 case 2://引导页
-                    intent=new Intent(MyApplication.getMyApp(), GuideActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), GuideActivity.class);
                     startActivity(intent);
                     break;
                 case 3://图片多选
-                    intent=new Intent(MyApplication.getMyApp(), AnswerActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), AnswerActivity.class);
                     startActivity(intent);
                     break;
                 case 4://获取验证码
-                    intent=new Intent(MyApplication.getMyApp(), RegisterActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), RegisterActivity.class);
                     startActivity(intent);
                     break;
                 case 5://WebView
-                    intent=new Intent(MyApplication.getMyApp(), BaseWebViewActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), BaseWebViewActivity.class);
                     startActivity(intent);
                     break;
                 case 6://JS交互WebView
-                    intent=new Intent(MyApplication.getMyApp(), JSWebViewActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), JSWebViewActivity.class);
                     startActivity(intent);
                     break;
                 case 7://仿支付宝密码输入
-                    intent=new Intent(MyApplication.getMyApp(), AlipayPassWordActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), AlipayPassWordActivity.class);
                     startActivity(intent);
                     break;
                 case 8://支付方式选择
-                    intent=new Intent(MyApplication.getMyApp(), PaymentActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), PaymentActivity.class);
                     startActivity(intent);
                     break;
                 case 9://加入购物车
-                    intent=new Intent(MyApplication.getMyApp(), AddShopcartActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), AddShopcartActivity.class);
                     startActivity(intent);
                     break;
                 case 10://截图并保存图片
-                    intent=new Intent(MyApplication.getMyApp(), ScreenShortActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ScreenShortActivity.class);
                     startActivity(intent);
                     break;
                 case 11://快递节点
-                    intent=new Intent(MyApplication.getMyApp(), NodeProgressDemo.class);
+                    intent=new Intent(BaseApplication.getInstance(), NodeProgressDemo.class);
                     startActivity(intent);
                     break;
                 case 12://悬停，搜索，扫描，弹窗
-                    intent=new Intent(MyApplication.getMyApp(), HomeActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), HomeActivity.class);
                     startActivity(intent);
                     break;
                 case 13://下拉选择
-                    intent=new Intent(MyApplication.getMyApp(), SpinnerActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), SpinnerActivity.class);
                     startActivity(intent);
                     break;
                 case 14://地址时间选择
-                    intent=new Intent(MyApplication.getMyApp(), PickActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), PickActivity.class);
                     startActivity(intent);
                     break;
                 case 15://Android MVP+Retrofit+RxAndroid
-                    intent=new Intent(MyApplication.getMyApp(), LoginActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), LoginActivity.class);
                     startActivity(intent);
                     break;
                 case 16://商品详情
-                    intent=new Intent(MyApplication.getMyApp(), ProductDetailsActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ProductDetailsActivity.class);
                     intent.putExtra("isShanGou",true);
                     startActivity(intent);
                     break;
                 case 17://提交评价
-                    intent=new Intent(MyApplication.getMyApp(), EvaluateActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), EvaluateActivity.class);
                     startActivity(intent);
                     break;
                 case 18://版本检查
-                    intent=new Intent(MyApplication.getMyApp(), SettingsActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), SettingsActivity.class);
                     startActivity(intent);
                     break;
                 case 19://解析html
-                    intent=new Intent(MyApplication.getMyApp(), ResolveHtmlActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ResolveHtmlActivity.class);
                     startActivity(intent);
                     break;
                 case 20://Android图表视图/图形视图库
-                    intent=new Intent(MyApplication.getMyApp(), LineChartActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), LineChartActivity.class);
                     startActivity(intent);
                     break;
                 case 21://图形验证码
-                    intent=new Intent(MyApplication.getMyApp(), GraphValiCodeActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), GraphValiCodeActivity.class);
                     startActivity(intent);
                     break;
                 case 22://SystemBar一体化，状态栏和导航栏
-                    intent=new Intent(MyApplication.getMyApp(), BottomBarActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), BottomBarActivity.class);
                     startActivity(intent);
                     break;
                 case 23://手机通讯录
-                    intent=new Intent(MyApplication.getMyApp(), ContactsActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ContactsActivity.class);
                     startActivity(intent);
                     break;
                 case 24://多级树形
-                    intent=new Intent(MyApplication.getMyApp(), TreeActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), TreeActivity.class);
                     startActivity(intent);
                     break;
                 case 25://RecyclerView侧滑菜单
-                    intent=new Intent(MyApplication.getMyApp(), XSwipeMainActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), XSwipeMainActivity.class);
                     startActivity(intent);
                     break;
                 case 26://高德地图
-                    intent=new Intent(MyApplication.getMyApp(), AMapActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), AMapActivity.class);
                     intent.putExtra("name","怡富花园二期-东门");
                     intent.putExtra("address","福建省厦门市思明区莲前西路314号");
                     intent.putExtra("latitude",24.4771500111);
@@ -627,55 +628,55 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case 27://NFC
-                    intent=new Intent(MyApplication.getMyApp(), NFCMainActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), NFCMainActivity.class);
                     startActivity(intent);
                     break;
                 case 28://消息通知
-                    intent=new Intent(MyApplication.getMyApp(), MessageActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), MessageActivity.class);
                     startActivity(intent);
                     break;
                 case 29://获取安卓设备唯一编码
-                    intent=new Intent(MyApplication.getMyApp(), UniqueIDActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), UniqueIDActivity.class);
                     startActivity(intent);
                     break;
                 case 30://视频播放器gsyVideoPlayer
-                    intent=new Intent(MyApplication.getMyApp(), GSYVideoActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), GSYVideoActivity.class);
                     startActivity(intent);
                     break;
                 case 31://百度文字识别（身份证等）
-                    intent=new Intent(MyApplication.getMyApp(), OCRMainActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), OCRMainActivity.class);
                     startActivity(intent);
                     break;
                 case 32://AutoComleteTextView自动补齐
-                    intent=new Intent(MyApplication.getMyApp(), AutoTextAvtivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), AutoTextAvtivity.class);
                     startActivity(intent);
                     break;
                 case 33://低功率蓝牙
-                    intent=new Intent(MyApplication.getMyApp(), BluetoothBLEActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), BluetoothBLEActivity.class);
                     startActivity(intent);
                     break;
                 case 34://传统蓝牙
-                    intent=new Intent(MyApplication.getMyApp(), BluetoothActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), BluetoothActivity.class);
                     startActivity(intent);
                     break;
                 case 35://取消订单
-                    intent=new Intent(MyApplication.getMyApp(), CancelOrderActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), CancelOrderActivity.class);
                     startActivity(intent);
                     break;
                 case 36://身份证校验
-                    intent=new Intent(MyApplication.getMyApp(), IDCartActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), IDCartActivity.class);
                     startActivity(intent);
                     break;
                 case 37://复制、粘贴
-                    intent=new Intent(MyApplication.getMyApp(), CopyActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), CopyActivity.class);
                     startActivity(intent);
                     break;
                 case 38://自动抢红包
-                    intent=new Intent(MyApplication.getMyApp(), StartActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), StartActivity.class);
                     startActivity(intent);
                     break;
                 case 39://webView下载文件
-                    intent=new Intent(MyApplication.getMyApp(), JSWebViewActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), JSWebViewActivity.class);
                     WebTools webTools=new WebTools();
                     webTools.title="文件下载";
                     webTools.url="https://www.easyicon.net/1521-blue_box_info_information_icon.html";
@@ -683,15 +684,19 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case 40://崩溃日志
-                    intent=new Intent(MyApplication.getMyApp(), CrashActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), CrashActivity.class);
                     startActivity(intent);
                     break;
                 case 41://获取应用签名MD5值
-                    intent=new Intent(MyApplication.getMyApp(), SingMD5Activity.class);
+                    intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
                 case 42://NDK(.so)测试
-                    intent=new Intent(MyApplication.getMyApp(), SingMD5Activity.class);
+                    intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
+                    startActivity(intent);
+                    break;
+                case 43://    <item>native加密解密</item>
+                    intent=new Intent(BaseApplication.getInstance(), EncryptActivity.class);
                     startActivity(intent);
                     break;
             }

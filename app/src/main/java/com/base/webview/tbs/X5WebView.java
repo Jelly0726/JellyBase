@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.log.DebugLog;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.webview.DownPicUtil;
@@ -93,7 +93,7 @@ public class X5WebView extends WebView {
 					return super.shouldInterceptRequest(view, url);
 				} else { //其他的URL则会开启一个Acitity然后去调用原生APP
 					Intent in = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-					MyApplication.getMyApp().startActivity(in);
+					BaseApplication.getInstance().startActivity(in);
 					return null;
 				}
 			}catch (ActivityNotFoundException e){
@@ -777,15 +777,15 @@ public class X5WebView extends WebView {
 		webSetting.setAllowFileAccessFromFileURLs(false);
 		// * 设置存储定位数据库的位置，考虑到位置权限和持久化Cache缓存，Application需要拥有指定路径的
 		// * write权限
-		webSetting.setGeolocationDatabasePath(MyApplication.getMyApp().getDir("geolocation", 0)
+		webSetting.setGeolocationDatabasePath(BaseApplication.getInstance().getDir("geolocation", 0)
 				.getPath());
 		//* 是否允许Cache，默认false。考虑需要存储缓存，应该为缓存指定存储路径setAppCachePath
 		webSetting.setAppCacheEnabled(true);
 		webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
 		// * 设置Cache API缓存路径。为了保证可以访问Cache，Application需要拥有指定路径的write权限。
 		// * 该方法应该只调用一次，多次调用自动忽略。
-		webSetting.setAppCachePath(MyApplication.getMyApp().getDir("appcache", 0).getPath());
-		webSetting.setDatabasePath(MyApplication.getMyApp().getDir("databases", 0).getPath());
+		webSetting.setAppCachePath(BaseApplication.getInstance().getDir("appcache", 0).getPath());
+		webSetting.setDatabasePath(BaseApplication.getInstance().getDir("databases", 0).getPath());
 		// * 是否允许数据库存储。默认false。查看setDatabasePath API 如何正确设置数据库存储。
 		// * 该设置拥有全局特性，同一进程所有WebView实例共用同一配置。注意：保证在同一进程的任一WebView
 		// * 加载页面之前修改该属性，因为在这之后设置WebView可能会忽略该配置

@@ -141,7 +141,7 @@ public class AppManager {
     public void AppExit() {
         try {
             finishAllActivity();
-            MyApplication.getMyApp().exit();
+            BaseApplication.getInstance().exit();
         } catch (Exception e) {
         }
     }

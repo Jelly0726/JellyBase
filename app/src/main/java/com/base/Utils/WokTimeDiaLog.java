@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 
@@ -66,7 +66,7 @@ public class WokTimeDiaLog {
 	 * @return
 	 */
 	public void getStarOnClick() {
-		Count= AppPrefs.getLong(MyApplication.getMyApp(),ConfigKey.WORKCONNT,0l);
+		Count= AppPrefs.getLong(BaseApplication.getInstance(),ConfigKey.WORKCONNT,0l);
 		//map=new HashMap<String, String>();
 		//myIntent = new Intent();//创建Intent对象
 		//handler1.postDelayed(runnable,1000);         // 开始Timer
@@ -94,8 +94,8 @@ public class WokTimeDiaLog {
 						int sec = totalSec % 60;
 						try {
 							String wiatTime = String.format("%1$02d:%2$02d:%3$02d", shi, mai, sec);
-							AppPrefs.putString(MyApplication.getMyApp(),ConfigKey.WORKTIME,wiatTime);
-							AppPrefs.putLong(MyApplication.getMyApp(),ConfigKey.WORKCONNT,Count);
+							AppPrefs.putString(BaseApplication.getInstance(),ConfigKey.WORKTIME,wiatTime);
+							AppPrefs.putLong(BaseApplication.getInstance(),ConfigKey.WORKCONNT,Count);
 							if (map != null && myIntent != null) {
 								map.put("id", "a");
 								map.put("WokeTime", wiatTime);

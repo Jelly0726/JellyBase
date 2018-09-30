@@ -17,7 +17,7 @@ import com.base.MapUtil.LocationTask;
 import com.base.MapUtil.OnLocationGetListener;
 import com.base.MapUtil.RegeocodeTask;
 import com.base.MapUtil.RouteTask;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.eventBus.HermesManager;
@@ -62,15 +62,15 @@ public class LocationService extends Service {
     public void onCreate() {
         super.onCreate();
         //==================================================================//后台定位
-        regeocodeTask=new RegeocodeTask(MyApplication.getMyApp());
+        regeocodeTask=new RegeocodeTask(BaseApplication.getInstance());
         regeocodeTask.setOnLocationGetListener(onLocationGetListener);
-        mLocationTask = LocationTask.getInstance(MyApplication.getMyApp());
+        mLocationTask = LocationTask.getInstance(BaseApplication.getInstance());
         mLocationTask.setOnLocationGetListener(onLocationGetListener);
         if (!HermesEventBus.getDefault().isRegistered(LocationService.this)){
             HermesEventBus.getDefault().register(LocationService.this);
         }
         //==================================================================//
-        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,true);
+        AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,true);
         // 开启高精度定位
         mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_HIGHT_PRECISION);
         HermesEventBus.getDefault().post(mLocationTypeEvent);
@@ -95,7 +95,7 @@ public class LocationService extends Service {
             mLocationTask.stopLocate();
         }
         HermesEventBus.getDefault().unregister(LocationService.this);
-        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,false);
+        AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,false);
         Log.d(TAG, "onDestroy");
         super.onDestroy();
     }
@@ -110,7 +110,7 @@ public class LocationService extends Service {
             mLocationTask.stopLocate();
         }
         HermesEventBus.getDefault().unregister(LocationService.this);
-        AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.ISRUN,false);
+        AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,false);
         super.onTaskRemoved(rootIntent);
     }
 
@@ -139,7 +139,7 @@ public class LocationService extends Service {
                 if (!getLocationType(amapLocation)) {
                     return;
                 }
-//            if(MyApplication.orderNu.equals("0") ) {
+//            if(BaseApplication.orderNu.equals("0") ) {
 //                if ( mLocationTypeEvent.getType() != LocationTypeEvent.sTYPE_LBS){
 //                    // 开启lbs模式
 //                    mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_LBS);
@@ -163,12 +163,12 @@ public class LocationService extends Service {
 //                }
 //            }
 ////            Log.d(TAG, "定时器定位");
-//            MyApplication.latitude = Double.parseDouble(mDecimalFormat.format(amapLocation.getLatitude()));
-//            MyApplication.longitude = Double.parseDouble(mDecimalFormat.format(amapLocation.getLongitude()));
-//            MyApplication.provider =amapLocation.getProvider();
+//            BaseApplication.latitude = Double.parseDouble(mDecimalFormat.format(amapLocation.getLatitude()));
+//            BaseApplication.longitude = Double.parseDouble(mDecimalFormat.format(amapLocation.getLongitude()));
+//            BaseApplication.provider =amapLocation.getProvider();
 //            entity.latitue = amapLocation.getLatitude();
 //            entity.longitude = amapLocation.getLongitude();
-////            PostDriverXY.postErrorMessage(MyApplication.mDriverId, "x:"+MyApplication.latitude+"y:"+MyApplication.longitude);
+////            PostDriverXY.postErrorMessage(BaseApplication.mDriverId, "x:"+BaseApplication.latitude+"y:"+BaseApplication.longitude);
 //            //Log.i("msg","getProvider()="+amapLocation.getProvider()+" getLocationType="+amapLocation.getLocationType());
                 entity.latitue = amapLocation.getLatitude();
                 entity.longitude = amapLocation.getLongitude();

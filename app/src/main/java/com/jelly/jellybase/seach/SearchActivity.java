@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.multiClick.OnMultiClickListener;
 import com.base.sqldao.HistoryDaoUtils;
 import com.base.toast.ToastUtils;
@@ -54,7 +54,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history = new SearchHistory();
                         history.setTime(System.currentTimeMillis());
                         history.setHistory(search);
-                        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).addToHistoryfoTable(history);
+                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).addToHistoryfoTable(history);
                     }
                     setBackData(search);
                     return true;
@@ -79,7 +79,7 @@ public class SearchActivity extends BaseActivity {
         if(search_history.getChildCount()>0){
             search_history.removeAllViewsInLayout();
         }
-        List<SearchHistory> historyList= HistoryDaoUtils.getInstance(MyApplication.getMyApp()).getHistory();
+        List<SearchHistory> historyList= HistoryDaoUtils.getInstance(BaseApplication.getInstance()).getHistory();
         if(historyList!=null){
             for (int i = 0; i < historyList.size(); i++) {
                 TextView tv = (TextView) getLayoutInflater().inflate(
@@ -93,7 +93,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history= (SearchHistory) v.getTag();
 
                         history.setTime(System.currentTimeMillis());
-                        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).updatePosition(history);
+                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).updatePosition(history);
 
                         setBackData(history.getHistory());
                     }
@@ -110,7 +110,7 @@ public class SearchActivity extends BaseActivity {
         finish();
     }
     private void clearHistory(){
-        HistoryDaoUtils.getInstance(MyApplication.getMyApp()).clearHistory();
+        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).clearHistory();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 iniHistory();

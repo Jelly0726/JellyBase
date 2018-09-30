@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.config.BaseConfig;
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -21,7 +21,7 @@ public class PayUtil {
 	public static final int SDK_PAY_FLAG = 1;
 	public static final int SDK_AUTH_FLAG = 2;
 	//微信支付
-	public static final String WX_RECHARGE_SUCCESS = MyApplication.getMyApp().getPackageName()+".WX_RECHARGE_SUCCESS";
+	public static final String WX_RECHARGE_SUCCESS = BaseApplication.getInstance().getPackageName()+".WX_RECHARGE_SUCCESS";
 
 	private static volatile PayUtil mInstance;
 	private IWXAPI mApi;

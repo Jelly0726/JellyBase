@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.view.Menu;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
@@ -40,7 +40,7 @@ public class LauncherActivity extends BaseActivity{
 		TraceServiceImpl.sShouldStopService = true;
 		DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
 
-		if (AppPrefs.getBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,true)) {
+		if (AppPrefs.getBoolean(BaseApplication.getInstance(),ConfigKey.FIRST,true)) {
 			if(!hasShortcut()){
 				createShut();// 创建快捷方式
 			}else{
@@ -49,18 +49,18 @@ public class LauncherActivity extends BaseActivity{
 		}
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
-				if (MyApplication.getMyApp().isLogin()){
-					//MyApplication.getMyApp().goLoginActivity();
-					MyApplication.getMyApp().goMainActivity();//进入主界面
-					//MyApplication.getMyApp().goGuideActivity();//进入引导页界面
+				if (BaseApplication.getInstance().isLogin()){
+					//BaseApplication.getInstance().goLoginActivity();
+					BaseApplication.getInstance().goMainActivity();//进入主界面
+					//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
 					finish();
 				}else{
 					if(BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-						MyApplication.getMyApp().goLoginActivity();
+						BaseApplication.getInstance().goLoginActivity();
 					}else {
-						MyApplication.getMyApp().goMainActivity();//进入主界面
+						BaseApplication.getInstance().goMainActivity();//进入主界面
 					}
-					//MyApplication.getMyApp().goGuideActivity();//进入引导页界面
+					//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
 					finish();
 				}
 			}
@@ -113,7 +113,7 @@ public class LauncherActivity extends BaseActivity{
 			addIntent.putExtra("duplicate", false); //不允许重复创建
 			// 发送广播添加快捷方式
 			sendBroadcast(addIntent);
-			AppPrefs.putBoolean(MyApplication.getMyApp(),ConfigKey.FIRST,false);
+			AppPrefs.putBoolean(BaseApplication.getInstance(),ConfigKey.FIRST,false);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

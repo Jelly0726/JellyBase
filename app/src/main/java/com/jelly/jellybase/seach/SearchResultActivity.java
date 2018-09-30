@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
@@ -114,7 +114,7 @@ public class SearchResultActivity extends BaseActivity {
         items.add(new BaseItem("集团客户",-1));
         items.add(new BaseItem("集团客户",-1));
         topMiddlePopup = new TopMiddlePopup(this,
-                Util.getScreenWidth(MyApplication.getMyApp()), Util.getScreenHeight(MyApplication.getMyApp()),
+                Util.getScreenWidth(BaseApplication.getInstance()), Util.getScreenHeight(BaseApplication.getInstance()),
                 onPopItem,items, type);
     }
     private boolean oNcount=false;
@@ -211,7 +211,7 @@ public class SearchResultActivity extends BaseActivity {
                     finish();
                     break;
                 case R.id.back_search:
-                    Intent intent=new Intent(MyApplication.getMyApp(),SearchActivity.class);
+                    Intent intent=new Intent(BaseApplication.getInstance(),SearchActivity.class);
                     intent.putExtra("search",search);
                     //setResult(getIntent().getIntExtra("requestCode",-1),intent);
                     startActivity(intent);

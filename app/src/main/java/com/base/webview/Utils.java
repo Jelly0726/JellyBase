@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.webkit.URLUtil;
 
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.base.log.DebugLog;
 import com.tencent.smtt.sdk.CacheManager;
 
@@ -123,7 +123,7 @@ public class Utils {
 //        另外可选一下方法，自定义下载路径
 //        request.setDestinationUri()
 //        request.setDestinationInExternalFilesDir()
-        final DownloadManager downloadManager = (DownloadManager) MyApplication.getMyApp().getSystemService(DOWNLOAD_SERVICE);
+        final DownloadManager downloadManager = (DownloadManager) BaseApplication.getInstance().getSystemService(DOWNLOAD_SERVICE);
         // 添加一个下载任务
         long downloadId = downloadManager.enqueue(request);
         DebugLog.i("downloadId:{}", downloadId+"");

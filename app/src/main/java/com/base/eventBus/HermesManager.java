@@ -3,7 +3,7 @@ package com.base.eventBus;
 import android.content.Intent;
 
 import com.base.MapUtil.LocationTask;
-import com.base.appManager.MyApplication;
+import com.base.appManager.BaseApplication;
 import com.jelly.jellybase.server.LocationService;
 
 import java.io.ObjectStreamException;
@@ -50,9 +50,9 @@ public class HermesManager {
         if (locationEvent!=null) {
             locationEvent.remove(event);
             if (getEventSize()<=0){
-                Intent intent=new Intent(MyApplication.getMyApp(), LocationService.class);
-                MyApplication.getMyApp().stopService(intent);
-                LocationTask.getInstance(MyApplication.getMyApp()).onDestroy();
+                Intent intent=new Intent(BaseApplication.getInstance(), LocationService.class);
+                BaseApplication.getInstance().stopService(intent);
+                LocationTask.getInstance(BaseApplication.getInstance()).onDestroy();
             }
         }
     }

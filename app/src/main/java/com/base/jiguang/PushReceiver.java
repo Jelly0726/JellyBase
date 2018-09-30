@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.base.appManager.AppSubject;
+import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.MyApplication;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
@@ -47,7 +47,7 @@ public class PushReceiver extends BroadcastReceiver {
             Log.d(TAG, "接受到推送下来的通知");
 
             receivingNotification(context,bundle);
-            AppPrefs.putBoolean(MyApplication.getMyApp(), ConfigKey.NEWMESSAGE, true);
+            AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.NEWMESSAGE, true);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "用户点击打开了通知");
@@ -56,7 +56,7 @@ public class PushReceiver extends BroadcastReceiver {
             //打开自定义的Activity
             Intent i = new Intent();
             if (AppSubject.getInstance().isRegistered(MainActivity.class)){
-                i.setAction(MyApplication.getMyApp().getPackageName()+".action.ACTION_MAIN");
+                i.setAction(BaseApplication.getInstance().getPackageName()+".action.ACTION_MAIN");
             }else {
                 i.setAction(IntentAction.JPUSH_CLICK);
             }
