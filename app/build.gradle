@@ -17,7 +17,10 @@ android {
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
         externalNativeBuild {
             cmake {
-                cppFlags ""
+//                cppFlags ""
+//                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                //设置支持的SO库架构
                 abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
             }
         }
@@ -89,6 +92,11 @@ android {
             keyPassword "1207qw"
             //v1SigningEnabled false
             // v2SigningEnabled false
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['F:\\github\\JellyBase\\app\\alley\\lib']
         }
     }
     buildTypes {
@@ -203,7 +211,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.1.0'//VectorDrawable需要Support Library 23.2+
+    compile 'com.android.support:appcompat-v7:26.0.2'//VectorDrawable需要Support Library 23.2+
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 

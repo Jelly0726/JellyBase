@@ -5,25 +5,29 @@
 
 cmake_minimum_required(VERSION 3.4.1)
 
+#配置加载头文件
+include_directories(F:/github/JellyBase/app/alley/include)
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-             native-lib
+             cipher
 
              # Sets the library as a shared library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/jni/native-lib.cpp
-             src/main/jni/EnvChecker.cpp
-             src/main/jni/EncodeUtils.cpp
-             src/main/jni/aes.c
-             src/main/jni/md5.cpp
-             src/main/jni/Utils.cpp
-             )
+             src/main/jni/cipher.cpp src/main/jni/zsd.cpp )
+
+#动态方式加载
+add_library(openssl SHARED IMPORTED )
+add_library(ssl SHARED IMPORTED )
+#引入第三方.so库
+set_target_properties(openssl PROPERTIES IMPORTED_LOCATION F:/github/JellyBase/app/alley/lib/${ANDROID_ABI}/libcrypto.so)
+set_target_properties(ssl PROPERTIES IMPORTED_LOCATION F:/github/JellyBase/app/alley/lib/${ANDROID_ABI}/libssl.so)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -31,7 +35,6 @@ add_library( # Sets the name of the library.
 # you want to add. CMake verifies that the library exists before
 # completing its build.
 
-# 找到预编译库 log_lib 并link到我们的动态库 native-lib中
 find_library( # Sets the name of the path variable.
               log-lib
 
@@ -44,7 +47,10 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       native-lib
+                       cipher
+                       openssl
+                       ssl
+                       android
 
                        # Links the target library to the log library
                        # included in the NDK.

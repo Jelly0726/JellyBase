@@ -21,7 +21,50 @@
             android:layout_margin="10dp"
             android:hint="请输入有加密的字符串或者要解密的Base64字符串"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_copy_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="复制"
+                />
+            <Button
+                android:id="@+id/btn_past_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粘贴"
+                />
+        </LinearLayout>
 
+        <TextView
+            android:id="@+id/text_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="true"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_sha1OfApk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取sha1"
+                />
+            <Button
+                android:id="@+id/btn_apk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="验证apk签名"
+                />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,13 +74,13 @@
                 android:id="@+id/btn_java_encode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JAVA AES 加密"
+                android:text="HmacSHA1 加密"
                 />
             <Button
                 android:id="@+id/btn_native_encode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Native AES 加密"
+                android:text="SHA1 加密"
                 />
         </LinearLayout>
 
@@ -50,13 +93,13 @@
                 android:id="@+id/btn_java_decode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JAVA AES 解密"
+                android:text="SHA224 加密"
                 />
             <Button
                 android:id="@+id/btn_native_decode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Native AES 解密"
+                android:text="SHA256 加密"
                 />
         </LinearLayout>
 
@@ -69,23 +112,117 @@
                 android:id="@+id/btn_java_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="JAVA生成sign"
+                android:text="SHA384 加密"
                 />
             <Button
                 android:id="@+id/btn_native_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Native生成sign"
+                android:text="SHA512 加密"
                 />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/text_result"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:layout_margin="10dp"
-            />
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_md5_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="md5 加密"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_XOR_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XOR异或加密"
+                />
+            <Button
+                android:id="@+id/btn_XORs_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XOR异或解密"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_AES_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AES加密"
+                />
+            <Button
+                android:id="@+id/btn_AESs_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AES解密"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_RSA_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA公钥加密"
+                />
+            <Button
+                android:id="@+id/btn_RSAs_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA私钥解密"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_RSAa_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA私钥加密"
+                />
+            <Button
+                android:id="@+id/btn_RSAd_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA公钥解密"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/btn_RSAsa_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA私钥签名"
+                />
+            <Button
+                android:id="@+id/btn_RSAsad_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RSA公钥验证签名"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 
