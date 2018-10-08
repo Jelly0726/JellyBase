@@ -8,6 +8,13 @@
 #include <openssl/pem.h>
 #include <openssl/md5.h>
 #include"zsd.h"
+//换成你自己的key值
+const char *key = "758DA6688786C0D2C10CA074C29351FB02686237";
+//换成你自己的RSAPubKey值
+const char *RSAPubKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCi8t4HMFsMvpoXK4HF3HK0bvlE\nFBw8L6IGWxo2wQxrMreYWOvRbcCMv+ObXY+NsW+E69KNaio7lx5iLc1gJYJvnvRY\nuL8I+rCCG4Hb2IYtnZvzdmmzcxDCdlrBtpHouuKrGmbZWsFr/ZNhhgoT+tzEe/Wf\nfrnAc7vkmafl6xLfQwIDAQAB\n-----END PUBLIC KEY-----\n";
+
+//换成你自己的RSAPrivateKey值
+const char *RSAPrivateKey = "-----BEGIN PRIVATE KEY-----\nMIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKLy3gcwWwy+mhcr\ngcXccrRu+UQUHDwvogZbGjbBDGsyt5hY69FtwIy/45tdj42xb4Tr0o1qKjuXHmIt\nzWAlgm+e9Fi4vwj6sIIbgdvYhi2dm/N2abNzEMJ2WsG2kei64qsaZtlawWv9k2GG\nChP63MR79Z9+ucBzu+SZp+XrEt9DAgMBAAECgYB4Tr51KlOfJj7YqounDWs3ItQx\nWnO6UCTdcnf5QzErGIgLGGQL/W9zu92NgVeS8xV2WzLarC7AToPlUxHWUftpxqCa\nalQ+HtJ2zROnbblMwmEcnwsPXD8SncjJGDg1mSxkhi/jw1riPg36Exw1VGgmww4b\n+iMboCv3ApBDdxn7yQJBAM7rgodIHGf11d9+TO+PUkglc9AfCDMXQraDirU6JjCh\n6AVJXH76k2oLz4DCvd3CCBcM5qGmdAzTK/X1MSToGgUCQQDJmVtKiJkPOe/N2Vi3\nMkIIalnqZ9GFYtDjUV3dgI1QVgLQ8qpN2y98j8PU9nM/BpU0fU4qSX36vPCfYn0e\nmS6nAkABiAKmR6VWK56Skde16iScvhI2VxRzdFedDCopny2LLJeP+nQByI7wuPen\nJ0nKa1Yt/X1zcsznD2UC4/aiJEmVAkACL+a8pUS71I4UdqIuwp3Sx4yYLW4pe0v2\n22AgUg+2amh3adqNI66dNFYUjmPrsB+YRS++57M1MC2QHRpsZY8LAkAKFNUtX47a\n4LYofojZrEdcz9O8xisB4bsv04G+WiM4bqTrlQo/6Y3YofvaP5jGSwBW8K/w6KPX\nD0VGzyfqFiL7\n-----END PRIVATE KEY-----\n";
 
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
@@ -231,13 +238,17 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(key));
+    env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte*)key );
+
     LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
-    const unsigned char *iv = (const unsigned char *) "0123456789012345";
+    const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -277,13 +288,17 @@ Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(key));
+    env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte*)key );
+
     LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
-    const unsigned char *iv = (const unsigned char *) "0123456789012345";
+    const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -322,12 +337,16 @@ Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPubKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -391,12 +410,16 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context,jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPrivateKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -460,12 +483,16 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPrivateKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -529,12 +556,16 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPubKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -598,12 +629,16 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context,  jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPrivateKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -647,12 +682,16 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_, jbyteArray sign_) {
+Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_, jbyteArray sign_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return -1;
     }
     LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+    jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
+    keys_ =env->NewByteArray(strlen(RSAPubKey));
+    env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
+
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jbyte *sign = env->GetByteArrayElements(sign_, NULL);

@@ -62,75 +62,67 @@ public class JniUtils {
     /**
      * AES加密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] encodeByAES(Context context,byte[] keys, byte[] src);
+    public native byte[] encodeByAES(Context context, byte[] src);
 
     /**
      * AES解密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] decodeByAES(Context context,byte[] keys, byte[] src);
+    public native byte[] decodeByAES(Context context, byte[] src);
 
     /**
      * RSA公钥加密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] encodeByRSAPubKey(Context context,byte[] keys, byte[] src);
+    public native byte[] encodeByRSAPubKey(Context context, byte[] src);
 
     /**
      * RSA私钥解密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] decodeByRSAPrivateKey(Context context,byte[] keys, byte[] src);
+    public native byte[] decodeByRSAPrivateKey(Context context, byte[] src);
 
     /**
      * RSA私钥加密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] encodeByRSAPrivateKey(Context context,byte[] keys, byte[] src);
+    public native byte[] encodeByRSAPrivateKey(Context context, byte[] src);
 
     /**
      * RSA公钥解密
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] decodeByRSAPubKey(Context context,byte[] keys, byte[] src);
+    public native byte[] decodeByRSAPubKey(Context context, byte[] src);
 
     /**
      * RSA私钥签名
      *
-     * @param keys
      * @param src
      * @return
      */
-    public native byte[] signByRSAPrivateKey(Context context,byte[] keys, byte[] src);
+    public native byte[] signByRSAPrivateKey(Context context, byte[] src);
 
     /**
      * RSA公钥验证签名
      *
-     * @param keys
      * @param src
      * @param sign
      * @return 1:验证成功
      */
-    public native int verifyByRSAPubKey(Context context,byte[] keys, byte[] src, byte[] sign);
+    public native int verifyByRSAPubKey(Context context, byte[] src, byte[] sign);
 
     /**
      * 异或加解密
