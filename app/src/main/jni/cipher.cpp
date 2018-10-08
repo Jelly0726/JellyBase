@@ -10,7 +10,7 @@
 #include"zsd.h"
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
     LOGD("HmacSHA1->HMAC: Hash-based Message Authentication Code，即基于Hash的消息鉴别码");
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
@@ -47,7 +47,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject 
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -83,7 +83,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject inst
     return env->NewStringUTF(hex);
 }
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -120,7 +120,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject in
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -157,7 +157,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject in
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -194,7 +194,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject in
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -231,7 +231,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject in
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -277,7 +277,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject insta
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -322,7 +322,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject insta
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -391,7 +391,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -460,7 +460,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, job
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -529,7 +529,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, job
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -598,7 +598,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -647,7 +647,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobje
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_, jbyteArray sign_) {
+Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray keys_, jbyteArray src_, jbyteArray sign_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return -1;
@@ -691,7 +691,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -725,7 +725,7 @@ Java_com_jelly_jellybase_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -761,11 +761,11 @@ Java_com_jelly_jellybase_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_sha1OfApk(JNIEnv *env, jobject instance, jobject context) {
+Java_com_base_encrypt_JniUtils_sha1OfApk(JNIEnv *env, jobject instance, jobject context) {
     return env->NewStringUTF(sha1OfApk(env, context));
 }
 
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_jelly_jellybase_encrypt_JniUtils_verifySha1OfApk(JNIEnv *env, jobject instance, jobject context) {
+Java_com_base_encrypt_JniUtils_verifySha1OfApk(JNIEnv *env, jobject instance, jobject context) {
     return verifySha1OfApk(env, context);
 }

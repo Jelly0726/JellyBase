@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.base.encrypt.JniUtils;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
@@ -123,11 +124,11 @@ public class EncryptActivity extends AppCompatActivity implements View.OnClickLi
                 result = "XOR异或解密->" + new String(jni.xOr(this,Base64.decode(ori, Base64.NO_WRAP)));
                 break;
             case R.id.btn_AES_sign:
-                byte[] encodeAES = jni.encodeByAES(this,TEST_KEY.getBytes(), ori.getBytes());
+                byte[]  encodeAES = jni.encodeByAES(this,TEST_KEY.getBytes(),ori.getBytes());
                 result ="AES加密编码->" + Base64.encodeToString(encodeAES, Base64.NO_WRAP);
                 break;
             case R.id.btn_AESs_sign:
-                byte[] decodeAES = jni.decodeByAES(this,TEST_KEY.getBytes(), ori.getBytes());
+                byte[] decodeAES = jni.decodeByAES(this,TEST_KEY.getBytes(),Base64.decode(ori,  Base64.NO_WRAP));
                 result="AES解密->" + new String(decodeAES);
                 break;
             case R.id.btn_RSA_sign:
@@ -137,7 +138,7 @@ public class EncryptActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_RSAs_sign:
                 byte[] decodeByRSAPrivateKey = jni.decodeByRSAPrivateKey(this,TEST_PRIVATE_KEY.getBytes(),
-                        ori.getBytes());
+                        Base64.decode(ori,  Base64.NO_WRAP));
                 result ="RSA私钥解密->" + new String(decodeByRSAPrivateKey);
                 break;
             case R.id.btn_RSAa_sign:
@@ -147,7 +148,7 @@ public class EncryptActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_RSAd_sign:
                 byte[] decodeByRSAPubKey = jni.decodeByRSAPubKey(this,TEST_PUBLIC_KEY.getBytes(),
-                        ori.getBytes());
+                        Base64.decode(ori,  Base64.NO_WRAP));
                 result = "RSA公钥解密->" + new String(decodeByRSAPubKey);
                 break;
             case R.id.btn_RSAsa_sign:
