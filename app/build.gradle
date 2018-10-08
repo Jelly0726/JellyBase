@@ -96,7 +96,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['F:\\github\\JellyBase\\app\\alley\\lib']
+            jniLibs.srcDirs = ['alley\\lib']
         }
     }
     buildTypes {
