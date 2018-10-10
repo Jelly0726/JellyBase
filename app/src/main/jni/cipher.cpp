@@ -9,12 +9,12 @@
 #include <openssl/md5.h>
 #include"zsd.h"
 //换成你自己的key值
-const char *key = "758DA6688786C0D2C10CA074C29351FB02686237";
+const char *key = "758DA6688786C0D2C7";
 //换成你自己的RSAPubKey值
-const char *RSAPubKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCi8t4HMFsMvpoXK4HF3HK0bvlE\nFBw8L6IGWxo2wQxrMreYWOvRbcCMv+ObXY+NsW+E69KNaio7lx5iLc1gJYJvnvRY\nuL8I+rCCG4Hb2IYtnZvzdmmzcxDCdlrBtpHouuKrGmbZWsFr/ZNhhgoT+tzEe/Wf\nfrnAc7vkmafl6xLfQwIDAQAB\n-----END PUBLIC KEY-----\n";
+const char *RSAPubKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0HjcCrWfRY8o4i2NwIvMJdP5l\nzuj7HOOZpjezE39a32fMjmztVtqLjso5MXjwwB5JiAfhOkFhVnNGPAmu0f5HOQly\nx88QgczokVrB73uj6HLUmX/SuFCbUh+YLJ4ZWp0g2Go6qwH2O5b3IQeENqTrIo4l\nrJTSLCzjnQ/QZYUuewIDAQAB\n-----END PUBLIC KEY-----\n";
 
 //换成你自己的RSAPrivateKey值
-const char *RSAPrivateKey = "-----BEGIN PRIVATE KEY-----\nMIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKLy3gcwWwy+mhcr\ngcXccrRu+UQUHDwvogZbGjbBDGsyt5hY69FtwIy/45tdj42xb4Tr0o1qKjuXHmIt\nzWAlgm+e9Fi4vwj6sIIbgdvYhi2dm/N2abNzEMJ2WsG2kei64qsaZtlawWv9k2GG\nChP63MR79Z9+ucBzu+SZp+XrEt9DAgMBAAECgYB4Tr51KlOfJj7YqounDWs3ItQx\nWnO6UCTdcnf5QzErGIgLGGQL/W9zu92NgVeS8xV2WzLarC7AToPlUxHWUftpxqCa\nalQ+HtJ2zROnbblMwmEcnwsPXD8SncjJGDg1mSxkhi/jw1riPg36Exw1VGgmww4b\n+iMboCv3ApBDdxn7yQJBAM7rgodIHGf11d9+TO+PUkglc9AfCDMXQraDirU6JjCh\n6AVJXH76k2oLz4DCvd3CCBcM5qGmdAzTK/X1MSToGgUCQQDJmVtKiJkPOe/N2Vi3\nMkIIalnqZ9GFYtDjUV3dgI1QVgLQ8qpN2y98j8PU9nM/BpU0fU4qSX36vPCfYn0e\nmS6nAkABiAKmR6VWK56Skde16iScvhI2VxRzdFedDCopny2LLJeP+nQByI7wuPen\nJ0nKa1Yt/X1zcsznD2UC4/aiJEmVAkACL+a8pUS71I4UdqIuwp3Sx4yYLW4pe0v2\n22AgUg+2amh3adqNI66dNFYUjmPrsB+YRS++57M1MC2QHRpsZY8LAkAKFNUtX47a\n4LYofojZrEdcz9O8xisB4bsv04G+WiM4bqTrlQo/6Y3YofvaP5jGSwBW8K/w6KPX\nD0VGzyfqFiL7\n-----END PRIVATE KEY-----\n";
+const char *RSAPrivateKey = "-----BEGIN PRIVATE KEY-----\nMIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALQeNwKtZ9FjyjiL\nY3Ai8wl0/mXO6Psc45mmN7MTf1rfZ8yObO1W2ouOyjkxePDAHkmIB+E6QWFWc0Y8\nCa7R/kc5CXLHzxCBzOiRWsHve6PoctSZf9K4UJtSH5gsnhlanSDYajqrAfY7lvch\nB4Q2pOsijiWslNIsLOOdD9BlhS57AgMBAAECgYAC82fFTx/0nzo7OOq1IJgeCeD3\nvARhxh8NxQUD6wgwGJmJEWBEIc3MxtcV9B3eG9ejLsD/oJuyQ4n57EE1sFJbwziB\nvTLwmL+yLEpghtc/J2Xo1Y22E2Czu+VI0d/WUy3MN2I4a601xxA6rg1tRvPSftDW\n49fDCAhUb5yYLZgo0QJBAPzYRxsoPtoR8LbarPBuz/dwT9U3kiGT5yXVzjv0wkmp\nHblFBi2JY37f2TJ8moLi9hWAUHwEbSrjaxZM/g5GhhkCQQC2XZvPJHGPf8aAKUFz\nx0kZDUW1m436xiKVwHBAJGeYCYk87NJwNOiCN7HafRWkjbZtx2fS3M2lzPmxWqzw\n4COzAkAZpvOn3LBrvXA3jP4IsqVkzD89OZMY1wGXhBaVXKKtiHvchRU4X3z5rUpC\n5gNjDhW7XrZLrsNIm6QMsikAV8VZAkBiZCjvXstCT/8qIJgmvkvLD2Uf8bhtp777\nKuOlR774wZRg4ak8Tt9velsj9b7alHbrzd1PYEA4B1pkfPa300aPAkBbr6fDTKhC\nsckhQPDdrLBxtjGAvJ0Rzhk54FhHa5FLX2jdDPttH/q1QZH4w1TGV68hWogCcfsE\nBha/h6Ag4H5V\n-----END PRIVATE KEY-----\n";
 
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
@@ -23,7 +23,7 @@ Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, j
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    const char *key = "alleyApp@22383243-335457968";
+    const char *key = "jellyApp@22383243*335457968";
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -59,6 +59,15 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -95,6 +104,15 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -132,6 +150,15 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -169,6 +196,15 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -206,6 +242,15 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -736,7 +781,7 @@ Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context
         return env->NewByteArray(0);
     }
     LOGD("XOR->异或加解密: 相同为假，不同为真");
-    const char keys[] = "alley20170829";
+    const char keys[] = "jelly20180829";
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -769,9 +814,19 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
     }
+    //====================将秘钥拼接到数据源末端=========================
+    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    int nOutSize=strlen(key)+src_Lens;
+    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
+    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
+    src_=jarray;
+    //====================将秘钥拼接到数据源末端=========================
     LOGD("MD5->信息摘要算法第五版");
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
+
 
     char buff[3] = {'\0'};
     char hex[33] = {'\0'};

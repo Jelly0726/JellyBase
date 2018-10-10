@@ -639,6 +639,9 @@ public class RSAUtil {
             RSAPrivateKey privateKey = (RSAPrivateKey) getRSAPrivatekey();
             System.out.println("生成秘钥时间："+(System.currentTimeMillis()-star)+"ms");
 
+            System.out.println("公钥："+getpublickey());
+            System.out.println("私钥："+getprivatekey());
+
             star=System.currentTimeMillis();
             String s = encrypt(source);
             System.out.println("公钥加密时间："+(System.currentTimeMillis()-star)+"ms");
