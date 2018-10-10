@@ -2,7 +2,7 @@ package com.jelly.jellybase.alipay;
 
 import android.content.Context;
 
-import com.base.Utils.UtilTools;
+import com.base.encrypt.SafetyUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +49,8 @@ public class PostRecharge {
 			map.put("memberid",playcode);
 			map.put("subject",subject);
 			map.put("amount", price);
-			map= UtilTools.getSign(map,1);
+			String sign= SafetyUtil.getInstance().getSign(map,1);
+			map.put("sign", sign);
 		}catch(Exception e){
 			if(aliListener!=null){
 				aliListener.onFailure(04, "e="+e.toString());

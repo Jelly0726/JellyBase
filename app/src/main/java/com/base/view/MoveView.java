@@ -66,7 +66,7 @@ public class MoveView extends View {
         mHeight = getBackground().getIntrinsicHeight();
         mWidth = getBackground().getIntrinsicWidth();
         mMaxD = AppUtils.dipTopx(getContext(), sLINE_DISTANCE);
-//        mCircleRadius = UtilTools.dip2px(getContext(), sCIRCLE_RADIUS);
+//        mCircleRadius = SafetyUtil.dip2px(getContext(), sCIRCLE_RADIUS);
         mBubblePaint = new Paint();                                                                 // 创建画笔
         mBubblePaint.setColor(Color.RED);
         mBubblePaint.setStyle(Paint.Style.STROKE);                                                 // 填充模式 描边

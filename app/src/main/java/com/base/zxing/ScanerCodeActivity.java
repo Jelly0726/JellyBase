@@ -210,7 +210,7 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 //						if (photo_path == null) {
 //							photo_path = ZXingUtils.getPath(getApplicationContext(),
 //									data.getData());
-//							//Log.i("123path  Utils", photo_path);
+//							//Log.i("123path  SafetyUtil", photo_path);
 //						}
 //						//Log.i("123path", photo_path);
 //

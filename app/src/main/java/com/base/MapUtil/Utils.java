@@ -26,7 +26,7 @@ import com.amap.api.maps.model.Marker;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * ClassName:Utils <br/>
+ * ClassName:SafetyUtil <br/>
  * Function: TODO ADD FUNCTION. <br/>
  * Reason:   TODO ADD REASON. <br/>
  * Date:     2015年4月7日 下午3:43:05 <br/>

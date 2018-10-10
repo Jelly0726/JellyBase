@@ -751,4 +751,42 @@ public class MyDate {
 		}
 		return time;
 	}
+	/***
+	 * 获取当前时间
+	 * @return
+	 */
+	public static String getCurentDate(){
+		String date, day;
+		int today;
+		Calendar calendar = Calendar.getInstance();
+		today = calendar.get(Calendar.DAY_OF_WEEK);
+		switch (today){
+			case 2:
+				day = "星期一";
+				break;
+			case 3:
+				day = "星期二";
+				break;
+			case 4:
+				day = "星期三";
+				break;
+			case 5:
+				day = "星期四";
+				break;
+			case 6:
+				day = "星期五";
+				break;
+			case 7:
+				day = "星期六";
+				break;
+			case 8:
+				day = "星期天";
+				break;
+			default:
+				day = "日期错误";
+				break;
+		}
+		date = calendar.get(Calendar.MONTH) + 1 + "月" + calendar.get(Calendar.DATE) + "日  " + day;
+		return date;
+	}
 }
