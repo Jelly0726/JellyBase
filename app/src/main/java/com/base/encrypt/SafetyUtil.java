@@ -3,6 +3,7 @@ package com.base.encrypt;
 import android.text.TextUtils;
 
 import com.base.appManager.BaseApplication;
+import com.base.log.DebugLog;
 
 import java.io.ObjectStreamException;
 import java.util.Comparator;
@@ -56,6 +57,7 @@ public class SafetyUtil {
 					.replaceAll("-", "").substring(0, 20).toUpperCase();
 			map.put("nonce_str",uuid);
 		}
+        map.put("timestamp", System.currentTimeMillis()+"");//时间戳
 		map=sortMapByKey(map);
 		StringBuffer stringBuffer=new StringBuffer("");
 		Iterator iterator=map.entrySet().iterator();
@@ -80,7 +82,9 @@ public class SafetyUtil {
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		String sign=jni.md5(BaseApplication.getInstance(),stringBuffer.toString().getBytes());
+        DebugLog.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+        String sign=jni.md5(BaseApplication.getInstance(),stringBuffer.toString().getBytes());
+        DebugLog.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
