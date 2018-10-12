@@ -50,7 +50,7 @@ public class PostExpense {
 			map.put("orderno",exOrderNo);
 			map.put("subject",subject);
 			map.put("amount", price);
-			String sign= SafetyUtil.getInstance().getSign(map,1);
+			String sign= SafetyUtil.getInstance().encode(map,SafetyUtil.MD5);
 			map.put("sign", sign);
 		}catch(Exception e){
 			if(aliListener!=null){
