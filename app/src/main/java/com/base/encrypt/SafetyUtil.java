@@ -65,7 +65,6 @@ public class SafetyUtil {
 	 * @return
 	 */
 	public boolean verify(@NonNull String source,@NonNull String sign, int type){
-		source +="&key=";
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
@@ -108,7 +107,6 @@ public class SafetyUtil {
 		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
 			stringBuffer.deleteCharAt(stringBuffer.length()-1);
 		}
-		stringBuffer.append("&key=");
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
@@ -129,7 +127,6 @@ public class SafetyUtil {
 	 * @return
 	 */
 	public String encode(@NonNull String source, int type){
-		source +="&key=";
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
@@ -168,7 +165,6 @@ public class SafetyUtil {
 		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
 			stringBuffer.deleteCharAt(stringBuffer.length()-1);
 		}
-		stringBuffer.append("&key=");
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
@@ -190,19 +186,19 @@ public class SafetyUtil {
 		switch (type) {
 			case AES:
 				byte[] AES = jni.decodeByAES(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
-				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
+				sign = new String(AES);
 				break;
 			case RSA_PUBKEY:
 				byte[] RSA_PUBKEY = jni.decodeByRSAPubKey(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
-				sign =  Base64.encodeToString(RSA_PUBKEY,Base64.NO_WRAP);
+				sign =  new String(RSA_PUBKEY);
 				break;
 			case RSA_PRIVATEKEY:
 				byte[] RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
-				sign = Base64.encodeToString(RSA_PRIVATEKEY,Base64.NO_WRAP);
+				sign = new String(RSA_PRIVATEKEY);
 				break;
 			case XOR:
 				byte[] XOR = jni.xOr(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
-				sign = Base64.encodeToString(XOR,Base64.NO_WRAP);
+				sign =  new String(XOR);
 				break;
 			default:
 				sign = "";

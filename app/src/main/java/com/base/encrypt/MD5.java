@@ -99,6 +99,6 @@ public class MD5 {
         return md5StrBuff.toString();
     }
     public static void main(String[] agrs){
-         System.out.println(MD5Encode("GS客户为您服务！758DA6688786C0D2C10CA074C29351FB02686237"));
+         System.out.println(MD5Encode("语序HP不符合&key=758DA6688786C0D2C7"));
     }
 }

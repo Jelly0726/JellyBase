@@ -146,7 +146,7 @@ public class EncryptActivity extends AppCompatActivity implements View.OnClickLi
                 result ="AES加密编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.AES);
                 break;
             case R.id.btn_AESs_sign:
-                result="AES解密->" +SafetyUtil.getInstance().decode(ori,SafetyUtil.SHA1);
+                result="AES解密->" +SafetyUtil.getInstance().decode(ori,SafetyUtil.AES);
                 break;
             case R.id.btn_RSA_sign:
                 result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.RSA_PUBKEY);

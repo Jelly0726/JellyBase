@@ -61,9 +61,12 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
@@ -106,9 +109,12 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
@@ -152,9 +158,12 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
@@ -198,9 +207,12 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
@@ -244,9 +256,12 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
@@ -816,9 +831,12 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
+    char *Skey="&key=";
+    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
     strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
+//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=strlen(key)+src_Lens;
+    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
     jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
     env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
     src_=jarray;
