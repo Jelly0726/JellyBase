@@ -167,6 +167,7 @@ public class SafetyUtil {
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
+		DebugLog.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
 		String sign=sign(stringBuffer.toString(), type);
 		DebugLog.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
