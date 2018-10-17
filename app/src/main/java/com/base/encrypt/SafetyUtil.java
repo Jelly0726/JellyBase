@@ -93,7 +93,7 @@ public class SafetyUtil {
 		while(iterator.hasNext()){
 			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
 			String key= (String) entent.getKey();
-			String value= (String) entent.getValue();
+			String value= String.valueOf((Object) entent.getValue());
 			if(!TextUtils.isEmpty(value)) {
 				stringBuffer
 						.append(key)
@@ -144,14 +144,13 @@ public class SafetyUtil {
 	 * @return
 	 */
 	public String encode(@NonNull Map<String, String> source, int type){
-		source.put("timestamp", System.currentTimeMillis()+"");//时间戳
 		source=sortMapByKey(source);
 		StringBuffer stringBuffer=new StringBuffer("");
 		Iterator iterator=source.entrySet().iterator();
 		while(iterator.hasNext()){
 			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
 			String key= (String) entent.getKey();
-			String value= (String) entent.getValue();
+			String value= String.valueOf((Object) entent.getValue());
 			if(!TextUtils.isEmpty(value)) {
 				stringBuffer
 						.append(key)
@@ -168,7 +167,6 @@ public class SafetyUtil {
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		DebugLog.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
 		String sign=sign(stringBuffer.toString(), type);
 		DebugLog.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
