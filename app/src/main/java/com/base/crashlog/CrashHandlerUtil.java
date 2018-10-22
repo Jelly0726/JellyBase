@@ -196,9 +196,6 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
         Log.e("error",sb.toString());
-        if(BuildConfig.DEBUG) {
-            return null;
-        }
 
         /*
         这个 crashInfo 就是我们收集到的所有信息，可以做一个异常上报的接口用来提交用户的crash信息
