@@ -10,11 +10,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.base.applicationUtils.ExecutorManager;
-import com.base.applicationUtils.FilesUtil;
-import com.yolorich.payhelper.BuildConfig;
-import com.yolorich.payhelper.utils.BaseConfig;
-import com.yolorich.payhelper.utils.Logger;
+import com.base.Utils.FilesUtil;
+import com.base.appManager.ExecutorManager;
+import com.base.config.BaseConfig;
+import com.jelly.jellybase.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,7 +101,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
-                Logger.e("error : ", e.getMessage());
+                Log.e("error : ", e.getMessage());
                 e.printStackTrace();
             }
             //退出程序
@@ -156,7 +155,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
                 infos.put("versionCode", versionCode);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            Logger.e("an error occured when collect package info", e.getMessage());
+            Log.e("error package info", e.getMessage());
         }
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
@@ -165,7 +164,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
                 infos.put(field.getName(), field.get(null).toString());
 //                Logger.e(field.getName() + " : " + field.get(null));
             } catch (Exception e) {
-                Logger.e("an error occured when collect crash info", e.getMessage());
+                Log.e("error crash info", e.getMessage());
             }
         }
     }
@@ -196,7 +195,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
-        Logger.e("error",sb.toString());
+        Log.e("error",sb.toString());
         if(BuildConfig.DEBUG) {
             return null;
         }
@@ -268,7 +267,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
         return BuildConfig.SEND_ERR;
     }
     public void sendCrash(){
-        ExecutorManager.getExecutorManager().getSingleThread().execute(new Runnable() {
+        ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
             @Override
             public void run() {
                 Log.e(TAG, "file - "+CAHCE_CRASH_LOG);
