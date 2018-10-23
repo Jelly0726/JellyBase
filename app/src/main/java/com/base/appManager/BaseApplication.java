@@ -51,8 +51,12 @@ public class BaseApplication extends Application {
         super.onCreate();
         myApp=this;
         //初始化一下就行了，别忘记了  --奔溃日志
-        CrashApphandler.getInstance().init(this);
-        CrashApphandler.getInstance().sendCrash();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CrashApphandler.getInstance().init(myApp);
+            }
+        }).start();
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {

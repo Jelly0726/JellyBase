@@ -74,6 +74,7 @@ import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
 import com.jelly.jellybase.activity.ResolveHtmlActivity;
 import com.jelly.jellybase.activity.ScreenShortActivity;
+import com.jelly.jellybase.activity.SendEmailActivity;
 import com.jelly.jellybase.activity.SingMD5Activity;
 import com.jelly.jellybase.activity.SpinnerActivity;
 import com.jelly.jellybase.activity.TreeActivity;
@@ -697,6 +698,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 43://    <item>native加密解密</item>
                     intent=new Intent(BaseApplication.getInstance(), EncryptActivity.class);
+                    startActivity(intent);
+                    break;
+                case 44:// 发送邮件
+                    intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
             }

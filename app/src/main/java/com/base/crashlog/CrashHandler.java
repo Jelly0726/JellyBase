@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.base.config.BaseConfig;
@@ -55,8 +56,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             //如果在自定义异常处理器之前，系统有自己的默认异常处理器的话，调用它来处理异常信息
             defaultCrashHandler.uncaughtException(thread, throwable);
         } else {
+            //延时1秒杀死进程
+            SystemClock.sleep(2000);
             android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
         }
     }
     private boolean isSendErr() {

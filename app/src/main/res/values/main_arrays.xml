@@ -45,6 +45,7 @@
         <item>获取应用签名MD5值</item>
         <item>NDK(.so)测试</item>
         <item>native加密解密</item>
+        <item>发送邮件</item>
     </string-array>
 
     <string-array name="cause">

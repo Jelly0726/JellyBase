@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+//        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
         google()
@@ -19,9 +20,9 @@ buildscript {
 
 allprojects {
     repositories {
+//        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
-        //mavenCentral()
         maven { url 'https://jitpack.io'}
         //从api 26开始，support libraries 需要从google的maven仓库下载
        // maven { url "https://maven.google.com" }

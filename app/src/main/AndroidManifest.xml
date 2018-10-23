@@ -358,6 +358,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.SendEmailActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↓↓↓↓高德地图↓↓↓↓-->
         <activity android:name=".activity.AMapActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"

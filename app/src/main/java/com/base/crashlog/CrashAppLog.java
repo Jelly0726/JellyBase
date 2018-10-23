@@ -10,10 +10,12 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.base.appManager.ExecutorManager;
+import com.base.sendEmail.SendMailUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -145,11 +147,9 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
                 /**
                  * 可以延迟一秒钟在退出
                  */
-                Thread.sleep(3000);
-
+                //延时1秒杀死进程
+                SystemClock.sleep(2000);
                 android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-
             }
         }catch (Exception e) {
             Log.e(TAG, "uncaughtException - "+e.getMessage());
@@ -192,7 +192,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
              */
 
             limitAppLogCount(LIMIT_LOG_COUNT);
-
+            return true;
         } catch (Exception e) {
             Log.e(TAG, "hanlderException - " + e.getMessage());
         }
@@ -302,15 +302,16 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
             buffer.append("Exception:+\r\n");
             buffer.append(result);
             buffer.append("\r\n");
-            writerToFile(buffer.toString());
 
+            SendMailUtil.send(buffer.toString());
+//            writerToFile(buffer.toString());
         }catch (Exception e) {
             Log.e(TAG, "writerCrashLogToFile - "+e.getMessage());
         }
     }
 
     private void writerToFile(String s) {
-
+        SendMailUtil.send(s);
         try {
             /**
              * 创建日志文件名称
