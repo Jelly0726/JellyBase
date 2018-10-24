@@ -175,6 +175,31 @@ public class StringUtil {
         if (TextUtils.isEmpty(paramString))return false;
         return Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$").matcher(paramString).matches();
     }
+
+    /**
+     * 提取字符串中的数字（整数，flot,double）类型的金额
+     * @param ptCasinoMsg  源字符串
+     * @return
+     */
+    public static String[] extractAmountMsg(String ptCasinoMsg){
+        String returnAmounts [] = new String [4];
+        ptCasinoMsg = ptCasinoMsg.replace(" | ", " ");
+        String [] amounts = ptCasinoMsg.split(" ");
+        for(int i=0;i<amounts.length;i++){
+            Pattern p=Pattern.compile("(\\d+\\.\\d+)");
+            Matcher m=p.matcher(amounts[i]);
+            if(m.find()){
+                returnAmounts[i]=m.group(1);
+            }else{
+                p= Pattern.compile("(\\d+)");
+                m=p.matcher(amounts[i]);
+                if(m.find()){
+                    returnAmounts[i]=m.group(1);
+                }
+            }
+        }
+        return returnAmounts;
+    }
     /**
      * 关键字高亮显示
      *
@@ -248,5 +273,13 @@ public class StringUtil {
     }
     public static void main(String[] arg){
         System.out.println(NativeUtils.getNativeString());
+
+        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
+        String [] amounts = extractAmountMsg(ptCasinoMsg);
+        String ptliveOrderCount = amounts[0].toString();
+        String ptliveVilida = amounts[1].toString();
+        String ptliveSum = amounts[2].toString();
+        String ptlivePayout = amounts[3].toString();
+        System.out.println("日单量："+ptliveOrderCount+ "  实付金额："+ptliveVilida+"  订单金额："+ptliveSum+"  优惠金额："+ptlivePayout);
     }
 }
