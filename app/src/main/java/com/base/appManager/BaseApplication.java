@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
@@ -21,6 +22,7 @@ import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.sqldao.DBManager;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
@@ -193,24 +195,23 @@ public class BaseApplication extends Application {
             protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
                 Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", throwable);
                 CrashUtils.getInstance().saveErrorInfo(myApp, throwable);
-//                new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        ToastUtils.show(myApp,"捕获到导致崩溃的异常");
-//                    }
-//                });
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+                    }
+                });
             }
 
             @Override
             protected void onBandageExceptionHappened(Throwable throwable) {
                 throwable.printStackTrace();//打印警告级别log，该throwable可能是最开始的bug导致的，无需关心
-//                ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+                ToastUtils.show(myApp,"捕获到导致崩溃的异常");
             }
 
             @Override
             protected void onEnterSafeMode() {
-//                ToastUtils.show(myApp,"已经进入安全模式");
-
+                ToastUtils.show(myApp,"已经进入安全模式");
             }
 
             @Override
