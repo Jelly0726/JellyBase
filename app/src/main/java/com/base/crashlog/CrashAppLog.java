@@ -302,9 +302,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
             buffer.append("Exception:+\r\n");
             buffer.append(result);
             buffer.append("\r\n");
-
-            SendMailUtil.send(buffer.toString());
-//            writerToFile(buffer.toString());
+            writerToFile(buffer.toString());
         }catch (Exception e) {
             Log.e(TAG, "writerCrashLogToFile - "+e.getMessage());
         }

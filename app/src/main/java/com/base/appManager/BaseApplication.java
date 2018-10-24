@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Looper;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,8 +13,10 @@ import android.util.Log;
 import com.base.MapUtil.LocationTask;
 import com.base.applicationUtil.ChangeLanguageHelper;
 import com.base.bgabanner.GuideActivity;
+import com.base.cockroach.Cockroach;
+import com.base.cockroach.CrashUtils;
+import com.base.cockroach.ExceptionHandler;
 import com.base.config.IntentAction;
-import com.base.crashlog.CrashApphandler;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -51,12 +54,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         myApp=this;
         //初始化一下就行了，别忘记了  --奔溃日志
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                CrashApphandler.getInstance().init(myApp);
-            }
-        }).start();
+        installCockroach();
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {
@@ -186,6 +184,45 @@ public class BaseApplication extends Application {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    //初始化Cockroach，开启crash防护
+    private void installCockroach() {
+        final Thread.UncaughtExceptionHandler sysExcepHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Cockroach.install(new ExceptionHandler() {
+            @Override
+            protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
+                Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", throwable);
+                CrashUtils.getInstance().saveErrorInfo(myApp, throwable);
+//                new Handler(Looper.getMainLooper()).post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+//                    }
+//                });
+            }
+
+            @Override
+            protected void onBandageExceptionHappened(Throwable throwable) {
+                throwable.printStackTrace();//打印警告级别log，该throwable可能是最开始的bug导致的，无需关心
+//                ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+            }
+
+            @Override
+            protected void onEnterSafeMode() {
+//                ToastUtils.show(myApp,"已经进入安全模式");
+
+            }
+
+            @Override
+            protected void onMayBeBlackScreen(Throwable e) {
+                Thread thread = Looper.getMainLooper().getThread();
+                Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", e);
+                //黑屏时建议直接杀死app
+                sysExcepHandler.uncaughtException(thread, new RuntimeException("black screen"));
+            }
+
+        });
+
     }
     /**
      * 退出
