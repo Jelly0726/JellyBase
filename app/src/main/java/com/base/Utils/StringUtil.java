@@ -15,9 +15,10 @@ import android.widget.Spinner;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
-import com.base.nativeUtil.NativeUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,23 +183,26 @@ public class StringUtil {
      * @return
      */
     public static String[] extractAmountMsg(String ptCasinoMsg){
-        String returnAmounts [] = new String [4];
-        ptCasinoMsg = ptCasinoMsg.replace(" | ", " ");
+       List str=new ArrayList();
+//        ptCasinoMsg = ptCasinoMsg.replace(" | ", " ");
+        ptCasinoMsg = ptCasinoMsg.replaceAll("[^\\d.]+"," ");
         String [] amounts = ptCasinoMsg.split(" ");
         for(int i=0;i<amounts.length;i++){
             Pattern p=Pattern.compile("(\\d+\\.\\d+)");
             Matcher m=p.matcher(amounts[i]);
             if(m.find()){
-                returnAmounts[i]=m.group(1);
+                str.add(m.group(1));
             }else{
                 p= Pattern.compile("(\\d+)");
                 m=p.matcher(amounts[i]);
                 if(m.find()){
-                    returnAmounts[i]=m.group(1);
+                    str.add(m.group(1));
                 }
             }
         }
-        return returnAmounts;
+        String[] strings = new String[str.size()];
+        str.toArray(strings);
+        return strings;
     }
     /**
      * 关键字高亮显示
@@ -272,9 +276,9 @@ public class StringUtil {
         }
     }
     public static void main(String[] arg){
-        System.out.println(NativeUtils.getNativeString());
-
-        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
+//        System.out.println(NativeUtils.getNativeString());
+        String ptCasinoMsg = "qwe123wer.fadsf56hudh55.55fhsj6.00dj";
+//        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
         String [] amounts = extractAmountMsg(ptCasinoMsg);
         String ptliveOrderCount = amounts[0].toString();
         String ptliveVilida = amounts[1].toString();
