@@ -184,7 +184,6 @@ public class StringUtil {
      */
     public static String[] extractAmountMsg(String ptCasinoMsg){
        List str=new ArrayList();
-//        ptCasinoMsg = ptCasinoMsg.replace(" | ", " ");
         ptCasinoMsg = ptCasinoMsg.replaceAll("[^\\d.]+"," ");
         String [] amounts = ptCasinoMsg.split(" ");
         for(int i=0;i<amounts.length;i++){
@@ -280,10 +279,8 @@ public class StringUtil {
         String ptCasinoMsg = "qwe123wer.fadsf56hudh55.55fhsj6.00dj";
 //        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
         String [] amounts = extractAmountMsg(ptCasinoMsg);
-        String ptliveOrderCount = amounts[0].toString();
-        String ptliveVilida = amounts[1].toString();
-        String ptliveSum = amounts[2].toString();
-        String ptlivePayout = amounts[3].toString();
-        System.out.println("日单量："+ptliveOrderCount+ "  实付金额："+ptliveVilida+"  订单金额："+ptliveSum+"  优惠金额："+ptlivePayout);
+        for (String i:amounts){
+            System.out.println("金额："+i);
+        }
     }
 }
