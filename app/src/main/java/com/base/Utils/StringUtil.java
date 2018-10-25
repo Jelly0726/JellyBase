@@ -276,7 +276,7 @@ public class StringUtil {
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
-        String ptCasinoMsg = "qwe123wer.fadsf56hudh55.55fhsj6.00dj";
+        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
 //        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
         String [] amounts = extractAmountMsg(ptCasinoMsg);
         for (String i:amounts){
