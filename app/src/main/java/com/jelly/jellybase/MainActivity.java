@@ -37,7 +37,6 @@ import com.base.bgabanner.GuideActivity;
 import com.base.checkVersion.BaseDialog;
 import com.base.config.BaseConfig;
 import com.base.daemon.DaemonEnv;
-import com.base.daemon.service.WatchDogService;
 import com.base.mic.MicService;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
@@ -85,6 +84,7 @@ import com.jelly.jellybase.blebluetooth.BluetoothBLEActivity;
 import com.jelly.jellybase.bluetooth.BluetoothActivity;
 import com.jelly.jellybase.encrypt.EncryptActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
+import com.jelly.jellybase.server.TraceServiceImpl;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
@@ -119,8 +119,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         iniXRefreshView();
-        //启动守护服务，运行在:watch子进程中
-        DaemonEnv.startServiceMayBind(WatchDogService.class);
+        //启动或停止守护服务，运行在:watch子进程中
+        TraceServiceImpl.sShouldStopService = true;//true  表示停止服务，false  表示启动服务
+        DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
+
        startService(new Intent(this, MicService.class));
         //初始化省流量更新SDK，传入的Context必须为ApplicationContext
         TMSelfUpdateManager.getInstance().init(getApplicationContext(), BaseConfig.SELF_UPDATE_CHANNEL, mSelfUpdateListener,
