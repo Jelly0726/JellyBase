@@ -344,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
                             public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
                                 BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.checkversion_dialog_layout);
                                 TextView textView = baseDialog.findViewById(R.id.tv_msg);
+                                if (versionBundle!=null)
                                 textView.setText(versionBundle.getContent());
                                 baseDialog.setCanceledOnTouchOutside(true);
                                 return baseDialog;
