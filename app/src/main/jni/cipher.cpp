@@ -61,18 +61,25 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("SHA1->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    jsize src_Len = strlen(src);
 
     char buff[SHA_DIGEST_LENGTH];
     char hex[SHA_DIGEST_LENGTH * 2];
@@ -95,10 +102,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
         strcat(hex, buff);
     }
     LOGD("SHA1->%s", hex);
-
-    LOGD("SHA1->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
     return env->NewStringUTF(hex);
 }
 extern "C" JNIEXPORT jstring JNICALL
@@ -109,18 +112,25 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("SHA224->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    jsize src_Len = strlen(src);
 
     char buff[SHA224_DIGEST_LENGTH];
     char hex[SHA224_DIGEST_LENGTH * 2];
@@ -144,9 +154,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     }
     LOGD("SHA224->%s", hex);
 
-    LOGD("SHA224->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
     return env->NewStringUTF(hex);
 }
 
@@ -158,18 +165,25 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("SHA256->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    jsize src_Len = strlen(src);
 
     char buff[SHA256_DIGEST_LENGTH];
     char hex[SHA256_DIGEST_LENGTH * 2];
@@ -193,9 +207,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     }
     LOGD("SHA256->%s", hex);
 
-    LOGD("SHA256->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
     return env->NewStringUTF(hex);
 }
 
@@ -207,18 +218,25 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("SHA384->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    jsize src_Len = strlen(src);
 
     char buff[SHA384_DIGEST_LENGTH];
     char hex[SHA384_DIGEST_LENGTH * 2];
@@ -242,9 +260,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     }
     LOGD("SHA384->%s", hex);
 
-    LOGD("SHA384->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
     return env->NewStringUTF(hex);
 }
 
@@ -256,18 +271,25 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("SHA512->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    jsize src_Len = strlen(src);
 
     char buff[SHA512_DIGEST_LENGTH];
     char hex[SHA512_DIGEST_LENGTH * 2];
@@ -290,9 +312,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
         strcat(hex, buff);
     }
     LOGD("SHA512->%s", hex);
-
-    LOGD("SHA512->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
 
     return env->NewStringUTF(hex);
 }
@@ -831,20 +850,26 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
     }
     //====================将秘钥拼接到数据源末端=========================
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    char *Skey="&key=";
-    strcat(reinterpret_cast<char *>(srcs), Skey); //拼接两个char字符串
-    strcat(reinterpret_cast<char *>(srcs), key); //拼接两个char字符串
-//    LOGD("源数据-> %s ", srcs);
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-    int nOutSize=src_Lens+strlen(Skey)+strlen(key);
-    jbyteArray jarray = env->NewByteArray(nOutSize);//新建jbyteArray对象
-    env->SetByteArrayRegion(jarray, 0, nOutSize, srcs);//给jbyteArray对象赋值
-    src_=jarray;
+//    LOGD("源数据->sss %s ", srcs);
+    char *Skey="&key=";
+
+    char *chars = NULL;
+    chars = new char[src_Lens + 1];
+    memset(chars,0,src_Lens + 1);
+    memcpy(chars, srcs, src_Lens);
+    chars[src_Lens] = 0;
+    LOGD("MD5->从jni释放数据指针");
+    env->ReleaseByteArrayElements(src_, srcs, 0);
+
+    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    strcpy(src,chars);
+    strcat(src, Skey);
+    strcat(src, key);
+//    LOGD("源数据-> %s ", src);
     //====================将秘钥拼接到数据源末端=========================
     LOGD("MD5->信息摘要算法第五版");
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
-
+    jsize src_Len = strlen(src);
 
     char buff[3] = {'\0'};
     char hex[33] = {'\0'};
@@ -865,10 +890,6 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
         strcat(hex, buff);
     }
     LOGD("MD5->%s", hex);
-
-    LOGD("MD5->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
     return env->NewStringUTF(hex);
 }
 
