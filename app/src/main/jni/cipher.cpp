@@ -63,8 +63,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -73,13 +71,14 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     LOGD("SHA1->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
-    //====================将秘钥拼接到数据源末端=========================
     jsize src_Len = strlen(src);
+    //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA_DIGEST_LENGTH];
     char hex[SHA_DIGEST_LENGTH * 2];
@@ -114,8 +113,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -124,13 +121,14 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     LOGD("SHA224->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
-    //====================将秘钥拼接到数据源末端=========================
     jsize src_Len = strlen(src);
+    //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA224_DIGEST_LENGTH];
     char hex[SHA224_DIGEST_LENGTH * 2];
@@ -167,8 +165,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -177,13 +173,14 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     LOGD("SHA256->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
-    //====================将秘钥拼接到数据源末端=========================
     jsize src_Len = strlen(src);
+    //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA256_DIGEST_LENGTH];
     char hex[SHA256_DIGEST_LENGTH * 2];
@@ -220,8 +217,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -230,13 +225,14 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     LOGD("SHA384->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
-    //====================将秘钥拼接到数据源末端=========================
     jsize src_Len = strlen(src);
+    //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA384_DIGEST_LENGTH];
     char hex[SHA384_DIGEST_LENGTH * 2];
@@ -273,8 +269,6 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -283,13 +277,14 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
     LOGD("SHA512->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
-    //====================将秘钥拼接到数据源末端=========================
     jsize src_Len = strlen(src);
+    //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA512_DIGEST_LENGTH];
     char hex[SHA512_DIGEST_LENGTH * 2];
@@ -852,8 +847,6 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
     jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
     jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
 //    LOGD("源数据->sss %s ", srcs);
-    char *Skey="&key=";
-
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars,0,src_Lens + 1);
@@ -862,14 +855,15 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
     LOGD("MD5->从jni释放数据指针");
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
+    char *Skey="&key=";
     char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("源数据-> %s ", src);
+    jsize src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
     LOGD("MD5->信息摘要算法第五版");
-    jsize src_Len = strlen(src);
 
     char buff[3] = {'\0'};
     char hex[33] = {'\0'};
