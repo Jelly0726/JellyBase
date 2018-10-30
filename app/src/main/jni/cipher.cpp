@@ -72,7 +72,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+ 1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
@@ -122,7 +122,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+ 1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
@@ -174,7 +174,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+ 1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
@@ -226,7 +226,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+ 1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
@@ -278,7 +278,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+ 1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
