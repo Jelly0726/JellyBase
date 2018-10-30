@@ -856,7 +856,7 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
     env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey="&key=";
-    char* src = (char*)malloc(src_Lens +strlen(Skey) + strlen(key) + 1);
+    char* src = (char*)malloc(src_Lens+1 +strlen(Skey) + strlen(key) + 1);
     strcpy(src,chars);
     strcat(src, Skey);
     strcat(src, key);
