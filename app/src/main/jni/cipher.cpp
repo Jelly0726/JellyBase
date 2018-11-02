@@ -18,7 +18,7 @@ const char *RSAPrivateKey = "-----BEGIN PRIVATE KEY-----\nMIICdQIBADANBgkqhkiG9w
 
 extern "C" JNIEXPORT jbyteArray JNICALL
 Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
-    LOGD("HmacSHA1->HMAC: Hash-based Message Authentication Code，即基于Hash的消息鉴别码");
+//    LOGD("HmacSHA1->HMAC: Hash-based Message Authentication Code，即基于Hash的消息鉴别码");
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -32,11 +32,11 @@ Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, j
     char buff[EVP_MAX_MD_SIZE];
     char hex[EVP_MAX_MD_SIZE];
 
-    LOGD("HmacSHA1->调用函数进行哈希运算");
+//    LOGD("HmacSHA1->调用函数进行哈希运算");
     HMAC(EVP_sha1(), key, strlen(key), (unsigned char *) src, src_Len, result, &result_len);
 
     strcpy(hex, "");
-    LOGD("HmacSHA1->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("HmacSHA1->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != result_len; i++) {
         sprintf(buff, "%02x", result[i]);
         strcat(hex, buff);
@@ -47,7 +47,7 @@ Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, j
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray signature = env->NewByteArray(strlen(hex));
-    LOGD("HmacSHA1->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("HmacSHA1->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(signature, 0, strlen(hex), (jbyte *) hex);
 
     return signature;
@@ -88,19 +88,23 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
 
     SHA_CTX ctx;
     SHA1_Init(&ctx);
-    LOGD("SHA1->正在进行SHA1哈希运算");
+//    LOGD("SHA1->正在进行SHA1哈希运算");
     SHA1_Update(&ctx, src, src_Len);
     SHA1_Final(digest, &ctx);
 
     OPENSSL_cleanse(&ctx, sizeof(ctx));
 
     strcpy(hex, "");
-    LOGD("SHA1->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("SHA1->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("SHA1->%s", hex);
+    LOGD("SHA1->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
+
     return env->NewStringUTF(hex);
 }
 extern "C" JNIEXPORT jstring JNICALL
@@ -138,19 +142,22 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
 
     SHA256_CTX ctx;
     SHA224_Init(&ctx);
-    LOGD("SHA224->正在进行SHA224哈希运算");
+//    LOGD("SHA224->正在进行SHA224哈希运算");
     SHA224_Update(&ctx, src, src_Len);
     SHA224_Final(digest, &ctx);
 
     OPENSSL_cleanse(&ctx, sizeof(ctx));
 
     strcpy(hex, "");
-    LOGD("SHA224->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("SHA224->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("SHA224->%s", hex);
+    LOGD("SHA224->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
 
     return env->NewStringUTF(hex);
 }
@@ -190,20 +197,22 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
 
     SHA256_CTX ctx;
     SHA256_Init(&ctx);
-    LOGD("SHA256->正在进行SHA256哈希运算");
+//    LOGD("SHA256->正在进行SHA256哈希运算");
     SHA256_Update(&ctx, src, src_Len);
     SHA256_Final(digest, &ctx);
 
     OPENSSL_cleanse(&ctx, sizeof(ctx));
 
     strcpy(hex, "");
-    LOGD("SHA256->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("SHA256->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("SHA256->%s", hex);
-
+    LOGD("SHA256->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
     return env->NewStringUTF(hex);
 }
 
@@ -242,19 +251,22 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
 
     SHA512_CTX ctx;
     SHA384_Init(&ctx);
-    LOGD("SHA384->正在进行SHA384哈希运算");
+//    LOGD("SHA384->正在进行SHA384哈希运算");
     SHA384_Update(&ctx, src, src_Len);
     SHA384_Final(digest, &ctx);
 
     OPENSSL_cleanse(&ctx, sizeof(ctx));
 
     strcpy(hex, "");
-    LOGD("SHA384->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("SHA384->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("SHA384->%s", hex);
+    LOGD("SHA384->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
 
     return env->NewStringUTF(hex);
 }
@@ -294,19 +306,22 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
 
     SHA512_CTX ctx;
     SHA512_Init(&ctx);
-    LOGD("SHA512->正在进行SHA256哈希运算");
+//    LOGD("SHA512->正在进行SHA256哈希运算");
     SHA512_Update(&ctx, src, src_Len);
     SHA512_Final(digest, &ctx);
 
     OPENSSL_cleanse(&ctx, sizeof(ctx));
 
     strcpy(hex, "");
-    LOGD("SHA512->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("SHA512->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("SHA512->%s", hex);
+    LOGD("SHA512->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
 
     return env->NewStringUTF(hex);
 }
@@ -321,7 +336,7 @@ Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject
     keys_ =env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte*)key );
 
-    LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
+//    LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
     const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
@@ -335,17 +350,17 @@ Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject
 
     EVP_CIPHER_CTX ctx;
     EVP_CIPHER_CTX_init(&ctx);
-    LOGD("AES->指定加密算法，初始化加密key/iv");
+//    LOGD("AES->指定加密算法，初始化加密key/iv");
     EVP_EncryptInit_ex(&ctx, EVP_aes_128_cbc(), NULL, (const unsigned char *) keys, iv);
-    LOGD("AES->对数据进行加密运算");
+//    LOGD("AES->对数据进行加密运算");
     EVP_EncryptUpdate(&ctx, out, &outlen, (const unsigned char *) src, src_Len);
     cipherText_len = outlen;
 
-    LOGD("AES->结束加密运算");
+//    LOGD("AES->结束加密运算");
     EVP_EncryptFinal_ex(&ctx, out + outlen, &outlen);
     cipherText_len += outlen;
 
-    LOGD("AES->EVP_CIPHER_CTX_cleanup");
+//    LOGD("AES->EVP_CIPHER_CTX_cleanup");
     EVP_CIPHER_CTX_cleanup(&ctx);
 
     LOGD("AES->从jni释放数据指针");
@@ -353,7 +368,7 @@ Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(cipherText_len);
-    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, cipherText_len, (jbyte *) out);
     LOGD("AES->释放内存");
     free(out);
@@ -371,7 +386,7 @@ Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject
     keys_ =env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte*)key );
 
-    LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
+//    LOGD("AES->对称密钥，也就是说加密和解密用的是同一个密钥");
     const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
     jbyte *keys = env->GetByteArrayElements(keys_, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
@@ -384,17 +399,17 @@ Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject
 
     EVP_CIPHER_CTX ctx;
     EVP_CIPHER_CTX_init(&ctx);
-    LOGD("AES->指定解密算法，初始化解密key/iv");
+//    LOGD("AES->指定解密算法，初始化解密key/iv");
     EVP_DecryptInit_ex(&ctx, EVP_aes_128_cbc(), NULL, (const unsigned char *) keys, iv);
-    LOGD("AES->对数据进行解密运算");
+//    LOGD("AES->对数据进行解密运算");
     EVP_DecryptUpdate(&ctx, out, &outlen, (const unsigned char *) src, src_Len);
     plaintext_len = outlen;
 
-    LOGD("AES->结束解密运算");
+//    LOGD("AES->结束解密运算");
     EVP_DecryptFinal_ex(&ctx, out + outlen, &outlen);
     plaintext_len += outlen;
 
-    LOGD("AES->EVP_CIPHER_CTX_cleanup");
+//    LOGD("AES->EVP_CIPHER_CTX_cleanup");
     EVP_CIPHER_CTX_cleanup(&ctx);
 
     LOGD("AES->从jni释放数据指针");
@@ -402,7 +417,7 @@ Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(plaintext_len);
-    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, plaintext_len, (jbyte *) out);
     LOGD("AES->释放内存");
     free(out);
@@ -416,7 +431,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPubKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
@@ -430,9 +445,9 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA公钥");
+//    LOGD("RSA->从字符串读取RSA公钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSA_PUBKEY(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
@@ -448,7 +463,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
     memset(srcOrigin, 0, src_Len);
     memcpy(srcOrigin, src, src_Len);
 
-    LOGD("RSA->对数据进行公钥加密运算");
+//    LOGD("RSA->对数据进行公钥加密运算");
     //RSA_PKCS1_PADDING最大加密长度：128-11；RSA_NO_PADDING最大加密长度：128
     for (int i = 0; i <= src_Len / (flen - 11); i++) {
         src_flen = (i == src_Len / (flen - 11)) ? src_Len % (flen - 11) : flen - 11;
@@ -465,7 +480,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
     }
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -473,7 +488,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(cipherText_offset);
-    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, cipherText_offset, (jbyte *) desText);
     LOGD("RSA->释放内存");
     free(srcOrigin);
@@ -489,7 +504,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPrivateKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
@@ -503,9 +518,9 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA私钥");
+//    LOGD("RSA->从字符串读取RSA私钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSAPrivateKey(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
@@ -521,7 +536,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
     memset(srcOrigin, 0, src_Len);
     memcpy(srcOrigin, src, src_Len);
 
-    LOGD("RSA->对数据进行私钥解密运算");
+//    LOGD("RSA->对数据进行私钥解密运算");
     //一次性解密数据最大字节数RSA_size
     for (int i = 0; i <= src_Len / flen; i++) {
         src_flen = (i == src_Len / flen) ? src_Len % flen : flen;
@@ -538,7 +553,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
     }
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -546,7 +561,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(plaintext_offset);
-    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, plaintext_offset, (jbyte *) desText);
     LOGD("RSA->释放内存");
     free(srcOrigin);
@@ -562,7 +577,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPrivateKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
@@ -576,9 +591,9 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA私钥");
+//    LOGD("RSA->从字符串读取RSA私钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSAPrivateKey(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
@@ -594,7 +609,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
     memset(srcOrigin, 0, src_Len);
     memcpy(srcOrigin, src, src_Len);
 
-    LOGD("RSA->对数据进行私钥加密运算");
+//    LOGD("RSA->对数据进行私钥加密运算");
     //RSA_PKCS1_PADDING最大加密长度：128-11；RSA_NO_PADDING最大加密长度：128
     for (int i = 0; i <= src_Len / (flen - 11); i++) {
         src_flen = (i == src_Len / (flen - 11)) ? src_Len % (flen - 11) : flen - 11;
@@ -611,7 +626,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
     }
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -619,7 +634,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(cipherText_offset);
-    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, cipherText_offset, (jbyte *) desText);
     LOGD("RSA->释放内存");
     free(srcOrigin);
@@ -635,7 +650,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPubKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
@@ -649,9 +664,9 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA公钥");
+//    LOGD("RSA->从字符串读取RSA公钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSA_PUBKEY(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
@@ -667,7 +682,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
     memset(srcOrigin, 0, src_Len);
     memcpy(srcOrigin, src, src_Len);
 
-    LOGD("RSA->对数据进行公钥解密运算");
+//    LOGD("RSA->对数据进行公钥解密运算");
     //一次性解密数据最大字节数RSA_size
     for (int i = 0; i <= src_Len / flen; i++) {
         src_flen = (i == src_Len / flen) ? src_Len % flen : flen;
@@ -684,7 +699,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
     }
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -692,7 +707,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(plaintext_offset);
-    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, plaintext_offset, (jbyte *) desText);
     LOGD("RSA->释放内存");
     free(srcOrigin);
@@ -708,7 +723,7 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPrivateKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPrivateKey), (jbyte*)RSAPrivateKey );
@@ -723,9 +738,9 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA公钥");
+//    LOGD("RSA->从字符串读取RSA公钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSAPrivateKey(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
@@ -733,13 +748,13 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
     unsigned char *sign = (unsigned char *) malloc(129);
     memset(sign, 0, 129);
 
-    LOGD("RSA->对数据进行摘要运算");
+//    LOGD("RSA->对数据进行摘要运算");
     SHA1((const unsigned char *) src, src_Len, digest);
-    LOGD("RSA->对摘要进行RSA私钥加密");
+//    LOGD("RSA->对摘要进行RSA私钥加密");
     RSA_sign(NID_sha1, digest, SHA_DIGEST_LENGTH, sign, &siglen, rsa);
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -747,7 +762,7 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(siglen);
-    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("RSA->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, siglen, (jbyte *) sign);
     LOGD("RSA->释放内存");
     free(sign);
@@ -761,7 +776,7 @@ Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,j
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return -1;
     }
-    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
+//    LOGD("RSA->非对称密码算法，也就是说该算法需要一对密钥，使用其中一个加密，则需要用另一个才能解密");
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ =env->NewByteArray(strlen(RSAPubKey));
     env->SetByteArrayRegion(keys_, 0, strlen(RSAPubKey), (jbyte*)RSAPubKey );
@@ -779,20 +794,20 @@ Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,j
     RSA *rsa = NULL;
     BIO *keybio = NULL;
 
-    LOGD("RSA->从字符串读取RSA公钥");
+//    LOGD("RSA->从字符串读取RSA公钥");
     keybio = BIO_new_mem_buf(keys, -1);
-    LOGD("RSA->从bio结构中得到RSA结构");
+//    LOGD("RSA->从bio结构中得到RSA结构");
     rsa = PEM_read_bio_RSA_PUBKEY(keybio, NULL, NULL, NULL);
     LOGD("RSA->释放BIO");
     BIO_free_all(keybio);
 
-    LOGD("RSA->对数据进行摘要运算");
+//    LOGD("RSA->对数据进行摘要运算");
     SHA1((const unsigned char *) src, src_Len, digest);
-    LOGD("RSA->对摘要进行RSA公钥验证");
+//    LOGD("RSA->对摘要进行RSA公钥验证");
     ret = RSA_verify(NID_sha1, digest, SHA_DIGEST_LENGTH, (const unsigned char *) sign, siglen, rsa);
 
     RSA_free(rsa);
-    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
+//    LOGD("RSA->CRYPTO_cleanup_all_ex_data");
     CRYPTO_cleanup_all_ex_data();
 
     LOGD("RSA->从jni释放数据指针");
@@ -809,7 +824,7 @@ Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
     }
-    LOGD("XOR->异或加解密: 相同为假，不同为真");
+//    LOGD("XOR->异或加解密: 相同为假，不同为真");
     const char keys[] = "jelly20180829";
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
@@ -818,7 +833,7 @@ Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context
     memset(chs, 0, src_Len);
     memcpy(chs, src, src_Len);
 
-    LOGD("XOR->对数据进行异或运算");
+//    LOGD("XOR->对数据进行异或运算");
     for (int i = 0; i < src_Len; i++) {
         *chs = *chs ^ keys[i % strlen(keys)];
         chs++;
@@ -829,7 +844,7 @@ Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context
     env->ReleaseByteArrayElements(src_, src, 0);
 
     jbyteArray cipher = env->NewByteArray(src_Len);
-    LOGD("XOR->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
+//    LOGD("XOR->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
     env->SetByteArrayRegion(cipher, 0, src_Len, (const jbyte *) chs);
     LOGD("XOR->释放内存");
     free(chs);
@@ -863,7 +878,7 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
 //    LOGD("源数据-> %s ", src);
     jsize src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
-    LOGD("MD5->信息摘要算法第五版");
+//    LOGD("MD5->信息摘要算法第五版");
 
     char buff[3] = {'\0'};
     char hex[33] = {'\0'};
@@ -873,17 +888,21 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
 
     MD5_CTX ctx;
     MD5_Init(&ctx);
-    LOGD("MD5->进行MD5信息摘要运算");
+//    LOGD("MD5->进行MD5信息摘要运算");
     MD5_Update(&ctx, src, src_Len);
     MD5_Final(digest, &ctx);
 
     strcpy(hex, "");
-    LOGD("MD5->把哈希值按%%02x格式定向到缓冲区");
+//    LOGD("MD5->把哈希值按%%02x格式定向到缓冲区");
     for (int i = 0; i != sizeof(digest); i++) {
         sprintf(buff, "%02x", digest[i]);
         strcat(hex, buff);
     }
     LOGD("MD5->%s", hex);
+    LOGD("MD5->释放内存");
+    free(src);//malloc和free要配套使用
+    delete []chars;//new/delete、new[]/delete[] 要配套使用总是没错的
+
     return env->NewStringUTF(hex);
 }
 

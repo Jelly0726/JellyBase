@@ -95,7 +95,7 @@ char *sha1OfApk(JNIEnv *env, jobject context) {
     }
     hex[arraySize * 2] = '\0';
 
-    LOGD("sha1OfApk->sha1 %s ", hex);
+//    LOGD("sha1OfApk->sha1 %s ", hex);
     return hex;
 }
 
