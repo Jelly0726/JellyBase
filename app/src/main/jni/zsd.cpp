@@ -8,7 +8,9 @@
 #include"zsd.h"
 
 //换成你自己的apk-sha1值
-const char *signatureOfApk = "758DA6688786C0D2C10CA074C29351FB02686237";
+//NPayHelper.jsk "73C03C185B565BB1D78589B2424DF0C190265ACD";
+//Jelly.jsk "758DA6688786C0D2C10CA074C29351FB02686237";
+const char *signatureOfApk ="758DA6688786C0D2C10CA074C29351FB02686237";
 
 const char digest[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
