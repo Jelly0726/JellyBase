@@ -1,4 +1,4 @@
-package com.base.view;
+package com.base.valicode;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,7 +13,7 @@ import java.util.Random;
  */
 
 public class GraphValiCode {
-
+    private TimerUtil mTimerUtil;
     //随机数数组
     private static final char[] CHARS = {
             '2', '3', '4', '5', '6', '7', '8', '9',
@@ -36,6 +36,10 @@ public class GraphValiCode {
     private static final int DEFAULT_CODE_LENGTH = 4;
     //默认字体大小
     private static final int DEFAULT_FONT_SIZE = 25;
+    //默认倒计时时间(ms)
+    private static final int DEFAULT_MILLISINFUTURE = 60000;
+    //默认倒计时速度(ms)
+    private static final int DEFAULT_COUNTDOWNUNTERVAL = 1000;
     //默认线条的条数
     private static final int DEFAULT_LINE_NUMBER = 5;
     //padding值
@@ -58,14 +62,24 @@ public class GraphValiCode {
     private String code;
     private int padding_left, padding_top;
     private Random random = new Random();
+
+    /**
+     * Millis since epoch when alarm should stop.
+     */
+    private long mMillisInFuture;
+
+    /**
+     * The interval in millis that the user receives callbacks
+     */
+    private long mCountdownInterval;
     //验证码图片
-    public Bitmap createBitmap() {
+    public Bitmap createBitmap(long millisInFuture, long countDownInterval) {
         padding_left = 0;
 
         Bitmap bp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bp);
 
-        code = createCode();
+        code = createCode(millisInFuture,countDownInterval);
 
         c.drawColor(Color.WHITE);
         Paint paint = new Paint();
@@ -86,18 +100,48 @@ public class GraphValiCode {
         c.restore();//
         return bp;
     }
-
+    //验证码图片
+    public Bitmap createBitmap() {
+        return createBitmap(DEFAULT_MILLISINFUTURE,DEFAULT_COUNTDOWNUNTERVAL);
+    }
     public String getCode() {
         return code;
     }
-
+    public void onDestroy() {
+        if (mTimerUtil != null) {
+            mTimerUtil.cancel();
+            mTimerUtil = null;
+        }
+    }
     //生成验证码
-    private String createCode() {
+    public String createCode(long millisInFuture, long countDownInterval) {
+        if (mTimerUtil != null) {
+            mTimerUtil.cancel();
+            mTimerUtil = null;
+        }
+        mMillisInFuture=millisInFuture;
+        mCountdownInterval=countDownInterval;
+        mTimerUtil = new TimerUtil(millisInFuture, countDownInterval);
+        mTimerUtil.setCountDownTimerListener(new TimerUtil.CountDownTimerListener() {
+            @Override
+            public void startCount(long millsUtilFinished) {
+            }
+
+            @Override
+            public void finishCount() {
+                code = createCode(mMillisInFuture,mCountdownInterval);
+            }
+        });
+        mTimerUtil.start();
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < codeLength; i++) {
             buffer.append(CHARS[random.nextInt(CHARS.length)]);
         }
         return buffer.toString();
+    }
+    //生成验证码
+    public String createCode() {
+        return createCode(DEFAULT_MILLISINFUTURE,DEFAULT_COUNTDOWNUNTERVAL);
     }
     //画干扰线
     private void drawLine(Canvas canvas, Paint paint) {
@@ -136,5 +180,9 @@ public class GraphValiCode {
     private void randomPadding() {
         padding_left += base_padding_left + random.nextInt(range_padding_left);
         padding_top = base_padding_top + random.nextInt(range_padding_top);
+    }
+    //验证验证码
+    public boolean verify(String verifyCode){
+        return verifyCode.toUpperCase().equals(code.toUpperCase());
     }
 }

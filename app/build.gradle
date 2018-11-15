@@ -210,8 +210,7 @@ repositories {
         androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
             exclude group: 'com.android.support', module: 'support-annotations'
         })
-        compile 'com.android.support:appcompat-v7:26.0.2'
-
+        compile 'com.android.support:appcompat-v7:27.1.0'
         //VectorDrawable需要Support Library 23.2+
         compile 'com.android.support.constraint:constraint-layout:1.0.2'
         testCompile 'junit:junit:4.12'
@@ -220,7 +219,7 @@ repositories {
         compile 'com.android.support:percent:22.2.0'
 
         //recyclerview
-        compile 'com.android.support:design:26.1.0'
+        compile 'com.android.support:design:27.1.0'
 
         //butterknife注解式绑定id
         compile 'com.jakewharton:butterknife:8.8.1'
