@@ -41,11 +41,11 @@ public class LauncherActivity extends BaseActivity{
 		DaemonEnv.startServiceMayBind(TraceServiceImpl.class);
 
 		if (AppPrefs.getBoolean(BaseApplication.getInstance(),ConfigKey.FIRST,true)) {
-			if(!hasShortcut()){
-				createShut();// 创建快捷方式
-			}else{
-				delShortcut();
-			}
+//			if(!hasShortcut()){
+//				createShut();// 创建快捷方式
+//			}else{
+//				delShortcut();
+//			}
 		}
 		new Handler().postDelayed(new Runnable() {
 			public void run() {
