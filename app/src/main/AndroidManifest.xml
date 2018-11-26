@@ -151,6 +151,11 @@
         <meta-data android:name="design_height" android:value="1280">
         </meta-data>
         <!--↑↑↑↑↑↑↑ autolayout 设计稿的尺寸。↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓解决Glide由于过度压缩导致了图片变绿↓↓↓↓↓-->
+        <meta-data
+            android:name="com.base.glide.GlideConfiguration"
+            android:value="GlideModule"/>
+        <!--↑↑↑↑↑↑↑↑解决Glide由于过度压缩导致了图片变绿↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓circle_dialog↓↓↓↓↓-->
         <meta-data
             android:name="circle_dialog_design_width" android:value="1200"/>
