@@ -601,21 +601,6 @@ public class MyDate {
 		return sdf.format(new Date(Long.valueOf(seconds+"000")));
 	}
 	/**
-	 * 日期格式字符串转换成时间戳
-	 * @param date_str 字符串日期
-	 * @param format 如：yyyy-MM-dd HH:mm:ss
-	 * @return
-	 */
-	public static String date2TimeStamp(String date_str,String format){
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			return String.valueOf(sdf.parse(date_str).getTime()/1000);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "";
-	}
-	/**
 	 * long型时间转换
 	 *
 	 * @param longTime 长整型时间
@@ -788,5 +773,9 @@ public class MyDate {
 		}
 		date = calendar.get(Calendar.MONTH) + 1 + "月" + calendar.get(Calendar.DATE) + "日  " + day;
 		return date;
+	}
+	public static void main(String[] arg){
+		String time=timeFormat(1544005522);
+		System.out.println(time);
 	}
 }
