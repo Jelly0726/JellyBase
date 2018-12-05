@@ -561,19 +561,7 @@ public class MyDate {
 	 * @return timeformat
 	 */
 	public static String convertToTime(String timeformat, long longTime) {
-		Date date = new Date(longTime);
-		return convertToTime(timeformat, date);
-	}
-
-	/**
-	 * 将Date型时间转为固定格式的时间字符串
-	 * @param timeformat 时间格式
-	 * @param date 时间
-	 * @return timeformat
-	 */
-	public static String convertToTime(String timeformat, Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat(timeformat, Locale.getDefault());
-		return sdf.format(date);
+		return timeStamp2Date(longTime+"",timeformat);
 	}
 
 	/**
@@ -594,27 +582,39 @@ public class MyDate {
 	 * @return {@link MyDate#DATE_FORMAT}
 	 */
 	public static String convertToDate(long longTime) {
-		return convertToTime(DATE_FORMAT, longTime);
+		return timeStamp2Date(longTime+"",DATE_FORMAT);
 	}
 
 	/**
-	 * 将String类型时间转为long类型时间
-	 *
-	 * @param timeFormat 解析格式
-	 * @param timestamp  yyyy-MM-dd HH:mm:ss
-	 * @return 时间
+	 * 时间戳转换成日期格式字符串
+	 * @param seconds 精确到秒的字符串
+	 * @return
 	 */
-	public static long covertToLong(String timeFormat, String timestamp) {
-		SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.getDefault());
-		try {
-			Date date = sdf.parse(timestamp);
-			return date.getTime();
-		} catch (ParseException e) {
-			Log.e(TAG, e.getMessage());
-			return -1;
+	public static String timeStamp2Date(String seconds,String format) {
+		if(seconds == null || seconds.isEmpty() || seconds.equals("null")){
+			return "";
 		}
+		if(format == null || format.isEmpty()){
+			format = "yyyy-MM-dd HH:mm:ss";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		return sdf.format(new Date(Long.valueOf(seconds+"000")));
 	}
-
+	/**
+	 * 日期格式字符串转换成时间戳
+	 * @param date_str 字符串日期
+	 * @param format 如：yyyy-MM-dd HH:mm:ss
+	 * @return
+	 */
+	public static String date2TimeStamp(String date_str,String format){
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			return String.valueOf(sdf.parse(date_str).getTime()/1000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 	/**
 	 * long型时间转换
 	 *
