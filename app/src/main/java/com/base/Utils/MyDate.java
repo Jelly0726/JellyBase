@@ -588,6 +588,7 @@ public class MyDate {
 	/**
 	 * 时间戳转换成日期格式字符串
 	 * @param seconds 精确到秒的字符串
+	 * @param format 返回的时间格式  默认{@link MyDate#TIME_FORMAT}
 	 * @return
 	 */
 	public static String timeStamp2Date(String seconds,String format) {
@@ -595,10 +596,16 @@ public class MyDate {
 			return "";
 		}
 		if(format == null || format.isEmpty()){
-			format = "yyyy-MM-dd HH:mm:ss";
+			format = TIME_FORMAT;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		return sdf.format(new Date(Long.valueOf(seconds+"000")));
+		if(seconds.length()==10) {
+			return sdf.format(new Date(Long.valueOf(seconds + "000")));
+		}else if(seconds.length()==13) {
+			return sdf.format(new Date(Long.valueOf(seconds)));
+		}else {
+			return "";
+		}
 	}
 	/**
 	 * long型时间转换
@@ -775,7 +782,7 @@ public class MyDate {
 		return date;
 	}
 	public static void main(String[] arg){
-		String time=timeFormat(1544005522);
+		String time=timeStamp2Date(1544005522+"",null);
 		System.out.println(time);
 	}
 }
