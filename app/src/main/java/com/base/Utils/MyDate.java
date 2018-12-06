@@ -586,7 +586,16 @@ public class MyDate {
 
 		return timeStr;
 	}
-
+	/**
+	 * 将Calendar型时间转为固定格式的时间字符串
+	 * @param timeformat 时间格式
+	 * @param calendar   时间
+	 * @return timeformat
+	 */
+	public static String convertToTime(String timeformat, Calendar calendar) {
+		SimpleDateFormat sdf = new SimpleDateFormat(timeformat, Locale.getDefault());
+		return sdf.format(calendar.getTime());
+	}
 	/**
 	 * 将long型时间转为固定格式的时间字符串
 	 *
@@ -606,17 +615,6 @@ public class MyDate {
 	 */
 	public static String convertToTime(String timeformat, long longTime) {
 		return timeStamp2Date(longTime+"",timeformat);
-	}
-
-	/**
-	 * 将Calendar型时间转为固定格式的时间字符串
-	 * @param timeformat 时间格式
-	 * @param calendar   时间
-	 * @return timeformat
-	 */
-	public static String convertToTime(String timeformat, Calendar calendar) {
-		SimpleDateFormat sdf = new SimpleDateFormat(timeformat, Locale.getDefault());
-		return sdf.format(calendar.getTime());
 	}
 
 	/**
