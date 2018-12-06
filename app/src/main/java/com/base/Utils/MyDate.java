@@ -217,7 +217,7 @@ public class MyDate {
 	 * @return
 	 */
 	public static int getTimeToStampMin(String time){
-		SimpleDateFormat sdf =   new SimpleDateFormat( TIME_FORMAT2);
+		SimpleDateFormat sdf =   new SimpleDateFormat(TIME_FORMAT2);
 		try {
 			Date date = sdf.parse(time);
 			sdf = new SimpleDateFormat( "mm" );
@@ -283,48 +283,87 @@ public class MyDate {
 		Calendar c = Calendar.getInstance();
 		return c.get(Calendar.MILLISECOND);
 	}
+
+	/**
+	 * 获取中文格式 年月日时分秒
+	 * @return  {@link MyDate#DATE_FORMAT2}
+	 */
 	public static String getDateCN() {
 		SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT2);
 		String date = format.format(new Date(System.currentTimeMillis()));
 		return date;// 2012年10月03日 23:41:31
 	}
 
+	/**
+	 *  获取英文格式 年月日时分秒
+	 * @return {@link MyDate#TIME_FORMAT}
+	 */
 	public static String getDateEN() {
 		SimpleDateFormat format1 = new SimpleDateFormat(TIME_FORMAT);
 		String date1 = format1.format(new Date(System.currentTimeMillis()));
 		return date1;// 2012-10-03 23:41:31
 	}
 
+	/**
+	 *  获取英文格式 时分
+	 * @return  {@link MyDate#TIME_FORMAT6}
+	 */
 	public static String getDate() {
 		SimpleDateFormat format2 = new SimpleDateFormat(TIME_FORMAT6);
 		String date = format2.format(new Date(System.currentTimeMillis()));
 		return date;
 	}
+
+	/**
+	 *  获取英文格式 时分秒
+	 * @return {@link MyDate#TIME_FORMAT5}
+	 */
 	public static String getDatemiao() {
 		SimpleDateFormat format2 = new SimpleDateFormat(TIME_FORMAT5);
 		String date = format2.format(new Date(System.currentTimeMillis()));
 		return date;
 	}
+	/**
+	 *  获取英文格式 年月日
+	 * @return {@link MyDate#TIME_FORMAT4}
+	 */
 	public static String getDateDaEN() {
 		SimpleDateFormat format3 = new SimpleDateFormat(TIME_FORMAT4);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012-10-03
 	}
+	/**
+	 *  获取英文格式 年月
+	 * @return {@link MyDate#TIME_FORMAT8}
+	 */
 	public static String getDateMonthEN() {
 		SimpleDateFormat format3 = new SimpleDateFormat(TIME_FORMAT8);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012-10
 	}
+	/**
+	 *  获取中文格式 年月
+	 * @return {@link MyDate#DATE_FORMAT8}
+	 */
 	public static String getDateMonthCN() {
 		SimpleDateFormat format3 = new SimpleDateFormat(DATE_FORMAT8);
 		String date = format3.format(new Date(System.currentTimeMillis()));
 		return date;//2012年10月
 	}
+	/**
+	 *  获取中文格式 年月日
+	 * @return {@link MyDate#DATE_FORMAT}
+	 */
 	public static String getDateDaCN() {
 		SimpleDateFormat format4 = new SimpleDateFormat(DATE_FORMAT);
 		String date = format4.format(new Date(System.currentTimeMillis()));
 		return date;//2012年10月03日
 	}
+	/**
+	 *  获取英文格式 年月日
+	 *  @param da  把日期往后增加一天.整数往后推,负数往前移动
+	 * @return {@link MyDate#TIME_FORMAT4}
+	 */
 	public static String getDateDaEN(int da){
 		Date date=new Date();//取时间
 		Calendar calendar = new GregorianCalendar();
@@ -335,6 +374,11 @@ public class MyDate {
 		String dateString = formatter.format(date);
 		return dateString;
 	}
+	/**
+	 *  获取中文格式 年月日
+	 *  @param da  把日期往后增加一天.整数往后推,负数往前移动
+	 * @return {@link MyDate#DATE_FORMAT}
+	 */
 	public static String getDateDaCN(int da){
 		Date date=new Date();//取时间
 		Calendar calendar = new GregorianCalendar();
@@ -608,7 +652,7 @@ public class MyDate {
 		}
 	}
 	/**
-	 * long型时间转换
+	 * long型时间转换 2013年7月3日 18:05(星期三)格式
 	 *
 	 * @param longTime 长整型时间
 	 * @return 2013年7月3日 18:05(星期三)
@@ -630,7 +674,7 @@ public class MyDate {
 	}
 
 	/**
-	 * 转换数字的星期为字符串的
+	 * 转换数字的星期为字符串的星期
 	 *
 	 * @param w
 	 * @return 星期x
@@ -674,6 +718,15 @@ public class MyDate {
 	 * @return {@link MyDate#TIME_BEFORE}{@link MyDate#TIME_ING}{@link MyDate#TIME_AFTER}
 	 */
 	public static int betweenTime(long time, long time1, long time2) {
+		if ((time+"").length()==10){
+			time=Long.parseLong(time+"000");
+		}
+		if ((time1+"").length()==10){
+			time1=Long.parseLong(time1+"000");
+		}
+		if ((time2+"").length()==10){
+			time2=Long.parseLong(time2+"000");
+		}
 		if (time1 > time2) {  //时间1大
 			long testTime = time1;
 			time1 = time2;
@@ -690,6 +743,11 @@ public class MyDate {
 		}
 	}
 
+	/**
+	 *  将"yyyy-MM-dd HH:mm:ss"格式的时间转为天、时、分、秒形式
+	 * @param time  "yyyy-MM-dd HH:mm:ss"格式的时间
+	 * @return  天、时、分、秒
+	 */
 	public static String computeTimeDifference(String time) {
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -700,8 +758,15 @@ public class MyDate {
 		}
 		return null;
 	}
-
+	/**
+	 *  将时间戳转为天、时、分、秒形式
+	 * @param time  时间戳
+	 * @return  天、时、分、秒
+	 */
 	public static String computeTimeDifference(long time) {
+		if ((time+"").length()==10){
+			time=Long.parseLong(time+"000");
+		}
 		long l = time - System.currentTimeMillis();
 		if(l <= 0) {
 			return "" + 0 + "天" + 0 + "小时" + 0 + "分" + 0 + "秒";
@@ -713,8 +778,15 @@ public class MyDate {
 		long s = (l / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
 		return "" + day + "天" + hour + "小时" + min + "分" + s + "秒";
 	}
-
+	/**
+	 *  将时间戳转为天、时形式
+	 * @param time  时间戳
+	 * @return  天、时
+	 */
 	public static String timeFormat(long time){
+		if ((time+"").length()==10){
+			time=Long.parseLong(time+"000");
+		}
 		long l = time - System.currentTimeMillis();
 		if(l <= 0) {
 			return "" + 0 + "天" + 0 + "小时";
@@ -730,6 +802,12 @@ public class MyDate {
 			return "" + day + "天";
 		}
 	}
+
+	/**
+	 * 去掉时间中的T字符
+	 * @param timeT
+	 * @return
+	 */
 	public static String reTimeT(String timeT){
 		String time="00-00-00 00:00:00";
 		try{
@@ -744,7 +822,7 @@ public class MyDate {
 		return time;
 	}
 	/***
-	 * 获取当前时间
+	 * 获取当前时间 月、日、星期
 	 * @return
 	 */
 	public static String getCurentDate(){
