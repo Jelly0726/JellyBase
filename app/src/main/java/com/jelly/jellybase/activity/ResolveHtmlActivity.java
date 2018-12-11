@@ -1,17 +1,25 @@
 package com.jelly.jellybase.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.appManager.BaseApplication;
+import com.base.richtext.OkHttpImageDownloader;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
+import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
-import com.zzhoujay.richtext.ig.DefaultImageDownloader;
+import com.zzhoujay.richtext.RichTextConfig;
+import com.zzhoujay.richtext.callback.Callback;
+import com.zzhoujay.richtext.callback.DrawableGetter;
+import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
 /**
  * Created by Administrator on 2017/12/18.
@@ -52,8 +60,29 @@ public class ResolveHtmlActivity extends AppCompatActivity implements View.OnCli
                 .autoFix(true) // 是否自动修复，默认true
                 .resetSize(true) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效）
                 // ，true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
-                .imageDownloader(new DefaultImageDownloader()) // 设置DefaultImageGetter的图片下载器
+                .scaleType(ImageHolder.ScaleType.fit_center) // 图片缩放方式
+                .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
+                .imageGetter(new DefaultImageGetter())//.imageGetter(yourImageGetter) // 设置图片加载器，默认为DefaultImageGetter，
+                .imageDownloader(new OkHttpImageDownloader()) // 设置DefaultImageGetter的图片下载器
                 .cache(CacheType.all)//默认为CacheType.ALL
+                .errorImage(new DrawableGetter() {
+                    @Override
+                    public Drawable getDrawable(ImageHolder holder, RichTextConfig config, TextView textView) {
+                        return ContextCompat.getDrawable(ResolveHtmlActivity.this,R.mipmap.nopic);
+                    }
+                })// 设置加载失败的错误图
+                .placeHolder(new DrawableGetter() {
+                    @Override
+                    public Drawable getDrawable(ImageHolder holder, RichTextConfig config, TextView textView) {
+                        return ContextCompat.getDrawable(ResolveHtmlActivity.this,R.mipmap.nopic);
+                    }
+                })//设置加载中显示的占位图
+                .done(new Callback() {
+                    @Override
+                    public void done(boolean imageLoadDone) {
+                        Log.i("SSSS", "imageLoadDone="+imageLoadDone);
+                    }
+                })
                 .into(productDetail_tv);
     }
     @Override
@@ -64,5 +93,4 @@ public class ResolveHtmlActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
-
 }
