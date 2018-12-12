@@ -106,7 +106,7 @@ public class FilesUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             while ((readline = br.readLine()) != null) {
-                if (!StringUtil.isEmpty(readline)) {
+                if (!isEmpty(readline)) {
                     sb.append(readline);
                     sb.append("\r\n");
                 }
@@ -127,7 +127,7 @@ public class FilesUtil {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String readline = "";
             while ((readline = br.readLine()) != null) {
-                if (!StringUtil.isEmpty(readline)) {
+                if (!isEmpty(readline)) {
                     sb.append(readline);
                     sb.append("\r\n");
                 }
@@ -156,7 +156,7 @@ public class FilesUtil {
                 BufferedReader bfr = new BufferedReader(isr);
                 String in = "";
                 while ((in = bfr.readLine()) != null) {
-                    if (!StringUtil.isEmpty(in)) {
+                    if (!isEmpty(in)) {
                         sb.append(in);
                         sb.append("\r\n");
                     }
@@ -433,5 +433,19 @@ public class FilesUtil {
             }
         }
         return null;
+    }
+    /**
+     * 字符串非空判断
+     * @param string
+     * @return
+     */
+    private static boolean isEmpty(String string){
+        if (string!=null){
+            if (!string.toLowerCase().equals("null")
+                    &&string.trim().length()>0){
+                return false;
+            }
+        }
+        return true;
     }
 }
