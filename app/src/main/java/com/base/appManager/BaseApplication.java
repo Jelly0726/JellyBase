@@ -198,7 +198,7 @@ public class BaseApplication extends Application {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+                        ToastUtils.show(myApp,"捕获到导致崩溃的异常并发送");
                     }
                 });
             }

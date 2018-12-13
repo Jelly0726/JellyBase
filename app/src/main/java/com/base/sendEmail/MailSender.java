@@ -6,8 +6,10 @@ import java.io.File;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.CommandMap;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.activation.MailcapCommandMap;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
@@ -175,10 +177,19 @@ public class MailSender {
 			// 创建邮件正文，为了避免邮件正文中文乱码问题，需要使用CharSet=UTF-8指明字符编码
 			MimeBodyPart text = new MimeBodyPart();
 			text.setContent(info.getContent(), "text/html;charset=UTF-8");
-
 			// 创建容器描述数据关系
 			MimeMultipart mp = new MimeMultipart();
 			mp.addBodyPart(text);
+
+			//发送附件时有时候会报java-mail的Error, eg:javax.activation.UnsupportedDataTypeException:
+			// no object DCH for MIME type multipart/related;所以务必添加以下几行代码来确定DCH
+			MailcapCommandMap mc = (MailcapCommandMap) CommandMap.getDefaultCommandMap();
+			mc.addMailcap("text/html;; x-java-content-handler=com.sun.mail.handlers.text_html");
+			mc.addMailcap("text/xml;; x-java-content-handler=com.sun.mail.handlers.text_xml");
+			mc.addMailcap("text/plain;; x-java-content-handler=com.sun.mail.handlers.text_plain");
+			mc.addMailcap("multipart/*;; x-java-content-handler=com.sun.mail.handlers.multipart_mixed");
+			mc.addMailcap("message/rfc822;; x-java-content-handler=com.sun.mail.handlers.message_rfc822");
+			CommandMap.setDefaultCommandMap(mc);
 			// 创建邮件附件
 			MimeBodyPart attach = new MimeBodyPart();
 
