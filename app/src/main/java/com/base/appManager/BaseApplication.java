@@ -62,7 +62,6 @@ public class BaseApplication extends Application {
         //初始化一下就行了，别忘记了  --奔溃日志
         installCockroach();//崩溃后自动重启并发送崩溃信息
 //        initCrashReport();//崩溃后不重启保存崩溃信息，下次启动压缩崩溃信息并发送
-//        LogReport.getInstance().upload(this);//启动压缩崩溃信息并发送
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {

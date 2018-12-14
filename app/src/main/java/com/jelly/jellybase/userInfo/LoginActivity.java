@@ -16,6 +16,7 @@ import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.multiClick.AntiShake;
+import com.base.permission.CallBack;
 import com.base.permission.PermissionUtils;
 import com.base.social.SocialUtil;
 import com.base.view.BackInterface;
@@ -68,7 +69,12 @@ public class LoginActivity extends BaseActivity implements
             @Override
             public void run() {
                 // 申请权限。
-                PermissionUtils.getInstance().requestPermission(LoginActivity.this,
+                PermissionUtils.getInstance().requestPermission(LoginActivity.this, new CallBack() {
+                            @Override
+                            public void onSuceess() {
+
+                            }
+                        },
                         Permission.Group.STORAGE,
                         Permission.Group.CALENDAR,
                         Permission.Group.CAMERA,

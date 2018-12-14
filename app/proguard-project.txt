@@ -399,6 +399,27 @@ public static java.lang.String TABLENAME;
 -dontwarn com.android.internal.http.multipart.**
 -keep class org.apache.** { *; }
 -dontwarn org.apache.**
+#==================activation=============
+-keep class com.sun.activation.** { *; }
+-dontwarn com.sun.activation.**
+-keep class javax.activation.** { *; }
+-dontwarn javax.activation.**
+#==================additionnal=============
+-keep class myjava.awt.datatransfer.** { *; }
+-dontwarn com.sun.datatransfer.**
+-keep class org.apache.** { *; }
+-dontwarn org.apache.**
+#==================mail=============
+-keep class com.sun.mail.** { *; }
+-dontwarn com.sun.mail.**
+-keep class javax.mail.** { *; }
+-dontwarn javax.mail.**
+#==================zip4j=============
+-keep class net.lingala.zip4j.** { *; }
+-dontwarn net.lingala.zip4j.**
+#==================logreport=============
+-keep class com.wenming.library.** { *; }
+-dontwarn com.wenming.library.**
 #=======================album====================
 -dontwarn com.yanzhenjie.album.**
 -dontwarn com.yanzhenjie.mediascanner.**

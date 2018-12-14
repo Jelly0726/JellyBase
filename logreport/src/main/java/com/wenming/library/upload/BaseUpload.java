@@ -59,7 +59,8 @@ public abstract class BaseUpload implements ILogUpload {
      * @return 返回标题的string文本
      */
     public String buildTitle(Context context) {
-        return "APP程序崩溃啦";
+
+        return "应用程序崩溃啦";
 //        return "【CrashLog】  " + context.getString(context.getApplicationInfo().labelRes) + " " + yyyy_MM_dd_HH_mm_ss_SS.format(Calendar.getInstance().getTime());
     }
 

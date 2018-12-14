@@ -58,7 +58,7 @@ public class PermissionUtils {
     /**
      * Request permissions.
      */
-    public void requestPermission(final Context context,String... permissions) {
+    public void requestPermission(final Context context,final CallBack callBack,String... permissions) {
         AndPermission.with(context)
                 .runtime()
                 .permission(permissions)
@@ -67,6 +67,8 @@ public class PermissionUtils {
                     @Override
                     public void onAction(List<String> permissions) {
                         Toast.makeText(context, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
+                        if (callBack!=null)
+                        callBack.onSuceess();
                     }
                 })
                 .onDenied(new Action<List<String>>() {
@@ -83,7 +85,7 @@ public class PermissionUtils {
     /**
      * Request permissions.
      */
-    public void requestPermission(final Context context,String[]... permissions) {
+    public void requestPermission(final Context context,final CallBack callBack,String[]... permissions) {
         AndPermission.with(context)
                 .runtime()
                 .permission(permissions)
@@ -92,6 +94,8 @@ public class PermissionUtils {
                     @Override
                     public void onAction(List<String> permissions) {
                         Toast.makeText(context, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
+                        if (callBack!=null)
+                        callBack.onSuceess();
                     }
                 })
                 .onDenied(new Action<List<String>>() {

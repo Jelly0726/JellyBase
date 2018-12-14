@@ -22,22 +22,21 @@ package com.wenming.library.upload.http;
 
 import android.util.Log;
 
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.message.BasicHeader;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Random;
 
+//import org.apache.http.Header;
+//import org.apache.http.HttpEntity;
+//import org.apache.http.message.BasicHeader;
 
-public class SimpleMultipartEntity implements HttpEntity {
+
+public class SimpleMultipartEntity {
+//public class SimpleMultipartEntity implements HttpEntity {
 
     /**
      * ASCII的字符池，用于生成分界线。
@@ -154,53 +153,53 @@ public class SimpleMultipartEntity implements HttpEntity {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public long getContentLength() {
-        writeLastBoundaryIfNeeds();
-        return out.toByteArray().length;
-    }
-
-    @Override
-    public Header getContentType() {
-        return new BasicHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
-    }
-
-    @Override
-    public boolean isChunked() {
-        return false;
-    }
-
-    @Override
-    public boolean isRepeatable() {
-        return false;
-    }
-
-    @Override
-    public boolean isStreaming() {
-        return false;
-    }
-
-    @Override
-    public void writeTo(final OutputStream outstream) throws IOException {
-        outstream.write(out.toByteArray());
-    }
-
-    @Override
-    public Header getContentEncoding() {
-        return null;
-    }
-
-    @Override
-    public void consumeContent() throws IOException, UnsupportedOperationException {
-        if (isStreaming()) {
-            throw new UnsupportedOperationException(
-                    "Streaming entity does not implement #consumeContent()");
-        }
-    }
-
-    @Override
-    public InputStream getContent() throws IOException, UnsupportedOperationException {
-        return new ByteArrayInputStream(out.toByteArray());
-    }
+//
+//    @Override
+//    public long getContentLength() {
+//        writeLastBoundaryIfNeeds();
+//        return out.toByteArray().length;
+//    }
+//
+//    @Override
+//    public Header getContentType() {
+//        return new BasicHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+//    }
+//
+//    @Override
+//    public boolean isChunked() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isRepeatable() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isStreaming() {
+//        return false;
+//    }
+//
+//    @Override
+//    public void writeTo(final OutputStream outstream) throws IOException {
+//        outstream.write(out.toByteArray());
+//    }
+//
+//    @Override
+//    public Header getContentEncoding() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void consumeContent() throws IOException, UnsupportedOperationException {
+//        if (isStreaming()) {
+//            throw new UnsupportedOperationException(
+//                    "Streaming entity does not implement #consumeContent()");
+//        }
+//    }
+//
+//    @Override
+//    public InputStream getContent() throws IOException, UnsupportedOperationException {
+//        return new ByteArrayInputStream(out.toByteArray());
+//    }
 }

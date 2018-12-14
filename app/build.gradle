@@ -366,14 +366,15 @@ repositories {
             exclude group: 'com.android.support'
         }
         implementation files('libs/zxing-core-3.3.1.jar')
-        implementation files('libs/commons-codec-1.11.jar')
-        implementation files('libs/commons-io-2.6.jar')
 
         //百度文字识别(身份证、银行卡等)
         implementation files('libs/ocr-sdk.jar')
         compile project(path: ':ocr_ui')
-        compile project(path: ':logreport')//commons-logging-1.2.jar和org.apache.http.legacy冲突，备份到libss里
+        compile project(path: ':logreport')
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
+        implementation files('libs/commons-codec-1.11.jar')
+        implementation files('libs/commons-io-2.6.jar')
+        implementation files('libs/commons-logging-1.2.jar')
 //        implementation files('libs/email-activation.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/email-additionnal.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/email-mail.jar')//logreport里已包含，备份到libss里

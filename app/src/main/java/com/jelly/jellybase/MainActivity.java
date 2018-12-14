@@ -40,6 +40,7 @@ import com.base.daemon.DaemonEnv;
 import com.base.mic.MicService;
 import com.base.multiClick.AntiShake;
 import com.base.nodeprogress.NodeProgressDemo;
+import com.base.permission.CallBack;
 import com.base.permission.PermissionUtils;
 import com.base.redpacket.StartActivity;
 import com.base.toast.ToastUtils;
@@ -131,7 +132,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // 申请权限。
-                PermissionUtils.getInstance().requestPermission(MainActivity.this,
+                PermissionUtils.getInstance().requestPermission(MainActivity.this, new CallBack() {
+                            @Override
+                            public void onSuceess() {
+//                                LogReport.getInstance().upload(MainActivity.this);//启动压缩崩溃信息并发送
+                            }
+                        },
                         Permission.Group.MICROPHONE,//扩音器，麦克风
                         Permission.Group.STORAGE,//存储
                         Permission.Group.CALENDAR,//日历
@@ -149,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 //                BDAutoUpdateSDK.cpUpdateCheck(MainActivity.this,new MyCheckUpdateCallback(),false);
                 //检查更新
                 TMSelfUpdateManager.getInstance().checkSelfUpdate();
+
             }
         });
     }
