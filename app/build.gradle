@@ -12,6 +12,7 @@ android {
         versionCode 3
         versionName "1.0.3F" //versionName 包含"F"表示强制更新
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         multiDexEnabled true
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
@@ -371,10 +372,11 @@ repositories {
         //百度文字识别(身份证、银行卡等)
         implementation files('libs/ocr-sdk.jar')
         compile project(path: ':ocr_ui')
+        compile project(path: ':logreport')//commons-logging-1.2.jar和org.apache.http.legacy冲突，备份到libss里
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
-        implementation files('libs/email-activation.jar')
-        implementation files('libs/email-additionnal.jar')
-        implementation files('libs/email-mail.jar')
+//        implementation files('libs/email-activation.jar')//logreport里已包含，备份到libss里
+//        implementation files('libs/email-additionnal.jar')//logreport里已包含，备份到libss里
+//        implementation files('libs/email-mail.jar')//logreport里已包含，备份到libss里
 
     }
 }

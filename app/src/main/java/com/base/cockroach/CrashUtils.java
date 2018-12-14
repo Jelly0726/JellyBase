@@ -45,7 +45,8 @@ public class CrashUtils {
         try {
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append(getAppInfo(mContext));
-            stringBuffer.append("崩溃时间：").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
+            stringBuffer.append("崩溃时间：").append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    .format(new Date())).append("\n");
             stringBuffer.append("手机系统：").append(Build.VERSION.RELEASE).append("\n");
             stringBuffer.append("android版本号API：" + Build.VERSION.SDK_INT).append("\n");
             stringBuffer.append("手机制造商:" + Build.MANUFACTURER).append("\n");

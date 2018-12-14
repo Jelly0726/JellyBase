@@ -27,6 +27,10 @@ import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
+import com.wenming.library.LogReport;
+import com.wenming.library.save.imp.CrashWriter;
+import com.wenming.library.upload.email.EmailReporter;
+import com.wenming.library.upload.http.HttpReporter;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import butterknife.ButterKnife;
@@ -56,7 +60,9 @@ public class BaseApplication extends Application {
         super.onCreate();
         myApp=this;
         //初始化一下就行了，别忘记了  --奔溃日志
-        installCockroach();
+        installCockroach();//崩溃后自动重启并发送崩溃信息
+//        initCrashReport();//崩溃后不重启保存崩溃信息，下次启动压缩崩溃信息并发送
+//        LogReport.getInstance().upload(this);//启动压缩崩溃信息并发送
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         if (getPackageName().equals(getCurProcessName())) {
@@ -224,6 +230,42 @@ public class BaseApplication extends Application {
 
         });
 
+    }
+    private void initCrashReport() {
+        LogReport.getInstance()
+                .setCacheSize(30 * 1024 * 1024)//支持设置缓存大小，超出后清空
+                .setLogDir(getApplicationContext(), "sdcard/" + this.getString(this.getApplicationInfo().labelRes) + "/")//定义路径为：sdcard/[app name]/
+                .setWifiOnly(true)//设置只在Wifi状态下上传，设置为false为Wifi和移动网络都上传
+                .setLogSaver(new CrashWriter(getApplicationContext()))//支持自定义保存崩溃信息的样式
+                //.setEncryption(new AESEncode()) //支持日志到AES加密或者DES加密，默认不开启
+                .init(getApplicationContext());
+        initEmailReporter();
+    }
+
+    /**
+     * 使用EMAIL发送日志
+     */
+    private void initEmailReporter() {
+        EmailReporter email = new EmailReporter(this);
+        email.setReceiver("jieye_1@163.com");//收件人
+        email.setSender("vicdaner@163.com");//发送人邮箱
+        email.setSendPassword("1097382492email");//邮箱的客户端授权码，注意不是邮箱密码
+        email.setSMTPHost("smtp.163.com");//SMTP地址
+        email.setPort("465");//SMTP 端口
+        LogReport.getInstance().setUploadType(email);
+    }
+    /**
+     * 使用HTTP发送日志
+     */
+    private void initHttpReporter() {
+        HttpReporter http = new HttpReporter(this);
+        http.setUrl("http://crashreport.jd-app.com/your_receiver");//发送请求的地址
+        http.setFileParam("fileName");//文件的参数名
+        http.setToParam("to");//收件人参数名
+        http.setTo("你的接收邮箱");//收件人
+        http.setTitleParam("subject");//标题
+        http.setBodyParam("message");//内容
+        LogReport.getInstance().setUploadType(http);
     }
     /**
      * 退出
