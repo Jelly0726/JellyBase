@@ -21,13 +21,13 @@ android {
 //                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
                 cppFlags "-std=c++11 -frtti -fexceptions"
                 //设置支持的SO库架构
-                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+                abiFilters "armeabi", "armeabi-v7a", "x86", 'mips'  //输出指定三种abi体系结构下的so库。
             }
         }
         //ndk编译生成.so文件
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
 //            moduleName "testjni"         //生成的so名字
-            abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+            abiFilters "armeabi", "armeabi-v7a", "x86", 'mips'  //输出指定三种abi体系结构下的so库。
 //            //极光推送选择要添加的对应cpu类型的.so库。
 //            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
 //            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
@@ -175,7 +175,7 @@ android {
     //cmake，全新定义cmake脚本
     externalNativeBuild {
         cmake {
-           path 'CMakeLists.txt'
+            path 'CMakeLists.txt'
         }
     }
 //ndk-build,已有Android.mk
@@ -194,8 +194,8 @@ android {
 //greendao配置
 greendao {
     schemaVersion 1//版本号，升级时可配置
-    daoPackage'systemdb' //包名
-    targetGenDir'src/main/java' //生成目录
+    daoPackage 'systemdb' //包名
+    targetGenDir 'src/main/java' //生成目录
 }
 //导入智能更新 SDK 的 AAR 文件
 repositories {
@@ -372,9 +372,9 @@ repositories {
         implementation files('libs/ocr-sdk.jar')
         compile project(path: ':ocr_ui')
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
-        implementation files('libs/activation.jar')
-        implementation files('libs/additionnal.jar')
-        implementation files('libs/mail.jar')
+        implementation files('libs/email-activation.jar')
+        implementation files('libs/email-additionnal.jar')
+        implementation files('libs/email-mail.jar')
 
     }
 }
