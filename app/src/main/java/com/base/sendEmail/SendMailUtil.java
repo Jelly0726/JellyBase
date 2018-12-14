@@ -19,8 +19,8 @@ public class SendMailUtil {
     //qq
     private static final String HOST = "smtp.qq.com";
     private static final String PORT = "465";//587
-    private static final String FROM_ADD = "accordingguest@foxmail.com";
-    private static final String FROM_PSW = "lbvsgxohqkbxjgci";//zvfbqmwyygnxjgab
+    private static final String FROM_ADD = "382807054@qq.com";
+    private static final String FROM_PSW = "jziggdzdzwtvbghc";//zvfbqmwyygnxjgab  lbvsgxohqkbxjgci jziggdzdzwtvbghc
 
     //163
 //    private static final String HOST = "smtp.163.com";
@@ -33,7 +33,7 @@ public class SendMailUtil {
 //    private static final String FROM_ADD = "vicdaner@sina.com";
 //    private static final String FROM_PSW = "1097382492email";
 
-    private static final String TO_ADD = "jieye_1@163.com";//发到哪个邮件去
+    private static final String TO_ADD = "249972465@qq.com";//发到哪个邮件去
 //    private static final String TO_ADD = "vicdaner@sina.com";//发到哪个邮件去
 
     public static void send(final File file, String toAdd){
