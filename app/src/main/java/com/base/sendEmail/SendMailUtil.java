@@ -3,6 +3,9 @@ package com.base.sendEmail;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.base.appManager.BaseApplication;
+import com.jelly.jellybase.R;
+
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,18 +17,24 @@ import java.util.regex.Pattern;
 public class SendMailUtil {
 
     //qq
-//    private static final String HOST = "smtp.qq.com";
-//    private static final String PORT = "465";//587
-//    private static final String FROM_ADD = "accordingguest@foxmail.com";
-//    private static final String FROM_PSW = "lbvsgxohqkbxjgci";//zvfbqmwyygnxjgab
+    private static final String HOST = "smtp.qq.com";
+    private static final String PORT = "465";//587
+    private static final String FROM_ADD = "accordingguest@foxmail.com";
+    private static final String FROM_PSW = "lbvsgxohqkbxjgci";//zvfbqmwyygnxjgab
 
     //163
-    private static final String HOST = "smtp.163.com";
-    private static final String PORT = "465"; //或者465  994
-    private static final String FROM_ADD = "vicdaner@163.com";
-    private static final String FROM_PSW = "1097382492email";
+//    private static final String HOST = "smtp.163.com";
+//    private static final String PORT = "465"; //或者465  994
+//    private static final String FROM_ADD = "vicdaner@163.com";
+//    private static final String FROM_PSW = "1097382492email";
+    //sina
+//    private static final String HOST = "smtp.sina.com";
+//    private static final String PORT = "465"; //或者465  994
+//    private static final String FROM_ADD = "vicdaner@sina.com";
+//    private static final String FROM_PSW = "1097382492email";
 
     private static final String TO_ADD = "jieye_1@163.com";//发到哪个邮件去
+//    private static final String TO_ADD = "vicdaner@sina.com";//发到哪个邮件去
 
     public static void send(final File file, String toAdd){
         if (isEmail(toAdd)){
@@ -102,7 +111,8 @@ public class SendMailUtil {
             mailInfo.setToAddress(TO_ADD);// 发到哪个邮件去
         else
         mailInfo.setToAddress(toAdd); // 发到哪个邮件去
-        mailInfo.setSubject("异常信息"); // 邮件主题
+        String title="程序【"+BaseApplication.getInstance().getString(R.string.app_name)+"】崩溃啦";
+        mailInfo.setSubject(title); // 邮件主题
         mailInfo.setContent(text); // 邮件文本
         return mailInfo;
     }
