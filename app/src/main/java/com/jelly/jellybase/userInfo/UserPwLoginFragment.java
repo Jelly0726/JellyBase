@@ -4,20 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppPrefs;
-import com.base.encrypt.MD5;
 import com.base.appManager.BaseApplication;
-import com.base.toast.ToastUtils;
+import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
+import com.base.encrypt.MD5;
 import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.presenter.LoginActivityPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
@@ -26,6 +29,7 @@ import com.base.httpmvp.view.BaseFragmentImpl;
 import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
 import com.base.social.SocialUtil;
+import com.base.toast.ToastUtils;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -61,6 +65,8 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     EditText phone_edit;
     @BindView(R.id.password_edit)
     EditText password_edit;
+    @BindView(R.id.pwd_visible)
+    CheckBox pwd_visible;
     @BindView(R.id.isparallel)
     Switch isparallel;
     @BindView(R.id.wechat_tv)
@@ -114,6 +120,28 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
         iniData();
     }
     private void iniData(){
+        pwd_visible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    //选择状态 显示明文--设置为可见的密码
+                    //mEtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    /**
+                     * 第二种
+                     */
+                    password_edit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //默认状态显示密码--设置文本 要一起写才能起作用 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    //mEtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    /**
+                     * 第二种
+                     */
+                    password_edit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                if (!TextUtils.isEmpty(password_edit.getText().toString()))
+                    password_edit.setSelection(password_edit.getText().toString().length());
+            }
+        });
         if (!TextUtils.isEmpty(phone)&&!TextUtils.isEmpty(password)&&from==0){
             phone_edit.setText(phone);
             phone_edit.setSelection(phone.length());
