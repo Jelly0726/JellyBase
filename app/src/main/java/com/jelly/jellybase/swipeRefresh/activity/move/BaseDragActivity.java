@@ -99,14 +99,14 @@ public abstract class BaseDragActivity extends BaseActivity {
             {
                 SwipeMenuItem addItem = new SwipeMenuItem(BaseDragActivity.this)
                         .setBackground(R.drawable.xswipe_selector_green)
-                        .setImage(R.mipmap.xswipe_action_add)
+                        .setImage(R.drawable.xswipe_action_add)
                         .setWidth(width)
                         .setHeight(height);
                 swipeLeftMenu.addMenuItem(addItem); // 添加一个按钮到左侧菜单。
 
                 SwipeMenuItem closeItem = new SwipeMenuItem(BaseDragActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
-                        .setImage(R.mipmap.xswipe_action_close)
+                        .setImage(R.drawable.xswipe_action_close)
                         .setWidth(width)
                         .setHeight(height);
 
@@ -117,7 +117,7 @@ public abstract class BaseDragActivity extends BaseActivity {
             {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(BaseDragActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
-                        .setImage(R.mipmap.xswipe_action_delete)
+                        .setImage(R.drawable.xswipe_action_delete)
                         .setText("删除")
                         .setTextColor(Color.WHITE)
                         .setWidth(width)
@@ -126,7 +126,7 @@ public abstract class BaseDragActivity extends BaseActivity {
 
                 SwipeMenuItem closeItem = new SwipeMenuItem(BaseDragActivity.this)
                         .setBackground(R.drawable.xswipe_selector_purple)
-                        .setImage(R.mipmap.xswipe_action_close)
+                        .setImage(R.drawable.xswipe_action_close)
                         .setWidth(width)
                         .setHeight(height);
                 swipeRightMenu.addMenuItem(closeItem); // 添加一个按钮到右侧菜单。

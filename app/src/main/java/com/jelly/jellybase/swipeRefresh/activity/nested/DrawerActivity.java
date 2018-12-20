@@ -86,7 +86,7 @@ public class DrawerActivity extends BaseActivity {
             {
                 SwipeMenuItem closeItem = new SwipeMenuItem(DrawerActivity.this)
                         .setBackground(R.drawable.xswipe_selector_purple)
-                        .setImage(R.mipmap.xswipe_action_close)
+                        .setImage(R.drawable.xswipe_action_close)
                         .setWidth(width)
                         .setHeight(height);
                 swipeRightMenu.addMenuItem(closeItem); // 添加菜单到左侧。

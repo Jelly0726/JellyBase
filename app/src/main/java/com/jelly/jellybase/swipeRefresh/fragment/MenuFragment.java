@@ -125,14 +125,14 @@ public class MenuFragment extends Fragment {
 
             SwipeMenuItem addItem = new SwipeMenuItem(getContext())
                     .setBackground(R.drawable.xswipe_selector_green)
-                    .setImage(R.mipmap.xswipe_action_add)
+                    .setImage(R.drawable.xswipe_action_add)
                     .setWidth(width)
                     .setHeight(height);
             swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
 
             SwipeMenuItem closeItem = new SwipeMenuItem(getContext())
                     .setBackground(R.drawable.xswipe_selector_green)
-                    .setImage(R.mipmap.xswipe_action_close)
+                    .setImage(R.drawable.xswipe_action_close)
                     .setWidth(width)
                     .setHeight(height);
             swipeRightMenu.addMenuItem(closeItem); // 添加菜单到右侧。

@@ -365,6 +365,9 @@ repositories {
         compile('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta') {
             exclude group: 'com.android.support'
         }
+        //广告轮播
+//        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
+
         implementation files('libs/zxing-core-3.3.1.jar')
 
         //百度文字识别(身份证、银行卡等)

@@ -180,7 +180,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
             {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(BankCardListActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
-                        .setImage(R.mipmap.xswipe_action_delete)
+                        .setImage(R.drawable.xswipe_action_delete)
                         .setText("删除")
                         .setTextColor(Color.WHITE)
                         .setWidth(width)

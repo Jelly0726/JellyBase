@@ -66,14 +66,14 @@ public class ListActivity extends BaseActivity {
             {
                 SwipeMenuItem addItem = new SwipeMenuItem(ListActivity.this)
                         .setBackground(R.drawable.xswipe_selector_green)
-                        .setImage(R.mipmap.xswipe_action_add)
+                        .setImage(R.drawable.xswipe_action_add)
                         .setWidth(width)
                         .setHeight(height);
                 swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
 
                 SwipeMenuItem closeItem = new SwipeMenuItem(ListActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
-                        .setImage(R.mipmap.xswipe_action_close)
+                        .setImage(R.drawable.xswipe_action_close)
                         .setWidth(width)
                         .setHeight(height);
                 swipeLeftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
@@ -83,7 +83,7 @@ public class ListActivity extends BaseActivity {
             {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(ListActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
-                        .setImage(R.mipmap.xswipe_action_delete)
+                        .setImage(R.drawable.xswipe_action_delete)
                         .setText("删除")
                         .setTextColor(Color.WHITE)
                         .setWidth(width)
