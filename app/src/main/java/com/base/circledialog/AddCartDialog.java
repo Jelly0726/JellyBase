@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.base.httpmvp.databean.Goods;
+import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
-
 
 /**
  * 加入购物车、立即购买
@@ -39,9 +39,9 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     private TextView goodsNum;
     //加数量
     private TextView increaseGoodsNum;
-    private int count = 1;
+    private Goods product;
+    private int count=1;
     private OnConfirmListener onConfirmListener;
-
     public static AddCartDialog getInstance() {
         AddCartDialog dialogFragment = new AddCartDialog();
         dialogFragment.setCanceledBack(false);
@@ -60,35 +60,53 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         View view = getView();
-        confirm_tv = (TextView) view.findViewById(R.id.confirm_tv);
+        confirm_tv= (TextView) view.findViewById(R.id.confirm_tv);
         confirm_tv.setOnClickListener(this);
-        cancel_img = (ImageView) view.findViewById(R.id.cancel_img);
+        cancel_img= (ImageView) view.findViewById(R.id.cancel_img);
         cancel_img.setOnClickListener(this);
-        goods_pic = (ImageView) view.findViewById(R.id.goods_pic);
-        goods_price = (TextView) view.findViewById(R.id.goods_price);
-        goods_repertory = (TextView) view.findViewById(R.id.goods_repertory);
-        reduceGoodsNum = (TextView) view.findViewById(R.id.reduce_goodsNum);
-        goodsNum = (TextView) view.findViewById(R.id.goods_Num);
-        increaseGoodsNum = (TextView) view.findViewById(R.id.increase_goods_Num);
+        goods_pic= (ImageView) view.findViewById(R.id.goods_pic);
+        goods_price= (TextView) view.findViewById(R.id.goods_price);
+        goods_repertory= (TextView) view.findViewById(R.id.goods_repertory);
+        reduceGoodsNum= (TextView) view.findViewById(R.id.reduce_goodsNum);
+        goodsNum= (TextView) view.findViewById(R.id.goods_Num);
+        increaseGoodsNum= (TextView) view.findViewById(R.id.increase_goods_Num);
 
         increaseGoodsNum.setOnClickListener(this);
         reduceGoodsNum.setOnClickListener(this);
         goodsNum.setOnClickListener(this);
+        iniData();
     }
-
+    private void iniData(){
+        if (product!=null){
+            if (!TextUtils.isEmpty(product.getShowImgs())){
+                Glide.with(getActivity())
+                        .load(product.getShowImgs())
+                        .dontAnimate()
+                        .centerCrop()
+                        .into(goods_pic);
+            }
+            goods_price.setText("￥："+product.getSalesPrice());
+            goods_repertory.setText("库存"+product.getStock()+product.getUnit());
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();
     }
+    public void setData(Goods product){
+        this.product=product;
+        if (getActivity()!=null)
+            iniData();
 
+    }
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.cancel_img:
                 dismiss();
                 break;
             case R.id.confirm_tv://确定
-                if (onConfirmListener != null) {
+                if(onConfirmListener!=null){
                     onConfirmListener.OnConfirm(count);
                 }
                 dismiss();
@@ -104,7 +122,6 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
                 break;
         }
     }
-
     public OnConfirmListener getOnConfirmListener() {
         return onConfirmListener;
     }
@@ -112,66 +129,35 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     public void setOnConfirmListener(OnConfirmListener onConfirmListener) {
         this.onConfirmListener = onConfirmListener;
     }
-
     /**
      * 确定按钮监听
      */
-    public interface OnConfirmListener {
+    public interface OnConfirmListener{
         void OnConfirm(int payment);
     }
-
     /**
+     *
      * @param showCountView
      */
     private void showDialog(final View showCountView) {
-        final AlertDialog.Builder alertDialog_Builder = new AlertDialog.Builder(getContext());
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.shopcar_dialog_change_num, null);
-        final AlertDialog dialog = alertDialog_Builder.create();
+        final AlertDialog.Builder alertDialog_Builder=new AlertDialog.Builder(getContext());
+        View view= LayoutInflater.from(getContext()).inflate(R.layout.shopcar_dialog_change_num,null);
+        final AlertDialog dialog=alertDialog_Builder.create();
         dialog.setView(view);//errored,这里是dialog，不是alertDialog_Buidler
         //count=child.getCount();
-        final EditText num = (EditText) view.findViewById(R.id.dialog_num);
-        num.setText(count + "");
-        num.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-//                if (TextUtils.isEmpty(s.toString().trim())){
-//
-//                }else {
-//                    int number = Integer.parseInt(s.toString().trim());
-//                    if (number <= goods.getMinsale()) {
-//                        number = goods.getMinsale();
-//                        num.setText(String.valueOf(number));
-//                    } else {
-//                        if (number > goods.getStockqty()) {
-//                            number = goods.getStockqty();
-//                            num.setText(String.valueOf(number));
-//                            num.setSelection(String.valueOf(number).length());
-//                        }
-//                    }
-//                }
-            }
-        });
+        final EditText num= (EditText) view.findViewById(R.id.dialog_num);
+        num.setText(count+"");
         //自动弹出键盘
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                UtilTool.showKeyboard(getContext(), showCountView);
+                UtilTool.showKeyboard(getContext(),showCountView);
             }
         });
-        final TextView increase = (TextView) view.findViewById(R.id.dialog_increaseNum);
-        final TextView DeIncrease = (TextView) view.findViewById(R.id.dialog_reduceNum);
-        final TextView pButton = (TextView) view.findViewById(R.id.dialog_Pbutton);
-        final TextView nButton = (TextView) view.findViewById(R.id.dialog_Nbutton);
+        final TextView increase= (TextView) view.findViewById(R.id.dialog_increaseNum);
+        final TextView DeIncrease=(TextView)view.findViewById(R.id.dialog_reduceNum);
+        final TextView pButton= (TextView) view.findViewById(R.id.dialog_Pbutton);
+        final TextView nButton= (TextView) view.findViewById(R.id.dialog_Nbutton);
         nButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,13 +167,13 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         pButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int number = Integer.parseInt(num.getText().toString().trim());
-                if (number == 0) {
+                int number=Integer.parseInt(num.getText().toString().trim());
+                if(number==0){
                     dialog.dismiss();
-                } else {
-                    count=number;
+                }else{
                     num.setText(String.valueOf(number));
                     //child.setCount(number);
+                    count=number;
                     goodsNum.setText(String.valueOf(number));
                     dialog.dismiss();
                 }
@@ -203,7 +189,7 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         DeIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (count > 1) {
+                if(count>1){
                     count--;
                     num.setText(String.valueOf(count));
                 }
@@ -211,7 +197,6 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         });
         dialog.show();
     }
-
     public void doIncrease(View showCountView) {
 //        GoodsInfo good = (GoodsInfo) ;
 //        int count = good.getCount();
@@ -219,11 +204,10 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         //good.setCount(count);
         ((TextView) showCountView).setText(String.valueOf(count));
     }
-
     /**
      * @param showCountView
      */
-    public void doDecrease(View showCountView) {
+    public void doDecrease( View showCountView) {
 //        GoodsInfo good = (GoodsInfo) ;
 //        int count = good.getCount();
         if (count == 1) {

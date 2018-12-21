@@ -26,6 +26,26 @@ import java.util.regex.Pattern;
  * 字符串工具类
  */
 public class StringUtil {
+
+    /***
+     * 获取url 指定name的value;
+     * @param url
+     * @param name
+     * @return
+     */
+    public static String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        String[] keyValue = temp.split("&");
+        for (String str : keyValue) {
+            if (str.contains(name)) {
+                result = str.replace(name + "=", "");
+                break;
+            }
+        }
+        return result;
+    }
     /**
      * 隐藏字符
      * @param str    要替换的字符串

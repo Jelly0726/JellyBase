@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -50,6 +51,13 @@ public class BaseActivity extends AutoLayoutActivity implements Observer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        //====
         getExtra();
         mRecevier = new InnerRecevier();
         mFilter = new IntentFilter();
