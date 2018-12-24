@@ -202,6 +202,9 @@ public class BottomBarItem extends LinearLayout {
         return mIsHeave;
     }
 
+    public void setIsSkip(boolean mIsSkip) {
+        this.mIsSkip = mIsSkip;
+    }
     public boolean getIsSkip() {
         return mIsSkip;
     }

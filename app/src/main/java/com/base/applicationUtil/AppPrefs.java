@@ -2,6 +2,10 @@ package com.base.applicationUtil;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
+import com.base.Utils.StringUtil;
+import com.base.encrypt.SafetyUtil;
+
 import net.grandcentrix.tray.TrayPreferences;
 
 
@@ -153,7 +157,36 @@ public class AppPrefs {
         TrayEMMPrefs prefs = getPrefs(context);
         return prefs.getString(key, defaultValue);
     }
-
+    /**
+     * 将对象保存
+     * @param context
+     * @param key
+     * @param value
+     */
+    public static void putObject(Context context, String key, Object value){
+        if (value!=null){
+            String va= SafetyUtil.getInstance().encode(JSON.toJSONString(value), SafetyUtil.AES);
+            putString(context,key , va);
+        }else
+            remove(context,key);
+    }
+    /**
+     * 返回指定对象
+     * @param context
+     * @param key
+     * @param cc
+     * @return
+     */
+    public static Object getObject(Context context, String key,Class cc){
+        String json=getString(context,key);
+        if (StringUtil.isEmpty(json)){
+            return null;
+        }else {
+            json=SafetyUtil.getInstance().decode(JSON.toJSONString(json), SafetyUtil.AES);
+            Object object= JSON.parseObject(json, cc);
+            return object;
+        }
+    }
     public static void remove(Context context, String key) {
         TrayEMMPrefs prefs = getPrefs(context);
         if (key != null) {

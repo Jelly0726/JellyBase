@@ -1,13 +1,16 @@
 package com.base.SwipeRefresh;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.AbsListView;
 
 /**
- * 解决左右滑动冲突问题
+ * 解决左右和ScrollView滑动冲突问题
  * @author Jack Tony
  * @brief 只在竖直方向才能下拉刷新的控件
  * @date 2015/4/5
@@ -17,14 +20,36 @@ public class MySwipeRefreshLayout extends SwipeRefreshLayout {
     private int mTouchSlop;
     // 上一次触摸时的X坐标
     private float mPrevX;
-
+    //实际需要滑动的child view
+    private View mScrollUpChild;
     public MySwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         // 触发移动事件的最短距离，如果小于这个距离就不触发移动控件
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
+    public void setScrollUpChild(View view) {
+        mScrollUpChild = view;
+    }
 
+    @Override
+    public boolean canChildScrollUp() {
+        if (mScrollUpChild != null) {
+            if (android.os.Build.VERSION.SDK_INT < 14) {
+                if (mScrollUpChild instanceof AbsListView) {
+                    final AbsListView absListView = (AbsListView) mScrollUpChild;
+                    return absListView.getChildCount() > 0
+                            && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0)
+                            .getTop() < absListView.getPaddingTop());
+                } else {
+                    return ViewCompat.canScrollVertically(mScrollUpChild, -1) || mScrollUpChild.getScrollY() > 0;
+                }
+            } else {
+                return ViewCompat.canScrollVertically(mScrollUpChild, -1);
+            }
+        }
+        return super.canChildScrollUp();
+    }
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
 
