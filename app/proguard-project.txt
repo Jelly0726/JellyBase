@@ -213,6 +213,14 @@
 -dontwarn android.databinding.**
 -dontwarn com.tencent.smtt.export.external.**
 #===========微信支付=====================
+#===========银联支付=====================
+-keep class com.unionpay.** { *;}
+-keep class cn.gov.pbc.** {*;}
+-keep class com.UCMobile.** {*;}
+-dontwarn com.unionpay.**
+-dontwarn cn.gov.pbc.**
+-dontwarn om.UCMobile.**
+#===========银联支付=====================
 #===============sharesdk混淆注意================
 -keep class android.net.http.SslError
 -keep class android.webkit.**{*;}
