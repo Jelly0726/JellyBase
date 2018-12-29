@@ -1,6 +1,7 @@
 package com.base.social;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
-import com.shadow.seewashed.R;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class ShareAdapter extends BaseRecyclerAdapter<ShareAdapter.ViewHolder> {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lpy.setMargins(0, 0, 0, AppUtils.dipTopx(context,20));
         textView.setLayoutParams(lpy);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.text91a9ac));
+        textView.setTextColor(Color.parseColor("#91a9ac"));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
 
         linearLayout.addView(textView);
