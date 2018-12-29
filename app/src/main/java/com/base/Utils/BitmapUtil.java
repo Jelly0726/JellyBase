@@ -42,7 +42,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Toast;
 
 import com.base.appManager.BaseApplication;
 import com.base.log.DebugLog;
@@ -66,7 +65,7 @@ public class BitmapUtil {
         RECEIVER, MEDIA
     }
     // 首先保存图片
-    public static void saveImageToGallery(Context context, Bitmap bitmap, ScannerType type) {
+    public static String saveImageToGallery(Context context, Bitmap bitmap, ScannerType type) {
         File appDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "Cache");
         if (!appDir.exists()) {
             // 目录不存在 则创建
@@ -91,11 +90,11 @@ public class BitmapUtil {
                 // bitmap.recycle(); 当存储大图片时，为避免出现OOM ，及时回收Bitmap
                 System.gc(); // 通知系统回收
             }
-            Toast.makeText(context, "图片保存为" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            return file.getAbsolutePath();
         }
     }
     // 首先保存图片
-    public static void saveBitmap(Context context, Bitmap bitmap) {
+    public static String saveBitmap(Context context, Bitmap bitmap) {
         File appDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "Cache");
         if (!appDir.exists()) {
             // 目录不存在 则创建
@@ -116,7 +115,7 @@ public class BitmapUtil {
                 System.gc(); // 通知系统回收
             }
             ScannerByMedia(context, file.getAbsolutePath());
-            Toast.makeText(context, "图片保存为" + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            return file.getAbsolutePath();
         }
     }
     /**
