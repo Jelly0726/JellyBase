@@ -1,12 +1,9 @@
 package com.base.httpmvp.retrofitapi;
 
 import android.content.Intent;
-import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppUtils;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
@@ -23,11 +20,12 @@ import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
+import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -42,14 +40,10 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -82,79 +76,6 @@ public class HttpMethods implements IGlobalManager {
 					File cacheFile = new File(BaseApplication.getInstance().getExternalCacheDir(), CACHE_NAME);
 					//生成缓存，50M
 					Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-					//应用拦截器
-					Interceptor cacheInterceptor = new Interceptor() {
-						@Override
-						public Response intercept(Chain chain) throws IOException {
-							Request request = chain.request();
-							//网络不可用
-							if (!NetworkUtils.isAvailable(BaseApplication.getInstance())) {
-								if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
-									//在请求头中加入：强制使用缓存，不访问网络
-								/*
-									.addHeader("Connection", "close")
-									解决java.io.IOException: unexpected end of stream on Connection
-									主要就是在http header里面增加关闭连接，不让它保持连接。
-									主要是在回收url connection有可能有问题，后来我也增加了连接关闭，
-									不保持url connection，这样就解决了，但是付出了性能的代价。
-									 */
-									request = request.newBuilder()
-											.cacheControl(CacheControl.FORCE_CACHE)
-											//.addHeader("Connection", "close")
-											.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
-											.build();
-								}else {
-									//在请求头中加入：强制使用缓存，不访问网络
-									request = request.newBuilder()
-											.cacheControl(CacheControl.FORCE_CACHE)
-											.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
-											.build();
-								}
-								Log.i("sss","no network");
-							}else {
-								//请求头添加参数version
-								request = request.newBuilder()
-										.addHeader("version", AppUtils.getVersionCode(BaseApplication.getInstance()) + "")
-										.build();
-							}
-							Response response = chain.proceed(request);
-							//网络可用
-							if (NetworkUtils.isAvailable(BaseApplication.getInstance())) {
-								int maxAge = 0;
-								// 有网络时 在响应头中加入：设置缓存超时时间0个小时
-								response.newBuilder()
-										.header("Cache-Control", "public, max-age=" + maxAge)
-										.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
-										.build();
-							} else {
-								Log.i("sss","network error");
-								// 无网络时，在响应头中加入：设置缓存超时为4周
-								//离线缓存控制 总缓存时间=在线缓存时间+设置离线时的缓存时间
-								int maxStale = 60 * 60 * 24 * 28;
-								response.newBuilder()
-										.header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-										.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
-										.build();
-							}
-							HttpUtils.checkResponse(response);
-							return response;
-						}
-					};
-					//只有 网络拦截器环节 才会写入缓存写入缓存,在有网络的时候 设置缓存时间
-					Interceptor rewriteCacheControlInterceptor = new Interceptor() {
-						@Override
-						public Response intercept(Chain chain) throws IOException {
-							Request request = chain.request();
-							Response originalResponse = chain.proceed(request);
-							//int maxAge = 1 * 60; // 在线缓存在1分钟内可读取 单位:秒
-							int maxAge = 1; // 在线缓存在1秒内可读取 单位:秒
-							return originalResponse.newBuilder()
-									.removeHeader("Pragma")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
-									.removeHeader("Cache-Control")
-									.header("Cache-Control", "public, max-age=" + maxAge)
-									.build();
-						}
-					};
 					//手动创建一个OkHttpClient并设置超时时间
 					OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
 					httpClientBuilder
@@ -164,8 +85,8 @@ public class HttpMethods implements IGlobalManager {
 							//错误重连
 							.retryOnConnectionFailure(false)
 							//设置拦截器
-							.addInterceptor(cacheInterceptor)
-							.addNetworkInterceptor(rewriteCacheControlInterceptor)
+							.addInterceptor(new BaseInterceptor(BaseApplication.getInstance()))
+							.addNetworkInterceptor(new HttpCacheInterceptor(BaseApplication.getInstance()))
 							.cache(cache);
 
 					HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
