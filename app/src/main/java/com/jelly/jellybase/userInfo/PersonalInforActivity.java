@@ -15,7 +15,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.toast.ToastUtils;
 import com.base.circledialog.CircleDialog;
 import com.base.circledialog.callback.ConfigButton;
 import com.base.circledialog.callback.ConfigDialog;
@@ -29,9 +28,11 @@ import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.presenter.PersonalInfoPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XScrollView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.yanzhenjie.album.Action;
@@ -156,7 +157,8 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 }
                 Glide.with(this)
                         .load(phto)
-                        .centerCrop()
+                        .skipMemoryCache(true)//不使用内存缓存
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
                         .into(store_img);
             }
         }
