@@ -66,8 +66,9 @@ public class GuideActivity extends Activity {
 ////                simpleDraweeView.setImageURI(Uri.parse(model));
                 Glide.with(GuideActivity.this)
                         .load(model)
-                        .placeholder(R.drawable.bga_banner_holder)
-                        .error(R.drawable.bga_banner_holder)
+                        .placeholder(R.drawable.bga_banner_holder)//加载前
+                        .error(R.drawable.bga_banner_holder)//加载错误
+                        .fallback(R.drawable.bga_banner_holder)//load为null
                         .dontAnimate()
                         .centerCrop()
                         .into(itemView);

@@ -248,9 +248,6 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         }
                         presenter.upload(lifecycleProvider
                                 .<Long>bindUntilEvent(ActivityEvent.DESTROY));
-                        Album.getAlbumConfig().
-                                getAlbumLoader().
-                                loadImage(store_img,result, 100, 100);
                     }
                 })
                 .onCancel(new Action<String>() {
@@ -280,9 +277,6 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         }
                         presenter.upload(lifecycleProvider
                                 .<Long>bindUntilEvent(ActivityEvent.DESTROY));
-                        Album.getAlbumConfig().
-                                getAlbumLoader().
-                                loadAlbumFile(store_img, mAlbumFiles.get(0), 100, 100);
                     }
                 })
                 .onCancel(new Action<String>() {
@@ -509,6 +503,9 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     @Override
     public void uploadSuccess(Object mCallBackVo) {
         uploadData=(UploadData)mCallBackVo;
+        Album.getAlbumConfig().
+                getAlbumLoader().
+                loadAlbumFile(store_img, mAlbumFiles.get(0), 100, 100);
     }
 
     @Override

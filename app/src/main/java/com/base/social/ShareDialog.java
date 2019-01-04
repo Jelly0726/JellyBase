@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.base.circledialog.BaseCircleDialog;
-import com.shadow.seewashed.R;
+import com.jelly.jellybase.R;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;

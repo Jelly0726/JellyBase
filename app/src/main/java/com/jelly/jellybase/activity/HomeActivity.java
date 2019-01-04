@@ -443,6 +443,7 @@ public class HomeActivity extends BaseActivity {
                         .load(model)
                         .placeholder(R.drawable.bga_banner_holder)
                         .error(R.drawable.bga_banner_holder)
+                        .fallback(R.drawable.bga_banner_holder)//load为null
                         .dontAnimate()
                         .centerCrop()
                         .into(itemView);

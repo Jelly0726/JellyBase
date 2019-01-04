@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.MapUtil.LocationTask;
+import com.base.album.GlideAlbumLoader;
 import com.base.applicationUtil.ChangeLanguageHelper;
 import com.base.bgabanner.GuideActivity;
 import com.base.cockroach.Cockroach;
@@ -31,6 +32,8 @@ import com.wenming.library.LogReport;
 import com.wenming.library.save.imp.CrashWriter;
 import com.wenming.library.upload.email.EmailReporter;
 import com.wenming.library.upload.http.HttpReporter;
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumConfig;
 import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import butterknife.ButterKnife;
@@ -111,6 +114,10 @@ public class BaseApplication extends Application {
             JPushInterface.setDebugMode(true);
             JPushInterface.init(this);
         }
+        //初始化图片选择器
+        Album.initialize(AlbumConfig.newBuilder(this)
+                .setAlbumLoader(new GlideAlbumLoader())
+                .build());
     }
 
     private String getCurProcessName() {

@@ -19,6 +19,7 @@ import android.webkit.URLUtil;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.AlbumLoader;
 import com.yanzhenjie.album.task.DefaultAlbumLoader;
@@ -48,12 +49,40 @@ public class GlideAlbumLoader implements AlbumLoader {
         if (URLUtil.isNetworkUrl(imagePath)) {
             Glide.with(imageView.getContext())
                     .load(imagePath)
+                    .skipMemoryCache(true)//不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
+                    .dontAnimate()
                     .into(imageView);
         } else {
             Glide.with(imageView.getContext())
                     .load(new File(imagePath))
+                    .skipMemoryCache(true)//不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
+                    .dontAnimate()
                     .into(imageView);
         }
     }
-
+//    @Override
+//    public void load(ImageView imageView, AlbumFile albumFile) {
+//        load(imageView, albumFile.getPath());
+//    }
+//
+//    @Override
+//    public void load(ImageView imageView, String url) {
+//        if (URLUtil.isNetworkUrl(url)) {
+//            Glide.with(imageView.getContext())
+//                    .load(url)
+//                    .skipMemoryCache(true)//不使用内存缓存
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
+//                    .dontAnimate()
+//                    .into(imageView);
+//        } else {
+//            Glide.with(imageView.getContext())
+//                    .load(new File(url))
+//                    .skipMemoryCache(true)//不使用内存缓存
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
+//                    .dontAnimate()
+//                    .into(imageView);
+//        }
+//    }
 }
