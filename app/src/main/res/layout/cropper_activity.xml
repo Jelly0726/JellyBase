@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             custom:fixAspectRatio="true"
-            custom:aspectRatioX="40"
-            custom:aspectRatioY="40"/>
+            custom:aspectRatioX="1"
+            custom:aspectRatioY="1"/>
     </FrameLayout>
 </LinearLayout>
