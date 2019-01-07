@@ -11,13 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppPrefs;
-import com.base.encrypt.MD5;
 import com.base.appManager.BaseApplication;
-import com.base.toast.ToastUtils;
+import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.base.encrypt.MD5;
 import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.presenter.LoginActivityPresenter;
 import com.base.httpmvp.retrofitapi.HttpResult;
@@ -27,9 +26,9 @@ import com.base.httpmvp.view.BaseFragmentImpl;
 import com.base.jiguang.TagAliasOperatorHelper;
 import com.base.multiClick.AntiShake;
 import com.base.social.SocialUtil;
+import com.base.toast.ToastUtils;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
@@ -123,7 +122,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
             password_edit.setText(password);
             password_edit.setSelection(password.length());
             presenter.userLogin(lifecycleProvider
-                    .<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    .<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
         }
     }
     private void initCountDownBtn() {

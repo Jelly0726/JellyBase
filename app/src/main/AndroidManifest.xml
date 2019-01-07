@@ -378,6 +378,14 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↑↑↑↑↑高德地图↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓图片裁剪↓↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.base.cropper.CropperActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑图片裁剪↑↑↑↑↑↑↑↑-->
         <activity
             android:name=".swipeRefresh.activity.XSwipeMainActivity"
             android:label="Item中的菜单"

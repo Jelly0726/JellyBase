@@ -2,6 +2,7 @@ package com.base.Utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -44,6 +45,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.base.appManager.BaseApplication;
+import com.base.cropper.CropperActivity;
 import com.base.log.DebugLog;
 
 import java.io.ByteArrayInputStream;
@@ -57,6 +59,8 @@ import java.io.InputStream;
  * 图片工具类
  */
 public class BitmapUtil {
+    public static final int IMG_CROP=99;//裁剪图片的请求码
+    public static final String PATH="path";//裁剪图片的请求码
     private BitmapUtil() {
         throw new UnsupportedOperationException("u can't fuck me...");
     }
@@ -152,6 +156,47 @@ public class BitmapUtil {
     private static void ScannerByMedia(Context context, String path) {
         MediaScannerConnection.scanFile(context, new String[] {path}, null, null);
         DebugLog.v("TAG", "media scanner completed");
+    }
+    /**
+     * 根据路径删除图片
+     * @param context
+     * @param path
+     */
+    public static void deleteFile(final  Context context, final String path) {
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        ContentResolver mContentResolver = context.getContentResolver();
+        String where = MediaStore.Images.Media.DATA + "='" + path + "'";
+        //删除图片
+        mContentResolver.delete(uri, where, null);
+
+        //版本号的判断  4.4为分水岭，发送广播更新媒体库
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            MediaScannerConnection.scanFile(context, new String[]{path}, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                        public void onScanCompleted(String path, Uri uri) {
+                            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                            mediaScanIntent.setData(uri);
+                            context.sendBroadcast(mediaScanIntent);
+                        }
+                    });
+        } else {
+            File file = new File(path);
+            String relationDir = file.getParent();
+            File file1 = new File(relationDir);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.fromFile(file1.getAbsoluteFile())));
+        }
+    }
+    /**
+     * 打开图片裁剪
+     * @param context
+     * @param path     原图片路径
+     */
+    public static void startCropIntent(Activity context,String path) {
+        File file = new File(path);
+        Intent intent = new Intent(context, CropperActivity.class);
+        Uri uri = Uri.fromFile(file);// parse(pathUri);13         intent.setDataAndType(uri, "image/*");
+        intent.setData(uri);
+        context.startActivityForResult(intent, IMG_CROP);
     }
     /**
      * bitmap转为base64
