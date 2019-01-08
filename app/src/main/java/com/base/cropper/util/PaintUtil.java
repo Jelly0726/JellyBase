@@ -17,7 +17,7 @@ import android.content.res.Resources;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
-import com.shadow.seewashed.R;
+import com.jelly.jellybase.R;
 
 
 /**
