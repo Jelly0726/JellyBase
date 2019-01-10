@@ -3,9 +3,11 @@ package com.base.applicationUtil;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.ConnectivityManager;
@@ -15,12 +17,19 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
+import com.alibaba.fastjson.JSON;
 import com.base.Utils.StringUtil;
+import com.base.appManager.BaseApplication;
+import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.os.Build.getSerial;
 
@@ -361,6 +370,43 @@ public class PhoneUtil {
             e.printStackTrace();
         }
         return serial;
+    }
+    public static List<Map<String,Object>> getSmsFromPhone(Context context) {
+        List<Map<String,Object>> list=new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
+                Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ToastUtils.showShort(context.getApplicationContext(), "缺少{Manifest.permission.READ_SMS}权限");
+            DebugLog.i("ooc","缺少{Manifest.permission.READ_SMS}权限");
+            return list;
+        }
+        Uri SMS_INBOX = Uri.parse("content://sms/");
+        ContentResolver cr = BaseApplication.getInstance().getContentResolver();
+        String[] projection = new String[] {"_id", "address", "person","body", "date", "type" };
+        Cursor cur = cr.query(SMS_INBOX, projection, null, null, "date desc");
+        if (null == cur) {
+            DebugLog.i("ooc","************cur == null");
+            return list;
+        }
+        while(cur.moveToNext()) {
+            String number = cur.getString(cur.getColumnIndex("address"));//手机号
+            String name = cur.getString(cur.getColumnIndex("person"));//联系人姓名列表
+            String body = cur.getString(cur.getColumnIndex("body"));//短信内容
+            //至此就获得了短信的相关的内容, 以下是把短信加入map中，构建listview,非必要。
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("num",number);
+            map.put("mess",body);
+            map.put("name",name );
+            list.add(map);
+        }
+        DebugLog.i("list="+ JSON.toJSONString(list));
+        return list;
     }
     public static void main(String[] arg){
         // System.out.println("getUniqueID="+getUniqueID(this));
