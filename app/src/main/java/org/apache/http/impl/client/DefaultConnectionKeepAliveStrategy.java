@@ -1,0 +1,22 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
+
+package org.apache.http.impl.client;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.conn.ConnectionKeepAliveStrategy;
+import org.apache.http.protocol.HttpContext;
+
+/** @deprecated */
+@Deprecated
+public class DefaultConnectionKeepAliveStrategy implements ConnectionKeepAliveStrategy {
+    public DefaultConnectionKeepAliveStrategy() {
+        throw new RuntimeException("Stub!");
+    }
+
+    public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
+        throw new RuntimeException("Stub!");
+    }
+}
