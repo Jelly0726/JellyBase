@@ -336,10 +336,10 @@ public static java.lang.String TABLENAME;
   # If you do not use TrayPreferences:
  -dontwarn net.grandcentrix.tray.*
  -keep class net.grandcentrix.tray.**{*;}
- #====================rxlifecycle2====================
-  # If you do not use rxlifecycle2:
- -dontwarn ncom.trello.rxlifecycle2.*
- -keep class ncom.trello.rxlifecycle2.**{*;}
+ #====================rxlifecycle3====================
+  # If you do not use rxlifecycle3:
+ -dontwarn ncom.trello.rxlifecycle3.*
+ -keep class ncom.trello.rxlifecycle3.**{*;}
  #====================retrofit2====================
 # Retrofit
 -dontnote retrofit2.Platform
@@ -360,6 +360,26 @@ public static java.lang.String TABLENAME;
      public *** get*();
      public *** is*();
  }
+ # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
+  # EnclosingMethod is required to use InnerClasses.
+  -keepattributes Signature, InnerClasses, EnclosingMethod
+
+  # Retain service method parameters when optimizing.
+  -keepclassmembers,allowshrinking,allowobfuscation interface * {
+      @retrofit2.http.* <methods>;
+  }
+
+  # Ignore annotation used for build tooling.
+  -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+
+  # Ignore JSR 305 annotations for embedding nullability information.
+  -dontwarn javax.annotation.**
+
+  # Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+  -dontwarn kotlin.Unit
+
+  # Top-level functions that can only be used by Kotlin.
+  -dontwarn retrofit2.-KotlinExtensions
   #====================fastjson====================
  -keepattributes Signature
  -dontwarn com.alibaba.fastjson.**

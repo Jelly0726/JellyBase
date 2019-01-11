@@ -17,7 +17,7 @@ import com.base.httpmvp.retrofitapi.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;

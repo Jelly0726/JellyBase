@@ -17,7 +17,7 @@ import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.MessageAdapter;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;

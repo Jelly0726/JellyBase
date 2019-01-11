@@ -20,7 +20,7 @@ import com.base.webview.BaseWebViewActivity;
 import com.base.webview.WebConfig;
 import com.base.webview.WebTools;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;

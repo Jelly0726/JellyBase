@@ -30,7 +30,7 @@ import com.base.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AddressListAdapter;
 import com.jelly.jellybase.datamodel.RecevierAddress;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;

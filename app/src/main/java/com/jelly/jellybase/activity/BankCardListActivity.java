@@ -19,7 +19,7 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.BankCardListAdapter;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;

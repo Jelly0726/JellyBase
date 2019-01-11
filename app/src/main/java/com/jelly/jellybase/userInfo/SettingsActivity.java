@@ -20,7 +20,7 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 /**
  * Created by Administrator on 2017/9/27.

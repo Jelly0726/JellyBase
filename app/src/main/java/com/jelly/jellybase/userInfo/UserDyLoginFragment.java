@@ -29,7 +29,7 @@ import com.base.social.SocialUtil;
 import com.base.toast.ToastUtils;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.trello.rxlifecycle3.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.entities.ThirdInfoEntity;

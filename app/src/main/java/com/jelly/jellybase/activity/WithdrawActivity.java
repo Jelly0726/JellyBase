@@ -24,7 +24,7 @@ import com.base.multiClick.AntiShake;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
