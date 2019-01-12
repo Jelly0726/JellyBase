@@ -23,4 +23,5 @@ public class ConfigKey {
     public static final String JPUSHID="JPUSHID";//极光ID
     public static final String UNIQUEID="UNIQUEID";//设备唯一ID
     public static final String NEWMESSAGE="NEWMESSAGE";//新消息
+    public static final String BILL_LIST_LAST="BILL_LIST_LAST";//
 }

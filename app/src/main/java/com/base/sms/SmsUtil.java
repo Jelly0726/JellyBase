@@ -14,9 +14,7 @@ import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SmsUtil {
 
@@ -44,8 +42,8 @@ public class SmsUtil {
      * @param time       获取什么时间的短信（单位分钟）-1 不限制
      * @return
      */
-    public static List<Map<String,Object>> getPhoneSms(Context context, Uri SMS_INBOX, int time) {
-        List<Map<String,Object>> list=new ArrayList<>();
+    public static List<SMS> getPhoneSms(Context context, Uri SMS_INBOX, int time) {
+        List<SMS> list=new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
                 Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -86,14 +84,17 @@ public class SmsUtil {
             return list;
         }
         while(cur.moveToNext()) {
+            String id = cur.getString(cur.getColumnIndex("_id"));//短信编号
             String number = cur.getString(cur.getColumnIndex("address"));//手机号
             String name = cur.getString(cur.getColumnIndex("person"));//联系人姓名列表
             String body = cur.getString(cur.getColumnIndex("body"));//短信内容
+            Long date = cur.getLong(cur.getColumnIndex("date"));//短信时间
             //至此就获得了短信的相关的内容, 以下是把短信加入map中，构建listview,非必要。
-            Map<String,Object> map = new HashMap<String,Object>();
-            map.put("num",number);
-            map.put("mess",body);
-            map.put("name",name );
+            SMS map = new SMS();
+            map.setId(id);
+            map.setNumber(number);
+            map.setBody(body);
+            map.setDate(date);
             list.add(map);
 
             // 下面匹配验证码

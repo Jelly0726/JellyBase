@@ -46,16 +46,26 @@ public class SmsReceiver extends BroadcastReceiver {
                         DebugLog.d(TAG, "message from: " + sender + ", message body: " + content
                                 + ", message date: " + msgDate);
                         //自己的逻辑
+                    }else {
+                        cursor = context.getContentResolver().query(Uri.parse("content://sms"),
+                                new String[]{"_id", "address", "read", "body", "date"}, "read = ? ",
+                                new String[]{"0"}, "date desc");
+                        if (null == cursor) {
+                            return;
+                        }
+                        DebugLog.i(TAG, "m cursor count is " + cursor.getCount());
+                        DebugLog.i(TAG, "m first is " + cursor.moveToFirst());
                     }
+                }else {
+                    cursor = context.getContentResolver().query(Uri.parse("content://sms"),
+                            new String[]{"_id", "address", "read", "body", "date"}, "read = ? ",
+                            new String[]{"0"}, "date desc");
+                    if (null == cursor) {
+                        return;
+                    }
+                    DebugLog.i(TAG, "m cursor count is " + cursor.getCount());
+                    DebugLog.i(TAG, "m first is " + cursor.moveToFirst());
                 }
-                cursor = context.getContentResolver().query(Uri.parse("content://sms"),
-                        new String[] { "_id", "address", "read", "body", "date" }, "read = ? ",
-                        new String[] { "0" }, "date desc");
-                if (null == cursor){
-                    return;
-                }
-                DebugLog.i(TAG,"m cursor count is "+cursor.getCount());
-                DebugLog.i(TAG,"m first is "+cursor.moveToFirst());
             }
         } catch (Exception e) {
             e.printStackTrace();

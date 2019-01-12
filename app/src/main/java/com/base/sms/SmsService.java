@@ -8,6 +8,10 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
 
+import com.base.appManager.BaseApplication;
+
+import java.util.List;
+
 /**
  * 监听短信数据库
  */
@@ -20,7 +24,16 @@ public class SmsService extends Service{
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_INBOX:
-
+                    List<SMS> list= SmsUtil.getPhoneSms(BaseApplication.getInstance(),
+                            Uri.parse("content://sms/"),5);
+                    for (SMS map:list){
+//                        try {
+//                            mApiBll.sendQR(map);
+//                            ActMain.sendmsg("收到新的短消息");
+//                        } catch (UnsupportedEncodingException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
                     break;
             }
         }
