@@ -47,8 +47,8 @@ public class SmsService extends Service{
     @Override
     public void onCreate() {
         super.onCreate();
-        smsContentObserver = new SMSContentObserver(this, mHandler);
-        if (smsContentObserver != null) {
+        if (smsContentObserver==null) {
+            smsContentObserver = new SMSContentObserver(this, mHandler);
             getContentResolver().registerContentObserver(
                     Uri.parse("content://sms/"), true, smsContentObserver);// 注册监听短信数据库的变化
         }
@@ -65,5 +65,6 @@ public class SmsService extends Service{
         if (smsContentObserver != null) {
             getContentResolver().unregisterContentObserver(smsContentObserver);// 取消监听短信数据库的变化
         }
+        smsContentObserver=null;
     }
 }
