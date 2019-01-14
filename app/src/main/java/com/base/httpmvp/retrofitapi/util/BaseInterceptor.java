@@ -48,12 +48,14 @@ public class BaseInterceptor implements Interceptor {
                         .cacheControl(CacheControl.FORCE_CACHE)
                         //.addHeader("Connection", "close")
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                        .addHeader("Connection", "keep-alive")
                         .build();
             }else {
                 //在请求头中加入：强制使用缓存，不访问网络
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                        .addHeader("Connection", "keep-alive")
                         .build();
             }
             Log.i("sss","no network");
@@ -61,6 +63,7 @@ public class BaseInterceptor implements Interceptor {
             //请求头添加参数version
             request = request.newBuilder()
                     .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                    .addHeader("Connection", "keep-alive")
                     .build();
         }
         Response response = chain.proceed(request);
