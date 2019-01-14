@@ -40,6 +40,7 @@ public class BaseInterceptor implements Interceptor {
                 /*
 					.addHeader("Connection", "close")
 					解决java.io.IOException: unexpected end of stream on Connection
+					和 java.net.SocketException: sendto failed: ECONNRESET (Connection reset by peer)
 					主要就是在http header里面增加关闭连接，不让它保持连接。
 					主要是在回收url connection有可能有问题，后来我也增加了连接关闭，
 					不保持url connection，这样就解决了，但是付出了性能的代价。
@@ -48,14 +49,14 @@ public class BaseInterceptor implements Interceptor {
                         .cacheControl(CacheControl.FORCE_CACHE)
                         //.addHeader("Connection", "close")
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
-                        .addHeader("Connection", "keep-alive")
+                        .addHeader("Connection", "close")
                         .build();
             }else {
                 //在请求头中加入：强制使用缓存，不访问网络
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
-                        .addHeader("Connection", "keep-alive")
+                        .addHeader("Connection", "close")
                         .build();
             }
             Log.i("sss","no network");
@@ -63,7 +64,7 @@ public class BaseInterceptor implements Interceptor {
             //请求头添加参数version
             request = request.newBuilder()
                     .addHeader("version", AppUtils.getVersionCode(mContext) + "")
-                    .addHeader("Connection", "keep-alive")
+                    .addHeader("Connection", "close")
                     .build();
         }
         Response response = chain.proceed(request);
