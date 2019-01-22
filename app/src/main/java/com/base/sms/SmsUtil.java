@@ -11,7 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import com.alibaba.fastjson.JSON;
 import com.base.appManager.BaseApplication;
 import com.base.log.DebugLog;
-import com.base.toast.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,21 +46,18 @@ public class SmsUtil {
         if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
                 Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            ToastUtils.showShort(context.getApplicationContext(), "缺少{Manifest.permission.READ_SMS}权限");
             DebugLog.i("ooc","缺少{Manifest.permission.READ_SMS}权限");
             return list;
         }
         if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
                 Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            ToastUtils.showShort(context.getApplicationContext(), "缺少{Manifest.permission.RECEIVE_SMS}权限");
             DebugLog.i("ooc","缺少{Manifest.permission.RECEIVE_SMS}权限");
             return list;
         }
         if (ActivityCompat.checkSelfPermission(context.getApplicationContext(),
                 Manifest.permission.RECEIVE_MMS) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            ToastUtils.showShort(context.getApplicationContext(), "缺少{Manifest.permission.RECEIVE_MMS}权限");
             DebugLog.i("ooc","缺少{Manifest.permission.RECEIVE_MMS}权限");
             return list;
         }
