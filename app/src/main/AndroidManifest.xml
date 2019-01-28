@@ -134,6 +134,8 @@
         tools:replace="android:icon, android:theme"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--适配全面屏设置-->
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
         <!--↓↓↓↓↓ 高德地图 ↓↓↓↓↓-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
