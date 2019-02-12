@@ -1,11 +1,10 @@
 package com.base.encrypt;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
-
-import com.base.appManager.BaseApplication;
-import com.base.log.DebugLog;
+import android.util.Log;
 
 import java.io.ObjectStreamException;
 import java.util.Comparator;
@@ -64,16 +63,16 @@ public class SafetyUtil {
 	 * @param type  签名验证算法
 	 * @return
 	 */
-	public boolean verify(@NonNull String source,@NonNull String sign, int type){
+	public boolean verify(Context context, @NonNull String source, @NonNull String sign, int type){
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		DebugLog.i("SafetyUtil", "签名加密前:"+source);
+		Log.i("SafetyUtil", "签名加密前:"+source);
 		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY){//使用RSA验签只能是私钥加密，公钥验证
 			type=RSA_PUBKEY;
 		}
-		String signs=sign(source,type);
-		DebugLog.i("SafetyUtil", "签名加密后:"+sign);
+		String signs=sign(context.getApplicationContext(),source,type);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return signs.equals(sign);
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
@@ -85,7 +84,7 @@ public class SafetyUtil {
 	 * @param type  签名验证算法
 	 * @return
 	 */
-	public boolean verify(@NonNull Map<String, String> source,@NonNull String sign, int type){
+	public boolean verify(Context context,@NonNull Map<String, String> source,@NonNull String sign, int type){
 		source.put("timestamp", System.currentTimeMillis()+"");//时间戳
 		source=sortMapByKey(source);
 		StringBuffer stringBuffer=new StringBuffer("");
@@ -110,12 +109,12 @@ public class SafetyUtil {
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		DebugLog.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
 		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY){//使用RSA验签只能是私钥加密，公钥验证
 			type=RSA_PUBKEY;
 		}
-		String signs=sign(stringBuffer.toString(),type);
-		DebugLog.i("SafetyUtil", "签名加密后:"+signs);
+		String signs=sign(context.getApplicationContext(),stringBuffer.toString(),type);
+		Log.i("SafetyUtil", "签名加密后:"+signs);
 		return signs.equals(sign);
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
@@ -126,13 +125,13 @@ public class SafetyUtil {
 	 * @param type  加密签名算法
 	 * @return
 	 */
-	public String encode(@NonNull String source, int type){
+	public String encode(Context context,@NonNull String source, int type){
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		DebugLog.i("SafetyUtil", "签名加密前:"+source);
-		String sign=sign(source, type);
-		DebugLog.i("SafetyUtil", "签名加密后:"+sign);
+		Log.i("SafetyUtil", "签名加密前:"+source);
+		String sign=sign(context.getApplicationContext(),source, type);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
@@ -143,7 +142,7 @@ public class SafetyUtil {
 	 * @param type  加密签名算法
 	 * @return
 	 */
-	public String encode(@NonNull Map<String, String> source, int type){
+	public String encode(Context context,@NonNull Map<String, String> source, int type){
 		source=sortMapByKey(source);
 		StringBuffer stringBuffer=new StringBuffer("");
 		Iterator iterator=source.entrySet().iterator();
@@ -167,9 +166,9 @@ public class SafetyUtil {
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
-		DebugLog.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
-		String sign=sign(stringBuffer.toString(), type);
-		DebugLog.i("SafetyUtil", "签名加密后:"+sign);
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		String sign=sign(context.getApplicationContext(),stringBuffer.toString(), type);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
@@ -180,23 +179,23 @@ public class SafetyUtil {
 	 * @param type  解密签名算法
 	 * @return
 	 */
-	public String decode(@NonNull String source, int type){
+	public String decode(Context context,@NonNull String source, int type){
 		String sign;
 		switch (type) {
 			case AES:
-				byte[] AES = jni.decodeByAES(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] AES = jni.decodeByAES(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 				sign = new String(AES);
 				break;
 			case RSA_PUBKEY:
-				byte[] RSA_PUBKEY = jni.decodeByRSAPubKey(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 				sign =  new String(RSA_PUBKEY);
 				break;
 			case RSA_PRIVATEKEY:
-				byte[] RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 				sign = new String(RSA_PRIVATEKEY);
 				break;
 			case XOR:
-				byte[] XOR = jni.xOr(BaseApplication.getInstance(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] XOR = jni.xOr(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 				sign =  new String(XOR);
 				break;
 			default:
@@ -221,45 +220,45 @@ public class SafetyUtil {
 		sortMap.putAll(map);
 		return sortMap;
 	}
-	private String sign(@NonNull String source, int type){
+	private String sign(Context context,@NonNull String source, int type){
 		String sign;
 		switch (type) {
 			case MD5:
-				sign = jni.md5(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.md5(context, source.getBytes());
 				break;
 			case HMAC_SHA1:
-				byte[] HMAC = jni.encodeByHmacSHA1(BaseApplication.getInstance(), source.getBytes());
+				byte[] HMAC = jni.encodeByHmacSHA1(context, source.getBytes());
 				sign =  Base64.encodeToString(HMAC,Base64.NO_WRAP);
 				break;
 			case SHA1:
-				sign = jni.encodeBySHA1(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.encodeBySHA1(context, source.getBytes());
 				break;
 			case SHA224:
-				sign = jni.encodeBySHA224(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.encodeBySHA224(context, source.getBytes());
 				break;
 			case SHA256:
-				sign = jni.encodeBySHA256(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.encodeBySHA256(context, source.getBytes());
 				break;
 			case SHA384:
-				sign = jni.encodeBySHA384(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.encodeBySHA384(context, source.getBytes());
 				break;
 			case SHA512:
-				sign = jni.encodeBySHA512(BaseApplication.getInstance(), source.getBytes());
+				sign = jni.encodeBySHA512(context, source.getBytes());
 				break;
 			case AES:
-				byte[] AES = jni.encodeByAES(BaseApplication.getInstance(), source.getBytes());
+				byte[] AES = jni.encodeByAES(context, source.getBytes());
 				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
 				break;
 			case RSA_PUBKEY:
-				byte[] RSA_PUBKEY = jni.encodeByRSAPubKey(BaseApplication.getInstance(), source.getBytes());
+				byte[] RSA_PUBKEY = jni.encodeByRSAPubKey(context, source.getBytes());
 				sign = Base64.encodeToString(RSA_PUBKEY,Base64.NO_WRAP);
 				break;
 			case RSA_PRIVATEKEY:
-				byte[] RSA_PRIVATEKEY = jni.encodeByRSAPrivateKey(BaseApplication.getInstance(), source.getBytes());
+				byte[] RSA_PRIVATEKEY = jni.encodeByRSAPrivateKey(context, source.getBytes());
 				sign = Base64.encodeToString(RSA_PRIVATEKEY,Base64.NO_WRAP);
 				break;
 			case XOR:
-				byte[] XOR = jni.xOr(BaseApplication.getInstance(), source.getBytes());
+				byte[] XOR = jni.xOr(context, source.getBytes());
 				sign = Base64.encodeToString(XOR,Base64.NO_WRAP);
 				break;
 			default:
@@ -268,7 +267,6 @@ public class SafetyUtil {
 		}
 		return sign;
 	}
-
 	//比较器类
 
 	private class MapKeyComparator implements Comparator<String> {

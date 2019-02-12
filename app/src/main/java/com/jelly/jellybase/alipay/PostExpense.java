@@ -2,6 +2,7 @@ package com.jelly.jellybase.alipay;
 
 import android.content.Context;
 
+import com.base.appManager.BaseApplication;
 import com.base.encrypt.SafetyUtil;
 
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class PostExpense {
 			map.put("subject",subject);
 			map.put("amount", price);
 			map.put("timestamp", System.currentTimeMillis()+"");//时间戳
-			String sign= SafetyUtil.getInstance().encode(map,SafetyUtil.MD5);
+			String sign= SafetyUtil.getInstance().encode(BaseApplication.getInstance(),map,SafetyUtil.MD5);
 			map.put("sign", sign);
 		}catch(Exception e){
 			if(aliListener!=null){

@@ -165,7 +165,7 @@ public class AppPrefs {
      */
     public static void putObject(Context context, String key, Object value){
         if (value!=null){
-            String va= SafetyUtil.getInstance().encode(JSON.toJSONString(value), SafetyUtil.AES);
+            String va= SafetyUtil.getInstance().encode(context,JSON.toJSONString(value), SafetyUtil.AES);
             putString(context,key , va);
         }else
             remove(context,key);
@@ -182,7 +182,7 @@ public class AppPrefs {
         if (StringUtil.isEmpty(json)){
             return null;
         }else {
-            json=SafetyUtil.getInstance().decode(JSON.toJSONString(json), SafetyUtil.AES);
+            json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
             Object object= JSON.parseObject(json, cc);
             return object;
         }

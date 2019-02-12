@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.base.appManager.BaseApplication;
 import com.base.encrypt.JniUtils;
 import com.base.encrypt.SafetyUtil;
 import com.base.toast.ToastUtils;
@@ -116,57 +117,57 @@ public class EncryptActivity extends AppCompatActivity implements View.OnClickLi
                 result ="验证apk签名-> " + jni.verifySha1OfApk(this);
                 break;
             case R.id.btn_java_encode:
-                result ="hmacSHA1签名编码->" + SafetyUtil.getInstance().encode(ori, SafetyUtil.HMAC_SHA1);
+                result ="hmacSHA1签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori, SafetyUtil.HMAC_SHA1);
                 break;
             case R.id.btn_native_encode:
-                result = "SHA1签名->" +SafetyUtil.getInstance().encode(ori,SafetyUtil.SHA1);
+                result = "SHA1签名->" +SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.SHA1);
                 break;
             case R.id.btn_java_decode:
-                result = "SHA224签名->" +SafetyUtil.getInstance().encode(ori,SafetyUtil.SHA224);
+                result = "SHA224签名->" +SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.SHA224);
                 break;
             case R.id.btn_native_decode:
-                result= "SHA256签名->" +SafetyUtil.getInstance().encode(ori,SafetyUtil.SHA256);
+                result= "SHA256签名->" +SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.SHA256);
                 break;
             case R.id.btn_java_sign:
-                result="SHA384签名->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.SHA384);
+                result="SHA384签名->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.SHA384);
                 break;
             case R.id.btn_native_sign:
-                result = "SHA512签名->" +SafetyUtil.getInstance().encode(ori,SafetyUtil.SHA512);
+                result = "SHA512签名->" +SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.SHA512);
                 break;
             case R.id.btn_md5_sign:
-                result="MD5信息摘要->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.MD5).toUpperCase();
+                result="MD5信息摘要->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.MD5).toUpperCase();
                 break;
             case R.id.btn_XOR_sign:
-                result= "XOR异或加密编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.XOR);
+                result= "XOR异或加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.XOR);
                 break;
             case R.id.btn_XORs_sign:
-                result = "XOR异或解密->" + SafetyUtil.getInstance().decode(ori,SafetyUtil.XOR);
+                result = "XOR异或解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.XOR);
                 break;
             case R.id.btn_AES_sign:
-                result ="AES加密编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.AES);
+                result ="AES加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.AES);
                 break;
             case R.id.btn_AESs_sign:
-                result="AES解密->" +SafetyUtil.getInstance().decode(ori,SafetyUtil.AES);
+                result="AES解密->" +SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.AES);
                 break;
             case R.id.btn_RSA_sign:
-                result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.RSA_PUBKEY);
+                result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
                 break;
             case R.id.btn_RSAs_sign:
-                result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(ori,SafetyUtil.RSA_PRIVATEKEY);
+                result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAa_sign:
-                result ="RSA私钥加密编码->" +  SafetyUtil.getInstance().encode(ori,SafetyUtil.RSA_PRIVATEKEY);
+                result ="RSA私钥加密编码->" +  SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAd_sign:
-                result = "RSA公钥解密->" + SafetyUtil.getInstance().decode(ori,SafetyUtil.RSA_PUBKEY);
+                result = "RSA公钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
                 break;
             case R.id.btn_RSAsa_sign:
-                result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(ori,SafetyUtil.RSA_PRIVATEKEY);
+                result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAsad_sign:
-               String signByRSAPrivateKeys = SafetyUtil.getInstance().encode(ori,SafetyUtil.RSA_PRIVATEKEY);
+               String signByRSAPrivateKeys = SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
 
-                boolean verifySign = SafetyUtil.getInstance().verify(ori,signByRSAPrivateKeys,SafetyUtil.RSA_PUBKEY);
+                boolean verifySign = SafetyUtil.getInstance().verify(BaseApplication.getInstance(),ori,signByRSAPrivateKeys,SafetyUtil.RSA_PUBKEY);
                 result="RSA公钥验证签名-> " + verifySign + "，true：验证成功";
                 break;
             case R.id.btn_copy_sign:
