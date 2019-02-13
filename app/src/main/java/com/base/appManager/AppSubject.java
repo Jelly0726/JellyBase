@@ -17,7 +17,7 @@ public class AppSubject extends Subject {
          * 通过反射获得单例类的构造函数
          * 抵御这种攻击，要防止构造函数被成功调用两次。需要在构造函数中对实例化次数进行统计，大于一次就抛出异常。
          */
-        synchronized (AppManager.class) {
+        synchronized (AppSubject.class) {
             if(count > 0){
                 throw new RuntimeException("创建了两个实例");
             }
