@@ -13,7 +13,19 @@ import java.util.Stack;
  */
 public class AppManager {
     private static Stack<Activity> activityStack;
-    private AppManager() {}
+    private static int count = 0;
+    private AppManager() {
+        /**
+         * 通过反射获得单例类的构造函数
+         * 抵御这种攻击，要防止构造函数被成功调用两次。需要在构造函数中对实例化次数进行统计，大于一次就抛出异常。
+         */
+        synchronized (AppManager.class) {
+            if(count > 0){
+                throw new RuntimeException("创建了两个实例");
+            }
+            count++;
+        }
+    }
     /**
      * 内部类，在装载该内部类时才会去创建单利对象
      */
