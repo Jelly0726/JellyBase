@@ -193,8 +193,11 @@ public class StringUtil {
      * @return
      */
     public static boolean isMobileNO(String paramString) {
-        if (TextUtils.isEmpty(paramString))return false;
-        return Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$").matcher(paramString).matches();
+        if (isEmpty(paramString))return false;
+        String regExp = "^((13[0-9])|(15[0-9])|(166)|(17[0-8])|(18[0-9])|(19[8-9])|(14[4-9]))\\d{8}$";
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(paramString);
+        return m.matches();
     }
 
     /**
@@ -296,12 +299,13 @@ public class StringUtil {
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
-        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
-//        String ptCasinoMsg = "qwefhsj.dj";
-//        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
-        String [] amounts = extractAmountMsg(ptCasinoMsg);
-        for (String i:amounts){
-            System.out.println("金额："+i);
-        }
+//        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
+////        String ptCasinoMsg = "qwefhsj.dj";
+////        String ptCasinoMsg = "日单量：100 | 实付金额：5000.0 | 订单金额：57000.34 | 优惠金额：9000";
+//        String [] amounts = extractAmountMsg(ptCasinoMsg);
+//        for (String i:amounts){
+//            System.out.println("金额："+i);
+//        }
+        System.out.println(isMobileNO("14600087240"));
     }
 }
