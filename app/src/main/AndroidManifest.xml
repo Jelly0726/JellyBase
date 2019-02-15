@@ -391,6 +391,14 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <!--↑↑↑↑↑↑↑↑图片裁剪↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓虚拟显示器↓↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.base.screenColor.ScreenColorActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑虚拟显示器↑↑↑↑↑↑↑↑-->
         <activity
             android:name=".swipeRefresh.activity.XSwipeMainActivity"
             android:label="Item中的菜单"
