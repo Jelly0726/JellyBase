@@ -9,7 +9,7 @@
 #include <openssl/md5.h>
 #include"zsd.h"
 //换成你自己的key值
-const char *key = "758DA6688786C0D2C7";//QKBgQC0HjcCrWfRY8o4i2
+const char *key = "758DA6688786C0D2C7";//"brLxpmIzzN6o7JDW";//"758DA6688786C0D2C7";//"QKBgQC0HjcCrWfRY8o4i2";
 //换成你自己的RSAPubKey值
 const char *RSAPubKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0HjcCrWfRY8o4i2NwIvMJdP5l\nzuj7HOOZpjezE39a32fMjmztVtqLjso5MXjwwB5JiAfhOkFhVnNGPAmu0f5HOQly\nx88QgczokVrB73uj6HLUmX/SuFCbUh+YLJ4ZWp0g2Go6qwH2O5b3IQeENqTrIo4l\nrJTSLCzjnQ/QZYUuewIDAQAB\n-----END PUBLIC KEY-----\n";
 
