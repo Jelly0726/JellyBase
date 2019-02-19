@@ -30,6 +30,7 @@ import com.jelly.jellybase.fragment.OrderFragment;
 import com.jelly.jellybase.fragment.WalletFragment;
 import com.jelly.jellybase.server.LocationService;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -39,7 +40,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 import systemdb.Login;
 import systemdb.PositionEntity;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 public class BottomBarActivity extends BaseActivity implements BackInterface {
     private static final int areaRresultCode=0;
@@ -55,7 +55,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HermesEventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         login= LoginDaoUtils.getInstance(getApplicationContext())
                 .getLogin();
         setContentView(R.layout.bottombar_activity);
@@ -71,8 +71,8 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     }
     @Override
     protected void onDestroy() {
-        if(HermesEventBus.getDefault().isRegistered(this)){
-            HermesEventBus.getDefault().unregister(this);
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
         }
         HermesManager.getHermesManager().removeEvent(this);
         super.onDestroy();

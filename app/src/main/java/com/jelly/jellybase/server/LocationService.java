@@ -25,12 +25,13 @@ import com.base.eventBus.LocationTypeEvent;
 import com.base.eventBus.NetEvent;
 import com.jelly.jellybase.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DecimalFormat;
 
 import systemdb.PositionEntity;
-import xiaofei.library.hermeseventbus.HermesEventBus;
+
 
 
 /**gps定位服务
@@ -66,21 +67,21 @@ public class LocationService extends Service {
         regeocodeTask.setOnLocationGetListener(onLocationGetListener);
         mLocationTask = LocationTask.getInstance(BaseApplication.getInstance());
         mLocationTask.setOnLocationGetListener(onLocationGetListener);
-        if (!HermesEventBus.getDefault().isRegistered(LocationService.this)){
-            HermesEventBus.getDefault().register(LocationService.this);
+        if (!EventBus.getDefault().isRegistered(LocationService.this)){
+            EventBus.getDefault().register(LocationService.this);
         }
         //==================================================================//
         AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,true);
         // 开启高精度定位
         mLocationTypeEvent.setType(LocationTypeEvent.sTYPE_HIGHT_PRECISION);
-        HermesEventBus.getDefault().post(mLocationTypeEvent);
+        EventBus.getDefault().post(mLocationTypeEvent);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (!mLocationTask.getLocationStatus()){
             // 开启定位
-            HermesEventBus.getDefault().post(mLocationTypeEvent);
+            EventBus.getDefault().post(mLocationTypeEvent);
         }
         return Service.START_STICKY;
     }
@@ -94,7 +95,7 @@ public class LocationService extends Service {
             mLocationTask.RemoveListener(onLocationGetListener);
             mLocationTask.stopLocate();
         }
-        HermesEventBus.getDefault().unregister(LocationService.this);
+        EventBus.getDefault().unregister(LocationService.this);
         AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,false);
         Log.d(TAG, "onDestroy");
         super.onDestroy();
@@ -109,7 +110,7 @@ public class LocationService extends Service {
             mLocationTask.RemoveListener(onLocationGetListener);
             mLocationTask.stopLocate();
         }
-        HermesEventBus.getDefault().unregister(LocationService.this);
+        EventBus.getDefault().unregister(LocationService.this);
         AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISRUN,false);
         super.onTaskRemoved(rootIntent);
     }
@@ -193,12 +194,12 @@ public class LocationService extends Service {
                     if (HermesManager.getHermesManager().getEventSize() > 0) {
                         NetEvent netEvent1 = new NetEvent();
                         netEvent1.setEvent(entity);
-                        HermesEventBus.getDefault().post(netEvent1);
+                        EventBus.getDefault().post(netEvent1);
                     }
                 }
                 NetEvent netEvent = new NetEvent();
                 netEvent.setEvent(amapLocation.clone());
-                HermesEventBus.getDefault().post(netEvent);
+               EventBus.getDefault().post(netEvent);
             }catch (Exception e){
                 //System.out.println("eeee=" + e);
                 e.printStackTrace();
@@ -237,7 +238,7 @@ public class LocationService extends Service {
             if (HermesManager.getHermesManager().getEventSize()>0) {
                 NetEvent netEvent = new NetEvent();
                 netEvent.setEvent(entity);
-                HermesEventBus.getDefault().post(netEvent);
+                EventBus.getDefault().post(netEvent);
             }
         }
         /**
@@ -326,7 +327,7 @@ public class LocationService extends Service {
         if (HermesManager.getHermesManager().getEventSize()>0) {
             NetEvent netEvent = new NetEvent();
             netEvent.setEvent(entity);
-            HermesEventBus.getDefault().post(netEvent);
+            EventBus.getDefault().post(netEvent);
         }
     }
 

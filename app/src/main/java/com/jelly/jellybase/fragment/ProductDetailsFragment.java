@@ -15,10 +15,11 @@ import com.base.xrefreshview.XScrollView;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2017/9/18.
@@ -99,7 +100,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 case R.id.product_parameter:
                     NetEvent netEvent0=new NetEvent();
                     netEvent0.setEvent(new CurrentItem(1,"",0));
-                    HermesEventBus.getDefault().post(netEvent0);
+                    EventBus.getDefault().post(netEvent0);
                     break;
             }
         }

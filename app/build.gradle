@@ -232,8 +232,8 @@ repositories {
         compile 'net.grandcentrix.tray:tray:0.12.0'
 
         //
-        compile 'xiaofei.library:hermes-eventbus:0.3.0'
-
+//        compile 'xiaofei.library:hermes-eventbus:0.3.0'
+        implementation 'org.greenrobot:eventbus:3.1.1'
         //okhttp
         compile 'com.squareup.okhttp3:okhttp:3.12.1'
 

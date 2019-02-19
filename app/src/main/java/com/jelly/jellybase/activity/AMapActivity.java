@@ -42,15 +42,16 @@ import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.TTSController;
 import com.base.appManager.BaseApplication;
-import com.base.toast.ToastUtils;
 import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
 import com.base.mprogressdialog.MProgressUtil;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.LocationService;
 import com.maning.mndialoglibrary.MProgressDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -59,7 +60,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2018/3/13.
@@ -107,7 +107,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         initAmap(savedInstanceState);
         initNavi();
 
-        HermesEventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         HermesManager.getHermesManager().addEvent(this);
         Intent intent=new Intent(this, LocationService.class);
         startService(intent);
@@ -213,7 +213,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         }
         aMapView=null;
         mListener = null;
-        HermesEventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
         HermesManager.getHermesManager().removeEvent(this);
         super.onDestroy();
     }

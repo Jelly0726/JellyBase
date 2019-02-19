@@ -28,6 +28,7 @@ import com.jelly.jellybase.fragment.ProductEvaluateFragment;
 import com.jelly.jellybase.fragment.ProductParameterFragment;
 import com.yanzhenjie.sofia.Sofia;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -39,7 +40,6 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 /**
  * Created by Administrator on 2017/9/21.
@@ -76,7 +76,7 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HermesEventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.product_details_activity);
         ButterKnife.bind(this);
         isShanGou=getIntent().getBooleanExtra("isShanGou",false);
@@ -218,7 +218,7 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
             timer.cancel();
         }
         super.onDestroy();
-        HermesEventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(NetEvent netEvent){

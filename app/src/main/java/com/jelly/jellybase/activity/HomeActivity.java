@@ -19,10 +19,10 @@ import android.widget.Toast;
 
 import com.base.MapUtil.DestinationActivity;
 import com.base.appManager.BaseApplication;
-import com.base.toast.ToastUtils;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
 import com.base.httpmvp.databean.ScanResult;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XScrollView;
@@ -41,6 +41,7 @@ import com.jelly.jellybase.mypopupmenu.TopMiddlePopup;
 import com.jelly.jellybase.mypopupmenu.Util;
 import com.jelly.jellybase.seach.SearchActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import systemdb.PositionEntity;
-import xiaofei.library.hermeseventbus.HermesEventBus;
 
 
 /**
@@ -385,7 +385,7 @@ public class HomeActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     netEvent0.setEvent(new CurrentItem(2,jsonObject0.toString(),0));
-                    HermesEventBus.getDefault().post(netEvent0);
+                    EventBus.getDefault().post(netEvent0);
                     break;
                 case R.id.unconfirmed_layout:
                     NetEvent netEvent=new NetEvent();
@@ -396,7 +396,7 @@ public class HomeActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     netEvent.setEvent(new CurrentItem(2,jsonObject.toString(),0));
-                    HermesEventBus.getDefault().post(netEvent);
+                    EventBus.getDefault().post(netEvent);
                     break;
                 case R.id.unsendout_layout:
                     NetEvent netEvent1=new NetEvent();
@@ -407,7 +407,7 @@ public class HomeActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                     netEvent1.setEvent(new CurrentItem(2,jsonObject1.toString(),0));
-                    HermesEventBus.getDefault().post(netEvent1);
+                    EventBus.getDefault().post(netEvent1);
                     break;
             }
         }

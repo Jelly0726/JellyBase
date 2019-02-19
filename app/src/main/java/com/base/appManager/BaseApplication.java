@@ -39,7 +39,7 @@ import com.zhy.autolayout.config.AutoLayoutConifg;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import hugo.weaving.DebugLog;
-import xiaofei.library.hermeseventbus.HermesEventBus;
+
 
 /**
  * Created by Administrator on 2015/10/8.
@@ -70,7 +70,7 @@ public class BaseApplication extends Application {
         if (getPackageName().equals(getCurProcessName())) {
             //初始化数据库
             DBManager.getDBManager().init(this);
-            HermesEventBus.getDefault().init(this);
+//            HermesEventBus.getDefault().init(this);
             //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
             DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
 
@@ -282,7 +282,7 @@ public class BaseApplication extends Application {
             AppSubject.getInstance().detachAll();
             LocationTask.getInstance(this).onDestroy();//销毁定位
             if (getPackageName().equals(getCurProcessName())) {
-                HermesEventBus.getDefault().destroy();
+//                EventBus.getDefault().destroy();
             }
             // 杀死该应用进程
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -297,7 +297,7 @@ public class BaseApplication extends Application {
         // 程序终止的时候执行
         LocationTask.getInstance(this).onDestroy();//销毁定位
         if (getPackageName().equals(getCurProcessName())) {
-            HermesEventBus.getDefault().destroy();
+//            EventBus.getDefault().destroy();
         }
         super.onTerminate();
     }
