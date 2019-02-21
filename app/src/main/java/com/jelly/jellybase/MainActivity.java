@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 // 申请权限。
                 PermissionUtils.getInstance().requestPermission(MainActivity.this, new CallBack() {
                             @Override
-                            public void onSuceess() {
+                            public void onSucess() {
 //                                LogReport.getInstance().upload(MainActivity.this);//启动压缩崩溃信息并发送
                             }
                         },

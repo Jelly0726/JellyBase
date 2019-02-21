@@ -13,10 +13,13 @@ import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
+import com.base.permission.CallBack;
+import com.base.permission.PermissionUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.TraceServiceImpl;
+import com.yanzhenjie.permission.Permission;
 
 import hugo.weaving.DebugLog;
 
@@ -47,24 +50,41 @@ public class LauncherActivity extends BaseActivity{
 //				delShortcut();
 //			}
 		}
-		new Handler().postDelayed(new Runnable() {
-			public void run() {
-				if (BaseApplication.getInstance().isLogin()){
-					//BaseApplication.getInstance().goLoginActivity();
-					BaseApplication.getInstance().goMainActivity();//进入主界面
-					//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-					finish();
-				}else{
-					if(BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-						BaseApplication.getInstance().goLoginActivity();
-					}else {
-						BaseApplication.getInstance().goMainActivity();//进入主界面
+		// 申请权限。
+		PermissionUtils.getInstance().requestPermission(LauncherActivity.this,new CallBack(){
+					@Override
+					public void onSucess() {
+						new Handler().postDelayed(new Runnable() {
+							public void run() {
+								if (BaseApplication.getInstance().isLogin()){
+									//BaseApplication.getInstance().goLoginActivity();
+									BaseApplication.getInstance().goMainActivity();//进入主界面
+									//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+									finish();
+								}else{
+									if(BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+										BaseApplication.getInstance().goLoginActivity();
+									}else {
+										BaseApplication.getInstance().goMainActivity();//进入主界面
+									}
+									//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+									finish();
+								}
+							}
+						},1000);
 					}
-					//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-					finish();
-				}
-			}
-		},1000);
+				},
+				Permission.Group.MICROPHONE,//扩音器，麦克风
+				Permission.Group.STORAGE,//存储
+				Permission.Group.CALENDAR,//日历
+				Permission.Group.CAMERA,//照相机
+				Permission.Group.CONTACTS,//联系人
+				Permission.Group.LOCATION,//定位
+				Permission.Group.SMS,//短信
+				new String[]{
+						android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
+						android.Manifest.permission.CALL_PHONE//拨打电话
+				});
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

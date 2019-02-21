@@ -71,7 +71,7 @@ public class LoginActivity extends BaseActivity implements
                 // 申请权限。
                 PermissionUtils.getInstance().requestPermission(LoginActivity.this, new CallBack() {
                             @Override
-                            public void onSuceess() {
+                            public void onSucess() {
 
                             }
                         },

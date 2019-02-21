@@ -68,7 +68,7 @@ public class PermissionUtils {
                     public void onAction(List<String> permissions) {
                         Toast.makeText(context, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
-                        callBack.onSuceess();
+                        callBack.onSucess();
                     }
                 })
                 .onDenied(new Action<List<String>>() {
@@ -95,7 +95,7 @@ public class PermissionUtils {
                     public void onAction(List<String> permissions) {
                         Toast.makeText(context, R.string.permission_successfully, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
-                        callBack.onSuceess();
+                        callBack.onSucess();
                     }
                 })
                 .onDenied(new Action<List<String>>() {
