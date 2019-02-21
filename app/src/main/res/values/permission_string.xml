@@ -35,7 +35,7 @@
     <string name="message_error_storage">请检查外部存储设备.</string>
 
     <string name="alert_for_doze_mode_title">关于后台运行</string>
-    <string name="alert_for_doze_mode_content">为了让JellyBase不会频繁被系统杀死，请允许把JellyBase加入电池优化白名单；同时，JellyBase会尽量保证不滥用此权限。请在接下来的系统弹窗中选择"允许" :)</string>
+    <string name="alert_for_doze_mode_content">为了让【JellyBase】不会频繁被系统杀死，请允许把【JellyBase】加入电池优化白名单；同时，【JellyBase】会尽量保证不滥用此权限。请在接下来的系统弹窗中选择"允许" :)</string>
     <string name="alert_for_doze_mode_yes">朕同意了</string>
     <string name="alert_for_doze_mode_no">我拒绝</string>
 </resources>
