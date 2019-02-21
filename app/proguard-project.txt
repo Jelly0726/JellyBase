@@ -336,6 +336,7 @@ public static java.lang.String TABLENAME;
   # If you do not use TrayPreferences:
  -dontwarn net.grandcentrix.tray.*
  -keep class net.grandcentrix.tray.**{*;}
+  -keep class net.grandcentrix.tray.provider.TrayContentProvider{*;}
  #====================rxlifecycle3====================
   # If you do not use rxlifecycle3:
  -dontwarn ncom.trello.rxlifecycle3.*
@@ -475,6 +476,7 @@ public static java.lang.String TABLENAME;
 -keep class com.yanzhenjie.recyclerview.swipe.** {*;}
 #=======================permission====================
 -dontwarn com.yanzhenjie.permission.**
+-keep class com.yanzhenjie.permission.FileProvide{*;}
 #=======================butterknife====================
  -keep class butterknife.** { *; }
  -dontwarn butterknife.internal.**

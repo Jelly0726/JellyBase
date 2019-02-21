@@ -135,7 +135,7 @@ public class BaseApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+        MultiDex.install(base);
     }
     /**
      * 获取本app可用的Context
