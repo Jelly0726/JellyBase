@@ -258,7 +258,7 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 					@Override
 					public void run() {
 						if (TextUtils.isEmpty(realContent)) {
-							Toast.makeText(ScanerCodeActivity.this, R.string.libraryzxing_get_pic_fail, Toast.LENGTH_SHORT).show();
+							Toast.makeText(ScanerCodeActivity.this, R.string.libraryzxing_analysis_pic_fail, Toast.LENGTH_SHORT).show();
 						} else {
 							if (GsonUtils.isJSONValid3(realContent)&&GsonUtils.isJsonObject(realContent)){
 								Gson gson=new Gson();
