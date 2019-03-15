@@ -348,6 +348,7 @@ repositories {
 
         //Android平台下的富文本解析器，支持Html和Markdown
         compile 'com.zzhoujay.richtext:richtext:3.0.7'// latest-version  3.0.4
+        compile 'com.zzhoujay:html:1.0.2'//latest-version
 
         //Android图表视图/图形视图库
         compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
