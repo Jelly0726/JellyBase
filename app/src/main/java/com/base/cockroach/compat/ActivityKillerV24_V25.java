@@ -69,7 +69,6 @@ public class ActivityKillerV24_V25 implements IActivityKiller {
     private void finish(IBinder binder) throws Exception {
 
         /*
-
          ActivityManagerNative.getDefault()
                  .finishActivity(r.token, Activity.RESULT_CANCELED, null, Activity.DONT_FINISH_TASK_WITH_ACTIVITY);
          */

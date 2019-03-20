@@ -25,6 +25,7 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.sqldao.DBManager;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.BuildConfig;
+import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
@@ -202,7 +203,7 @@ public class BaseApplication extends Application {
     //初始化Cockroach，开启crash防护
     private void installCockroach() {
         final Thread.UncaughtExceptionHandler sysExcepHandler = Thread.getDefaultUncaughtExceptionHandler();
-        Cockroach.install(new ExceptionHandler() {
+        Cockroach.install(this, new ExceptionHandler() {
             @Override
             protected void onUncaughtExceptionHappened(Thread thread, Throwable throwable) {
                 Log.e("AndroidRuntime", "--->onUncaughtExceptionHappened:" + thread + "<---", throwable);
@@ -210,7 +211,7 @@ public class BaseApplication extends Application {
                 new Handler(Looper.getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.show(myApp,"捕获到导致崩溃的异常并发送");
+                        ToastUtils.show(myApp,R.string.safe_mode_excep_tips);
                     }
                 });
             }
@@ -218,12 +219,19 @@ public class BaseApplication extends Application {
             @Override
             protected void onBandageExceptionHappened(Throwable throwable) {
                 throwable.printStackTrace();//打印警告级别log，该throwable可能是最开始的bug导致的，无需关心
-                ToastUtils.show(myApp,"捕获到导致崩溃的异常");
+                ToastUtils.show(myApp,"Cockroach Worked");
             }
 
             @Override
             protected void onEnterSafeMode() {
-                ToastUtils.show(myApp,"已经进入安全模式");
+                int tips = R.string.safe_mode_tips;
+                ToastUtils.show(myApp,R.string.safe_mode_tips);
+//
+//                if (BuildConfig.DEBUG) {
+//                    Intent intent = new Intent(myApp, DebugSafeModeTipActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                }
             }
 
             @Override
@@ -235,7 +243,6 @@ public class BaseApplication extends Application {
             }
 
         });
-
     }
     private void initCrashReport() {
         LogReport.getInstance()
