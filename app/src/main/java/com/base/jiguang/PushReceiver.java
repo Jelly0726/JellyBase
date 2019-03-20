@@ -12,7 +12,7 @@ import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
-import com.base.daemon.service.WatchDogService;
+import com.base.daemon.WatchDogService;
 
 import org.json.JSONObject;
 

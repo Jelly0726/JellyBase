@@ -5,8 +5,6 @@ import android.content.*;
 import android.os.*;
 import android.support.annotation.*;
 
-import com.base.daemon.service.AbsWorkService;
-
 import java.util.*;
 
 public final class DaemonEnv {
@@ -16,11 +14,11 @@ public final class DaemonEnv {
     public static final int DEFAULT_WAKE_UP_INTERVAL = 6 * 60 * 1000;
     private static final int MINIMAL_WAKE_UP_INTERVAL = 3 * 60 * 1000;
 
-    public static Context sApp;
-    public static Class<? extends AbsWorkService> sServiceClass;
+    static Context sApp;
+    static Class<? extends AbsWorkService> sServiceClass;
     private static int sWakeUpInterval = DEFAULT_WAKE_UP_INTERVAL;
-    public static boolean sInitialized;
-    public static boolean sForeground=true;//是否前台服务
+    static boolean sInitialized;
+    static boolean sForeground=true;//是否前台服务
 
     public static final Map<Class<? extends Service>, ServiceConnection> BIND_STATE_MAP = new HashMap<>();
 

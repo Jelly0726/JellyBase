@@ -1,10 +1,9 @@
-package com.base.daemon.service;
+package com.base.daemon;
 
-import android.annotation.*;
-import android.app.job.*;
-import android.os.*;
-
-import com.base.daemon.DaemonEnv;
+import android.annotation.TargetApi;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
+import android.os.Build;
 
 /**
  * Android 5.0+ 使用的 JobScheduler.

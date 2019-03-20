@@ -3,7 +3,7 @@ package com.jelly.jellybase.server;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.base.daemon.service.AbsWorkService;
+import com.base.daemon.AbsWorkService;
 
 import java.util.concurrent.TimeUnit;
 

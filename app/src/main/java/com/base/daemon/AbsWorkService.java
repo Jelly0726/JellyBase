@@ -1,4 +1,4 @@
-package com.base.daemon.service;
+package com.base.daemon;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -13,8 +13,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.base.config.BaseConfig;
-import com.base.daemon.DaemonEnv;
-import com.base.daemon.receiver.WakeUpReceiver;
 import com.jelly.jellybase.R;
 
 public abstract class AbsWorkService extends Service {

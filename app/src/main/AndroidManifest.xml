@@ -765,7 +765,7 @@
         </receiver>
         <!--↓↓↓daemon保活服务↓↓↓-->
         <receiver
-            android:name="com.base.daemon.receiver.WakeUpReceiver"
+            android:name="com.base.daemon.WakeUpReceiver"
             android:process=":watch">
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT"/>
@@ -785,7 +785,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.base.daemon.receiver.WakeUpReceiver$WakeUpAutoStartReceiver"
+            android:name="com.base.daemon.WakeUpReceiver$WakeUpAutoStartReceiver"
             android:process=":watch">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -797,18 +797,18 @@
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
-        <service android:name="com.base.daemon.service.AbsWorkService$WorkNotificationService"/>
+        <service android:name="com.base.daemon.AbsWorkService$WorkNotificationService"/>
         <service
-            android:name="com.base.daemon.service.JobSchedulerService"
+            android:name="com.base.daemon.JobSchedulerService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true"
             android:exported="true"
             android:process=":watch"/>
         <service
-            android:name="com.base.daemon.service.WatchDogService"
+            android:name="com.base.daemon.WatchDogService"
             android:process=":watch"/>
         <service
-            android:name="com.base.daemon.service.WatchDogService$WatchDogNotificationService"
+            android:name="com.base.daemon.WatchDogService$WatchDogNotificationService"
             android:process=":watch"/>
 
         <service android:name=".server.TraceServiceImpl"/>

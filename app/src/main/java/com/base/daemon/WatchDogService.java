@@ -1,4 +1,4 @@
-package com.base.daemon.service;
+package com.base.daemon;
 
 import android.app.AlarmManager;
 import android.app.Notification;
@@ -11,8 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
-
-import com.base.daemon.DaemonEnv;
 
 import java.util.concurrent.TimeUnit;
 

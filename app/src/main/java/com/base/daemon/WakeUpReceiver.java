@@ -1,9 +1,6 @@
-package com.base.daemon.receiver;
+package com.base.daemon;
 
 import android.content.*;
-
-import com.base.daemon.DaemonEnv;
-import com.base.daemon.service.WatchDogService;
 
 public class WakeUpReceiver extends BroadcastReceiver {
 
