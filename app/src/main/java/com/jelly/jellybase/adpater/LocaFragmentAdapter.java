@@ -26,7 +26,6 @@ import com.base.httpmvp.databean.AccountDetail;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -80,7 +79,6 @@ public class LocaFragmentAdapter extends BaseRecyclerAdapter<LocaFragmentAdapter
 
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
         }
     }
     private OnItemClickListener mOnItemClickListener;

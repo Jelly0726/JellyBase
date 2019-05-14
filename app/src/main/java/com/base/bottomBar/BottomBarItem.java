@@ -15,8 +15,6 @@ import android.widget.TextView;
 
 import com.base.middleBar.UIUtils;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 
 /**
@@ -55,22 +53,6 @@ public class BottomBarItem extends LinearLayout {
 
     private int mUnreadTextSize = 10; //未读数默认字体大小10sp
     private int mMsgTextSize = 6; //消息默认字体大小6sp
-
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoLinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoLinearLayout.LayoutParams(getContext(), attrs);
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
 
     public BottomBarItem(Context context) {
         this(context, null);

@@ -268,7 +268,7 @@ repositories {
         }
 
         //自动适配
-        compile 'com.zhy:autolayout:1.4.5'
+//        compile 'com.zhy:autolayout:1.4.5'
 
         //高德地图so及jar
 

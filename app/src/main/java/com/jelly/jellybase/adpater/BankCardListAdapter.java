@@ -34,7 +34,6 @@ import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -123,7 +122,6 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
 
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             bank_logo= (ImageView) itemView.findViewById(R.id.bank_logo);
             bank_name = (TextView) itemView.findViewById(R.id.bank_name);
             card_type = (TextView) itemView.findViewById(R.id.card_type);

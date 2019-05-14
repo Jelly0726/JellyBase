@@ -6,8 +6,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.zhy.autolayout.AutoFrameLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
@@ -25,22 +23,6 @@ public class BGAGuideLinkageLayout extends FrameLayout {
 
     public BGAGuideLinkageLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-    }
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoFrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoFrameLayout.LayoutParams(getContext(), attrs);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

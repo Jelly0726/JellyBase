@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
-import com.zhy.autolayout.AutoFrameLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
-
 public class XNestedScrollView extends NestedScrollView {
 
     private OnScrollListener onScrollListener, mScrollListener;
@@ -20,21 +17,6 @@ public class XNestedScrollView extends NestedScrollView {
     private XRefreshView mParent;
     private int mTouchSlop;
     private float lastY;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoFrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoFrameLayout.LayoutParams(getContext(), attrs);
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public XNestedScrollView(Context context) {
         super(context, null);
     }

@@ -13,11 +13,8 @@ import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.callback.IFooterCallBack;
 import com.base.xrefreshview.utils.Utils;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 public class CustomerFooter extends LinearLayout implements IFooterCallBack {
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
     private Context mContext;
 
     private View mContentView;
@@ -34,21 +31,6 @@ public class CustomerFooter extends LinearLayout implements IFooterCallBack {
     public CustomerFooter(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
-    }
-    @Override
-    public AutoLinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoLinearLayout.LayoutParams(getContext(), attrs);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
     private RecyclerView recyclerView;
 

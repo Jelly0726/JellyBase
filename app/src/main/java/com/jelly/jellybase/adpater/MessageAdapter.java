@@ -30,7 +30,6 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.MessageDetailsActivity;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -88,7 +87,6 @@ public class MessageAdapter extends BaseRecyclerAdapter<MessageAdapter.ViewHolde
         TextView time_tv;
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             title_tv=itemView.findViewById(R.id.title_tv);
             content_tv=itemView.findViewById(R.id.content_tv);
             time_tv=itemView.findViewById(R.id.time_tv);

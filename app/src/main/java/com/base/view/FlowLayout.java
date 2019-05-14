@@ -5,14 +5,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zhy.autolayout.AutoRelativeLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class FlowLayout extends ViewGroup {
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -25,11 +21,6 @@ public class FlowLayout extends ViewGroup {
     public FlowLayout(Context context) {
         this(context, null);
     }
-    @Override
-    public AutoRelativeLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoRelativeLayout.LayoutParams(getContext(), attrs);
-    }
 //    /**
 //     * 与当前ViewGroup对应的LayoutParams
 //     */
@@ -39,10 +30,6 @@ public class FlowLayout extends ViewGroup {
 //    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
         int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
         int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);

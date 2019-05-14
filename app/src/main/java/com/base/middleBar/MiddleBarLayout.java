@@ -8,9 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,21 +27,6 @@ public class MiddleBarLayout extends LinearLayout implements ViewPager.OnPageCha
     private List<MiddleBarItem> mItemViews = new ArrayList<>();
     private int mCurrentItem;//当前条目的索引
     private boolean mSmoothScroll;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoLinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoLinearLayout.LayoutParams(getContext(), attrs);
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public MiddleBarLayout(Context context) {
         this(context, null);
     }

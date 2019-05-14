@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
@@ -31,7 +32,6 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.sofia.Sofia;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -39,7 +39,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by Administrator on 2017/12/5.
  */
 
-public class BaseActivity extends AutoLayoutActivity implements Observer {
+public class BaseActivity extends AppCompatActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;

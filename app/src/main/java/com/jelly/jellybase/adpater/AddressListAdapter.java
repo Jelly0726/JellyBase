@@ -32,7 +32,6 @@ import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.AddressEditActivity;
 import com.jelly.jellybase.datamodel.RecevierAddress;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -146,7 +145,6 @@ public class AddressListAdapter extends BaseRecyclerAdapter<AddressListAdapter.V
         public TextView address_delete;
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             name_tv= (TextView) itemView.findViewById(R.id.name_tv);
             phone_tv= (TextView) itemView.findViewById(R.id.phone_tv);
             address_tv= (TextView) itemView.findViewById(R.id.address_tv);

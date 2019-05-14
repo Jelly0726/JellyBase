@@ -30,7 +30,6 @@ import com.base.addressmodel.Area;
 import com.base.applicationUtil.AppUtils;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -92,7 +91,6 @@ public class AddressAdapter extends BaseRecyclerAdapter<AddressAdapter.ViewHolde
         TextView textView;
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             textView= (TextView) itemView;
         }
     }

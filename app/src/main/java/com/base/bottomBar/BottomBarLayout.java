@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.base.view.NoPreloadViewPager;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +28,6 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
     private List<BottomBarItem> mItemViews = new ArrayList<>();
     private int mCurrentItem;//当前条目的索引
     private boolean mSmoothScroll;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoLinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoLinearLayout.LayoutParams(getContext(), attrs);
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public BottomBarLayout(Context context) {
         this(context, null);
     }

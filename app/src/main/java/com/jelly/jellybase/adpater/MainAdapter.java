@@ -27,7 +27,6 @@ import com.base.multiClick.OnMultiClickListener;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.utils.AutoUtils;
 
 public class MainAdapter extends BaseRecyclerAdapter<MainAdapter.ViewHolder> {
 
@@ -79,7 +78,6 @@ public class MainAdapter extends BaseRecyclerAdapter<MainAdapter.ViewHolder> {
         public TextView tv;
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             tv= (TextView) itemView.findViewById(R.id.tv);
         }
     }

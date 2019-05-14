@@ -6,9 +6,6 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.widget.ScrollView;
 
-import com.zhy.autolayout.AutoFrameLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
-
 public class XScrollView extends ScrollView {
 
     private OnScrollListener onScrollListener, mScrollListener;
@@ -19,21 +16,6 @@ public class XScrollView extends ScrollView {
     private XRefreshView mParent;
     private int mTouchSlop;
     private float lastY;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoFrameLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoFrameLayout.LayoutParams(getContext(), attrs);
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public XScrollView(Context context) {
         super(context, null);
     }

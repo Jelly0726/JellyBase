@@ -27,7 +27,6 @@ import com.base.httpmvp.databean.AccountDetail;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -95,7 +94,6 @@ public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAda
 
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             type_tv = (TextView) itemView.findViewById(R.id.type_tv);
             state_tv = (TextView) itemView.findViewById(R.id.state_tv);
             time_tv = (TextView) itemView.findViewById(R.id.time_tv);

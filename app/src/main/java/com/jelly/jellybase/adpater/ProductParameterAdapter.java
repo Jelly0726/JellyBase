@@ -26,7 +26,6 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -72,7 +71,6 @@ public class ProductParameterAdapter extends BaseRecyclerAdapter<ProductParamete
     static class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
         }
     }
     private OnItemClickListener mOnItemClickListener;

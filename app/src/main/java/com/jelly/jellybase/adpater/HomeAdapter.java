@@ -29,7 +29,6 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.List;
 
@@ -84,7 +83,6 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeAdapter.ViewHolder> {
         public TextView repertory_tv;
         public ViewHolder(View itemView) {
             super(itemView);
-            AutoUtils.autoSize(itemView);
             product_img= (ImageView) itemView.findViewById(R.id.product_img);
             price_tv = (TextView) itemView.findViewById(R.id.price_tv);
             minshipment_tv = (TextView) itemView.findViewById(R.id.minshipment_tv);

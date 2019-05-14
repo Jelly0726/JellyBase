@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="88px"
     android:gravity="center_vertical"
-    app:layout_auto_basewidth="height"
     android:background="#fff">
     <TextView
         android:layout_width="150px"

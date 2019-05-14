@@ -27,8 +27,6 @@ import com.base.xrefreshview.listener.OnTopRefreshTime;
 import com.base.xrefreshview.utils.LogUtils;
 import com.base.xrefreshview.utils.Utils;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -110,12 +108,6 @@ public class XRefreshView extends LinearLayout {
      */
     private boolean mLayoutReady = false;
     private boolean mNeedToRefresh = false;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoLinearLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoLinearLayout.LayoutParams(getContext(), attrs);
-    }
     public XRefreshView(Context context) {
         this(context, null);
     }
@@ -321,10 +313,6 @@ public class XRefreshView extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
         //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         int width = MeasureSpec.getSize(widthMeasureSpec);

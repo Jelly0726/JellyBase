@@ -35,7 +35,6 @@ import com.wenming.library.upload.email.EmailReporter;
 import com.wenming.library.upload.http.HttpReporter;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
-import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
@@ -77,8 +76,6 @@ public class BaseApplication extends Application {
 
             //butterknife注解式绑定id
             ButterKnife.setDebug(BuildConfig.DEBUG);
-            // AutoLayout适配
-            AutoLayoutConifg.getInstance().useDeviceSize();
             //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
             //TbsDownloader.needDownload(getApplicationContext(), false);
             QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {

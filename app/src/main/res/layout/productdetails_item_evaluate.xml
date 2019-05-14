@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_auto_basewidth="height"
     android:background="#fff">
     <LinearLayout
         android:layout_width="match_parent"

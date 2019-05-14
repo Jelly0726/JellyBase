@@ -28,8 +28,6 @@ import android.widget.TextView;
 import com.base.bgabanner.transformer.BGAPageTransformer;
 import com.base.bgabanner.transformer.TransitionEffect;
 import com.jelly.jellybase.R;
-import com.zhy.autolayout.AutoRelativeLayout;
-import com.zhy.autolayout.utils.AutoLayoutHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -83,22 +81,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private GuideDelegate mGuideDelegate;
     private int mContentBottomMargin;
     private boolean mIsFirstInvisible = true;
-    private final AutoLayoutHelper mHelper = new AutoLayoutHelper(this);
-    @Override
-    public AutoRelativeLayout.LayoutParams generateLayoutParams(AttributeSet attrs)
-    {
-        return new AutoRelativeLayout.LayoutParams(getContext(), attrs);
-    }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
-    {
-        if (!isInEditMode())
-        {
-            mHelper.adjustChildren();
-        }
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public void onDestroy(){
         stopAutoPlay();
         removeAllViewsInLayout();
