@@ -15,8 +15,6 @@ import com.base.cockroach.compat.IActivityKiller;
 
 import java.lang.reflect.Field;
 
-import me.weishu.reflection.Reflection;
-
 
 /**
  * Created by wanjian on 2017/2/14.
@@ -35,12 +33,6 @@ public final class Cockroach {
     public static void install(Context ctx, ExceptionHandler exceptionHandler) {
         if (sInstalled) {
             return;
-        }
-        try {
-            //解除 android P 反射限制
-            Reflection.unseal(ctx);
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
         }
         sInstalled = true;
         sExceptionHandler = exceptionHandler;

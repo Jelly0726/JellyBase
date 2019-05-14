@@ -370,8 +370,8 @@ repositories {
         compile('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta') {
             exclude group: 'com.android.support'
         }
-        //防崩溃需要
-        compile 'me.weishu:free_reflection:1.2.0'
+        //允许你在Android P上使用反射而没有任何限制的库
+        implementation 'me.weishu:free_reflection:2.0.0'
         //广告轮播
 //        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
 

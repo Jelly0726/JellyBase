@@ -39,6 +39,7 @@ import com.yanzhenjie.album.AlbumConfig;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import hugo.weaving.DebugLog;
+import me.weishu.reflection.Reflection;
 
 
 /**
@@ -134,6 +135,8 @@ public class BaseApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
+        //解除 android P 反射限制
+        Reflection.unseal(base);
     }
     /**
      * 获取本app可用的Context
