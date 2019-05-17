@@ -1247,7 +1247,23 @@ public class BitmapUtil {
     public static Bitmap toGray(Bitmap src) {
         return toGray(src, false);
     }
+    /**
+     *
+     * @param bm 原图片
+     * @param colcor  遮罩层颜色
+     * @return
+     */
+    public  Bitmap getMaskLayer(Bitmap bm,String colcor){
+        Bitmap bmp = Bitmap.createBitmap(bm.getWidth(),bm.getHeight(),Bitmap.Config.RGB_565);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        Canvas canvas = new Canvas(bmp);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bm,0,0,paint);
+        canvas.drawColor(Color.parseColor(colcor));
+        return bmp;
 
+    }
     /**
      * 灰色bitmap
      * @param src
