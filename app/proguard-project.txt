@@ -466,6 +466,9 @@ public static java.lang.String TABLENAME;
 -keep class com.allenliu.versionchecklib.**{*;}
 #=======================richtext====================
 -dontwarn com.zzhoujay.richtext.**
+-dontwarn com.zzhoujay.html.**
+-keep class com.zzhoujay.richtext.**{*;}
+-keep class com.zzhoujay.html.**{*;}
 #=======================MPAndroidChart====================
 -dontwarn com.github.PhilJay.**
 #=======================recyclerviewswipe====================
