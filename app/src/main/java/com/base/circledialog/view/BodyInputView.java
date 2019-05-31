@@ -2,6 +2,7 @@ package com.base.circledialog.view;
 
 import android.content.Context;
 import android.os.Build;
+import android.text.InputFilter;
 import android.widget.EditText;
 
 import com.base.circledialog.params.ButtonParams;
@@ -12,6 +13,7 @@ import com.base.circledialog.params.TitleParams;
 import com.base.circledialog.res.drawable.CircleDrawable;
 import com.base.circledialog.res.drawable.InputDrawable;
 import com.base.circledialog.res.values.CircleColor;
+import com.base.moneyedittext.MoneyValueFilter;
 
 
 /**
@@ -74,6 +76,11 @@ class BodyInputView extends ScaleLinearLayout {
         mEditText.setTextSize(inputParams.textSize);
         mEditText.setTextColor(inputParams.textColor);
         mEditText.setHeight(inputParams.inputHeight);
+        mEditText.setText(inputParams.text);
+        mEditText.setSelection(inputParams.text.length());
+        if (inputParams.type==InputParams.INPUT_MONEY){
+            mEditText.setFilters(new InputFilter[]{new MoneyValueFilter().setDigits(inputParams.digits)});
+        }
 
         int backgroundResourceId = inputParams.inputBackgroundResourceId;
         if (backgroundResourceId == 0) {

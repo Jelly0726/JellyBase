@@ -13,7 +13,8 @@ import com.base.circledialog.res.values.CircleDimen;
  */
 public class InputParams implements Parcelable {
     private static final int[] MARGINS = {50, 20, 50, 40};
-
+    public static final int INPUT_TEXT=0;//输入文本
+    public static final int INPUT_MONEY=1;//输入金额
     /**
      * 输入框与body视图的距离
      */
@@ -58,6 +59,21 @@ public class InputParams implements Parcelable {
      * 输入框字体颜色
      */
     public int textColor = CircleColor.title;
+    /**
+     * 输入框输入类型
+     */
+    public int type =INPUT_TEXT;
+    /**
+     * 输入框输入金额小数点的位数默认保留2位小数
+     */
+    public int digits =2;
+    /**
+     * 输入框默认文本
+     */
+    public String text="";
+
+    public InputParams() {
+    }
 
     @Override
     public int describeContents() {
@@ -77,9 +93,9 @@ public class InputParams implements Parcelable {
         dest.writeInt(this.backgroundColor);
         dest.writeInt(this.textSize);
         dest.writeInt(this.textColor);
-    }
-
-    public InputParams() {
+        dest.writeInt(this.type);
+        dest.writeInt(this.digits);
+        dest.writeString(this.text);
     }
 
     protected InputParams(Parcel in) {
@@ -94,6 +110,9 @@ public class InputParams implements Parcelable {
         this.backgroundColor = in.readInt();
         this.textSize = in.readInt();
         this.textColor = in.readInt();
+        this.type = in.readInt();
+        this.digits = in.readInt();
+        this.text = in.readString();
     }
 
     public static final Creator<InputParams> CREATOR = new Creator<InputParams>() {
