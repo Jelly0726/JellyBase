@@ -5,6 +5,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.base.circledialog.params.ButtonParams;
@@ -129,8 +130,12 @@ class MultipleButton extends ScaleLinearLayout {
             @Override
             public void onClick(View v) {
                 String text = input.getText().toString();
-                if (!TextUtils.isEmpty(text))
+                if (!TextUtils.isEmpty(text)) {
+                    InputMethodManager manager = (InputMethodManager) input.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(input.getWindowToken(), 0);
                     mPositiveParams.dismiss();
+                }
                 if (mPositiveParams.inputListener != null)
                     mPositiveParams.inputListener.onClick(text, v);
             }

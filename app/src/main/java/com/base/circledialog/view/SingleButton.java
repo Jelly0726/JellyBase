@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.base.circledialog.params.ButtonParams;
@@ -62,8 +63,12 @@ class SingleButton extends ScaleTextView {
             @Override
             public void onClick(View v) {
                 String text = input.getText().toString();
-                if (!TextUtils.isEmpty(text))
+                if (!TextUtils.isEmpty(text)) {
+                    InputMethodManager manager = (InputMethodManager) input.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(input.getWindowToken(), 0);
                     mButtonParams.dismiss();
+                }
                 if (mButtonParams.inputListener != null)
                     mButtonParams.inputListener.onClick(text, v);
             }

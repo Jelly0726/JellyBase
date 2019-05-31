@@ -85,9 +85,6 @@ class BodyInputView extends ScaleLinearLayout {
         if (inputParams.type==InputParams.INPUT_MONEY){
             mEditText.setFilters(new InputFilter[]{new MoneyValueFilter().setDigits(inputParams.digits)});
         }
-        mEditText.setFocusable(true);
-        mEditText.setFocusableInTouchMode(true);
-        mEditText.requestFocus();
         Timer timer = new Timer();
         timer.schedule(new TimerTask()
                        {
