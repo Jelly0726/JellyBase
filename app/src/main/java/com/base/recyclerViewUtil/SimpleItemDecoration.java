@@ -151,23 +151,16 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
         } else if (parent.getLayoutManager() instanceof GridLayoutManager){
             outRect.left = 0;
             outRect.right = 0;
-            if (parent.getChildLayoutPosition(view) % span == 0) {
-                if(span==1){
-                    if(LR!=type) {
-                        outRect.left = space;
-                        outRect.right = space;
-                    }
-                }else {
-                    if(LR!=type) {
-                        outRect.left = space;
-                    }
-                    outRect.right = space/2;
-                }
-            } else {
-                outRect.left = space/2;
-                if(LR!=type) {
-                    outRect.right = space;
-                }
+            GridLayoutManager.LayoutParams lp = (GridLayoutManager
+                    .LayoutParams)view.getLayoutParams();
+            int spanIndex = lp.getSpanIndex();
+            //判断当前的位置，如果是最后设置右边距
+            if (spanIndex == span-1) {
+                outRect.left = space;
+                outRect.right = space;
+            } else {//其余的位置右边距为0
+                outRect.left = space;
+                outRect.right = 0;
             }
         } else if (parent.getLayoutManager() instanceof LinearLayoutManager){
             outRect.left = space;
