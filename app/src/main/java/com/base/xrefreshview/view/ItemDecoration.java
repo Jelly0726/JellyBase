@@ -54,10 +54,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
                     outRect.left = 0;
                     outRect.right = 0;
                     outRect.top = 0;
-                }else {
-                    parentLayoutManager(outRect,view,parent,state);
-                }
-                if (type == FOOT && parent.getChildAdapterPosition(view)
+                }else if (type == FOOT && parent.getChildAdapterPosition(view)
                         == parent.getAdapter().getItemCount()-1) {
                     outRect.left = 0;
                     outRect.right = 0;

@@ -119,10 +119,7 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
                     outRect.left = 0;
                     outRect.right = 0;
                     outRect.top = 0;
-                }else {
-                    parentLayoutManager(outRect,view,parent,state);
-                }
-                if (type == FOOT && parent.getChildAdapterPosition(view)
+                }else if (type == FOOT && parent.getChildAdapterPosition(view)
                         == parent.getAdapter().getItemCount()-1) {
                     outRect.left = 0;
                     outRect.right = 0;
@@ -149,18 +146,37 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
                 outRect.right = 0;
             }
         } else if (parent.getLayoutManager() instanceof GridLayoutManager){
-            outRect.left = 0;
-            outRect.right = 0;
-            GridLayoutManager.LayoutParams lp = (GridLayoutManager
-                    .LayoutParams)view.getLayoutParams();
-            int spanIndex = lp.getSpanIndex();
-            //判断当前的位置，如果是最后设置右边距
-            if (spanIndex == span-1) {
-                outRect.left = space;
+            GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+            final GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+            final int childPosition = parent.getChildAdapterPosition(view);
+            final int spanCount = layoutManager.getSpanCount();
+            if (layoutManager.getOrientation() == GridLayoutManager.VERTICAL) {
+                //判断是否在第一排
+                if (layoutManager.getSpanSizeLookup().getSpanGroupIndex(childPosition, spanCount) == 0) {//第一排的需要上面
+                    outRect.top =space;
+                }
+                outRect.bottom =space;
+                //这里忽略和合并项的问题，只考虑占满和单一的问题
+                if (lp.getSpanSize() == spanCount) {//占满
+                    outRect.left = space;
+                    outRect.right = space;
+                } else {
+                    outRect.left = (int) (((float) (spanCount - lp.getSpanIndex())) / spanCount *space);
+                    outRect.right = (int) (((float) space * (spanCount + 1) / spanCount) - outRect.left);
+                }
+            } else {
+                if (layoutManager.getSpanSizeLookup().getSpanGroupIndex(childPosition, spanCount) == 0) {//第一排的需要left
+                    outRect.left = space;
+                }
                 outRect.right = space;
-            } else {//其余的位置右边距为0
-                outRect.left = space;
-                outRect.right = 0;
+                //这里忽略和合并项的问题，只考虑占满和单一的问题
+                if (lp.getSpanSize() == spanCount) {//占满
+                    outRect.top =space;
+                    outRect.bottom = space;
+                } else {
+                    outRect.top = (int) (((float) (spanCount - lp.getSpanIndex())) / spanCount * space);
+                    outRect.bottom = (int) (((float) space * (spanCount + 1) / spanCount) - outRect.top);
+                }
             }
         } else if (parent.getLayoutManager() instanceof LinearLayoutManager){
             outRect.left = space;
