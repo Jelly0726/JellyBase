@@ -15,6 +15,7 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
@@ -62,7 +63,6 @@ public class ImageViewPlus extends AppCompatImageView {
 	private int mType;
 	private int mBorderColor;
 	private int mBorderWidth;
-	private int mRadius;
 
 	private Paint mPaintBitmap = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Paint mPaintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -78,7 +78,7 @@ public class ImageViewPlus extends AppCompatImageView {
 	private int mImageColor = Color.TRANSPARENT;
 	/*圆角的半径，依次为左上角xy半径，右上角，右下角，左下角*/
 	//此处可根据自己需要修改大小
-	private float[] rids =null;
+	private float[] mRadiusArray =null;
 	public ImageViewPlus(Context context) {
 		this(context, null);
 		// TODOAuto-generated constructor stub
@@ -95,12 +95,32 @@ public class ImageViewPlus extends AppCompatImageView {
 		mType = ta.getInt(R.styleable.ImageViewPlus_ivpType, DEFAULT_TYPE);
 		mBorderColor = ta.getColor(R.styleable.ImageViewPlus_ivpBorderColor, DEFAULT_BORDER_COLOR);
 		mBorderWidth = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBorderWidth, dip2px(DEFAULT_BORDER_WIDTH));
-		mRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
-		float mTopLeftRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpTopLeftRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
-		float mTopRightRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpTopRightRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
-		float mBottomLeftRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBottomLeftRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
-		float mBottomRightRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBottomRightRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
-		rids= new float[]{mTopLeftRadius, mTopLeftRadius, mTopRightRadius, mTopRightRadius, mBottomLeftRadius, mBottomLeftRadius, mBottomRightRadius, mBottomRightRadius};
+		float mRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+		if (mRadius>0){
+			mRadiusArray = new float[]{
+					mRadius,
+					mRadius,
+					mRadius,
+					mRadius,
+					mRadius,
+					mRadius,
+					mRadius,
+					mRadius};
+		}else {
+			float mTopLeftRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpTopLeftRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+			float mTopRightRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpTopRightRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+			float mBottomLeftRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBottomLeftRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+			float mBottomRightRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBottomRightRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
+			mRadiusArray = new float[]{
+					mTopLeftRadius,
+					mTopLeftRadius,
+					mTopRightRadius,
+					mTopRightRadius,
+					mBottomLeftRadius,
+					mBottomLeftRadius,
+					mBottomRightRadius,
+					mBottomRightRadius};
+		}
 		ta.recycle();
 	}
 	@Override
@@ -146,47 +166,47 @@ public class ImageViewPlus extends AppCompatImageView {
 				canvas.drawCircle(radius - mBorderWidth, radius - mBorderWidth, radius - mBorderWidth, mPaintBitmap);
 			} else if (mType == TYPE_ROUNDED){
 
-				if (mRadius==0){
-					float[] borderRadius={
-							rids[0] - halfBorderWidth > 0.0f ? rids[0] - halfBorderWidth : 0.0f,
-							rids[1] - halfBorderWidth > 0.0f ? rids[1] - halfBorderWidth : 0.0f,
-							rids[2] - halfBorderWidth > 0.0f ? rids[2] - halfBorderWidth : 0.0f,
-							rids[3] - halfBorderWidth > 0.0f ? rids[3] - halfBorderWidth : 0.0f,
-							rids[4] - halfBorderWidth > 0.0f ? rids[4] - halfBorderWidth : 0.0f,
-							rids[5] - halfBorderWidth > 0.0f ? rids[5] - halfBorderWidth : 0.0f,
-							rids[6] - halfBorderWidth > 0.0f ? rids[6] - halfBorderWidth : 0.0f,
-							rids[7] - halfBorderWidth > 0.0f ? rids[7] - halfBorderWidth : 0.0f,
-					};
-					mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
-					Path mBorderPath = new Path();
-					mBorderPath.addRoundRect(mRectBorder, borderRadius,  Path.Direction.CW);
-					canvas.drawPath(mBorderPath,mPaintBorder);
-					canvas.translate(mBorderWidth, mBorderWidth);
+//				if (mRadius==0){
+				float[] borderRadius={
+						mRadiusArray[0] - halfBorderWidth > 0.0f ? mRadiusArray[0] - halfBorderWidth : 0.0f,
+						mRadiusArray[1] - halfBorderWidth > 0.0f ? mRadiusArray[1] - halfBorderWidth : 0.0f,
+						mRadiusArray[2] - halfBorderWidth > 0.0f ? mRadiusArray[2] - halfBorderWidth : 0.0f,
+						mRadiusArray[3] - halfBorderWidth > 0.0f ? mRadiusArray[3] - halfBorderWidth : 0.0f,
+						mRadiusArray[4] - halfBorderWidth > 0.0f ? mRadiusArray[4] - halfBorderWidth : 0.0f,
+						mRadiusArray[5] - halfBorderWidth > 0.0f ? mRadiusArray[5] - halfBorderWidth : 0.0f,
+						mRadiusArray[6] - halfBorderWidth > 0.0f ? mRadiusArray[6] - halfBorderWidth : 0.0f,
+						mRadiusArray[7] - halfBorderWidth > 0.0f ? mRadiusArray[7] - halfBorderWidth : 0.0f,
+				};
+				mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
+				Path mBorderPath = new Path();
+				mBorderPath.addRoundRect(mRectBorder, borderRadius,  Path.Direction.CW);
+				canvas.drawPath(mBorderPath,mPaintBorder);
+				canvas.translate(mBorderWidth, mBorderWidth);
 
 
-					float[] bitmapRadius={
-							rids[0] - mBorderWidth > 0.0f ? rids[0] - mBorderWidth : 0.0f,
-							rids[1] - mBorderWidth > 0.0f ? rids[1] - mBorderWidth : 0.0f,
-							rids[2] - mBorderWidth > 0.0f ? rids[2] - mBorderWidth : 0.0f,
-							rids[3] - mBorderWidth > 0.0f ? rids[3] - mBorderWidth : 0.0f,
-							rids[4] - mBorderWidth > 0.0f ? rids[4] - mBorderWidth : 0.0f,
-							rids[5] - mBorderWidth > 0.0f ? rids[5] - mBorderWidth : 0.0f,
-							rids[6] - mBorderWidth > 0.0f ? rids[6] - mBorderWidth : 0.0f,
-							rids[7] - mBorderWidth > 0.0f ? rids[7] - mBorderWidth : 0.0f,
-					};
-					mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
-					Path mBitmapPath = new Path();
-					mBitmapPath.addRoundRect(mRectBitmap, bitmapRadius, Path.Direction.CW);
-					canvas.drawPath(mBitmapPath,mPaintBitmap);
-				}else {
-					mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
-					mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
-					float borderRadius = mRadius - halfBorderWidth > 0.0f ? mRadius - halfBorderWidth : 0.0f;
-					float bitmapRadius = mRadius - mBorderWidth > 0.0f ? mRadius - mBorderWidth : 0.0f;
-					canvas.drawRoundRect(mRectBorder, borderRadius, borderRadius, mPaintBorder);
-					canvas.translate(mBorderWidth, mBorderWidth);
-					canvas.drawRoundRect(mRectBitmap, bitmapRadius, bitmapRadius, mPaintBitmap);
-				}
+				float[] bitmapRadius={
+						mRadiusArray[0] - mBorderWidth > 0.0f ? mRadiusArray[0] - mBorderWidth : 0.0f,
+						mRadiusArray[1] - mBorderWidth > 0.0f ? mRadiusArray[1] - mBorderWidth : 0.0f,
+						mRadiusArray[2] - mBorderWidth > 0.0f ? mRadiusArray[2] - mBorderWidth : 0.0f,
+						mRadiusArray[3] - mBorderWidth > 0.0f ? mRadiusArray[3] - mBorderWidth : 0.0f,
+						mRadiusArray[4] - mBorderWidth > 0.0f ? mRadiusArray[4] - mBorderWidth : 0.0f,
+						mRadiusArray[5] - mBorderWidth > 0.0f ? mRadiusArray[5] - mBorderWidth : 0.0f,
+						mRadiusArray[6] - mBorderWidth > 0.0f ? mRadiusArray[6] - mBorderWidth : 0.0f,
+						mRadiusArray[7] - mBorderWidth > 0.0f ? mRadiusArray[7] - mBorderWidth : 0.0f,
+				};
+				mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
+				Path mBitmapPath = new Path();
+				mBitmapPath.addRoundRect(mRectBitmap, bitmapRadius, Path.Direction.CW);
+				canvas.drawPath(mBitmapPath,mPaintBitmap);
+//				}else {
+//					mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
+//					mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
+//					float borderRadius = mRadius - halfBorderWidth > 0.0f ? mRadius - halfBorderWidth : 0.0f;
+//					float bitmapRadius = mRadius - mBorderWidth > 0.0f ? mRadius - mBorderWidth : 0.0f;
+//					canvas.drawRoundRect(mRectBorder, borderRadius, borderRadius, mPaintBorder);
+//					canvas.translate(mBorderWidth, mBorderWidth);
+//					canvas.drawRoundRect(mRectBitmap, bitmapRadius, bitmapRadius, mPaintBitmap);
+//				}
 			} else if(mType == TYPE_OVAL){
 				mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
 				mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
@@ -323,8 +343,8 @@ public class ImageViewPlus extends AppCompatImageView {
 	 * 获取圆角矩形弧度半径
 	 * @return 弧度半径(像素)
 	 */
-	public int getRectRoundRadius(){
-		return this.mRadius;
+	public float[] getRectRoundRadius(){
+		return this.mRadiusArray;
 	}
 	/**
 	 * 设置圆角矩形弧度半径(自动重绘)
@@ -341,10 +361,44 @@ public class ImageViewPlus extends AppCompatImageView {
 	 */
 	public void setRectRoundRadius(int radius, boolean fUpdateView){
 		if (this.mType == TYPE_ROUNDED
-				&& radius != this.mRadius
+				&& radius != this.mRadiusArray[0]
 				&& radius >= 0
 				&& radius <= Math.min(getWidth(), getHeight()) / 2){
-			this.mRadius = radius;
+			mRadiusArray = new float[]{
+					radius,
+					radius,
+					radius,
+					radius,
+					radius,
+					radius,
+					radius,
+					radius};
+			if (fUpdateView){
+				invalidate();
+			}
+		}
+	}
+	/**
+	 * 设置圆角矩形弧度半径(自动重绘)
+	 * @param radius 弧度半径(像素)
+	 */
+	public void setRectRoundRadius(float[] radius){
+		setRectRoundRadius(radius, true);
+	}
+	/**
+	 * 设置圆角矩形弧度半径
+	 * @param radius 弧度半径(像素)
+	 * @param fUpdateView 是否自动重绘
+	 */
+	public void setRectRoundRadius(@NonNull float[] radius, boolean fUpdateView){
+		if (this.mType == TYPE_ROUNDED
+				&& radius != this.mRadiusArray
+				&& radius.length >= 0
+				&& radius[0] <= Math.min(getWidth(), getHeight()) / 2
+				&& radius[2] <= Math.min(getWidth(), getHeight()) / 2
+				&& radius[4] <= Math.min(getWidth(), getHeight()) / 2
+				&& radius[6] <= Math.min(getWidth(), getHeight()) / 2){
+			this.mRadiusArray = radius;
 			if (fUpdateView){
 				invalidate();
 			}
