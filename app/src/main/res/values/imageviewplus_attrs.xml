@@ -1,19 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>  
-<resources>  
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
     <attr name="ivpType">
-        <enum name="none" value="0" />  
-        <enum name="circle" value="1" />  
+        <!--原型-->
+        <enum name="none" value="0" />
+        <!--圆-->
+        <enum name="circle" value="1" />
+        <!--圆角矩形-->
         <enum name="round" value="2" />
+        <!--椭圆-->
         <enum name="oval" value="3" />
     </attr>
+    <!--边框颜色-->
     <attr name="ivpBorderColor" format="color" />
+    <!--边框宽度-->
     <attr name="ivpBorderWidth" format="dimension" />
+    <!--圆角大小-->
     <attr name="ivpRadius" format="dimension" />
+    <!--左上角圆角大小-->
+    <attr name="ivpTopLeftRadius" format="dimension" />
+    <!--右上角圆角大小-->
+    <attr name="ivpTopRightRadius" format="dimension" />
+    <!--左下角圆角大小-->
+    <attr name="ivpBottomLeftRadius" format="dimension" />
+    <!--右下角圆角大小-->
+    <attr name="ivpBottomRightRadius" format="dimension" />
 
-    <declare-styleable name="ImageViewPlus">  
+    <declare-styleable name="ImageViewPlus">
         <attr name="ivpType" />
         <attr name="ivpBorderColor" />
         <attr name="ivpBorderWidth" />
         <attr name="ivpRadius" />
+        <attr name="ivpTopLeftRadius" />
+        <attr name="ivpTopRightRadius" />
+        <attr name="ivpBottomLeftRadius" />
+        <attr name="ivpBottomRightRadius" />
     </declare-styleable>
-</resources>  
+</resources>
