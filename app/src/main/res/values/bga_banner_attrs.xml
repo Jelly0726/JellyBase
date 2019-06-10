@@ -2,6 +2,12 @@
 <resources>
 
     <declare-styleable name="BGABanner">
+        <!-- 指示点容器的宽 -->
+        <attr name="banner_pointContainerWidth" >
+            <flag name="full_parent" value="0xffffffff"/>
+            <flag name="match_parent" value="0xffffffff"/>
+            <flag name="wrap_content" value="0xfffffffe"/>
+        </attr>
         <!-- 指示点容器背景 -->
         <attr name="banner_pointContainerBackground" format="reference|color"/>
         <!-- 指示点背景 -->
@@ -12,6 +18,8 @@
         <attr name="banner_pointTopBottomMargin" format="dimension"/>
         <!-- 指示点左右外间距 -->
         <attr name="banner_pointLeftRightMargin" format="dimension"/>
+        <!-- 指示点容器与边缘的间距根据指示器的位置设置 -->
+        <attr name="banner_pointContainerLeftRightMargin" format="dimension"/>
         <!-- 指示器的位置 -->
         <attr name="banner_indicatorGravity">
             <flag name="top" value="0x30"/>

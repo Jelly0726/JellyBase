@@ -50,8 +50,10 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private int mAutoPlayInterval = 3000;
     private int mPageChangeDuration = 800;
     private int mPointGravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+    private int mPointContainerWidth = RMP;
     private int mPointLeftRightMargin;
     private int mPointTopBottomMargin;
+    private int mPointContainerLeftRightMargin;
     private int mPointContainerLeftRightPadding;
     private int mTipTextSize;
     private int mTipTextColor = Color.WHITE;
@@ -81,7 +83,6 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private GuideDelegate mGuideDelegate;
     private int mContentBottomMargin;
     private boolean mIsFirstInvisible = true;
-
     public void onDestroy(){
         stopAutoPlay();
         removeAllViewsInLayout();
@@ -137,6 +138,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
 
         mPointLeftRightMargin = BGABannerUtil.dp2px(context, 3);
         mPointTopBottomMargin = BGABannerUtil.dp2px(context, 6);
+        mPointContainerLeftRightMargin = BGABannerUtil.dp2px(context, 6);
         mPointContainerLeftRightPadding = BGABannerUtil.dp2px(context, 10);
         mTipTextSize = BGABannerUtil.sp2px(context, 10);
         mPointContainerBackgroundDrawable = new ColorDrawable(Color.parseColor("#44aaaaaa"));
@@ -166,8 +168,12 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             mPointContainerLeftRightPadding = typedArray.getDimensionPixelSize(attr, mPointContainerLeftRightPadding);
         } else if (attr == R.styleable.BGABanner_banner_pointTopBottomMargin) {
             mPointTopBottomMargin = typedArray.getDimensionPixelSize(attr, mPointTopBottomMargin);
+        } else if (attr == R.styleable.BGABanner_banner_pointContainerLeftRightMargin) {
+            mPointContainerLeftRightMargin = typedArray.getDimensionPixelSize(attr, mPointContainerLeftRightMargin);
         } else if (attr == R.styleable.BGABanner_banner_indicatorGravity) {
             mPointGravity = typedArray.getInt(attr, mPointGravity);
+        } else if (attr == R.styleable.BGABanner_banner_pointContainerWidth) {
+            mPointContainerWidth = typedArray.getInt(attr, mPointContainerWidth);
         } else if (attr == R.styleable.BGABanner_banner_pointAutoPlayAble) {
             mAutoPlayAble = typedArray.getBoolean(attr, mAutoPlayAble);
         } else if (attr == R.styleable.BGABanner_banner_pointAutoPlayInterval) {
@@ -211,12 +217,17 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             pointContainerRl.setBackgroundDrawable(mPointContainerBackgroundDrawable);
         }
         pointContainerRl.setPadding(mPointContainerLeftRightPadding, mPointTopBottomMargin, mPointContainerLeftRightPadding, mPointTopBottomMargin);
-        LayoutParams pointContainerLp = new LayoutParams(RMP, RWC);
+        LayoutParams pointContainerLp = new LayoutParams(mPointContainerWidth, RWC);
         // 处理圆点在顶部还是底部
         if ((mPointGravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.TOP) {
             pointContainerLp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        } else {
+            pointContainerLp.topMargin=mPointContainerLeftRightMargin;
+        } else if((mPointGravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM){
             pointContainerLp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            pointContainerLp.bottomMargin=mPointContainerLeftRightMargin;
+        }
+        if ((mPointGravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.CENTER_HORIZONTAL) {
+            pointContainerLp.addRule(RelativeLayout.CENTER_HORIZONTAL);
         }
         addView(pointContainerRl, pointContainerLp);
 
@@ -935,7 +946,6 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             return POSITION_NONE;
         }
     }
-
     private static class AutoPlayTask implements Runnable {
         private final WeakReference<BGABanner> mBanner;
 
