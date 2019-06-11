@@ -82,7 +82,7 @@ public class ContactsSortAdapter extends RecyclerView.Adapter<ContactsSortAdapte
 			@Override
 			public void onClick(View v) {
 				if (onItemClickListener!=null){
-					onItemClickListener.onItemClick(v,position);
+					onItemClickListener.onItemClick(holder,position);
 				}
 			}
 		});
