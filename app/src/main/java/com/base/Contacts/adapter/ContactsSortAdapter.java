@@ -1,14 +1,16 @@
 package com.base.Contacts.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.base.Contacts.OnItemClickListener;
 import com.base.Contacts.model.SortModel;
 import com.jelly.jellybase.R;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ContactsSortAdapter extends BaseAdapter implements SectionIndexer {
+public class ContactsSortAdapter extends RecyclerView.Adapter<ContactsSortAdapter.ViewHolder> implements SectionIndexer {
 	/**
 	 * 联系人列表
 	 */
@@ -26,7 +28,7 @@ public class ContactsSortAdapter extends BaseAdapter implements SectionIndexer {
 	 */
 	private List<SortModel> mSelectedList;
 	private Context mContext;
-
+	private OnItemClickListener onItemClickListener;
 	public ContactsSortAdapter(Context mContext, List<SortModel> list) {
 		this.mContext = mContext;
 		mSelectedList = new ArrayList<SortModel>();
@@ -49,58 +51,73 @@ public class ContactsSortAdapter extends BaseAdapter implements SectionIndexer {
 		}
 		notifyDataSetChanged();
 	}
-
-	public int getCount() {
-		return this.mList.size();
-	}
-
 	public Object getItem(int position) {
 		return mList.get(position);
+	}
+
+	@NonNull
+	@Override
+	public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+		return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.contacts_item, parent,false));
+	}
+
+	@Override
+	public void onBindViewHolder(@NonNull final ViewHolder holder,final int position) {
+		final SortModel mContent = mList.get(position);
+		//根据position获取分类的首字母的Char ascii值
+		int section = getSectionForPosition(position);
+
+		//如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+		if (position == getPositionForSection(section)) {
+			holder.tvLetter.setVisibility(View.VISIBLE);
+			holder.tvLetter.setText(mContent.sortLetters);
+		} else {
+			holder.tvLetter.setVisibility(View.GONE);
+		}
+
+		holder.tvTitle.setText(this.mList.get(position).name);
+		holder.tvNumber.setText(this.mList.get(position).number);
+		holder.cbChecked.setChecked(isSelected(mContent));
+		holder.itemView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (onItemClickListener!=null){
+					onItemClickListener.onItemClick(v,position);
+				}
+			}
+		});
 	}
 
 	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(final int position, View view, ViewGroup arg2) {
-		ViewHolder viewHolder = null;
-		final SortModel mContent = mList.get(position);
-		if (view == null) {
-			viewHolder = new ViewHolder();
-			view = LayoutInflater.from(mContext).inflate(R.layout.contacts_item, null);
-			viewHolder.tvTitle = (TextView) view.findViewById(R.id.title);
-			viewHolder.tvNumber = (TextView) view.findViewById(R.id.number);
-			viewHolder.tvLetter = (TextView) view.findViewById(R.id.catalog);
-			viewHolder.cbChecked = (CheckBox) view.findViewById(R.id.cbChecked);
-			view.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) view.getTag();
-		}
-
-		//根据position获取分类的首字母的Char ascii值
-		int section = getSectionForPosition(position);
-
-		//如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-		if (position == getPositionForSection(section)) {
-			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-			viewHolder.tvLetter.setText(mContent.sortLetters);
-		} else {
-			viewHolder.tvLetter.setVisibility(View.GONE);
-		}
-
-		viewHolder.tvTitle.setText(this.mList.get(position).name);
-		viewHolder.tvNumber.setText(this.mList.get(position).number);
-		viewHolder.cbChecked.setChecked(isSelected(mContent));
-
-		return view;
-
+	@Override
+	public int getItemCount() {
+		return mList.size();
 	}
 
-	public static class ViewHolder {
+	public OnItemClickListener getOnItemClickListener() {
+		return onItemClickListener;
+	}
+
+	public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+		this.onItemClickListener = onItemClickListener;
+	}
+
+	public static class ViewHolder extends RecyclerView.ViewHolder {
 		public TextView tvLetter;
 		public TextView tvTitle;
 		public TextView tvNumber;
 		public CheckBox cbChecked;
+
+		public ViewHolder(View itemView) {
+			super(itemView);
+			tvTitle = (TextView) itemView.findViewById(R.id.title);
+			tvNumber = (TextView) itemView.findViewById(R.id.number);
+			tvLetter = (TextView) itemView.findViewById(R.id.catalog);
+			cbChecked = (CheckBox) itemView.findViewById(R.id.cbChecked);
+		}
 	}
 
 	/**
@@ -114,7 +131,7 @@ public class ContactsSortAdapter extends BaseAdapter implements SectionIndexer {
 	 * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
 	 */
 	public int getPositionForSection(int section) {
-		for (int i = 0; i < getCount(); i++) {
+		for (int i = 0; i < getItemCount(); i++) {
 			String sortStr = mList.get(i).sortLetters;
 			char firstChar = sortStr.toUpperCase(Locale.CHINESE).charAt(0);
 			if (firstChar == section) {
@@ -145,7 +162,7 @@ public class ContactsSortAdapter extends BaseAdapter implements SectionIndexer {
 		} else {
 			setSelected(position);
 		}
-		
+
 	}
 	/**
 	 * 添加联系人到选择的联系人列表

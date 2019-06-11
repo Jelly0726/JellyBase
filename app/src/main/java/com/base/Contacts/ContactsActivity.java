@@ -5,18 +5,18 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +26,12 @@ import com.base.Contacts.model.SortToken;
 import com.base.Contacts.utils.CharacterParser;
 import com.base.Contacts.utils.PinyinComparator;
 import com.base.Contacts.view.SideBar;
-import com.base.toast.ToastUtils;
+import com.base.applicationUtil.AppUtils;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
+import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,13 +42,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ContactsActivity extends BaseActivity {
+public class ContactsActivity extends BaseActivity implements OnItemClickListener{
 	@BindView(R.id.left_back)
 	LinearLayout left_back;
 	@BindView(R.id.right_text)
 	LinearLayout right_text;
 	@BindView(R.id.lv_contacts)
-	ListView mListView;
+	RecyclerView mRecyclerView;
 	@BindView(R.id.et_search)
 	EditText etSearch;
 	@BindView(R.id.ivClearText)
@@ -63,7 +65,8 @@ public class ContactsActivity extends BaseActivity {
 
 	/** 根据拼音来排列ListView里面的数据类 */
 	private PinyinComparator pinyinComparator;
-
+	protected RecyclerView.LayoutManager mLayoutManager;
+	protected RecyclerView.ItemDecoration mItemDecoration;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -85,7 +88,20 @@ public class ContactsActivity extends BaseActivity {
 		pinyinComparator = new PinyinComparator();
 		Collections.sort(mAllContactsList, pinyinComparator);// 根据a-z进行排序源数据
 		adapter = new ContactsSortAdapter(this, mAllContactsList);
-		mListView.setAdapter(adapter);
+		adapter.setOnItemClickListener(this);
+		mLayoutManager = createLayoutManager();
+		mItemDecoration = createItemDecoration();
+		mRecyclerView.setLayoutManager(mLayoutManager);
+		mRecyclerView.addItemDecoration(mItemDecoration);
+		mRecyclerView.setAdapter(adapter);
+	}
+	protected RecyclerView.LayoutManager createLayoutManager() {
+		return new LinearLayoutManager(this);
+	}
+
+	protected RecyclerView.ItemDecoration createItemDecoration() {
+		return new DefaultItemDecoration(ContextCompat.getColor(this, R.color.transparent),
+				AppUtils.dipTopx(this,1), AppUtils.dipTopx(this,1));
 	}
 	private void initListener() {
 
@@ -125,7 +141,7 @@ public class ContactsActivity extends BaseActivity {
 				} else {
 					adapter.updateListView(mAllContactsList);
 				}
-				mListView.setSelection(0);
+				mRecyclerView.scrollToPosition(0);
 
 			}
 
@@ -139,16 +155,8 @@ public class ContactsActivity extends BaseActivity {
 				//该字母首次出现的位置
 				int position = adapter.getPositionForSection(s.charAt(0));
 				if (position != -1) {
-					mListView.setSelection(position);
+					mRecyclerView.scrollToPosition(position);
 				}
-			}
-		});
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
-				ContactsSortAdapter.ViewHolder viewHolder = (ContactsSortAdapter.ViewHolder) view.getTag();
-				viewHolder.cbChecked.performClick();
-				adapter.toggleChecked(position);
 			}
 		});
 
@@ -360,5 +368,10 @@ public class ContactsActivity extends BaseActivity {
 		}
 		return token;
 	}
-
+	@Override
+	public void onItemClick(View view, int position) {
+		ContactsSortAdapter.ViewHolder viewHolder = (ContactsSortAdapter.ViewHolder) view.getTag();
+		viewHolder.cbChecked.performClick();
+		adapter.toggleChecked(position);
+	}
 }
