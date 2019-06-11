@@ -369,8 +369,8 @@ public class ContactsActivity extends BaseActivity implements OnItemClickListene
 		return token;
 	}
 	@Override
-	public void onItemClick(View view, int position) {
-		ContactsSortAdapter.ViewHolder viewHolder = (ContactsSortAdapter.ViewHolder) view.getTag();
+	public void onItemClick(RecyclerView.ViewHolder view, int position) {
+		ContactsSortAdapter.ViewHolder viewHolder = (ContactsSortAdapter.ViewHolder) view;
 		viewHolder.cbChecked.performClick();
 		adapter.toggleChecked(position);
 	}
