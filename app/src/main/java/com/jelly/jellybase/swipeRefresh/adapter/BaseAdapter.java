@@ -36,14 +36,10 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
         return mInflater;
     }
 
-    public abstract void notifyDataSetChanged(List<Bean> dataList);
+    public abstract void notifyDataSetChanged(List dataList);
 
     public Context getContext() {
         return mContext;
-    }
-
-    public static class Bean{
-
     }
 
 }
