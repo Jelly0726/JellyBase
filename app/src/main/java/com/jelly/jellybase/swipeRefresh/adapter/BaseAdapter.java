@@ -25,10 +25,10 @@ import java.util.List;
  * Created by YanZhenjie on 2017/10/3.
  */
 public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-
     private LayoutInflater mInflater;
-
+    private Context mContext;
     public BaseAdapter(Context context) {
+        mContext=context;
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -36,6 +36,14 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
         return mInflater;
     }
 
-    public abstract void notifyDataSetChanged(List<String> dataList);
+    public abstract void notifyDataSetChanged(List<Bean> dataList);
+
+    public Context getContext() {
+        return mContext;
+    }
+
+    public static class Bean{
+
+    }
 
 }
