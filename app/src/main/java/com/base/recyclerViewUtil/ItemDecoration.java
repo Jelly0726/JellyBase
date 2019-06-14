@@ -41,6 +41,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        outRect.left = this.outRect.left;
+        outRect.right = this.outRect.right;
         outRect.bottom = this.outRect.bottom;
         outRect.top = this.outRect.top;
         if ( parent.getChildAdapterPosition(view)==0||parent.getChildLayoutPosition(view)
@@ -119,8 +121,27 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
                 }
             }
         } else if (parent.getLayoutManager() instanceof LinearLayoutManager){
-            outRect.left = this.outRect.left;
-            outRect.right = this.outRect.right;
+            LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+            final int childPosition = parent.getChildAdapterPosition(view);
+            int orientation=layoutManager.getOrientation();
+            int childCount = parent.getAdapter().getItemCount();
+            if (orientation== LinearLayoutManager.VERTICAL) {
+                if (childPosition+1==childCount){
+                    outRect.top = this.outRect.top;
+                    outRect.bottom=this.outRect.bottom;
+                }else {
+                    outRect.top = this.outRect.top;
+                    outRect.bottom = 0;
+                }
+            }else {
+                if (childPosition+1==childCount){
+                    outRect.left = this.outRect.left;
+                    outRect.right=this.outRect.right;
+                }else {
+                    outRect.left = this.outRect.left;
+                    outRect.right = 0;
+                }
+            }
         }
     }
     private int getOrientation(RecyclerView.LayoutManager layoutManager) {
