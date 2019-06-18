@@ -36,7 +36,7 @@
                     android:layout_weight="1"
                     android:gravity="center|bottom"
                     android:layout_marginBottom="11px"
-                    android:textSize="@dimen/home_gride_title"
+                    android:textSize="@dimen/sp_14"
                     android:text="待确认"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                     android:layout_marginTop="11px"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:textSize="@dimen/home_gride_number"
+                    android:textSize="@dimen/sp_16"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -59,7 +59,7 @@
                     android:layout_weight="1"
                     android:gravity="center|bottom"
                     android:layout_marginBottom="11px"
-                    android:textSize="@dimen/home_gride_title"
+                    android:textSize="@dimen/sp_14"
                     android:text="待付款"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                     android:layout_weight="1"
                     android:gravity="center|top"
                     android:layout_marginTop="11px"
-                    android:textSize="@dimen/home_gride_number"
+                    android:textSize="@dimen/sp_16"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -82,7 +82,7 @@
                     android:layout_weight="1"
                     android:gravity="center|bottom"
                     android:layout_marginBottom="11px"
-                    android:textSize="@dimen/home_gride_title"
+                    android:textSize="@dimen/sp_14"
                     android:text="待发货"/>
 
                 <TextView
@@ -93,7 +93,7 @@
                     android:gravity="center|top"
                     android:layout_marginTop="11px"
                     android:text="10"
-                    android:textSize="@dimen/home_gride_number" />
+                    android:textSize="@dimen/sp_16" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
