@@ -182,12 +182,12 @@ class HostLayout extends RelativeLayout implements Bar {
     public Bar fitsStatusBarView(View view) {
         ViewParent fitParent = view.getParent();
         if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
-            FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
+            FitWindowLayout fitLayout = new FitWindowLayout(mActivity.getApplicationContext());
             ViewGroup fitGroup = (ViewGroup) fitParent;
             fitGroup.removeView(view);
             fitGroup.addView(fitLayout);
 
-            StatusView statusView = new StatusView(mActivity);
+            StatusView statusView = new StatusView(mActivity.getApplicationContext());
             fitLayout.addView(statusView);
 
             ViewGroup.LayoutParams fitViewParams = view.getLayoutParams();
@@ -205,7 +205,7 @@ class HostLayout extends RelativeLayout implements Bar {
     public Bar fitsNavigationBarView(View view) {
         ViewParent fitParent = view.getParent();
         if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
-            FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
+            FitWindowLayout fitLayout = new FitWindowLayout(mActivity.getApplicationContext());
             ViewGroup fitGroup = (ViewGroup) fitParent;
             fitGroup.removeView(view);
             fitGroup.addView(fitLayout);
@@ -213,7 +213,7 @@ class HostLayout extends RelativeLayout implements Bar {
             ViewGroup.LayoutParams fitViewParams = view.getLayoutParams();
             fitLayout.addView(view, fitViewParams.width, fitViewParams.height);
 
-            NavigationView navigationView = new NavigationView(mActivity) {
+            NavigationView navigationView = new NavigationView(mActivity.getApplicationContext()) {
                 @Override
                 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                     if (isLandscape()) {
