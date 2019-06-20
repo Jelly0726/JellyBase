@@ -35,8 +35,8 @@ import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.log.DebugLog;
+import com.base.sofia.Sofia;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

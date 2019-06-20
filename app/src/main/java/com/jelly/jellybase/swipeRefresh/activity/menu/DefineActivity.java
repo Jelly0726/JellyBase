@@ -75,7 +75,7 @@ public class DefineActivity extends BaseActivity {
         }
 
         @Override
-        public void notifyDataSetChanged(List<String> dataList) {
+        public void notifyDataSetChanged(List dataList) {
         }
 
         @Override

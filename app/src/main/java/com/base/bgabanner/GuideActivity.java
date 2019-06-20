@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.base.sofia.Sofia;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.List;

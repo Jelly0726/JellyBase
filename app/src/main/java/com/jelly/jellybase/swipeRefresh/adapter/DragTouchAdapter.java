@@ -44,7 +44,7 @@ public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
     }
 
     @Override
-    public void notifyDataSetChanged(List<String> dataList) {
+    public void notifyDataSetChanged(List dataList) {
         this.mDataList = dataList;
         super.notifyDataSetChanged();
     }

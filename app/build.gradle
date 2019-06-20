@@ -337,9 +337,6 @@ repositories {
 ////        exclude group:'com.android.support'
 //        }
 
-        //SystemBar一体化，状态栏
-        compile 'com.yanzhenjie:sofia:1.0.5'
-
         //ProgressDialog
         compile 'com.github.maning0303:MNProgressHUD:V1.0.2'
 

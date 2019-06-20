@@ -16,6 +16,7 @@ import com.base.eventBus.NetEvent;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
+import com.base.sofia.Sofia;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
@@ -26,7 +27,6 @@ import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.fragment.ProductDetailsFragment;
 import com.jelly.jellybase.fragment.ProductEvaluateFragment;
 import com.jelly.jellybase.fragment.ProductParameterFragment;
-import com.yanzhenjie.sofia.Sofia;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

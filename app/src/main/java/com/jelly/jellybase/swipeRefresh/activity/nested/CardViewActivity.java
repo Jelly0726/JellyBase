@@ -63,7 +63,7 @@ public class CardViewActivity extends BaseActivity {
         }
 
         @Override
-        public void notifyDataSetChanged(List<String> dataList) {
+        public void notifyDataSetChanged(List dataList) {
             this.mDataList = dataList;
             super.notifyDataSetChanged();
         }
