@@ -89,28 +89,28 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
                 if(mAlbumFiles==null){
-                    ((ImageViewHolder) holder).setData(R.mipmap.wyhdxj);
+                    ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((ImageViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((ImageViewHolder) holder).setData(R.mipmap.wyhdxj);
+                        ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
                     }
                 }
                 break;
             }
             case AlbumFile.TYPE_VIDEO: {
                 if(mAlbumFiles==null){
-                    ((VideoViewHolder) holder).setData(R.mipmap.wyhdxj);
+                    ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((VideoViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((VideoViewHolder) holder).setData(R.mipmap.wyhdxj);
+                        ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
                     }
                 }
                 break;
