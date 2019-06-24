@@ -98,6 +98,7 @@
                     app:HorizontalProgresTextColor="#f44c4c"
                     app:HorizontalProgresReachHeight="15dp"
                     app:HorizontalProgresUnReachHeight="15dp"
+                    app:HorizontalProgressTextGravity="top"
                     android:layout_width="130dp"
                     android:layout_height="15dp"/>
             </LinearLayout>

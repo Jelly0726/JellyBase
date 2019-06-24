@@ -10,8 +10,20 @@
     <attr name="HorizontalProgresTextSize" format="dimension"></attr>
     <attr name="HorizontalProgresTextOffset" format="dimension"></attr>
     <attr name="HorizontalProgressRadius" format="dimension"></attr>
-
-
+    <!--左上角圆角大小-->
+    <attr name="HorizontalProgressTopLeftRadius" format="dimension" />
+    <!--右上角圆角大小-->
+    <attr name="HorizontalProgressTopRightRadius" format="dimension" />
+    <!--左下角圆角大小-->
+    <attr name="HorizontalProgressBottomLeftRadius" format="dimension" />
+    <!--右下角圆角大小-->
+    <attr name="HorizontalProgressBottomRightRadius" format="dimension" />
+    <!-- 文字的位置 -->
+    <attr name="HorizontalProgressTextGravity">
+        <flag name="top" value="0x30"/>
+        <flag name="bottom" value="0x50"/>
+        <flag name="center_horizontal" value="0x01"/>
+    </attr>
     <declare-styleable name="CustomHorizontalProgresStyle">
         <attr name="HorizontalProgresUnReachColor" ></attr>
         <attr name="HorizontalProgresUnReachHeight" ></attr>
@@ -21,6 +33,11 @@
         <attr name="HorizontalProgresTextSize" ></attr>
         <attr name="HorizontalProgresTextOffset"></attr>
         <attr name="HorizontalProgressRadius"></attr>
+        <attr name="HorizontalProgressTopLeftRadius" />
+        <attr name="HorizontalProgressTopRightRadius" />
+        <attr name="HorizontalProgressBottomLeftRadius" />
+        <attr name="HorizontalProgressBottomRightRadius" />
+        <attr name="HorizontalProgressTextGravity" />
         <attr name="ProgressLeftText" format="string"></attr>
         <attr name="ProgressRightText" format="string"></attr>
         <attr name="ProgressMiddleText" format="string"></attr>

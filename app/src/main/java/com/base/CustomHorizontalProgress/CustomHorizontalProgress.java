@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.widget.ProgressBar;
 
 import com.jelly.jellybase.R;
@@ -41,8 +43,10 @@ public class CustomHorizontalProgress extends ProgressBar{
     protected int HorizontalProgresTextColor;
     protected int HorizontalProgresTextSize;
     protected int HorizontalProgresTextOffset;
-    private int HorizontalProgressRadius=0;//进度条的圆角
-
+    private int mPointGravity = Gravity.CENTER_HORIZONTAL;//文本位置
+    /*圆角的半径，依次为左上角xy半径，右上角，右下角，左下角*/
+    //此处可根据自己需要修改大小
+    private float[] mRadiusArray =null;
     public int getHorizontalProgresUnReachColor() {
         return HorizontalProgresUnReachColor;
     }
@@ -124,7 +128,33 @@ public class CustomHorizontalProgress extends ProgressBar{
         HorizontalProgresTextColor = typedArray.getColor(R.styleable.CustomHorizontalProgresStyle_HorizontalProgresTextColor,DEAFUALT_PROGRESS_TEXT_CORLOR);
         HorizontalProgresTextSize = (int) typedArray.getDimension(R.styleable.CustomHorizontalProgresStyle_HorizontalProgresTextSize,sp2px(getContext(),DEAFUALT_PROGRESS_TEXT_SIZE));
         HorizontalProgresTextOffset = (int) typedArray.getDimension(R.styleable.CustomHorizontalProgresStyle_HorizontalProgresTextOffset,DEAFUALT_PROGRESS_TEXT_OFFSET);
-        HorizontalProgressRadius = (int) typedArray.getDimension(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressRadius,0);
+        float mRadius = typedArray.getDimensionPixelSize(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressRadius, 0);
+        if (mRadius>0){
+            mRadiusArray = new float[]{
+                    mRadius,
+                    mRadius,
+                    mRadius,
+                    mRadius,
+                    mRadius,
+                    mRadius,
+                    mRadius,
+                    mRadius};
+        }else {
+            float mTopLeftRadius = typedArray.getDimensionPixelSize(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressTopLeftRadius,0);
+            float mTopRightRadius = typedArray.getDimensionPixelSize(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressTopRightRadius,0);
+            float mBottomLeftRadius = typedArray.getDimensionPixelSize(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressBottomLeftRadius,0);
+            float mBottomRightRadius = typedArray.getDimensionPixelSize(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressBottomRightRadius,0);
+            mRadiusArray = new float[]{
+                    mTopLeftRadius,
+                    mTopLeftRadius,
+                    mTopRightRadius,
+                    mTopRightRadius,
+                    mBottomLeftRadius,
+                    mBottomLeftRadius,
+                    mBottomRightRadius,
+                    mBottomRightRadius};
+        }
+        mPointGravity = typedArray.getInt(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressTextGravity, mPointGravity);
         leftText=typedArray.getString(R.styleable.CustomHorizontalProgresStyle_ProgressLeftText);
         if (TextUtils.isEmpty(leftText)){
             leftText="";
@@ -161,25 +191,50 @@ public class CustomHorizontalProgress extends ProgressBar{
         float radio = getProgress()*1.0f/getMax();
         float realWidth = getWidth() - getPaddingLeft() - getPaddingRight()  ;//实际宽度
         float progressO  = radio * realWidth ;
-        float progressX  = radio * (realWidth-HorizontalProgressRadius*3) ;
+        float progressX  = radio * (realWidth-0*3) ;
         //绘制未做走完的进度
         if (progressO  <
                 getWidth() - getPaddingLeft() - getPaddingRight()){//进度走完了,不再画未走完的
+            float[] bitmapRadius={
+                    0.0f,
+                    0.0f,
+                    mRadiusArray[2],
+                    mRadiusArray[3],
+                    mRadiusArray[4],
+                    mRadiusArray[5],
+                    0.0f,
+                    0.0f,
+            };
             mPaint.setColor(HorizontalProgresUnReachColor);
             mPaint.setStrokeWidth(HorizontalProgresUnReachHeight);
             RectF mRectF2 = new RectF(progressX,
                     getPaddingTop()-HorizontalProgresUnReachHeight/2,
                     realWidth,HorizontalProgresUnReachHeight/2);//圆角 int left, int top, int right, int bottom
-            canvas.drawRoundRect(mRectF2,HorizontalProgressRadius,HorizontalProgressRadius,mPaint);//圆角矩形
+//            canvas.drawRoundRect(mRectF2,HorizontalProgressRadius,HorizontalProgressRadius,mPaint);//圆角矩形
+            Path mBitmapPath = new Path();
+            mBitmapPath.addRoundRect(mRectF2, bitmapRadius, Path.Direction.CW);
+            canvas.drawPath(mBitmapPath,mPaint);
             //progressO  = radio * (realWidth+HorizontalProgressRadius);
         }
+        float[] bitmapRadius={
+                mRadiusArray[0],
+                mRadiusArray[1],
+                0.0f,
+                0.0f,
+                0.0f,
+                0.0f,
+                mRadiusArray[6],
+                mRadiusArray[7],
+        };
         //绘制走完的进度线
         mPaint.setColor(HorizontalProgresReachColor);
         mPaint.setStrokeWidth(HorizontalProgresReachHeight);
         RectF mRectF = new RectF(getPaddingLeft(),getPaddingTop()-HorizontalProgresReachHeight/2,
                 (int)progressO,HorizontalProgresReachHeight/2);//圆角 int left, int top, int right, int bottom
-        canvas.drawRoundRect(mRectF,HorizontalProgressRadius,HorizontalProgressRadius,mPaint);//圆角矩形
-
+//        canvas.drawRoundRect(mRectF,HorizontalProgressRadius,HorizontalProgressRadius,mPaint);//圆角矩形
+        Path mBitmapPath = new Path();
+        mBitmapPath.addRoundRect(mRectF, bitmapRadius, Path.Direction.CW);
+        canvas.drawPath(mBitmapPath,mPaint);
         //绘制文字
         mPaint.setColor(HorizontalProgresTextColor);
         mPaint.setTextSize(HorizontalProgresTextSize);
@@ -196,8 +251,16 @@ public class CustomHorizontalProgress extends ProgressBar{
         canvas.drawText(rightText,realWidth-rightTextWidth-dp2px(getContext(),5)
                 ,getPaddingTop() + y,mPaint);
         int followTextWidth = (int) mPaint.measureText(followText);//The width of the text
-        canvas.drawText(followText,(int)progressO-followTextWidth-dp2px(getContext(),5)
-                ,getPaddingTop() + y,mPaint);
+        if (mPointGravity == Gravity.CENTER_HORIZONTAL) {
+            canvas.drawText(followText, (int) progressO - followTextWidth - dp2px(getContext(), 5)
+                    , getPaddingTop() + y, mPaint);
+        }else if (mPointGravity == Gravity.TOP) {
+            canvas.drawText(followText, (int) progressO
+                    ,-(HorizontalProgresTextSize/2), mPaint);
+        }else if (mPointGravity == Gravity.BOTTOM) {
+            canvas.drawText(followText, (int) progressO
+                    ,getPaddingTop() +y+getPaddingBottom()+HorizontalProgresTextSize, mPaint);
+        }
         canvas.restore();
     }
 
