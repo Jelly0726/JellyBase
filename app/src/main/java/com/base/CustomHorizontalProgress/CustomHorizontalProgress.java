@@ -43,7 +43,8 @@ public class CustomHorizontalProgress extends ProgressBar{
     protected int HorizontalProgresTextColor;
     protected int HorizontalProgresTextSize;
     protected int HorizontalProgresTextOffset;
-    private int mPointGravity = Gravity.CENTER_HORIZONTAL;//文本位置
+    private int mTextGravity = Gravity.CENTER;//文本位置
+    private int mProgresGravity = Gravity.TOP;//进度条位置
     /*圆角的半径，依次为左上角xy半径，右上角，右下角，左下角*/
     //此处可根据自己需要修改大小
     private float[] mRadiusArray =null;
@@ -154,7 +155,8 @@ public class CustomHorizontalProgress extends ProgressBar{
                     mBottomRightRadius,
                     mBottomRightRadius};
         }
-        mPointGravity = typedArray.getInt(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressTextGravity, mPointGravity);
+        mTextGravity = typedArray.getInt(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressTextGravity, mTextGravity);
+        mProgresGravity = typedArray.getInt(R.styleable.CustomHorizontalProgresStyle_HorizontalProgressGravity, mProgresGravity);
         leftText=typedArray.getString(R.styleable.CustomHorizontalProgresStyle_ProgressLeftText);
         if (TextUtils.isEmpty(leftText)){
             leftText="";
@@ -187,7 +189,13 @@ public class CustomHorizontalProgress extends ProgressBar{
         super.onDraw(canvas);
 
         canvas.save();//save、restore 图层的保存和回滚相关的方法 详见 http://blog.csdn.net/tianjian4592/article/details/45234419
-        canvas.translate(0,getHeight()/2);//移动图层到垂直居中位置
+        if (mProgresGravity==Gravity.CENTER){
+            canvas.translate(0,getHeight()/2);//移动图层到垂直居中位置
+        }else if (mProgresGravity==Gravity.TOP){
+            canvas.translate(0,HorizontalProgresReachHeight/2);
+        }else if (mProgresGravity==Gravity.BOTTOM){
+            canvas.translate(0,getHeight()-HorizontalProgresReachHeight/2);
+        }
         float radio = getProgress()*1.0f/getMax();
         float realWidth = getWidth() - getPaddingLeft() - getPaddingRight()  ;//实际宽度
         float progressO  = radio * realWidth ;
@@ -251,13 +259,13 @@ public class CustomHorizontalProgress extends ProgressBar{
         canvas.drawText(rightText,realWidth-rightTextWidth-dp2px(getContext(),5)
                 ,getPaddingTop() + y,mPaint);
         int followTextWidth = (int) mPaint.measureText(followText);//The width of the text
-        if (mPointGravity == Gravity.CENTER_HORIZONTAL) {
+        if (mTextGravity == Gravity.CENTER) {
             canvas.drawText(followText, (int) progressO - followTextWidth - dp2px(getContext(), 5)
                     , getPaddingTop() + y, mPaint);
-        }else if (mPointGravity == Gravity.TOP) {
+        }else if (mTextGravity == Gravity.TOP) {
             canvas.drawText(followText, (int) progressO
                     ,-(HorizontalProgresTextSize/2), mPaint);
-        }else if (mPointGravity == Gravity.BOTTOM) {
+        }else if (mTextGravity == Gravity.BOTTOM) {
             canvas.drawText(followText, (int) progressO
                     ,getPaddingTop() +y+getPaddingBottom()+HorizontalProgresTextSize, mPaint);
         }
