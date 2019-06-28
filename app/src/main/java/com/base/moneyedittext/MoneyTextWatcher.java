@@ -69,6 +69,14 @@ public class MoneyTextWatcher implements TextWatcher {
                     return;
                 }
             }
+            //如果已经包含"."，则不能再输入"."
+            if (s.toString().substring(s.toString().indexOf(".")+1,s.length()).contains(".")){
+                s= s.toString().substring(0,s.toString().indexOf(".")+1)
+                        +(s.toString().substring(s.toString().indexOf(".")+1,s.length()).replace(".", ""));
+                editText.setText(s);
+                editText.setSelection(s.length()); //光标移到最后
+                return;
+            }
         }else {
             //如果小数限制为0则输入".",则无法后续输入
             //删除“.”后面超过2位后的数据
