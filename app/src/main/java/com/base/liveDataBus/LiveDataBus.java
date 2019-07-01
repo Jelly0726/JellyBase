@@ -39,14 +39,14 @@ public void onChanged(@Nullable String s) {
  LiveDataBus.get().with("key_test").setValue(s);
 
   混淆
- -dontwarn com.jeremyliao.liveeventbus.**
- -keep class com.jeremyliao.liveeventbus.** { ; }
+ -dontwarn com.base.liveDataBus.**
+ -keep class com.base.liveDataBus.** { ; }
  -keep class android.arch.lifecycle.* { ; }
  -keep class android.arch.core.* { *; }
 
  for androidx:
- -dontwarn com.jeremyliao.liveeventbus.**
- -keep class com.jeremyliao.liveeventbus.** { ; }
+ -dontwarn com.base.liveDataBus.**
+ -keep class com.base.liveDataBus.** { ; }
  -keep class androidx.lifecycle.* { ; }
  -keep class androidx.arch.core.* { *; }
  */

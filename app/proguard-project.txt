@@ -508,6 +508,17 @@ public void xxxxxx(**);
 }
 #=======================GalleryRecyclerView====================
 -dontwarn com.ryan.baselib.util.**
+#======================= liveeventbus:=======================
+ -dontwarn com.base.liveDataBus.**
+ -keep class com.base.liveDataBus.** { ; }
+ -keep class android.arch.lifecycle.* { ; }
+ -keep class android.arch.core.* { *; }
+
+#======================= for androidx:=======================
+ -dontwarn com.base.liveDataBus.**
+ -keep class com.base.liveDataBus.** { ; }
+ -keep class androidx.lifecycle.* { ; }
+ -keep class androidx.arch.core.* { *; }
 #---------------------腾讯自动更新----------------------
 -dontwarn com.tencent.**
 -keep class com.tencent.beaconselfupdate.** {*;}
