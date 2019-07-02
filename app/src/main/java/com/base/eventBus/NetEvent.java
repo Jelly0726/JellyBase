@@ -15,8 +15,9 @@ public class NetEvent<T> implements Parcelable {
     private Integer tag;
     private Integer arg;
     private Integer arg0;
-    public void setEventType(String eventType) {
+    public NetEvent setEventType(String eventType) {
         EventType = eventType;
+        return this;
     }
     public String getEventType(){
         if(event!=null){
