@@ -13,7 +13,7 @@ import com.base.circledialog.res.values.CircleDimen;
  */
 public class InputParams implements Parcelable {
     private static final int[] MARGINS = {50, 20, 50, 40};
-    private static final int[] PADDING = {50, 20, 50, 40};
+    private static final int[] PADDING = {0, 0, 0, 0};
     public static final int INPUT_TEXT=0;//输入文本
     public static final int INPUT_MONEY=1;//输入金额
     /**
