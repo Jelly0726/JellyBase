@@ -28,47 +28,53 @@ public class NetEvent<T> implements Parcelable {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public NetEvent setStatus(Integer status) {
         this.status = status;
+        return this;
     }
 
     public T getEvent() {
         return (T)event;
     }
 
-    public void setEvent(Object event) {
+    public NetEvent setEvent(Object event) {
         this.event = event;
+        return this;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
+    public NetEvent setMsg(String msg) {
         this.msg = msg;
+        return this;
     }
     public Integer getTag() {
         return tag;
     }
 
-    public void setTag(Integer tag) {
+    public NetEvent setTag(Integer tag) {
         this.tag = tag;
+        return this;
     }
 
     public Integer getArg() {
         return arg;
     }
 
-    public void setArg(Integer arg) {
+    public NetEvent setArg(Integer arg) {
         this.arg = arg;
+        return this;
     }
 
     public Integer getArg0() {
         return arg0;
     }
 
-    public void setArg0(Integer arg0) {
+    public NetEvent setArg0(Integer arg0) {
         this.arg0 = arg0;
+        return this;
     }
 
     public NetEvent() {
