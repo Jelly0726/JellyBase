@@ -76,6 +76,7 @@ android {
         imageView.setImageDrawable(drawableCompat);
         drawableCompat.start();
         * */
+        resConfig 'en'
     }
     signingConfigs {
         release {
