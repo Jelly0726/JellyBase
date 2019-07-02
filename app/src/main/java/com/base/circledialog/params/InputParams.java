@@ -13,12 +13,17 @@ import com.base.circledialog.res.values.CircleDimen;
  */
 public class InputParams implements Parcelable {
     private static final int[] MARGINS = {50, 20, 50, 40};
+    private static final int[] PADDING = {50, 20, 50, 40};
     public static final int INPUT_TEXT=0;//输入文本
     public static final int INPUT_MONEY=1;//输入金额
     /**
      * 输入框与body视图的距离
      */
     public int[] margins = MARGINS;
+    /**
+     *  输入框内边距
+     */
+    public int[] paddings = PADDING;
     /**
      * 输入框的高度
      */
@@ -83,6 +88,7 @@ public class InputParams implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeIntArray(this.margins);
+        dest.writeIntArray(this.paddings);
         dest.writeInt(this.inputHeight);
         dest.writeString(this.hintText);
         dest.writeInt(this.hintTextColor);
@@ -100,6 +106,7 @@ public class InputParams implements Parcelable {
 
     protected InputParams(Parcel in) {
         this.margins = in.createIntArray();
+        this.paddings = in.createIntArray();
         this.inputHeight = in.readInt();
         this.hintText = in.readString();
         this.hintTextColor = in.readInt();

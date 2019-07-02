@@ -82,6 +82,8 @@ class BodyInputView extends ScaleLinearLayout {
         mEditText.setHeight(inputParams.inputHeight);
         mEditText.setText(inputParams.text);
         mEditText.setSelection(inputParams.text.length());
+        int[] paddings=inputParams.paddings;
+        mEditText.setPadding(paddings[0],paddings[1],paddings[2],paddings[3]);
         if (inputParams.type==InputParams.INPUT_MONEY){
             mEditText.setFilters(new InputFilter[]{new MoneyValueFilter().setDigits(inputParams.digits)});
         }
