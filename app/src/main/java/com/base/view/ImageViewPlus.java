@@ -116,10 +116,10 @@ public class ImageViewPlus extends AppCompatImageView {
 					mTopLeftRadius,
 					mTopRightRadius,
 					mTopRightRadius,
-					mBottomLeftRadius,
-					mBottomLeftRadius,
 					mBottomRightRadius,
-					mBottomRightRadius};
+					mBottomRightRadius,
+					mBottomLeftRadius,
+					mBottomLeftRadius};
 		}
 		ta.recycle();
 	}
