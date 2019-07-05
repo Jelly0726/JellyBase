@@ -513,7 +513,9 @@ public void xxxxxx(**);
  -keep class com.base.liveDataBus.** { ; }
  -keep class android.arch.lifecycle.* { ; }
  -keep class android.arch.core.* { *; }
-
+#======================= 自定义toast:=======================
+ -dontwarn com.base.toast.**
+ -keep class com.base.toast.** { ; }
 #======================= for androidx:=======================
  -dontwarn com.base.liveDataBus.**
  -keep class com.base.liveDataBus.** { ; }
