@@ -1,32 +1,54 @@
 package com.base.toast;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.jelly.jellybase.R;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+import static android.os.Build.VERSION_CODES.KITKAT;
 
 /**
- * Created by Administrator on 2017/2/16.
+ * 核心toast类
+ *
+ * @author lin
  */
 
 public class ToastUtils {
+    private static final int NOTIFICATION_UNKNOWN = -1;
+    private static final int NOTIFICATION_DISABLED = 0;
+    private static final int NOTIFICATION_ENABLED = 1;
+    private static int sNotificationStatus = NOTIFICATION_UNKNOWN;
+
+    public static final int UNIVERSAL = 0;
+    public static final int EMPHASIZE = 1;
+    public static final int CLICKABLE = 2;
+
+    public static final int LENGTH_LONG = Toast.LENGTH_LONG;
+    public static final int LENGTH_SHORT = Toast.LENGTH_SHORT;
+
+    @IntDef({UNIVERSAL, EMPHASIZE, CLICKABLE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {
+    }
+
+    @IntDef({LENGTH_LONG, LENGTH_SHORT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Duration {
+    }
     /**
      * 默认Toast样式
      * @param context
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable String msg){
-        Toast.makeText(context.getApplicationContext(),msg,
-                Toast.LENGTH_SHORT).show();
+        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
     }
     /**
      * 默认Toast样式
@@ -34,8 +56,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable int msg){
-        Toast.makeText(context.getApplicationContext(),msg,
-                Toast.LENGTH_SHORT).show();
+        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
     }
 
     /**
@@ -44,10 +65,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable String msg){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
     }
     /**
      * 屏幕居中显示Toast
@@ -55,10 +73,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable int msg){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -66,10 +81,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable String msg){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg,  Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        makeText(context.getApplicationContext(),msg, LENGTH_SHORT,EMPHASIZE).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -77,88 +89,49 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable int msg){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        makeText(context.getApplicationContext(),msg, LENGTH_SHORT,EMPHASIZE).show();
     }
-    /**
-     * 屏幕居中显示带图片的Toast
-     * @param context
-     * @param msg
-     * @param icon
-     */
-    public static void showIconToast(@Nullable Context context, @Nullable String msg, @Nullable int icon){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        LinearLayout toastView = (LinearLayout) toast.getView();
-        ImageView imageCodeProject = new ImageView(context.getApplicationContext());
-        imageCodeProject.setImageResource(icon);
-        toastView.addView(imageCodeProject, 0);
-        toast.show();
+    public static IToast makeText(@NonNull Context context, @NonNull int text) {
+        return makeText(context, context.getString(text), LENGTH_SHORT, UNIVERSAL);
     }
-    /**
-     * 屏幕居中显示带图片的Toast
-     * @param context
-     * @param msg
-     * @param icon
-     */
-    public static void showIconToast(@Nullable Context context, @Nullable int msg, @Nullable int icon){
-        Toast toast = Toast.makeText(context.getApplicationContext(),
-                msg, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        LinearLayout toastView = (LinearLayout) toast.getView();
-        ImageView imageCodeProject = new ImageView(context.getApplicationContext());
-        imageCodeProject.setImageResource(icon);
-        toastView.addView(imageCodeProject, 0);
-        toast.show();
+    public static IToast makeText(@NonNull Context context, @NonNull String text) {
+        return makeText(context,text, LENGTH_SHORT, UNIVERSAL);
+    }
+    public static IToast makeText(@NonNull Context context, @NonNull int text, @Duration int duration, @Type int
+            type) {
+        return makeText(context, context.getString(text), duration, type);
+    }
+    public static IToast makeText(@NonNull Context context, @NonNull int text, @Duration int duration) {
+        return makeText(context, context.getString(text), duration, UNIVERSAL);
+    }
+    public static IToast makeText(@NonNull Context context, @NonNull String text, @Duration int duration) {
+        return makeText(context, text, duration, UNIVERSAL);
     }
 
-    /**
-     * 屏幕居中显示自定义布局toast
-     * @param activity
-     * @param msg
-     * @param titless
-     * @param icon
-     */
-    public static void showIconToast(@Nullable Activity activity, @Nullable String msg
-            , @Nullable String titless, @Nullable int icon){
-        LayoutInflater inflater =activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.toast, null);
-        ImageView image = (ImageView) view.findViewById(R.id.image);
-        TextView title = (TextView) view.findViewById(R.id.title);
-        TextView content = (TextView) view.findViewById(R.id.content);
-        image.setBackgroundResource(icon);
-        title.setText(titless);
-        content.setText(msg);
-        Toast toast = new Toast(activity.getApplicationContext());
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(view);
-        toast.show();
+    public static IToast makeText(@NonNull Context context, @NonNull String text, @Duration int duration, @Type int
+            type) {
+        // 允许通知权限,并且不需要点击则用系统toast
+        // 没有通知权限或者是可点击的toast则使用自定义toast
+        if (notificationEnabled(context) && type != CLICKABLE) {
+            Log.d("TAG", sNotificationStatus + ":SystemToast");
+            return SystemToast.makeText(context, text, duration, type);
+        } else {
+            Log.d("TAG", sNotificationStatus + ":CustomToast");
+            return CustomToast.makeText(context, text, duration, type);
+        }
     }
-    /**
-     * 屏幕居中显示自定义布局toast
-     * @param activity
-     * @param msg
-     * @param titless
-     * @param icon
-     */
-    public static void showIconToast(@Nullable Activity activity, @Nullable int msg
-            , @Nullable int titless, @Nullable int icon){
-        LayoutInflater inflater =activity.getLayoutInflater();
-        View view = inflater.inflate(R.layout.toast, null);
-        ImageView image = (ImageView) view.findViewById(R.id.image);
-        TextView title = (TextView) view.findViewById(R.id.title);
-        TextView content = (TextView) view.findViewById(R.id.content);
-        image.setBackgroundResource(icon);
-        title.setText(titless);
-        content.setText(msg);
-        Toast toast = new Toast(activity.getApplicationContext());
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(view);
-        toast.show();
+
+    private static boolean notificationEnabled(Context context) {
+        // 5.0以下采用自定义toast
+        if (sNotificationStatus == NOTIFICATION_UNKNOWN) {
+            if (Build.VERSION.SDK_INT >= KITKAT) {
+                sNotificationStatus = NotificationManagerCompat.from(context).areNotificationsEnabled() ?
+                        NOTIFICATION_ENABLED : NOTIFICATION_DISABLED;
+            } else {
+                sNotificationStatus = NOTIFICATION_DISABLED;
+            }
+        }
+        return sNotificationStatus == NOTIFICATION_ENABLED;
     }
 }
+

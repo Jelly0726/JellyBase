@@ -20,16 +20,19 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.toast.UniversalToast.Duration;
-import com.base.toast.UniversalToast.Type;
+import com.base.toast.ToastUtils.Duration;
+import com.base.toast.ToastUtils.Type;
+import com.base.view.ImageViewPlus;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
 
 import java.lang.reflect.Field;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static android.os.Build.VERSION_CODES.N;
-import static com.base.toast.UniversalToast.EMPHASIZE;
-import static com.base.toast.UniversalToast.UNIVERSAL;
+import static com.base.toast.ToastUtils.EMPHASIZE;
+import static com.base.toast.ToastUtils.UNIVERSAL;
 
 /**
  * 系统toast
@@ -38,13 +41,13 @@ import static com.base.toast.UniversalToast.UNIVERSAL;
  */
 
 public class SystemToast implements IToast {
-    private static final String TAG = "UniversalToast";
+    private static final String TAG = "ToastUtils";
     private static final int NO_LEFT_ICON = 0;
     @NonNull
     private final Toast mToast;
     @NonNull
     private final Context mContext;
-    @UniversalToast.Type
+    @ToastUtils.Type
     private final int mType;
     @DrawableRes
     private int mLeftIconRes = NO_LEFT_ICON;
@@ -63,7 +66,7 @@ public class SystemToast implements IToast {
     }
 
     public static SystemToast makeText(@NonNull Context context, @NonNull String text, @Duration int
-            duration, @UniversalToast.Type int type) {
+            duration, @ToastUtils.Type int type) {
         Toast toast = Toast.makeText(context, text, duration);
         int layoutId = R.layout.toast_universal;
         if (type == EMPHASIZE) {
@@ -176,18 +179,19 @@ public class SystemToast implements IToast {
 
     @Override
     public void show() {
-//        SimpleDraweeView draweeView = mToast.getView().findViewById(R.id.icon);
-//        if (mLeftGifUri != null) {
-//            DraweeController draweeController = Fresco.newDraweeControllerBuilder()
-//                    .setAutoPlayAnimations(true) // 自动播放动画
-//                    .setUri(mLeftGifUri)
-//                    .build();
-//            draweeView.setController(draweeController);
-//            draweeView.setVisibility(View.VISIBLE);
-//        } else if (mLeftIconRes != NO_LEFT_ICON) {
-//            draweeView.setActualImageResource(mLeftIconRes);
-//            draweeView.setVisibility(View.VISIBLE);
-//        }
+        ImageViewPlus draweeView = mToast.getView().findViewById(R.id.icon);
+        if (mLeftGifUri != null) {
+            Glide.with(mContext)
+                    .load(mLeftGifUri)
+                    .asGif()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .centerCrop()
+                    .into(draweeView);
+            draweeView.setVisibility(View.VISIBLE);
+        } else if (mLeftIconRes != NO_LEFT_ICON) {
+            draweeView.setImageResource(mLeftIconRes);
+            draweeView.setVisibility(View.VISIBLE);
+        }
         mToast.show();
     }
 

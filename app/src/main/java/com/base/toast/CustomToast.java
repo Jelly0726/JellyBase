@@ -26,15 +26,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.UniversalToast.Duration;
-import com.base.toast.UniversalToast.Type;
+import com.base.toast.ToastUtils.Duration;
+import com.base.toast.ToastUtils.Type;
+import com.base.view.ImageViewPlus;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
 
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
-import static com.base.toast.UniversalToast.CLICKABLE;
-import static com.base.toast.UniversalToast.EMPHASIZE;
-import static com.base.toast.UniversalToast.UNIVERSAL;
+import static com.base.toast.ToastUtils.CLICKABLE;
+import static com.base.toast.ToastUtils.EMPHASIZE;
+import static com.base.toast.ToastUtils.UNIVERSAL;
 
 /**
  * 自定义window实现的toast，无notification权限或者是点击类型时强制采用这种
@@ -43,7 +46,7 @@ import static com.base.toast.UniversalToast.UNIVERSAL;
  */
 
 public class CustomToast implements IToast {
-    private static final String TAG = "UniversalToast";
+    private static final String TAG = "ToastUtils";
     private static final int NO_LEFT_ICON = 0;
     private static final int TIME_LONG = 3500;
     private static final int TIME_SHORT = 2000;
@@ -57,7 +60,7 @@ public class CustomToast implements IToast {
     private Runnable mShowRunnable;
     private Runnable mCancelRunnable;
     private View.OnClickListener mListener = null;
-    @UniversalToast.Type
+    @ToastUtils.Type
     private final int mType;
     @DrawableRes
     private int mLeftIconRes = NO_LEFT_ICON;
@@ -83,7 +86,7 @@ public class CustomToast implements IToast {
         mContext = context;
         mView = LayoutInflater.from(context).inflate(layoutId, null);
         ((TextView) mView.findViewById(R.id.text)).setText(text);
-        mDuration = (duration == UniversalToast.LENGTH_LONG ? TIME_LONG : TIME_SHORT);
+        mDuration = (duration == ToastUtils.LENGTH_LONG ? TIME_LONG : TIME_SHORT);
         mParams = new WindowManager.LayoutParams();
         mParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -120,9 +123,9 @@ public class CustomToast implements IToast {
 
     @Override
     public IToast setDuration(@Duration int duration) {
-        if (duration == UniversalToast.LENGTH_SHORT) {
+        if (duration == ToastUtils.LENGTH_SHORT) {
             mDuration = TIME_SHORT;
-        } else if (duration == UniversalToast.LENGTH_LONG) {
+        } else if (duration == ToastUtils.LENGTH_LONG) {
             mDuration = TIME_LONG;
         } else {
             mDuration = duration;
@@ -213,18 +216,19 @@ public class CustomToast implements IToast {
                 if (mView != null && mView.getParent() instanceof ViewGroup) {
                     ((ViewGroup) mView.getParent()).removeView(mView);
                 }
-//                SimpleDraweeView draweeView = mView.findViewById(R.id.icon);
-//                if (mLeftGifUri != null) {
-//                    DraweeController draweeController = Fresco.newDraweeControllerBuilder()
-//                            .setAutoPlayAnimations(true) // 自动播放动画
-//                            .setUri(mLeftGifUri)
-//                            .build();
-//                    draweeView.setController(draweeController);
-//                    draweeView.setVisibility(View.VISIBLE);
-//                } else if (mLeftIconRes != NO_LEFT_ICON) {
-//                    draweeView.setActualImageResource(mLeftIconRes);
-//                    draweeView.setVisibility(View.VISIBLE);
-//                }
+                ImageViewPlus draweeView = mView.findViewById(R.id.icon);
+                if (mLeftGifUri != null) {
+                    Glide.with(mContext)
+                            .load(mLeftGifUri)
+                            .asGif()
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .centerCrop()
+                            .into(draweeView);
+                    draweeView.setVisibility(View.VISIBLE);
+                } else if (mLeftIconRes != NO_LEFT_ICON) {
+                    draweeView.setImageResource(mLeftIconRes);
+                    draweeView.setVisibility(View.VISIBLE);
+                }
                 mWindowManager.addView(mView, mParams);
                 Log.d(TAG, "addView");
                 sHandler.postDelayed(mCancelRunnable, mDuration);

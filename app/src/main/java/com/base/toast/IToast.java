@@ -22,7 +22,7 @@ public interface IToast {
      * @param duration 显示时长
      * @return IToast
      */
-    IToast setDuration(@UniversalToast.Duration int duration);
+    IToast setDuration(@ToastUtils.Duration int duration);
 
     /**
      * 设置icon
