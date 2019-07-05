@@ -29,11 +29,12 @@ public class ToastUtils {
     public static final int UNIVERSAL = 0;
     public static final int EMPHASIZE = 1;
     public static final int CLICKABLE = 2;
+    public static final int CUSTOM = 3;
 
     public static final int LENGTH_LONG = Toast.LENGTH_LONG;
     public static final int LENGTH_SHORT = Toast.LENGTH_SHORT;
 
-    @IntDef({UNIVERSAL, EMPHASIZE, CLICKABLE})
+    @IntDef({UNIVERSAL, EMPHASIZE, CLICKABLE,CUSTOM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
     }
@@ -48,7 +49,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable String msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
     }
     /**
      * 默认Toast样式
@@ -56,7 +57,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable int msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
     }
 
     /**
@@ -65,7 +66,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable String msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
     }
     /**
      * 屏幕居中显示Toast
@@ -73,7 +74,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable int msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_LONG,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -81,7 +82,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable String msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_SHORT,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_SHORT,CUSTOM).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -89,7 +90,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable int msg){
-        makeText(context.getApplicationContext(),msg, LENGTH_SHORT,EMPHASIZE).show();
+        makeText(context,msg, LENGTH_SHORT,CUSTOM).show();
     }
     public static IToast makeText(@NonNull Context context, @NonNull int text) {
         return makeText(context, context.getString(text), LENGTH_SHORT, UNIVERSAL);
@@ -97,7 +98,7 @@ public class ToastUtils {
     public static IToast makeText(@NonNull Context context, @NonNull String text) {
         return makeText(context,text, LENGTH_SHORT, UNIVERSAL);
     }
-    public static IToast makeText(@NonNull Context context, @NonNull int text, @Duration int duration, @Type int
+    public static IToast makeText(@NonNull Context context, @NonNull int text, @Duration int duration,@Type int
             type) {
         return makeText(context, context.getString(text), duration, type);
     }
@@ -112,7 +113,7 @@ public class ToastUtils {
             type) {
         // 允许通知权限,并且不需要点击则用系统toast
         // 没有通知权限或者是可点击的toast则使用自定义toast
-        if (notificationEnabled(context) && type != CLICKABLE) {
+        if (notificationEnabled(context) && type != CLICKABLE && type!=CUSTOM) {
             Log.d("TAG", sNotificationStatus + ":SystemToast");
             return SystemToast.makeText(context, text, duration, type);
         } else {
