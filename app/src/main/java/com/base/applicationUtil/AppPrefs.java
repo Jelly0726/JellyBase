@@ -8,6 +8,8 @@ import com.base.encrypt.SafetyUtil;
 
 import net.grandcentrix.tray.TrayPreferences;
 
+import java.util.List;
+
 
 /**
  * Created by Administrator on 2017/1/24.
@@ -184,6 +186,23 @@ public class AppPrefs {
         }else {
             json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
             Object object= JSON.parseObject(json, cc);
+            return object;
+        }
+    }
+    /**
+     * 返回指定对象
+     * @param context
+     * @param key
+     * @param cc
+     * @return
+     */
+    public static <T> List<T> getArray(Context context, String key, Class<T> cc){
+        String json=getString(context,key);
+        if (StringUtil.isEmpty(json)){
+            return null;
+        }else {
+            json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
+            List<T> object= JSON.parseArray(json, cc);
             return object;
         }
     }
