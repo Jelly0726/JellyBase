@@ -2,204 +2,217 @@ package com.base.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 自定义流式布局
+ */
 public class FlowLayout extends ViewGroup {
 
-    public FlowLayout(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    private List<List<View>> views; // 存放所有子元素（一行一行存储）
+    private List<View> lineViews; // 存储每一行中的子元素
+    private List<Integer> heights; // 存储每一行的高度
+
+    private boolean scrollable; // 是否可以滚动
+    private int measuredHeight; // 测量得到的高度
+    private int realHeight; // 整个流式布局控件的实际高度
+    private int scrolledHeight = 0; // 已经滚动过的高度
+    private int startY; // 本次滑动开始的Y坐标位置
+    private int offsetY; // 本次滑动的偏移量
+    private boolean pointerDown; // 在ACTION_MOVE中，视第一次触发为手指按下，从第二次触发开始计入正式滑动
+
+    public FlowLayout(Context context) {
+        super(context);
     }
 
     public FlowLayout(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
-    public FlowLayout(Context context) {
-        this(context, null);
+    public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
-//    /**
-//     * 与当前ViewGroup对应的LayoutParams
-//     */
-//    @Override
-//    public LayoutParams generateLayoutParams(AttributeSet attrs) {
-//        return new MarginLayoutParams(getContext(), attrs);
-//    }
+
+    /**
+     * 初始化
+     */
+    private void init() {
+        views = new ArrayList<>();
+        lineViews = new ArrayList<>();
+        heights = new ArrayList<>();
+    }
+
+    /**
+     * 计算布局中所有子元素的宽度和高度，累加得到整个布局最终显示的宽度和高度
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int modeWidth = MeasureSpec.getMode(widthMeasureSpec);
-        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
-        int modeHeight = MeasureSpec.getMode(heightMeasureSpec);
-
-        // 如果是warp_content情况下，记录宽和高
-        int width = 0;
-        int height = 0;
-
-        // 记录每一行的宽度与高度
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        // 当前行的宽度和高度（宽度是子元素宽度的和，高度是子元素高度的最大值）
         int lineWidth = 0;
         int lineHeight = 0;
-
-        // 得到内部元素的个数
-        int cCount = getChildCount();
-
-        for (int i = 0; i < cCount; i++) {
-            // 通过索引拿到每一个子view
-            View child = getChildAt(i);
-            // 测量子View的宽和高,系统提供的measureChild
+        // 整个流式布局最终显示的宽度和高度
+        int flowLayoutWidth = 0;
+        int flowLayoutHeight = 0;
+        // 初始化各种参数（列表）
+        init();
+        // 遍历所有子元素，对子元素进行排列
+        int childCount = this.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = this.getChildAt(i);
+            // 获取到子元素的宽度和高度
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
-            // 得到LayoutParams
-            MarginLayoutParams lp = (MarginLayoutParams) child
-                    .getLayoutParams();
-
-            // 子View占据的宽度
-            int childWidth = child.getMeasuredWidth() + lp.leftMargin
-                    + lp.rightMargin;
-            // 子View占据的高度
-            int childHeight = child.getMeasuredHeight() + lp.topMargin
-                    + lp.bottomMargin;
-
-            // 换行 判断 当前的宽度大于 开辟新行
-            if (lineWidth + childWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {
-                // 对比得到最大的宽度
-                width = Math.max(width, lineWidth);
-                // 重置lineWidth
-                lineWidth = childWidth;
-                // 记录行高
-                height += lineHeight;
-                lineHeight = childHeight;
-            } else
-            // 未换行
-            {
-                // 叠加行宽
-                lineWidth += childWidth;
-                // 得到当前行最大的高度
-                lineHeight = Math.max(lineHeight, childHeight);
-            }
-            // 特殊情况,最后一个控件
-            if (i == cCount - 1) {
-                width = Math.max(lineWidth, width);
-                height += lineHeight;
-            }
-        }
-        setMeasuredDimension(
-                modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width + getPaddingLeft() + getPaddingRight(),
-                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height + getPaddingTop() + getPaddingBottom()//
-        );
-
-    }
-
-    /**
-     * 存储所有的View
-     */
-    private List<List<View>> mAllViews = new ArrayList<List<View>>();
-    /**
-     * 每一行的高度
-     */
-    private List<Integer> mLineHeight = new ArrayList<Integer>();
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        mAllViews.clear();
-        mLineHeight.clear();
-
-        // 当前ViewGroup的宽度
-        int width = getWidth();
-
-        int lineWidth = 0;
-        int lineHeight = 0;
-
-        // 存放每一行的子view
-        List<View> lineViews = new ArrayList<View>();
-
-        int cCount = getChildCount();
-
-        for (int i = 0; i < cCount; i++) {
-            View child = getChildAt(i);
-            MarginLayoutParams lp = (MarginLayoutParams) child
-                    .getLayoutParams();
-
             int childWidth = child.getMeasuredWidth();
             int childHeight = child.getMeasuredHeight();
-
-            // 如果需要换行
-            if (childWidth + lineWidth + lp.leftMargin + lp.rightMargin > width - getPaddingLeft() - getPaddingRight()) {
-                // 记录LineHeight
-                mLineHeight.add(lineHeight);
-                // 记录当前行的Views
-                mAllViews.add(lineViews);
-
-                // 重置我们的行宽和行高
+            MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+            // 如果当前行中剩余的空间不足以容纳下一个子元素，则换行
+            // 换行的同时，保存当前行中的所有元素，叠加行高，然后将行宽和行高重置为0
+            if (lineWidth + childWidth + lp.leftMargin + lp.rightMargin > widthSize - getPaddingLeft() - getPaddingRight()) {
+                views.add(lineViews);
+                lineViews = new ArrayList<>();
+                flowLayoutWidth = Math.max(flowLayoutWidth, lineWidth); // 以最宽的行的宽度作为最终布局的宽度
+                flowLayoutHeight += lineHeight;
+                heights.add(lineHeight);
                 lineWidth = 0;
-                lineHeight = childHeight + lp.topMargin + lp.bottomMargin;
-                // 重置我们的View集合
-                lineViews = new ArrayList<View>();
+                lineHeight = 0;
             }
-            lineWidth += childWidth + lp.leftMargin + lp.rightMargin;
-            lineHeight = Math.max(lineHeight, childHeight + lp.topMargin
-                    + lp.bottomMargin);
+            // 无论换不换行，都需要将元素添加到列表中、处理宽度和高度的值
             lineViews.add(child);
+            lineWidth += childWidth + lp.leftMargin + lp.rightMargin;
+            lineHeight = Math.max(lineHeight, childHeight + lp.topMargin + lp.bottomMargin);
+            // 处理最后一行，否则最后一行不能显示
+            if (i == childCount - 1) {
+                flowLayoutHeight += lineHeight;
+                flowLayoutWidth = Math.max(flowLayoutWidth, lineWidth);
+                heights.add(lineHeight);
+                views.add(lineViews);
+            }
+        }
+        // 得到最终的宽高
+        // 宽度：如果是EXACTLY模式，则遵循测量值，否则使用我们计算得到的宽度值
+        // 高度：只要布局中内容的高度大于测量高度，就使用内容高度（无视测量模式）；否则才使用测量高度
+        int width = widthMode == MeasureSpec.EXACTLY ? widthSize : flowLayoutWidth + getPaddingLeft() + getPaddingRight();
+        realHeight = flowLayoutHeight + getPaddingTop() + getPaddingBottom();
+        if (heightMode == MeasureSpec.EXACTLY) {
+            realHeight = Math.max(measuredHeight, realHeight);
+        }
+        scrollable = realHeight > measuredHeight;
+        // 设置最终的宽高
+        setMeasuredDimension(width, realHeight);
+    }
 
-        }// for end
-        // 处理最后一行
-        mLineHeight.add(lineHeight);
-        mAllViews.add(lineViews);
-
-        // 设置子View的位置
-
-        int left = getPaddingLeft();
-        int top = getPaddingTop();
-
-        // 行数
-        int lineNum = mAllViews.size();
-
-        for (int i = 0; i < lineNum; i++) {
-            // 当前行的所有的View
-            lineViews = mAllViews.get(i);
-            lineHeight = mLineHeight.get(i);
-
+    /**
+     * 对所有子元素进行布局
+     */
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        // 当前子元素应该布局到的X、Y坐标
+        int currentX = getPaddingLeft();
+        int currentY = getPaddingTop();
+        // 遍历所有子元素，对每个子元素进行布局
+        // 遍历每一行
+        for (int i = 0; i < views.size(); i++) {
+            int lineHeight = heights.get(i);
+            List<View> lineViews = views.get(i);
+            // 遍历当前行中的每一个子元素
             for (int j = 0; j < lineViews.size(); j++) {
                 View child = lineViews.get(j);
-                // 判断child的状态
-                if (child.getVisibility() == View.GONE) {
-                    continue;
-                }
-
-                MarginLayoutParams lp = (MarginLayoutParams) child
-                        .getLayoutParams();
-
-                int lc = left + lp.leftMargin;
-                int tc = top + lp.topMargin;
-                int rc = lc + child.getMeasuredWidth();
-                int bc = tc + child.getMeasuredHeight();
-
-                // 为子View进行布局
-                child.layout(lc, tc, rc, bc);
-
-                left += child.getMeasuredWidth() + lp.leftMargin
-                        + lp.rightMargin;
+                // 获取到当前子元素的上、下、左、右的margin值
+                MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+                int childL = currentX + lp.leftMargin;
+                int childT = currentY + lp.topMargin;
+                int childR = childL + child.getMeasuredWidth();
+                int childB = childT + child.getMeasuredHeight();
+                // 对当前子元素进行布局
+                child.layout(childL, childT, childR, childB);
+                // 更新下一个元素要布局的X、Y坐标
+                currentX += lp.leftMargin + child.getMeasuredWidth() + lp.rightMargin;
             }
-            left = getPaddingLeft();
-            top += lineHeight;
+            currentY += lineHeight;
+            currentX = getPaddingLeft();
         }
-
     }
+
+    /**
+     * 滚动事件的处理，当布局可以滚动（内容高度大于测量高度）时，对手势操作进行处理
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // 只有当布局可以滚动的时候（内容高度大于测量高度的时候），才会对手势操作进行处理
+        if (scrollable) {
+            int currY = (int) event.getY();
+            switch (event.getAction()) {
+                // 因为ACTION_DOWN手势可能是为了点击布局中的某个子元素，因此在onInterceptTouchEvent()方法中没有拦截这个手势
+                // 因此，在这个事件中不能获取到startY，也因此才将startY的获取移动到第一次滚动的时候进行
+                case MotionEvent.ACTION_DOWN:
+                    break;
+                // 当第一次触发ACTION_MOVE事件时，视为手指按下；以后的ACTION_MOVE事件才视为滚动事件
+                case MotionEvent.ACTION_MOVE:
+                    // 用pointerDown标志位只是手指是否已经按下
+                    if (!pointerDown) {
+                        startY = currY;
+                        pointerDown = true;
+                    } else {
+                        offsetY = startY - currY; // 下滑大于0
+                        // 布局中的内容跟随手指的滚动而滚动
+                        // 用scrolledHeight记录以前的滚动事件中滚动过的高度（因为不一定每一次滚动都是从布局的最顶端开始的）
+                        this.scrollTo(0, scrolledHeight + offsetY);
+                    }
+                    break;
+                // 手指抬起时，更新scrolledHeight的值；
+                // 如果滚动过界（滚动到高于布局最顶端或低于布局最低端的时候），设置滚动回到布局的边界处
+                case MotionEvent.ACTION_UP:
+                    scrolledHeight += offsetY;
+                    if (scrolledHeight + offsetY < 0) {
+                        this.scrollTo(0, 0);
+                        scrolledHeight = 0;
+                    } else if (scrolledHeight + offsetY + measuredHeight > realHeight) {
+                        this.scrollTo(0, realHeight - measuredHeight);
+                        scrolledHeight = realHeight - measuredHeight;
+                    }
+                    // 手指抬起后别忘了重置这个标志位
+                    pointerDown = false;
+                    break;
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * 调用在这个布局中的子元素对象的getLayoutParams()方法，会得到一个MarginLayoutParams对象
+     */
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new MyLayoutParams(getContext(), attrs);
     }
 
+    /**
+     * 事件拦截，当手指按下或抬起的时候不进行拦截（因为可能这个操作只是点击了布局中的某个子元素）；
+     * 当手指移动的时候，才将事件拦截；
+     * 因此，我们在onTouchEvent()方法中，只能将ACTION_MOVE的第一次触发作为手指按下
+     */
     @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams lp) {
-        return new MyLayoutParams(lp);
-    }
-
-    @Override
-    protected LayoutParams generateDefaultLayoutParams() {
-        return new MyLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        boolean intercepted = false;
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                intercepted = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                intercepted = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                intercepted = false;
+                break;
+        }
+        return intercepted;
     }
 
     public static class MyLayoutParams extends MarginLayoutParams {
