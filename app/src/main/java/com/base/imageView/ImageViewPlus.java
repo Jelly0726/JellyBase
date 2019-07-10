@@ -1,4 +1,4 @@
-package com.base.view;
+package com.base.imageView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -23,7 +23,7 @@ import com.jelly.jellybase.R;
 
 
 /**
- *  <com.base.view.ImageViewPlus
+ *  <com.base.imageview.ImageViewPlus
  android:id="@+id/imgplus"
  android:layout_width="200dp"
  android:layout_height="300dp"
