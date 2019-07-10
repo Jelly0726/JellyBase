@@ -49,7 +49,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable String msg){
-        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
     }
     /**
      * 默认Toast样式
@@ -57,7 +57,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void show(@Nullable Context context, @Nullable int msg){
-        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
     }
 
     /**
@@ -66,7 +66,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable String msg){
-        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
     }
     /**
      * 屏幕居中显示Toast
@@ -74,7 +74,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable int msg){
-        makeText(context,msg, LENGTH_LONG,CUSTOM).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -82,7 +82,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable String msg){
-        makeText(context,msg, LENGTH_SHORT,CUSTOM).show();
+        makeText(context,msg, LENGTH_SHORT,UNIVERSAL).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -90,7 +90,7 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable int msg){
-        makeText(context,msg, LENGTH_SHORT,CUSTOM).show();
+        makeText(context,msg, LENGTH_SHORT,UNIVERSAL).show();
     }
     public static IToast makeText(@NonNull Context context, @NonNull int text) {
         return makeText(context, context.getString(text), LENGTH_SHORT, UNIVERSAL);
