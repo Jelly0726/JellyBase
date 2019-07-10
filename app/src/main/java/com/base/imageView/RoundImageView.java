@@ -1,4 +1,4 @@
-package com.base.view;
+package com.base.imageView;
 
 import android.content.Context;
 import android.content.res.TypedArray;

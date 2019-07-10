@@ -120,7 +120,7 @@
                         </LinearLayout>
                     </LinearLayout>
                 </com.base.cardView.AutoCardView>
-                <com.base.view.CircleImageView
+                <com.base.imageView.CircleImageView
                     android:id="@+id/photo"
                     android:layout_width="150px"
                     android:layout_height="150px"

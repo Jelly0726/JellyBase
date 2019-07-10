@@ -1,4 +1,4 @@
-package com.base.CustomHorizontalProgress;
+package com.base.progressBar;
 
 import android.content.Context;
 import android.content.res.TypedArray;

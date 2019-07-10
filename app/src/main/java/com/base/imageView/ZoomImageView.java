@@ -1,20 +1,13 @@
-package com.base.view;
+package com.base.imageView;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
-
-import com.amap.api.navi.view.ZoomInIntersectionView;
-
-import org.w3c.dom.Attr;
 
 /**
  * Created by BYPC006 on 2017/5/4.

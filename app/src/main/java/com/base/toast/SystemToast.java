@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.base.toast.ToastUtils.Duration;
 import com.base.toast.ToastUtils.Type;
-import com.base.view.ImageViewPlus;
+import com.base.imageView.ImageViewPlus;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
