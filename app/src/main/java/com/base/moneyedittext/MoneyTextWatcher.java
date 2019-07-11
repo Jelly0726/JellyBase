@@ -20,6 +20,8 @@ import android.widget.EditText;
 public class MoneyTextWatcher implements TextWatcher {
     private EditText editText;
     private int digits = 2;
+    private double max=-1;
+    private double min=-1;
 
     public MoneyTextWatcher(EditText et) {
         editText = et;
@@ -34,7 +36,16 @@ public class MoneyTextWatcher implements TextWatcher {
         digits = d;
         return this;
     }
-
+    /**
+     * 设置输入数字的范围
+     * @param maxNum 最大数
+     * @param minNum 最小数
+     */
+    public MoneyTextWatcher setRegion(double maxNum, double minNum) {
+        this.max = maxNum;
+        this.min = minNum;
+        return this;
+    }
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -43,6 +54,21 @@ public class MoneyTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (start >= 0) {//从一输入就开始判断，
+            if (min != -1 && max != -1) {
+                try {
+                    int num = Integer.parseInt(s.toString());
+                    //判断当前edittext中的数字(可能一开始Edittext中有数字)是否大于max
+                    if (num > max) {
+                        s = String.valueOf(max);//如果大于max，则内容为max
+                    } else if (num < min) {
+                        s = String.valueOf(min);//如果小于min,则内容为min
+                    }
+                } catch (NumberFormatException e) {
+                }
+                //edittext中的数字在max和min之间，则不做处理，正常显示即可。
+            }
+        }
         if (digits > 0) {
             //删除“.”后面超过2位后的数据
             if (s.toString().contains(".")) {
@@ -69,7 +95,6 @@ public class MoneyTextWatcher implements TextWatcher {
                     return;
                 }
             }
-            //如果已经包含"."，则不能再输入"."
             if (s.toString().substring(s.toString().indexOf(".")+1,s.length()).contains(".")){
                 s= s.toString().substring(0,s.toString().indexOf(".")+1)
                         +(s.toString().substring(s.toString().indexOf(".")+1,s.length()).replace(".", ""));
