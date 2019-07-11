@@ -1,1 +1,1 @@
-include ':app',':ocr_ui',':logreport'
+include ':app',':ocr_ui',':logreport',':form'

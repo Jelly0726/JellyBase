@@ -377,6 +377,7 @@ repositories {
         implementation files('libs/ocr-sdk.jar')
         compile project(path: ':ocr_ui')
         compile project(path: ':logreport')
+        compile project(path: ':form')
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')
         implementation files('libs/commons-io-2.6.jar')
