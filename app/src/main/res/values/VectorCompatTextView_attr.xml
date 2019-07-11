@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VectorCompatTextView">
+        <attr name="drawableLeftCompat" format="reference"/>
+        <attr name="drawableRightCompat" format="reference"/>
+        <attr name="drawableTopCompat" format="reference"/>
+        <attr name="drawableBottomCompat" format="reference"/>
+        <attr name="tintDrawableInTextColor" format="boolean"/>
+        <attr name="drawableCompatColor" format="color|reference"/>
+        <attr name="drawableAdjustTextWidth" format="boolean"/>
+        <attr name="drawableAdjustTextHeight" format="boolean"/>
+        <attr name="drawableAdjustViewWidth" format="boolean"/>
+        <attr name="drawableAdjustViewHeight" format="boolean"/>
+        <attr name="drawableWidth" format="dimension|reference"/>
+        <attr name="drawableHeight" format="dimension|reference"/>
+    </declare-styleable>
+</resources>
