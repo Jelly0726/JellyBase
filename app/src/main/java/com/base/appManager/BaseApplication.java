@@ -1,6 +1,5 @@
 package com.base.appManager;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +34,10 @@ import com.wenming.library.upload.email.EmailReporter;
 import com.wenming.library.upload.http.HttpReporter;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumConfig;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
@@ -120,12 +123,23 @@ public class BaseApplication extends Application {
 
     private String getCurProcessName() {
         int pid = android.os.Process.myPid();
-        ActivityManager mActivityManager = (ActivityManager) getApplicationContext()
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
-                .getRunningAppProcesses()) {
-            if (appProcess.pid == pid) {
-                return appProcess.processName;
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
         return null;
