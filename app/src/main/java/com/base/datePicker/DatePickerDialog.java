@@ -2,6 +2,7 @@ package com.base.datePicker;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -128,11 +129,12 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
         }
     }
     @Override
-    public void dismiss() {
-        super.dismiss();
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         if (onComplete!=null)
             onComplete.onComplete(mYear,mMonth,mDay);
     }
+
 
     @Override
     public void onCalendarOutOfRange(Calendar calendar) {
