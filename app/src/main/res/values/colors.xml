@@ -34,4 +34,8 @@
 
     <color name="disburse">#27a02d</color>
     <color name="income">#ff0101</color>
+    <color name="mainText">#084051</color>
+    <color name="mainText3">#C8D4D5</color>
+    <color name="mainText5">#f57fdc</color>
+    <color name="mainText15">#98caec</color>
 </resources>

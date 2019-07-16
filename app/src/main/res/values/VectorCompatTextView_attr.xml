@@ -11,7 +11,7 @@
         <attr name="drawableAdjustTextHeight" format="boolean"/>
         <attr name="drawableAdjustViewWidth" format="boolean"/>
         <attr name="drawableAdjustViewHeight" format="boolean"/>
-        <attr name="drawableWidth" format="dimension|reference"/>
-        <attr name="drawableHeight" format="dimension|reference"/>
+        <attr name="drawableWidthCompat" format="dimension|reference"/>
+        <attr name="drawableHeightCompat" format="dimension|reference"/>
     </declare-styleable>
 </resources>

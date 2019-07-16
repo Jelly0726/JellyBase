@@ -490,7 +490,22 @@ public static java.lang.String TABLENAME;
  -keepclasseswithmembernames class * {
  @butterknife.* <methods>;
  }
-
+ #=======================日期选择=======================
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context);
+}
+-keep class com.base.datePicker.CustomMonthView {
+    public <init>(android.content.Context);
+}
+-keep class com.base.datePicker.CustomWeekBar {
+    public <init>(android.content.Context);
+}
+-keep class com.base.datePicker.CustomWeekView {
+    public <init>(android.content.Context);
+}
+-keep class com.base.datePicker.CustomYearView {
+    public <init>(android.content.Context);
+}
 #=======================eventbus 3.0=======================
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;

@@ -372,7 +372,7 @@ repositories {
 //        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
 
         implementation files('libs/zxing-core-3.3.1.jar')
-
+        implementation 'com.haibin:calendarview:3.6.4'//日历选择
         //百度文字识别(身份证、银行卡等)
         implementation files('libs/ocr-sdk.jar')
         compile project(path: ':ocr_ui')

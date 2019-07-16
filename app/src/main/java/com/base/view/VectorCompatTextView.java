@@ -95,8 +95,8 @@ public class VectorCompatTextView extends AppCompatCheckedTextView {
             isDrawableAdjustTextHeight = a.getBoolean(R.styleable.VectorCompatTextView_drawableAdjustTextHeight, false);
             isDrawableAdjustViewWidth = a.getBoolean(R.styleable.VectorCompatTextView_drawableAdjustViewWidth, false);
             isDrawableAdjustViewHeight = a.getBoolean(R.styleable.VectorCompatTextView_drawableAdjustViewHeight, false);
-            mDrawableWidth = a.getDimensionPixelSize(R.styleable.VectorCompatTextView_drawableWidth, 0);
-            mDrawableHeight = a.getDimensionPixelSize(R.styleable.VectorCompatTextView_drawableHeight, 0);
+            mDrawableWidth = a.getDimensionPixelSize(R.styleable.VectorCompatTextView_drawableWidthCompat, 0);
+            mDrawableHeight = a.getDimensionPixelSize(R.styleable.VectorCompatTextView_drawableHeightCompat, 0);
             a.recycle();
 
             initDrawables(dl, dt, dr, db);
