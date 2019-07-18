@@ -169,6 +169,7 @@
         <!--↑↑↑↑↑↑↑↑circle_dialog↑↑↑↑↑↑↑↑-->
         <activity android:name="com.base.LauncherActivity"
             android:theme="@style/SplashThemeImage"
+            android:windowSoftInputMode="stateHidden"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

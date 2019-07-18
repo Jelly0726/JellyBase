@@ -45,6 +45,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.base.appManager.BaseApplication;
+import com.base.applicationUtil.AppUtils;
 import com.base.cropper.CropperActivity;
 import com.base.log.DebugLog;
 
@@ -1282,6 +1283,19 @@ public class BitmapUtil {
         canvas.drawBitmap(src, 0, 0, paint);
         if (recycle && !src.isRecycled()) src.recycle();
         return ret;
+    }
+    /**
+     * 设置图片大小
+     * @param src
+     * @param width
+     * @param height
+     * @return
+     */
+    public static Drawable getDrawable(int src,int width,int height){
+        Drawable otherDrawable =BaseApplication.getInstance().getResources().getDrawable(src);
+        otherDrawable.setBounds(0,0, AppUtils.dipTopx(BaseApplication.getInstance(), width)
+                ,AppUtils.dipTopx(BaseApplication.getInstance(), height));//第一0是距左边距离，第二0是距上边距离，30、35分别是长宽
+        return otherDrawable;
     }
     /**
      * 根据文件名判断文件是否为图片

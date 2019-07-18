@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PieChartView">
+        <!--中间文字-->
+        <attr name="pieChartName" format="string"/>
+        <!--中间文字大小dp（默认16dp）-->
+        <attr name="pieChartNameSize" format="dimension"/>
+        <!--中间文字方向（水平or垂直，默认水平）-->
+        <attr name="pieChartNameOrientation" >
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <!--中间文字颜色（默认黑色）-->
+        <attr name="pieChartNameColor" format="color"/>
+        <!--内容文字方向（水平or圆弧方向path，默认圆弧方向）-->
+        <attr name="pieChartTextOrientation">
+            <enum name="horizontal" value="0"/>
+            <enum name="path" value="2"/>
+        </attr>
+        <!--内容文字大小dp（默认16d'p）-->
+        <attr name="pieChartTextSize" format="dimension"/>
+        <!--内容文字颜色（默认黑色）-->
+        <attr name="pieChartTextColor" format="color"/>
+        <!--圆饼宽度（默认是半径的一半）-->
+        <attr name="pieChartWidth" format="dimension"/>
+        <!--最大圆半径（默认是View 宽高最小值的一半）-->
+        <attr name="pieChartRadius" format="dimension"/>
+        <!--中间透明圆宽度（默认是圆饼宽度的0.1）-->
+        <attr name="alphaWidth" format="dimension"/>
+        <!--中间透明圆透明度（0-255）（默认80）-->
+        <attr name="alphaPieTran" format="integer"/>
+        <!--中间透明圆颜色（默认白色）-->
+        <attr name="alphaPieColor" format="color"/>
+        <!--内圆颜色（默认透明）-->
+        <attr name="inCricleColor" format="color"/>
+        <!--是否开启动画（默认开启true）-->
+        <attr name="isAnimation" format="boolean"/>
+        <!--动画持续时间（默认2000）-->
+        <attr name="isTouchFlag" format="boolean"/>
+        <!--是否开启触摸切割效果（默认开启true）-->
+        <attr name="startAngle" format="integer"/>
+        <!--圆饼起始角度（默认0）-->
+        <attr name="segmentAngle" format="float"/>
+        <!--圆饼分割角度（0-0.9）（默认0）-->
+        <attr name="animaDuration" format="integer"/>
+    </declare-styleable>
+</resources>
