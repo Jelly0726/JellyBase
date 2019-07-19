@@ -35,13 +35,13 @@
         <attr name="inCricleColor" format="color"/>
         <!--是否开启动画（默认开启true）-->
         <attr name="isAnimation" format="boolean"/>
-        <!--动画持续时间（默认2000）-->
-        <attr name="isTouchFlag" format="boolean"/>
         <!--是否开启触摸切割效果（默认开启true）-->
-        <attr name="startAngle" format="integer"/>
+        <attr name="isTouchFlag" format="boolean"/>
         <!--圆饼起始角度（默认0）-->
-        <attr name="segmentAngle" format="float"/>
+        <attr name="startAngle" format="integer"/>
         <!--圆饼分割角度（0-0.9）（默认0）-->
+        <attr name="segmentAngle" format="float"/>
+        <!--动画持续时间（默认2000）-->
         <attr name="animaDuration" format="integer"/>
     </declare-styleable>
 </resources>
