@@ -36,9 +36,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.HomeAdapter;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.datamodel.Product;
-import com.jelly.jellybase.mypopupmenu.BaseItem;
-import com.jelly.jellybase.mypopupmenu.TopMiddlePopup;
-import com.jelly.jellybase.mypopupmenu.Util;
+import com.base.mypopupmenu.BaseItem;
+import com.base.mypopupmenu.TopMiddlePopup;
+import com.base.mypopupmenu.Util;
 import com.jelly.jellybase.seach.SearchActivity;
 
 import org.greenrobot.eventbus.EventBus;
