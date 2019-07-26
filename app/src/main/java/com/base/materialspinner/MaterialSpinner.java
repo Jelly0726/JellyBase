@@ -114,7 +114,7 @@ public class MaterialSpinner extends TextView {
       left = resources.getDimensionPixelSize(R.dimen.ms__padding_left);
     }
 
-    //setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+    setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
     setClickable(true);
     setPadding(left, top, right, bottom);
     setBackgroundResource(R.drawable.ms__selector);
