@@ -131,30 +131,37 @@ public class DecimalUtils {
         }
         return new DecimalFormat(formatStr).format(amount);
     }
+
     /**
-     * 数值舍入操作
+     * 数值舍入操作 结果保留两位小数 不足补0
      * @param amount
      * @param type  取BigDecimal里的常量
+     *              BigDecimal.ROUND_UP 向上取整
+     *              BigDecimal.ROUND_DOWN 向下取整
+     *              BigDecimal.ROUND_HALF_UP 四舍五入
+     *              BigDecimal.ROUND_HALF_DOWN 五舍六入
+     * @param num  保留的小数位  当type==BigDecimal.ROUND_DOWN时 1，抹分 0 抹角
      * @return
      */
-    public static String getBigDecimal(double amount,int type){
-        String result="";
+    public static String getBigDecimal(double amount,int type,int num){
+        if (num<0)num=2;
+        double result=0.00;
         BigDecimal bg3 = new BigDecimal(amount);
         switch (type){
             case BigDecimal.ROUND_UP://向上取整
-                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_UP).doubleValue());
+                result=bg3.setScale(num, BigDecimal.ROUND_UP).doubleValue();
                 break;
             case BigDecimal.ROUND_DOWN://向下取整
-                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_DOWN).doubleValue());
+                result=bg3.setScale(num, BigDecimal.ROUND_DOWN).doubleValue();
                 break;
             case BigDecimal.ROUND_HALF_UP://四舍五入
-                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                result=bg3.setScale(num, BigDecimal.ROUND_HALF_UP).doubleValue();
                 break;
             case BigDecimal.ROUND_HALF_DOWN://五舍六入
-                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_HALF_DOWN).doubleValue());
+                result=bg3.setScale(num, BigDecimal.ROUND_HALF_DOWN).doubleValue();
                 break;
         }
-        return result;
+        return getDecimal1(result,2);
     }
     /**
      * 小数点末尾字体变小
@@ -176,5 +183,12 @@ public class DecimalUtils {
         Double d = 554545.4545454;
         String str = nf.format(d);
         return str;
+    }
+    public static void main(String[] args){
+        String str = getBigDecimal(5.24,BigDecimal.ROUND_UP,1);
+        System.out.println(str);
+        str = getBigDecimal(5.25,BigDecimal.ROUND_DOWN,0);
+        System.out.println(str);
+//$554545.4545
     }
 }
