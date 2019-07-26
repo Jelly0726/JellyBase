@@ -1,6 +1,12 @@
 package com.base.Utils;
 
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 /**
  * 金额工具类
@@ -124,5 +130,51 @@ public class DecimalUtils {
             formatStr = formatStr + "0";
         }
         return new DecimalFormat(formatStr).format(amount);
+    }
+    /**
+     * 数值舍入操作
+     * @param amount
+     * @param type  取BigDecimal里的常量
+     * @return
+     */
+    public static String getBigDecimal(double amount,int type){
+        String result="";
+        BigDecimal bg3 = new BigDecimal(amount);
+        switch (type){
+            case BigDecimal.ROUND_UP://向上取整
+                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_UP).doubleValue());
+                break;
+            case BigDecimal.ROUND_DOWN://向下取整
+                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_DOWN).doubleValue());
+                break;
+            case BigDecimal.ROUND_HALF_UP://四舍五入
+                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+                break;
+            case BigDecimal.ROUND_HALF_DOWN://五舍六入
+                result=String.valueOf(bg3.setScale(2, BigDecimal.ROUND_HALF_DOWN).doubleValue());
+                break;
+        }
+        return result;
+    }
+    /**
+     * 小数点末尾字体变小
+     */
+    public static SpannableString changTVsize(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        if (value.contains(".")) {
+            spannableString.setSpan(new RelativeSizeSpan(0.6f),
+                    value.indexOf("."), value.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannableString;
+    }
+    /**
+     * 金钱数字保留4位小数且三位三位的隔开
+     */
+    public static String changFormat(String value) {
+        NumberFormat nf = new DecimalFormat("#,###.####");
+        Double d = 554545.4545454;
+        String str = nf.format(d);
+        return str;
     }
 }
