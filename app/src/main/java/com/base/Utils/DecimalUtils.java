@@ -140,7 +140,7 @@ public class DecimalUtils {
      *              BigDecimal.ROUND_DOWN 向下取整
      *              BigDecimal.ROUND_HALF_UP 四舍五入
      *              BigDecimal.ROUND_HALF_DOWN 五舍六入
-     * @param num  保留的小数位  当type==BigDecimal.ROUND_DOWN时 1，抹分 0 抹角
+     * @param num  保留到第几小数对之后的小数位进行舍入操作  当type==BigDecimal.ROUND_DOWN时 1，抹分 0 抹角
      * @return
      */
     public static String getBigDecimal(double amount,int type,int num){
@@ -185,9 +185,11 @@ public class DecimalUtils {
         return str;
     }
     public static void main(String[] args){
-        String str = getBigDecimal(5.24,BigDecimal.ROUND_UP,1);
+        String str = getBigDecimal(5.24,BigDecimal.ROUND_DOWN,1);
         System.out.println(str);
-        str = getBigDecimal(5.25,BigDecimal.ROUND_DOWN,0);
+        str = getBigDecimal(5.95,BigDecimal.ROUND_DOWN,0);
+        System.out.println(str);
+        str = getBigDecimal(5.49,BigDecimal.ROUND_HALF_UP,0);
         System.out.println(str);
 //$554545.4545
     }
