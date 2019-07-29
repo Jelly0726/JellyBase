@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,12 +37,15 @@ import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.log.DebugLog;
 import com.base.sofia.Sofia;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import cn.jpush.android.api.JPushInterface;
+
+import static com.base.permission.PermissionUtils.REQUEST_CODE_SETTING;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -206,6 +210,16 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         if (circleDialog!=null){
             circleDialog.onDismiss();
             circleDialog=null;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        switch (requestCode) {
+            case REQUEST_CODE_SETTING: {
+                ToastUtils.showShort(this, R.string.message_setting_comeback);
+                break;
+            }
         }
     }
     @Override

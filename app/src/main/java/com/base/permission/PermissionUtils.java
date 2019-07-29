@@ -18,7 +18,6 @@ import com.jelly.jellybase.R;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
-import com.yanzhenjie.permission.Setting;
 
 import java.io.ObjectStreamException;
 import java.util.List;
@@ -140,13 +139,7 @@ public class PermissionUtils {
         AndPermission.with(context)
                 .runtime()
                 .setting()
-                .onComeback(new Setting.Action() {
-                    @Override
-                    public void onAction() {
-                        Toast.makeText(context, R.string.message_setting_comeback, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .start();
+                .start(REQUEST_CODE_SETTING);
     }
     //电池优化白名单
     private AlertDialog alertDialog;
