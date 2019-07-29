@@ -83,7 +83,8 @@ public class LauncherActivity extends BaseActivity{
 				Permission.Group.SMS,//短信
 				new String[]{
 						android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
-						android.Manifest.permission.CALL_PHONE//拨打电话
+						android.Manifest.permission.CALL_PHONE,//拨打电话
+						android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
 				});
 	}
 	@Override
