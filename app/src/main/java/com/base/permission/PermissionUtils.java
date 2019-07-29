@@ -16,8 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-
 import com.base.appManager.BaseApplication;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.permission.Action;
@@ -217,15 +215,17 @@ public class PermissionUtils {
      * @param context
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void requestAlertWindowPermission(Context context) {
-        AppOpsManager appOpsMgr = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-        int mode = appOpsMgr.checkOpNoThrow("android:system_alert_window", android.os.Process.myUid(), context.getPackageName());
-        if (mode ==2){
-            List<String> permissions=new ArrayList<String>();
-            permissions.add("开启悬浮窗");
-            showSettingDialog(context,permissions);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            AppOpsManager appOpsMgr = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            int mode = appOpsMgr.checkOpNoThrow("android:system_alert_window", android.os.Process.myUid(), context.getPackageName());
+            if (mode ==2){
+                List<String> permissions=new ArrayList<String>();
+                permissions.add("开启悬浮窗");
+                showSettingDialog(context,permissions);
+            }
         }
+
     }
     /**
      * 悬浮窗权限
