@@ -163,7 +163,7 @@ public class USBPrinter {
                 }
             }
         } else {
-            ToastUtils.showShort(mContext, "未发现可用的打印机");
+            handler.sendEmptyMessage(0);
 
         }
     }
@@ -179,7 +179,7 @@ public class USBPrinter {
         }
     }
 
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
