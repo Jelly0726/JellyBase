@@ -18,6 +18,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.base.appManager.ExecutorManager;
 import com.base.toast.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -163,20 +164,25 @@ public class USBPrinter {
                 }
             }
         } else {
-            handler.sendEmptyMessage(0);
+            ToastUtils.showShort(mContext, "未发现可用的打印机");
 
         }
     }
 
-    private void write(byte[] bytes) {
-        if (mUsbDeviceConnection != null) {
-            int b = mUsbDeviceConnection.bulkTransfer(printerEp, bytes, bytes.length, TIME_OUT);
-            Log.i("Return Status", "b-->" + b);
-        } else {
-            Looper.prepare();
-            handler.sendEmptyMessage(0);
-            Looper.loop();
-        }
+    private void write(final byte[] bytes) {
+        ExecutorManager.getInstance().getCachedThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (mUsbDeviceConnection != null) {
+                    int b = mUsbDeviceConnection.bulkTransfer(printerEp, bytes, bytes.length, TIME_OUT);
+                    Log.i("Return Status", "b-->" + b);
+                } else {
+                    Looper.prepare();
+                    handler.sendEmptyMessage(0);
+                    Looper.loop();
+                }
+            }
+        });
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
