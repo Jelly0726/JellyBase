@@ -116,12 +116,6 @@
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
     <!--电池优化白名单-->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <!--API level 9只包含有限的tag支持,包括：
-        .通过ACTION_TAG_DISCOVERED来发布Tag信息
-        .只有通过EXTRA_NDEF_MESSAGES扩展来访问NDEF消息
-        .其他的tag属性和I/O操作都不支持
-        所以你可能想要用API level 10来实现对tag的广泛的读写支持。-->
-    <uses-sdk android:minSdkVersion="10"/>
     <!--NFC权限-->
     <uses-permission android:name="android.permission.NFC" />
     <!-- 要求当前设备必须要有NFC芯片 -->
@@ -719,7 +713,7 @@
             <!--<intent-filter>-->
             <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
             <!--</intent-filter>-->
-            <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
+            <!--<uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>-->
         </service>
         <!--↑↑↑↑↑↑↑↑通知栏监听↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
@@ -836,5 +830,4 @@
         </receiver>
         <!--↑↑↑极光推送↑↑↑-->
     </application>
-
 </manifest>

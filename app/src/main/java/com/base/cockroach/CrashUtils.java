@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import com.base.sendEmail.SendMailUtil;
 
 import java.io.ObjectStreamException;
 import java.io.PrintWriter;
@@ -65,7 +64,6 @@ public class CrashUtils {
             String result = writer.toString();
             stringBuffer.append("崩溃信息：").append(result);
             //发送邮箱
-            SendMailUtil.send(stringBuffer.toString());
         }catch (Exception e){
 
         }

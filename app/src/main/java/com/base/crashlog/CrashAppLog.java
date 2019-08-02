@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.base.appManager.ExecutorManager;
-import com.base.sendEmail.SendMailUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -309,7 +308,6 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
     }
 
     private void writerToFile(String s) {
-        SendMailUtil.send(s);
         try {
             /**
              * 创建日志文件名称

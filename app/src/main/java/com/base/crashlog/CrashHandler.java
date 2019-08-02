@@ -6,8 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.SystemClock;
 
-import com.base.sendEmail.SendMailUtil;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -55,7 +53,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             stringBuffer.append("手机型号：").append(Build.MODEL).append("\n");
             stringBuffer.append("崩溃信息：").append(throwable.getMessage());
             //发送邮箱
-            SendMailUtil.send(stringBuffer.toString());
             return true;
         }catch (Exception e){
 

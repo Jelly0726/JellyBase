@@ -488,7 +488,7 @@ public class CreateQRImage
 		cv.drawBitmap( watermark,(w - ww)/2, h - wh+20,null);//在src的下方中间画入水印
 		//save all clip
 		//cv.drawText(watermark,w/2, h-20, null);
-		cv.save( Canvas.ALL_SAVE_FLAG );//保存
+		cv.save();//保存
 		//store
 		cv.restore();//存储
 		return newb;
@@ -570,7 +570,7 @@ public class CreateQRImage
 			//drawBitmap(Bitmap bitmap, float left, float top, Paint paint)
 			//canvas.drawBitmap(logo_cr, (srcWidth - logoWidth) / 2, (srcHeight - logoHeight) / 2, null);
 			canvas.drawBitmap(logo, (srcWidth - logoWidth) / 2,srcHeight, null);
-			canvas.save(Canvas.ALL_SAVE_FLAG);
+			canvas.save();
 			canvas.restore();
 		} catch (Exception e) {
 			bitmap = null;
