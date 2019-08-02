@@ -42,6 +42,7 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import hugo.weaving.DebugLog;
+import me.jessyan.autosize.AutoSizeConfig;
 
 
 /**
@@ -70,6 +71,7 @@ public class BaseApplication extends Application {
 //        initCrashReport();//崩溃后不重启保存崩溃信息，下次启动压缩崩溃信息并发送
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
+        AutoSizeConfig.getInstance().setCustomFragment(true);//屏幕适配
         if (getPackageName().equals(getCurProcessName())) {
             //初始化数据库
             DBManager.getDBManager().init(this);

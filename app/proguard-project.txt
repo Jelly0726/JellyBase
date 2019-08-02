@@ -536,6 +536,9 @@ public void xxxxxx(**);
  -keep class com.base.liveDataBus.** { ; }
  -keep class androidx.lifecycle.* { ; }
  -keep class androidx.arch.core.* { *; }
+#======================= 屏幕适配 =======================
+ -keep class me.jessyan.autosize.** { *; }
+ -keep interface me.jessyan.autosize.** { *; }
 #---------------------腾讯自动更新----------------------
 -dontwarn com.tencent.**
 -keep class com.tencent.beaconselfupdate.** {*;}

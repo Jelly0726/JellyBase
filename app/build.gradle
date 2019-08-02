@@ -383,6 +383,7 @@ repositories {
         implementation files('libs/commons-codec-1.11.jar')
         implementation files('libs/commons-io-2.6.jar')
         implementation files('libs/commons-logging-1.2.jar')
+        implementation 'me.jessyan:autosize:1.1.2'//屏幕适配
 //        implementation files('libs/email-activation.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/email-additionnal.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/email-mail.jar')//logreport里已包含，备份到libss里
