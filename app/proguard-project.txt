@@ -539,6 +539,9 @@ public void xxxxxx(**);
 #======================= 屏幕适配 =======================
  -keep class me.jessyan.autosize.** { *; }
  -keep interface me.jessyan.autosize.** { *; }
+#=======================blurkit====================
+  -keep class io.alterac.blurkit.** { *; }
+  -dontwarn butterknife.internal.**
 #---------------------腾讯自动更新----------------------
 -dontwarn com.tencent.**
 -keep class com.tencent.beaconselfupdate.** {*;}

@@ -1,0 +1,40 @@
+<manifest package="io.alterac.blurkit" />
+<!--
+
+blurkit-android有两种使用方式，使用BlurLayout控件或者直接对View及Bitmap进行高斯模糊。
+
+1、先来看BlurLayout的使用，非常简单。
+  <io.alterac.blurkit.BlurLayout xmlns:blurkit="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/blurLayout"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:layout_centerInParent="true"
+      blurkit:blk_fps="60"//每过1000/fps的时间重新绘制一次BlurLayout，
+      blurkit:blk_alpha="0.5"//透明度
+      blurkit:blk_blurRadius="15"//模糊半径
+      blurkit:blk_cornerRadius="30dp"//BlurLayout的圆角半径
+      blurkit:blk_downscaleFactor="0.12"//缩放大小，是先放大再缩小，所以值太大则有可能OOM
+      >
+2、当然仅在xml文件中定义还不够，还需要在onStart及onStop中开启与暂停
+  @Override
+  protected void onStart() {
+      super.onStart();
+      blurLayout.startBlur();
+      blurLayout.lockView();
+  }
+
+  @Override
+  protected void onStop() {
+      super.onStop();
+      blurLayout.pauseBlur();
+  }
+3、关于直接对View及Bitmap进行高斯模糊的使用就更简单了
+ //进行BlurKit初始化，在Application中初始化
+  BlurKit.init(this);
+  //通过RenderScript进行高斯模糊并返回一个bitmap，iv1可以是一个View，也可以是一个ViewGroup，25是模糊半径
+  Bitmap bt=BlurKit.getInstance().blur(iv1, 25);
+  //通过RenderScript进行高斯模糊并返回一个bitmap，传入的是一个bitmap，25是模糊半径
+  Bitmap bt=BlurKit.getInstance().blur(bitmap, 25);
+  //通过RenderScript进行高斯模糊并返回一个bitmap，iv1可以是一个View，也可以是一个ViewGroup，25是模糊半径，2代表缩放比例，如果值太大可能会出现OOM
+  Bitmap bt=BlurKit.getInstance().fastBlur(iv1,25,2)
+-->
