@@ -14,14 +14,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.base.SystemBar.StatusBarUtil;
 import com.base.appManager.AppSubject;
 import com.base.appManager.BaseApplication;
 import com.base.appManager.Observable;
@@ -36,7 +35,6 @@ import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.log.DebugLog;
-import com.base.sofia.Sofia;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
@@ -55,7 +53,6 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
-    private Toolbar mToolbar;
     static {
         //使你的app使用矢量图support library；
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -106,8 +103,6 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         frameLayout.addView(view);
-        View topBar = getLayoutInflater().inflate(R.layout.toolbar_dark, null);
-        frameLayout.addView(topBar);
         super.setContentView(frameLayout);
         iniBar();
     }
@@ -118,37 +113,20 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     }
     private void iniBar(){
         //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
-        mToolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        mToolbar.setVisibility(View.GONE);
-        Sofia.with(this)
-                // 状态栏深色字体。
-                .statusBarDarkFont()
-                // 状态栏浅色字体。
-                //.statusBarLightFont()
-                // 导航栏背景透明度。
-                //.navigationBarBackgroundAlpha(int alpha)
-                // 状态栏背景。可接受Color、Drawable
-                .statusBarBackground(ContextCompat.getColor(this, R.color.navi_color))
-                // 导航栏背景。可接受Color、Drawable
-                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-                // 内容入侵状态栏。
-                .invasionStatusBar()
-                // 内容入侵导航栏。
-                //.invasionNavigationBar()
-                // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-                .fitsSystemWindowView(mToolbar);
-        setAnyBarAlpha(0);
+        //这里注意下 因为在评论区发现有网友调用setRootViewFitsSystemWindows 里面 winContent.getChildCount()=0 导致代码无法继续
+        //是因为你需要在setContentView之后才可以调用 setRootViewFitsSystemWindows
+        //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
+        StatusBarUtil.setRootViewFitsSystemWindows(this,false);
+        //设置状态栏透明
+        StatusBarUtil.setTranslucentStatus(this);
+        //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
+        //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this,0x55000000);
+        }
         //// ↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑
-    }
-    /**
-     * 设置状态栏透明度
-     * @param alpha
-     */
-    private void setAnyBarAlpha(int alpha) {
-        mToolbar.getBackground().mutate().setAlpha(alpha);
-        Sofia.with(this)
-                .statusBarBackgroundAlpha(alpha);
     }
     private boolean isTranslucentOrFloating() {
         boolean isTranslucentOrFloating = false;

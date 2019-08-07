@@ -1,12 +1,11 @@
 package com.base.bgabanner;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.base.sofia.Sofia;
+import com.base.view.BaseActivity;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GuideActivity extends Activity {
+public class GuideActivity extends BaseActivity {
     private static final String TAG = GuideActivity.class.getSimpleName();
     private BGABanner mBackgroundBanner;
     private BGABanner mForegroundBanner;
@@ -29,25 +28,6 @@ public class GuideActivity extends Activity {
         processLogic();
     }
     private void iniBar(){
-        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
-        Sofia.with(this)
-                // 状态栏深色字体。
-                //.statusBarDarkFont()
-                // 状态栏浅色字体。
-                //.statusBarLightFont()
-                // 导航栏背景透明度。
-                //.navigationBarBackgroundAlpha(int alpha)
-                // 状态栏背景。可接受Color、Drawable
-                //.statusBarBackground(ContextCompat.getColor(this, R.color.navi_color));
-                // 导航栏背景。可接受Color、Drawable
-                //.navigationBarBackground(ContextCompat.getDrawable(getActivity(), R.color.colorNavigation))
-                // 内容入侵状态栏。
-                .invasionStatusBar();
-        // 内容入侵导航栏。
-        //.invasionNavigationBar()
-        // 让某一个View考虑状态栏的高度，显示在适当的位置，可接受viewID、view
-        //.fitsSystemWindowView(mStatusView);
-        //// ↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑
     }
     private void initView() {
         setContentView(R.layout.base_activity_guide);
