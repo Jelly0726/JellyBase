@@ -19,8 +19,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eee"
-    android:fitsSystemWindows="true">
+    android:background="#eee">
 
     <include layout="@layout/xswipe_toolbar_scroll"/>
     <android.support.v4.widget.SwipeRefreshLayout

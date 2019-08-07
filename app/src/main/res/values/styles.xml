@@ -16,8 +16,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/bga_banner_holder</item>
-        <!--沉浸-->
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
     <!--↓↓↓↓↓↓进出动画从下方出进↓↓↓↓↓↓-->
     <style name="Anim_bottom" parent="android:Theme.Light.NoTitleBar">
