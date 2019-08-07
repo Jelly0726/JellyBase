@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.base.SystemBar.StatusBarUtil;
+
 import io.reactivex.annotations.Nullable;
 
 /**
@@ -63,6 +65,7 @@ public abstract class BaseFragment extends Fragment{
         if (rootView == null) {
             return;
         }
+        iniSofia();
         Log.i("SSSS","setUserVisibleHint isFirstVisible====="+isFirstVisible+"  "+this);
         if (isFirstVisible && isVisibleToUser) {
             this.onFragmentFirstVisible();
@@ -209,5 +212,12 @@ public abstract class BaseFragment extends Fragment{
 
     public void setConnected(boolean connected) {
         isConnected = connected;
+    }
+    private void iniSofia(){
+        if (!StatusBarUtil.setStatusBarDarkTheme(getActivity(), true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(getActivity(),0x55000000);
+        }
     }
 }
