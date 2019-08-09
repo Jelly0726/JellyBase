@@ -8,6 +8,17 @@ import android.widget.ScrollView;
 
 /**
  * Created by YH on 2017/10/10.
+ *
+ *
+ *         //优化RecyclerView嵌套卡顿
+ *         holder.mRecyclerView.setHasFixedSize(true);
+ *         holder.mRecyclerView.setNestedScrollingEnabled(false);
+ *         holder.mRecyclerView.setItemViewCacheSize(600);
+ *         RecyclerView.RecycledViewPool recycledViewPool = new
+ *                 RecyclerView.RecycledViewPool();
+ *         holder.mRecyclerView.setRecycledViewPool(recycledViewPool);
+ *
+ *
  */
 
 public class RecyclerScrollView extends ScrollView {
