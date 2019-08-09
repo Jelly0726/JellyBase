@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+
 /**
  * 项目名称：RefreshAndLoad
  * 类描述：对适配器的item布局的装饰
@@ -45,8 +48,14 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         outRect.right = this.outRect.right;
         outRect.bottom = this.outRect.bottom;
         outRect.top = this.outRect.top;
-        if ( parent.getChildAdapterPosition(view)==0||parent.getChildLayoutPosition(view)
-                == parent.getAdapter().getItemCount()-1) {
+        int hCounnt=1;
+        int fCounnt=1;
+        if (parent instanceof SwipeMenuRecyclerView) {
+            hCounnt=((SwipeMenuRecyclerView)parent).getHeaderItemCount();
+            fCounnt=((SwipeMenuRecyclerView)parent).getFooterItemCount();
+        }
+        if ( parent.getChildAdapterPosition(view)<hCounnt||parent.getChildLayoutPosition(view)
+                >= parent.getAdapter().getItemCount()-fCounnt) {
             if(type==NONE){
                 parentLayoutManager(outRect,view,parent,state);
             }else if(type==ALL_HAVE){
@@ -55,13 +64,13 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
                 outRect.top = 0;
                 outRect.bottom=0;
             }else if(type == HEAD || type == FOOT){
-                if (type == HEAD && parent.getChildAdapterPosition(view) == 0) {
+                if (type == HEAD && parent.getChildAdapterPosition(view) <hCounnt) {
                     outRect.left = 0;
                     outRect.right = 0;
                     outRect.top = 0;
                     outRect.bottom=0;
                 }else if (type == FOOT && parent.getChildAdapterPosition(view)
-                        == parent.getAdapter().getItemCount()-1) {
+                        >= parent.getAdapter().getItemCount()-fCounnt) {
                     outRect.left = 0;
                     outRect.right = 0;
                     outRect.top = 0;
