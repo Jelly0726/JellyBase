@@ -37,6 +37,55 @@ import java.util.zip.ZipInputStream;
  */
 
 public class FilesUtil {
+    //常用文件类型格式
+    //*/*
+    public static final String ALL="*/*";
+    //图片格式
+    public static final String IMAGE="image/*";
+    //视频格式
+    public static final String VIDEO="video/*";
+    //音频格式
+    public static final String AUDIO="audio/*";
+    //.apk
+    public static final String APK="application/vnd.android.package-archive";
+    //.txt .c .log .cpp .conf .h .java .prop .rc .sh .xml .htm .html
+    public static final String TEXT="text/*";
+    //.bin
+    public static final String BIN="application/octet-stream";
+    //.class
+    public static final String CLASS="application/octet-stream";
+    //.exe
+    public static final String EXE="application/octet-stream";
+    //.doc .docx .wps
+    public static final String WORD="application/msword;" +
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document;" +
+            "application/vnd.ms-works";
+    //.xls .xlsx
+    public static final String EXCEL="application/vnd.ms-excel;" +
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    //.gtar .gz .tar .tgz .zip
+    public static final String RAR="application/x-gtar;" +
+            "application/x-gzip;" +
+            "application/x-tar;" +
+            "application/x-compressed;" +
+            "application/x-zip-compressed";
+    //.jar
+    public static final String JAR="application/java-archive";
+    //.js
+    public static final String JS="application/x-javascript";
+    //mpc
+    public static final String MPC="application/vnd.mpohun.certificate";
+    //msg
+    public static final String MSG="application/vnd.ms-outlook";
+    //pdf
+    public static final String PDF="application/pdf";
+    //.pps .ppt .pptx
+    public static final String PPT="pplication/vnd.ms-powerpoint;" +
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+    //.rtf
+    public static final String RTF="application/rtf";
+    //.z
+    public static final String Z="application/x-compress";
     private FilesUtil(){
 
     }
