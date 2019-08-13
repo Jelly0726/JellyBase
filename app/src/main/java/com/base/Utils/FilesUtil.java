@@ -12,6 +12,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
+import com.base.appManager.BaseApplication;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -105,7 +107,17 @@ public class FilesUtil {
         }
         return null;
     }
-
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = BaseApplication.getInstance().getContentResolver().query(contentUri, proj, null, null, null);
+        if(null!=cursor&&cursor.moveToFirst()){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+            cursor.close();
+        }
+        return res;
+    }
     /**
      *@author chenzheng_Java
      *保存用户输入的内容到文件
@@ -206,6 +218,7 @@ public class FilesUtil {
         }
         return sb;
     }
+
     /**
      * @author chenzheng_java
      * 读取刚才用户保存的内容
