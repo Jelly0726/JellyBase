@@ -97,6 +97,22 @@ public class FilesUtil {
         return filesUtil;
     }
     /**
+     * 打开文件选择器
+     * @param activity
+     * @param requestCode
+     * @param type
+     */
+    public void selectFile(Activity activity,int requestCode,String type){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //intent.setType("image/*");//选择图片
+        //intent.setType("audio/*"); //选择音频
+        //intent.setType("video/*"); //选择视频 （mp4 3gp 是android支持的视频格式）
+        //intent.setType("video/*;image/*");//同时选择视频和图片
+        intent.setType(type);//
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        activity.startActivityForResult(intent, requestCode);
+    }
+    /**
      * 专为Android4.4设计的从Uri获取文件绝对路径，以前的方法已不好使
      */
     @SuppressLint("NewApi")
