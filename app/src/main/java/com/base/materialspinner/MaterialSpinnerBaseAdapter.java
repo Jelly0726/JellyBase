@@ -20,6 +20,7 @@ package com.base.materialspinner;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
   private final Context context;
   private int selectedIndex;
   private int textColor;
+  private float textSize;
 
   public MaterialSpinnerBaseAdapter(Context context) {
     this.context = context;
@@ -47,6 +49,7 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
       convertView = inflater.inflate(R.layout.ms__list_item, parent, false);
       textView = (TextView) convertView.findViewById(R.id.tv_tinted_spinner);
       textView.setTextColor(textColor);
+      textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,textSize);
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
         Configuration config = context.getResources().getConfiguration();
         if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
@@ -83,6 +86,10 @@ public abstract class MaterialSpinnerBaseAdapter<T> extends BaseAdapter {
 
   public MaterialSpinnerBaseAdapter<T> setTextColor(int textColor) {
     this.textColor = textColor;
+    return this;
+  }
+  public MaterialSpinnerBaseAdapter<T> setTextSize(float textSize) {
+    this.textSize = textSize;
     return this;
   }
 
