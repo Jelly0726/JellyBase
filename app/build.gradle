@@ -385,3 +385,6 @@ repositories {
 
     }
 }
+dependencies {
+    implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
+}
