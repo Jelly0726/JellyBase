@@ -3,11 +3,14 @@ package com.base.httpmvp.retrofitapi.exception;
 
 import android.net.ParseException;
 
+import com.base.log.DebugLog;
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.ConnectException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -82,7 +85,10 @@ public class ApiException extends RuntimeException {
         }else if (throwable instanceof ApiException) {//ApiException
             return throwable.getMessage();
         }else {
-            message = "未知错误("+ERROR.UNKNOWN+"):"+throwable.getMessage();          //未知错误
+            message = "未知错误("+ERROR.UNKNOWN+"):"+throwable;          //未知错误
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            DebugLog.i(sw.toString());
             return message;
         }
     }
