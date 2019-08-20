@@ -29,7 +29,7 @@ import okio.BufferedSink;
 public class BaseInterceptor implements Interceptor {
 
     private Context mContext;
-
+    private RequestBody requestBody;
     public BaseInterceptor(Context context) {
         this.mContext = context;
     }
@@ -37,6 +37,20 @@ public class BaseInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        requestBody = request.body();
+        if (requestBody.contentLength()==0){
+            requestBody=new RequestBody() {
+                @Override
+                public MediaType contentType() {
+                    return MediaType.parse("application/json; charset=UTF-8");
+                }
+
+                @Override
+                public void writeTo(BufferedSink sink) throws IOException {
+
+                }
+            };
+        }
         //网络不可用
         if (!NetworkUtils.isAvailable(mContext)) {
             if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
@@ -54,17 +68,7 @@ public class BaseInterceptor implements Interceptor {
                         //.addHeader("Connection", "close")
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                         .addHeader("Connection", "close")
-                        .post(new RequestBody() {
-                            @Override
-                            public MediaType contentType(){
-                                return MediaType.parse("application/json; charset=UTF-8");
-                            }
-
-                            @Override
-                            public void writeTo(BufferedSink sink) throws IOException {
-
-                            }
-                        })
+                        .post(requestBody)
                         .build();
             }else {
                 //在请求头中加入：强制使用缓存，不访问网络
@@ -72,17 +76,7 @@ public class BaseInterceptor implements Interceptor {
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                         .addHeader("Connection", "close")
-                        .post(new RequestBody() {
-                            @Override
-                            public MediaType contentType(){
-                                return MediaType.parse("application/json; charset=UTF-8");
-                            }
-
-                            @Override
-                            public void writeTo(BufferedSink sink) throws IOException {
-
-                            }
-                        })
+                        .post(requestBody)
                         .build();
             }
             Log.i("sss","no network");
@@ -91,17 +85,7 @@ public class BaseInterceptor implements Interceptor {
             request = request.newBuilder()
                     .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                     .addHeader("Connection", "close")
-                    .post(new RequestBody() {
-                        @Override
-                        public MediaType contentType(){
-                            return MediaType.parse("application/json; charset=UTF-8");
-                        }
-
-                        @Override
-                        public void writeTo(BufferedSink sink) throws IOException {
-
-                        }
-                    })
+                    .post(requestBody)
                     .build();
         }
         Response response = chain.proceed(request);
