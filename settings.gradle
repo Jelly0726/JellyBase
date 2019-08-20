@@ -1,1 +1,1 @@
-include ':app',':ocr_ui',':logreport',':form',':LiveDataBus',':blurkit'
+include ':app',':ocr_ui',':logreport',':form',':LiveDataBus',':blurkit',':WebSocketClient'
