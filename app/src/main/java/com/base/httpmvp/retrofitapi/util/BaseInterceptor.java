@@ -12,8 +12,12 @@ import java.io.IOException;
 
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
+
 /**
  * 注意点
  1.对Response的缓存策略进行修改的拦截器一定要应用于网络拦截器，否则无法缓存数据，因为在Response返回的过程中，
@@ -50,6 +54,17 @@ public class BaseInterceptor implements Interceptor {
                         //.addHeader("Connection", "close")
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                         .addHeader("Connection", "close")
+                        .post(new RequestBody() {
+                            @Override
+                            public MediaType contentType(){
+                                return MediaType.parse("application/json; charset=UTF-8");
+                            }
+
+                            @Override
+                            public void writeTo(BufferedSink sink) throws IOException {
+
+                            }
+                        })
                         .build();
             }else {
                 //在请求头中加入：强制使用缓存，不访问网络
@@ -57,6 +72,17 @@ public class BaseInterceptor implements Interceptor {
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                         .addHeader("Connection", "close")
+                        .post(new RequestBody() {
+                            @Override
+                            public MediaType contentType(){
+                                return MediaType.parse("application/json; charset=UTF-8");
+                            }
+
+                            @Override
+                            public void writeTo(BufferedSink sink) throws IOException {
+
+                            }
+                        })
                         .build();
             }
             Log.i("sss","no network");
@@ -65,6 +91,17 @@ public class BaseInterceptor implements Interceptor {
             request = request.newBuilder()
                     .addHeader("version", AppUtils.getVersionCode(mContext) + "")
                     .addHeader("Connection", "close")
+                    .post(new RequestBody() {
+                        @Override
+                        public MediaType contentType(){
+                            return MediaType.parse("application/json; charset=UTF-8");
+                        }
+
+                        @Override
+                        public void writeTo(BufferedSink sink) throws IOException {
+
+                        }
+                    })
                     .build();
         }
         Response response = chain.proceed(request);
