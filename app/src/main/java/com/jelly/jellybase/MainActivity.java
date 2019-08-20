@@ -714,6 +714,10 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
+                case 45:// websocket
+                    intent=new Intent(BaseApplication.getInstance(), com.yxc.websocketclientdemo.MainActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }

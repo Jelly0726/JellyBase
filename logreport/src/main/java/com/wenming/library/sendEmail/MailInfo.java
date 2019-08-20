@@ -1,4 +1,4 @@
-package com.base.sendEmail;
+package com.wenming.library.sendEmail;
 
 import java.util.Properties;
 

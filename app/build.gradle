@@ -380,12 +380,10 @@ repositories {
         implementation 'me.jessyan:autosize:1.1.2'//屏幕适配
         implementation project(path: ':blurkit')
         implementation project(path: ':WebSocketClient')
-//        implementation files('libs/email-activation.jar')//logreport里已包含，备份到libss里
-//        implementation files('libs/email-additionnal.jar')//logreport里已包含，备份到libss里
-//        implementation files('libs/email-mail.jar')//logreport里已包含，备份到libss里
+//        implementation files('libs/libss/email-activation.jar')//logreport里已包含，备份到libss里
+//        implementation files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
+//        implementation files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里
+        implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
 
     }
-}
-dependencies {
-    implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
 }

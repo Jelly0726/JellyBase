@@ -1,10 +1,12 @@
-package com.base.sendEmail;
+package com.base.emil;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.base.appManager.BaseApplication;
 import com.jelly.jellybase.R;
+import com.wenming.library.sendEmail.MailInfo;
+import com.wenming.library.sendEmail.MailSender;
 
 import java.io.File;
 import java.util.regex.Matcher;

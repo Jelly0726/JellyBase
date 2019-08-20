@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.base.sendEmail.SendMailUtil;
+import com.base.emil.SendMailUtil;
 import com.jelly.jellybase.R;
 
 import java.io.File;
