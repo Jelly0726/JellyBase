@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             unregisterReceiver(chatMessageReceiver);
         chatMessageReceiver=null;
         unbindService(serviceConnection);
+        stopService(new Intent(mContext, JWebSocketClientService.class));
     }
 
     private void findViewById() {
