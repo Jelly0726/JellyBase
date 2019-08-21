@@ -3,12 +3,12 @@ package com.base.sqldao;
 import android.content.Context;
 import android.text.TextUtils;
 
-import org.apache.commons.beanutils.ConvertUtilsBean;
+import com.base.Utils.StringUtil;
+import com.base.applicationUtil.AppUtils;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import systemdb.DaoSession;
@@ -96,88 +96,12 @@ public class LoginDaoUtils {
             if (item == null) {
                 item = items;
             } else {
-                item = (Login) setValue(item, items);
+                item = (Login) AppUtils.setValue(item, items);
             }
             return item;
         }catch (Exception e){
             return null;
         }
-    }
-
-    /**
-     * 给对象的变量赋值
-     * @param set   要赋值的对象 不能为空
-     * @param get   要取值的对象 不能为空
-     * @return
-     */
-    public Object setValue(Object set, Object get){
-        if(set!=null&&get!=null) {
-            Class setTemp = set.getClass(); // 获取Class类的对象的方法之一
-            Class getTemp = get.getClass(); // 获取Class类的对象的方法之一
-            Field[] setfb = setTemp.getDeclaredFields();//返回所有属性的成员变量的数组
-            Field[] getfb = getTemp.getDeclaredFields();//返回所有属性的成员变量的数组
-            //List setList=Arrays.asList(setfb);//数组转list
-            List getList= Arrays.asList(getfb);//数组转list
-            try {
-                for (int i = 0; i < setfb.length; i++) {
-                    if(getList.contains(setfb[i])) {
-                        if(setfb[i].getName().equals("serialVersionUID")){
-                            continue;
-                        }
-                        Class cl = setfb[i].getType();    // 属性的类型
-                        if(cl.toString()
-                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
-                                ||cl.toString()
-                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
-                            continue;
-                        int md = setfb[i].getModifiers();    // 属性的修饰域
-                        Field f = getTemp.getDeclaredField(setfb[i].getName());// 属性的值
-                        f.setAccessible(true);    // Very Important
-                        Object value = (Object) f.get(get);
-                        if(value==null) {
-                            value=new ConvertUtilsBean().convert(0,cl);
-                        }
-                        Method method = set.getClass()
-                                .getMethod("set" + getMethodName(setfb[i].getName()), cl);
-                        method.invoke(set, value);
-                        //Object returnObj = ConvertUtils.convert(str, clazz);
-                    }else{
-                        if(setfb[i].getName().equals("serialVersionUID")){
-                            continue;
-                        }
-                        Class cl = setfb[i].getType();    // 属性的类型
-                        if(cl.toString()
-                                .equals("interface com.android.tools.fd.runtime.IncrementalChange")
-                                ||cl.toString()
-                                .equals("interface com.android.tools.ir.runtime.IncrementalChange"))
-                            continue;
-                        int md = setfb[i].getModifiers();    // 属性的修饰域
-                        Field f = setTemp.getDeclaredField(setfb[i].getName());// 属性的值
-                        f.setAccessible(true);    // Very Important
-                        Object value =  f.get(set);
-                        if(value==null) {
-                            value = new ConvertUtilsBean().convert(0, cl);
-                            Method method = set.getClass()
-                                    .getMethod("set" + getMethodName(setfb[i].getName()), cl);
-                            method.invoke(set, value);
-                        }
-                    }
-                }
-
-                return set;
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return null;
-    }
-    /**
-     * 将属性名称的首字母变成大写
-     * */
-    private String getMethodName(String fieldName) {
-        byte[] bytes = fieldName.getBytes();
-        bytes[0] = (byte) (bytes[0] - 'a' + 'A');
-        return new String(bytes);
     }
     /**
      查询某个表是否包含某个id:
@@ -208,7 +132,40 @@ public class LoginDaoUtils {
     public List<Login> query(String where, String... params){
         return dao.queryRaw(where, params);
     }
-
+    /**
+     * 分页查询
+     * @param offset
+     * @param size
+     * @return
+     */
+    public List<Login> query(int offset, int size){
+        List<Login> listMsg = dao.queryBuilder()
+                .offset(offset * size).limit(size).list();
+        return listMsg;
+    }
+    /**
+     * 模糊查询
+     * @param key
+     * @return
+     */
+    public List<Login> query(String key){
+        QueryBuilder<Login> qb = dao.queryBuilder();
+        List<Login> list=new ArrayList<>();
+        //判断输入的是中文还是英文
+        if(StringUtil.isEnglish(key)){
+            for (Login item : getAllList()) {
+                String username = item.getName();
+                String firstUsername = StringUtil.getSpells(username);
+                if(firstUsername.contains(key)){
+                    list.add(item);
+                }
+            }
+        }else {
+            list.addAll(qb.whereOr(LoginDao.Properties.Name.like("%" + key + "%")
+                    ,LoginDao.Properties.Code.like("%" + key + "%")).distinct().list());
+        }
+        return list;
+    }
 
     /**
      * 根据用户信息,插入或修改信息
@@ -233,6 +190,12 @@ public class LoginDaoUtils {
             public void run() {
                 for(int i=0; i<list.size(); i++){
                     Login item = list.get(i);
+                    for (Login items : getAllList()) {
+                        if (item.getCode().equals(items.getCode())
+                                &&item.getId().equals(items.getId())){
+                            AppUtils.setValue(item,items);
+                        }
+                    }
                     dao.insertOrReplace(item);
                 }
             }

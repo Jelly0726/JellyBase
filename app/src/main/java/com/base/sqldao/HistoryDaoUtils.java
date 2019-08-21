@@ -2,8 +2,12 @@ package com.base.sqldao;
 
 import android.content.Context;
 
+import com.base.Utils.StringUtil;
+import com.base.applicationUtil.AppUtils;
+
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import systemdb.DaoSession;
@@ -63,8 +67,8 @@ public class HistoryDaoUtils {
      */
     public List<SearchHistory> getAllList() {
         try {
-            QueryBuilder<SearchHistory> qb = dao.queryBuilder();
             // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
+            QueryBuilder<SearchHistory> qb = dao.queryBuilder();
             qb.orderDesc(SearchHistoryDao.Properties.Time);
             return qb.list();
         }catch (Exception e){
@@ -80,14 +84,47 @@ public class HistoryDaoUtils {
     public List<SearchHistory> query(String where, String... params){
         return dao.queryRaw(where, params);
     }
+    /**
+     * 分页查询
+     * @param offset
+     * @param size
+     * @return
+     */
+    public List<SearchHistory> query(int offset, int size){
+        List<SearchHistory> listMsg = dao.queryBuilder()
+                .offset(offset * size).limit(size).list();
+        return listMsg;
+    }
 
-
+    /**
+     * 模糊查询
+     * @param key
+     * @return
+     */
+    public List<SearchHistory> query(String key){
+        QueryBuilder<SearchHistory> qb = dao.queryBuilder();
+        List<SearchHistory> list=new ArrayList<>();
+        //判断输入的是中文还是英文
+        if(StringUtil.isEnglish(key)){
+            for (SearchHistory item : getAllList()) {
+                String username = item.getHistory();
+                String firstUsername = StringUtil.getSpells(username);
+                if(firstUsername.contains(key)){
+                    list.add(item);
+                }
+            }
+        }else {
+            list.addAll(qb.whereOr(SearchHistoryDao.Properties.History.like("%" + key + "%")
+                    ,SearchHistoryDao.Properties.Time.like("%" + key + "%")).distinct().list());
+        }
+        return list;
+    }
     /**
      * 根据搜索记录,插入或修改信息
      * @param item
      * @return 插入或修改的id
      */
-    public long updatePosition(SearchHistory item){
+    public long update(SearchHistory item){
         return dao.insertOrReplace(item);
     }
 
@@ -100,19 +137,21 @@ public class HistoryDaoUtils {
         if(list == null || list.isEmpty()){
             return;
         }
-        for(int i=0; i<list.size(); i++){
-            SearchHistory item = list.get(i);
-            dao.insertOrReplace(item);
-        }
-//        positionEntityDao.getSession().runInTx(new Runnable() {
-//            @Override
-//            public void run() {
-//                for(int i=0; i<list.size(); i++){
-//                    PositionEntity positionEntity = list.get(i);
-//                    positionEntityDao.insertOrReplace(positionEntity);
-//                }
-//            }
-//        });
+        dao.getSession().runInTx(new Runnable() {
+            @Override
+            public void run() {
+                for(int i=0; i<list.size(); i++){
+                    SearchHistory item = list.get(i);
+                    for (SearchHistory items : getAllList()) {
+                        if (item.getHistory().equals(items.getHistory())
+                                &&item.getTime().equals(items.getTime())){
+                            AppUtils.setValue(item,items);
+                        }
+                    }
+                    dao.insertOrReplace(item);
+                }
+            }
+        });
     }
 
     /**

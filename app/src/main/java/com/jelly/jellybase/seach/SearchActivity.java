@@ -93,7 +93,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history= (SearchHistory) v.getTag();
 
                         history.setTime(System.currentTimeMillis());
-                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).updatePosition(history);
+                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).update(history);
 
                         setBackData(history.getHistory());
                     }

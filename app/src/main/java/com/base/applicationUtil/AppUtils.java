@@ -958,7 +958,7 @@ public class AppUtils {
      * @param get   要取值的对象 不能为空
      * @return
      */
-    public Object setValue(Object set, Object get){
+    public static Object setValue(Object set, Object get){
         if(set!=null&&get!=null) {
             Class setTemp = set.getClass(); // 获取Class类的对象的方法之一
             Class getTemp = get.getClass(); // 获取Class类的对象的方法之一
@@ -1022,7 +1022,7 @@ public class AppUtils {
     /**
      * 将属性名称的首字母变成大写
      * */
-    private String getMethodName(String fieldName) {
+    private static String getMethodName(String fieldName) {
         byte[] bytes = fieldName.getBytes();
         bytes[0] = (byte) (bytes[0] - 'a' + 'A');
         return new String(bytes);

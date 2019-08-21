@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
 
 /**
@@ -80,6 +82,16 @@ public class DebugLog {
     public static void info(String msg) {
         info(DebugLog.class, msg);
     }
+    public static void info(Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        info(DebugLog.class, sw.toString());
+    }
+    public static void info(Class clazz,Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        info(clazz,sw.toString());
+    }
 
     public static void info(Class clazz, String msg) {
 
@@ -147,47 +159,90 @@ public class DebugLog {
         lineNumber = sElements[1].getLineNumber();
     }
 
+    public static void e(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        e(createLog(sw.toString()));
+    }
     public static void e(String message){
         if (!isDebuggable())
             return;
 
         // Throwable instance must be created before any methods
         getMethodNames(new Throwable().getStackTrace());
-        Log.e(className, createLog(message));
+        e(className, createLog(message));
     }
-
+    public static void i(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        i( createLog(sw.toString()));
+    }
     public static void i(String message){
         if (!isDebuggable())
             return;
 
         getMethodNames(new Throwable().getStackTrace());
-        Log.i(className, createLog(message));
+        i(className, createLog(message));
     }
-
+    public static void d(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        d( createLog(sw.toString()));
+    }
     public static void d(String message){
         if (!isDebuggable())
             return;
 
         getMethodNames(new Throwable().getStackTrace());
-        Log.d(className, createLog(message));
+        d(className, createLog(message));
     }
-
+    public static void v(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        v( createLog(sw.toString()));
+    }
     public static void v(String message){
         if (!isDebuggable())
             return;
 
         getMethodNames(new Throwable().getStackTrace());
-        Log.v(className, createLog(message));
+        v(className, createLog(message));
     }
-
+    public static void w(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        w(createLog(sw.toString()));
+    }
     public static void w(String message){
         if (!isDebuggable())
             return;
 
         getMethodNames(new Throwable().getStackTrace());
-        Log.w(className, createLog(message));
+        w(className, createLog(message));
     }
-
+    public static void wtf(Throwable throwable){
+        if (!isDebuggable())
+            return;
+        // Throwable instance must be created before any methods
+        StringWriter sw = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(sw, true));
+        wtf(createLog(sw.toString()));
+    }
     public static void wtf(String message){
         if (!isDebuggable())
             return;
@@ -195,10 +250,26 @@ public class DebugLog {
         getMethodNames(new Throwable().getStackTrace());
         Log.wtf(className, createLog(message));
     }
+    public static void i(String title,Throwable throwable){
+        if (isDebuggable()){
+            //Debug，打印日志
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            i(title,sw.toString());
+        }
+    }
     public static void i(String title,String mes){
         if (isDebuggable()){
             //Debug，打印日志
             Log.i(title,mes);
+        }
+    }
+    public static void v(String title,Throwable throwable){
+        if (isDebuggable()){
+            //Debug，打印日志
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            v(title,sw.toString());
         }
     }
     public static void v(String title,String mes){
@@ -207,16 +278,40 @@ public class DebugLog {
             Log.v(title,mes);
         }
     }
+    public static void d(String title,Throwable throwable){
+        if (isDebuggable()){
+            //Debug，打印日志
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            d(title,sw.toString());
+        }
+    }
     public static void d(String title,String mes){
         if (isDebuggable()){
             //Debug，打印日志
             Log.d(title,mes);
         }
     }
+    public static void e(String title,Throwable throwable){
+        if (isDebuggable()){
+            //Debug，打印日志
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            e(title,sw.toString());
+        }
+    }
     public static void e(String title,String mes){
         if (isDebuggable()){
             //Debug，打印日志
             Log.e(title,mes);
+        }
+    }
+    public static void w(String title,Throwable throwable){
+        if (isDebuggable()){
+            //Debug，打印日志
+            StringWriter sw = new StringWriter();
+            throwable.printStackTrace(new PrintWriter(sw, true));
+            w(title,sw.toString());
         }
     }
     public static void w(String title,String mes){
