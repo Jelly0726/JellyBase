@@ -19,7 +19,7 @@ public class HistoryDaoUtils {
     private static Context mContext;
 
     private static HistoryDaoUtils instance;
-    private SearchHistoryDao searchHistoryDao;
+    private SearchHistoryDao dao;
     private HistoryDaoUtils(){
 
     }
@@ -33,37 +33,37 @@ public class HistoryDaoUtils {
                     }
                     //数据库对象
                     DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.searchHistoryDao = daoSession.getSearchHistoryDao();
+                    instance.dao = daoSession.getSearchHistoryDao();
                 }
             }
             return  instance;
         }
         return  instance;
     }
-    //===========↓↓↓↓↓↓↓搜索记录↓↓↓↓↓↓↓↓=================
+    //===========↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓=================
     /**
-     添加搜索记录数据
+     添加数据
      */
-    public void addToHistoryListfoTable(List<SearchHistory> item){
-        for(SearchHistory searchHistory:item){
-            addToHistoryfoTable(searchHistory);
+    public void addTable(List<SearchHistory> item){
+        for(SearchHistory items:item){
+            addTable(items);
         }
     }
     /**
-     添加搜索记录数据
+     添加数据
      */
-    public long addToHistoryfoTable(SearchHistory item){
-        long id=searchHistoryDao.insert(item);
+    public long addTable(SearchHistory item){
+        long id= dao.insert(item);
         return id;
     }
 
     /**
-     * 取出所有搜索记录数据
-     * @return      所有搜索记录数据信息
+     * 取出所有数据
+     * @return      所有数据信息
      */
-    public List<SearchHistory> getHistory() {
+    public List<SearchHistory> getAllList() {
         try {
-            QueryBuilder<SearchHistory> qb = searchHistoryDao.queryBuilder();
+            QueryBuilder<SearchHistory> qb = dao.queryBuilder();
             // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
             qb.orderDesc(SearchHistoryDao.Properties.Time);
             return qb.list();
@@ -72,37 +72,37 @@ public class HistoryDaoUtils {
         }
     }
     /**
-     * 根据查询条件,返回搜索记录数据列表
+     * 根据查询条件,返回数据列表
      * @param where        条件
      * @param params       参数
      * @return             数据列表
      */
-    public List<SearchHistory> queryHistory(String where, String... params){
-        return searchHistoryDao.queryRaw(where, params);
+    public List<SearchHistory> query(String where, String... params){
+        return dao.queryRaw(where, params);
     }
 
 
     /**
      * 根据搜索记录,插入或修改信息
-     * @param item  搜索记录
-     * @return 插入或修改的搜索记录id
+     * @param item
+     * @return 插入或修改的id
      */
     public long updatePosition(SearchHistory item){
-        return searchHistoryDao.insertOrReplace(item);
+        return dao.insertOrReplace(item);
     }
 
 
     /**
-     * 批量插入或修改搜索记录
-     * @param list      搜索记录列表
+     * 批量插入或修改数据
+     * @param list
      */
-    public void updateHistory(final List<SearchHistory> list){
+    public void update(final List<SearchHistory> list){
         if(list == null || list.isEmpty()){
             return;
         }
         for(int i=0; i<list.size(); i++){
             SearchHistory item = list.get(i);
-            searchHistoryDao.insertOrReplace(item);
+            dao.insertOrReplace(item);
         }
 //        positionEntityDao.getSession().runInTx(new Runnable() {
 //            @Override
@@ -117,23 +117,23 @@ public class HistoryDaoUtils {
 
     /**
      * 根据id,删除数据
-     * @param id      搜索记录id
+     * @param id      id
      */
-    public void deleteHistory(long id){
-        searchHistoryDao.deleteByKey(id);
+    public void delete(long id){
+        dao.deleteByKey(id);
     }
     /**
-     * 根据搜索记录,删除信息
-     * @param searchHistory    搜索记录
+     * 根据对象,删除信息
+     * @param item
      */
-    public void deleteHistory(SearchHistory searchHistory){
-        searchHistoryDao.delete(searchHistory);
+    public void delete(SearchHistory item){
+        dao.delete(item);
     }
     /**
-     删除全部搜索记录
+     删除全部数据
      */
-    public void clearHistory(){
-        searchHistoryDao.deleteAll();
+    public void clear(){
+        dao.deleteAll();
     }
-    //===========↑↑↑↑↑↑↑↑↑搜索记录↑↑↑↑↑↑↑↑↑=================
+    //===========↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑=================
 }

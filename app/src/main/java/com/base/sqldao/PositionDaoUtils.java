@@ -17,7 +17,7 @@ public class PositionDaoUtils {
     private static Context mContext;
 
     private static PositionDaoUtils instance;
-    private PositionEntityDao positionEntityDao;
+    private PositionEntityDao dao;
     private PositionDaoUtils(){
 
     }
@@ -31,37 +31,37 @@ public class PositionDaoUtils {
                     }
                     //数据库对象
                     DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.positionEntityDao = daoSession.getPositionEntityDao();
+                    instance.dao = daoSession.getPositionEntityDao();
                 }
             }
             return  instance;
         }
         return  instance;
     }
-    //===========↓↓↓↓↓↓↓地址搜索记录↓↓↓↓↓↓↓↓↓=================
+    //===========↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓=================
     /**
-     添加地址搜索记录数据
+     添加数据
      */
-    public void addToPositionListfoTable(List<PositionEntity> item){
-        for(PositionEntity positionEntity:item){
-            addToPositionfoTable(positionEntity);
+    public void addTable(List<PositionEntity> item){
+        for(PositionEntity items:item){
+            addTable(items);
         }
     }
     /**
-     添加地址搜索记录数据
+     添加数据
      */
-    public long addToPositionfoTable(PositionEntity item){
-        long id=positionEntityDao.insert(item);
+    public long addTable(PositionEntity item){
+        long id= dao.insert(item);
         return id;
     }
 
     /**
-     * 取出所有地址搜索记录数据
-     * @return      所有地址搜索记录数据信息
+     * 取出所有数据
+     * @return      所有数据信息
      */
-    public List<PositionEntity> getPositionList() {
+    public List<PositionEntity> getAllList() {
         try {
-            QueryBuilder<PositionEntity> qb = positionEntityDao.queryBuilder();
+            QueryBuilder<PositionEntity> qb = dao.queryBuilder();
             // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
             qb.orderDesc(PositionEntityDao.Properties.Id);
             return qb.list();
@@ -70,44 +70,44 @@ public class PositionDaoUtils {
         }
     }
     /**
-     * 根据查询条件,返回地址搜索记录数据列表
+     * 根据查询条件,返回数据列表
      * @param where        条件
      * @param params       参数
      * @return             数据列表
      */
-    public List<PositionEntity> queryPosition(String where, String... params){
-        return positionEntityDao.queryRaw(where, params);
+    public List<PositionEntity> query(String where, String... params){
+        return dao.queryRaw(where, params);
     }
 
 
     /**
      * 根据地址搜索记录,插入或修改信息
-     * @param positionEntity  地址搜索记录
-     * @return 插入或修改的地址搜索记录id
+     * @param item
+     * @return 插入或修改的id
      */
-    public long updatePosition(PositionEntity positionEntity){
-        return positionEntityDao.insertOrReplace(positionEntity);
+    public long update(PositionEntity item){
+        return dao.insertOrReplace(item);
     }
 
 
     /**
-     * 批量插入或修改地址搜索记录
-     * @param list      地址搜索记录列表
+     * 批量插入或修改
+     * @param list
      */
-    public void updatePositionLists(final List<PositionEntity> list){
+    public void update(final List<PositionEntity> list){
         if(list == null || list.isEmpty()){
             return;
         }
         for(int i=0; i<list.size(); i++){
-            PositionEntity positionEntity = list.get(i);
-            positionEntityDao.insertOrReplace(positionEntity);
+            PositionEntity item = list.get(i);
+            dao.insertOrReplace(item);
         }
-//        positionEntityDao.getSession().runInTx(new Runnable() {
+//        dao.getSession().runInTx(new Runnable() {
 //            @Override
 //            public void run() {
 //                for(int i=0; i<list.size(); i++){
 //                    PositionEntity positionEntity = list.get(i);
-//                    positionEntityDao.insertOrReplace(positionEntity);
+//                    dao.insertOrReplace(positionEntity);
 //                }
 //            }
 //        });
@@ -115,25 +115,25 @@ public class PositionDaoUtils {
 
     /**
      * 根据id,删除数据
-     * @param id      地址搜索记录id
+     * @param id      id
      */
-    public void deletePosition(long id){
-        positionEntityDao.deleteByKey(id);
+    public void delete(long id){
+        dao.deleteByKey(id);
     }
 
     /**
-     * 根据地址搜索记录,删除信息
-     * @param positionEntity    地址搜索记录
+     * 根据对象,删除信息
+     * @param item
      */
-    public void deletePosition(PositionEntity positionEntity){
-        positionEntityDao.delete(positionEntity);
+    public void delete(PositionEntity item){
+        dao.delete(item);
     }
 
     /**
-     删除全部地址搜索记录
+     删除全部
      */
-    public void clearPosition(){
-        positionEntityDao.deleteAll();
+    public void clear(){
+        dao.deleteAll();
     }
-    //===========↑↑↑↑↑↑↑↑↑地址搜索记录↑↑↑↑↑↑↑↑↑=================
+    //===========↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑=================
 }

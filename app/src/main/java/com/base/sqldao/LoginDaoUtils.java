@@ -28,8 +28,8 @@ public class LoginDaoUtils {
      * 解决方法 SUN 官方已经给我们了。将instance 定义成 private volatile static Singleton instance =null: 即可
      */
     private volatile static LoginDaoUtils instance;
-    private LoginDao loginDao;
-    private Login login;
+    private LoginDao dao;
+    private Login item;
     private LoginDaoUtils(){
 
     }
@@ -46,19 +46,19 @@ public class LoginDaoUtils {
                     }
                     //数据库对象
                     DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.loginDao = daoSession.getLoginDao();
+                    instance.dao = daoSession.getLoginDao();
                 }
             }
             return  instance;
         }
         return  instance;
     }
-    //===========↓↓↓↓↓↓↓用户数据↓↓↓↓↓↓↓↓=================
+    //===========↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓=================
     /**
-     添加登录数据
+     添加数据
      */
-    public long addToLoginfoTable(Login item){
-        long id=loginDao.insert(item);
+    public long addTable(Login item){
+        long id= dao.insert(item);
         return id;
     }
 
@@ -66,10 +66,10 @@ public class LoginDaoUtils {
      * 取出所有数据
      * @return      所有数据信息
      */
-    public List<Login> getLoginList() {
+    public List<Login> getAllList() {
         try {
-            QueryBuilder<Login> qb = loginDao.queryBuilder();
-            // return loginDao.loadAll();//获取整个表的数据集合,一句代码就搞定！
+            QueryBuilder<Login> qb = dao.queryBuilder();
+            // return dao.loadAll();//获取整个表的数据集合,一句代码就搞定！
             return qb.list();
         }catch (Exception e){
             return null;
@@ -78,27 +78,27 @@ public class LoginDaoUtils {
     /**
      获取一条数据
      */
-    public Login getLogin(){
+    public Login getItem(){
         try {
-            Login logi = null;
-            if (getLoginList().size() > 0) {
-                logi = getLoginList().get(0);
-                if (logi != null) {
-                    if (logi.getUserID() != null) {
-                        if (logi.getUserID() == 0) {
-                            logi = null;
+            Login items = null;
+            if (getAllList().size() > 0) {
+                items = getAllList().get(0);
+                if (items != null) {
+                    if (items.getUserID() != null) {
+                        if (items.getUserID() == 0) {
+                            items = null;
                         }
                     } else {
-                        logi = null;
+                        items = null;
                     }
                 }
             }
-            if (login == null) {
-                login = logi;
+            if (item == null) {
+                item = items;
             } else {
-                login = (Login) setValue(login, logi);
+                item = (Login) setValue(item, items);
             }
-            return login;
+            return item;
         }catch (Exception e){
             return null;
         }
@@ -183,7 +183,7 @@ public class LoginDaoUtils {
      查询某个表是否包含某个id:
      */
     public boolean isSaved(int Id){
-        QueryBuilder<Login> qb = loginDao.queryBuilder();
+        QueryBuilder<Login> qb = dao.queryBuilder();
         // qb.where(CustomerDao.Properties.Id.eq(Id));
         qb.buildCount().count();
         return qb.buildCount().count()>0?true:false;
@@ -193,9 +193,9 @@ public class LoginDaoUtils {
      * @param id           用户id
      * @return             用户信息
      */
-    public Login loadLogin(long id) {
+    public Login load(long id) {
         if(!TextUtils.isEmpty(id + "")) {
-            return loginDao.load(id);
+            return dao.load(id);
         }
         return  null;
     }
@@ -205,35 +205,35 @@ public class LoginDaoUtils {
      * @param params       参数
      * @return             数据列表
      */
-    public List<Login> queryLogin(String where, String... params){
-        return loginDao.queryRaw(where, params);
+    public List<Login> query(String where, String... params){
+        return dao.queryRaw(where, params);
     }
 
 
     /**
      * 根据用户信息,插入或修改信息
-     * @param login  用户信息
-     * @return 插入或修改的用户id
+     * @param item
+     * @return 插入或修改的id
      */
-    public long updateLogin(Login login){
-        return loginDao.insertOrReplace(login);
+    public long update(Login item){
+        return dao.insertOrReplace(item);
     }
 
 
     /**
-     * 批量插入或修改用户信息
-     * @param list      用户信息列表
+     * 批量插入或修改信息
+     * @param list
      */
-    public void updateLoginLists(final List<Login> list){
+    public void update(final List<Login> list){
         if(list == null || list.isEmpty()){
             return;
         }
-        loginDao.getSession().runInTx(new Runnable() {
+        dao.getSession().runInTx(new Runnable() {
             @Override
             public void run() {
                 for(int i=0; i<list.size(); i++){
-                    Login login = list.get(i);
-                    loginDao.insertOrReplace(login);
+                    Login item = list.get(i);
+                    dao.insertOrReplace(item);
                 }
             }
         });
@@ -242,25 +242,25 @@ public class LoginDaoUtils {
 
     /**
      * 根据id,删除数据
-     * @param id      用户id
+     * @param id      id
      */
-    public void deleteLogin(long id){
-        loginDao.deleteByKey(id);
+    public void delete(long id){
+        dao.deleteByKey(id);
     }
 
     /**
-     * 根据用户类,删除信息
-     * @param login    用户信息类
+     * 根据对象,删除信息
+     * @param item
      */
-    public void deleteLogin(Login login){
-        loginDao.delete(login);
+    public void delete(Login item){
+        dao.delete(item);
     }
 
     /**
-     删除全部用户
+     删除全部数据
      */
-    public void clearLogin(){
-        loginDao.deleteAll();
+    public void clear(){
+        dao.deleteAll();
     }
-    //===========↑↑↑↑↑↑↑↑↑用户数据↑↑↑↑↑↑↑↑↑=================
+    //===========↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑=================
 }

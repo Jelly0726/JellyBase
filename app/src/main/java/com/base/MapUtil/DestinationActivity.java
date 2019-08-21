@@ -102,7 +102,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 				return false;
 			}
 		});
-		posList= PositionDaoUtils.getInstance(this).getPositionList();
+		posList= PositionDaoUtils.getInstance(this).getAllList();
 		mRecomandAdapter=new RecomandAdapter(getApplicationContext());
 		mRecommendList.setAdapter(mRecomandAdapter);
 		mRecommendList.setOnItemClickListener(this);
@@ -212,7 +212,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 			posList.clear();
 			posList.add(0,positionEntity);
 			posList.addAll(list);
-			PositionDaoUtils.getInstance(this).addToPositionListfoTable(posList);
+			PositionDaoUtils.getInstance(this).addTable(posList);
 			list.clear();
 			list=null;
 		}
