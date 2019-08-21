@@ -188,9 +188,10 @@ public class LoginDaoUtils {
         dao.getSession().runInTx(new Runnable() {
             @Override
             public void run() {
+                List<Login> lists=getAllList();
                 for(int i=0; i<list.size(); i++){
                     Login item = list.get(i);
-                    for (Login items : getAllList()) {
+                    for (Login items : lists) {
                         if (item.getCode().equals(items.getCode())
                                 &&item.getId().equals(items.getId())){
                             AppUtils.setValue(item,items);

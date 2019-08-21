@@ -136,9 +136,10 @@ public class PositionDaoUtils {
         dao.getSession().runInTx(new Runnable() {
             @Override
             public void run() {
+                List<PositionEntity> lists=getAllList();
                 for(int i=0; i<list.size(); i++){
                     PositionEntity item = list.get(i);
-                    for (PositionEntity items : getAllList()) {
+                    for (PositionEntity items : lists) {
                         if (item.getAdCode().equals(items.getAdCode())
                                 &&item.getAddress().equals(items.getAddress())
                                 ){

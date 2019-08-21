@@ -140,9 +140,10 @@ public class HistoryDaoUtils {
         dao.getSession().runInTx(new Runnable() {
             @Override
             public void run() {
+                List<SearchHistory> lists=getAllList();
                 for(int i=0; i<list.size(); i++){
                     SearchHistory item = list.get(i);
-                    for (SearchHistory items : getAllList()) {
+                    for (SearchHistory items : lists) {
                         if (item.getHistory().equals(items.getHistory())
                                 &&item.getTime().equals(items.getTime())){
                             AppUtils.setValue(item,items);
