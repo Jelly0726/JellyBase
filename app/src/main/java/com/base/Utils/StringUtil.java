@@ -16,6 +16,11 @@ import android.widget.Spinner;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -338,7 +343,7 @@ public class StringUtil {
                 buffer.append(String.valueOf(spell));
             }
         }
-        return buffer.toString();
+        return buffer.toString().toLowerCase();
     }
     // 获取一个汉字的首字母
     public static Character getFirstLetter(char ch) {
@@ -376,6 +381,37 @@ public class StringUtil {
             }
         }
         return result;
+    }
+    /**
+     * List 深度复制（重新分配地址）
+     * @param src
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public static <T> List<T> deepCopy(List<T> src){
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(byteOut);
+            out.writeObject(src);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream in = null;
+        @SuppressWarnings("unchecked")
+        List<T> dest = null;
+        try {
+            in = new ObjectInputStream(byteIn);
+            dest = (List<T>) in.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dest==null?new ArrayList<T>():dest;
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());

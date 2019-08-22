@@ -37,19 +37,22 @@ public class BaseInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        requestBody = request.body();
-        if (requestBody.contentLength()==0){
-            requestBody=new RequestBody() {
-                @Override
-                public MediaType contentType() {
-                    return MediaType.parse("application/json; charset=UTF-8");
-                }
+        if (request.method().equals("POST")) {
+            requestBody = request.body();
+            if (requestBody != null && requestBody.contentLength() == 0) {
+                requestBody = new RequestBody() {
+                    @Override
+                    public MediaType contentType() {
+                        return MediaType.parse("application/json; charset=UTF-8");
+//                        return MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8");
+                    }
 
-                @Override
-                public void writeTo(BufferedSink sink) throws IOException {
+                    @Override
+                    public void writeTo(BufferedSink sink) throws IOException {
 
-                }
-            };
+                    }
+                };
+            }
         }
         //网络不可用
         if (!NetworkUtils.isAvailable(mContext)) {
@@ -63,14 +66,23 @@ public class BaseInterceptor implements Interceptor {
 					主要是在回收url connection有可能有问题，后来我也增加了连接关闭，
 					不保持url connection，这样就解决了，但是付出了性能的代价。
 				 */
-                request = request.newBuilder()
-                        .cacheControl(CacheControl.FORCE_CACHE)
-                        //.addHeader("Connection", "close")
-                        .addHeader("version", AppUtils.getVersionCode(mContext) + "")
-                        .addHeader("Connection", "close")
-                        .post(requestBody)
-                        .build();
-            }else {
+                if (request.method().equals("POST")) {
+                    request = request.newBuilder()
+                            .cacheControl(CacheControl.FORCE_CACHE)
+                            //.addHeader("Connection", "close")
+                            .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                            .addHeader("Connection", "close")
+                            .post(requestBody)
+                            .build();
+                }else {
+                    request = request.newBuilder()
+                            .cacheControl(CacheControl.FORCE_CACHE)
+                            //.addHeader("Connection", "close")
+                            .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                            .addHeader("Connection", "close")
+                            .build();
+                }
+            }else  if (request.method().equals("POST")) {
                 //在请求头中加入：强制使用缓存，不访问网络
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
@@ -78,15 +90,28 @@ public class BaseInterceptor implements Interceptor {
                         .addHeader("Connection", "close")
                         .post(requestBody)
                         .build();
+            }else {
+                request = request.newBuilder()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                        .addHeader("Connection", "close")
+                        .build();
             }
             Log.i("sss","no network");
         }else {
             //请求头添加参数version
-            request = request.newBuilder()
-                    .addHeader("version", AppUtils.getVersionCode(mContext) + "")
-                    .addHeader("Connection", "close")
-                    .post(requestBody)
-                    .build();
+            if (request.method().equals("POST")) {
+                request = request.newBuilder()
+                        .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                        .addHeader("Connection", "close")
+                        .post(requestBody)
+                        .build();
+            }else {
+                request = request.newBuilder()
+                        .addHeader("version", AppUtils.getVersionCode(mContext) + "")
+                        .addHeader("Connection", "close")
+                        .build();
+            }
         }
         Response response = chain.proceed(request);
         //网络可用

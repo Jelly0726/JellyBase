@@ -86,8 +86,8 @@ public class HistoryDaoUtils {
     }
     /**
      * 分页查询
-     * @param offset
-     * @param size
+     * @param offset  页码第一页页码为0
+     * @param size    每页条数
      * @return
      */
     public List<SearchHistory> query(int offset, int size){
@@ -109,15 +109,35 @@ public class HistoryDaoUtils {
             for (SearchHistory item : getAllList()) {
                 String username = item.getHistory();
                 String firstUsername = StringUtil.getSpells(username);
-                if(firstUsername.contains(key)){
+                if(firstUsername.contains(key.toLowerCase())){
                     list.add(item);
                 }
             }
-        }else {
-            list.addAll(qb.whereOr(SearchHistoryDao.Properties.History.like("%" + key + "%")
-                    ,SearchHistoryDao.Properties.Time.like("%" + key + "%")).distinct().list());
+        }
+        List<SearchHistory> listMsg =qb.whereOr(SearchHistoryDao.Properties.History.like("%" + key + "%")
+                ,SearchHistoryDao.Properties.Time.like("%" + key + "%")).distinct().list();
+        for (SearchHistory item : listMsg) {
+            boolean isExist=false;
+            for (SearchHistory items : list) {
+                if (item.getHistory().equals(items.getHistory())
+                        &&item.getId().equals(items.getId())){
+                    isExist=true;
+                    break;
+                }
+            }
+            if (!isExist){
+                list.add(item);
+            }
         }
         return list;
+    }
+    /**
+     * 获取数据总数
+     * @return
+     */
+    public long queryCount(){
+        QueryBuilder<SearchHistory> qb = dao.queryBuilder();
+        return qb.count();
     }
     /**
      * 根据搜索记录,插入或修改信息

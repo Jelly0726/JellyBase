@@ -134,8 +134,8 @@ public class LoginDaoUtils {
     }
     /**
      * 分页查询
-     * @param offset
-     * @param size
+     * @param offset  页码第一页页码为0
+     * @param size    每页条数
      * @return
      */
     public List<Login> query(int offset, int size){
@@ -156,17 +156,36 @@ public class LoginDaoUtils {
             for (Login item : getAllList()) {
                 String username = item.getName();
                 String firstUsername = StringUtil.getSpells(username);
-                if(firstUsername.contains(key)){
+                if(firstUsername.contains(key.toLowerCase())){
                     list.add(item);
                 }
             }
-        }else {
-            list.addAll(qb.whereOr(LoginDao.Properties.Name.like("%" + key + "%")
-                    ,LoginDao.Properties.Code.like("%" + key + "%")).distinct().list());
+        }
+        List<Login> listMsg =qb.whereOr(LoginDao.Properties.Name.like("%" + key + "%")
+                ,LoginDao.Properties.Phone.like("%" + key + "%")).distinct().list();
+        for (Login item : listMsg) {
+            boolean isExist=false;
+            for (Login items : list) {
+                if (item.getUserID().equals(items.getUserID())
+                        &&item.getPhone().equals(items.getPhone())){
+                    isExist=true;
+                    break;
+                }
+            }
+            if (!isExist){
+                list.add(item);
+            }
         }
         return list;
     }
-
+    /**
+     * 获取数据总数
+     * @return
+     */
+    public long queryCount(){
+        QueryBuilder<Login> qb = dao.queryBuilder();
+        return qb.count();
+    }
     /**
      * 根据用户信息,插入或修改信息
      * @param item

@@ -84,8 +84,8 @@ public class PositionDaoUtils {
     }
     /**
      * 分页查询
-     * @param offset
-     * @param size
+     * @param offset  页码第一页页码为0
+     * @param size    每页条数
      * @return
      */
     public List<PositionEntity> query(int offset, int size){
@@ -106,15 +106,35 @@ public class PositionDaoUtils {
             for (PositionEntity item : getAllList()) {
                 String username = item.getAdCode();
                 String firstUsername = StringUtil.getSpells(username);
-                if(firstUsername.contains(key)){
+                if(firstUsername.contains(key.toLowerCase())){
                     list.add(item);
                 }
             }
-        }else {
-            list.addAll(qb.whereOr(PositionEntityDao.Properties.AdCode.like("%" + key + "%")
-                    ,PositionEntityDao.Properties.Address.like("%" + key + "%")).distinct().list());
+        }
+        List<PositionEntity> listMsg = qb.whereOr(PositionEntityDao.Properties.AdCode.like("%" + key + "%")
+                ,PositionEntityDao.Properties.Address.like("%" + key + "%")).distinct().list();
+        for (PositionEntity item : listMsg) {
+            boolean isExist=false;
+            for (PositionEntity items : list) {
+                if (item.getAdCode().equals(items.getAdCode())
+                        &&item.getId().equals(items.getId())){
+                    isExist=true;
+                    break;
+                }
+            }
+            if (!isExist){
+                list.add(item);
+            }
         }
         return list;
+    }
+    /**
+     * 获取数据总数
+     * @return
+     */
+    public long queryCount(){
+        QueryBuilder<PositionEntity> qb = dao.queryBuilder();
+        return qb.count();
     }
     /**
      * 根据地址搜索记录,插入或修改信息
@@ -142,7 +162,7 @@ public class PositionDaoUtils {
                     for (PositionEntity items : lists) {
                         if (item.getAdCode().equals(items.getAdCode())
                                 &&item.getAddress().equals(items.getAddress())
-                                ){
+                        ){
                             AppUtils.setValue(item,items);
                         }
                     }
