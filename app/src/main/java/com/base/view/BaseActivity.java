@@ -48,7 +48,7 @@ import static com.base.permission.PermissionUtils.REQUEST_CODE_SETTING;
 /**
  * Created by Administrator on 2017/12/5.
  */
-
+@hugo.weaving.DebugLog
 public class BaseActivity extends AppCompatActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;

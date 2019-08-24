@@ -17,7 +17,7 @@ import com.base.sqldao.LoginDaoUtils;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
-import com.base.view.FragmentStateAdapter;
+import com.base.view.FragmentAdapter;
 import com.base.view.NoPreloadViewPager;
 import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
@@ -46,7 +46,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     private final int zxingRequestCode=1;
     private NoPreloadViewPager mVpContent;
     private BottomBarLayout mBottomBarLayout;
-    private FragmentStateAdapter myAdapter;
+    private FragmentAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     private Login login;
@@ -132,7 +132,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     }
 
     private void initListener() {
-        myAdapter= new FragmentStateAdapter(getSupportFragmentManager(),mFragmentList);
+        myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
         mVpContent.setAdapter(myAdapter);
         mBottomBarLayout.setViewPager(mVpContent);
         mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
