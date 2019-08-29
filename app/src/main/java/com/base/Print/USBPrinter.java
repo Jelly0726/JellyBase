@@ -43,12 +43,14 @@ import java.util.HashMap;
  *
  * android设备连接USB打印机的打印方法
  *
- *  * 80热敏纸最大打印宽度 292.0
- *  * 一个空格宽度 3.0
- *  * 一个中午宽度 12.0
- *  * 一个数字宽度 7.0
- *  * 一个中午符号 12.0 （：）
- *  * 一个英文符号 3.0  （.）
+ * 80热敏纸最大打印宽度 292.0
+ * 一个空格宽度 		3.0
+ * 一个中午宽度 		12.0
+ * 一个数字宽度 		7.0
+ * 一个中午符号 		12.0 （：）
+ * 一个英文符号 		3.0  （.）
+ * 一个英文小写字符宽度	7.0（a）
+ * 一个英文大写字符宽度	8.0 （A）
  */
 public class USBPrinter {
     public static final String ACTION_USB_PERMISSION = "com.usb.printer.USB_PERMISSION";
