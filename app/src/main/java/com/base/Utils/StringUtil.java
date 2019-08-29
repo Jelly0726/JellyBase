@@ -1,6 +1,7 @@
 package com.base.Utils;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.Spannable;
@@ -412,6 +413,20 @@ public class StringUtil {
             e.printStackTrace();
         }
         return dest==null?new ArrayList<T>():dest;
+    }
+    /**
+     * @return 返回指定的文字宽度
+     */
+    public static float getFontWidth(String text) {
+        return new Paint().measureText(text);
+    }
+    /**
+     * @return 返回指定的文字高度
+     */
+    public static float getFontHeight(Paint paint) {
+        Paint.FontMetrics fm = new Paint().getFontMetrics();
+        //文字基准线的下部距离-文字基准线的上部距离 = 文字高度
+        return fm.descent - fm.ascent;
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
