@@ -103,6 +103,7 @@ public class USBPrinter {
 
         for (UsbDevice device : deviceList.values()) {
             usbInterface = device.getInterface(0);
+            //usb接口描述符bInterfaceClass 0x07表示是打印机类
             if (usbInterface.getInterfaceClass() == 7) {
                 Log.d("device", device.getProductName() + "     " + device.getManufacturerName());
                 Log.d("device", device.getVendorId() + "     " + device.getProductId() + "      " + device.getDeviceId());
