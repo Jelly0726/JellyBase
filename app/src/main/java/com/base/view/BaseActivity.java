@@ -16,6 +16,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -222,7 +223,18 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     protected void onStop() {
         super.onStop();
     }
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // TODO Auto-generated method stub
+        if ((event.getKeyCode() >= KeyEvent.KEYCODE_F1
+                &&event.getKeyCode() <= KeyEvent.KEYCODE_F12)
+                ||event.getKeyCode() <= KeyEvent.KEYCODE_ENTER
+                ||event.getKeyCode() <= KeyEvent.KEYCODE_NUMPAD_ENTER){
 
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
     /**
      * 广播接收者
      */
