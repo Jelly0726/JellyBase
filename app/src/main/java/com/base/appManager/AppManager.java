@@ -121,7 +121,14 @@ public class AppManager {
         }
         activityStack.clear();
     }
-
+    /**
+     * 获取存活的activity数量
+     *
+     * @author kymjs
+     */
+    public int getCount() {
+        return activityStack.size();
+    }
     /**
      * 获取指定的Activity
      *
