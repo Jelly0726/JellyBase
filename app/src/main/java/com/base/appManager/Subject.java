@@ -61,6 +61,14 @@ public class Subject<T> extends Observable<T>{
             }
         });
     }
+    /**
+     * 获取存活的activity数量
+     *
+     * @author kymjs
+     */
+    public int getCount() {
+        return observers==null?0:observers.size();
+    }
     public void notifyObservers(){
         detachAll();
     }
