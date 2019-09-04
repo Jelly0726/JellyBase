@@ -3,7 +3,6 @@ package com.base.sqldao;
 import android.content.Context;
 
 import com.base.Utils.StringUtil;
-import com.base.applicationUtil.AppUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -142,6 +141,13 @@ public class PositionDaoUtils {
      * @return 插入或修改的id
      */
     public long update(PositionEntity item){
+        for (PositionEntity items : getAllList()) {
+            if (item.getAdCode().equals(items.getAdCode())
+                    &&item.getAddress().equals(items.getAddress())
+            ){
+                item.setId(items.getId());
+            }
+        }
         return dao.insertOrReplace(item);
     }
 
@@ -163,7 +169,7 @@ public class PositionDaoUtils {
                         if (item.getAdCode().equals(items.getAdCode())
                                 &&item.getAddress().equals(items.getAddress())
                         ){
-                            AppUtils.setValue(item,items);
+                            item.setId(items.getId());
                         }
                     }
                     dao.insertOrReplace(item);

@@ -428,6 +428,28 @@ public class StringUtil {
         //文字基准线的下部距离-文字基准线的上部距离 = 文字高度
         return fm.descent - fm.ascent;
     }
+    /**
+     * List转String以","隔开
+     * 采用Stringbuilder.append()的方式追加
+     * @param mList
+     * @return
+     */
+    public static String listToString(List<String> mList) {
+        final String SEPARATOR = ",";
+        // mList = Arrays.asList("AAA", "BBB", "CCC");
+        StringBuilder sb = new StringBuilder();
+        String convertedListStr = "";
+        if (null != mList && mList.size() > 0) {
+            for (String item : mList) {
+                sb.append(item);
+                sb.append(SEPARATOR);
+            }
+            convertedListStr = sb.toString();
+            convertedListStr = convertedListStr.substring(0, convertedListStr.length()
+                    - SEPARATOR.length());
+            return convertedListStr;
+        } else return "List is null!!!";
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";

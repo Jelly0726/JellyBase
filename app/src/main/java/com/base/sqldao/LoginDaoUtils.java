@@ -192,6 +192,12 @@ public class LoginDaoUtils {
      * @return 插入或修改的id
      */
     public long update(Login item){
+        for (Login items : getAllList()) {
+            if (item.getCode().equals(items.getCode())
+                    &&item.getId().equals(items.getId())){
+                item.setId(items.getId());
+            }
+        }
         return dao.insertOrReplace(item);
     }
 
@@ -213,7 +219,7 @@ public class LoginDaoUtils {
                     for (Login items : lists) {
                         if (item.getCode().equals(items.getCode())
                                 &&item.getId().equals(items.getId())){
-                            AppUtils.setValue(item,items);
+                            item.setId(items.getId());
                         }
                     }
                     dao.insertOrReplace(item);

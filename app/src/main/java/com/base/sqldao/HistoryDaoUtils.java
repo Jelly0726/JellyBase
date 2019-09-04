@@ -3,7 +3,6 @@ package com.base.sqldao;
 import android.content.Context;
 
 import com.base.Utils.StringUtil;
-import com.base.applicationUtil.AppUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -145,6 +144,12 @@ public class HistoryDaoUtils {
      * @return 插入或修改的id
      */
     public long update(SearchHistory item){
+        for (SearchHistory items : getAllList()) {
+            if (item.getHistory().equals(items.getHistory())
+                    &&item.getTime().equals(items.getTime())){
+                item.setId(items.getId());
+            }
+        }
         return dao.insertOrReplace(item);
     }
 
@@ -166,7 +171,7 @@ public class HistoryDaoUtils {
                     for (SearchHistory items : lists) {
                         if (item.getHistory().equals(items.getHistory())
                                 &&item.getTime().equals(items.getTime())){
-                            AppUtils.setValue(item,items);
+                            item.setId(items.getId());
                         }
                     }
                     dao.insertOrReplace(item);
