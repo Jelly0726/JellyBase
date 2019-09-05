@@ -1,7 +1,9 @@
 package com.base.circledialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +15,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.base.circledialog.res.drawable.CircleDrawable;
 import com.base.circledialog.res.values.CircleDimen;
@@ -98,6 +102,24 @@ public abstract class BaseCircleDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
+        //设置dialog监听键盘按键
+        this.getDialog().setOnKeyListener(new DialogInterface.OnKeyListener(){
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event){
+                //设置接收到回车事件时隐藏软键盘
+                if(getActivity()!=null
+                        &&event!=null
+                        &&event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+                        && event.getAction()==KeyEvent.ACTION_DOWN) {
+                    InputMethodManager manager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    View focus = getDialog().getCurrentFocus();
+                    manager.hideSoftInputFromWindow(
+                            focus == null ? null : focus.getWindowToken(),
+//                            editText == null ? null : editText.getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false; // pass on to be processed as normal
+            }
+        });
         View view = createView(getContext(), inflater, container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(new CircleDrawable(mBackgroundColor, mRadius));
