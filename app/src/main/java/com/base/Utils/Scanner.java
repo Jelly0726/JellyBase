@@ -36,7 +36,7 @@ public class Scanner {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
-        //设置回车后的下一个焦点对象为本身
+        //设置下一个焦点对象为本身
         editText.setNextFocusDownId(editText.getId());
 
         //关闭软键盘：防止顺序乱码

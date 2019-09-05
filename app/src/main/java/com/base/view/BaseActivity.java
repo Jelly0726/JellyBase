@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.base.SystemBar.StatusBarUtil;
@@ -223,18 +224,6 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     protected void onStop() {
         super.onStop();
     }
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        // TODO Auto-generated method stub
-        if ((event.getKeyCode() >= KeyEvent.KEYCODE_F1
-                &&event.getKeyCode() <= KeyEvent.KEYCODE_F12)
-                ||event.getKeyCode() <= KeyEvent.KEYCODE_ENTER
-                ||event.getKeyCode() <= KeyEvent.KEYCODE_NUMPAD_ENTER){
-
-            return true;
-        }
-        return super.dispatchKeyEvent(event);
-    }
     /**
      * 广播接收者
      */
@@ -330,5 +319,18 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     public void onUpdate(Observable observable, Object data) {
         // TODO Auto-generated method stub
         this.finish();
+    }
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        //设置接收到回车事件时隐藏软键盘
+        if(event!=null&&event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction()==KeyEvent.ACTION_DOWN) {
+            InputMethodManager manager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            View focus = getCurrentFocus();
+            manager.hideSoftInputFromWindow(
+                    focus == null ? null : focus.getWindowToken(),
+//                            editText == null ? null : editText.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+        return super.dispatchKeyEvent(event);
     }
 }
