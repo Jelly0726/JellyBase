@@ -1,9 +1,9 @@
 package com.base.Utils;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
@@ -36,14 +36,16 @@ public class Scanner {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
+        //设置回车后的下一个焦点对象为本身
+        editText.setNextFocusDownId(editText.getId());
 
         //关闭软键盘：防止顺序乱码
-        InputMethodManager manager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //View focus = act.getCurrentFocus();
-        manager.hideSoftInputFromWindow(
-                //focus == null ? null : focus.getWindowToken(),
-                editText == null ? null : editText.getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+//        InputMethodManager manager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+//        //View focus = act.getCurrentFocus();
+//        manager.hideSoftInputFromWindow(
+//                //focus == null ? null : focus.getWindowToken(),
+//                editText == null ? null : editText.getWindowToken(),
+//                InputMethodManager.HIDE_NOT_ALWAYS);
 
         //增加软键盘监听，扫出来内容会自己填充到editText中去的
         editText.setOnKeyListener(new View.OnKeyListener() {
@@ -53,9 +55,12 @@ public class Scanner {
             //keycode=20,event.getAction()=0  -> 20=KeyEvent.KEYCODE_DPAD_DOWN=按键按下 , 1=KeyEvent.ACTION_DOWN=按下
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //LogUtil.i("keycode="+keyCode+",event.getAction()="+event.getAction());
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction()== KeyEvent.ACTION_DOWN){
-                    onScanResultCallBack.OnScanSucccess(editText.getText().toString());//返回结果值，看需要使用了
+//                DebugLog.i("keycode="+keyCode+",getAction="+event.getAction());
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction()==KeyEvent.ACTION_DOWN){
+                    if(!TextUtils.isEmpty(editText.getText().toString())) {
+                        onScanResultCallBack.OnScanSucccess(editText.getText().toString());//返回结果值，看需要使用了
+                        editText.setText("");
+                    }
                     return true;
                 }
                 return false;
@@ -75,8 +80,6 @@ public class Scanner {
         public void OnScanSucccess(String result);
         public void OnScanFail(String errorMsg);
     }
-
-
     private OnScanResultCallBack onScanResultCallBack = new OnScanResultCallBack(){
         @Override
         public void OnScanSucccess(String result) {}
