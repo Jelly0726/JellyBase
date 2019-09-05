@@ -23,6 +23,7 @@ import android.widget.EditText;
 public class Scanner {
 
     private Activity activity;
+    private boolean clear=true;
 
     public Scanner(Activity activity){
         this.activity = activity;
@@ -59,7 +60,8 @@ public class Scanner {
                 if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction()==KeyEvent.ACTION_DOWN){
                     if(!TextUtils.isEmpty(editText.getText().toString())) {
                         onScanResultCallBack.OnScanSucccess(editText.getText().toString());//返回结果值，看需要使用了
-                        editText.setText("");
+                        if (clear)
+                            editText.setText("");
                     }
                     return true;
                 }
@@ -69,7 +71,13 @@ public class Scanner {
 
 
     }
+    public boolean isClear() {
+        return clear;
+    }
 
+    public void setClear(boolean clear) {
+        this.clear = clear;
+    }
 
     /**
      * 扫码枪接口：有timeout设置，当然光标移除的时候关闭计时
