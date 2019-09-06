@@ -1,6 +1,7 @@
 package com.base.sqldao;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.text.TextUtils;
 
 import com.base.Utils.StringUtil;
@@ -30,6 +31,7 @@ public class LoginDaoUtils {
     private volatile static LoginDaoUtils instance;
     private LoginDao dao;
     private Login item;
+    private DaoSession daoSession;
     private LoginDaoUtils(){
 
     }
@@ -45,8 +47,8 @@ public class LoginDaoUtils {
                         mContext = context.getApplicationContext();
                     }
                     //数据库对象
-                    DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.dao = daoSession.getLoginDao();
+                    instance.daoSession = DBManager.getDBManager().getDaoSession();
+                    instance.dao = instance.daoSession.getLoginDao();
                 }
             }
             return  instance;
@@ -122,6 +124,26 @@ public class LoginDaoUtils {
             return dao.load(id);
         }
         return  null;
+    }
+    /**
+     * 根据查询条件,返回数据列表
+     * @param sql          sql语句
+     * @param params       参数
+     * @return             数据列表
+     */
+    public List<String> queryBySQL(String sql, String... params){
+        ArrayList<String> result = new ArrayList<String>();
+        Cursor c = daoSession.getDatabase().rawQuery(sql, params);
+        try{
+            if (c.moveToFirst()) {
+                do {
+                    result.add(c.getString(0));
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+        }
+        return result;
     }
     /**
      * 根据查询条件,返回数据列表
@@ -236,7 +258,20 @@ public class LoginDaoUtils {
     public void delete(long id){
         dao.deleteByKey(id);
     }
-
+    /**
+     * 根据会员id,删除数据
+     * @param id      id
+     */
+    public void delete(String id){
+        StringBuffer stringBuffer=new StringBuffer();
+        stringBuffer.append("DELETE");
+        stringBuffer.append(" FROM ");
+        stringBuffer.append(LoginDao.TABLENAME);
+        stringBuffer.append(" WHERE ");
+        stringBuffer.append(LoginDao.Properties.UserID.columnName);
+        stringBuffer.append(" = ?");
+        daoSession.getDatabase().execSQL(stringBuffer.toString(), new String[]{id});
+    }
     /**
      * 根据对象,删除信息
      * @param item

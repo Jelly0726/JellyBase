@@ -1,6 +1,7 @@
 package com.base.sqldao;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import com.base.Utils.StringUtil;
 
@@ -21,6 +22,7 @@ public class PositionDaoUtils {
 
     private static PositionDaoUtils instance;
     private PositionEntityDao dao;
+    private DaoSession daoSession;
     private PositionDaoUtils(){
 
     }
@@ -33,8 +35,8 @@ public class PositionDaoUtils {
                         mContext = context.getApplicationContext();
                     }
                     //数据库对象
-                    DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.dao = daoSession.getPositionEntityDao();
+                    instance.daoSession = DBManager.getDBManager().getDaoSession();
+                    instance.dao = instance.daoSession.getPositionEntityDao();
                 }
             }
             return  instance;
@@ -71,6 +73,26 @@ public class PositionDaoUtils {
         }catch (Exception e){
             return null;
         }
+    }
+    /**
+     * 根据查询条件,返回数据列表
+     * @param sql          sql语句
+     * @param params       参数
+     * @return             数据列表
+     */
+    public List<String> queryBySQL(String sql, String... params){
+        ArrayList<String> result = new ArrayList<String>();
+        Cursor c = daoSession.getDatabase().rawQuery(sql, params);
+        try{
+            if (c.moveToFirst()) {
+                do {
+                    result.add(c.getString(0));
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+        }
+        return result;
     }
     /**
      * 根据查询条件,返回数据列表
@@ -185,7 +207,20 @@ public class PositionDaoUtils {
     public void delete(long id){
         dao.deleteByKey(id);
     }
-
+    /**
+     * 根据会员id,删除数据
+     * @param id      id
+     */
+    public void delete(String id){
+        StringBuffer stringBuffer=new StringBuffer();
+        stringBuffer.append("DELETE");
+        stringBuffer.append(" FROM ");
+        stringBuffer.append(PositionEntityDao.TABLENAME);
+        stringBuffer.append(" WHERE ");
+        stringBuffer.append(PositionEntityDao.Properties.AdCode.columnName);
+        stringBuffer.append(" = ?");
+        daoSession.getDatabase().execSQL(stringBuffer.toString(), new String[]{id});
+    }
     /**
      * 根据对象,删除信息
      * @param item

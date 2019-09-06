@@ -1,6 +1,7 @@
 package com.base.sqldao;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import com.base.Utils.StringUtil;
 
@@ -23,6 +24,7 @@ public class HistoryDaoUtils {
 
     private static HistoryDaoUtils instance;
     private SearchHistoryDao dao;
+    private DaoSession daoSession;
     private HistoryDaoUtils(){
 
     }
@@ -35,8 +37,8 @@ public class HistoryDaoUtils {
                         mContext = context.getApplicationContext();
                     }
                     //数据库对象
-                    DaoSession daoSession = DBManager.getDBManager().getDaoSession();
-                    instance.dao = daoSession.getSearchHistoryDao();
+                    instance.daoSession = DBManager.getDBManager().getDaoSession();
+                    instance.dao = instance.daoSession.getSearchHistoryDao();
                 }
             }
             return  instance;
@@ -73,6 +75,26 @@ public class HistoryDaoUtils {
         }catch (Exception e){
             return null;
         }
+    }
+    /**
+     * 根据查询条件,返回数据列表
+     * @param sql          sql语句
+     * @param params       参数
+     * @return             数据列表
+     */
+    public List<String> queryBySQL(String sql, String... params){
+        ArrayList<String> result = new ArrayList<String>();
+        Cursor c = daoSession.getDatabase().rawQuery(sql, params);
+        try{
+            if (c.moveToFirst()) {
+                do {
+                    result.add(c.getString(0));
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+        }
+        return result;
     }
     /**
      * 根据查询条件,返回数据列表
@@ -186,6 +208,20 @@ public class HistoryDaoUtils {
      */
     public void delete(long id){
         dao.deleteByKey(id);
+    }
+    /**
+     * 根据会员id,删除数据
+     * @param id      id
+     */
+    public void delete(String id){
+        StringBuffer stringBuffer=new StringBuffer();
+        stringBuffer.append("DELETE");
+        stringBuffer.append(" FROM ");
+        stringBuffer.append(SearchHistoryDao.TABLENAME);
+        stringBuffer.append(" WHERE ");
+        stringBuffer.append(SearchHistoryDao.Properties.History.columnName);
+        stringBuffer.append(" = ?");
+        daoSession.getDatabase().execSQL(stringBuffer.toString(), new String[]{id});
     }
     /**
      * 根据对象,删除信息
