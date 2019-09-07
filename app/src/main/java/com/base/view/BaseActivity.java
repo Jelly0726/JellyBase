@@ -104,7 +104,8 @@ public class BaseActivity extends AppCompatActivity implements Observer {
 //                    mPresentation.setOwnerActivity(this);
 //                }
 //                mPresentation.show();
-//            }else if (mPresentation!=null
+//            }else {
+//            if (mPresentation!=null
 //                    &&(mPresentation instanceof DifferentDislay)){//当前不是收银台如果客显是收银客显 就关闭重新创建其他客显
 //                mPresentation.dismiss();
 //                mPresentation=null;
@@ -115,6 +116,7 @@ public class BaseActivity extends AppCompatActivity implements Observer {
 //                }
 //                mPresentation.show();
 //            }
+//          }
 //        }
     }
     @Override
