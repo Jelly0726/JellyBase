@@ -109,13 +109,13 @@ public class BaseActivity extends AppCompatActivity implements Observer {
 //                    &&(mPresentation instanceof DifferentDislay)){//当前不是收银台如果客显是收银客显 就关闭重新创建其他客显
 //                mPresentation.dismiss();
 //                mPresentation=null;
-//                if (mPresentation==null) {
-//                    mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
-//                    mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//                    mPresentation.setOwnerActivity(this);
-//                }
-//                mPresentation.show();
 //            }
+//            if (mPresentation==null) {
+//               mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
+//               mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//               mPresentation.setOwnerActivity(this);
+//              }
+//            mPresentation.show();
 //          }
 //        }
     }
