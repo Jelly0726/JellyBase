@@ -55,6 +55,8 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
+//    public DisplayManager mDisplayManager;//双屏客显
+//    public Presentation mPresentation;//双屏客显
     static {
         //使你的app使用矢量图support library；
         //AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -85,6 +87,35 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         if (mRecevier != null) {
             registerReceiver(mRecevier, mFilter);
         }
+//        //开启双屏
+//        mDisplayManager=(DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+//        Display[] displays = mDisplayManager.getDisplays();
+//        if(displays.length>=2){//小于2代表只有一个屏幕，那么mPresentation就没有必要创建了
+//            if (this instanceof MainActivity){//判断当前是否是收银台
+//                //当前为收银台如果客显不是收银客显 就关闭重新创建收银客显
+//                if (mPresentation!=null
+//                        &&!(mPresentation instanceof DifferentDislay)){
+//                    mPresentation.dismiss();
+//                    mPresentation=null;
+//                }
+//                if (mPresentation==null) {
+//                    mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
+//                    mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//                    mPresentation.setOwnerActivity(this);
+//                }
+//                mPresentation.show();
+//            }else if (mPresentation!=null
+//                    &&(mPresentation instanceof DifferentDislay)){//当前不是收银台如果客显是收银客显 就关闭重新创建其他客显
+//                mPresentation.dismiss();
+//                mPresentation=null;
+//                if (mPresentation==null) {
+//                    mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
+//                    mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//                    mPresentation.setOwnerActivity(this);
+//                }
+//                mPresentation.show();
+//            }
+//        }
     }
     @Override
     protected void onNewIntent(Intent intent) {
