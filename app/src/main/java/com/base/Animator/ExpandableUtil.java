@@ -134,15 +134,27 @@ public class ExpandableUtil {
             }
         }
     }
+
+    /**
+     * 其他View的展开动画
+     * @param v  展开的View
+     * @param end  展开后的高度
+     */
     public static void animateOpen(View v,int end) {
         int origHeight = v.getHeight();
-        if (origHeight==0)
+        if (origHeight==0)//当前高度为0表示该View已隐藏需调用显示
             v.setVisibility(View.VISIBLE);
         ValueAnimator animator = createDropAnimator(v, origHeight,
                 end);
         animator.start();
 
     }
+
+    /**
+     * 其他View的收起动画
+     * @param view 收起的View
+     * @param end  收起后的高度 为0表示全部隐藏
+     */
     public static void animateClose(final View view,final int end) {
         int origHeight = view.getHeight();
         ValueAnimator animator = createDropAnimator(view, origHeight, end);
@@ -163,6 +175,7 @@ public class ExpandableUtil {
 
             @Override
             public void onAnimationUpdate(ValueAnimator arg0) {
+                //动态实时给View设置高度
                 int value = (int) arg0.getAnimatedValue();
                 ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
                 layoutParams.height = value;
