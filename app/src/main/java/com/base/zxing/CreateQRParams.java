@@ -37,7 +37,7 @@ public class CreateQRParams implements Parcelable {
     /**
      * 生成二维码的边框宽度
      */
-    public int margin=4;
+    public int margin=2;
 
     public CreateQRParams() {
     }

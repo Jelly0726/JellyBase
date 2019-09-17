@@ -10,8 +10,6 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -61,7 +59,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN, 2); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -110,7 +108,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
+			hints.put(EncodeHintType.MARGIN,2); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -159,7 +157,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
+			hints.put(EncodeHintType.MARGIN, 2); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -215,7 +213,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
+			hints.put(EncodeHintType.MARGIN,2); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(content, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -284,7 +282,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN,params.margin); //default is 4
+			hints.put(EncodeHintType.MARGIN,params.margin); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -353,7 +351,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, params.margin); //default is 4
+			hints.put(EncodeHintType.MARGIN, params.margin); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -423,7 +421,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN,params.margin); //default is 4
+			hints.put(EncodeHintType.MARGIN,params.margin); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
