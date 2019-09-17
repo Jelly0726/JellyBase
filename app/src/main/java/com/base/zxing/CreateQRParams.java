@@ -34,6 +34,13 @@ public class CreateQRParams implements Parcelable {
      * 生成二维码的下方水印文字
      */
     public String watermarkText;
+    /**
+     * 生成二维码的边框宽度
+     */
+    public int margin=4;
+
+    public CreateQRParams() {
+    }
 
     @Override
     public int describeContents() {
@@ -48,9 +55,7 @@ public class CreateQRParams implements Parcelable {
         dest.writeParcelable(this.conterBitmap, flags);
         dest.writeParcelable(this.watermarkBitmap, flags);
         dest.writeString(this.watermarkText);
-    }
-
-    public CreateQRParams() {
+        dest.writeInt(this.margin);
     }
 
     protected CreateQRParams(Parcel in) {
@@ -60,6 +65,7 @@ public class CreateQRParams implements Parcelable {
         this.conterBitmap = in.readParcelable(Bitmap.class.getClassLoader());
         this.watermarkBitmap = in.readParcelable(Bitmap.class.getClassLoader());
         this.watermarkText = in.readString();
+        this.margin = in.readInt();
     }
 
     public static final Creator<CreateQRParams> CREATOR = new Creator<CreateQRParams>() {

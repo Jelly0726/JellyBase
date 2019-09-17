@@ -10,6 +10,8 @@ import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
+import com.base.appManager.BaseApplication;
+import com.base.applicationUtil.AppUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
@@ -108,7 +110,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -157,7 +159,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -200,7 +202,8 @@ public class CreateQRImage
 	 * @param watermark 二维码下方中间水印图标（可以为null）
 	 * @return 返回 生成二维码Bitmap的结果
 	 */
-	public static boolean createQRImage(@NonNull Context gContext,@NonNull String content, Bitmap logoBm, Bitmap watermark, String filePath) {
+	public static boolean createQRImage(@NonNull Context gContext,@NonNull String content,
+										Bitmap logoBm, Bitmap watermark, String filePath) {
 		try {
 			if (content == null || "".equals(content)) {
 				return false;
@@ -212,7 +215,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN, AppUtils.dipTopx(BaseApplication.getInstance(), 4)); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(content, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -258,7 +261,7 @@ public class CreateQRImage
 	 * 生成二维码Bitmap
 	 * @return 返回 生成二维码Bitmap的结果
 	 */
-	public static Bitmap createQRImage(@NonNull Context gContext,CreateQRParams params) {
+	public static Bitmap createQRImage(@NonNull Context gContext, CreateQRParams params) {
 		try {
 			if (params.str == null || "".equals(params.str)) {
 				return null;
@@ -281,7 +284,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN,params.margin); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -350,7 +353,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN, params.margin); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -420,7 +423,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 1); //default is 4
+			hints.put(EncodeHintType.MARGIN,params.margin); //default is 4
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(params.str, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
@@ -508,11 +511,11 @@ public class CreateQRImage
 		float scale = resources.getDisplayMetrics().density;
 		//Bitmap bitmap =
 		//		BitmapFactory.decodeResource(resources, gResId);
-		android.graphics.Bitmap.Config bitmapConfig =
+		Bitmap.Config bitmapConfig =
 				bitmap.getConfig();
 		// set default bitmap config if none
 		if(bitmapConfig == null) {
-			bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+			bitmapConfig = Bitmap.Config.ARGB_8888;
 		}
 		// resource bitmaps are imutable,
 		// so we need to convert it to mutable one
