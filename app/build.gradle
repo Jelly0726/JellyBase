@@ -343,7 +343,7 @@ repositories {
         implementation 'com.zzhoujay:html:1.0.2'//latest-version
 
         //Android图表视图/图形视图库
-        implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+        implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
         implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
 
         //RecyclerView侧滑菜单
