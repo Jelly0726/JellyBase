@@ -46,7 +46,7 @@ public class ColorUtils {
     public static String toHexColor(int color) {
         String A,R, G, B;
         StringBuffer sb = new StringBuffer();
-        A=Integer.toHexString(Color.alpha(color));
+        A = Integer.toHexString(Color.alpha(color));
         R = Integer.toHexString(Color.red(color));
         G = Integer.toHexString(Color.green(color));
         B = Integer.toHexString(Color.blue(color));
