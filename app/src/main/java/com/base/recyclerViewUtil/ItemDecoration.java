@@ -287,17 +287,12 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
             canvas.restore();
         }else if (layoutManager instanceof LinearLayoutManager) {
             canvas.save();
-            for (int i = 0; i < childCount; i++) {
-                View view = layoutManager.getChildAt(i);
-                assert view != null;
-                int position = parent.getChildLayoutPosition(view);
-                if (orientation == RecyclerView.VERTICAL) {
-                    //纵向布局分割线
-                    drawVertical(canvas, parent);
-                } else {
-                    //横向布局分割线
-                    drawHorizontal(canvas, parent);
-                }
+            if (orientation == RecyclerView.VERTICAL) {
+                //纵向布局分割线
+                drawVertical(canvas, parent);
+            } else {
+                //横向布局分割线
+                drawHorizontal(canvas, parent);
             }
             canvas.restore();
         }
