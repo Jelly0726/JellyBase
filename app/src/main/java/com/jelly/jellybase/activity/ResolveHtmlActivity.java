@@ -4,12 +4,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.BaseActivity;
 import com.base.appManager.BaseApplication;
 import com.base.richtext.OkHttpImageDownloader;
 import com.jelly.jellybase.R;
@@ -21,32 +20,27 @@ import com.zzhoujay.richtext.callback.Callback;
 import com.zzhoujay.richtext.callback.DrawableGetter;
 import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
 /**
  * Created by Administrator on 2017/12/18.
  */
 
-public class ResolveHtmlActivity extends AppCompatActivity implements View.OnClickListener{
-    private LinearLayout left_back;
-    private TextView productDetail_tv;
-
-    @Override
-    public void onDestroy() {
-        // activity onDestory时
-        RichText.clear(this);
-        //在应用退出时调用
-        RichText.recycle();
-        super.onDestroy();
-    }
-
+public class ResolveHtmlActivity extends BaseActivity {
+    private Unbinder unbinder;
+    @BindView(R.id.productDetail_tv)
+    TextView productDetail_tv;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.resolve_html_activity);
-
-        left_back= (LinearLayout) findViewById(R.id.left_back);
-        left_back.setOnClickListener(this);
-
-        productDetail_tv=findViewById(R.id.productDetail_tv);
+        unbinder= ButterKnife.bind(this);
+        iniVew();
+    }
+    private void iniVew(){
         String html="<h1>百度一下,你就知道官</h1>"
                 + "全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，" +
                 "可以瞬间找到相关的搜索结果。"
@@ -86,8 +80,17 @@ public class ResolveHtmlActivity extends AppCompatActivity implements View.OnCli
                 .into(productDetail_tv);
     }
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    protected void onDestroy() {
+        super.onDestroy();
+        // activity onDestory时
+        RichText.clear(this);
+        //在应用退出时调用
+        RichText.recycle();
+        unbinder.unbind();
+    }
+    @OnClick({R.id.left_back})
+    public void onClick(View view){
+        switch (view.getId()){
             case R.id.left_back:
                 finish();
                 break;

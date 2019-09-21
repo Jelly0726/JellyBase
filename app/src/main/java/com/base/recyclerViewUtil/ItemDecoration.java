@@ -16,12 +16,21 @@ import com.base.Utils.ColorUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 /**
- * 项目名称：RefreshAndLoad
- * 类描述：对适配器的item布局的装饰
- * 作者：峰哥
- * 创建时间：2016/11/30 16:54
- * 邮箱：470794349@qq.com
- * 修改简介：
+ * 万能分隔线
+ * StaggeredGridLayoutManager布局使用注意
+ * //定义瀑布流管理器，第一个参数是列数，第二个是方向。
+ * final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+ *         layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);//不设置的话，图片闪烁错位，有可能有整列错位的情况。
+ *         mRecyclerView.setLayoutManager(layoutManager);//设置瀑布流管理器
+ *         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(40));//边距和分割线，需要自己定义
+ *         mRecyclerView.setAdapter(new MyAdapter(this));//设置适配器
+ *         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+ *             @Override
+ *             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+ *                 super.onScrollStateChanged(recyclerView, newState);
+ *                 layoutManager.invalidateSpanAssignments();//这行主要解决了当加载更多数据时，底部需要重绘，否则布局可能衔接不上。
+ *             }
+ *         });
  */
 public class ItemDecoration extends RecyclerView.ItemDecoration{
 
@@ -99,28 +108,39 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
                 outRect.set(this.outRect.left, 0, 0,0);
             }
         } else if (parent.getLayoutManager() instanceof GridLayoutManager){
-            final int position = parent.getChildAdapterPosition(view);
             /**
-             * 表格格局分割线
-             * <p>
-             *      1：当是第一个Item的时候，四周全部需要分割线
-             *      2：当是第一行Item的时候，需要额外添加顶部的分割线
-             *      3：当是第一列Item的时候，需要额外添加左侧的分割线
-             *      4：默认情况全部添加底部和右侧的分割线
-             * </p>
+             *
              */
-            RecyclerView.LayoutManager mLayoutManager = parent.getLayoutManager();
-            if (mLayoutManager instanceof GridLayoutManager) {
-                GridLayoutManager mGridLayoutManager = (GridLayoutManager) mLayoutManager;
-                int mSpanCount = mGridLayoutManager.getSpanCount();
-                if (position == 0) {//1
-                    outRect.set(this.outRect.left, this.outRect.top, this.outRect.right, this.outRect.bottom);
-                } else if ((position + 1) <= mSpanCount) {//2
-                    outRect.set(0, this.outRect.top, this.outRect.right, this.outRect.bottom);
-                } else if (((position + mSpanCount) % mSpanCount) == 0) {//3
-                    outRect.set(this.outRect.left, 0, this.outRect.right, this.outRect.bottom);
-                } else {//4
-                    outRect.set(0, 0, this.outRect.right, this.outRect.bottom);
+            GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
+            final GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+            final int childPosition = parent.getChildAdapterPosition(view);
+            final int spanCount = layoutManager.getSpanCount();
+            if (layoutManager.getOrientation() == GridLayoutManager.VERTICAL) {
+                //判断是否在第一排
+                if (layoutManager.getSpanSizeLookup().getSpanGroupIndex(childPosition, spanCount) == 0) {//第一排的需要上面
+                    outRect.top = this.outRect.top;
+                }
+                outRect.bottom = this.outRect.bottom;
+                //这里忽略和合并项的问题，只考虑占满和单一的问题
+                if (lp.getSpanSize() == spanCount) {//占满
+                    outRect.left = this.outRect.left;
+                    outRect.right = this.outRect.right;
+                } else {
+                    outRect.left = (int) (((float) (spanCount - lp.getSpanIndex())) / spanCount * this.outRect.left);
+                    outRect.right = (int) (((float) this.outRect.right * (spanCount + 1) / spanCount) - outRect.left);
+                }
+            } else {
+                if (layoutManager.getSpanSizeLookup().getSpanGroupIndex(childPosition, spanCount) == 0) {//第一排的需要left
+                    outRect.left = this.outRect.left;
+                }
+                outRect.right = this.outRect.right;
+                //这里忽略和合并项的问题，只考虑占满和单一的问题
+                if (lp.getSpanSize() == spanCount) {//占满
+                    outRect.top = this.outRect.top;
+                    outRect.bottom = this.outRect.bottom;
+                } else {
+                    outRect.top = (int) (((float) (spanCount - lp.getSpanIndex())) / spanCount * this.outRect.top);
+                    outRect.bottom = (int) (((float) this.outRect.bottom * (spanCount + 1) / spanCount) - outRect.top);
                 }
             }
         } else if (parent.getLayoutManager() instanceof LinearLayoutManager){
@@ -176,92 +196,94 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
 
     /**
      * 判断是否是第一行
-     * @param orientation 方向
+     * @param parent RecyclerView
      * @param position    对应的位置
-     * @param columnCount 总列数
-     * @param childCount  总网格数
      * @return
      */
-    private boolean isFirstRaw(int orientation, int position, int columnCount, int childCount) {
-        if (orientation == RecyclerView.VERTICAL) {
-            return position < columnCount;
+    private boolean isFirstRaw(RecyclerView parent, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        int spanCount = getSpanCount(layoutManager);//总列数
+        if (getOrientation(layoutManager) == RecyclerView.VERTICAL) {
+            return position < spanCount;
         } else {
-            if (columnCount == 1) return true;
-            return position % columnCount == 0;
+            if (spanCount == 1) return true;
+            return position % spanCount == 0;
         }
     }
     /**
      * 判断是否是最后一行
-     * @param orientation 方向
+     * @param parent RecyclerView
      * @param position    对应的位置
-     * @param columnCount 总列数
-     * @param childCount  总网格数
      * @return
      */
-    private boolean isLastRaw(int orientation, int position, int columnCount, int childCount) {
-        if (orientation == RecyclerView.VERTICAL) {
-            if (columnCount == 1) {
+    private boolean isLastRaw(RecyclerView parent, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        int spanCount = getSpanCount(layoutManager);//总列数
+        int childCount = layoutManager.getChildCount();//总网格数
+        if (getOrientation(layoutManager) == RecyclerView.VERTICAL) {
+            if (spanCount == 1) {
                 return position + 1 == childCount;
             } else {
-                int lastRawItemCount = childCount % columnCount;
-                int rawCount = (childCount - lastRawItemCount) / columnCount + (lastRawItemCount > 0 ? 1 : 0);
+                int lastRawItemCount = childCount % spanCount;
+                int rawCount = (childCount - lastRawItemCount) / spanCount + (lastRawItemCount > 0 ? 1 : 0);
 
-                int rawPositionJudge = (position + 1) % columnCount;
+                int rawPositionJudge = (position + 1) % spanCount;
                 if (rawPositionJudge == 0) {
-                    int positionRaw = (position + 1) / columnCount;
+                    int positionRaw = (position + 1) / spanCount;
                     return rawCount == positionRaw;
                 } else {
-                    int rawPosition = (position + 1 - rawPositionJudge) / columnCount + 1;
+                    int rawPosition = (position + 1 - rawPositionJudge) / spanCount + 1;
                     return rawCount == rawPosition;
                 }
             }
         } else {
-            if (columnCount == 1) return true;
-            return (position + 1) % columnCount == 0;
+            if (spanCount == 1) return true;
+            return (position + 1) % spanCount == 0;
         }
     }
     /**
      * 判断是否是第一列
-     * @param orientation 方向
+     * @param parent RecyclerView
      * @param position    对应的位置
-     * @param columnCount 总列数
-     * @param childCount  总网格数
      * @return
      */
-    private boolean isFirstColumn(int orientation, int position, int columnCount, int childCount) {
-        if (orientation == RecyclerView.VERTICAL) {
-            if (columnCount == 1) return true;
-            return position % columnCount == 0;
+    private boolean isFirstColumn(RecyclerView parent, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        int spanCount = getSpanCount(layoutManager);//总列数
+        if (getOrientation(layoutManager) == RecyclerView.VERTICAL) {
+            if (spanCount == 1) return true;
+            return position % spanCount == 0;
         } else {
-            return position < columnCount;
+            return position < spanCount;
         }
     }
     /**
      * 判断是否是最后一列
-     * @param orientation 方向
+     * @param parent RecyclerView
      * @param position    对应的位置
-     * @param columnCount 总列数
-     * @param childCount  总网格数
      * @return
      */
-    private boolean isLastColumn(int orientation, int position, int columnCount, int childCount) {
-        if (orientation == RecyclerView.VERTICAL) {
-            if (columnCount == 1) return true;
-            return ((position + 1) % columnCount == 0)
+    private boolean isLastColumn(RecyclerView parent, int position) {
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        int spanCount = getSpanCount(layoutManager);//总列数
+        int childCount = layoutManager.getChildCount();//总网格数
+        if (getOrientation(layoutManager) == RecyclerView.VERTICAL) {
+            if (spanCount == 1) return true;
+            return ((position + 1) % spanCount == 0)
                     ||(position + 1 == childCount);
         } else {
-            if (columnCount == 1) {
+            if (spanCount == 1) {
                 return position + 1 == childCount;
             } else {
-                int lastRawItemCount = childCount % columnCount;
-                int rawCount = (childCount - lastRawItemCount) / columnCount + (lastRawItemCount > 0 ? 1 : 0);
+                int lastRawItemCount = childCount % spanCount;
+                int rawCount = (childCount - lastRawItemCount) / spanCount + (lastRawItemCount > 0 ? 1 : 0);
 
-                int rawPositionJudge = (position + 1) % columnCount;
+                int rawPositionJudge = (position + 1) % spanCount;
                 if (rawPositionJudge == 0) {
-                    int positionRaw = (position + 1) / columnCount;
+                    int positionRaw = (position + 1) / spanCount;
                     return rawCount == positionRaw;
                 } else {
-                    int rawPosition = (position + 1 - rawPositionJudge) / columnCount + 1;
+                    int rawPosition = (position + 1 - rawPositionJudge) / spanCount + 1;
                     return rawCount == rawPosition;
                 }
             }
@@ -272,9 +294,6 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         assert layoutManager != null;
         int orientation = getOrientation(layoutManager);
-        int spanCount = getSpanCount(layoutManager);
-        int childCount = layoutManager.getChildCount();
-
         if (layoutManager instanceof GridLayoutManager) {
             canvas.save();
             //表格格局分割线
@@ -412,16 +431,11 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int right = left + outRect.right;
         int bottom = mChild.getBottom() + mChildLayoutParams.bottomMargin;
         if (isGridLayoutManager(recyclerView)) {
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            assert layoutManager != null;
-            int orientation = getOrientation(layoutManager);
-            int spanCount = getSpanCount(layoutManager);
-            int childCount = layoutManager.getChildCount();
             int position = recyclerView.getChildLayoutPosition(mChild);
-            boolean firstRaw = isFirstRaw(orientation, position, spanCount, childCount);
-            boolean lastRaw = isLastRaw(orientation, position, spanCount, childCount);
-            boolean firstColumn = isFirstColumn(orientation, position, spanCount, childCount);
-            boolean lastColumn = isLastColumn(orientation, position, spanCount, childCount);
+            boolean firstRaw = isFirstRaw(recyclerView, position);
+            boolean lastRaw = isLastRaw(recyclerView, position);
+            boolean firstColumn = isFirstColumn(recyclerView, position);
+            boolean lastColumn = isLastColumn(recyclerView, position);
             if (firstRaw&&lastColumn)
                 top = mChild.getTop() - mChildLayoutParams.topMargin - outRect.top;
         }
