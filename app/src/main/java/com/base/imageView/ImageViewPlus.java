@@ -55,6 +55,10 @@ public class ImageViewPlus extends AppCompatImageView {
 	 * 椭圆形
 	 */
 	public static final int TYPE_OVAL = 3;
+	/**
+	 * 弧形
+	 */
+	public static final int TYPE_ARC = 4;
 	private static final int DEFAULT_TYPE = TYPE_NONE;
 	private static final int DEFAULT_BORDER_COLOR = Color.TRANSPARENT;
 	private static final int DEFAULT_BORDER_WIDTH = 0;
@@ -63,6 +67,16 @@ public class ImageViewPlus extends AppCompatImageView {
 	private int mType;
 	private int mBorderColor;
 	private int mBorderWidth;
+	//弧形的高占控件宽高的百分比
+	private float mArcHeight =0;
+	//弧形的模式 外凸、内凹
+	private int mArcMode =0;
+	//弧形的位置
+	private int mArcLocation =0;
+	private int mLeft=0x001;
+	private int mTop=0x002;
+	private int mRight=0x008;
+	private int mBottom=0x004;
 
 	private Paint mPaintBitmap = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Paint mPaintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -95,6 +109,9 @@ public class ImageViewPlus extends AppCompatImageView {
 		mType = ta.getInt(R.styleable.ImageViewPlus_ivpType, DEFAULT_TYPE);
 		mBorderColor = ta.getColor(R.styleable.ImageViewPlus_ivpBorderColor, DEFAULT_BORDER_COLOR);
 		mBorderWidth = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpBorderWidth, dip2px(DEFAULT_BORDER_WIDTH));
+		mArcHeight = ta.getFloat(R.styleable.ImageViewPlus_ivpArcHeight,1);
+		mArcMode=ta.getInt(R.styleable.ImageViewPlus_ivpArcMode,0);
+		mArcLocation=ta.getInt(R.styleable.ImageViewPlus_ivpArcLocation,0);
 		float mRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
 		if (mRadius>0){
 			mRadiusArray = new float[]{
@@ -208,11 +225,198 @@ public class ImageViewPlus extends AppCompatImageView {
 //					canvas.drawRoundRect(mRectBitmap, bitmapRadius, bitmapRadius, mPaintBitmap);
 //				}
 			} else if(mType == TYPE_OVAL){
-				mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth, dstHeight - halfBorderWidth);
-				mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth, dstHeight - doubleBorderWidth);
+				mRectBorder.set(halfBorderWidth, halfBorderWidth, dstWidth - halfBorderWidth,
+						dstHeight - halfBorderWidth);
+				mRectBitmap.set(0.0f, 0.0f, dstWidth - doubleBorderWidth,
+						dstHeight - doubleBorderWidth);
 				canvas.drawOval(mRectBorder, mPaintBorder);
 				canvas.translate(mBorderWidth, mBorderWidth);
 				canvas.drawOval(mRectBitmap, mPaintBitmap);
+			}else if (mType == TYPE_ARC){
+				if ((mArcLocation & mLeft)==mLeft){//左边弧形
+					//画外边框
+					Path mBorderPath = new Path();
+					if (mArcMode == 1) {//内凹
+						mBorderPath.moveTo(halfBorderWidth, halfBorderWidth);
+						//画左边
+						mBorderPath.cubicTo(halfBorderWidth,halfBorderWidth
+								, (getWidth() * mArcHeight) - halfBorderWidth, getHeight() /2
+								, halfBorderWidth, getHeight() - halfBorderWidth);
+						//画下面直线
+						mBorderPath.lineTo(getWidth()-halfBorderWidth, getHeight() - halfBorderWidth);
+						//画右边
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, halfBorderWidth);
+					} else {
+						mBorderPath.moveTo((getWidth() * mArcHeight) - halfBorderWidth, halfBorderWidth);
+						//画左边
+						mBorderPath.cubicTo((getWidth() * mArcHeight) - halfBorderWidth,halfBorderWidth
+								,  -(getWidth() * mArcHeight)-doubleBorderWidth*2, getHeight() /2
+								, (getWidth() * mArcHeight) - halfBorderWidth, getHeight() - halfBorderWidth);
+						//画下面直线
+						mBorderPath.lineTo(getWidth()-halfBorderWidth, getHeight() - halfBorderWidth);
+						//画右边
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, halfBorderWidth);
+					}
+					mBorderPath.close();
+//				canvas.clipPath(mBorderPath);
+					canvas.drawPath(mBorderPath, mPaintBorder);
+					canvas.translate(mBorderWidth, mBorderWidth);
+					//画图片
+					Path mBitmapPath = new Path();
+					if (mArcMode == 1) {//内凹
+						mBitmapPath.moveTo(0, 0);
+						//画左边
+						mBitmapPath.cubicTo(halfBorderWidth,-halfBorderWidth
+								, (getWidth() * mArcHeight) - doubleBorderWidth, getHeight() /2
+								,  halfBorderWidth, getHeight() - doubleBorderWidth);
+						//画下面
+						mBitmapPath.lineTo(getWidth()-doubleBorderWidth, getHeight() -doubleBorderWidth);
+						//画右边
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, 0);
+					} else {
+						mBitmapPath.moveTo((getWidth() * mArcHeight)- halfBorderWidth*3 ,0);
+						//画左边
+						mBitmapPath.cubicTo((getWidth() * mArcHeight) - halfBorderWidth*3,halfBorderWidth
+								,  -(getWidth() * mArcHeight)-doubleBorderWidth*2+halfBorderWidth, getHeight() /2-halfBorderWidth*3
+								, (getWidth() * mArcHeight) -doubleBorderWidth, getHeight() - doubleBorderWidth);
+						//画下面直线
+						mBitmapPath.lineTo(getWidth()-doubleBorderWidth, getHeight() - doubleBorderWidth);
+						//画右边
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, 0);
+					}
+					mBitmapPath.close();
+					canvas.drawPath(mBitmapPath, mPaintBitmap);
+				}
+				if ((mArcLocation&mTop)==mTop){//上边弧形
+					//画外边框
+					Path mBorderPath = new Path();
+					if (mArcMode == 1) {//内凹
+						mBorderPath.moveTo(halfBorderWidth, halfBorderWidth);
+						mBorderPath.lineTo(halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, - halfBorderWidth);
+						//画上边
+						mBorderPath.cubicTo(getWidth() +halfBorderWidth*3,  doubleBorderWidth*2
+								,getWidth() / 2, 2*(getHeight() * mArcHeight)
+								, halfBorderWidth, halfBorderWidth);
+					} else {
+						mBorderPath.moveTo(halfBorderWidth, (getHeight() * mArcHeight));
+						mBorderPath.lineTo(halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, (getHeight() * mArcHeight));
+						//画上边
+						mBorderPath.cubicTo(getWidth() +halfBorderWidth*3, (getHeight() * mArcHeight)
+								,getWidth() / 2+halfBorderWidth, -(getHeight() * mArcHeight)-mBorderWidth
+								, halfBorderWidth, (getHeight() * mArcHeight));
+					}
+					mBorderPath.close();
+//				canvas.clipPath(mBorderPath);
+					canvas.drawPath(mBorderPath, mPaintBorder);
+					canvas.translate(mBorderWidth, mBorderWidth);
+					//画图片
+					Path mBitmapPath = new Path();
+					if (mArcMode == 1) {//内凹
+						mBitmapPath.moveTo(0, -halfBorderWidth);
+						mBitmapPath.lineTo(0, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, - doubleBorderWidth);
+						//画上边
+						mBitmapPath.cubicTo(getWidth() +doubleBorderWidth*2,  doubleBorderWidth*2-halfBorderWidth
+								,getWidth() / 2, 2*(getHeight() * mArcHeight)-halfBorderWidth
+								, 0, 0);
+					} else {
+						mBitmapPath.moveTo(0, (getHeight() * mArcHeight));
+						mBitmapPath.lineTo(0, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, (getHeight() * mArcHeight));
+						//画上边
+						mBitmapPath.cubicTo(getWidth() +doubleBorderWidth,  (getHeight() * mArcHeight)-doubleBorderWidth-halfBorderWidth
+								,getWidth() / 2-doubleBorderWidth*4, -(getHeight() * mArcHeight)-halfBorderWidth*2
+								, 0, (getHeight() * mArcHeight)-halfBorderWidth);
+					}
+					mBitmapPath.close();
+					canvas.drawPath(mBitmapPath, mPaintBitmap);
+				}
+				if ((mArcLocation&mRight)==mRight){//右边弧形
+					//画外边框
+					Path mBorderPath = new Path();
+					mBorderPath.moveTo(halfBorderWidth, halfBorderWidth);
+					if (mArcMode == 1) {//内凹
+						mBorderPath.lineTo(getWidth() -halfBorderWidth,  halfBorderWidth);
+						//画右边
+						mBorderPath.quadTo(getWidth() - (getWidth() * mArcHeight) - halfBorderWidth,getHeight() / 2
+								, getWidth() - halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(halfBorderWidth, getHeight() - halfBorderWidth);
+					} else {
+						mBorderPath.lineTo(getWidth() - getWidth() * mArcHeight - halfBorderWidth,halfBorderWidth);
+						//画右边
+						mBorderPath.quadTo(getWidth() + getWidth() * mArcHeight - halfBorderWidth,getHeight() / 2 ,
+								getWidth() - getWidth() * mArcHeight - halfBorderWidth,getHeight() - halfBorderWidth);
+						mBorderPath.lineTo( halfBorderWidth, getHeight() -halfBorderWidth);
+					}
+					mBorderPath.close();
+//				canvas.clipPath(mBorderPath);
+					canvas.drawPath(mBorderPath, mPaintBorder);
+					canvas.translate(mBorderWidth, mBorderWidth);
+					//画图片
+					Path mBitmapPath = new Path();
+					mBitmapPath.moveTo(0, 0);
+					if (mArcMode == 1) {//内凹
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth,0);
+						//画右边
+						mBitmapPath.quadTo( getWidth() - (getWidth() * mArcHeight) - halfBorderWidth * 3,getHeight() / 2,
+								getWidth() - doubleBorderWidth, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(0, getHeight() - doubleBorderWidth);
+					} else {
+						mBitmapPath.lineTo(getWidth() - getWidth() * mArcHeight - halfBorderWidth * 3,0);
+						//画右边
+						mBitmapPath.quadTo(getWidth() + getWidth() * mArcHeight - doubleBorderWidth,getHeight() / 2,
+								getWidth() - getWidth() * mArcHeight - halfBorderWidth * 3,getHeight() - doubleBorderWidth );
+						mBitmapPath.lineTo( 0,getHeight() - doubleBorderWidth);
+					}
+					mBitmapPath.close();
+					canvas.drawPath(mBitmapPath, mPaintBitmap);
+				}
+				if ((mArcLocation&mBottom)==mBottom) {//下边弧形
+					//画外边框
+					Path mBorderPath = new Path();
+					mBorderPath.moveTo(halfBorderWidth, halfBorderWidth);
+					if (mArcMode == 1) {//内凹
+						mBorderPath.lineTo(halfBorderWidth, getHeight() - halfBorderWidth);
+						//画下边
+						mBorderPath.quadTo(getWidth() / 2, getHeight() - (getHeight() * mArcHeight) - halfBorderWidth
+								, getWidth() - halfBorderWidth, getHeight() - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, halfBorderWidth);
+					} else {
+						mBorderPath.lineTo(halfBorderWidth, getHeight() - getHeight() * mArcHeight - halfBorderWidth);
+						//画下边
+						mBorderPath.quadTo(getWidth() / 2, getHeight() + getHeight() * mArcHeight - halfBorderWidth,
+								getWidth() - halfBorderWidth, getHeight() - getHeight() * mArcHeight - halfBorderWidth);
+						mBorderPath.lineTo(getWidth() - halfBorderWidth, halfBorderWidth);
+					}
+					mBorderPath.close();
+//				canvas.clipPath(mBorderPath);
+					canvas.drawPath(mBorderPath, mPaintBorder);
+					canvas.translate(mBorderWidth, mBorderWidth);
+					//画图片
+					Path mBitmapPath = new Path();
+					mBitmapPath.moveTo(0, 0);
+					if (mArcMode == 1) {//内凹
+						mBitmapPath.lineTo(0, getHeight() - doubleBorderWidth);
+						//画下边
+						mBitmapPath.quadTo(getWidth() / 2, getHeight() - (getHeight() * mArcHeight) - halfBorderWidth * 3
+								, getWidth() - doubleBorderWidth, getHeight() - doubleBorderWidth);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, 0);
+					} else {
+						mBitmapPath.lineTo(0, getHeight() - getHeight() * mArcHeight - halfBorderWidth * 3);
+						//画下边
+						mBitmapPath.quadTo(getWidth() / 2, getHeight() + getHeight() * mArcHeight - doubleBorderWidth,
+								getWidth() - doubleBorderWidth, getHeight() - getHeight() * mArcHeight - halfBorderWidth * 3);
+						mBitmapPath.lineTo(getWidth() - doubleBorderWidth, 0);
+					}
+					mBitmapPath.close();
+					canvas.drawPath(mBitmapPath, mPaintBitmap);
+				}
 			}
 		} else {
 			super.onDraw(canvas);

@@ -9,6 +9,8 @@
         <enum name="round" value="2" />
         <!--椭圆-->
         <enum name="oval" value="3" />
+        <!--弧形-->
+        <enum name="arc" value="4" />
     </attr>
     <!--边框颜色-->
     <attr name="ivpBorderColor" format="color" />
@@ -24,7 +26,22 @@
     <attr name="ivpBottomLeftRadius" format="dimension" />
     <!--右下角圆角大小-->
     <attr name="ivpBottomRightRadius" format="dimension" />
-
+    <!--弧形高度占控件高度的百分比（0到1）-->
+    <attr name="ivpArcHeight" format="float"/>
+    <!--弧形的模式-->
+    <attr name="ivpArcMode" format="float">
+        <!--外凸-->
+        <enum name="raised" value="0" />
+        <!--内凹-->
+        <enum name="sunken" value="1" />
+    </attr>
+    <!--弧形的位置(暂不支持多个位置同时)-->
+    <attr name="ivpArcLocation">
+        <flag name="left" value="0x001"/>
+        <flag name="top" value="0x002"/>
+        <flag name="right" value="0x008"/>
+        <flag name="bottom" value="0x004"/>
+    </attr>
     <declare-styleable name="ImageViewPlus">
         <attr name="ivpType" />
         <attr name="ivpBorderColor" />
@@ -34,5 +51,8 @@
         <attr name="ivpTopRightRadius" />
         <attr name="ivpBottomLeftRadius" />
         <attr name="ivpBottomRightRadius" />
+        <attr name="ivpArcHeight" />
+        <attr name="ivpArcMode" />
+        <attr name="ivpArcLocation" />
     </declare-styleable>
 </resources>
