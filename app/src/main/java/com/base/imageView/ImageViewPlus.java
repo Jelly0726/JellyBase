@@ -20,8 +20,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-
 import com.jelly.jellybase.R;
+
 
 /**
  *  <com.base.imageview.ImageViewPlus
@@ -214,11 +214,11 @@ public class ImageViewPlus extends AppCompatImageView {
 				}
 				if (rawBitmap.getWidth() < viewWidth) {
 					int bWidth =viewWidth - rawBitmap.getWidth();
-					rawBitmap = addFrame(rawBitmap, bWidth, 0, Color.parseColor("#ffffffff"));
+					rawBitmap = addFrame(rawBitmap, bWidth, 0,Color.WHITE);
 				}
 				if (viewHeight > rawBitmap.getHeight()) {
 					int bWidth = viewHeight  - rawBitmap.getHeight();
-					rawBitmap = addFrame(rawBitmap, 0, bWidth, Color.parseColor("#ffffffff"));
+					rawBitmap = addFrame(rawBitmap, 0, bWidth,Color.WHITE);
 				}
 			}
 			if (mShader == null || !rawBitmap.equals(mRawBitmap)){
@@ -531,9 +531,9 @@ public class ImageViewPlus extends AppCompatImageView {
 		int newHeight = src.getHeight() + borderHeight;
 		Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(out);
-		Rect rec = canvas.getClipBounds();
-		rec.bottom--;
-		rec.right--;
+		Rect rec = new Rect();
+		rec.bottom=newHeight--;
+		rec.right=newWidth--;
 		Paint paint = new Paint();
 		paint.setColor(color);
 		paint.setStyle(Paint.Style.STROKE);

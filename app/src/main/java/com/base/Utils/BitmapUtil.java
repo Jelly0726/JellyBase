@@ -965,9 +965,9 @@ public class BitmapUtil {
         int newHeight = src.getHeight() + borderHeight;
         Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(out);
-        Rect rec = canvas.getClipBounds();
-        rec.bottom--;
-        rec.right--;
+        Rect rec = new Rect();
+        rec.bottom=newHeight--;
+        rec.right=newWidth--;
         Paint paint = new Paint();
         paint.setColor(color);
         paint.setStyle(Paint.Style.STROKE);
