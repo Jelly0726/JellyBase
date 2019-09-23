@@ -526,21 +526,40 @@ public class BitmapUtil {
         if (!src.isRecycled()) src.recycle();
         return res;
     }
+
     /**
      *  设置bitmap的宽高
      *
      * @param bm
-     * @param newWidth
-     * @param newHeight
+     * @param newWidth 为0则以高为准
+     * @param newHeight 为0则以宽为准
      * @return
      */
-    public static Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+    public static Bitmap zoomImg(Bitmap bm, float newWidth, float newHeight) {
+        if (newWidth<=0&&newHeight<=0)return bm;
         // 获得图片的宽高
         int width = bm.getWidth();
         int height = bm.getHeight();
         // 计算缩放比例
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
+        float scaleWidth=0f;
+        float scaleHeight=0f;
+        /**
+         * height/width=newHeight/newWidth
+         * newHeight=newWidth*(height/width);
+         * newWidth=newHeight/(height/width);
+         */
+        if(newWidth>0&&newHeight>0) {//判断以哪边为准
+            scaleWidth = newWidth / (float)width;
+            scaleHeight =  newHeight / (float)height;
+        }else if (newWidth>0){//以宽为准 高通过原宽高比计算
+            newHeight=(newWidth*((float)height/(float)width));
+            scaleWidth =  newWidth / (float)width;
+            scaleHeight = newHeight / (float)height;
+        }else if (newHeight>0){//以高为准 宽通过原宽高比计算
+            newWidth=(newHeight/((float)height/(float)width));
+            scaleWidth = newWidth / (float)width;
+            scaleHeight =  newHeight / (float)height;
+        }
         // 取得想要缩放的matrix参数
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
@@ -935,14 +954,15 @@ public class BitmapUtil {
      * 添加颜色边框
      *
      * @param src         源图片
-     * @param borderWidth 边框宽度
+     * @param borderWidth 左右边框宽度
+     * @param borderWidth 上下边框宽度
      * @param color       边框的颜色值
      * @return 带颜色边框图
      */
-    public static Bitmap addFrame(Bitmap src, int borderWidth, int color) {
+    public static Bitmap addFrame(Bitmap src, int borderWidth,int borderHeight, int color) {
         if (isEmptyBitmap(src)) return null;
         int newWidth = src.getWidth() + borderWidth;
-        int newHeight = src.getHeight() + borderWidth;
+        int newHeight = src.getHeight() + borderHeight;
         Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(out);
         Rect rec = canvas.getClipBounds();
@@ -953,7 +973,7 @@ public class BitmapUtil {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(borderWidth);
         canvas.drawRect(rec, paint);
-        canvas.drawBitmap(src, borderWidth / 2, borderWidth / 2, null);
+        canvas.drawBitmap(src, borderWidth / 2, borderHeight / 2, null);
         canvas.save();
         canvas.restore();
         if (!src.isRecycled()) src.recycle();
@@ -1269,23 +1289,7 @@ public class BitmapUtil {
     public static Bitmap toGray(Bitmap src) {
         return toGray(src, false);
     }
-    /**
-     *
-     * @param bm 原图片
-     * @param colcor  遮罩层颜色
-     * @return
-     */
-    public  Bitmap getMaskLayer(Bitmap bm,String colcor){
-        Bitmap bmp = Bitmap.createBitmap(bm.getWidth(),bm.getHeight(),Bitmap.Config.RGB_565);
-        Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        Canvas canvas = new Canvas(bmp);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bm,0,0,paint);
-        canvas.drawColor(Color.parseColor(colcor));
-        return bmp;
 
-    }
     /**
      * 灰色bitmap
      * @param src

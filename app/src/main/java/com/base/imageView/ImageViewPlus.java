@@ -15,12 +15,13 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.jelly.jellybase.R;
-
 
 /**
  *  <com.base.imageview.ImageViewPlus
@@ -39,6 +40,15 @@ import com.jelly.jellybase.R;
  * 实现圆形、圆角，椭圆等自定义图片View可加边框。
  */
 public class ImageViewPlus extends AppCompatImageView {
+
+	private static final String STATE_INSTANCE = "state_instance";
+	private static final String STATE_TYPE = "state_type";
+	private static final String STATE_BORDER_WIDTH = "state_border_width";
+	private static final String STATE_BORDER_COLOR = "state_border_color";
+	private static final String STATE_ARC_HEIGHT = "state_arc_height";
+	private static final String STATE_ARC_MODE = "state_arc_mode";
+	private static final String STATE_ARC_LOCATION = "state_arc_location";
+	private static final String STATE_RADIUS = "state_radius";
 	/**
 	 * android.widget.ImageView
 	 */
@@ -141,6 +151,41 @@ public class ImageViewPlus extends AppCompatImageView {
 		ta.recycle();
 	}
 	@Override
+	protected Parcelable onSaveInstanceState()
+	{
+		Bundle bundle = new Bundle();
+		bundle.putParcelable(STATE_INSTANCE, super.onSaveInstanceState());
+		bundle.putInt(STATE_TYPE, mType);
+		bundle.putFloatArray(STATE_RADIUS, mRadiusArray);
+		bundle.putInt(STATE_BORDER_COLOR, mBorderColor);
+		bundle.putInt(STATE_BORDER_WIDTH, mBorderWidth);
+		bundle.putFloat(STATE_ARC_HEIGHT, mArcHeight);
+		bundle.putInt(STATE_ARC_LOCATION, mArcLocation);
+		bundle.putInt(STATE_ARC_MODE, mArcMode);
+		return bundle;
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Parcelable state)
+	{
+		if (state instanceof Bundle)
+		{
+			Bundle bundle = (Bundle) state;
+			super.onRestoreInstanceState(((Bundle) state)
+					.getParcelable(STATE_INSTANCE));
+			mType = bundle.getInt(STATE_TYPE);
+			mBorderColor = bundle.getInt(STATE_BORDER_COLOR);
+			mBorderWidth = bundle.getInt(STATE_BORDER_WIDTH);
+			mArcHeight = bundle.getFloat(STATE_ARC_HEIGHT);
+			mArcMode=bundle.getInt(STATE_ARC_MODE);
+			mArcLocation=bundle.getInt(STATE_ARC_LOCATION);
+		} else
+		{
+			super.onRestoreInstanceState(state);
+		}
+
+	}
+	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		// TODOAuto-generated method stub
 		super.onSizeChanged(w,h, oldw, oldh);
@@ -152,7 +197,6 @@ public class ImageViewPlus extends AppCompatImageView {
 			return;
 		}
 		Bitmap rawBitmap = getBitmap(drawable);
-
 		if (rawBitmap != null && mType != TYPE_NONE){
 			int viewWidth = getWidth();
 			int viewHeight = getHeight();
@@ -162,15 +206,40 @@ public class ImageViewPlus extends AppCompatImageView {
 			float halfBorderWidth = mBorderWidth / 2.0f;
 			float doubleBorderWidth = mBorderWidth * 2;
 
+			if (mType == TYPE_ARC&&!rawBitmap.equals(mRawBitmap)) {//图片是否缩放过的
+				if (viewHeight < viewWidth) {//
+					rawBitmap = zoomImg(rawBitmap, 0, viewHeight);
+				} else if (viewHeight >= viewWidth) {
+					rawBitmap = zoomImg(rawBitmap, viewWidth, 0);
+				}
+				if (rawBitmap.getWidth() < viewWidth) {
+					int bWidth =viewWidth - rawBitmap.getWidth();
+					rawBitmap = addFrame(rawBitmap, bWidth, 0, Color.parseColor("#ffffffff"));
+				}
+				if (viewHeight > rawBitmap.getHeight()) {
+					int bWidth = viewHeight  - rawBitmap.getHeight();
+					rawBitmap = addFrame(rawBitmap, 0, bWidth, Color.parseColor("#ffffffff"));
+				}
+			}
 			if (mShader == null || !rawBitmap.equals(mRawBitmap)){
 				mRawBitmap = rawBitmap;
 				mShader = new BitmapShader(mRawBitmap, TileMode.CLAMP, TileMode.CLAMP);
 			}
+			float scaleX = 1.0f;
+			float scaleY = 1.0f;
+			if (mType == TYPE_CIRCLE){
+				// 拿到bitmap宽或高的小值
+				int bSize = Math.min(rawBitmap.getWidth(), rawBitmap.getHeight());
+				scaleX = viewMinSize * 1.0f / bSize;
+				scaleY = viewMinSize * 1.0f / bSize;
+			}else {
+				scaleY = scaleX  = Math.max((dstWidth - doubleBorderWidth) * 1.0f / rawBitmap.getWidth(),
+						(dstHeight - doubleBorderWidth)	* 1.0f / rawBitmap.getHeight());
+			}
 			if (mShader != null) {
-				mMatrix.setScale((dstWidth - doubleBorderWidth) / rawBitmap.getWidth(), (dstHeight - doubleBorderWidth) / rawBitmap.getHeight());
+				mMatrix.setScale(scaleX,scaleY);
 				mShader.setLocalMatrix(mMatrix);
 			}
-
 			mPaintBitmap.setShader(mShader);
 			mPaintBorder.setStyle(Paint.Style.STROKE);
 			mPaintBorder.setStrokeWidth(mBorderWidth);
@@ -182,7 +251,6 @@ public class ImageViewPlus extends AppCompatImageView {
 				canvas.translate(mBorderWidth, mBorderWidth);
 				canvas.drawCircle(radius - mBorderWidth, radius - mBorderWidth, radius - mBorderWidth, mPaintBitmap);
 			} else if (mType == TYPE_ROUNDED){
-
 //				if (mRadius==0){
 				float[] borderRadius={
 						mRadiusArray[0] - halfBorderWidth > 0.0f ? mRadiusArray[0] - halfBorderWidth : 0.0f,
@@ -199,7 +267,6 @@ public class ImageViewPlus extends AppCompatImageView {
 				mBorderPath.addRoundRect(mRectBorder, borderRadius,  Path.Direction.CW);
 				canvas.drawPath(mBorderPath,mPaintBorder);
 				canvas.translate(mBorderWidth, mBorderWidth);
-
 
 				float[] bitmapRadius={
 						mRadiusArray[0] - mBorderWidth > 0.0f ? mRadiusArray[0] - mBorderWidth : 0.0f,
@@ -232,7 +299,7 @@ public class ImageViewPlus extends AppCompatImageView {
 				canvas.drawOval(mRectBorder, mPaintBorder);
 				canvas.translate(mBorderWidth, mBorderWidth);
 				canvas.drawOval(mRectBitmap, mPaintBitmap);
-			}else if (mType == TYPE_ARC){
+			}else if (mType == TYPE_ARC){//画弧
 				if ((mArcLocation & mLeft)==mLeft){//左边弧形
 					//画外边框
 					Path mBorderPath = new Path();
@@ -258,7 +325,6 @@ public class ImageViewPlus extends AppCompatImageView {
 						mBorderPath.lineTo(getWidth() - halfBorderWidth, halfBorderWidth);
 					}
 					mBorderPath.close();
-//				canvas.clipPath(mBorderPath);
 					canvas.drawPath(mBorderPath, mPaintBorder);
 					canvas.translate(mBorderWidth, mBorderWidth);
 					//画图片
@@ -451,7 +517,74 @@ public class ImageViewPlus extends AppCompatImageView {
 			return bitmap;
 		}
 	}
-
+	/**
+	 * 添加颜色边框
+	 *
+	 * @param src         源图片
+	 * @param borderWidth 左右边框宽度
+	 * @param borderHeight 上下边框宽度
+	 * @param color       边框的颜色值
+	 * @return 带颜色边框图
+	 */
+	private Bitmap addFrame(Bitmap src, int borderWidth,int borderHeight, int color) {
+		int newWidth = src.getWidth() + borderWidth;
+		int newHeight = src.getHeight() + borderHeight;
+		Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(out);
+		Rect rec = canvas.getClipBounds();
+		rec.bottom--;
+		rec.right--;
+		Paint paint = new Paint();
+		paint.setColor(color);
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(borderWidth);
+		canvas.drawRect(rec, paint);
+		canvas.drawBitmap(src, borderWidth / 2, borderHeight/2, null);
+		canvas.save();
+		canvas.restore();
+		if (!src.isRecycled()) src.recycle();
+		return out;
+	}
+	/**
+	 *  设置bitmap的宽高
+	 *
+	 * @param bm
+	 * @param newWidth 为0则以高为准
+	 * @param newHeight 为0则以宽为准
+	 * @return
+	 */
+	private Bitmap zoomImg(Bitmap bm, float newWidth, float newHeight) {
+		if (newWidth<=0&&newHeight<=0)return bm;
+		// 获得图片的宽高
+		int width = bm.getWidth();
+		int height = bm.getHeight();
+		// 计算缩放比例
+		float scaleWidth=0f;
+		float scaleHeight=0f;
+		/**
+		 * height/width=newHeight/newWidth
+		 * newHeight=newWidth*(height/width);
+		 * newWidth=newHeight/(height/width);
+		 */
+		if(newWidth>0&&newHeight>0) {//判断以哪边为准
+			scaleWidth = newWidth / (float)width;
+			scaleHeight =  newHeight / (float)height;
+		}else if (newWidth>0){//以宽为准 高通过原宽高比计算
+			newHeight=(newWidth*((float)height/(float)width));
+			scaleWidth =  newWidth / (float)width;
+			scaleHeight = newHeight / (float)height;
+		}else if (newHeight>0){//以高为准 宽通过原宽高比计算
+			newWidth=(newHeight/((float)height/(float)width));
+			scaleWidth = newWidth / (float)width;
+			scaleHeight =  newHeight / (float)height;
+		}
+		// 取得想要缩放的matrix参数
+		Matrix matrix = new Matrix();
+		matrix.postScale(scaleWidth, scaleHeight);
+		// 得到新的图片
+		Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+		return newbm;
+	}
 	/**
 	 * 获取类型
 	 * @return TYPE_CIRCLE(圆形) TYPE_ROUNDED(圆角矩形)  TYPE_OVAL(椭圆)
