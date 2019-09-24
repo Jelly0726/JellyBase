@@ -3,7 +3,6 @@ package com.base.circledialog.view;
 import android.content.Context;
 import android.os.Build;
 import android.text.InputFilter;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.base.circledialog.params.ButtonParams;
@@ -14,10 +13,6 @@ import com.base.circledialog.params.TitleParams;
 import com.base.circledialog.res.drawable.CircleDrawable;
 import com.base.circledialog.res.drawable.InputDrawable;
 import com.base.circledialog.res.values.CircleColor;
-import com.base.moneyedittext.MoneyValueFilter;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -80,25 +75,13 @@ class BodyInputView extends ScaleLinearLayout {
         mEditText.setTextSize(inputParams.textSize);
         mEditText.setTextColor(inputParams.textColor);
         mEditText.setHeight(inputParams.inputHeight);
-        mEditText.setText(inputParams.text);
-        mEditText.setSelection(inputParams.text.length());
-        int[] paddings=inputParams.paddings;
-        mEditText.setPadding(paddings[0],paddings[1],paddings[2],paddings[3]);
-        if (inputParams.type==InputParams.INPUT_MONEY){
-            mEditText.setFilters(new InputFilter[]{new MoneyValueFilter().setDigits(inputParams.digits)});
+        mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(inputParams.maxLength)});//
+        mEditText.setLines(inputParams.lines);
+        mEditText.setMaxLines(inputParams.lines);
+        if (inputParams.lines==1){
+            mEditText.setSingleLine();
         }
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask()
-                       {
-                           public void run()
-                           {
-                               InputMethodManager inputManager =
-                                       (InputMethodManager)mEditText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                               inputManager.showSoftInput(mEditText, 0);
-                           }
-                       },
-                500);
-
+        mEditText.setInputType(inputParams.inputType);//限制格式
         int backgroundResourceId = inputParams.inputBackgroundResourceId;
         if (backgroundResourceId == 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

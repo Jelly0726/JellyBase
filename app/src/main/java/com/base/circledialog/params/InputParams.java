@@ -3,6 +3,7 @@ package com.base.circledialog.params;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.InputType;
 
 import com.base.circledialog.res.values.CircleColor;
 import com.base.circledialog.res.values.CircleDimen;
@@ -13,17 +14,11 @@ import com.base.circledialog.res.values.CircleDimen;
  */
 public class InputParams implements Parcelable {
     private static final int[] MARGINS = {50, 20, 50, 40};
-    private static final int[] PADDING = {0, 0, 0, 0};
-    public static final int INPUT_TEXT=0;//输入文本
-    public static final int INPUT_MONEY=1;//输入金额
+
     /**
      * 输入框与body视图的距离
      */
     public int[] margins = MARGINS;
-    /**
-     *  输入框内边距
-     */
-    public int[] paddings = PADDING;
     /**
      * 输入框的高度
      */
@@ -65,17 +60,17 @@ public class InputParams implements Parcelable {
      */
     public int textColor = CircleColor.title;
     /**
-     * 输入框输入类型
+     * 输入框最长字数
      */
-    public int type =INPUT_TEXT;
+    public int maxLength = Integer.MAX_VALUE;
     /**
-     * 输入框输入金额小数点的位数默认保留2位小数
+     * 输入框行数
      */
-    public int digits =2;
+    public int lines = Integer.MAX_VALUE;
     /**
-     * 输入框默认文本
+     * 输入框限制格式
      */
-    public String text="";
+    public int inputType = InputType.TYPE_CLASS_TEXT;
 
     public InputParams() {
     }
@@ -88,7 +83,6 @@ public class InputParams implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeIntArray(this.margins);
-        dest.writeIntArray(this.paddings);
         dest.writeInt(this.inputHeight);
         dest.writeString(this.hintText);
         dest.writeInt(this.hintTextColor);
@@ -99,14 +93,13 @@ public class InputParams implements Parcelable {
         dest.writeInt(this.backgroundColor);
         dest.writeInt(this.textSize);
         dest.writeInt(this.textColor);
-        dest.writeInt(this.type);
-        dest.writeInt(this.digits);
-        dest.writeString(this.text);
+        dest.writeInt(this.maxLength);
+        dest.writeInt(this.lines);
+        dest.writeInt(this.inputType);
     }
 
     protected InputParams(Parcel in) {
         this.margins = in.createIntArray();
-        this.paddings = in.createIntArray();
         this.inputHeight = in.readInt();
         this.hintText = in.readString();
         this.hintTextColor = in.readInt();
@@ -117,9 +110,9 @@ public class InputParams implements Parcelable {
         this.backgroundColor = in.readInt();
         this.textSize = in.readInt();
         this.textColor = in.readInt();
-        this.type = in.readInt();
-        this.digits = in.readInt();
-        this.text = in.readString();
+        this.maxLength = in.readInt();
+        this.lines = in.readInt();
+        this.inputType = in.readInt();
     }
 
     public static final Creator<InputParams> CREATOR = new Creator<InputParams>() {
