@@ -20,6 +20,10 @@ public class InputParams implements Parcelable {
      */
     public int[] margins = MARGINS;
     /**
+     * 输入框内边距
+     */
+    public int[] padding = {5,5,5,5};
+    /**
      * 输入框的高度
      */
     public int inputHeight = CircleDimen.INPUT_HEIGHT;

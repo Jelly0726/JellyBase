@@ -82,6 +82,10 @@ class BodyInputView extends ScaleLinearLayout {
             mEditText.setSingleLine();
         }
         mEditText.setInputType(inputParams.inputType);//限制格式
+        int[] padding = inputParams.padding;
+        if (padding != null) {
+            mEditText.setPadding(padding[0], padding[1], padding[2], padding[3]);
+        }
         int backgroundResourceId = inputParams.inputBackgroundResourceId;
         if (backgroundResourceId == 0) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -99,6 +103,7 @@ class BodyInputView extends ScaleLinearLayout {
         if (margins != null) {
             layoutParams.setMargins(margins[0], margins[1], margins[2], margins[3]);
         }
+
         addView(mEditText, layoutParams);
     }
 
