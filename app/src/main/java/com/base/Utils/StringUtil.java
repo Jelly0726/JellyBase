@@ -448,7 +448,7 @@ public class StringUtil {
             convertedListStr = convertedListStr.substring(0, convertedListStr.length()
                     - SEPARATOR.length());
             return convertedListStr;
-        } else return "List is null!!!";
+        } else return "";
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
