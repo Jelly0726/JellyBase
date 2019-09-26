@@ -34,6 +34,7 @@ public class CreateQRImage
 	private static int QR_WIDTH = 460, QR_HEIGHT =460;
 	private static final int IMAGE_HALFWIDTH = 40;//宽度值，影响中间图片大小
 	private static final int IMAGE_HALFHEIGHT = 40;//高度值，
+	private static final int MARGIN=2;//默认空白边距的宽度
 	/**
 	 * @方法功能说明: 生成二维码图片,实际使用时要初始化sweepIV,不然会报空指针错误
 	 * @作者:饶正勇
@@ -59,7 +60,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 2); //default is 2
+			hints.put(EncodeHintType.MARGIN, MARGIN); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -108,7 +109,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN,2); //default is 2
+			hints.put(EncodeHintType.MARGIN,MARGIN); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -157,7 +158,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN, 2); //default is 2
+			hints.put(EncodeHintType.MARGIN, MARGIN); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter().encode(url, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
 			int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
@@ -213,7 +214,7 @@ public class CreateQRImage
 			//容错级别
 			hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 			//设置空白边距的宽度
-			hints.put(EncodeHintType.MARGIN,2); //default is 2
+			hints.put(EncodeHintType.MARGIN,MARGIN); //default is 2
 			//图像数据转换，使用了矩阵转换
 			BitMatrix bitMatrix = new QRCodeWriter()
 					.encode(content, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
