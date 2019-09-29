@@ -150,15 +150,21 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
             int childCount = parent.getAdapter().getItemCount();
             if (orientation== LinearLayoutManager.VERTICAL) {
                 if (childPosition+1==childCount){
-                    outRect.set(this.outRect.left, this.outRect.top, this.outRect.right, this.outRect.bottom);
-                }else {
                     outRect.set(this.outRect.left, this.outRect.top, this.outRect.right,0);
+                }else {
+                    if (this.outRect.top>0)
+                        outRect.set(this.outRect.left, this.outRect.top, this.outRect.right,0);
+                    else
+                        outRect.set(this.outRect.left, this.outRect.top, this.outRect.right,this.outRect.bottom);
                 }
             }else {
                 if (childPosition+1==childCount){
-                    outRect.set(this.outRect.left, this.outRect.top, this.outRect.right, this.outRect.bottom);
+                    outRect.set(this.outRect.left, this.outRect.top,0, this.outRect.bottom);
                 }else {
-                    outRect.set(this.outRect.left, this.outRect.top,0,this.outRect.bottom);
+                    if (this.outRect.left>0)
+                        outRect.set(this.outRect.left, this.outRect.top, 0,this.outRect.bottom);
+                    else
+                        outRect.set(this.outRect.left, this.outRect.top, this.outRect.right,this.outRect.bottom);
                 }
             }
         }
@@ -327,7 +333,10 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int mChildCount = parent.getChildCount();
         for (int i = 0; i < mChildCount; i++) {
             View mChild = parent.getChildAt(i);
-            drawLeft(c, mChild, parent);
+            if (this.outRect.left>0)
+                drawLeft(c, mChild, parent);
+            else
+                drawRight(c, mChild, parent);
         }
     }
 
@@ -341,7 +350,10 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int mChildCount = parent.getChildCount();
         for (int i = 0; i < mChildCount; i++) {
             View mChild = parent.getChildAt(i);
-            drawTop(c, mChild, parent);
+            if (this.outRect.top>0)
+                drawTop(c, mChild, parent);
+            else
+                drawBottom(c, mChild, parent);
         }
     }
 
