@@ -60,11 +60,11 @@ public abstract class BaseCircleDialog extends DialogFragment {
     private int mRadius = CircleDimen.RADIUS;//对话框的圆角半径
     private float mAlpha = 1f;//对话框透明度，范围：0-1；1不透明
     private int mX, mY;
-
+    protected View rootView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //设置 无标题 无边框
+        //ic_setting 无标题 无边框
         setStyle(DialogFragment.STYLE_NO_TITLE, 0);
         if (savedInstanceState != null) {
             mGravity = savedInstanceState.getInt(SAVED_GRAVITY);
@@ -120,14 +120,16 @@ public abstract class BaseCircleDialog extends DialogFragment {
                 return false; // pass on to be processed as normal
             }
         });
-        View view = createView(getContext(), inflater, container);
+        // 先调用一下父类方法(因为恒返回空，就不会存在问题)
+        rootView = super.onCreateView(inflater, container, savedInstanceState);
+        rootView = createView(getContext(), inflater, container);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            view.setBackground(new CircleDrawable(mBackgroundColor, mRadius));
+            rootView.setBackground(new CircleDrawable(mBackgroundColor, mRadius));
         } else {
-            view.setBackgroundDrawable(new CircleDrawable(mBackgroundColor, mRadius));
+            rootView.setBackgroundDrawable(new CircleDrawable(mBackgroundColor, mRadius));
         }
-        view.setAlpha(mAlpha);
-        return view;
+        rootView.setAlpha(mAlpha);
+        return rootView;
     }
 
 
