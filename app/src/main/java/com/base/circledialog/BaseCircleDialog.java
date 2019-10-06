@@ -131,7 +131,15 @@ public abstract class BaseCircleDialog extends DialogFragment {
         rootView.setAlpha(mAlpha);
         return rootView;
     }
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //解决DialogFragment 内存泄露
+        Dialog dialog = getDialog();
+        dialog.setOnShowListener(null);
+        dialog.setOnCancelListener(null);
+        dialog.setOnDismissListener(null);
+    }
 
     @Override
     public void onStart() {
