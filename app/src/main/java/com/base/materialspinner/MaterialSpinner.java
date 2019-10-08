@@ -70,6 +70,7 @@ public class MaterialSpinner extends TextView {
   private int arrowColor;
   private int arrowColorDisabled;
   private int textColor;
+  private float textSize;
   private int numberOfItems;
 
   public MaterialSpinner(Context context) {
@@ -89,7 +90,7 @@ public class MaterialSpinner extends TextView {
 
   private void init(Context context, AttributeSet attrs) {
     TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MaterialSpinner);
-    int defaultColor = getTextColors().getDefaultColor();
+    int defaultColor = getCurrentTextColor();
     boolean rtl = Utils.isRtl(context);
 
     try {
@@ -99,8 +100,9 @@ public class MaterialSpinner extends TextView {
       hideArrow = ta.getBoolean(R.styleable.MaterialSpinner_ms_hide_arrow, false);
       popupWindowMaxHeight = ta.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_dropdown_max_height, 0);
       popupWindowHeight = ta.getLayoutDimension(R.styleable.MaterialSpinner_ms_dropdown_height,
-          WindowManager.LayoutParams.WRAP_CONTENT);
+              WindowManager.LayoutParams.WRAP_CONTENT);
       arrowColorDisabled = Utils.lighter(arrowColor, 0.8f);
+      textSize=getTextSize();
     } finally {
       ta.recycle();
     }
@@ -117,7 +119,7 @@ public class MaterialSpinner extends TextView {
     setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
     setClickable(true);
     setPadding(left, top, right, bottom);
-    setBackgroundResource(R.drawable.ms__selector);
+//    setBackgroundResource(R.drawable.ms__selector);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && rtl) {
       setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
       setTextDirection(View.TEXT_DIRECTION_RTL);
@@ -228,9 +230,15 @@ public class MaterialSpinner extends TextView {
     popupWindow.getBackground().setColorFilter(color, PorterDuff.Mode.SRC_IN);
   }
 
-  @Override public void setTextColor(int color) {
+  @Override
+  public void setTextColor(int color) {
     textColor = color;
     super.setTextColor(color);
+  }
+  @Override
+  public void setTextSize(float textSize) {
+    this.textSize = textSize;
+    super.setTextSize(textSize);
   }
 
   @Override public Parcelable onSaveInstanceState() {
@@ -250,7 +258,7 @@ public class MaterialSpinner extends TextView {
     if (savedState instanceof Bundle) {
       Bundle bundle = (Bundle) savedState;
       selectedIndex = bundle.getInt("selected_index");
-      if (adapter != null) {
+      if (adapter != null&&selectedIndex>-1) {
         setText(adapter.get(selectedIndex).toString());
         adapter.notifyItemSelected(selectedIndex);
       }
@@ -332,7 +340,7 @@ public class MaterialSpinner extends TextView {
    */
   public <T> void setItems(@NonNull List<T> items) {
     numberOfItems = items.size();
-    adapter = new MaterialSpinnerAdapter<>(getContext(), items).setTextColor(textColor).setTextSize(getTextSize());
+    adapter = new MaterialSpinnerAdapter<>(getContext(), items).setTextColor(textColor).setTextSize(textSize);
     setAdapterInternal(adapter);
   }
 
@@ -382,9 +390,13 @@ public class MaterialSpinner extends TextView {
   private void setAdapterInternal(@NonNull MaterialSpinnerBaseAdapter adapter) {
     listView.setAdapter(adapter);
     if (selectedIndex >= numberOfItems) {
-      selectedIndex = 0;
+      if (numberOfItems>0)
+        selectedIndex = 0;
+      else
+        selectedIndex=-1;
     }
-    setText(adapter.get(selectedIndex).toString());
+    if (selectedIndex>-1)
+      setText(adapter.get(selectedIndex).toString());
   }
 
   /**
@@ -468,8 +480,8 @@ public class MaterialSpinner extends TextView {
     if (popupWindowMaxHeight > 0 && listViewHeight > popupWindowMaxHeight) {
       return popupWindowMaxHeight;
     } else if (popupWindowHeight != WindowManager.LayoutParams.MATCH_PARENT
-        && popupWindowHeight != WindowManager.LayoutParams.WRAP_CONTENT
-        && popupWindowHeight <= listViewHeight) {
+            && popupWindowHeight != WindowManager.LayoutParams.WRAP_CONTENT
+            && popupWindowHeight <= listViewHeight) {
       return popupWindowHeight;
     }
     return WindowManager.LayoutParams.WRAP_CONTENT;
