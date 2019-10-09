@@ -22,7 +22,9 @@ import com.base.appManager.ExecutorManager;
 import com.base.toast.ToastUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * USBPrinter usbPrinter = USBPrinter.getInstance();
@@ -61,7 +63,7 @@ public class USBPrinter {
     private PendingIntent mPermissionIntent;
     private UsbManager mUsbManager;
     private UsbDeviceConnection mUsbDeviceConnection;
-
+    private List<UsbDevice> usbDevice=new ArrayList<>();
     private UsbEndpoint ep,printerEp;
     private UsbInterface usbInterface;
 
@@ -108,16 +110,17 @@ public class USBPrinter {
                 Log.d("device", device.getProductName() + "     " + device.getManufacturerName());
                 Log.d("device", device.getVendorId() + "     " + device.getProductId() + "      " + device.getDeviceId());
                 Log.d("device", usbInterface.getInterfaceClass() + "");
-                if (!mUsbManager.hasPermission(device)) {
-                    mUsbManager.requestPermission(device, mPermissionIntent);
-                }else {
-                    connectUsbPrinter(device);
-                }
+                usbDevice.add(device);
             }
         }
 
     }
-
+    public List<UsbDevice> getUsbDevice(){
+        return usbDevice;
+    }
+    public UsbDevice getUsbDevice(int position){
+        return usbDevice.get(position);
+    }
     private final BroadcastReceiver mUsbDeviceReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -157,18 +160,26 @@ public class USBPrinter {
         mUsbManager = null;
     }
 
-    private void connectUsbPrinter(UsbDevice mUsbDevice) {
+    /**
+     * 连接打印机
+     * @param mUsbDevice
+     */
+    public void connectUsbPrinter(UsbDevice mUsbDevice) {
         if (mUsbDevice != null) {
-            for (int i = 0; i < usbInterface.getEndpointCount(); i++) {
-                ep = usbInterface.getEndpoint(i);
-                if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
-                    if (ep.getDirection() == UsbConstants.USB_DIR_OUT) {
-                        mUsbDeviceConnection = mUsbManager.openDevice(mUsbDevice);
-                        printerEp = ep;
-                        if (mUsbDeviceConnection != null) {
-                            ToastUtils.showShort(mContext, "设备已连接");
-                            mUsbDeviceConnection.claimInterface(usbInterface, true);
-                            mUsbDeviceConnection.releaseInterface(usbInterface);
+            if (!mUsbManager.hasPermission(mUsbDevice)) {
+                mUsbManager.requestPermission(mUsbDevice, mPermissionIntent);
+            }else {
+                for (int i = 0; i < usbInterface.getEndpointCount(); i++) {
+                    ep = usbInterface.getEndpoint(i);
+                    if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                        if (ep.getDirection() == UsbConstants.USB_DIR_OUT) {
+                            mUsbDeviceConnection = mUsbManager.openDevice(mUsbDevice);
+                            printerEp = ep;
+                            if (mUsbDeviceConnection != null) {
+                                ToastUtils.showShort(mContext, "设备已连接");
+                                mUsbDeviceConnection.claimInterface(usbInterface, true);
+                                mUsbDeviceConnection.releaseInterface(usbInterface);
+                            }
                         }
                     }
                 }
@@ -177,6 +188,7 @@ public class USBPrinter {
             ToastUtils.showShort(mContext, "未发现可用的打印机");
 
         }
+
     }
 
     private void write(final byte[] bytes) {
