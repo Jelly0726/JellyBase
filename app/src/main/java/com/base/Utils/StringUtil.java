@@ -482,7 +482,7 @@ public class StringUtil {
      * @param index      前后 0前，1后
      * @param text       文本
      * @param icon       图标
-     * @param size       图标大小
+     * @param size       图标大小单位dp
      * @return
      */
     public static SpannableString setIconToText(int index,String text,int icon,int size){
