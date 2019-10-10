@@ -1,14 +1,19 @@
 package com.base.Utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -31,7 +36,6 @@ import java.util.regex.Pattern;
 
 /**
  * 字符串工具类
- *
  * 80热敏纸最大打印宽度 292.0
  * 一个空格宽度 		3.0
  * 一个中文宽度 		12.0
@@ -404,6 +408,7 @@ public class StringUtil {
         }
         return result;
     }
+
     /**
      * List 深度复制（重新分配地址）
      * @param src
@@ -444,7 +449,7 @@ public class StringUtil {
     /**
      * @return 返回指定的文字高度
      */
-    public static float getFontHeight(Paint paint) {
+    public static float getFontHeight(String text) {
         Paint.FontMetrics fm = new Paint().getFontMetrics();
         //文字基准线的下部距离-文字基准线的上部距离 = 文字高度
         return fm.descent - fm.ascent;
@@ -471,6 +476,69 @@ public class StringUtil {
             return convertedListStr;
         } else return "";
     }
+
+    /**
+     * 在textView前后添加图标
+     * @param index      前后 0前，1后
+     * @param text       文本
+     * @param icon       图标
+     * @param size       图标大小
+     * @return
+     */
+    public static SpannableString setIconToText(int index,String text,int icon,int size){
+        if (index==0) {
+            SpannableString sp = new SpannableString("   " + text);
+            //获取一张图片
+            Drawable drawable = ContextCompat.getDrawable(BaseApplication.getInstance(), icon);
+            drawable.setBounds(0, 0, AppUtils.dipTopx(BaseApplication.getInstance(), size),
+                    AppUtils.dipTopx(BaseApplication.getInstance(), size));
+            //居中对齐imageSpan
+            CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
+            /**
+             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标，可以把0换成字符串长度-1，
+             * 把1换成字符串长度，切记要在后面加一个空格占位，否则会切割掉你原本的字符串哦。
+             */
+            sp.setSpan(imageSpan, 0, 1, ImageSpan.ALIGN_BASELINE);
+            return sp;
+        }else {
+            SpannableString sp = new SpannableString(text+"   ");
+            //获取一张图片
+            Drawable drawable = ContextCompat.getDrawable(BaseApplication.getInstance(), icon);
+            drawable.setBounds(0, 0, AppUtils.dipTopx(BaseApplication.getInstance(), size),
+                    AppUtils.dipTopx(BaseApplication.getInstance(), size));
+            //居中对齐imageSpan
+            CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
+            /**
+             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标，可以把0换成字符串长度-1，
+             * 把1换成字符串长度，切记要在后面加一个空格占位，否则会切割掉你原本的字符串哦。
+             */
+            sp.setSpan(imageSpan, -1, text.length(), ImageSpan.ALIGN_BASELINE);
+            return sp;
+        }
+    }
+    /**
+     *  这个是一个可以垂直居中的ImageSpan
+     */
+    static class CenterAlignImageSpan extends ImageSpan {
+
+        public CenterAlignImageSpan(Drawable drawable) {
+            super(drawable);
+        }
+        public CenterAlignImageSpan(Bitmap b) {
+            super(b);
+        }
+        @Override
+        public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom,
+                         @NonNull Paint paint) {
+            Drawable b = getDrawable();
+            Paint.FontMetricsInt fm = paint.getFontMetricsInt();
+            int transY = (y + fm.descent + y + fm.ascent) / 2 - b.getBounds().bottom / 2;//计算y方向的位移
+            canvas.save();
+            canvas.translate(x, transY);//绘制图片位移一段距离
+            b.draw(canvas);
+            canvas.restore();
+        }
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
@@ -480,6 +548,9 @@ public class StringUtil {
 //        for (String i:amounts){
 //            System.out.println("金额："+i);
 //        }
-        System.out.println(isMobileNO("14600087240"));
+//        System.out.println(isMobileNO("14600087240"));
+        System.out.println("width="+StringUtil.getFontWidth("                     "));
+        System.out.println("width="+StringUtil.getFontWidth("        "));
+        System.out.println("width="+StringUtil.getFontWidth("       "));
     }
 }
