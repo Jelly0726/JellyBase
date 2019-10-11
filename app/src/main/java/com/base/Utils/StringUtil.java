@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -22,14 +23,13 @@ import android.widget.Spinner;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -566,8 +566,48 @@ public class StringUtil {
             }
             return empty;
         }
-        return StringUtils.isNotBlank(obj.toString());
+        return false;
     }
+    /**
+     * <p>Title: validateFild</p>
+     * <p>Description: 这是一个以反射机制为基础的判断对象内部的属性是否为空的方法</p>
+     * @param obj      要判断的对象实例
+     * @param exclFild 放行的属性, 不需要做判断的属性 或在属性上加 @Nullable 注解
+     * @return 布尔类型, 这个可以根据需求做出变更
+     */
+    public static boolean validateFild(Object obj, List<String> exclFild) {
+
+        boolean target = false;
+        for (Field f : obj.getClass().getDeclaredFields()) {
+            f.setAccessible(true);
+            try {
+                String name = f.getName();
+                //获取属性是否有Nullable可以为空的注解
+                Annotation annotations= f.getAnnotation(Nullable.class);
+                if (annotations ==null){
+                    // 判断属性名称是否在排除属性值中
+                    if (exclFild ==null||exclFild.contains(name)) {
+                        continue;
+                    }
+                    if (f.get(obj) == null || f.get(obj).equals("")) {
+                        // 判断字段是否为空，并且对象属性中的基本都会转为对象类型来判断
+                        target = true;
+                        System.out.println(name);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                target = true;
+                System.out.println("对象属性解析异常" + e.getMessage());
+                return target;
+            } catch (IllegalAccessException e) {
+                target = true;
+                System.out.println("对象属性解析异常" + e.getMessage());
+                return target;
+            }
+        }
+        return target;
+    }
+
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
