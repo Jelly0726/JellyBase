@@ -578,8 +578,5 @@ public class StringUtil {
 //            System.out.println("金额："+i);
 //        }
 //        System.out.println(isMobileNO("14600087240"));
-        System.out.println("width="+StringUtil.getFontWidth("                     "));
-        System.out.println("width="+StringUtil.getFontWidth("        "));
-        System.out.println("width="+StringUtil.getFontWidth("       "));
     }
 }
