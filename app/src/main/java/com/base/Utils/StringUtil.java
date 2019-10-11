@@ -22,6 +22,9 @@ import android.widget.Spinner;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,7 +33,9 @@ import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,21 +164,6 @@ public class StringUtil {
         Matcher m = p.matcher(email);
         return m.matches();
     }
-    /**
-     * 字符串非空判断
-     * @param string
-     * @return
-     */
-    public static boolean isEmpty(String string){
-        if (string!=null){
-            if (!string.toLowerCase().equals("null")
-                    &&string.trim().length()>0){
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * 判断字符串是否全为汉字
      * @param string      待判定的字符串
@@ -538,6 +528,47 @@ public class StringUtil {
             b.draw(canvas);
             canvas.restore();
         }
+    }
+    /**
+     * 判断对象或对象数组中每一个对象是否为空:
+     * 对象为null或{}，
+     * 字符序列长度为0或null，
+     * 集合类、Map为empty
+     *
+     * @param obj
+     * @return
+     */
+    public static boolean isEmpty(Object obj) {
+        if (obj == null)
+            return true;
+        if (obj instanceof CharSequence)
+            return ((CharSequence) obj).length() == 0;
+        if (((String)obj).toLowerCase().equals("null")
+                &&((String)obj).trim().length()<=0){
+            return true;
+        }
+        if (obj instanceof Collection)
+            return ((Collection) obj).isEmpty();
+
+        if (obj instanceof Map)
+            return ((Map) obj).isEmpty();
+
+        if (obj instanceof Object[]) {
+            Object[] object = (Object[]) obj;
+            if (object.length == 0) {
+                return true;
+            }
+            boolean empty = true;
+            for (int i = 0; i < object.length; i++) {
+                if (!isEmpty(object[i])) {
+                    empty = false;
+                    break;
+                }
+            }
+            return empty;
+        }
+        String str = ObjectUtils.toString(obj, "");
+        return StringUtils.isNotBlank(str);
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
