@@ -22,7 +22,6 @@ import android.widget.Spinner;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayInputStream;
@@ -567,8 +566,7 @@ public class StringUtil {
             }
             return empty;
         }
-        String str = ObjectUtils.toString(obj, "");
-        return StringUtils.isNotBlank(str);
+        return StringUtils.isNotBlank(obj.toString());
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
