@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.base.Utils.MyDate;
 import com.base.circledialog.BaseCircleDialog;
 import com.base.log.DebugLog;
+import com.base.toast.ToastUtils;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
@@ -85,6 +87,8 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearViewChangeListener(this);
+        //设置日期拦截事件
+        mCalendarView.setOnCalendarInterceptListener(this);
         mYear = mCalendarView.getCurYear();
         mMonth = mCalendarView.getCurMonth();
         mDay = mCalendarView.getCurDay();
@@ -131,8 +135,6 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (onComplete!=null)
-            onComplete.onComplete(mYear,mMonth,mDay);
     }
 
 
@@ -144,10 +146,18 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
     @SuppressLint("SetTextI18n")
     @Override
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
+        boolean isEnable = onCalendarIntercept(calendar);//日期是否可用，没有被拦截，被拦截的可以置灰
+        if (isEnable) {
+            mCalendarView.scrollToCalendar(mYear,mMonth,mDay,true);
+            return;
+        }
         mTextMonthDay.setText(calendar.getYear() + "年" + calendar.getMonth() + "月");
         mYear = calendar.getYear();
         mMonth = calendar.getMonth();
         mDay = calendar.getDay();
+        dismiss();
+        if (onComplete!=null)
+            onComplete.onComplete(mYear,mMonth,mDay);
     }
 
     @Override
@@ -198,14 +208,19 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
      */
     @Override
     public boolean onCalendarIntercept(Calendar calendar) {
-        DebugLog.e("onCalendarIntercept", calendar.toString());
+        //这里写拦截条件，返回true代表拦截，尽量以最高效的代码执行
+        int year = calendar.getYear();
+        int month = calendar.getMonth();
         int day = calendar.getDay();
-        return day == 1 || day == 3 || day == 6 || day == 11 || day == 12 || day == 15 || day == 20 || day == 26;
+        if (year< MyDate.getYear())return true;
+        if (year== MyDate.getYear()&&month<MyDate.getMonth())return true;
+        if (year== MyDate.getYear()&&month==MyDate.getMonth()&&day<MyDate.getDay())return true;
+        return false;
     }
 
     @Override
     public void onCalendarInterceptClick(Calendar calendar, boolean isClick) {
-        DebugLog.i("onCalendarInterceptClick", calendar.toString() + "拦截不可点击");
+        ToastUtils.showShort(getActivity(), calendar.toString() + (isClick ? "拦截不可点击" : "拦截滚动到无效日期"));
     }
 
     private OnComplete onComplete;

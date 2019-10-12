@@ -23,12 +23,21 @@ public class CustomMonthView extends MonthView {
      * 今天的背景色
      */
     private Paint mCurrentDayPaint = new Paint();
+    /**
+     * 被拦截的日期颜色
+     */
+    protected Paint minterceptTextPaint = new Paint();
     public CustomMonthView(Context context) {
         super(context);
         mCurrentDayPaint.setAntiAlias(true);
         mCurrentDayPaint.setStyle(Paint.Style.STROKE);
         mCurrentDayPaint.setColor(ContextCompat.getColor(context, R.color.mainText5));
 
+        minterceptTextPaint.setAntiAlias(true);
+        minterceptTextPaint.setTextAlign(Paint.Align.CENTER);
+        minterceptTextPaint.setColor(0xffdcdcdc);
+        minterceptTextPaint.setFakeBoldText(true);
+        minterceptTextPaint.setTextSize(mCurDayTextPaint.getTextSize());
         //兼容硬件加速无效的代码
         setLayerType(View.LAYER_TYPE_SOFTWARE,mSelectedPaint);
         //4.0以上硬件加速会导致无效
@@ -66,6 +75,7 @@ public class CustomMonthView extends MonthView {
         float baselineY = mTextBaseLine + y;
         int cx = x + mItemWidth / 2;
         int cy = y + mItemHeight / 2;
+        boolean isEnable = onCalendarIntercept(calendar);//日期是否可用，没有被拦截，被拦截的可以置灰
         if (calendar.isCurrentDay() && !isSelected) {
             canvas.drawCircle(cx, cy, mRadius, mCurrentDayPaint);
         }
@@ -81,7 +91,8 @@ public class CustomMonthView extends MonthView {
                     baselineY,
                     calendar.isCurrentDay() ? mCurDayTextPaint :
                             calendar.isCurrentMonth() ? mSchemeTextPaint : mOtherMonthTextPaint);
-
+        }if (isEnable){
+            canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY,minterceptTextPaint);
         } else {
             canvas.drawText(String.valueOf(calendar.getDay()), cx, baselineY,
                     calendar.isCurrentDay() ? mCurDayTextPaint :

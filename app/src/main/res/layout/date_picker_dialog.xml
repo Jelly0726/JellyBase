@@ -75,6 +75,7 @@
             android:paddingBottom="@dimen/dp_10"
             app:calendar_padding="@dimen/dp_10"
             android:background="@drawable/date_picker_white_bg"
+            app:select_mode="single_mode"
             app:month_view="com.base.datePicker.CustomMonthView"
             app:calendar_height="@dimen/dp_46"
             app:current_day_lunar_text_color="@color/white"
