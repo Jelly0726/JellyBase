@@ -1,5 +1,8 @@
 package com.base.liveDataBus.ipc;
 
+/**
+ * Created by liaohailiang on 2019/3/25.
+ */
 public enum DataType {
 
     STRING,

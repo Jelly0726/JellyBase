@@ -1,5 +1,4 @@
 package android.arch.lifecycle;
-
 import android.support.annotation.NonNull;
 
 import java.lang.reflect.Field;

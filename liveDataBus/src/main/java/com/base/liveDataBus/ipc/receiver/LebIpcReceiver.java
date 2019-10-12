@@ -9,10 +9,23 @@ import com.base.liveDataBus.ipc.IpcConst;
 import com.base.liveDataBus.ipc.decode.DecodeException;
 import com.base.liveDataBus.ipc.decode.IDecoder;
 import com.base.liveDataBus.ipc.decode.ValueDecoder;
+import com.base.liveDataBus.ipc.json.JsonConverter;
 
+
+/**
+ * Created by liaohailiang on 2019/3/26.
+ */
 public class LebIpcReceiver extends BroadcastReceiver {
 
-    private IDecoder decoder = new ValueDecoder();
+    private IDecoder decoder;
+
+    public LebIpcReceiver(JsonConverter jsonConverter) {
+        this.decoder = new ValueDecoder(jsonConverter);
+    }
+
+    public void setJsonConverter(JsonConverter jsonConverter) {
+        this.decoder = new ValueDecoder(jsonConverter);
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -22,8 +35,7 @@ public class LebIpcReceiver extends BroadcastReceiver {
                 Object value = decoder.decode(intent);
                 if (key != null) {
                     LiveDataBus
-                            .get()
-                            .with(key)
+                            .get(key)
                             .post(value);
                 }
             } catch (DecodeException e) {

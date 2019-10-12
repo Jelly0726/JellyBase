@@ -4,15 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+
 import com.base.liveDataBus.ipc.DataType;
 import com.base.liveDataBus.ipc.IpcConst;
-import com.google.gson.Gson;
+import com.base.liveDataBus.ipc.json.JsonConverter;
 
 import java.io.Serializable;
 
+/**
+ * Created by liaohailiang on 2019/3/25.
+ */
 public class ValueEncoder implements IEncoder {
 
-    private Gson gson = new Gson();
+    private final JsonConverter jsonConverter;
+
+    public ValueEncoder(JsonConverter jsonConverter) {
+        this.jsonConverter = jsonConverter;
+    }
 
     @Override
     public void encode(Intent intent, Object value) throws EncodeException {
@@ -45,7 +53,7 @@ public class ValueEncoder implements IEncoder {
             intent.putExtra(IpcConst.VALUE, (Serializable) value);
         } else {
             try {
-                String json = gson.toJson(value);
+                String json = jsonConverter.toJson(value);
                 intent.putExtra(IpcConst.VALUE_TYPE, DataType.JSON.ordinal());
                 intent.putExtra(IpcConst.VALUE, json);
                 intent.putExtra(IpcConst.CLASS_NAME, value.getClass().getCanonicalName());

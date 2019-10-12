@@ -21,6 +21,7 @@ import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.base.liveDataBus.LiveDataBus;
 import com.base.sqldao.DBManager;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.BuildConfig;
@@ -76,6 +77,7 @@ public class BaseApplication extends Application {
             //初始化数据库
             DBManager.getDBManager().init(this);
 //            HermesEventBus.getDefault().init(this);
+            LiveDataBus.config();
             //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
             DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
 

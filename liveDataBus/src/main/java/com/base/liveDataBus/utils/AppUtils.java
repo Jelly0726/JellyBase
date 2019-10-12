@@ -3,6 +3,9 @@ package com.base.liveDataBus.utils;
 import android.annotation.SuppressLint;
 import android.app.Application;
 
+/**
+ * Created by liaohailiang on 2019/3/26.
+ */
 public final class AppUtils {
 
     @SuppressLint("StaticFieldLeak")

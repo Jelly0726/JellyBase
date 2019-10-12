@@ -1,5 +1,8 @@
 package com.base.liveDataBus.ipc.decode;
 
+/**
+ * Created by liaohailiang on 2019/3/26.
+ */
 public class DecodeException extends Exception {
     public DecodeException() {
     }

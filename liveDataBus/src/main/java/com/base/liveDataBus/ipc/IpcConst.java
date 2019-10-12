@@ -1,5 +1,9 @@
 package com.base.liveDataBus.ipc;
 
+
+/**
+ * Created by liaohailiang on 2019/3/25.
+ */
 public class IpcConst {
 
     public static final String ACTION = "intent.action.ACTION_LEB_IPC";

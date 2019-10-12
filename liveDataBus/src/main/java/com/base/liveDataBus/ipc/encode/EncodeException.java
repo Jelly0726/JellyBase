@@ -1,5 +1,8 @@
 package com.base.liveDataBus.ipc.encode;
 
+/**
+ * Created by liaohailiang on 2019/3/26.
+ */
 public class EncodeException extends Exception {
     public EncodeException() {
     }

@@ -1,87 +1,136 @@
 package com.base.liveDataBus;
 
-import android.arch.lifecycle.ExternalLiveData;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import com.base.liveDataBus.ipc.IpcConst;
-import com.base.liveDataBus.ipc.encode.IEncoder;
-import com.base.liveDataBus.ipc.encode.ValueEncoder;
-import com.base.liveDataBus.ipc.receiver.LebIpcReceiver;
-import com.base.liveDataBus.utils.ThreadUtils;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.base.liveDataBus.core.Config;
+import com.base.liveDataBus.core.LiveDataBusCore;
+import com.base.liveDataBus.core.Observable;
 
 /**
  *
  * 组件之间传递消息框架
  *
- 注册订阅
- LiveDataBus.get()
- .with("key_test", String.class)
+
+  在Application.onCreate方法中配置：
+
+ LiveDataBus
+          .config()
+          ...
+
+  supportBroadcast
+  配置支持跨进程、跨APP通信，传入Context
+  lifecycleObserverAlwaysActive
+  配置LifecycleObserver（如Activity）接收消息的模式（默认值true）：
+     true：整个生命周期（从onCreate到onDestroy）都可以实时收到消息
+     false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，需等到Activity重新变成激活状态，方可收到消息
+  autoClear
+  配置在没有Observer关联的时候是否自动清除LiveEvent以释放内存（默认值false）
+  setJsonConverter
+  配置JsonConverter（默认使用gson）
+  setLogger
+  配置Logger（默认使用DefaultLogger）
+ 使用
+ 以生命周期感知模式订阅消息
+ observe
+ 具有生命周期感知能力，LifecycleOwner销毁时自动取消订阅，不需要调用removeObserver
+
+ LiveDataBus
+ .get("key_name", String.class)
  .observe(this, new Observer<String>() {
 @Override
 public void onChanged(@Nullable String s) {
 }
 });
- 发送消息：
- LiveDataBus.get().with("key_test").setValue(s);
+ 以Forever模式订阅和取消订阅消息
+ observeForever
+ Forever模式订阅消息，需要调用removeObserver取消订阅
 
+ LiveDataBus
+ .get("key_name", String.class)
+ .observeForever(observer);
+ removeObserver
+ 取消订阅消息
+
+ LiveDataBus
+ .get("key_name", String.class)
+ .removeObserver(observer);
+ 发送消息
+ post
+ 发送一个消息，支持前台线程、后台线程发送
+
+ LiveDataBus
+ .get("key_name")
+ .post(value);
+ postDelay
+ 延迟发送一个消息，支持前台线程、后台线程发送
+
+ LiveDataBus
+ .get("key_name")
+ .postDelay(value, 1000);
+ 跨进程、跨APP发送消息
+ broadcast
+ 跨进程、跨APP发送消息，支持前台线程、后台线程发送。需要设置supportBroadcast
+
+ LiveDataBus
+ .get("key_name")
+ .broadcast(value);
+ 以前台队列的形式发送跨进程消息
+
+ LiveDataBus
+ .get("key_name")
+ .broadcast(value, true);
+ Sticky模式
+ 支持在订阅消息的时候设置Sticky模式，这样订阅者可以接收到之前发送的消息。
+
+ observeSticky
+ 以Sticky模式订阅消息，具有生命周期感知能力，LifecycleOwner销毁时自动取消订阅，不需要调用removeObserver
+
+ LiveDataBus
+ .get("sticky_key", String.class)
+ .observeSticky(this, new Observer<String>() {
+@Override
+public void onChanged(@Nullable String s){
+}
+});
+ observeStickyForever
+ Forever模式订阅消息，需要调用removeObserver取消订阅，Sticky模式
+
+ LiveDataBus
+ .get("sticky_key", String.class)
+ .observeStickyForever(observer);
   混淆
  -dontwarn com.base.liveDataBus.**
  -keep class com.base.liveDataBus.** { ; }
- -keep class android.arch.lifecycle.* { ; }
- -keep class android.arch.core.* { *; }
+ -keep class android.arch.lifecycle.** { ; }
+ -keep class android.arch.core.** { *; }
 
  for androidx:
  -dontwarn com.base.liveDataBus.**
  -keep class com.base.liveDataBus.** { ; }
- -keep class androidx.lifecycle.* { ; }
- -keep class androidx.arch.core.* { *; }
+ -keep class androidx.lifecycle.** { ; }
+ -keep class androidx.arch.core.** { *; }
  */
 public final class LiveDataBus {
 
-    private final Map<String, LiveEvent<Object>> bus;
 
-    private LiveDataBus() {
-        bus = new HashMap<>();
+    /**
+     * get observable by key with type
+     *
+     * @param key
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public static <T> Observable<T> get(String key, Class<T> type) {
+        return LiveDataBusCore.get().with(key, type);
     }
 
-    private static class SingletonHolder {
-        private static final LiveDataBus DEFAULT_BUS = new LiveDataBus();
-    }
-
-    public static LiveDataBus get() {
-        return SingletonHolder.DEFAULT_BUS;
-    }
-
-    private Context appContext;
-    private boolean lifecycleObserverAlwaysActive = true;
-    private boolean autoClear = false;
-    private IEncoder encoder = new ValueEncoder();
-    private Config config = new Config();
-    private LebIpcReceiver receiver = new LebIpcReceiver();
-
-    public synchronized <T> Observable<T> with(String key, Class<T> type) {
-        if (!bus.containsKey(key)) {
-            bus.put(key, new LiveEvent<>(key));
-        }
-        return (Observable<T>) bus.get(key);
-    }
-
-    public Observable<Object> with(String key) {
-        return with(key, Object.class);
+    /**
+     * get observable by key
+     *
+     * @param key
+     * @return
+     */
+    public static Observable<Object> get(String key) {
+        return get(key, Object.class);
     }
 
     /**
@@ -90,359 +139,7 @@ public final class LiveDataBus {
      * then, call the method of Config to config LiveEventBus
      * call this method in Application.onCreate
      */
-
-    public Config config() {
-        return config;
-    }
-
-    public class Config {
-
-        /**
-         * lifecycleObserverAlwaysActive
-         * set if then observer can always receive message
-         * true: observer can always receive message
-         * false: observer can only receive message when resumed
-         *
-         * @param active
-         * @return
-         */
-        public Config lifecycleObserverAlwaysActive(boolean active) {
-            lifecycleObserverAlwaysActive = active;
-            return this;
-        }
-
-        /**
-         * @param clear
-         * @return true: clear livedata when no observer observe it
-         * false: not clear livedata unless app was killed
-         */
-        public Config autoClear(boolean clear) {
-            autoClear = clear;
-            return this;
-        }
-
-        /**
-         * config broadcast
-         * only if you called this method, you can use broadcastValue() to send broadcast message
-         *
-         * @param context
-         * @return
-         */
-        public Config supportBroadcast(Context context) {
-            if (context != null) {
-                appContext = context.getApplicationContext();
-            }
-            if (appContext != null) {
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction(IpcConst.ACTION);
-                appContext.registerReceiver(receiver, intentFilter);
-            }
-            return this;
-        }
-    }
-
-    public interface Observable<T> {
-
-        /**
-         * 发送一个消息，支持前台线程、后台线程发送
-         *
-         * @param value
-         */
-        void post(T value);
-
-        /**
-         * 发送一个消息，支持前台线程、后台线程发送
-         * 需要跨进程、跨APP发送消息的时候调用该方法
-         *
-         * @param value
-         */
-        void broadcast(T value);
-
-        /**
-         * 延迟发送一个消息，支持前台线程、后台线程发送
-         *
-         * @param value
-         * @param delay 延迟毫秒数
-         */
-        void postDelay(T value, long delay);
-
-        /**
-         * 发送一个消息，支持前台线程、后台线程发送
-         * 需要跨进程、跨APP发送消息的时候调用该方法
-         *
-         * @param value
-         */
-        void broadcast(T value, boolean foreground);
-
-        /**
-         * 注册一个Observer，生命周期感知，自动取消订阅
-         *
-         * @param owner
-         * @param observer
-         */
-        void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer);
-
-        /**
-         * 注册一个Observer，生命周期感知，自动取消订阅
-         * 如果之前有消息发送，可以在注册时收到消息（消息同步）
-         *
-         * @param owner
-         * @param observer
-         */
-        void observeSticky(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer);
-
-        /**
-         * 注册一个Observer
-         *
-         * @param observer
-         */
-        void observeForever(@NonNull Observer<T> observer);
-
-        /**
-         * 注册一个Observer
-         * 如果之前有消息发送，可以在注册时收到消息（消息同步）
-         *
-         * @param observer
-         */
-        void observeStickyForever(@NonNull Observer<T> observer);
-
-        /**
-         * 通过observeForever或observeStickyForever注册的，需要调用该方法取消订阅
-         *
-         * @param observer
-         */
-        void removeObserver(@NonNull Observer<T> observer);
-    }
-
-    private class LiveEvent<T> implements Observable<T> {
-
-        @NonNull
-        private final String key;
-        private final LifecycleLiveData<T> liveData;
-        private final Map<Observer, ObserverWrapper<T>> observerMap = new HashMap<>();
-        private final Handler mainHandler = new Handler(Looper.getMainLooper());
-
-        LiveEvent(@NonNull String key) {
-            this.key = key;
-            this.liveData = new LifecycleLiveData<>();
-        }
-
-        @Override
-        public void post(T value) {
-            if (ThreadUtils.isMainThread()) {
-                postInternal(value);
-            } else {
-                mainHandler.post(new PostValueTask(value));
-            }
-        }
-
-        @Override
-        public void broadcast(T value) {
-            broadcast(value, false);
-        }
-
-        @Override
-        public void postDelay(T value, long delay) {
-            mainHandler.postDelayed(new PostValueTask(value), delay);
-        }
-
-        @Override
-        public void broadcast(final T value, final boolean foreground) {
-            if (appContext != null) {
-                if (ThreadUtils.isMainThread()) {
-                    broadcastInternal(value, foreground);
-                } else {
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            broadcastInternal(value, foreground);
-                        }
-                    });
-                }
-            } else {
-                post(value);
-            }
-        }
-
-        @Override
-        public void observe(@NonNull final LifecycleOwner owner, @NonNull final Observer<T> observer) {
-            if (ThreadUtils.isMainThread()) {
-                observeInternal(owner, observer);
-            } else {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        observeInternal(owner, observer);
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void observeSticky(@NonNull final LifecycleOwner owner, @NonNull final Observer<T> observer) {
-            if (ThreadUtils.isMainThread()) {
-                observeStickyInternal(owner, observer);
-            } else {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        observeStickyInternal(owner, observer);
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void observeForever(@NonNull final Observer<T> observer) {
-            if (ThreadUtils.isMainThread()) {
-                observeForeverInternal(observer);
-            } else {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        observeForeverInternal(observer);
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void observeStickyForever(@NonNull final Observer<T> observer) {
-            if (ThreadUtils.isMainThread()) {
-                observeStickyForeverInternal(observer);
-            } else {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        observeStickyForeverInternal(observer);
-                    }
-                });
-            }
-        }
-
-        @Override
-        public void removeObserver(@NonNull final Observer<T> observer) {
-            if (ThreadUtils.isMainThread()) {
-                removeObserverInternal(observer);
-            } else {
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        removeObserverInternal(observer);
-                    }
-                });
-            }
-        }
-
-        @MainThread
-        private void postInternal(T value) {
-            liveData.setValue(value);
-        }
-
-        @MainThread
-        private void broadcastInternal(T value, boolean foreground) {
-            Intent intent = new Intent(IpcConst.ACTION);
-            if (foreground && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
-            }
-            intent.putExtra(IpcConst.KEY, key);
-            try {
-                encoder.encode(intent, value);
-                appContext.sendBroadcast(intent);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @MainThread
-        private void observeInternal(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
-            ObserverWrapper<T> observerWrapper = new ObserverWrapper<>(observer);
-            observerWrapper.preventNextEvent = liveData.getVersion() > ExternalLiveData.START_VERSION;
-            liveData.observe(owner, observerWrapper);
-        }
-
-        @MainThread
-        private void observeStickyInternal(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
-            ObserverWrapper<T> observerWrapper = new ObserverWrapper<>(observer);
-            liveData.observe(owner, observerWrapper);
-        }
-
-        @MainThread
-        private void observeForeverInternal(@NonNull Observer<T> observer) {
-            ObserverWrapper<T> observerWrapper = new ObserverWrapper<>(observer);
-            observerWrapper.preventNextEvent = liveData.getVersion() > ExternalLiveData.START_VERSION;
-            observerMap.put(observer, observerWrapper);
-            liveData.observeForever(observerWrapper);
-        }
-
-        @MainThread
-        private void observeStickyForeverInternal(@NonNull Observer<T> observer) {
-            ObserverWrapper<T> observerWrapper = new ObserverWrapper<>(observer);
-            observerMap.put(observer, observerWrapper);
-            liveData.observeForever(observerWrapper);
-        }
-
-        @MainThread
-        private void removeObserverInternal(@NonNull Observer<T> observer) {
-            Observer<T> realObserver;
-            if (observerMap.containsKey(observer)) {
-                realObserver = observerMap.remove(observer);
-            } else {
-                realObserver = observer;
-            }
-            liveData.removeObserver(realObserver);
-        }
-
-        private class LifecycleLiveData<T> extends ExternalLiveData<T> {
-            @Override
-            protected Lifecycle.State observerActiveLevel() {
-                return lifecycleObserverAlwaysActive ? Lifecycle.State.CREATED : Lifecycle.State.STARTED;
-            }
-
-            @Override
-            public void removeObserver(@NonNull Observer<T> observer) {
-                super.removeObserver(observer);
-                if (autoClear && !liveData.hasObservers()) {
-                    LiveDataBus.get().bus.remove(key);
-                }
-            }
-        }
-
-        private class PostValueTask implements Runnable {
-            private Object newValue;
-
-            public PostValueTask(@NonNull Object newValue) {
-                this.newValue = newValue;
-            }
-
-            @Override
-            public void run() {
-                postInternal((T) newValue);
-            }
-        }
-    }
-
-    private static class ObserverWrapper<T> implements Observer<T> {
-
-        @NonNull
-        private final Observer<T> observer;
-        private boolean preventNextEvent = false;
-
-        ObserverWrapper(@NonNull Observer<T> observer) {
-            this.observer = observer;
-        }
-
-        @Override
-        public void onChanged(@Nullable T t) {
-            if (preventNextEvent) {
-                preventNextEvent = false;
-                return;
-            }
-            try {
-                observer.onChanged(t);
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-            }
-        }
+    public static Config config() {
+        return LiveDataBusCore.get().config();
     }
 }
