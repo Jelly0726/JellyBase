@@ -607,7 +607,67 @@ public class StringUtil {
         }
         return target;
     }
-
+    /**
+     * 判断字符串的文字的总个数 数字,英文字符算半个中文字符
+     * @param s
+     * @return
+     */
+    public static double getLength(String s) {
+        double valueLength = 0;
+        String chinese = "[\u4e00-\u9fa5]";
+        for (int i = 0; i < s.length(); i++) {
+            // 获取一个字符
+            String temp = s.substring(i, i + 1);
+            // 判断是否为中文字符
+            if (temp.matches(chinese)) {
+                // 中文字符长度为1
+                valueLength += 1;
+            } else {
+                // 其他字符长度为0.5
+                valueLength += 0.5;
+            }
+        }
+        //进位取整
+        return Math.ceil(valueLength);
+    }
+    /**
+     * 判断字符串中中文字符的个数
+     * @param s
+     * @return
+     */
+    public static int getCNNum(String s) {
+        int valueLength = 0;
+        String chinese = "[\u4e00-\u9fa5]";
+        for (int i = 0; i < s.length(); i++) {
+            // 获取一个字符
+            String temp = s.substring(i, i + 1);
+            // 判断是否为中文字符
+            if (temp.matches(chinese)) {
+                // 中文字符个数加1
+                valueLength += 1;
+            }
+        }
+        return valueLength;
+    }
+    /**
+     * 判断字符串中非中文字符的个数
+     * @param s
+     * @return
+     */
+    public static int getENNum(String s) {
+        int valueLength = 0;
+        String chinese = "[\u4e00-\u9fa5]";
+        for (int i = 0; i < s.length(); i++) {
+            // 获取一个字符
+            String temp = s.substring(i, i + 1);
+            // 判断是否为中文字符
+            if (!temp.matches(chinese)) {
+                // 非中文字符个数加1
+                valueLength += 1;
+            }
+        }
+        return valueLength;
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
