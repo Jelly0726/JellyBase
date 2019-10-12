@@ -77,7 +77,13 @@ public class BaseApplication extends Application {
             //初始化数据库
             DBManager.getDBManager().init(this);
 //            HermesEventBus.getDefault().init(this);
-            LiveDataBus.config();
+            LiveDataBus
+                    .config()
+                    .supportBroadcast(this)//配置支持跨进程、跨APP通信，传入Context
+                    .lifecycleObserverAlwaysActive(true);//  配置LifecycleObserver（如Activity）接收消息的模式（默认值true）：
+                                                        //true：整个生命周期（从onCreate到onDestroy）都可以实时收到消息
+                                                       // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，
+                                                      // 需等到Activity重新变成激活状态，方可收到消息
             //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
             DaemonEnv.initialize(this, TraceServiceImpl.class, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL);
 
