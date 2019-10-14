@@ -7,7 +7,7 @@
     app:cardCornerRadius="0dp"
     android:layout_height="match_parent"
     >
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -18,5 +18,5 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
-    </RelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
