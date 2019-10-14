@@ -3,6 +3,7 @@ package com.base.Display;
 import android.app.Presentation;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.RelativeLayout;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
@@ -88,10 +90,38 @@ public class DifferentDislay extends Presentation{
 
                 }
             });
+            mediaPlayer.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
+                @Override
+                public void onVideoSizeChanged(MediaPlayer mediaPlayer, int i, int i1) {
+                    changeVideoSize();
+                }
+            });
 
         } catch (Exception e) {
 
         }
+    }
+    //设置自适应
+    public void changeVideoSize() {
+        int videoWidth = mediaPlayer.getVideoWidth();
+        int videoHeight = mediaPlayer.getVideoHeight();
+
+        //根据视频尺寸去计算->视频可以在sufaceView中放大的最大倍数。
+        float max;
+        if (getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            //竖屏模式下按视频宽度计算放大倍数值
+            max = Math.max((float) videoWidth / (float) video.getWidth(),(float) videoHeight / (float) video.getHeight());
+        } else{
+            //横屏模式下按视频高度计算放大倍数值
+            max = Math.max(((float) videoWidth/(float) video.getWidth()),(float) videoHeight/(float) video.getHeight());
+        }
+
+        //视频宽高分别/最大倍数值 计算出放大后的视频尺寸
+        videoWidth = (int) Math.ceil((float) videoWidth / max);
+        videoHeight = (int) Math.ceil((float) videoHeight / max);
+
+        //无法直接设置视频尺寸，将计算出的视频尺寸设置到surfaceView 让视频自动填充。
+        video.setLayoutParams(new RelativeLayout.LayoutParams(videoWidth, videoHeight));
     }
     @Override
     protected void onStop() {
