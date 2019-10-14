@@ -69,6 +69,7 @@ public class DifferentDislay extends Presentation{
             //设置要播放的资源，可以是文件、文件路径、或者URL
             mediaPlayer.setDataSource(BaseApplication.getInstance(),uri);
             mediaPlayer.setDisplay(video.getHolder());
+            mediaPlayer.setVolume(10f,10f);
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
