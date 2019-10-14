@@ -828,6 +828,7 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+        <service android:name="com.base.Display.MediaService" />
         <!--↑↑↑极光推送↑↑↑-->
     </application>
 </manifest>
