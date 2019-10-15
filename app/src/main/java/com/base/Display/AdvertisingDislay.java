@@ -63,6 +63,9 @@ public class AdvertisingDislay extends Presentation {
         try {
             //设置要播放的资源，可以是文件、文件路径、或者URL
             mediaPlayer.setDataSource(BaseApplication.getInstance(),uri);
+            //Sets the audio stream type for this MediaPlayer，设置流的类型，此为音乐流
+//            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            //Sets the SurfaceHolder to use for displaying the video portion of the media，设置播放的容器
             mediaPlayer.setDisplay(video.getHolder());
             mediaPlayer.setVolume(10f,10f);
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
