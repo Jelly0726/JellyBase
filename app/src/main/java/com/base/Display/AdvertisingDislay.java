@@ -68,6 +68,7 @@ public class AdvertisingDislay extends Presentation {
             //Sets the SurfaceHolder to use for displaying the video portion of the media，设置播放的容器
             mediaPlayer.setDisplay(video.getHolder());
             mediaPlayer.setVolume(10f,10f);
+            //当装载流媒体完毕的时候回调。
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -77,8 +78,9 @@ public class AdvertisingDislay extends Presentation {
                     mediaPlayer.setLooping(true);
                 }
             });
-            //调用MediaPlayer.prepare()来准备
-            mediaPlayer.prepare();
+            //prepare同步的方式装载流媒体文件
+            //异步的方式装载流媒体文件(推荐)
+            mediaPlayer.prepareAsync();
             mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
