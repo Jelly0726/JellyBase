@@ -3,6 +3,7 @@ package com.base.Display;
 import android.app.Presentation;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class AdvertisingDislay extends Presentation {
     @BindView(R.id.video)
     SurfaceView video;
     private MediaPlayer mediaPlayer;
+    private AudioManager audioMa;
     public AdvertisingDislay(Context outerContext, Display display) {
         super(outerContext, display);
     }
@@ -67,7 +69,10 @@ public class AdvertisingDislay extends Presentation {
 //            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             //Sets the SurfaceHolder to use for displaying the video portion of the media，设置播放的容器
             mediaPlayer.setDisplay(video.getHolder());
-            mediaPlayer.setVolume(10f,10f);
+            //最大音量
+            int MaxVolume=audioMa.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            //设置音量
+            audioMa.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (MaxVolume*0.1),AudioManager.FLAG_SHOW_UI);
             //当装载流媒体完毕的时候回调。
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
