@@ -136,10 +136,6 @@ public class DifferentDislay extends Presentation{
     @Override
     protected void onStop() {
         super.onStop();
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-        mediaPlayer.release();
     }
     private class SHCallBack implements SurfaceHolder.Callback {
         /**
@@ -179,6 +175,12 @@ public class DifferentDislay extends Presentation{
             unbinder.unbind();
         if (observer!=null)
             LiveDataBus.get("CashierDeskActivity").removeObserver(observer);
+        if (mediaPlayer!=null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.release();
+        }
         super.dismiss();
 
     }

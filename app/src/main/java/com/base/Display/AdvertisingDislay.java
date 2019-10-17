@@ -55,6 +55,12 @@ public class AdvertisingDislay extends Presentation {
         DisplayUtils.getInstance().setPosition(mediaPlayer.getCurrentPosition());
         if (unbinder!=null)
             unbinder.unbind();
+        if (mediaPlayer!=null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.release();
+        }
         super.dismiss();
 
     }
@@ -129,10 +135,6 @@ public class AdvertisingDislay extends Presentation {
     @Override
     protected void onStop() {
         super.onStop();
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-        mediaPlayer.release();
     }
     private class SHCallBack implements SurfaceHolder.Callback {
         /**
