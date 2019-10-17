@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
@@ -1298,5 +1299,19 @@ public class AppUtils {
         }
 
         return null;
+    }
+    /**
+     * 使用反射解决
+     * 在 onSaveInstanceState 调用之后调用了 popBackStackImmediate 。导致崩溃问题
+     */
+    public static void fixBug(FragmentManager fragmentManager) {
+        try {
+            Class<? extends FragmentManager> aClass =fragmentManager.getClass();
+            Method method = aClass.getMethod("noteStateNotSaved");
+            method.setAccessible(true);
+            method.invoke(fragmentManager);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
