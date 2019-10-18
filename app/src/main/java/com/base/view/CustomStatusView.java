@@ -22,7 +22,7 @@ import com.jelly.jellybase.R;
  */
 
 public class CustomStatusView extends View {
-    public enum StatusEnum {
+    private enum StatusEnum {
         Loading,
         LoadSuccess,
         LoadFailure
@@ -189,7 +189,6 @@ public class CustomStatusView extends View {
 
     //重制路径
     private void resetPath() {
-        cancelAnimator();
         successValue = 0;
         circleValue = 0;
         failValueLeft = 0;
@@ -199,7 +198,6 @@ public class CustomStatusView extends View {
         failurePathLeft.reset();
         failurePathRight.reset();
         successPath.reset();
-        mPaint.setColor(progressColor);
     }
     //清除动画
     private void cancelAnimator() {
@@ -367,6 +365,7 @@ public class CustomStatusView extends View {
                 break;
             case View.INVISIBLE:
             case View.GONE:
+                resetPath();
                 cancelAnimator();
                 break;
             default:
