@@ -149,7 +149,6 @@ public class CustomStatusView extends View {
             canvas.drawArc(arcRectF, startAngle, sweepAngle, false, mPaint);
             invalidate();
         } else if (mStatus == StatusEnum.LoadSuccess) {     //加载成功
-            mPaint.setColor(loadSuccessColor);
             mPathCircle.addCircle(getWidth() / 2, getWidth() / 2, progressRadius, Path.Direction.CW);
             mPathMeasure.setPath(mPathCircle, false);
             mPathMeasure.getSegment(0, circleValue * mPathMeasure.getLength(), mPathCircleDst, true);   //截取path并保存到mPathCircleDst中
@@ -165,7 +164,6 @@ public class CustomStatusView extends View {
                 canvas.drawPath(mPathCircleDst, mPaint);
             }
         } else {      //加载失败
-            mPaint.setColor(loadFailureColor);
             mPathCircle.addCircle(getWidth() / 2, getWidth() / 2, progressRadius, Path.Direction.CW);
             mPathMeasure.setPath(mPathCircle, false);
             mPathMeasure.getSegment(0, circleValue * mPathMeasure.getLength(), mPathCircleDst, true);
@@ -201,6 +199,7 @@ public class CustomStatusView extends View {
         failurePathLeft.reset();
         failurePathRight.reset();
         successPath.reset();
+        mPaint.setColor(progressColor);
     }
     //清除动画
     private void cancelAnimator() {
@@ -214,8 +213,12 @@ public class CustomStatusView extends View {
         mStatus = status;
     }
 
+    /**
+     * 加载动画
+     */
     public void loadLoading() {
         resetPath();
+        mPaint.setColor(progressColor);
         setStatus(StatusEnum.Loading);
         if (animatorSet != null && animatorSet.isRunning()) {
             animatorSet.cancel();
@@ -252,14 +255,22 @@ public class CustomStatusView extends View {
         });
     }
 
+    /**
+     * 成功动画
+     */
     public void loadSuccess() {
         resetPath();
+        mPaint.setColor(loadSuccessColor);
         setStatus(StatusEnum.LoadSuccess);
         animatorSet=startSuccessAnim();
     }
 
+    /**
+     * 失败动画
+     */
     public void loadFailure() {
         resetPath();
+        mPaint.setColor(loadFailureColor);
         setStatus(StatusEnum.LoadFailure);
         animatorSet=startFailAnim();
     }
@@ -298,16 +309,6 @@ public class CustomStatusView extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 failValueRight = (float) animation.getAnimatedValue();
                 invalidate();
-                //当动画完成后,延迟一秒回掉,不然动画效果不明显
-                if (successValue==1f&&mListener != null) {
-                    postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mListener.onCorrectly();
-
-                        }
-                    }, 1000);
-                }
             }
         });
         ValueAnimator failRight = ValueAnimator.ofFloat(0f, 1.0f);
@@ -316,6 +317,16 @@ public class CustomStatusView extends View {
             public void onAnimationUpdate(ValueAnimator animation) {
                 failValueLeft = (float) animation.getAnimatedValue();
                 invalidate();
+                //当动画完成后,延迟一秒回掉,不然动画效果不明显
+                if (failValueLeft==1f&&mListener != null) {
+                    postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListener.onCorrectly();
+
+                        }
+                    }, 1000);
+                }
             }
         });
         //组合动画,一先一后执行
