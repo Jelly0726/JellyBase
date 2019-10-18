@@ -5,15 +5,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.ToastUtils;
 import com.base.appManager.BaseApplication;
 import com.base.httpmvp.contact.MessageDetailsContact;
 import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.presenter.MessageDetailsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.ig.DefaultImageDownloader;
@@ -34,7 +33,6 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     LinearLayout left_back;
     @BindView(R.id.messageDetail_tv)
     TextView messageDetail_tv;
-    private MProgressDialog progressDialog;
     private Message message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,7 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     }
 
     private void iniView(){
-        progressDialog= MProgressUtil.getInstance().getMProgressDialog(this);
+         MProgressUtil.getInstance().getMProgressDialog(this);
 
     }
     @OnClick({R.id.left_back})
@@ -68,16 +66,12 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     }
     @Override
     public void showProgress() {
-        if (progressDialog!=null){
-            progressDialog.show();
-        }
+        MProgressUtil.getInstance().show(this);
     }
 
     @Override
     public void closeProgress() {
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-        }
+        MProgressUtil.getInstance().dismiss();
     }
 
     @Override

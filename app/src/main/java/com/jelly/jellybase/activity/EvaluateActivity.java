@@ -6,12 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.base.toast.ToastUtils;
-import com.base.mprogressdialog.MProgressUtil;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.willy.ratingbar.BaseRatingBar;
 
 import butterknife.BindView;
@@ -36,15 +34,12 @@ public class EvaluateActivity extends BaseActivity {
     @BindView(R.id.content_ed)
     EditText content;
 
-
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.evaluate_activity);
         ButterKnife.bind(this);
         iniView();
-        progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
     }
 
 

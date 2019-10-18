@@ -57,7 +57,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         login= LoginDaoUtils.getInstance(getApplicationContext())
-                .getLogin();
+                .getItem();
         setContentView(R.layout.bottombar_activity);
         ButterKnife.bind(this);
         initView();

@@ -32,7 +32,6 @@ import com.base.webview.DownPicUtil;
 import com.base.webview.Utils;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.IX5WebSettings;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -71,7 +70,6 @@ public class X5WebView extends WebView {
 	private RelativeLayout refreshRela;
 	TextView title;
 	private TBSClientCallBack tbsClientCallBack;
-	private MProgressDialog progressDialog;
 	private boolean isVisible=true;//视图是否可见
 	private WebViewClient client = new WebViewClient() {
 		/**
@@ -124,8 +122,8 @@ public class X5WebView extends WebView {
 		@Override
 		public void onPageStarted(WebView view, String url, Bitmap favicon) {
 			super.onPageStarted(view, url, favicon);
-			if (progressDialog != null&&isVisible) {
-				progressDialog.show();
+			if (isVisible) {
+				MProgressUtil.getInstance().show(getContext());
 			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onPageStarted(view, url, favicon);
@@ -179,9 +177,7 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedHttpError(view, request, error);
 			}
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
+			MProgressUtil.getInstance().dismiss();
 
 		}
 
@@ -203,9 +199,7 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedError(view, errorCode, description, failingUrl);
 			}
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
+			MProgressUtil.getInstance().dismiss();
 		}
 
 
@@ -227,9 +221,7 @@ public class X5WebView extends WebView {
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onReceivedError(view, request, error);
 			}
-			if (progressDialog != null) {
-				progressDialog.dismiss();
-			}
+			MProgressUtil.getInstance().dismiss();
 		}
 	};
 	/**
@@ -415,9 +407,7 @@ public class X5WebView extends WebView {
 			Log.i("ss", "BridgeTBSWebViewClient onProgressChanged:----------->" + newProgress);
 			if (newProgress == 100) {
 				//loadingLayout.setVisibility(View.GONE);
-				if (progressDialog != null) {
-					progressDialog.dismiss();
-				}
+				MProgressUtil.getInstance().dismiss();
 			}
 			if (tbsClientCallBack!=null){
 				tbsClientCallBack.onProgressChanged(view, newProgress);
@@ -543,9 +533,7 @@ public class X5WebView extends WebView {
 	 */
 	@Override
 	protected void onDetachedFromWindow() {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
-		}
+		MProgressUtil.getInstance().dismiss();
 		super.onDetachedFromWindow();
 	}
 	@SuppressLint("SetJavaScriptEnabled")
@@ -698,7 +686,7 @@ public class X5WebView extends WebView {
 //				}
 //			}
 //		});
-		progressDialog = MProgressUtil.getInstance().getMProgressDialog(arg0);
+		MProgressUtil.getInstance().getMProgressDialog(BaseApplication.getInstance());
 	}
 	private void initWebViewSettings() {
 		//android:scrollbars="none"   隐藏滚动条

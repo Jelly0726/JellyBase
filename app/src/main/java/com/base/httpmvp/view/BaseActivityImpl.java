@@ -3,10 +3,10 @@ package com.base.httpmvp.view;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 
+import com.base.appManager.BaseApplication;
 import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;
 import com.trello.rxlifecycle3.RxLifecycle;
@@ -24,13 +24,12 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
         implements LifecycleProvider<ActivityEvent>,IBaseView {
     public LifecycleProvider lifecycleProvider;
     public P presenter;
-    private MProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         lifecycleProvider=this;
-        progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
+        MProgressUtil.getInstance().getMProgressDialog(BaseApplication.getInstance());
         presenter = initPresenter();
     }
     @Override
@@ -40,10 +39,7 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
             presenter.detach();//在presenter中解绑释放view
             presenter = null;
         }
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-            progressDialog=null;
-        }
+        MProgressUtil.getInstance().dismiss();
         super.onDestroy();
     }
     @Override
@@ -98,15 +94,11 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
     public abstract P initPresenter();
     @Override
     public void showProgress() {
-        if (progressDialog != null) {
-            progressDialog.show();
-        }
+        MProgressUtil.getInstance().show(this);
     }
 
     @Override
     public void closeProgress() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        MProgressUtil.getInstance().dismiss();
     }
 }

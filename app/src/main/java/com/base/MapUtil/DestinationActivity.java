@@ -196,7 +196,7 @@ public class DestinationActivity extends Activity implements OnClickListener,Tex
 	}
 	private void upPosition(PositionEntity positionEntity){
 		if(posList!=null){
-			PositionDaoUtils.getInstance(this).clearPosition();
+			PositionDaoUtils.getInstance(this).clear();
 			for (int i=0;i<posList.size();i++){
 				PositionEntity positionEntity1=posList.get(i);
 				if(positionEntity.city.equals(positionEntity1.city)

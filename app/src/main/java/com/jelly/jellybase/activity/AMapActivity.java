@@ -49,7 +49,6 @@ import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.LocationService;
-import com.maning.mndialoglibrary.MProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -86,7 +85,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     //起点终点列表
     private ArrayList<NaviLatLng> mStartPoints = new ArrayList<NaviLatLng>();
     private ArrayList<NaviLatLng> mEndPoints = new ArrayList<NaviLatLng>();
-    private MProgressDialog progressDialog;
     private double latitude =0d;
     private double longitude=0d;
     private String address="";
@@ -103,7 +101,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
 
         setContentView(R.layout.amap_activity);
         ButterKnife.bind(this);
-        progressDialog = MProgressUtil.getInstance().getMProgressDialog(this);
+        MProgressUtil.getInstance().getMProgressDialog(this.getApplicationContext());
         initAmap(savedInstanceState);
         initNavi();
 
@@ -229,9 +227,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
      */
 
     private void calculateDriveRoute() {
-        if (progressDialog != null) {
-            progressDialog.show();
-        }
+        MProgressUtil.getInstance().show(this);
         mEndPoints.clear();
         NaviLatLng  mNaviEnd = new NaviLatLng(latitude,longitude);
         mEndPoints.add(mNaviEnd);
@@ -242,15 +238,11 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
                     mEndPoints, null, strategy);
             if (!isSuccess) {
                 ToastUtils.show(this,"路线计算失败,检查参数情况");
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
+                MProgressUtil.getInstance().dismiss();
             }
         }catch (Exception e){
             ToastUtils.show(this,e.toString());
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
+            MProgressUtil.getInstance().dismiss();
         }
     }
     @Override
@@ -378,9 +370,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     @Override
     public void onCalculateRouteFailure(int arg0) {
         mIsCalculateRouteSuccess = false;
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        MProgressUtil.getInstance().dismiss();
         String msg = "路径计算失败";
         switch (arg0){
 //                case PathPlanningErrCode.SUCCESS_ROUTE:
@@ -582,9 +572,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     @Override
     public void onCalculateRouteSuccess(int[] ints) {
         mIsCalculateRouteSuccess = true;
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        MProgressUtil.getInstance().dismiss();
         AMapNaviPath naviPath = mAMapNavi.getNaviPath();
         if (naviPath == null) {
             return;

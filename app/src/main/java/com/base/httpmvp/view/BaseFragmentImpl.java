@@ -7,7 +7,6 @@ import android.view.View;
 import com.base.httpmvp.presenter.IBasePresenter;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseFragment;
-import com.maning.mndialoglibrary.MProgressDialog;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;
 import com.trello.rxlifecycle3.RxLifecycle;
@@ -27,7 +26,6 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
         implements LifecycleProvider<FragmentEvent> ,IBaseView {
 
     protected P presenter;
-    private MProgressDialog progressDialog;
 
     public LifecycleProvider lifecycleProvider;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
@@ -71,7 +69,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
-        progressDialog = MProgressUtil.getInstance().getMProgressDialog(getActivity());
+        MProgressUtil.getInstance().getMProgressDialog(getActivity().getApplicationContext());
     }
     @Override
     public void onStart() {
@@ -103,10 +101,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
             presenter.detach();
         }
         lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
-        if (progressDialog!=null){
-            progressDialog.dismiss();
-            progressDialog=null;
-        }
+        MProgressUtil.getInstance().dismiss();
         super.onDestroyView();
     }
 
@@ -124,15 +119,11 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public abstract P initPresenter();
     @Override
     public void showProgress() {
-        if (progressDialog != null) {
-            progressDialog.show();
-        }
+        MProgressUtil.getInstance().show(getActivity());
     }
 
     @Override
     public void closeProgress() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
+        MProgressUtil.getInstance().dismiss();
     }
 }

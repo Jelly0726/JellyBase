@@ -54,7 +54,7 @@ public class SearchActivity extends BaseActivity {
                         SearchHistory history = new SearchHistory();
                         history.setTime(System.currentTimeMillis());
                         history.setHistory(search);
-                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).addToHistoryfoTable(history);
+                        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).addTable(history);
                     }
                     setBackData(search);
                     return true;
@@ -79,7 +79,7 @@ public class SearchActivity extends BaseActivity {
         if(search_history.getChildCount()>0){
             search_history.removeAllViewsInLayout();
         }
-        List<SearchHistory> historyList= HistoryDaoUtils.getInstance(BaseApplication.getInstance()).getHistory();
+        List<SearchHistory> historyList= HistoryDaoUtils.getInstance(BaseApplication.getInstance()).getAllList();
         if(historyList!=null){
             for (int i = 0; i < historyList.size(); i++) {
                 TextView tv = (TextView) getLayoutInflater().inflate(
@@ -110,7 +110,7 @@ public class SearchActivity extends BaseActivity {
         finish();
     }
     private void clearHistory(){
-        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).clearHistory();
+        HistoryDaoUtils.getInstance(BaseApplication.getInstance()).clear();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 iniHistory();
