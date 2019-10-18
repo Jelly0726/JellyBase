@@ -103,22 +103,6 @@ public class CustomStatusView extends View {
         failurePathRight = new Path();
     }
 
-    private AnimatorSet initAnim() {
-        circleAnimator = ValueAnimator.ofFloat(0, 1);
-        circleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                circleValue = (float) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(circleAnimator);
-        animatorSet.setDuration(800);
-        animatorSet.start();
-        return animatorSet;
-    }
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -272,6 +256,21 @@ public class CustomStatusView extends View {
         setStatus(StatusEnum.LoadFailure);
         animatorSet=startFailAnim();
     }
+    private AnimatorSet initAnim() {
+        circleAnimator = ValueAnimator.ofFloat(0, 1);
+        circleAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                circleValue = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(circleAnimator);
+        animatorSet.setDuration(800);
+        animatorSet.start();
+        return animatorSet;
+    }
     private AnimatorSet startSuccessAnim() {
         ValueAnimator success = ValueAnimator.ofFloat(0f, 1.0f);
         success.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -295,7 +294,7 @@ public class CustomStatusView extends View {
         //组合动画,一先一后执行
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(success).after(circleAnimator);
-        animatorSet.setDuration(800);
+        animatorSet.setDuration(300);
         animatorSet.start();
         return animatorSet;
     }
@@ -330,7 +329,7 @@ public class CustomStatusView extends View {
         //组合动画,一先一后执行
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(failLeft).after(circleAnimator).before(failRight);
-        animatorSet.setDuration(800);
+        animatorSet.setDuration(300);
         animatorSet.start();
         return animatorSet;
     }
