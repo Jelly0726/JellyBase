@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MDLoadAttr">
+        <attr name="MDLoadArcColor" format="reference|color" />
+        <attr name="MDLoadBarBorderWidth" format="dimension" />
+    </declare-styleable>
+</resources>
