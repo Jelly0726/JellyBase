@@ -173,8 +173,8 @@ public class MDProgressBar extends View {
             //画第一根线
             canvas.drawLine(startX1, startY1, stopX1, stopY1, mPaint);
             if (isAnimationOverHalf) {
-                //-2 +2 是为了两根线尽可能靠拢
-                canvas.drawLine(stopX1 - 2, stopY1 + 2, stopX2, stopY2, mPaint);
+                //-mBorderWidth 是为了两根线尽可能靠拢
+                canvas.drawLine(stopX1 - mBorderWidth, stopY1, stopX2, stopY2, mPaint);
             }
         }
     }
@@ -186,12 +186,12 @@ public class MDProgressBar extends View {
         protected void applyTransformation(final float interpolatedTime, Transformation t) {
             super.applyTransformation(interpolatedTime, t);
             if (interpolatedTime <= 0.5f) {
-                stopX1 = startX1 + mRadius / 3 * interpolatedTime * 2;
-                stopY1 = startY1 + mRadius / 3 * interpolatedTime * 2;
+                stopX1 = startX1 + mRadius / 2 * interpolatedTime * 2;
+                stopY1 = startY1 + mRadius / 2 * interpolatedTime * 2;
                 isAnimationOverHalf = false;
             } else {
-                stopX2 = stopX1 + (mRadius - 20) * (interpolatedTime - 0.5f) * 2;
-                stopY2 = stopY1 - (mRadius - 20) * (interpolatedTime - 0.5f) * 2;
+                stopX2 = stopX1 + (mRadius - mRadius / 3) * (interpolatedTime - 0.5f) * 2;
+                stopY2 = stopY1 - (mRadius - mRadius / 3) * (interpolatedTime - 0.5f) * 2;
                 isAnimationOverHalf = true;
             }
             invalidate();
