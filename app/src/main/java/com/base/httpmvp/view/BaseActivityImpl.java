@@ -29,7 +29,7 @@ public abstract class BaseActivityImpl<P extends IBasePresenter> extends BaseAct
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         lifecycleProvider=this;
-        MProgressUtil.getInstance().getMProgressDialog(BaseApplication.getInstance());
+        MProgressUtil.getInstance().initialize(BaseApplication.getInstance());
         presenter = initPresenter();
     }
     @Override

@@ -686,7 +686,7 @@ public class X5WebView extends WebView {
 //				}
 //			}
 //		});
-		MProgressUtil.getInstance().getMProgressDialog(BaseApplication.getInstance());
+		MProgressUtil.getInstance().initialize(BaseApplication.getInstance());
 	}
 	private void initWebViewSettings() {
 		//android:scrollbars="none"   隐藏滚动条

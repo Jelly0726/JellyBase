@@ -53,7 +53,7 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     }
 
     private void iniView(){
-         MProgressUtil.getInstance().getMProgressDialog(this);
+         MProgressUtil.getInstance().initialize(this);
 
     }
     @OnClick({R.id.left_back})

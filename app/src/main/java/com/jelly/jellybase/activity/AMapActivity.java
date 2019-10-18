@@ -101,7 +101,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
 
         setContentView(R.layout.amap_activity);
         ButterKnife.bind(this);
-        MProgressUtil.getInstance().getMProgressDialog(this.getApplicationContext());
+        MProgressUtil.getInstance().initialize(this.getApplicationContext());
         initAmap(savedInstanceState);
         initNavi();
 

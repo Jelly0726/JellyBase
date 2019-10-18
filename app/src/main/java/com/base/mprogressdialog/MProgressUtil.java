@@ -15,6 +15,7 @@ import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
 public class MProgressUtil {
     private volatile static MProgressUtil sInstance;
     private MDialogConfig mDialogConfig;
+    private OnDialogDismissListener onDialogDismissListener;
     private MProgressUtil(){
 
     }
@@ -30,7 +31,7 @@ public class MProgressUtil {
         }
         return sInstance;
     }
-    public void getMProgressDialog(Context context){
+    public void initialize(Context context){
         //新建一个Dialog
 //        MProgressDialog  progressDialog = new MProgressDialog.Builder(context)
 //                //点击外部是否可以取消
@@ -104,12 +105,7 @@ public class MProgressUtil {
                     //padding
                     .setPadding(20, 20, 20, 20)
                     //关闭的监听
-                    .setOnDialogDismissListener(new OnDialogDismissListener() {
-                        @Override
-                        public void onDismiss() {
-//                        MToast.makeTextShort(mContext, "监听到了ProgressDialog关闭了");
-                        }
-                    })
+                    .setOnDialogDismissListener(onDialogDismissListener)
                     .build();
 //        //默认
 //        MProgressDialog.showProgress(this);
@@ -126,5 +122,12 @@ public class MProgressUtil {
     }
     public void dismiss(){
         MProgressDialog.dismissProgress();
+    }
+    public OnDialogDismissListener getDismissListener() {
+        return onDialogDismissListener;
+    }
+
+    public void setDismissListener(OnDialogDismissListener onDialogDismissListener) {
+        this.onDialogDismissListener = onDialogDismissListener;
     }
 }

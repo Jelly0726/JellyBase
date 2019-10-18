@@ -69,7 +69,7 @@ public abstract class BaseFragmentImpl<P extends IBasePresenter> extends BaseFra
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
-        MProgressUtil.getInstance().getMProgressDialog(getActivity().getApplicationContext());
+        MProgressUtil.getInstance().initialize(getActivity().getApplicationContext());
     }
     @Override
     public void onStart() {
