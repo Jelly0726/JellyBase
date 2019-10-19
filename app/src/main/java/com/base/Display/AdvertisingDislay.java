@@ -38,6 +38,7 @@ public class AdvertisingDislay extends Presentation {
         setContentView(R.layout.advertising_dislay);
         unbinder= ButterKnife.bind(this);
         mediaPlayer=new MediaPlayer();
+        audioMa = (AudioManager)BaseApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
         video.getHolder().addCallback(new SHCallBack());
     }
 
@@ -75,10 +76,14 @@ public class AdvertisingDislay extends Presentation {
 //            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             //Sets the SurfaceHolder to use for displaying the video portion of the media，设置播放的容器
             mediaPlayer.setDisplay(video.getHolder());
+            //音乐音量
+            int current = audioMa.getStreamVolume( AudioManager.STREAM_MUSIC );
             //最大音量
-            int MaxVolume=audioMa.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            //设置音量
-            audioMa.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (MaxVolume*0.1),AudioManager.FLAG_SHOW_UI);
+            int MaxVolume = audioMa.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+            if(current<=(MaxVolume * 0.1)) {
+                //设置音量
+                audioMa.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (MaxVolume * 0.1), AudioManager.FLAG_SHOW_UI);
+            }
             //当装载流媒体完毕的时候回调。
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
