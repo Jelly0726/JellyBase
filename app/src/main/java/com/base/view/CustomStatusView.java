@@ -187,8 +187,8 @@ public class CustomStatusView extends View {
     private void cancelAnimator() {
         if (animatorSet != null) {
             animatorSet.cancel();
-            setStatus(StatusEnum.Loading);
         }
+        setStatus(StatusEnum.Loading);
     }
 
     private void setStatus(StatusEnum status) {
