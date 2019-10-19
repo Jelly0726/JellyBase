@@ -81,7 +81,7 @@ public class DifferentDislay extends Presentation{
             int current = audioMa.getStreamVolume( AudioManager.STREAM_MUSIC );
             //最大音量
             int MaxVolume = audioMa.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-            if(current<=(MaxVolume * 0.1)) {
+            if(current!=(MaxVolume * 0.1)) {
                 //设置音量
                 audioMa.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (MaxVolume * 0.1), AudioManager.FLAG_SHOW_UI);
             }
