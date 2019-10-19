@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import java.lang.annotation.Retention;
@@ -66,7 +67,8 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable String msg){
-        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL)
+                .setGravity( Gravity.CENTER, 0, 0).show();
     }
     /**
      * 屏幕居中显示Toast
@@ -74,7 +76,8 @@ public class ToastUtils {
      * @param msg
      */
     public static void showToast(@Nullable Context context, @Nullable int msg){
-        makeText(context,msg, LENGTH_LONG,UNIVERSAL).show();
+        makeText(context,msg, LENGTH_LONG,UNIVERSAL)
+                .setGravity( Gravity.CENTER, 0, 0).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -82,7 +85,8 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable String msg){
-        makeText(context,msg, LENGTH_SHORT,UNIVERSAL).show();
+        makeText(context,msg, LENGTH_SHORT,UNIVERSAL)
+                .setGravity( Gravity.CENTER, 0, 0).show();
     }
     /**
      * 屏幕居中显示Toast短时
@@ -90,7 +94,8 @@ public class ToastUtils {
      * @param msg
      */
     public static void showShort(@Nullable Context context, @Nullable int msg){
-        makeText(context,msg, LENGTH_SHORT,UNIVERSAL).show();
+        makeText(context,msg, LENGTH_SHORT,UNIVERSAL)
+                .setGravity( Gravity.CENTER, 0, 0).show();
     }
     public static IToast makeText(@NonNull Context context, @NonNull int text) {
         return makeText(context, context.getString(text), LENGTH_SHORT, UNIVERSAL);
