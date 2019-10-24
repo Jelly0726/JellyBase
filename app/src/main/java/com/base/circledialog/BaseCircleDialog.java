@@ -120,6 +120,10 @@ public abstract class BaseCircleDialog extends DialogFragment {
                 return false; // pass on to be processed as normal
             }
         });
+        //禁用软键盘
+        getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        //在需要取消禁用软键盘
+//        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         // 先调用一下父类方法(因为恒返回空，就不会存在问题)
         rootView = super.onCreateView(inflater, container, savedInstanceState);
         rootView = createView(getContext(), inflater, container);

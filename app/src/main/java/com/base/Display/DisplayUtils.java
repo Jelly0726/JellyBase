@@ -127,7 +127,7 @@ public class DisplayUtils {
                 mPresentation = new QRCodeDislay(context, displays[displays.length - 1]);// displays[1]是副屏
                 mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             }
-            ((QRCodeDislay)mPresentation).setCode(code,type);
+            ((QRCodeDislay)mPresentation).setCode(code);
             if (!mPresentation.isShowing())
                 mPresentation.show();
         }

@@ -190,7 +190,6 @@ public class DifferentDislay extends Presentation{
                 public void run() {
                     try {
                         if (mediaPlayer.isPlaying()) {
-                            DisplayUtils.getInstance().setPosition(mediaPlayer.getCurrentPosition());
                             mediaPlayer.stop();
                         }
                     } catch (IllegalStateException e) {
