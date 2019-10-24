@@ -19,6 +19,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
@@ -67,6 +69,19 @@ public class BaseActivity extends AppCompatActivity implements Observer {
             boolean result = fixOrientation();
             DebugLog.i("onCreate fixOrientation when Oreo, result = " + result);
         }
+        //无title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // 全屏
+        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
+                WindowManager.LayoutParams. FLAG_FULLSCREEN);
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            boolean result = fixOrientation();
+            DebugLog.i("onCreate fixOrientation when Oreo, result = " + result);
+        }
+        //在BaseActivity里禁用软键盘
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        //在需要打开的Activity取消禁用软键盘
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         super.onCreate(savedInstanceState);
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -87,37 +102,6 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         if (mRecevier != null) {
             registerReceiver(mRecevier, mFilter);
         }
-//        //开启双屏
-//        mDisplayManager=(DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
-//        Display[] displays = mDisplayManager.getDisplays();
-//        if(displays.length>=2){//小于2代表只有一个屏幕，那么mPresentation就没有必要创建了
-//            if (this instanceof MainActivity){//判断当前是否是收银台
-//                //当前为收银台如果客显不是收银客显 就关闭重新创建收银客显
-//                if (mPresentation!=null
-//                        &&!(mPresentation instanceof DifferentDislay)){
-//                    mPresentation.dismiss();
-//                    mPresentation=null;
-//                }
-//                if (mPresentation==null) {
-//                    mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
-//                    mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//                    mPresentation.setOwnerActivity(this);
-//                }
-//                mPresentation.show();
-//            }else {
-//            if (mPresentation!=null
-//                    &&(mPresentation instanceof DifferentDislay)){//当前不是收银台如果客显是收银客显 就关闭重新创建其他客显
-//                mPresentation.dismiss();
-//                mPresentation=null;
-//            }
-//            if (mPresentation==null) {
-//               mPresentation = new DifferentDislay(this, displays[displays.length - 1]);// displays[1]是副屏
-//               mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//               mPresentation.setOwnerActivity(this);
-//              }
-//            mPresentation.show();
-//          }
-//        }
     }
     @Override
     protected void onNewIntent(Intent intent) {

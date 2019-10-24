@@ -19,6 +19,7 @@ import android.view.SurfaceView;
 import android.widget.RelativeLayout;
 
 import com.base.appManager.BaseApplication;
+import com.base.appManager.ExecutorManager;
 import com.base.applicationUtil.AppUtils;
 import com.base.eventBus.NetEvent;
 import com.base.liveDataBus.LiveDataBus;
@@ -181,10 +182,30 @@ public class DifferentDislay extends Presentation{
         if (observer!=null)
             LiveDataBus.get("CashierDeskActivity").removeObserver(observer);
         if (mediaPlayer!=null) {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-            }
-            mediaPlayer.release();
+            mediaPlayer.setOnPreparedListener(null);
+            mediaPlayer.setOnCompletionListener(null);
+            mediaPlayer.setOnVideoSizeChangedListener(null);
+            ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        if (mediaPlayer.isPlaying()) {
+                            DisplayUtils.getInstance().setPosition(mediaPlayer.getCurrentPosition());
+                            mediaPlayer.stop();
+                        }
+                    } catch (IllegalStateException e) {
+                        // TODO 如果当前java状态和jni里面的状态不一致，
+                        //e.printStackTrace();
+                        mediaPlayer = null;
+                        mediaPlayer=new MediaPlayer();
+                        mediaPlayer.stop();
+                    }
+                    mediaPlayer.setDisplay(null);
+                    mediaPlayer.reset();
+                    mediaPlayer.release();
+                    mediaPlayer=null;
+                }
+            });
         }
         super.dismiss();
 

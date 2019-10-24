@@ -58,7 +58,7 @@ public class DisplayUtils {
      * 单一实例
      */
     public static DisplayUtils getInstance() {
-        return DisplayUtils.SingletonHolder.instance;
+        return SingletonHolder.instance;
     }
     /**
      * 要杜绝单例对象在反序列化时重新生成对象，那么必须加入如下方法：
@@ -66,24 +66,15 @@ public class DisplayUtils {
      * @throws ObjectStreamException
      */
     private Object readResolve() throws ObjectStreamException {
-        return DisplayUtils.SingletonHolder.instance;
+        return SingletonHolder.instance;
     }
 
     /**
      * 副屏显示收银信息
      * @param context
      */
-    public void show(Context context){
+    public Presentation show(Context context){
         if(displays.length>=2){//小于2代表只有一个屏幕，那么mPresentation就没有必要创建了
-//            int Width=displays[displays.length - 1].getWidth();
-//            int Height=displays[displays.length - 1].getHeight();
-//            DebugLog.i("Width="+Width+",Height="+Height);
-//            Point point=new Point();
-//            displays[displays.length - 1].getRealSize(point);
-//            DebugLog.i("x="+point.x+",y="+point.y);
-//            Rect rect=new Rect();
-//            displays[displays.length - 1].getRectSize(rect);
-//            DebugLog.i("rect="+rect.toString());
             if (mPresentation!=null
                     &&!(mPresentation instanceof DifferentDislay)){
                 mPresentation.dismiss();
@@ -97,12 +88,13 @@ public class DisplayUtils {
             if (!mPresentation.isShowing())
                 mPresentation.show();
         }
+        return mPresentation;
     }
     /**
      * 副屏播放视频
      * @param context
      */
-    public void showVedio(Context context){
+    public Presentation showVedio(Context context){
         if(displays.length>=2){//小于2代表只有一个屏幕，那么mPresentation就没有必要创建了
             if (mPresentation != null
                     && !(mPresentation instanceof AdvertisingDislay)) {
@@ -117,11 +109,12 @@ public class DisplayUtils {
             if (!mPresentation.isShowing())
                 mPresentation.show();
         }
+        return mPresentation;
     }
     /**
      * 切换扫码收银客显
      */
-    public void showQR(Context context){
+    public Presentation showQR(Context context,String code,int type){
         //开启双屏
         if(displays.length>=2){//小于2代表只有一个屏幕，那么mPresentation就没有必要创建了
             //当前为扫码收银如果客显不是二维码客显 就关闭重新创建扫码收银客显
@@ -133,11 +126,12 @@ public class DisplayUtils {
             if (mPresentation==null) {
                 mPresentation = new QRCodeDislay(context, displays[displays.length - 1]);// displays[1]是副屏
                 mPresentation.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                ((QRCodeDislay)mPresentation).setCode("465468416486461");
             }
+            ((QRCodeDislay)mPresentation).setCode(code,type);
             if (!mPresentation.isShowing())
                 mPresentation.show();
         }
+        return mPresentation;
     }
     /**
      * 关闭双屏
@@ -149,5 +143,13 @@ public class DisplayUtils {
     }
     public Presentation getPresentation(){
         return mPresentation;
+    }
+
+    /**
+     * 是否多屏
+     * @return
+     */
+    public boolean isMultiScreen(){
+        return displays.length>=2;
     }
 }
