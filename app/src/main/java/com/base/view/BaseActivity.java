@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
@@ -78,10 +79,13 @@ public class BaseActivity extends AppCompatActivity implements Observer {
             boolean result = fixOrientation();
             DebugLog.i("onCreate fixOrientation when Oreo, result = " + result);
         }
-        //在BaseActivity里禁用软键盘
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        //在需要打开的Activity取消禁用软键盘
-//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        if (onEvaluateInputViewShown()) {
+            //在BaseActivity里禁用软键盘
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }else {
+            //在需要打开的Activity取消禁用软键盘
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
         super.onCreate(savedInstanceState);
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -103,6 +107,32 @@ public class BaseActivity extends AppCompatActivity implements Observer {
             registerReceiver(mRecevier, mFilter);
         }
     }
+    /**
+     *      //检測Configuration是否标示了有外接键盘
+     * @return
+     */
+    private boolean onEvaluateInputViewShown() {
+        Configuration config = getResources().getConfiguration();
+        //检測Configuration是否标示了有外接键盘
+        return config.keyboard == Configuration.KEYBOARD_NOKEYS
+                || config.hardKeyboardHidden ==
+                Configuration.HARDKEYBOARDHIDDEN_YES;
+    }
+
+    /**
+     * 是否禁用软键盘
+     * @param disable
+     */
+    public void setDisable(boolean disable) {
+        if (onEvaluateInputViewShown()&&disable) {
+            //在BaseActivity里禁用软键盘
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }else {
+            //在需要打开的Activity取消禁用软键盘
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
