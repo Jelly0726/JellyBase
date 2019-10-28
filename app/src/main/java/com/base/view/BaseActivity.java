@@ -124,7 +124,7 @@ public class BaseActivity extends AppCompatActivity implements Observer {
      * @param disable
      */
     public void setDisable(boolean disable) {
-        if (onEvaluateInputViewShown()&&disable) {
+        if (disable) {
             //在BaseActivity里禁用软键盘
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }else {
