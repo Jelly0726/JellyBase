@@ -108,7 +108,7 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         }
     }
     /**
-     *      //检測Configuration是否标示了有外接键盘
+     *检測Configuration是否标示了有外接键盘
      * @return
      */
     private boolean onEvaluateInputViewShown() {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -120,10 +121,13 @@ public abstract class BaseCircleDialog extends DialogFragment {
                 return false; // pass on to be processed as normal
             }
         });
-        //禁用软键盘
-        getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        //在需要取消禁用软键盘
-//        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        if (onEvaluateInputViewShown()) {
+            //禁用软键盘
+            getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }else {
+            //取消禁用软键盘
+            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
         // 先调用一下父类方法(因为恒返回空，就不会存在问题)
         rootView = super.onCreateView(inflater, container, savedInstanceState);
         rootView = createView(getContext(), inflater, container);
@@ -134,6 +138,30 @@ public abstract class BaseCircleDialog extends DialogFragment {
         }
         rootView.setAlpha(mAlpha);
         return rootView;
+    }
+    /**
+     * 是否禁用软键盘
+     * @param disable
+     */
+    public void setDisable(boolean disable) {
+        if (disable) {
+            //禁用软键盘
+            getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }else {
+            //取消禁用软键盘
+            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+    }
+    /**
+     * 检測Configuration是否标示了有外接键盘
+     * @return
+     */
+    private boolean onEvaluateInputViewShown() {
+        Configuration config = getResources().getConfiguration();
+        //检測Configuration是否标示了有外接键盘
+        return config.keyboard == Configuration.KEYBOARD_NOKEYS
+                || config.hardKeyboardHidden ==
+                Configuration.HARDKEYBOARDHIDDEN_YES;
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
