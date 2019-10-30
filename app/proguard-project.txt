@@ -822,8 +822,10 @@ public void xxxxxx(**);
 -keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 
 -keep class com.base.sqldao.**{*;}
- -keep class systemdb.**{*;}
- -keep class com.base.eventBus.**{*;}
+-keep class systemdb.**{*;}
+-keep class com.base.eventBus.**{*;}
+-keep class com.base.model.**{*;}
+-keep class com.base.httpmvp.databean.**{*;}
 #-keep public class java.**
 -dontwarn com.google.android.maps.**
 -dontwarn android.webkit.WebView.**
