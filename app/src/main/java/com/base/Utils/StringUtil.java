@@ -479,8 +479,8 @@ public class StringUtil {
             SpannableString sp = new SpannableString("   " + text);
             //获取一张图片
             Drawable drawable = ContextCompat.getDrawable(BaseApplication.getInstance(), icon);
-            drawable.setBounds(0, 0, AppUtils.dipTopx(BaseApplication.getInstance(), size),
-                    AppUtils.dipTopx(BaseApplication.getInstance(), size));
+            drawable.setBounds(0, 0,size,
+                    size);
             //居中对齐imageSpan
             CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
             /**
@@ -493,8 +493,8 @@ public class StringUtil {
             SpannableString sp = new SpannableString(text+"   ");
             //获取一张图片
             Drawable drawable = ContextCompat.getDrawable(BaseApplication.getInstance(), icon);
-            drawable.setBounds(0, 0, AppUtils.dipTopx(BaseApplication.getInstance(), size),
-                    AppUtils.dipTopx(BaseApplication.getInstance(), size));
+            drawable.setBounds(0, 0, size,
+                    size);
             //居中对齐imageSpan
             CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
             /**
