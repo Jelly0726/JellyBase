@@ -158,13 +158,18 @@ public abstract class BaseCircleDialog extends DialogFragment {
                         break;
                     }
                 }
-                if (isKeyboard&&isDisable) {
-                    //在BaseActivity里禁用软键盘
-                    getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                }else {
-                    //在需要打开的Activity取消禁用软键盘
-                    getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isKeyboard&&isDisable) {
+                            //在BaseActivity里禁用软键盘
+                            getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                        }else {
+                            //在需要打开的Activity取消禁用软键盘
+                            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                        }
+                    }
+                });
             }
         });
     }
