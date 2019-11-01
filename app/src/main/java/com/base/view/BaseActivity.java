@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.hardware.input.InputManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +17,7 @@ import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import android.widget.FrameLayout;
 import com.base.SystemBar.StatusBarUtil;
 import com.base.appManager.AppSubject;
 import com.base.appManager.BaseApplication;
+import com.base.appManager.ExecutorManager;
 import com.base.appManager.Observable;
 import com.base.appManager.Observer;
 import com.base.applicationUtil.AppPrefs;
@@ -58,6 +60,8 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     private InnerRecevier mRecevier;
     private IntentFilter mFilter;
     private boolean isResume=false;
+    private boolean isKeyboard=false;//是否有外接键盘
+    private boolean isDisable=true;//是否屏蔽软键盘
 //    public DisplayManager mDisplayManager;//双屏客显
 //    public Presentation mPresentation;//双屏客显
     static {
@@ -79,13 +83,7 @@ public class BaseActivity extends AppCompatActivity implements Observer {
             boolean result = fixOrientation();
             DebugLog.i("onCreate fixOrientation when Oreo, result = " + result);
         }
-        if (onEvaluateInputViewShown()) {
-            //在BaseActivity里禁用软键盘
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }else {
-            //在需要打开的Activity取消禁用软键盘
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }
+        detectUsbAudioDevice();
         super.onCreate(savedInstanceState);
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -107,23 +105,44 @@ public class BaseActivity extends AppCompatActivity implements Observer {
             registerReceiver(mRecevier, mFilter);
         }
     }
-    /**
-     *检測Configuration是否标示了有外接键盘
-     * @return
-     */
-    private boolean onEvaluateInputViewShown() {
-        Configuration config = getResources().getConfiguration();
-        //检測Configuration是否标示了有外接键盘
-        return config.keyboard == Configuration.KEYBOARD_NOKEYS
-                || config.hardKeyboardHidden ==
-                Configuration.HARDKEYBOARDHIDDEN_YES;
-    }
 
+    /**
+     * UsbManager检测是否为键盘
+     */
+    private void detectUsbAudioDevice() {
+        ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                isKeyboard=false;
+                //第二种 通过InputManager获取
+                InputManager inputManager = (InputManager)getSystemService(Context.INPUT_SERVICE);
+                //我们可以通过InputManager获取到当前的所有设备的DeviceId
+                int[] inputDeviceIds= inputManager.getInputDeviceIds();
+                for (int inputDeviceId : inputDeviceIds) {
+                    InputDevice inputDevice = inputManager.getInputDevice(inputDeviceId);
+                    if (inputDevice==null)continue;
+                    //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
+                    if (inputDevice.getKeyboardType()==InputDevice.KEYBOARD_TYPE_ALPHABETIC){
+                        isKeyboard=true;
+                        break;
+                    }
+                }
+                if (isKeyboard&&isDisable) {
+                    //在BaseActivity里禁用软键盘
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }else {
+                    //在需要打开的Activity取消禁用软键盘
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }
+            }
+        });
+    }
     /**
      * 是否禁用软键盘
      * @param disable
      */
     public void setDisable(boolean disable) {
+        this.isDisable=disable;
         if (disable) {
             //在BaseActivity里禁用软键盘
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);

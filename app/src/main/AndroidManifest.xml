@@ -831,5 +831,14 @@
         </receiver>
         <service android:name="com.base.Display.MediaService" />
         <!--↑↑↑极光推送↑↑↑-->
+        <!--USB事件监听-->
+        <receiver
+            android:name="com.base.Receiver.UsbDeviceReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

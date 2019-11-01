@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.graphics.Color;
+import android.hardware.input.InputManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.base.appManager.ExecutorManager;
 import com.base.circledialog.res.drawable.CircleDrawable;
 import com.base.circledialog.res.values.CircleDimen;
 import com.base.circledialog.scale.ScaleUtils;
@@ -62,6 +64,8 @@ public abstract class BaseCircleDialog extends DialogFragment {
     private float mAlpha = 1f;//对话框透明度，范围：0-1；1不透明
     private int mX, mY;
     protected View rootView;
+    private boolean isKeyboard=false;//是否有外接键盘
+    private boolean isDisable=true;//是否屏蔽软键盘
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,13 +125,7 @@ public abstract class BaseCircleDialog extends DialogFragment {
                 return false; // pass on to be processed as normal
             }
         });
-        if (onEvaluateInputViewShown()) {
-            //禁用软键盘
-            getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }else {
-            //取消禁用软键盘
-            getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        }
+        detectUsbAudioDevice();
         // 先调用一下父类方法(因为恒返回空，就不会存在问题)
         rootView = super.onCreateView(inflater, container, savedInstanceState);
         rootView = createView(getContext(), inflater, container);
@@ -140,28 +138,49 @@ public abstract class BaseCircleDialog extends DialogFragment {
         return rootView;
     }
     /**
+     * UsbManager检测是否为键盘
+     */
+    private void detectUsbAudioDevice() {
+        ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                isKeyboard=false;
+                //第二种 通过InputManager获取
+                InputManager inputManager = (InputManager)getContext().getSystemService(Context.INPUT_SERVICE);
+                //我们可以通过InputManager获取到当前的所有设备的DeviceId
+                int[] inputDeviceIds= inputManager.getInputDeviceIds();
+                for (int inputDeviceId : inputDeviceIds) {
+                    InputDevice inputDevice = inputManager.getInputDevice(inputDeviceId);
+                    if (inputDevice==null)continue;
+                    //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
+                    if (inputDevice.getKeyboardType()==InputDevice.KEYBOARD_TYPE_ALPHABETIC){
+                        isKeyboard=true;
+                        break;
+                    }
+                }
+                if (isKeyboard&&isDisable) {
+                    //在BaseActivity里禁用软键盘
+                    getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }else {
+                    //在需要打开的Activity取消禁用软键盘
+                    getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }
+            }
+        });
+    }
+    /**
      * 是否禁用软键盘
      * @param disable
      */
     public void setDisable(boolean disable) {
+        this.isDisable=disable;
         if (disable) {
-            //禁用软键盘
+            //在BaseActivity里禁用软键盘
             getDialog().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }else {
-            //取消禁用软键盘
+            //在需要打开的Activity取消禁用软键盘
             getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         }
-    }
-    /**
-     * 检測Configuration是否标示了有外接键盘
-     * @return
-     */
-    private boolean onEvaluateInputViewShown() {
-        Configuration config = getResources().getConfiguration();
-        //检測Configuration是否标示了有外接键盘
-        return config.keyboard == Configuration.KEYBOARD_NOKEYS
-                || config.hardKeyboardHidden ==
-                Configuration.HARDKEYBOARDHIDDEN_YES;
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

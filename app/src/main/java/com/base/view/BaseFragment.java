@@ -1,13 +1,18 @@
 package com.base.view;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.InputDevice;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.base.SystemBar.StatusBarUtil;
+import com.base.appManager.ExecutorManager;
 import com.base.log.DebugLog;
 
 import io.reactivex.annotations.Nullable;
@@ -41,6 +46,8 @@ public abstract class BaseFragment extends Fragment{
     private boolean isFirstVisible;
     //是否连接过服务器
     private boolean isConnected=false;
+    private boolean isKeyboard=false;//是否有外接键盘
+    private boolean isDisable=true;//是否屏蔽软键盘
     public abstract void setData(String json);
     public BackInterface mBackInterface;
 
@@ -162,6 +169,51 @@ public abstract class BaseFragment extends Fragment{
     public boolean isReuseView() {
         return isReuseView;
     }
+    /**
+     * UsbManager检测是否为键盘
+     */
+    private void detectUsbAudioDevice() {
+        ExecutorManager.getInstance().getSingleThread().execute(new Runnable() {
+            @Override
+            public void run() {
+                isKeyboard=false;
+                //第二种 通过InputManager获取
+                InputManager inputManager = (InputManager)getActivity().getSystemService(Context.INPUT_SERVICE);
+                //我们可以通过InputManager获取到当前的所有设备的DeviceId
+                int[] inputDeviceIds= inputManager.getInputDeviceIds();
+                for (int inputDeviceId : inputDeviceIds) {
+                    InputDevice inputDevice = inputManager.getInputDevice(inputDeviceId);
+                    if (inputDevice==null)continue;
+                    //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
+                    if (inputDevice.getKeyboardType()==InputDevice.KEYBOARD_TYPE_ALPHABETIC){
+                        isKeyboard=true;
+                        break;
+                    }
+                }
+                if (isKeyboard&&isDisable) {
+                    //在BaseActivity里禁用软键盘
+                    getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }else {
+                    //在需要打开的Activity取消禁用软键盘
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                }
+            }
+        });
+    }
+    /**
+     * 是否禁用软键盘
+     * @param disable
+     */
+    public void setDisable(boolean disable) {
+        this.isDisable=disable;
+        if (disable) {
+            //在BaseActivity里禁用软键盘
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }else {
+            //在需要打开的Activity取消禁用软键盘
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        }
+    }
 
     /**
      * onViewCreated是在onCreateView后被触发的事件
@@ -189,6 +241,7 @@ public abstract class BaseFragment extends Fragment{
     public void onActivityCreated(@android.support.annotation.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DebugLog.i("SSSS","onActivityCreated====="+this+"  rootView="+rootView);
+        detectUsbAudioDevice();
     }
 
     /**
