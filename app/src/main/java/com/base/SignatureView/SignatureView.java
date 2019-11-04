@@ -18,7 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.luolifen.cashregister.R;
+import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
 import java.util.List;
