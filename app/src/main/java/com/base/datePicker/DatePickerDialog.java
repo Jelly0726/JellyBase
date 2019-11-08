@@ -87,6 +87,9 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearViewChangeListener(this);
+        mCalendarView.setOnMonthChangeListener(this);
+        mCalendarView.setOnWeekChangeListener(this);
+        mCalendarView.setOnViewChangeListener(this);
         //设置日期拦截事件
         mCalendarView.setOnCalendarInterceptListener(this);
         mYear = mCalendarView.getCurYear();
@@ -163,16 +166,15 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
     @Override
     public void onYearChange(int year) {
         mYear =year;
-        mTextMonthDay.setText(String.valueOf(year));
+        mTextMonthDay.setText(year + "年" + mMonth + "月");
     }
     @SuppressLint("SetTextI18n")
     @Override
     public void onMonthChange(int year, int month) {
         DebugLog.e("onMonthChange", "  -- " + year + "  --  " + month);
-        Calendar calendar = mCalendarView.getSelectedCalendar();
-        mTextMonthDay.setText(calendar.getYear() + "年" + calendar.getMonth() + "月");
-        mYear = calendar.getYear();
-        mMonth = calendar.getMonth();
+        mTextMonthDay.setText(year + "年" + month + "月");
+        mYear = year;
+        mMonth = month;
     }
 
     @Override
@@ -190,13 +192,13 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
 
     @Override
     public void onYearViewChange(boolean isClose) {
-        if (isClose) {
-            previousTwo.setVisibility(View.VISIBLE);
-            nextTwo.setVisibility(View.VISIBLE);
-        }else {
-            previousTwo.setVisibility(View.INVISIBLE);
-            nextTwo.setVisibility(View.INVISIBLE);
-        }
+//        if (isClose) {
+//            previousTwo.setVisibility(View.VISIBLE);
+//            nextTwo.setVisibility(View.VISIBLE);
+//        }else {
+//            previousTwo.setVisibility(View.INVISIBLE);
+//            nextTwo.setVisibility(View.INVISIBLE);
+//        }
         DebugLog.e("onYearViewChange", "年视图 -- " + (isClose ? "关闭" : "打开"));
     }
 

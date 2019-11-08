@@ -20,6 +20,7 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="match_parent"
             android:padding="@dimen/dp_20"
+            android:visibility="gone"
             android:layout_marginLeft="@dimen/dp_30"
             app:srcCompat="@drawable/ic_previous_white_two"/>
         <ImageView
@@ -27,6 +28,7 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="match_parent"
             android:padding="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_30"
             app:srcCompat="@drawable/ic_previous_white"/>
         <TextView
             android:id="@+id/tv_month_day"
@@ -43,12 +45,14 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="match_parent"
             android:padding="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_30"
             app:srcCompat="@drawable/ic_white_next"/>
         <ImageView
             android:id="@+id/nextTwo"
             android:layout_width="@dimen/dp_60"
             android:layout_height="match_parent"
             android:padding="@dimen/dp_20"
+            android:visibility="gone"
             android:layout_marginRight="@dimen/dp_30"
             app:srcCompat="@drawable/ic_white_next_two"/>
     </LinearLayout>
