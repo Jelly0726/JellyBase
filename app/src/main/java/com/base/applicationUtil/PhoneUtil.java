@@ -156,7 +156,7 @@ public class PhoneUtil {
      * @param isDirect 是否直接拨打（直接拨打需要权限）
      */
     @SuppressLint("MissingPermission")
-    public void callPhone(String phoneNum,boolean isDirect){
+    public static void callPhone(String phoneNum,boolean isDirect){
         if (isDirect) {
             /**
              * 拨打电话（直接拨打电话）
