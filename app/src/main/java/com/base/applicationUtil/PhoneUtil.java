@@ -1,6 +1,7 @@
 package com.base.applicationUtil;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import com.base.Utils.StringUtil;
+import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 
 import java.lang.reflect.Method;
@@ -148,7 +150,33 @@ public class PhoneUtil {
         }
         return false;
     }
-
+    /**
+     * 拨打电话
+     * @param phoneNum 电话号码
+     * @param isDirect 是否直接拨打（直接拨打需要权限）
+     */
+    @SuppressLint("MissingPermission")
+    public void callPhone(String phoneNum,boolean isDirect){
+        if (isDirect) {
+            /**
+             * 拨打电话（直接拨打电话）
+             * 需要权限
+             */
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            Uri data = Uri.parse("tel:" + phoneNum);
+            intent.setData(data);
+            BaseApplication.getInstance().startActivity(intent);
+        }else {
+            /**
+             * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+             * 不需要权限
+             */
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri data = Uri.parse("tel:" + phoneNum);
+            intent.setData(data);
+            BaseApplication.getInstance().startActivity(intent);
+        }
+    }
     /**
      * 获取安卓手机的唯一标识
      * @param context
