@@ -198,15 +198,6 @@ public class AppUtils {
                 "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
-
-    /**
-     * 获取本机号码
-     * @return
-     */
-    public static String getPhoneNumber(Context context) {
-        TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getLine1Number();
-    }
     /**
      * 判断activity是否在栈顶运行
      * @param context
@@ -248,43 +239,6 @@ public class AppUtils {
         // 将文本内容放到系统剪贴板里。
         cm.setText(str);
         Toast.makeText(context, "复制成功，可以发给朋友们了。", Toast.LENGTH_LONG).show();
-    }
-    /**
-     * 打电话
-     * @param context
-     * @param phone_num
-     */
-    public static void callPhone(Context context, String phone_num) {
-
-        TelephonyManager manager = (TelephonyManager) context.
-                getSystemService(Context.TELEPHONY_SERVICE);
-        switch (manager.getSimState()) {
-            case TelephonyManager.SIM_STATE_READY:
-                Intent phoneIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:" + phone_num));
-                PackageManager pm = context.getPackageManager();
-                if (pm.checkPermission(Manifest.permission.CALL_PHONE,
-                        context.getPackageName())
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    Activity#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for Activity#requestPermissions for more details.
-                    return;
-                }
-                phoneIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(phoneIntent);
-                break;
-            case TelephonyManager.SIM_STATE_ABSENT:
-                Toast.makeText(context, "无SIM卡", Toast.LENGTH_LONG).show();
-                break;
-            default:
-                Toast.makeText(context, "SIM卡被锁定或未知状态", Toast.LENGTH_LONG).show();
-                break;
-        }
     }
     /**
      * 判断应用否是处于运行状态.
@@ -329,42 +283,6 @@ public class AppUtils {
             return false;
         }
         return false;
-    }
-    /**
-     * 发送短信
-     *
-     * @param mobile
-     * @param content
-     * @param context
-     */
-    public static void sendMessage(String mobile, String content, Context context) {
-        SmsManager smsManager = SmsManager.getDefault();
-        PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0, new Intent("SENT_SMS_ACTION"), 0);
-        if (content.length() >= 70) { // 短信字数大于70，自动分条
-            List<String> ms = smsManager.divideMessage(content);
-            for (String str : ms) {
-                smsManager.sendTextMessage(mobile, null, str, sentIntent, null); // 短信发送
-            }
-        } else {
-            smsManager.sendTextMessage(mobile, null, content, sentIntent, null);
-        }
-        // attach the Broadcast Receivers
-        context.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (getResultCode()) {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(context, "短信发送成功", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        break;
-                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        break;
-                    case SmsManager.RESULT_ERROR_NULL_PDU:
-                        break;
-                }
-            }
-        }, new IntentFilter("SENT_SMS_ACTION"));
     }
     /**
      * 获取屏幕的宽

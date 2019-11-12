@@ -2,10 +2,13 @@ package com.base.applicationUtil;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.location.LocationProvider;
@@ -14,15 +17,17 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
+import android.widget.Toast;
 
 import com.base.Utils.StringUtil;
-import com.base.appManager.BaseApplication;
 import com.base.toast.ToastUtils;
 
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import static android.os.Build.getSerial;
 
@@ -156,26 +161,99 @@ public class PhoneUtil {
      * @param isDirect 是否直接拨打（直接拨打需要权限）
      */
     @SuppressLint("MissingPermission")
-    public static void callPhone(String phoneNum,boolean isDirect){
-        if (isDirect) {
-            /**
-             * 拨打电话（直接拨打电话）
-             * 需要权限
-             */
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            Uri data = Uri.parse("tel:" + phoneNum);
-            intent.setData(data);
-            BaseApplication.getInstance().startActivity(intent);
-        }else {
-            /**
-             * 拨打电话（跳转到拨号界面，用户手动点击拨打）
-             * 不需要权限
-             */
-            Intent intent = new Intent(Intent.ACTION_DIAL);
-            Uri data = Uri.parse("tel:" + phoneNum);
-            intent.setData(data);
-            BaseApplication.getInstance().startActivity(intent);
+    public static void callPhone(Context context,String phoneNum,boolean isDirect){
+        TelephonyManager manager = (TelephonyManager) context.
+                getSystemService(Context.TELEPHONY_SERVICE);
+        switch (manager.getSimState()) {
+            case TelephonyManager.SIM_STATE_READY:
+                PackageManager pm = context.getPackageManager();
+                if (pm.checkPermission(Manifest.permission.CALL_PHONE,
+                        context.getPackageName())
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    Activity#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for Activity#requestPermissions for more details.
+                    return;
+                }
+                if (isDirect) {
+                    /**
+                     * 拨打电话（直接拨打电话）
+                     * 需要权限
+                     */
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    Uri data = Uri.parse("tel:" + phoneNum);
+                    intent.setData(data);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }else {
+                    /**
+                     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+                     * 不需要权限
+                     */
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse("tel:" + phoneNum);
+                    intent.setData(data);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+                break;
+            case TelephonyManager.SIM_STATE_ABSENT:
+                Toast.makeText(context, "无SIM卡", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                Toast.makeText(context, "SIM卡被锁定或未知状态", Toast.LENGTH_LONG).show();
+                break;
         }
+    }
+
+    /**
+     * 获取本机号码
+     * @return
+     */
+    @SuppressLint("MissingPermission")
+    public static String getPhoneNumber(Context context) {
+        TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return mTelephonyMgr.getLine1Number();
+    }
+    /**
+     * 发送短信
+     *
+     * @param mobile
+     * @param content
+     * @param context
+     */
+    public static void sendMessage(String mobile, String content, Context context) {
+        SmsManager smsManager = SmsManager.getDefault();
+        PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0, new Intent("SENT_SMS_ACTION"), 0);
+        if (content.length() >= 70) { // 短信字数大于70，自动分条
+            List<String> ms = smsManager.divideMessage(content);
+            for (String str : ms) {
+                smsManager.sendTextMessage(mobile, null, str, sentIntent, null); // 短信发送
+            }
+        } else {
+            smsManager.sendTextMessage(mobile, null, content, sentIntent, null);
+        }
+        // attach the Broadcast Receivers
+        context.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (getResultCode()) {
+                    case Activity.RESULT_OK:
+                        Toast.makeText(context, "短信发送成功", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        break;
+                }
+            }
+        }, new IntentFilter("SENT_SMS_ACTION"));
     }
     /**
      * 获取安卓手机的唯一标识
@@ -247,11 +325,11 @@ public class PhoneUtil {
     }
 
     /**
-      获取安卓手机的DeviceId（imei）
-      需要android.permission.READ_PHONE_STATE权限，它在6.0+系统中是需要动态申请的。如果需求要求App启动时上报设备
-      标识符的话，那么第一会影响初始化速度，第二还有可能被用户拒绝授权。
-      android系统碎片化严重，有的手机可能拿不到DeviceId，会返回null或者000000。
-      这个方法是只对有电话功能的设备有效的，在pad上不起作用。 可以看下方法注释
+     获取安卓手机的DeviceId（imei）
+     需要android.permission.READ_PHONE_STATE权限，它在6.0+系统中是需要动态申请的。如果需求要求App启动时上报设备
+     标识符的话，那么第一会影响初始化速度，第二还有可能被用户拒绝授权。
+     android系统碎片化严重，有的手机可能拿不到DeviceId，会返回null或者000000。
+     这个方法是只对有电话功能的设备有效的，在pad上不起作用。 可以看下方法注释
      * @param context
      * @return
      */
