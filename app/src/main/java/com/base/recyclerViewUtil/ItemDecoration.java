@@ -15,6 +15,7 @@ import android.view.View;
 import com.base.Utils.ColorUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
+
 /**
  * 万能分隔线
  * StaggeredGridLayoutManager布局使用注意
