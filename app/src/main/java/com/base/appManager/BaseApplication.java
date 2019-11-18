@@ -24,6 +24,7 @@ import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.liveDataBus.LiveDataBus;
 import com.base.sqldao.DBManager;
 import com.base.toast.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.TraceServiceImpl;
@@ -333,11 +334,17 @@ public class BaseApplication extends Application {
     public void onLowMemory() {
         // 低内存的时候执行
         super.onLowMemory();
+        //内存不足时清理Glide的缓存
+        Glide.get(this).clearMemory();
     }
     @Override
     public void onTrimMemory(int level) {
         // 程序在内存清理的时候执行
         super.onTrimMemory(level);
+        if (level==TRIM_MEMORY_UI_HIDDEN){
+            Glide.get(this).clearMemory();
+        }
+        Glide.get(this).trimMemory(level);
     }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
