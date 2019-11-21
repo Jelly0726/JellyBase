@@ -3,8 +3,8 @@ package com.base.httpmvp.presenter;
 import com.base.httpmvp.contact.AddressContact;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.retrofitapi.HttpResultList;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import io.reactivex.ObservableTransformer;

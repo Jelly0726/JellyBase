@@ -4,7 +4,7 @@ import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.contact.BankCartListContact;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResultList;
+import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;

@@ -825,6 +825,7 @@ public void xxxxxx(**);
 -keep class systemdb.**{*;}
 -keep class com.base.eventBus.**{*;}
 -keep class com.base.model.**{*;}
+-keep class com.base.httpmvp.retrofitapi.methods.**{*;}
 -keep class com.base.httpmvp.databean.**{*;}
 #-keep public class java.**
 -dontwarn com.google.android.maps.**

@@ -4,7 +4,7 @@ import com.base.httpmvp.contact.AboutContact;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;

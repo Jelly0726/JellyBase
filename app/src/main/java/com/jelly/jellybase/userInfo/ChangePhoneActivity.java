@@ -13,7 +13,7 @@ import com.base.toast.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;
-import com.base.httpmvp.retrofitapi.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;

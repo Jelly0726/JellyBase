@@ -5,7 +5,7 @@ import com.base.httpmvp.contact.MessageDetailsContact;
 import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.google.gson.Gson;
 
 import io.reactivex.ObservableTransformer;

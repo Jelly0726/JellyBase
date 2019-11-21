@@ -3,7 +3,7 @@ package com.base.httpmvp.presenter;
 import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.view.IGetBankView;
 
 import io.reactivex.ObservableTransformer;

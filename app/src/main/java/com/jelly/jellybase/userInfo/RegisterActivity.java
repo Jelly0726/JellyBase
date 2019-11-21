@@ -13,7 +13,7 @@ import com.base.toast.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.RegisterContact;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
-import com.base.httpmvp.retrofitapi.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.webview.BaseWebViewActivity;

@@ -3,8 +3,8 @@ package com.base.httpmvp.presenter;
 import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResult;
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;

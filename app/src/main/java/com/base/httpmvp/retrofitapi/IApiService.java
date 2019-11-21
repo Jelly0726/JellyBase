@@ -8,6 +8,10 @@ import com.base.httpmvp.databean.AppVersion;
 import com.base.httpmvp.databean.Message;
 import com.base.httpmvp.databean.PersonalInfo;
 import com.base.httpmvp.databean.UploadData;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
+import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
@@ -116,7 +120,7 @@ public interface IApiService {
 	@FormUrlEncoded
 	@POST("SLD/buyersInfo/bankList.doAdminJJ")
 	Observable<HttpResultList<BankCardInfo>> bankList(@Header("token") String token,
-                                                                     @Field("data") String jsonString);
+                                                      @Field("data") String jsonString);
 	//添加银行卡
 	@FormUrlEncoded
 	@POST("SLD/buyersInfo/addbank.doAdminJJ")
