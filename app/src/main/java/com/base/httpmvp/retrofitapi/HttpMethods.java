@@ -146,7 +146,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void unDisposable() {
 		if (mCompositeDisposable != null) {
-			mCompositeDisposable.dispose();
+			mCompositeDisposable.clear();
 		}
 	}
 
