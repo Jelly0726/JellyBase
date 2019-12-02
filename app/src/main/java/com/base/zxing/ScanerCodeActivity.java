@@ -245,22 +245,20 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 					return;
 				}
 				final BarcodeFormat type = result.getBarcodeFormat();
-				final String realContent = ZXingUtils.recode(result.toString());
-				if (BarcodeFormat.QR_CODE.equals(type)) {
-					//rxDialogSure.setTitle("二维码扫描结果");
-				} else if (BarcodeFormat.EAN_13.equals(type)) {
-					//rxDialogSure.setTitle("条形码扫描结果");
-				} else {
-					//rxDialogSure.setTitle("扫描结果");
-				}
 				Log.i("ss","result="+result);
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
+						String realContent = ZXingUtils.recode(result.toString());
 						if (TextUtils.isEmpty(realContent)) {
 							Toast.makeText(ScanerCodeActivity.this, R.string.libraryzxing_analysis_pic_fail, Toast.LENGTH_SHORT).show();
 						} else {
-							if (GsonUtils.isJSONValid3(realContent)&&GsonUtils.isJsonObject(realContent)){
+							if (BarcodeFormat.QR_CODE.equals(type)) {
+								//rxDialogSure.setTitle("二维码扫描结果");
+								if (!GsonUtils.isJSONValid3(realContent)||!GsonUtils.isJsonObject(realContent)){
+									ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+									return;
+								}
 								Gson gson=new Gson();
 								ScanResult scanRes =gson.fromJson(realContent,ScanResult.class);
 								if (scanRes ==null){
@@ -271,15 +269,29 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 									ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
 									return;
 								}
-								// 数据返回
-								Intent data = new Intent();
-								data.putExtra(ZXingUtils.ScanResult, realContent);
-								data.putExtra(ZXingUtils.ScanResultType, type);
-								setResult(ZXingUtils.resultCode, data);
-								finish();
-							}else {
-								ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+								scanRes.setType(type);
+								realContent=gson.toJson(scanRes);
+							} else if (BarcodeFormat.EAN_13.equals(type)) {
+								//rxDialogSure.setTitle("条形码扫描结果");
+								Gson gson=new Gson();
+								ScanResult scanRes=new ScanResult();
+								scanRes.setResult(realContent);
+								realContent=gson.toJson(scanRes);
+							} else {
+								//rxDialogSure.setTitle("扫描结果");
+								Gson gson=new Gson();
+								ScanResult scanRes=new ScanResult();
+								scanRes.setResult(realContent);
+								scanRes.setType(type);
+								realContent=gson.toJson(scanRes);
 							}
+							Log.i("ss","result="+realContent);
+							// 数据返回
+							Intent data = new Intent();
+							data.putExtra(ZXingUtils.ScanResult, realContent);
+							data.putExtra(ZXingUtils.ScanResultType, type);
+							setResult(ZXingUtils.resultCode, data);
+							finish();
 						}
 					}
 				});
@@ -383,19 +395,16 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 	public void handleDecode(final Result result, Bitmap barcode) {
 		inactivityTimer.onActivity();
 		playBeepSoundAndVibrate();
-		String recode = ZXingUtils.recode(result.toString());
+		String realContent = ZXingUtils.recode(result.toString());
 		BarcodeFormat type = result.getBarcodeFormat();
 		if (BarcodeFormat.QR_CODE.equals(type)) {
 			//rxDialogSure.setTitle("二维码扫描结果");
-		} else if (BarcodeFormat.EAN_13.equals(type)) {
-			//rxDialogSure.setTitle("条形码扫描结果");
-		} else {
-			//rxDialogSure.setTitle("扫描结果");
-		}
-		Log.i("ss","result="+recode);
-		if (GsonUtils.isJSONValid3(recode)&&GsonUtils.isJsonObject(recode)){
+			if (!GsonUtils.isJSONValid3(realContent)||!GsonUtils.isJsonObject(realContent)){
+				ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+				return;
+			}
 			Gson gson=new Gson();
-			ScanResult scanRes =gson.fromJson(recode,ScanResult.class);
+			ScanResult scanRes =gson.fromJson(realContent,ScanResult.class);
 			if (scanRes ==null){
 				ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
 				return;
@@ -404,15 +413,29 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 				ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
 				return;
 			}
-			// 数据返回
-			Intent data = new Intent();
-			data.putExtra(ZXingUtils.ScanResult, recode);
-			data.putExtra(ZXingUtils.ScanResultType, type);
-			setResult(ZXingUtils.resultCode, data);
-			finish();
-		}else {
-			ToastUtils.showShort(ScanerCodeActivity.this,"二维码无效");
+			scanRes.setType(type);
+			realContent=gson.toJson(scanRes);
+		} else if (BarcodeFormat.EAN_13.equals(type)) {
+			//rxDialogSure.setTitle("条形码扫描结果");
+			Gson gson=new Gson();
+			ScanResult scanRes=new ScanResult();
+			scanRes.setResult(realContent);
+			realContent=gson.toJson(scanRes);
+		} else {
+			//rxDialogSure.setTitle("扫描结果");
+			Gson gson=new Gson();
+			ScanResult scanRes=new ScanResult();
+			scanRes.setResult(realContent);
+			scanRes.setType(type);
+			realContent=gson.toJson(scanRes);
 		}
+		Log.i("ss","result="+realContent);
+		// 数据返回
+		Intent data = new Intent();
+		data.putExtra(ZXingUtils.ScanResult, realContent);
+		data.putExtra(ZXingUtils.ScanResultType, type);
+		setResult(ZXingUtils.resultCode, data);
+		finish();
 	}
 
 	private void initBeepSound() {
