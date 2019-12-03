@@ -1343,7 +1343,27 @@ public class BitmapUtil {
                 || path.endsWith(".GIF");
     }
 
-
+    /**
+     * 获取图片类型
+     *
+     * @param filePath 图片路径
+     * @return 图片类型
+     */
+    public static String getImageType(String filePath) {
+        String path = filePath.toUpperCase();
+        if (path.endsWith(".PNG")){
+            return "image/png";
+        }else if (path.endsWith(".JPG")){
+            return "image/jpeg";
+        }else if (path.endsWith(".JPEG")){
+            return "image/jpeg";
+        }else if (path.endsWith(".BMP")){
+            return "image/bmp";
+        }else if (path.endsWith(".GIF")){
+            return "image/gif";
+        }
+        return  "image/jpeg";
+    }
     /**
      * 流获取图片类型
      *
