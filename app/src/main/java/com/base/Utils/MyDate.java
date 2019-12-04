@@ -16,6 +16,10 @@ public class MyDate {
 	 */
 	public static final String DATE_FORMAT = "yyyy年MM月dd日";
 	/**
+	 * 时间格式：yyyy年MM月dd日
+	 */
+	public static final String DATE_FORMAT0 = "MM月dd日";
+	/**
 	 * 时间格式：yyyy年MM月dd日HH时mm分ss秒
 	 */
 	public static final String DATE_FORMAT2 = "yyyy年MM月dd日HH时mm分ss秒";
@@ -360,6 +364,15 @@ public class MyDate {
 		return date;//2012年10月03日
 	}
 	/**
+	 *  获取中文格式 月日
+	 * @return {@link MyDate#DATE_FORMAT0}
+	 */
+	public static String getMonthDayCN() {
+		SimpleDateFormat format4 = new SimpleDateFormat(DATE_FORMAT0);
+		String date = format4.format(new Date(System.currentTimeMillis()));
+		return date;//10月03日
+	}
+	/**
 	 *  获取英文格式 年月日
 	 *  @param da  把日期往后增加一天.整数往后推,负数往前移动
 	 * @return {@link MyDate#TIME_FORMAT4}
@@ -371,6 +384,21 @@ public class MyDate {
 		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
 		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
 		SimpleDateFormat formatter = new SimpleDateFormat(TIME_FORMAT4);
+		String dateString = formatter.format(date);
+		return dateString;
+	}
+	/**
+	 *  获取中文格式 月日
+	 *  @param da  把日期往后增加一天.整数往后推,负数往前移动
+	 * @return {@link MyDate#DATE_FORMAT0}
+	 */
+	public static String getMonthDayCN(int da){
+		Date date=new Date();//取时间
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(calendar.DATE,da);//把日期往后增加一天.整数往后推,负数往前移动
+		date=calendar.getTime(); //这个时间就是日期往后推一天的结果
+		SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT0);
 		String dateString = formatter.format(date);
 		return dateString;
 	}
