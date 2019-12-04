@@ -263,12 +263,21 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        DebugLog.i("SSSS","onStart====="+this+"  getUserVisibleHint()="+getUserVisibleHint());
+    }
+
+    /**
+     * Fragment处于活动状态，用户可与之交互。
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
         //告诉FragmentActivity，当前Fragment在栈顶
         if (mBackInterface!=null)
             mBackInterface.setSelectedFragment(this);
-        DebugLog.i("SSSS","onStart====="+this+"  getUserVisibleHint()="+getUserVisibleHint());
+        DebugLog.i("SSSS","onResume====="+this+"  getUserVisibleHint()="+getUserVisibleHint());
         if (getUserVisibleHint()) {
-            DebugLog.i("SSSS","onStart====="+this+"  isFirstVisible()="+isFirstVisible);
+            DebugLog.i("SSSS","onResume====="+this+"  isFirstVisible()="+isFirstVisible);
             if (isFirstVisible) {
                 this.onFragmentFirstVisible();
                 isFirstVisible = false;
@@ -278,15 +287,6 @@ public abstract class BaseFragment extends Fragment{
                 this.onFragmentVisibleChange(true);
             }
         }
-    }
-
-    /**
-     * Fragment处于活动状态，用户可与之交互。
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        DebugLog.i("SSSS","onResume====="+this);
     }
 
     /**
