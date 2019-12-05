@@ -16,6 +16,7 @@ import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.RichTextConfig;
+import com.zzhoujay.richtext.RichType;
 import com.zzhoujay.richtext.callback.Callback;
 import com.zzhoujay.richtext.callback.DrawableGetter;
 import com.zzhoujay.richtext.ig.DefaultImageGetter;
@@ -49,13 +50,29 @@ public class ResolveHtmlActivity extends BaseActivity {
                 "&src=http%3A%2F%2Foss.laohucaijing.com%2FUserFiles%2FImage%2F201603%2F20160330111155221.png' />";
         // 设置为Html
         RichText.initCacheDir(BaseApplication.getInstance());
-        RichText.fromHtml(html)
-                .bind(this)
+        if (html.toLowerCase().contains(".gif")) {
+            //gif图片关闭硬件加速
+            productDetail_tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+        RichText.from(html) // 数据源
+                .type(RichType.html) // 数据格式,不设置默认是Html,使用fromMarkdown的默认是Markdown格式
                 .autoFix(true) // 是否自动修复，默认true
-                .resetSize(true) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效）
-                // ，true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
+                .autoPlay(true) // gif图片是否自动播放
+//                .showBorder(true) // 是否显示图片边框
+//                .borderColor(Color.RED) // 图片边框颜色
+//                .borderSize(10) // 边框尺寸
+//                .borderRadius(50) // 图片边框圆角弧度
                 .scaleType(ImageHolder.ScaleType.fit_center) // 图片缩放方式
                 .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
+//                .fix(imageFixCallback) // 设置自定义修复图片宽高
+//                .fixLink(linkFixCallback) // 设置链接自定义回调
+//                .noImage(true) // 不显示并且不加载图片
+                .resetSize(false) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效），true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
+//                .clickable(true) // 是否可点击，默认只有设置了点击监听才可点击
+//                .imageClick(onImageClickListener) // 设置图片点击回调
+//                .imageLongClick(onImageLongClickListener) // 设置图片长按回调
+//                .urlClick(onURLClickListener) // 设置链接点击回调
+//                .urlLongClick(onUrlLongClickListener) // 设置链接长按回调
                 .imageGetter(new DefaultImageGetter())//.imageGetter(yourImageGetter) // 设置图片加载器，默认为DefaultImageGetter，
                 .imageDownloader(new OkHttpImageDownloader()) // 设置DefaultImageGetter的图片下载器
                 .cache(CacheType.all)//默认为CacheType.ALL
@@ -77,6 +94,7 @@ public class ResolveHtmlActivity extends BaseActivity {
                         Log.i("SSSS", "imageLoadDone="+imageLoadDone);
                     }
                 })
+                .bind(this)
                 .into(productDetail_tv);
     }
     @Override
