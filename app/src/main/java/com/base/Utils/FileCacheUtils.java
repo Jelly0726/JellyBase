@@ -167,7 +167,7 @@ public class FileCacheUtils {
     /**
      * 删除指定目录下文件及目录
      *
-     * @param deleteThisPath
+     * @param deleteThisPath 是否删除本目录
      * @param filePath
      * @return
      */
