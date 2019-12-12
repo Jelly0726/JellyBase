@@ -314,7 +314,7 @@ repositories {
         implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
         //QQ、微信、微博登陆和分享
-        implementation('com.github.arvinljw:SocialHelper:v1.0.5') {
+        implementation('com.github.arvinljw:SocialHelper:v1.2.2') {
             exclude group: 'com.android.support'
         }
 
