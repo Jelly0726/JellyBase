@@ -156,14 +156,6 @@ public class LoginActivity extends BaseActivity implements
         }
     }
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.i("s'ss","intent="+intent);
-        if (SocialUtil.getInstance() != null) {
-            SocialUtil.getInstance().socialHelper().onNewIntent(intent);
-        }
-    }
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
         if(BuildConfig.IS_MUST_LOGIN){//是否必须登录
