@@ -79,6 +79,8 @@ public class PermissionUtils {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
+                        if (callBack!=null)
+                            callBack.onFailure(permissions);
                         if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
                             showSettingDialog(context, permissions);
                         }
@@ -106,6 +108,8 @@ public class PermissionUtils {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
+                        if (callBack!=null)
+                            callBack.onFailure(permissions);
                         if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
                             PermissionUtils.getInstance().showSettingDialog(context, permissions);
                         }
