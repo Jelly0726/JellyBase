@@ -14,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.base.applicationUtil.AppUtils;
+import com.base.applicationUtil.CameraProvider;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
@@ -76,9 +78,13 @@ public class PermissionUtils {
                         List<String> perm=new ArrayList<>();
                         perm.addAll(permissions);
                         for (int i=0;i<perm.size();i++) {
-                            if (perm.get(i).contains("CAMERA")
-                                    ||perm.get(i).contains("STORAGE"))
-                                permissions.remove(i);
+                            if (perm.get(i).contains("CAMERA")){
+                                if (!CameraProvider.isCameraCanUse())
+                                    permissions.remove(i);
+                            }else if(perm.get(i).contains("STORAGE")) {
+                                if (!AppUtils.isSDcardExist())
+                                    permissions.remove(i);
+                            }
                         }
                         if (permissions.size()<=0){
                             if (callBack!=null)
@@ -116,9 +122,13 @@ public class PermissionUtils {
                         List<String> perm=new ArrayList<>();
                         perm.addAll(permissions);
                         for (int i=0;i<perm.size();i++) {
-                            if (perm.get(i).contains("CAMERA")
-                                    ||perm.get(i).contains("STORAGE"))
-                                permissions.remove(i);
+                            if (perm.get(i).contains("CAMERA")){
+                                if (!CameraProvider.isCameraCanUse())
+                                    permissions.remove(i);
+                            }else if(perm.get(i).contains("STORAGE")) {
+                                if (!AppUtils.isSDcardExist())
+                                    permissions.remove(i);
+                            }
                         }
                         if (permissions.size()<=0){
                             if (callBack!=null)
