@@ -5,12 +5,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -86,7 +88,7 @@ public class PermissionUtils {
                                     permissions.remove(i);
                             }
                         }
-                        if (permissions.size()<=0){
+                        if (permissions.size()<=0||!lacksPermissions(context,permissions)){
                             if (callBack!=null)
                                 callBack.onSucess();
                             return;
@@ -94,9 +96,10 @@ public class PermissionUtils {
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
                             callBack.onFailure(permissions);
-                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
-                            showSettingDialog(context, permissions);
-                        }
+                        showSettingDialog(context, permissions);
+//                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
+//                            showSettingDialog(context, permissions);
+//                        }
                     }
                 })
                 .start();
@@ -130,7 +133,7 @@ public class PermissionUtils {
                                     permissions.remove(i);
                             }
                         }
-                        if (permissions.size()<=0){
+                        if (permissions.size()<=0||!lacksPermissions(context,permissions)){
                             if (callBack!=null)
                                 callBack.onSucess();
                             return;
@@ -138,12 +141,34 @@ public class PermissionUtils {
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
                             callBack.onFailure(permissions);
-                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
-                            PermissionUtils.getInstance().showSettingDialog(context, permissions);
-                        }
+                        showSettingDialog(context, permissions);
+//                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
+//                            PermissionUtils.getInstance().showSettingDialog(context, permissions);
+//                        }
                     }
                 })
                 .start();
+    }
+    /**
+     * 判断权限集合
+     * permissions 权限数组
+     * return true-表示没有改权限  false-表示权限已开启
+     */
+    private static boolean lacksPermissions(Context mContexts,List<String> permissions) {
+        for (String permission : permissions) {
+            if (lacksPermission(mContexts,permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否缺少权限 true-表示没有改权限  false-表示权限已开启
+     */
+    private static boolean lacksPermission(Context mContexts, String permission) {
+        return ContextCompat.checkSelfPermission(mContexts, permission) ==
+                PackageManager.PERMISSION_DENIED;
     }
     /**
      * Display setting dialog.
