@@ -2,7 +2,8 @@ package com.base.recyclerViewUtil;
 
 import android.view.View;
 
-import com.luolifen.cashregister.adapter.BaseAdapter;
+import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
+
 
 /**
  * 自定义recyclerView的点击事件
