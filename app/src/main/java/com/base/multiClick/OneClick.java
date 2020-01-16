@@ -19,7 +19,10 @@ public class OneClick {
     public String getMethodName() {
         return methodName;
     }
-
+    /**
+     *
+     * @return false 正常点击  true 重复点击
+     */
     public boolean check() {
         long currentTime = Calendar.getInstance().getTimeInMillis();
         if (currentTime - lastClickTime > CLICK_DELAY_TIME) {
