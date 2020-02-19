@@ -286,6 +286,20 @@ public class AppUtils {
         return false;
     }
     /**
+     * 判断Activity是否Destroy
+     * @param mActivity
+     * @return
+     */
+    public static boolean isDestroy(Activity mActivity) {
+        if (mActivity== null || mActivity.isFinishing()
+                || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+                && mActivity.isDestroyed())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
      * 获取屏幕的宽
      * @param context
      * @return
