@@ -290,14 +290,16 @@ public class AppUtils {
      * @param mActivity
      * @return
      */
-    public static boolean isDestroy(Activity mActivity) {
-        if (mActivity== null || mActivity.isFinishing()
-                || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
-                && mActivity.isDestroyed())) {
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean isDestroy(Context mActivity) {
+        if (mActivity instanceof Activity)
+            if (mActivity== null || ((Activity)mActivity).isFinishing()
+                    || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+                    && ((Activity)mActivity).isDestroyed())) {
+                return true;
+            } else {
+                return false;
+            }
+        else return true;
     }
     /**
      * 获取屏幕的宽
