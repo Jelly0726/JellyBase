@@ -542,7 +542,7 @@ public class StringUtil {
             return true;
         if (obj instanceof CharSequence)
             return ((CharSequence) obj).length() == 0;
-        if (((String)obj).toLowerCase().equals("null")
+        if (obj instanceof String&&((String)obj).toLowerCase().equals("null")
                 &&((String)obj).trim().length()<=0){
             return true;
         }
