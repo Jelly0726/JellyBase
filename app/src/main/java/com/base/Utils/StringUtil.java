@@ -668,6 +668,17 @@ public class StringUtil {
         }
         return valueLength;
     }
+    /**
+     * 对距离格式化
+     * @param distance 距离 单位(米)
+     * @return 格式化后的距离包含单位
+     */
+    public static String distanceFormat(int distance){
+        if (distance<1000){
+            return String.valueOf(distance)+"米";
+        }
+        return (distance/1000)+"千米";
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
