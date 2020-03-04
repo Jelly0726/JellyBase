@@ -76,6 +76,7 @@ public class PaymentActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 PaymentDialog paymentDialog=PaymentDialog.getInstance();
+                paymentDialog.setItem(mList);
                 paymentDialog.setOnConfirmListener(new PaymentDialog.OnConfirmListener() {
                     @Override
                     public void OnConfirm(int payment) {

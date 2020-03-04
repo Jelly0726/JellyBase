@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.base.BaseAdapter;
 import com.base.Utils.StringUtil;
 import com.base.model.PayMothod;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
 import java.util.List;
@@ -49,6 +50,12 @@ public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
+                if (!mDataList.get(position).isEnable()) {//支付方式不可用
+                    ToastUtils.showShort(getContext(), mDataList.get(position).getMark());
+                    if (onCheckListen != null)
+                        onCheckListen.onChecked(mSelectedPos);
+                    return;
+                }
                 //实现单选方法三： RecyclerView另一种定向刷新方法：不会有白光一闪动画 也不会重复onBindVIewHolder
                 if (couponVH != null) {//还在屏幕里
                     couponVH.checkbox.setChecked(false);
