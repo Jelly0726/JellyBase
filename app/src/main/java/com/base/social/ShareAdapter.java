@@ -12,39 +12,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.base.BaseAdapter;
 import com.base.applicationUtil.AppUtils;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 
 import java.util.List;
 
-public class ShareAdapter extends BaseRecyclerAdapter<ShareAdapter.ViewHolder> {
+public class ShareAdapter extends BaseAdapter<ShareAdapter.ViewHolder> {
     private Context context;
     private List<? extends ShareItem> mList;
 
     public ShareAdapter(Context context, List<? extends ShareItem> mList) {
+        super(context);
         this.context=context;
         this.mList=mList;
     }
-    public void setData(List<? extends ShareItem> mList){
+    @Override
+    public void notifyDataSetChanged(List mList){
         this.mList=mList;
         notifyDataSetChanged();
     }
+    @NonNull
     @Override
-    public int getAdapterItemViewType(int position) {
-        return 0;
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return mList.size();
-    }
-
-    @Override
-    public ShareAdapter.ViewHolder getViewHolder(View view) {
-        return new ShareAdapter.ViewHolder(view);
-    }
-    @Override
-    public ShareAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LinearLayout linearLayout=new LinearLayout(context);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setGravity(Gravity.CENTER);
@@ -68,15 +59,21 @@ public class ShareAdapter extends BaseRecyclerAdapter<ShareAdapter.ViewHolder> {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
 
         linearLayout.addView(textView);
-        return new ShareAdapter.ViewHolder(linearLayout);
+        return new ViewHolder(linearLayout);
     }
 
     @Override
-    public void onBindViewHolder(ShareAdapter.ViewHolder holder, int position, boolean isItem) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.imageView.setImageDrawable(ContextCompat.getDrawable(context,
                 mList.get(position).getIcon()));
         holder.textView.setText(mList.get(position).getName());
     }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
     /**
      * item的ViewHolder
      */
