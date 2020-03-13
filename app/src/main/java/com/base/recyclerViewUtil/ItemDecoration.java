@@ -4,13 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 
 import com.base.Utils.ColorUtils;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -48,7 +49,7 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
      * @param span  代表item的列数
      * @param type 代表是否有head、foot、间距类型
      */
-    public ItemDecoration(Rect outRect, int span, int type,@ColorInt int color) {
+    public ItemDecoration(Rect outRect, int span, int type, @ColorInt int color) {
         this.outRect = outRect;
         this.span = span;
         this.type=type;
@@ -71,11 +72,18 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0,0,0);
-        int hCounnt=1;
-        int fCounnt=1;
+        int hCounnt=0;
+        int fCounnt=0;
         if (parent instanceof SwipeMenuRecyclerView) {
             hCounnt=((SwipeMenuRecyclerView)parent).getHeaderItemCount();
             fCounnt=((SwipeMenuRecyclerView)parent).getFooterItemCount();
+        }
+        if (hCounnt>0&&fCounnt>0){
+            type=ALL_HAVE;
+        }else if (hCounnt>0){
+            type = HEAD;
+        }else if (fCounnt>0 &&(view instanceof SwipeMenuRecyclerView.LoadMoreView)){
+            type = FOOT;
         }
         if ( parent.getChildAdapterPosition(view)<hCounnt||parent.getChildLayoutPosition(view)
                 >= parent.getAdapter().getItemCount()-fCounnt) {
@@ -325,6 +333,29 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
     }
 
     /**
+     * 判断是否是 HeaderView 或 FooterView
+     * @param view         当前View
+     * @param parent      RecyclerView
+     * @return            false 不是 true 是
+     */
+    private boolean isHanderOrFooter(View view,RecyclerView parent){
+        int hCounnt=0;
+        int fCounnt=0;
+        if (parent instanceof SwipeMenuRecyclerView) {
+            hCounnt=((SwipeMenuRecyclerView)parent).getHeaderItemCount();
+            fCounnt=((SwipeMenuRecyclerView)parent).getFooterItemCount();
+        }
+        if ( parent.getChildAdapterPosition(view)<hCounnt||parent.getChildLayoutPosition(view)
+                >= parent.getAdapter().getItemCount()-fCounnt) {
+            if(type==NONE){
+                return false;
+            }else if(type==ALL_HAVE || type == HEAD || type == FOOT || (view instanceof SwipeMenuRecyclerView.LoadMoreView)){
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
      * 绘制横向列表分割线
      *
      * @param c      绘制容器
@@ -334,6 +365,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int mChildCount = parent.getChildCount();
         for (int i = 0; i < mChildCount; i++) {
             View mChild = parent.getChildAt(i);
+            //判断是 HeaderView 或 FooterView 不画分割线
+            if (isHanderOrFooter(mChild,parent))continue;
             if (this.outRect.left>0)
                 drawLeft(c, mChild, parent);
             else
@@ -351,6 +384,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int mChildCount = parent.getChildCount();
         for (int i = 0; i < mChildCount; i++) {
             View mChild = parent.getChildAt(i);
+            //判断是 HeaderView 或 FooterView 不画分割线
+            if (isHanderOrFooter(mChild,parent))continue;
             if (this.outRect.top>0)
                 drawTop(c, mChild, parent);
             else
@@ -368,6 +403,8 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         int mChildCount = parent.getChildCount();
         for (int i = 0; i < mChildCount; i++) {
             View mChild = parent.getChildAt(i);
+            //判断是 HeaderView 或 FooterView 不画分割线
+            if (isHanderOrFooter(mChild,parent))continue;
             RecyclerView.LayoutManager mLayoutManager = parent.getLayoutManager();
             if (mLayoutManager instanceof GridLayoutManager) {
                 GridLayoutManager mGridLayoutManager = (GridLayoutManager) mLayoutManager;
