@@ -261,9 +261,17 @@ repositories {
         implementation 'com.alibaba:fastjson:1.1.55.android'
 
         //时间和地址选择器
-        implementation('cn.qqtheme.framework:WheelPicker:1.5.5') {
-            exclude group: 'com.android.support'
-        }
+//        implementation('cn.qqtheme.framework:WheelPicker:1.5.5') {
+//            exclude group: 'com.android.support'
+//        }
+        //时间和地址选择器 示例 AndroidPicker-master
+        implementation project(path:':library:WheelPicker')
+        //文件选择器 示例 AndroidPicker-master
+        implementation project(path:':library:FilePicker')
+        //颜色选择器 示例 AndroidPicker-master
+        implementation project(path:':library:ColorPicker')
+        //多级选择器 示例 AndroidPicker-master
+        implementation project(path:':library:MultiplePicker')
 
         //高德地图so及jar
 

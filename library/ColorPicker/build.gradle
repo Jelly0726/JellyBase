@@ -1,0 +1,16 @@
+apply plugin: 'com.android.library'
+
+ext {
+    isLibrary = true
+    pomArtifactId = "ColorPicker"
+    pomDescription = "color picker for android"
+}
+
+dependencies {
+    compile project(":library:Common")
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+}

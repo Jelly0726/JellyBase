@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+ext {
+    isLibrary = true
+    pomArtifactId = "FilePicker"
+    pomDescription = "file picker for android"
+}
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+}
+dependencies {
+    compile project(":library:Common")
+}

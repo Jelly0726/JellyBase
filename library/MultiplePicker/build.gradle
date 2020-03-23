@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+ext {
+    isLibrary = false
+    pomArtifactId = "MultiplePicker"
+    pomDescription = "multiple picker for android"
+}
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+}
+dependencies {
+    compile project(":library:Common")
+}

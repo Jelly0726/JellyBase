@@ -1,1 +1,6 @@
 include ':app',':ocr_ui',':logreport',':form',':LiveDataBus',':blurkit',':WebSocketClient',':viewpagerlayoutmanager'
+include ':library:Common'
+include ':library:WheelPicker'
+include ':library:FilePicker'
+include ':library:ColorPicker'
+include ':library:MultiplePicker'
