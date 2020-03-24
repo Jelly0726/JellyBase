@@ -376,6 +376,12 @@ public class RichEditor extends WebView {
         exec("javascript:RE.setJustifyRight();");
     }
 
+    /**
+     * 两端对齐
+     */
+    public void setAlignJustify() {
+        exec("javascript:RE.setJustifyFull();");
+    }
     public void setBlockquote() {
         exec("javascript:RE.setBlockquote();");
     }

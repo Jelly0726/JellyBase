@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 
@@ -91,7 +92,14 @@ public final class Utils {
     }
 
     public static Bitmap decodeResource(Context context, int resId) {
-        return BitmapFactory.decodeResource(context.getResources(), resId);
+        Bitmap bitmap=null;
+        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP){
+            Drawable vectorDrawable = context.getDrawable(resId);
+            bitmap=toBitmap(vectorDrawable);
+        }else {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), resId);
+        }
+        return bitmap;
     }
 
     public static long getCurrentTime() {
