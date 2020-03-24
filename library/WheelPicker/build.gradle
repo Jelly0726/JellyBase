@@ -10,6 +10,6 @@ android {
     buildToolsVersion "26.0.2"
 }
 dependencies {
-    compile project(":library:Common")
+    implementation project(":library:Common")
     implementation 'androidx.annotation:annotation:1.1.0'
 }

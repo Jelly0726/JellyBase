@@ -2,5 +2,7 @@ include ':app',':ocr_ui',':logreport',':form',':LiveDataBus',':blurkit',':WebSoc
 include ':library:Common'
 include ':library:WheelPicker'
 include ':library:FilePicker'
+include ':library:ImagePicker'
 include ':library:ColorPicker'
 include ':library:MultiplePicker'
+include ':library:htmlEditor'

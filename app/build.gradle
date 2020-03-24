@@ -265,6 +265,7 @@ repositories {
 //            exclude group: 'com.android.support'
 //        }
         //时间和地址选择器 示例 AndroidPicker-master
+        implementation project(path:':library:Common')
         implementation project(path:':library:WheelPicker')
         //文件选择器 示例 AndroidPicker-master
         implementation project(path:':library:FilePicker')
@@ -349,6 +350,8 @@ repositories {
         //Android平台下的富文本解析器，支持Html和Markdown
         implementation 'com.zzhoujay.richtext:richtext:3.0.7'// latest-version  3.0.4
         implementation 'com.zzhoujay:html:1.0.2'//latest-version
+        //Android平台下的富文本编辑器
+        implementation project(path: ':library:htmlEditor')
 
         //Android图表视图/图形视图库
         implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

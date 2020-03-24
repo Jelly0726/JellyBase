@@ -10,6 +10,7 @@ android {
     buildToolsVersion "26.0.2"
 }
 dependencies {
-    compile 'com.squareup.picasso:picasso:latest.release'
-    compile project(":library:Common")
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation project(":library:Common")
+    implementation 'androidx.annotation:annotation:1.1.0'
 }

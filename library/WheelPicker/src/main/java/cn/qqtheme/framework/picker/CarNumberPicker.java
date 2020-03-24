@@ -1,13 +1,14 @@
 package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.entity.CarNumberProvince;
 import cn.qqtheme.framework.entity.CarNumberCity;
+import cn.qqtheme.framework.entity.CarNumberProvince;
 
 /**
  * 车牌号码选择器。数据参见http://www.360doc.com/content/12/0602/07/3899427_215339300.shtml

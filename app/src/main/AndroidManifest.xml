@@ -532,6 +532,24 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <!--↓↓↓↓↓↓↓富文本编辑器↓↓↓↓↓↓↓-->
+        <activity android:name=".richeditor.MainActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.SimpleCallsActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.ActualDemoActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.ShowHtmlActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑富文本编辑器↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓通过广播监听短信↓↓↓↓↓↓↓-->
         <receiver android:name="com.base.sms.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">

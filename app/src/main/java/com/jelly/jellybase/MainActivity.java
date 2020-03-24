@@ -724,6 +724,10 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(BaseApplication.getInstance(), com.yxc.websocketclientdemo.MainActivity.class);
                     startActivity(intent);
                     break;
+                case 46:// 富文本编辑器
+                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.richeditor.MainActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }

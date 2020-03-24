@@ -7,7 +7,8 @@ ext {
 }
 
 dependencies {
-    compile project(":library:Common")
+    implementation project(":library:Common")
+    implementation 'androidx.annotation:annotation:1.1.0'
 }
 
 android {
