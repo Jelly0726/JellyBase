@@ -49,6 +49,7 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
         contentLayout = new FrameLayout(activity);
         contentLayout.setLayoutParams(new ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         contentLayout.setFocusable(true);
+        contentLayout.setPadding(0, 0, 40, 0);
         contentLayout.setFocusableInTouchMode(true);
         dialog = new Dialog(activity);
         dialog.setCanceledOnTouchOutside(true);//触摸屏幕取消窗体
