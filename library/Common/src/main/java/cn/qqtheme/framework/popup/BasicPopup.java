@@ -49,6 +49,7 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
         contentLayout = new FrameLayout(activity);
         contentLayout.setLayoutParams(new ViewGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         contentLayout.setFocusable(true);
+        //手机左边自动有边距右边却没有？ 暂时手动设置一个边距
         contentLayout.setPadding(0, 0, 40, 0);
         contentLayout.setFocusableInTouchMode(true);
         dialog = new Dialog(activity);
