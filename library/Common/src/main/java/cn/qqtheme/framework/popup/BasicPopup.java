@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.annotation.StyleRes;
@@ -64,6 +66,13 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
             //AndroidRuntimeException: requestFeature() must be called before adding content
             window.requestFeature(Window.FEATURE_NO_TITLE);
             window.setContentView(contentLayout);
+
+            //解决 使用了今日头条屏幕适配方案可能存在兼容性问题
+            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+            Point point = new Point();
+            wm.getDefaultDisplay().getSize(point);
+            WindowManager.LayoutParams params =window.getAttributes();
+            params.width = point.x;
         }
         setSize(screenWidthPixels, WRAP_CONTENT);
     }
