@@ -3,6 +3,7 @@ package com.base.sqldao;
 import android.content.Context;
 
 import com.base.appManager.BaseApplication;
+import com.jelly.jellybase.BuildConfig;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -62,6 +63,9 @@ public class DBManager {
         daoSession = daoMaster.newSession();
         //DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context,Config.DBNAME, null);
         //daoMaster = new systemdb.DaoMaster(helper.getWritableDatabase());
+        //打开调试日志
+        QueryBuilder.LOG_SQL = BuildConfig.DEBUG;
+        QueryBuilder.LOG_VALUES = BuildConfig.DEBUG;
     }
     /**
      * 取得DaoSession

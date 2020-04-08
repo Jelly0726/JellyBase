@@ -8,7 +8,10 @@ package com.base.multiClick;
 public class AntiShake {
 
     private static LimitQueue<OneClick> queue = new LimitQueue<>(10);
-
+    /**
+     *
+     * @return false 正常点击  true 重复点击
+     */
     public static boolean check(Object o) {
         String flag;
         if(o == null) {

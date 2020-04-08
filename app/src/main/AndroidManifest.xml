@@ -90,6 +90,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REMOVED"/>
     <uses-permission android:name="android.permission.ACCESS_GPS" />
     <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -131,6 +132,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         tools:replace="android:icon, android:theme"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <!--适配全面屏设置-->
         <meta-data android:name="android.max_aspect" android:value="2.1" />
@@ -530,6 +532,24 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <!--↓↓↓↓↓↓↓富文本编辑器↓↓↓↓↓↓↓-->
+        <activity android:name=".richeditor.MainActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.SimpleCallsActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.ActualDemoActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".richeditor.ShowHtmlActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑富文本编辑器↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓通过广播监听短信↓↓↓↓↓↓↓-->
         <receiver android:name="com.base.sms.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">

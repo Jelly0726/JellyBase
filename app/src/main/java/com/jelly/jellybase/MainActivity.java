@@ -94,9 +94,10 @@ import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
 import com.tencent.tmselfupdatesdk.TMSelfUpdateManager;
 import com.tencent.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
-import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.io.File;
+import java.util.List;
 
 import hugo.weaving.DebugLog;
 
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
                             public void onSucess() {
 //                                LogReport.getInstance().upload(MainActivity.this);//启动压缩崩溃信息并发送
                             }
+
+                            @Override
+                            public void onFailure(List<String> permissions) {
+
+                            }
                         },
                         Permission.Group.MICROPHONE,//扩音器，麦克风
                         Permission.Group.STORAGE,//存储
@@ -147,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
                         //Permission.SENSORS,//传感器，感应器；感测器
                         Permission.Group.SMS,//短信
                         new String[]{
-                                android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
-                                android.Manifest.permission.CALL_PHONE//拨打电话
+                                Permission.READ_PHONE_STATE,//读取手机状态
+                                Permission.CALL_PHONE//拨打电话
                         });
                 //百度智能更新 SDK 的 AAR 文件
                 //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。 cpUpdateDownload  下载
@@ -716,6 +722,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 45:// websocket
                     intent=new Intent(BaseApplication.getInstance(), com.yxc.websocketclientdemo.MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 46:// 富文本编辑器
+                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.richeditor.MainActivity.class);
                     startActivity(intent);
                     break;
             }

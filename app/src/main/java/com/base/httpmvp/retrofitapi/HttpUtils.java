@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.exception.ApiException;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

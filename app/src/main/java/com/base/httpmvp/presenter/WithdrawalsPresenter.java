@@ -3,7 +3,7 @@ package com.base.httpmvp.presenter;
 import com.base.httpmvp.contact.WithdrawalsContact;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;

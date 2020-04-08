@@ -15,7 +15,7 @@ public class NetEvent<T> implements Parcelable {
     private Integer tag;
     private Integer arg;
     private Integer arg0;
-    public NetEvent setEventType(String eventType) {
+    public NetEvent<T> setEventType(String eventType) {
         EventType = eventType;
         return this;
     }
@@ -29,7 +29,7 @@ public class NetEvent<T> implements Parcelable {
         return status;
     }
 
-    public NetEvent setStatus(Integer status) {
+    public NetEvent<T> setStatus(Integer status) {
         this.status = status;
         return this;
     }
@@ -38,7 +38,7 @@ public class NetEvent<T> implements Parcelable {
         return (T)event;
     }
 
-    public NetEvent setEvent(Object event) {
+    public NetEvent<T> setEvent(Object event) {
         this.event = event;
         return this;
     }
@@ -47,7 +47,7 @@ public class NetEvent<T> implements Parcelable {
         return msg;
     }
 
-    public NetEvent setMsg(String msg) {
+    public NetEvent<T> setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -55,7 +55,7 @@ public class NetEvent<T> implements Parcelable {
         return tag;
     }
 
-    public NetEvent setTag(Integer tag) {
+    public NetEvent<T> setTag(Integer tag) {
         this.tag = tag;
         return this;
     }
@@ -64,7 +64,7 @@ public class NetEvent<T> implements Parcelable {
         return arg;
     }
 
-    public NetEvent setArg(Integer arg) {
+    public NetEvent<T> setArg(Integer arg) {
         this.arg = arg;
         return this;
     }
@@ -73,7 +73,7 @@ public class NetEvent<T> implements Parcelable {
         return arg0;
     }
 
-    public NetEvent setArg0(Integer arg0) {
+    public NetEvent<T> setArg0(Integer arg0) {
         this.arg0 = arg0;
         return this;
     }

@@ -63,6 +63,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -198,15 +199,6 @@ public class AppUtils {
                 "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
-
-    /**
-     * 获取本机号码
-     * @return
-     */
-    public static String getPhoneNumber(Context context) {
-        TelephonyManager mTelephonyMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        return mTelephonyMgr.getLine1Number();
-    }
     /**
      * 判断activity是否在栈顶运行
      * @param context
@@ -248,43 +240,6 @@ public class AppUtils {
         // 将文本内容放到系统剪贴板里。
         cm.setText(str);
         Toast.makeText(context, "复制成功，可以发给朋友们了。", Toast.LENGTH_LONG).show();
-    }
-    /**
-     * 打电话
-     * @param context
-     * @param phone_num
-     */
-    public static void callPhone(Context context, String phone_num) {
-
-        TelephonyManager manager = (TelephonyManager) context.
-                getSystemService(Context.TELEPHONY_SERVICE);
-        switch (manager.getSimState()) {
-            case TelephonyManager.SIM_STATE_READY:
-                Intent phoneIntent = new Intent(Intent.ACTION_CALL,
-                        Uri.parse("tel:" + phone_num));
-                PackageManager pm = context.getPackageManager();
-                if (pm.checkPermission(Manifest.permission.CALL_PHONE,
-                        context.getPackageName())
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    Activity#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for Activity#requestPermissions for more details.
-                    return;
-                }
-                phoneIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(phoneIntent);
-                break;
-            case TelephonyManager.SIM_STATE_ABSENT:
-                Toast.makeText(context, "无SIM卡", Toast.LENGTH_LONG).show();
-                break;
-            default:
-                Toast.makeText(context, "SIM卡被锁定或未知状态", Toast.LENGTH_LONG).show();
-                break;
-        }
     }
     /**
      * 判断应用否是处于运行状态.
@@ -331,40 +286,20 @@ public class AppUtils {
         return false;
     }
     /**
-     * 发送短信
-     *
-     * @param mobile
-     * @param content
-     * @param context
+     * 判断Activity是否Destroy
+     * @param mActivity
+     * @return
      */
-    public static void sendMessage(String mobile, String content, Context context) {
-        SmsManager smsManager = SmsManager.getDefault();
-        PendingIntent sentIntent = PendingIntent.getBroadcast(context, 0, new Intent("SENT_SMS_ACTION"), 0);
-        if (content.length() >= 70) { // 短信字数大于70，自动分条
-            List<String> ms = smsManager.divideMessage(content);
-            for (String str : ms) {
-                smsManager.sendTextMessage(mobile, null, str, sentIntent, null); // 短信发送
+    public static boolean isDestroy(Context mActivity) {
+        if (mActivity instanceof Activity)
+            if (mActivity== null || ((Activity)mActivity).isFinishing()
+                    || (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
+                    && ((Activity)mActivity).isDestroyed())) {
+                return true;
+            } else {
+                return false;
             }
-        } else {
-            smsManager.sendTextMessage(mobile, null, content, sentIntent, null);
-        }
-        // attach the Broadcast Receivers
-        context.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                switch (getResultCode()) {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(context, "短信发送成功", Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        break;
-                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        break;
-                    case SmsManager.RESULT_ERROR_NULL_PDU:
-                        break;
-                }
-            }
-        }, new IntentFilter("SENT_SMS_ACTION"));
+        else return true;
     }
     /**
      * 获取屏幕的宽
@@ -752,72 +687,6 @@ public class AppUtils {
             //Log.e("WifiPreference IpAddress", ex.toString());
         }
         return "127.0.0.1";
-    }
-    /** * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * * @param context */
-    public static void cleanInternalCache(Context context) {
-        deleteFilesByDirectory(context.getCacheDir());
-    }
-
-    /** * 清除本应用所有数据库(/data/data/com.xxx.xxx/databases) * * @param context */
-    public static void cleanDatabases(Context context) {
-        deleteFilesByDirectory(new File("/data/data/"
-                + context.getPackageName() + "/databases"));
-    }
-
-    /**
-     * * 清除本应用SharedPreference(/data/data/com.xxx.xxx/shared_prefs) * * @param
-     * context
-     */
-    public static void cleanSharedPreference(Context context) {
-        deleteFilesByDirectory(new File("/data/data/"
-                + context.getPackageName() + "/shared_prefs"));
-    }
-
-    /** * 按名字清除本应用数据库 * * @param context * @param dbName */
-    public static void cleanDatabaseByName(Context context, String dbName) {
-        context.deleteDatabase(dbName);
-    }
-
-    /** * 清除/data/data/com.xxx.xxx/files下的内容 * * @param context */
-    public static void cleanFiles(Context context) {
-        deleteFilesByDirectory(context.getFilesDir());
-    }
-
-    /**
-     * * 清除外部cache下的内容(/mnt/sdcard/android/data/com.xxx.xxx/cache) * * @param
-     * context
-     */
-    public static void cleanExternalCache(Context context) {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            deleteFilesByDirectory(context.getExternalCacheDir());
-        }
-    }
-
-    /** * 清除自定义路径下的文件，使用需小心，请不要误删。而且只支持目录下的文件删除 * * @param filePath */
-    public static void cleanCustomCache(String filePath) {
-        deleteFilesByDirectory(new File(filePath));
-    }
-
-    /** * 清除本应用所有的数据 * * @param context * @param filepath */
-    public static void cleanApplicationData(Context context, String... filepath) {
-        cleanInternalCache(context);
-        cleanExternalCache(context);
-        cleanDatabases(context);
-        cleanSharedPreference(context);
-        cleanFiles(context);
-        for (String filePath : filepath) {
-            cleanCustomCache(filePath);
-        }
-    }
-
-    /** * 删除方法 这里只会删除某个文件夹下的文件，如果传入的directory是个文件，将不做处理 * * @param directory */
-    private static void deleteFilesByDirectory(File directory) {
-        if (directory != null && directory.exists() && directory.isDirectory()) {
-            for (File item : directory.listFiles()) {
-                item.delete();
-            }
-        }
     }
     private static TelephonyManager sTelManager;
 

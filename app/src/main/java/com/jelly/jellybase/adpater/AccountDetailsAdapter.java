@@ -17,72 +17,57 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.httpmvp.databean.AccountDetail;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 
 import java.util.List;
 
-public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAdapter.ViewHolder> {
+public class AccountDetailsAdapter extends BaseAdapter<AccountDetailsAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
-    private Context context;
     private List<AccountDetail> mList;
 
-    public AccountDetailsAdapter(Context context, List<AccountDetail> mList) {
-        this.context=context;
-        mInflater = LayoutInflater.from(context);
-        this.mList=mList;
-    }
-    @Override
-    public int getAdapterItemViewType(int position) {
-        return 0;
+    public AccountDetailsAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    public int getAdapterItemCount() {
-        return mList.size();
+    public void notifyDataSetChanged(List dataList) {
+        this.mList=dataList;
+        notifyDataSetChanged();
+    }
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return new ViewHolder(getInflater().inflate(R.layout.account_details_item, viewGroup, false));
     }
 
     @Override
-    public ViewHolder getViewHolder(View view) {
-        return new ViewHolder(view);
-    }
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        final View view = mInflater.inflate(R.layout.account_details_item, parent, false);
-        //view.setOnClickListener(listener);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position, boolean isItem) {
-        //holder.itemView.setTag(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(mList.get(position).getAmount()>=0){
-            holder.amount_tv.setText("" + mList.get(position).getAmount());
-            holder.amount_tv.setTextColor(context.getResources().getColor(R.color.income));
+            holder.amount_tv.setText("+" + mList.get(position).getAmount());
+//            holder.amount_tv.setTextColor(getContext().getResources().getColor(R.color.income));
         }else {
-            holder.amount_tv.setText("" + mList.get(position).getAmount());
-            holder.amount_tv.setTextColor(context.getResources().getColor(R.color.disburse));
+            holder.amount_tv.setText("-" + mList.get(position).getAmount());
+//            holder.amount_tv.setTextColor(getContext().getResources().getColor(R.color.disburse));
         }
         holder.time_tv.setText(mList.get(position).getAddtime());
         holder.type_tv.setText(mList.get(position).getType());
         holder.state_tv.setText(mList.get(position).getStatus());
 
     }
-    private View.OnClickListener listener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mOnItemClickListener.onItemClick(v, (int) v.getTag());
-        }
-    };
+
+    @Override
+    public int getItemCount() {
+        return mList==null?0:mList.size();
+    }
+
     /**
      * item的ViewHolder
      */
@@ -99,9 +84,5 @@ public class AccountDetailsAdapter extends BaseRecyclerAdapter<AccountDetailsAda
             time_tv = (TextView) itemView.findViewById(R.id.time_tv);
             amount_tv = (TextView) itemView.findViewById(R.id.amount_tv);
         }
-    }
-    private OnItemClickListener mOnItemClickListener;
-    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener){
-        this.mOnItemClickListener = mOnItemClickListener;
     }
 }

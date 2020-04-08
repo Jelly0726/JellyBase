@@ -358,7 +358,7 @@ public class ShopCarFragment extends BaseFragment implements
         }
         good.setCount(count);
         ((TextView) showCountView).setText(String.valueOf(count));
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         calulate();
     }
 
@@ -378,7 +378,7 @@ public class ShopCarFragment extends BaseFragment implements
         count--;
         good.setCount(count);
         ((TextView) showCountView).setText("" + count);
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         calulate();
     }
 
@@ -404,7 +404,7 @@ public class ShopCarFragment extends BaseFragment implements
         GoodsInfo good = (GoodsInfo) adapter.getChild(groupPosition, childPosition);
         int count = good.getCount();
         ((TextView) showCountView).setText(String.valueOf(count));
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         calulate();
     }
 

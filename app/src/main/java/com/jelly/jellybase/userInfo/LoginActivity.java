@@ -26,7 +26,7 @@ import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,14 +74,19 @@ public class LoginActivity extends BaseActivity implements
                             public void onSucess() {
 
                             }
+
+                            @Override
+                            public void onFailure(List<String> permissions) {
+
+                            }
                         },
                         Permission.Group.STORAGE,
                         Permission.Group.CALENDAR,
                         Permission.Group.CAMERA,
                         Permission.Group.LOCATION,
                         new String[]{
-                                android.Manifest.permission.READ_PHONE_STATE,
-                                android.Manifest.permission.CALL_PHONE
+                                Permission.READ_PHONE_STATE,
+                                Permission.CALL_PHONE
                         });
             }
         });
@@ -153,14 +158,6 @@ public class LoginActivity extends BaseActivity implements
                 intent=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
                 break;
-        }
-    }
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.i("s'ss","intent="+intent);
-        if (SocialUtil.getInstance() != null) {
-            SocialUtil.getInstance().socialHelper().onNewIntent(intent);
         }
     }
     @Override

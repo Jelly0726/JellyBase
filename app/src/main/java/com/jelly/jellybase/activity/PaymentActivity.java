@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.base.circledialog.PaymentDialog;
+import com.base.model.PayMothod;
 import com.base.passwordView.Callback;
 import com.base.passwordView.PasswordKeypad;
 import com.jelly.jellybase.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JELLY on 2017/11/3.
@@ -19,6 +23,7 @@ import com.jelly.jellybase.R;
 public class PaymentActivity extends AppCompatActivity{
     private PasswordKeypad mKeypad;
     private boolean state;
+    private List<PayMothod> mList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +67,20 @@ public class PaymentActivity extends AppCompatActivity{
                 //todo:做一些埋点类的需求
             }
         });
+        mList=new ArrayList<>();
+        mList.add(new PayMothod().setName("余额").setPayType(0).setIcon(R.mipmap.payment_zhanghu).setMark("￥0"));
+        mList.add(new PayMothod().setName("微信").setPayType(1).setIcon(R.mipmap.payment_weixin).setMark("推荐使用"));
+        mList.add(new PayMothod().setName("支付宝").setPayType(2).setIcon(R.mipmap.payment_zhifubao).setMark(""));
+        mList.add(new PayMothod().setName("银联").setPayType(3).setIcon(R.mipmap.payment_yinglian).setMark(""));
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PaymentDialog paymentDialog=PaymentDialog.getInstance();
+                paymentDialog.setItem(mList);
                 paymentDialog.setOnConfirmListener(new PaymentDialog.OnConfirmListener() {
                     @Override
                     public void OnConfirm(int payment) {
-                        if(payment==PaymentDialog.BALANCE){
+                        if(payment==0){
                             mKeypad.show(getSupportFragmentManager(), "PasswordKeypad");
                         }
                     }

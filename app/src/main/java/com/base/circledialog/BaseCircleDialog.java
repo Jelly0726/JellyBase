@@ -29,6 +29,7 @@ import com.base.appManager.ExecutorManager;
 import com.base.circledialog.res.drawable.CircleDrawable;
 import com.base.circledialog.res.values.CircleDimen;
 import com.base.circledialog.scale.ScaleUtils;
+import com.base.log.DebugLog;
 
 
 /**
@@ -152,10 +153,18 @@ public abstract class BaseCircleDialog extends DialogFragment {
                 for (int inputDeviceId : inputDeviceIds) {
                     InputDevice inputDevice = inputManager.getInputDevice(inputDeviceId);
                     if (inputDevice==null)continue;
-                    //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
-                    if (inputDevice.getKeyboardType()==InputDevice.KEYBOARD_TYPE_ALPHABETIC){
-                        isKeyboard=true;
-                        break;
+                    DebugLog.i("name="+inputDevice.getName());
+                    DebugLog.i("getSources="+(inputDevice.getSources()& InputDevice.SOURCE_KEYBOARD));
+                    DebugLog.i("getKeyboardType="+inputDevice.getKeyboardType());
+                    DebugLog.i("isVirtual="+inputDevice.isVirtual());
+                    int sources = inputDevice.getSources();
+                    if (!inputDevice.isVirtual()
+                            &&((sources & InputDevice.SOURCE_KEYBOARD) == InputDevice.SOURCE_KEYBOARD)) {
+                        //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
+                        if (inputDevice.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
+                            isKeyboard = true;
+                            break;
+                        }
                     }
                 }
                 getActivity().runOnUiThread(new Runnable() {

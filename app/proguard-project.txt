@@ -462,8 +462,17 @@ public static java.lang.String TABLENAME;
 #=======================MNProgressHUD====================
 -dontwarn com.maning.mndialoglibrary.**
 #=======================versionchecklib====================
--keep enum org.greenrobot.eventbus.ThreadMode { *; }
 -keep class com.allenliu.versionchecklib.**{*;}
+ -keepattributes *Annotation*
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
 #=======================richtext====================
 -dontwarn com.zzhoujay.richtext.**
 -dontwarn com.zzhoujay.html.**
@@ -825,6 +834,7 @@ public void xxxxxx(**);
 -keep class systemdb.**{*;}
 -keep class com.base.eventBus.**{*;}
 -keep class com.base.model.**{*;}
+-keep class com.base.httpmvp.retrofitapi.methods.**{*;}
 -keep class com.base.httpmvp.databean.**{*;}
 #-keep public class java.**
 -dontwarn com.google.android.maps.**

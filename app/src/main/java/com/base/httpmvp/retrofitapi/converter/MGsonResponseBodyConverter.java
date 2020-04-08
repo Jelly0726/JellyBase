@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.HttpCode;
-import com.base.httpmvp.retrofitapi.HttpState;
+import com.base.httpmvp.retrofitapi.methods.HttpState;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;

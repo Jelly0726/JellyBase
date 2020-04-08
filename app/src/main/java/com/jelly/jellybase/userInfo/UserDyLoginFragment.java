@@ -19,7 +19,7 @@ import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.encrypt.MD5;
 import com.base.httpmvp.contact.LoginContact;
 import com.base.httpmvp.presenter.LoginActivityPresenter;
-import com.base.httpmvp.retrofitapi.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.view.BaseFragmentImpl;

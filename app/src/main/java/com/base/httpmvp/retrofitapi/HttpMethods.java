@@ -16,6 +16,10 @@ import com.base.httpmvp.databean.UploadBean;
 import com.base.httpmvp.databean.UploadData;
 import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
+import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
@@ -146,7 +150,7 @@ public class HttpMethods implements IGlobalManager {
 	 */
 	public void unDisposable() {
 		if (mCompositeDisposable != null) {
-			mCompositeDisposable.dispose();
+			mCompositeDisposable.clear();
 		}
 	}
 

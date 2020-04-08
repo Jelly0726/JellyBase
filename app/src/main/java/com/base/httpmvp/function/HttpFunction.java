@@ -1,6 +1,6 @@
 package com.base.httpmvp.function;
 
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;

@@ -8,7 +8,6 @@ import android.view.Menu;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
-import com.base.applicationUtil.AppUtils;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.base.permission.CallBack;
@@ -17,6 +16,8 @@ import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 
 import hugo.weaving.DebugLog;
 
@@ -72,17 +73,22 @@ public class LauncherActivity extends BaseActivity{
 								}
 							}, 1000);
 						}
+
+						@Override
+						public void onFailure(List<String> permissions) {
+
+						}
 					},
 					Permission.Group.MICROPHONE,//扩音器，麦克风
-					AppUtils.isSDcardExist()? Permission.Group.STORAGE:new String[]{},//存储
+					Permission.Group.STORAGE,//存储
 					Permission.Group.CALENDAR,//日历
 					Permission.Group.CAMERA,//照相机
-					Permission.Group.CONTACTS,//联系人
+//					Permission.Group.CONTACTS,//联系人
 					Permission.Group.LOCATION,//定位
 					Permission.Group.SMS,//短信
 					new String[]{
-							android.Manifest.permission.READ_PHONE_STATE,//读取手机状态
-							android.Manifest.permission.CALL_PHONE,//拨打电话
+							Permission.READ_PHONE_STATE,//读取手机状态
+							Permission.CALL_PHONE,//拨打电话
 							android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
 					});
 		}else {

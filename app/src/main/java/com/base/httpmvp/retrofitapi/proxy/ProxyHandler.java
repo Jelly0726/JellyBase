@@ -6,7 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
-import com.base.httpmvp.retrofitapi.HttpResultData;
+import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;

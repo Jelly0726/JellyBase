@@ -17,7 +17,7 @@
         android:paddingBottom="0px"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:background="@drawable/payment_item_bg_w">
+        android:background="#fff">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -31,157 +31,16 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:textSize="12sp"
-            android:textColor="#fd7c13"
+            android:textColor="#9bcfea"
             android:gravity="center"
             android:text="取消"
             />
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/balance_layout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/payment_item_bg_w">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/payment_zhanghu"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
-            <TextView
-                android:id="@+id/balance_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#313131"
-                android:textStyle="italic"
-                android:textSize="14sp"
-                android:text="账户余额支付"/>
-            <TextView
-                android:id="@+id/balance_tv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:textColor="#313131"
-                android:textSize="12sp"
-                android:text="￥200"/>
-        </LinearLayout>
-        <CheckBox
-            android:id="@+id/balance_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:button="@drawable/payment_checkbox_bg"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/weixin_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/payment_item_bg_w">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_marginRight="30px"
-            android:src="@mipmap/payment_weixin"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="#313131"
-            android:textSize="14sp"
-            android:text="微信支付"/>
-        <CheckBox
-            android:id="@+id/weixin_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:button="@drawable/payment_checkbox_bg"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/alipay_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/payment_item_bg_w">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/payment_zhifubao"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="#313131"
-            android:textSize="14sp"
-            android:text="支付宝支付"/>
-        <CheckBox
-            android:id="@+id/alipay_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:button="@drawable/payment_checkbox_bg"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/unionpay_layout"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:background="@drawable/payment_item_bg_w">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/payment_yinglian"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:textColor="#313131"
-            android:textSize="14sp"
-            android:text="银联支付"/>
-        <CheckBox
-            android:id="@+id/unionpay_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="13dp"
-            android:button="@drawable/payment_checkbox_bg"/>
-    </LinearLayout>
+        android:layout_height="250dp"
+        />
     <TextView
         android:id="@+id/confirm_tv"
         android:layout_width="match_parent"
@@ -190,5 +49,5 @@
         android:textColor="#fff"
         android:gravity="center"
         android:text="确定"
-        android:background="@drawable/payment_btn_bg"/>
+        android:background="#9bcfea"/>
 </LinearLayout>

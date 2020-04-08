@@ -153,7 +153,7 @@ public class NoPreloadViewPager extends ViewGroup {
     private EdgeEffectCompat mRightEdge;
 
     private boolean mFirstLayout = true;
-
+    private boolean noScroll = false;//是否屏蔽滑动切换
     private OnPageChangeListener mOnPageChangeListener;
 
     /**
@@ -259,6 +259,14 @@ public class NoPreloadViewPager extends ViewGroup {
         float density = context.getResources().getDisplayMetrics().density;
         mBaseLineFlingVelocity = 2500.0f * density;
         mFlingVelocityInfluence = 0.4f;
+    }
+
+    /**
+     * 设置是否屏蔽水平滑动切换
+     * @param noScroll
+     */
+    public void setNoScroll(boolean noScroll) {
+        this.noScroll = noScroll;
     }
 
     private void setScrollState(int newState) {
@@ -1036,9 +1044,9 @@ public class NoPreloadViewPager extends ViewGroup {
                  */
 
                 /*
-                * Locally do absolute value. mLastMotionY is set to the y value
-                * of the down event.
-                */
+                 * Locally do absolute value. mLastMotionY is set to the y value
+                 * of the down event.
+                 */
                 final int activePointerId = mActivePointerId;
                 if (activePointerId == INVALID_POINTER) {
                     // If we don't have a valid id, the touch down wasn't on content.
@@ -1113,9 +1121,9 @@ public class NoPreloadViewPager extends ViewGroup {
         }
 
         /*
-        * The only time we want to intercept motion events is if we are in the
-        * drag mode.
-        */
+         * The only time we want to intercept motion events is if we are in the
+         * drag mode.
+         */
         return mIsBeingDragged;
     }
 
@@ -1138,7 +1146,7 @@ public class NoPreloadViewPager extends ViewGroup {
             // Nothing to present or scroll; nothing to touch.
             return false;
         }
-
+        if (noScroll)return false;//屏蔽水平滑动切换
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
