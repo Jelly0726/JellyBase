@@ -190,6 +190,9 @@ public class BaseActivity extends AppCompatActivity implements Observer {
     }
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
+        if (!BaseApplication.isVampix()){//不进行黑白化
+            return super.onCreateView(name, context, attrs);
+        }
         if("FrameLayout".equals(name)){
             int count = attrs.getAttributeCount();
             for (int i = 0; i < count; i++) {

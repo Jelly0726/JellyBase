@@ -56,12 +56,21 @@ public class BaseApplication extends Application {
     private static  boolean backStage=true;//后台运行
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
+    private static boolean vampix=false;//是否App黑白化
     public static boolean isMainState() {
         return mainState;
     }
 
     public static void setMainState(boolean mainState) {
         BaseApplication.mainState = mainState;
+    }
+
+    public static boolean isVampix() {
+        return vampix;
+    }
+
+    public static void setVampix(boolean vampix) {
+        BaseApplication.vampix = vampix;
     }
 
     @Override
