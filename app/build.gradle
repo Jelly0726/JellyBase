@@ -22,13 +22,13 @@ android {
 //                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
                 cppFlags "-std=c++11 -frtti -fexceptions"
                 //设置支持的SO库架构
-                abiFilters "armeabi", "armeabi-v7a", "x86", 'mips'  //输出指定三种abi体系结构下的so库。
+                abiFilters  "armeabi-v7a", "x86"  //输出指定三种abi体系结构下的so库。
             }
         }
         //ndk编译生成.so文件
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
 //            moduleName "testjni"         //生成的so名字
-            abiFilters "armeabi", "armeabi-v7a", "x86", 'mips'  //输出指定三种abi体系结构下的so库。
+            abiFilters  "armeabi-v7a", "x86"  //输出指定三种abi体系结构下的so库。
 //            //极光推送选择要添加的对应cpu类型的.so库。
 //            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','x86', 'x86_64', 'mips', 'mips64'
 //            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
