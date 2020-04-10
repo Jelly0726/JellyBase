@@ -16,6 +16,7 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
@@ -186,6 +187,40 @@ public class BaseActivity extends AppCompatActivity implements Observer {
         frameLayout.addView(view);
         super.setContentView(frameLayout);
         iniBar();
+    }
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        if (!BaseApplication.isVampix()){//不进行黑白化
+            return super.onCreateView(name, context, attrs);
+        }
+        if("FrameLayout".equals(name)){
+            int count = attrs.getAttributeCount();
+            for (int i = 0; i < count; i++) {
+                String attributeName = attrs.getAttributeName(i);
+                String attributeValue = attrs.getAttributeValue(i);
+                if (attributeName.equals("id")) {
+                    int id = Integer.parseInt(attributeValue.substring(1));
+                    String idVal = getResources().getResourceName(id);
+                    if ("android:id/content".equals(idVal)) {
+                        GrayFrameLayout grayFrameLayout = new GrayFrameLayout(context, attrs);
+                        //设置window 的 backgroud。
+                        grayFrameLayout.setBackgroundDrawable(getWindow().getDecorView().getBackground());
+                        //如果你是theme 中设置的 windowBackground，那么需要从 theme 里面提取 drawable，参考代码如下：
+//                        TypedValue a = new TypedValue();
+//                        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+//                        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+//                            // windowBackground is a color
+//                            int color = a.data;
+//                        } else {
+//                            // windowBackground is not a color, probably a drawable
+//                            Drawable c = getResources().getDrawable(a.resourceId);
+//                        }
+                        return grayFrameLayout;
+                    }
+                }
+            }
+        }
+        return super.onCreateView(name, context, attrs);
     }
     @Override
     public void setContentView(int view) {
