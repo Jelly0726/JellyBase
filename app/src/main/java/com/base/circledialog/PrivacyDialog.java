@@ -28,7 +28,7 @@ import android.widget.Toast;
 public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListener {
     private TextView textView;
     private String details;//内容
-
+    private OnClickListener onClickListener;
     public static PrivacyDialog getInstance() {
         PrivacyDialog dialogFragment = new PrivacyDialog();
         dialogFragment.setCanceledBack(false);
@@ -152,10 +152,14 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case 1://左边
+            case 1://拒绝
+                if (onClickListener!=null)
+                    onClickListener.onRefuse();
                 dismiss();
                 break;
-            case 2://右边
+            case 2://同意
+                if (onClickListener!=null)
+                    onClickListener.onAgree();
                 break;
         }
     }
@@ -170,6 +174,15 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
             textView.setText(Html.fromHtml(details));
         }
     }
+
+    public OnClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
     private class MyClickSpan extends ClickableSpan{
         private  String url;
         public MyClickSpan(String url){
@@ -185,5 +198,8 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
             Toast.makeText(getActivity(),"click link="+url,Toast.LENGTH_SHORT).show();
         }
     }
-
+    public interface OnClickListener{
+        public void onAgree();
+        public void onRefuse();
+    }
 }
