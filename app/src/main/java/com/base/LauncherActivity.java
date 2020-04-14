@@ -52,59 +52,103 @@ public class LauncherActivity extends BaseActivity{
 		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			//android 6.0及以上需要动态请求权限
-			PrivacyDialog privacyDialog=PrivacyDialog.getInstance();
-			privacyDialog.setOnClickListener(new PrivacyDialog.OnClickListener() {
-				@Override
-				public void onAgree() {
-					// 申请权限。
-					PermissionUtils.getInstance().requestPermission(LauncherActivity.this, new CallBack() {
-								@Override
-								public void onSucess() {
-									new Handler().postDelayed(new Runnable() {
-										public void run() {
-											if (BaseApplication.getInstance().isLogin()) {
-												//BaseApplication.getInstance().goLoginActivity();
-												BaseApplication.getInstance().goMainActivity();//进入主界面
-												//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-												finish();
-											} else {
-												if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-													BaseApplication.getInstance().goLoginActivity();
-												} else {
+			if (AppPrefs.getBoolean(BaseApplication.getInstance(), ConfigKey.FIRST,true)) {//第一次运行
+				PrivacyDialog privacyDialog = PrivacyDialog.getInstance();
+				privacyDialog.setOnClickListener(new PrivacyDialog.OnClickListener() {
+					@Override
+					public void onAgree() {
+						// 申请权限。
+						PermissionUtils.getInstance().requestPermission(LauncherActivity.this, new CallBack() {
+									@Override
+									public void onSucess() {
+										new Handler().postDelayed(new Runnable() {
+											public void run() {
+												if (BaseApplication.getInstance().isLogin()) {
+													//BaseApplication.getInstance().goLoginActivity();
 													BaseApplication.getInstance().goMainActivity();//进入主界面
+													//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+													finish();
+												} else {
+													if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+														BaseApplication.getInstance().goLoginActivity();
+													} else {
+														BaseApplication.getInstance().goMainActivity();//进入主界面
+													}
+													//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+													finish();
 												}
-												//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-												finish();
 											}
-										}
-									}, 1000);
-								}
+										}, 1000);
+									}
 
-								@Override
-								public void onFailure(List<String> permissions) {
+									@Override
+									public void onFailure(List<String> permissions) {
 
-								}
-							},
-							Permission.Group.MICROPHONE,//扩音器，麦克风
-							Permission.Group.STORAGE,//存储
-							Permission.Group.CALENDAR,//日历
-							Permission.Group.CAMERA,//照相机
+									}
+								},
+								Permission.Group.MICROPHONE,//扩音器，麦克风
+								Permission.Group.STORAGE,//存储
+								Permission.Group.CALENDAR,//日历
+								Permission.Group.CAMERA,//照相机
 //					Permission.Group.CONTACTS,//联系人
-							Permission.Group.LOCATION,//定位
-							Permission.Group.SMS,//短信
-							new String[]{
-									Permission.READ_PHONE_STATE,//读取手机状态
-									Permission.CALL_PHONE,//拨打电话
-									android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
-							});
-				}
+								Permission.Group.LOCATION,//定位
+								Permission.Group.SMS,//短信
+								new String[]{
+										Permission.READ_PHONE_STATE,//读取手机状态
+										Permission.CALL_PHONE,//拨打电话
+										android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
+								});
+					}
 
-				@Override
-				public void onRefuse() {
-					AppSubject.getInstance().exit();
-				}
-			});
-			privacyDialog.show(getSupportFragmentManager(),"PrivacyDialog");
+					@Override
+					public void onRefuse() {
+						AppSubject.getInstance().exit();
+					}
+				});
+				privacyDialog.show(getSupportFragmentManager(), "PrivacyDialog");
+			}else {
+				// 申请权限。
+				PermissionUtils.getInstance().requestPermission(LauncherActivity.this, new CallBack() {
+							@Override
+							public void onSucess() {
+								new Handler().postDelayed(new Runnable() {
+									public void run() {
+										if (BaseApplication.getInstance().isLogin()) {
+											//BaseApplication.getInstance().goLoginActivity();
+											BaseApplication.getInstance().goMainActivity();//进入主界面
+											//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+											finish();
+										} else {
+											if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+												BaseApplication.getInstance().goLoginActivity();
+											} else {
+												BaseApplication.getInstance().goMainActivity();//进入主界面
+											}
+											//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+											finish();
+										}
+									}
+								}, 1000);
+							}
+
+							@Override
+							public void onFailure(List<String> permissions) {
+
+							}
+						},
+						Permission.Group.MICROPHONE,//扩音器，麦克风
+						Permission.Group.STORAGE,//存储
+						Permission.Group.CALENDAR,//日历
+						Permission.Group.CAMERA,//照相机
+//					Permission.Group.CONTACTS,//联系人
+						Permission.Group.LOCATION,//定位
+						Permission.Group.SMS,//短信
+						new String[]{
+								Permission.READ_PHONE_STATE,//读取手机状态
+								Permission.CALL_PHONE,//拨打电话
+								android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
+						});
+			}
 		}else {
 			new Handler().postDelayed(new Runnable() {
 				public void run() {
