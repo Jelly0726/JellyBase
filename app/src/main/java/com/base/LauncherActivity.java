@@ -59,6 +59,7 @@ public class LauncherActivity extends BaseActivity{
 					public void onAgree() {
 						// 申请权限。
 						requestPermission();
+						AppPrefs.putBoolean(BaseApplication.getInstance(),ConfigKey.FIRST,false);
 					}
 
 					@Override
