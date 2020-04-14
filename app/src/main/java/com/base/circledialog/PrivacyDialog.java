@@ -160,6 +160,7 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
             case 2://同意
                 if (onClickListener!=null)
                     onClickListener.onAgree();
+                dismiss();
                 break;
         }
     }
