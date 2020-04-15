@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -679,6 +680,26 @@ public class StringUtil {
         }
         return (distance/1000)+"千米";
     }
+    /**
+     * 跟输入的整数获取比他大的10的倍数
+     * @param i
+     * @return
+     */
+    public static int getInt(int i){
+        int max=10;//最大的整数
+        int base=10;//基数
+        if (i<base*10){
+            max=(i/base+1)*base;
+        }else {
+            StringBuffer baseS=new StringBuffer("1");
+            for (int a=1;a<String.valueOf(i).length()-1;a++){
+                baseS.append("0");
+            }
+            base=Integer.parseInt(baseS.toString());
+            max=(i/base+1)*base;
+        }
+        return max;
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
@@ -689,5 +710,11 @@ public class StringUtil {
 //            System.out.println("金额："+i);
 //        }
 //        System.out.println(isMobileNO("14600087240"));
+        System.out.print("请输入值：");
+        java.util.Scanner sc = new Scanner(System.in);
+        while (!sc.hasNext("0")){
+            int age = sc.nextInt();    //读取整型输入
+            System.out.println( getInt(age));
+        }
     }
 }
