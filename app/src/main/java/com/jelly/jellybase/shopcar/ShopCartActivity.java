@@ -14,7 +14,7 @@ public class ShopCartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopcart_activity);
+        setContentView(R.layout.shopcart_fragment_activity);
         if (savedInstanceState != null) {
             shopCarFragment = (ShopCarFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, "shopCarFragment");
