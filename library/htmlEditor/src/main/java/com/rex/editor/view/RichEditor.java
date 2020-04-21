@@ -202,6 +202,7 @@ public class RichEditor extends WebView {
         }
         try {
             exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
+            focusEditor();
         } catch (UnsupportedEncodingException e) {
             // No handling
         }
