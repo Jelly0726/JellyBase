@@ -396,6 +396,7 @@ public class RichEditor extends WebView {
     }
 
     public void insertImage(String url, String alt, String style) {
+        focusEditor();
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertImage('" + url + "', '" + alt + "', '" + style + "');");
     }
