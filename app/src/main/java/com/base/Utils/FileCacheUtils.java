@@ -24,6 +24,10 @@ public class FileCacheUtils {
         long cacheSize = 0;
         try {
             cacheSize = getFolderSize(context.getCacheDir());
+            cacheSize += getFolderSize(new File("/data/data/"
+                    + context.getPackageName() + "/databases"));
+            cacheSize += getFolderSize(new File("/data/data/"
+                    + context.getPackageName() + "/shared_prefs"));
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 cacheSize += getFolderSize(context.getExternalCacheDir());
             }

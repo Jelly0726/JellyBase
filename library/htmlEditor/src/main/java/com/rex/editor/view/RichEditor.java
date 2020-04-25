@@ -202,6 +202,7 @@ public class RichEditor extends WebView {
         }
         try {
             exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
+            focusEditor();
         } catch (UnsupportedEncodingException e) {
             // No handling
         }
@@ -395,6 +396,7 @@ public class RichEditor extends WebView {
     }
 
     public void insertImage(String url, String alt, String style) {
+        focusEditor();
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertImage('" + url + "', '" + alt + "', '" + style + "');");
     }

@@ -125,6 +125,7 @@ public class RichEditorNew extends RichEditor {
     }
 
     public void insertHtml(String html) {
+        focusEditor();
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertHTML('" + html + "');");
     }
