@@ -34,7 +34,7 @@ public class MediaUtils
         //适配Android N
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
-            return FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", getOutputMediaFile(type));
+            return FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileprovider", getOutputMediaFile(type));
         } else
         {
             return Uri.fromFile(getOutputMediaFile(type));

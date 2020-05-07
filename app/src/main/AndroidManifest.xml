@@ -550,6 +550,12 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↑↑↑↑↑↑↑↑富文本编辑器↑↑↑↑↑↑↑↑-->
+        <activity android:name=".videorecord.MainActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".videorecord.VedioRecordActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".videorecord.VideoPlayActivity"
+            android:theme="@style/AppTheme"></activity>
         <!--↓↓↓↓↓↓↓通过广播监听短信↓↓↓↓↓↓↓-->
         <receiver android:name="com.base.sms.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">

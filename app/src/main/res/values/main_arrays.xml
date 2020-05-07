@@ -48,6 +48,7 @@
         <item>发送邮件</item>
         <item>websocket</item>
         <item>富文本编辑器</item>
+        <item>录小视频</item>
     </string-array>
 
     <string-array name="cause">
