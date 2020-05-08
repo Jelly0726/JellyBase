@@ -68,7 +68,7 @@
                     android:textColor="#ff0000"
                     android:textSize="22px"
                     android:visibility="visible"
-                    android:text="￥"/>
+                    android:text="¥"/>
                 <TextView
                     android:id="@+id/wholesale_price"
                     android:layout_width="wrap_content"

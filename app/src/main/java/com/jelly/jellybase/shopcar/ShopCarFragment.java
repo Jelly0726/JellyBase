@@ -566,7 +566,7 @@ public class ShopCarFragment extends BaseFragment implements
                 }
             }
         }
-        totalPrice.setText("￥" + mtotalPrice + "");
+        totalPrice.setText("¥" + mtotalPrice + "");
         goPay.setText("去支付(" + mtotalCount + ")");
         if (mtotalCount == 0) {
             setCartNum();

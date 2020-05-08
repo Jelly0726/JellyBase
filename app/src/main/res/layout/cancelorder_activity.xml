@@ -137,7 +137,7 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/order_price"
                     android:textSize="24px"
-                    android:text="￥200积分"/>
+                    android:text="¥200积分"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -153,7 +153,7 @@
                 android:gravity="right"
                 android:textSize="28px"
                 android:textColor="#454545"
-                android:text="￥2.5积分"/>
+                android:text="¥2.5积分"/>
             <TextView
                 android:id="@+id/num_tv"
                 android:layout_width="wrap_content"

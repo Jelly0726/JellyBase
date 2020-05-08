@@ -205,7 +205,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
 
             childViewHolder.goods_size.setText("门票:" + child.getColor() + ",类型:" + child.getSize());
             //设置打折前的原价
-            SpannableString spannableString = new SpannableString("￥" + child.getPrime_price() + "");
+            SpannableString spannableString = new SpannableString("¥" + child.getPrime_price() + "");
             StrikethroughSpan span = new StrikethroughSpan();
             spannableString.setSpan(span,0,spannableString.length()-1+1, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             //避免无限次的append

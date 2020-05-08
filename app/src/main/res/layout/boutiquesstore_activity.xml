@@ -292,7 +292,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="20px"
                                     android:textColor="#f44c4c"
-                                    android:text="￥"/>
+                                    android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -352,7 +352,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="20px"
                                     android:textColor="#f44c4c"
-                                    android:text="￥"/>
+                                    android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -412,7 +412,7 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="20px"
                                     android:textColor="#f44c4c"
-                                    android:text="￥"/>
+                                    android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
