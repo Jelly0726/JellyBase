@@ -155,7 +155,7 @@ public class PositionEntity implements Serializable ,Cloneable{
 					province, city, adCode, district, type, from);
 		}
 	}
-	//深度复制
+	//深度复制 需要实现 Serializable
 	public Object deepclone()  {
 		try {
 			//将对象写到流里

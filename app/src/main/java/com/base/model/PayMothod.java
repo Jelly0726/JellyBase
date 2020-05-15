@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.io.Serializable;
 
-public class PayMothod {
+public class PayMothod implements Serializable {
     private int icon= R.drawable.ic_placeholder_figure;
     private String name="微信";//支付方式
     private int payType=1;//支付方式
@@ -69,7 +70,7 @@ public class PayMothod {
     public void setEnable(boolean enable) {
         isEnable = enable;
     }
-    //深度复制
+    //深度复制 需要实现 Serializable
     public Object deepclone()  {
         try {
             //将对象写到流里

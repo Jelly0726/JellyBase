@@ -59,7 +59,7 @@ public class SearchHistory implements Serializable{
     public void setTime(Long time) {
         this.time = time;
     }
-    //深度复制
+    //深度复制 需要实现 Serializable
     public Object deepclone()  {
         try {
             //将对象写到流里

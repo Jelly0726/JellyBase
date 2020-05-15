@@ -178,7 +178,7 @@ public class Login implements Serializable {
     public void setCompanyno(String companyno) {
         this.companyno = companyno;
     }
-    //深度复制
+    //深度复制 需要实现 Serializable
     public Object deepclone()  {
         try {
             //将对象写到流里

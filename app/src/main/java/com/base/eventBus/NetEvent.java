@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017/2/9.
  */
 
-public class NetEvent<T> implements Parcelable {
+public class NetEvent<T> implements Parcelable , Serializable {
     private Integer status;
     private String msg;
     private Object event;
@@ -136,7 +137,7 @@ public class NetEvent<T> implements Parcelable {
             return new NetEvent[size];
         }
     };
-    //深度复制
+    //深度复制 需要实现 Serializable
     public Object deepclone()  {
         try {
             //将对象写到流里
