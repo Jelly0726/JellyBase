@@ -378,7 +378,8 @@ repositories {
         }
         //广告轮播
 //        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
-
+        //腾讯tbs
+//        api 'com.tencent.tbs.tbssdk:sdk:43697'
         implementation files('libs/zxing-core-3.3.1.jar')
         implementation 'com.haibin:calendarview:3.6.4'//日历选择
         //百度文字识别(身份证、银行卡等)
@@ -387,6 +388,7 @@ repositories {
         implementation project(path: ':logreport')
         implementation project(path: ':form')
         implementation project(path: ':LiveDataBus')
+        //应用宝自动升级
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')
         implementation files('libs/commons-io-2.6.jar')
