@@ -223,7 +223,7 @@ repositories {
         //recyclerview
         implementation 'com.android.support:design:27.1.0'
 
-        //butterknife注解式绑定id
+        //butterknife注解式绑定id  androidx 10.0.0
         implementation 'com.jakewharton:butterknife:8.8.1'
         annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
         implementation 'com.android.support:recyclerview-v7:26.1.0'
