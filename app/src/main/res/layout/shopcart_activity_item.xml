@@ -58,7 +58,7 @@
                 android:layout_marginBottom="28dp"
                 android:textColor="#f57fdc"
                 android:textSize="13sp"
-                android:text="￥1600"/>
+                android:text="¥1600"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="50dp"

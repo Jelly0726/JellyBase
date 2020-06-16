@@ -85,7 +85,7 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
                         .centerCrop()
                         .into(goods_pic);
             }
-            goods_price.setText("￥："+product.getSalesPrice());
+            goods_price.setText("¥："+product.getSalesPrice());
             goods_repertory.setText("库存"+product.getStock()+product.getUnit());
         }
     }

@@ -728,6 +728,10 @@ public class MainActivity extends AppCompatActivity {
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.richeditor.MainActivity.class);
                     startActivity(intent);
                     break;
+                case 47:// 录小视频
+                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
+                    startActivity(intent);
+                    break;
             }
 
         }

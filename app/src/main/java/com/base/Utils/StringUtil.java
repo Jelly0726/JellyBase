@@ -681,13 +681,13 @@ public class StringUtil {
         return (distance/1000)+"千米";
     }
     /**
-     * 跟输入的整数获取比他大的10的倍数
+     * 跟输入的整数获取比他大的基数的倍数
      * @param i
+     * @param base  基数
      * @return
      */
-    public static int getInt(int i){
+    public static int getInt(int i,int base){
         int max=10;//最大的整数
-        int base=10;//基数
         if (i<base*10){
             max=(i/base+1)*base;
         }else {
@@ -714,7 +714,7 @@ public class StringUtil {
         java.util.Scanner sc = new Scanner(System.in);
         while (!sc.hasNext("0")){
             int age = sc.nextInt();    //读取整型输入
-            System.out.println( getInt(age));
+            System.out.println( getInt(age,6));
         }
     }
 }

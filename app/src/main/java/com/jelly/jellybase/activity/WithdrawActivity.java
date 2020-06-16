@@ -74,7 +74,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s.toString().trim())){
                     double acount=Double.parseDouble(s.toString().trim());
-                    charge_tv.setText("手续费：￥"+String.valueOf(acount*charge)+"元");
+                    charge_tv.setText("手续费：¥"+String.valueOf(acount*charge)+"元");
                 }
             }
         }.setDigits(2));

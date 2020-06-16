@@ -68,7 +68,7 @@ public class PaymentActivity extends AppCompatActivity{
             }
         });
         mList=new ArrayList<>();
-        mList.add(new PayMothod().setName("余额").setPayType(0).setIcon(R.mipmap.payment_zhanghu).setMark("￥0"));
+        mList.add(new PayMothod().setName("余额").setPayType(0).setIcon(R.mipmap.payment_zhanghu).setMark("¥0"));
         mList.add(new PayMothod().setName("微信").setPayType(1).setIcon(R.mipmap.payment_weixin).setMark("推荐使用"));
         mList.add(new PayMothod().setName("支付宝").setPayType(2).setIcon(R.mipmap.payment_zhifubao).setMark(""));
         mList.add(new PayMothod().setName("银联").setPayType(3).setIcon(R.mipmap.payment_yinglian).setMark(""));

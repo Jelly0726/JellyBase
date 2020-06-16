@@ -5,6 +5,12 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
 import java.io.Serializable;
 
 /**
@@ -148,5 +154,24 @@ public class PositionEntity implements Serializable ,Cloneable{
 			return (PositionEntity) new PositionEntity(id, latitue, longitude, address,
 					province, city, adCode, district, type, from);
 		}
+	}
+	//深度复制 需要实现 Serializable
+	public Object deepclone()  {
+		try {
+			//将对象写到流里
+			ByteArrayOutputStream bo=new ByteArrayOutputStream();
+			ObjectOutputStream oo=new ObjectOutputStream(bo);
+			oo.writeObject(this);//从流里读出来
+			ByteArrayInputStream bi=new ByteArrayInputStream(bo.toByteArray());
+			ObjectInputStream oi=new ObjectInputStream(bi);
+			return(oi.readObject());
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (OptionalDataException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		return this;
 	}
 }

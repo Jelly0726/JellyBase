@@ -121,7 +121,7 @@
                 android:gravity="right"
                 android:textColor="#084051"
                 android:textSize="15sp"
-                android:text="合计：￥0.00"/>
+                android:text="合计：¥0.00"/>
         </LinearLayout>
         <TextView
             android:id="@+id/settlement_tv"

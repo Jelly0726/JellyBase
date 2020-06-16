@@ -3,7 +3,15 @@ package com.base.model;
 
 import com.jelly.jellybase.R;
 
-public class PayMothod {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
+import java.io.Serializable;
+
+public class PayMothod implements Serializable {
     private int icon= R.drawable.ic_placeholder_figure;
     private String name="微信";//支付方式
     private int payType=1;//支付方式
@@ -61,5 +69,24 @@ public class PayMothod {
 
     public void setEnable(boolean enable) {
         isEnable = enable;
+    }
+    //深度复制 需要实现 Serializable
+    public Object deepclone()  {
+        try {
+            //将对象写到流里
+            ByteArrayOutputStream bo=new ByteArrayOutputStream();
+            ObjectOutputStream oo=new ObjectOutputStream(bo);
+            oo.writeObject(this);//从流里读出来
+            ByteArrayInputStream bi=new ByteArrayInputStream(bo.toByteArray());
+            ObjectInputStream oi=new ObjectInputStream(bi);
+            return(oi.readObject());
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (OptionalDataException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return this;
     }
 }

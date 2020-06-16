@@ -140,7 +140,7 @@ class ShopCartAdapter(context: Context) :
         } else {
             holder.name_tv.text = mListItems!![position].name
         }
-        holder.price_tv.text = "￥" + mListItems!![position].price
+        holder.price_tv.text = "¥" + mListItems!![position].price
         holder.select_box.isChecked = mListItems!![position].isSelect
         holder.num_edit.setText(mListItems!![position].goodsNum.toString() + "")
         if (!TextUtils.isEmpty(mListItems!![position].majorImage)) {
