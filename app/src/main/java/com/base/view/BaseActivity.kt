@@ -33,6 +33,7 @@ import com.jelly.jellybase.R
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * Created by Jelly on 2017/12/5.
@@ -73,7 +74,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
             StrictMode.setThreadPolicy(policy)
         }
         //====
-        extra
+        getExtra()
         mRecevier = InnerRecevier()
         mFilter = IntentFilter()
         mFilter!!.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
@@ -138,14 +139,15 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent) //must store the new intent unless getIntent() will return the old one
-        extra
+        getExtra()
     }
 
     /**
      * 获取Intent传值
      */
-    open val extra: Unit
-        get() {}
+    open fun getExtra(){
+
+    }
 
     override fun setContentView(view: View) {
         val frameLayout = FrameLayout(this)
@@ -156,7 +158,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
         iniBar()
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View {
+    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         if (!BaseApplication.isVampix()) { //不进行黑白化
             return super.onCreateView(name, context, attrs)
         }
@@ -258,6 +260,8 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
     }
 
     override fun onDestroy() {
+        //结束协程
+        cancel()
         /**
          * 停止监听，注销广播
          */

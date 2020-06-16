@@ -391,6 +391,8 @@ repositories {
         implementation project(path: ':logreport')
         implementation project(path: ':form')
         implementation project(path: ':LiveDataBus')
+        //弹窗对话框
+//        implementation project(path: ':library:circleDialog')
         //应用宝自动升级
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')

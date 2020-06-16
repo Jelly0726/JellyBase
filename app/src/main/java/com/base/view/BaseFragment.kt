@@ -11,6 +11,7 @@ import com.base.appManager.ExecutorManager
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
 /**
  * Created by Jelly on 2017/9/21.
@@ -271,6 +272,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      * 销毁与Fragment有关的视图，但未与Activity解除绑定，依然可以通过onCreateView方法重新创建视图
      */
     override fun onDestroyView() {
+        //结束协程
+        cancel()
         super.onDestroyView()
         com.base.log.DebugLog.i("SSSS", "onDestroyView=====$this")
     }
