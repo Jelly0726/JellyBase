@@ -14,6 +14,7 @@ import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.base.permission.CallBack;
 import com.base.permission.PermissionUtils;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
@@ -125,7 +126,13 @@ public class LauncherActivity extends BaseActivity{
 
 					@Override
 					public void onFailure(List<String> permissions) {
+						StringBuffer msg=new StringBuffer();
+						for (String permission : permissions) {
+							msg.append(permission);
+							msg.append("\n");
+						}
 
+						ToastUtils.showShort(LauncherActivity.this, msg.toString());
 					}
 				},
 				Permission.Group.MICROPHONE,//扩音器，麦克风
