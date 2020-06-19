@@ -69,6 +69,7 @@ import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.IDCartActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.MessageActivity;
+import com.jelly.jellybase.activity.PIPActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
@@ -730,6 +731,10 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 47:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 48:// PIP模式
+                    intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
             }

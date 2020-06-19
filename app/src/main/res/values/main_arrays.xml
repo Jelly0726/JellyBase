@@ -49,6 +49,7 @@
         <item>websocket</item>
         <item>富文本编辑器</item>
         <item>录小视频</item>
+        <item>PIP模式</item>
     </string-array>
 
     <string-array name="cause">

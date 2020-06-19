@@ -183,7 +183,8 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="stateUnchanged|stateHidden">
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            >
             <intent-filter>
                 <action android:name="${applicationId}.action.ACTION_MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -371,6 +372,14 @@
         <activity android:name=".activity.SendEmailActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
+        </activity>
+        <!--        如果想要应用支持 PIP，请将 android:supportsPictureInPicture 和 android:resizeableActivity 设置为 true，-->
+        <activity android:name=".activity.PIPActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait"
+            android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
+            >
         </activity>
         <!--↓↓↓↓高德地图↓↓↓↓-->
         <activity android:name=".activity.AMapActivity"

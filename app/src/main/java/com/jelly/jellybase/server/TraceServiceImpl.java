@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.base.daemon.AbsWorkService;
+import com.base.eventBus.NetEvent;
+import com.base.liveDataBus.LiveDataBus;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,6 +55,8 @@ public class TraceServiceImpl extends AbsWorkService {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         System.out.println("每 3 秒采集一次数据... count = " + aLong);
+                        LiveDataBus.get("PIPActivity")
+                                .post(new NetEvent<String>().setEvent("每 3 秒采集一次数据... count = " + aLong));
                         if (aLong > 0 && aLong % 18 == 0)
                             System.out.println("保存数据到磁盘。 saveCount = " + (aLong / 18 - 1));
                     }
