@@ -86,6 +86,8 @@ public class PermissionUtils {
                             }else if(perm.get(i).contains("STORAGE")) {
                                 if (!AppUtils.isSDcardExist())
                                     permissions.remove(i);
+                            }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
+                                permissions.remove(i);
                             }
                         }
                         if (permissions.size()<=0||!lacksPermissions(context,permissions)){
@@ -131,6 +133,8 @@ public class PermissionUtils {
                             }else if(perm.get(i).contains("STORAGE")) {
                                 if (!AppUtils.isSDcardExist())
                                     permissions.remove(i);
+                            }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
+                                permissions.remove(i);
                             }
                         }
                         if (permissions.size()<=0||!lacksPermissions(context,permissions)){

@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -44,6 +43,7 @@ import com.base.permission.CallBack;
 import com.base.permission.PermissionUtils;
 import com.base.redpacket.StartActivity;
 import com.base.toast.ToastUtils;
+import com.base.view.BaseActivity;
 import com.base.view.FloatingDraftButton;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
@@ -69,6 +69,7 @@ import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.IDCartActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.MessageActivity;
+import com.jelly.jellybase.activity.PIPActivity;
 import com.jelly.jellybase.activity.PaymentActivity;
 import com.jelly.jellybase.activity.PickActivity;
 import com.jelly.jellybase.activity.ProductDetailsActivity;
@@ -102,7 +103,7 @@ import java.util.List;
 import hugo.weaving.DebugLog;
 
 @DebugLog
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
@@ -730,6 +731,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 47:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 48:// PIP模式
+                    intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
             }

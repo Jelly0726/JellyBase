@@ -60,8 +60,8 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
         //无title
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         // 全屏
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
+//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
             val result = fixOrientation()
             com.base.log.DebugLog.i("onCreate fixOrientation when Oreo, result = $result")
