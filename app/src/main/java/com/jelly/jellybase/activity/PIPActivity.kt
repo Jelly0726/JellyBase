@@ -1,6 +1,7 @@
 package com.jelly.jellybase.activity
 
 import android.arch.lifecycle.Observer
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,7 @@ import butterknife.Unbinder
 import com.base.daemon.DaemonEnv
 import com.base.eventBus.NetEvent
 import com.base.liveDataBus.LiveDataBus
+import com.base.log.DebugLog
 import com.base.view.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.server.TraceServiceImpl
@@ -63,5 +65,14 @@ class PIPActivity :BaseActivity(){
                 }
             }
         }
+    }
+
+    /**
+     * 监听pip模式变化 显示隐藏部分控件
+     * @param isInPictureInPictureMode true 是 false 否
+     */
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        DebugLog.i("是否PIP=${isInPictureInPictureMode}}")
     }
 }
