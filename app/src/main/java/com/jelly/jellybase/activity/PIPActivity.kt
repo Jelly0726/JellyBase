@@ -7,10 +7,12 @@ import android.view.View
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
+import com.base.daemon.DaemonEnv
 import com.base.eventBus.NetEvent
 import com.base.liveDataBus.LiveDataBus
 import com.base.view.BaseActivity
 import com.jelly.jellybase.R
+import com.jelly.jellybase.server.TraceServiceImpl
 import kotlinx.android.synthetic.main.pip_mode_activity.*
 
 /**
@@ -47,11 +49,17 @@ class PIPActivity :BaseActivity(){
     fun onClick(view:View){
         when(view.id){
             R.id.back_layout->{
+                //启动或停止守护服务，运行在:watch子进程中
+                TraceServiceImpl.sShouldStopService = true //true  表示停止服务，false  表示启动服务
+                DaemonEnv.startServiceMayBind(TraceServiceImpl::class.java)
                 finish()
             }
             R.id.btn->{
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     enterPictureInPictureMode()
+                    //启动或停止守护服务，运行在:watch子进程中
+                    TraceServiceImpl.sShouldStopService = false //true  表示停止服务，false  表示启动服务
+                    DaemonEnv.startServiceMayBind(TraceServiceImpl::class.java)
                 }
             }
         }
