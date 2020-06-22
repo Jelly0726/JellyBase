@@ -78,7 +78,7 @@ public class HomeFragment extends BaseFragment {
         webView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress>=100){
+                if (newProgress>=100&&getActivity()!=null){
                     webView.setVisible(true);
                     custom_view.stopRefresh();
                 }
