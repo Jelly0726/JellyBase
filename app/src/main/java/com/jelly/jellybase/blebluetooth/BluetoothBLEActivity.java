@@ -39,6 +39,7 @@ import com.base.bluetooth.data.BleDevice;
 import com.base.bluetooth.exception.BleException;
 import com.base.bluetooth.scan.BleScanRuleConfig;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.adapter.DeviceAdapter;
@@ -92,6 +93,12 @@ public class BluetoothBLEActivity extends BaseActivity {
         initView();
 
         BleManager.getInstance().init(getApplication());
+        //是否支持低功率蓝牙
+        if (!BleManager.getInstance().isBLEBluetooeh()) {
+            ToastUtils.showShort(this, "当前设备不支持低功率蓝牙！");
+            finish();
+            return;
+        }
         BleManager.getInstance()
                 .enableLog(true)
                 .setReConnectCount(1, 5000)
