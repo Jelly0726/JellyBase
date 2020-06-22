@@ -8,13 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * @author Rex
  * 编辑部分
  */
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     public final static String TAG = "rex";
 

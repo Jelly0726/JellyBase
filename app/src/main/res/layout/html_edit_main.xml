@@ -4,7 +4,13 @@
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:layout_height="match_parent">
-
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.base.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navi_color"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
