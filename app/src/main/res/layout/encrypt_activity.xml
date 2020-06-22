@@ -12,7 +12,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-
+        <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+        <com.base.sofia.StatusView
+            android:id="@+id/status_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/navi_color"/>
+        <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
         <EditText
             android:id="@+id/input_ori"
             android:layout_width="match_parent"
