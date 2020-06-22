@@ -78,30 +78,27 @@ public class PermissionUtils {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
                         List<String> perm=new ArrayList<>();
-                        //遍历权限
-                        for (int i=0;i<permissions.size();i++) {
-                            if (permissions.get(i).contains("CAMERA")){
-                                if (CameraProvider.isCameraCanUse()) {
-                                    perm.add(permissions.get(i));
-                                }
-                                continue;
-                            }else if(permissions.get(i).contains("STORAGE")) {
-                                if (AppUtils.isSDcardExist())
-                                    perm.add(permissions.get(i));
-                                continue;
-                            }else if (!(permissions.get(i).contains("SYSTEM_ALERT_WINDOW"))){
-                                perm.add(permissions.get(i));
+                        perm.addAll(permissions);
+                        for (int i=0;i<perm.size();i++) {
+                            if (perm.get(i).contains("CAMERA")){
+                                if (!CameraProvider.isCameraCanUse())
+                                    permissions.remove(perm.get(i));
+                            }else if(perm.get(i).contains("STORAGE")) {
+                                if (!AppUtils.isSDcardExist())
+                                    permissions.remove(perm.get(i));
+                            }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
+                                permissions.remove(perm.get(i));
                             }
                         }
-                        if (perm.size()<=0||!lacksPermissions(context,perm)){
+                        if (permissions.size()<=0||!lacksPermissions(context,permissions)){
                             if (callBack!=null)
                                 callBack.onSucess();
                             return;
                         }
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
-                            callBack.onFailure(perm);
-                        showSettingDialog(context, perm);
+                            callBack.onFailure(permissions);
+                        showSettingDialog(context, permissions);
 //                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
 //                            showSettingDialog(context, permissions);
 //                        }
@@ -128,30 +125,27 @@ public class PermissionUtils {
                     @Override
                     public void onAction(@NonNull List<String> permissions) {
                         List<String> perm=new ArrayList<>();
-                        //遍历权限
-                        for (int i=0;i<permissions.size();i++) {
-                            if (permissions.get(i).contains("CAMERA")){
-                                if (CameraProvider.isCameraCanUse()) {
-                                    perm.add(permissions.get(i));
-                                }
-                                continue;
-                            }else if(permissions.get(i).contains("STORAGE")) {
-                                if (AppUtils.isSDcardExist())
-                                    perm.add(permissions.get(i));
-                                continue;
-                            }else if (!(permissions.get(i).contains("SYSTEM_ALERT_WINDOW"))){
-                                perm.add(permissions.get(i));
+                        perm.addAll(permissions);
+                        for (int i=0;i<perm.size();i++) {
+                            if (perm.get(i).contains("CAMERA")){
+                                if (!CameraProvider.isCameraCanUse())
+                                    permissions.remove(perm.get(i));
+                            }else if(perm.get(i).contains("STORAGE")) {
+                                if (!AppUtils.isSDcardExist())
+                                    permissions.remove(perm.get(i));
+                            }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
+                                permissions.remove(perm.get(i));
                             }
                         }
-                        if (perm.size()<=0||!lacksPermissions(context,perm)){
+                        if (permissions.size()<=0||!lacksPermissions(context,permissions)){
                             if (callBack!=null)
                                 callBack.onSucess();
                             return;
                         }
                         Toast.makeText(context, R.string.permission_failure, Toast.LENGTH_SHORT).show();
                         if (callBack!=null)
-                            callBack.onFailure(perm);
-                        showSettingDialog(context, perm);
+                            callBack.onFailure(permissions);
+                        showSettingDialog(context, permissions);
 //                        if (AndPermission.hasAlwaysDeniedPermission(context, permissions)) {
 //                            PermissionUtils.getInstance().showSettingDialog(context, permissions);
 //                        }
