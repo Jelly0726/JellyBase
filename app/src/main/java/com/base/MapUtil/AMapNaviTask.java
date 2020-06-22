@@ -29,6 +29,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.base.MapUtil.mscUtil.TTSController;
 import com.base.appManager.BaseApplication;
 
 import java.io.ObjectStreamException;
@@ -589,6 +590,11 @@ public class AMapNaviTask implements AMapNaviListener {
 
     @Override
     public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+    }
+
+    @Override
+    public void onGpsSignalWeak(boolean b) {
 
     }
 

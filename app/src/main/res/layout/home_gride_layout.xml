@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.base.cardView.AutoCardView
+<com.base.cardView.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -97,4 +97,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</com.base.cardView.AutoCardView>
+</com.base.cardView.CardView>

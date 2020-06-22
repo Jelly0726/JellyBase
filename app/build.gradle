@@ -102,6 +102,8 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['alley\\lib']
+            //接入高德地图语音时so文件放在jniLibs 无法识别
+            jniLibs.srcDirs=['libs']
         }
     }
     buildTypes {
@@ -286,25 +288,25 @@ repositories {
 
         //3D地图
 
-        //compile 'com.amap.api:3dmap:latest.integration'
+        //implementation 'com.amap.api:3dmap:latest.integration'
 
-        //    compile 'com.amap.api:3dmap:6.5.0'
+        //    implementation 'com.amap.api:3dmap:6.5.0'
 
         //定位功能
 
-        //    compile 'com.amap.api:location:latest.integration'
-//    compile 'com.amap.api:location:4.3.0'
-        implementation files('libs/AMap_Location_V4.3.0_20181016.jar')
+        //    implementation 'com.amap.api:location:latest.integration'
+//        implementation 'com.amap.api:location:5.0.0'
+        implementation files('libs/AMap_Location_V5.0.0_20200609.jar')
 
         //搜索功能
-        //    compile 'com.amap.api:search:latest.integration'
-//    compile 'com.amap.api:search:6.5.0'
-        implementation files('libs/AMap_Search_V6.5.0_20180930.jar')
+        //    implementation 'com.amap.api:search:latest.integration'
+//        implementation 'com.amap.api:search:7.3.0'
+        implementation files('libs/AMap_Search_V7.3.0_20200331.jar')
 
         //导航
-//        compile 'com.amap.api:navi-3dmap:latest.integration'
-        //    compile 'com.amap.api:navi-3dmap:6.4.0'
-        implementation files('libs/AMap3DMap_6.5.0_AMapNavi_6.4.0_20181009.jar')
+//        implementation 'com.amap.api:navi-3dmap:latest.integration'
+//        implementation 'com.amap.api:navi-3dmap:7.5.0'
+        implementation files('libs/AMap3DMap_7.5.0_AMapNavi_7.5.0_20200610.jar')
 
         //极光推送
         implementation 'cn.jiguang.sdk:jpush:3.1.8'

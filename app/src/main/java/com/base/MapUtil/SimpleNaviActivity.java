@@ -22,6 +22,7 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.base.MapUtil.mscUtil.TTSController;
 import com.jelly.jellybase.R;
 
 public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMapNaviViewListener {
@@ -371,6 +372,11 @@ public class SimpleNaviActivity extends Activity implements AMapNaviListener,AMa
 
 	@Override
 	public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+	}
+
+	@Override
+	public void onGpsSignalWeak(boolean b) {
 
 	}
 

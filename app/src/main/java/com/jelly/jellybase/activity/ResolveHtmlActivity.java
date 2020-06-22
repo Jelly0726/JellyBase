@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
+import com.base.view.BaseActivity;
 import com.base.appManager.BaseApplication;
 import com.base.richtext.OkHttpImageDownloader;
 import com.jelly.jellybase.R;

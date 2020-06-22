@@ -40,7 +40,7 @@ import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.view.RouteOverLay;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
-import com.base.MapUtil.TTSController;
+import com.base.MapUtil.mscUtil.TTSController;
 import com.base.appManager.BaseApplication;
 import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
@@ -641,6 +641,11 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
 
     @Override
     public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+    }
+
+    @Override
+    public void onGpsSignalWeak(boolean b) {
 
     }
 

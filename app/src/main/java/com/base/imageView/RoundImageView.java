@@ -137,8 +137,8 @@ public class RoundImageView extends AppCompatImageView {
         // 设置变换矩阵
         mBitmapShader.setLocalMatrix(mMatrix);
         mPaint.setShader(mBitmapShader);
-        if (!bitmap.isRecycled())
-            bitmap.recycle();
+//        if (!bitmap.isRecycled())
+//            bitmap.recycle();
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.base.valicode.GraphValiCode;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
 
@@ -16,7 +16,7 @@ import com.jelly.jellybase.R;
  * Created by Administrator on 2018/1/8.
  */
 
-public class GraphValiCodeActivity extends AppCompatActivity implements View.OnClickListener{
+public class GraphValiCodeActivity extends BaseActivity implements View.OnClickListener{
     public static final String TAG = MainActivity.class.getName();
     private ImageView iv_showCode;
     private EditText et_phoneCode;

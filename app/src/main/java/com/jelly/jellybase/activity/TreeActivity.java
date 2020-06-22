@@ -1,7 +1,6 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,13 +13,14 @@ import com.base.tree.bean.BaseItem;
 import com.base.tree.bean.GrandSon;
 import com.base.tree.bean.Item;
 import com.base.tree.bean.Section;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TreeActivity extends AppCompatActivity {
+public class TreeActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private List<Section> mSectionList;             //数据集合
     private SectionExpandHelper mHelper;            //使用层级树的帮助工具类
