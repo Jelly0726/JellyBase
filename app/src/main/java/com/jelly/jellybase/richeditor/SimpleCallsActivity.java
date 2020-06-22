@@ -14,6 +14,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.richeditor.tools.ChooseDialog;
 import com.jelly.jellybase.richeditor.tools.ChooseDialogData;
@@ -29,7 +30,7 @@ import static com.jelly.jellybase.richeditor.tools.HttpFakeUtils.TEST_WEB_URL;
  * @author Rex
  * 编辑部分 快捷演示
  */
-public class SimpleCallsActivity extends Activity {
+public class SimpleCallsActivity extends BaseActivity {
 
     private RichEditorNew richEditor;
     private ProgressBar pb;

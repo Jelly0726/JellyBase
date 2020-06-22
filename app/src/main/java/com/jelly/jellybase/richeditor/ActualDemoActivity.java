@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.richeditor.tools.HttpFakeUtils;
 import com.rex.editor.common.EssFile;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 主要用于演示  视频 音频 文件 插入 及其后续实际流程
  */
-public class ActualDemoActivity extends AppCompatActivity {
+public class ActualDemoActivity extends BaseActivity {
 
     public final static int RESULT_CHOOSE = 123;
     private RichEditorNew richEditor;
