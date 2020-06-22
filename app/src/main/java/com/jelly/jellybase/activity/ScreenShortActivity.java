@@ -2,17 +2,17 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.base.circledialog.QRDialogLogout;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * Created by JELLY on 2017/11/3.
  */
 
-public class ScreenShortActivity extends AppCompatActivity{
+public class ScreenShortActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

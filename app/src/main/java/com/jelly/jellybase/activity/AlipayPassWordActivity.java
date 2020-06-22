@@ -3,19 +3,19 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.base.passwordView.Callback;
 import com.base.passwordView.PasswordKeypad;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * Created by JELLY on 2017/11/3.
  */
 
-public class AlipayPassWordActivity extends AppCompatActivity{
+public class AlipayPassWordActivity extends BaseActivity {
     private PasswordKeypad mKeypad;
     private boolean state;
     @Override

@@ -82,12 +82,12 @@ public class PermissionUtils {
                         for (int i=0;i<perm.size();i++) {
                             if (perm.get(i).contains("CAMERA")){
                                 if (!CameraProvider.isCameraCanUse())
-                                    permissions.remove(i);
+                                    permissions.remove(perm.get(i));
                             }else if(perm.get(i).contains("STORAGE")) {
                                 if (!AppUtils.isSDcardExist())
-                                    permissions.remove(i);
+                                    permissions.remove(perm.get(i));
                             }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
-                                permissions.remove(i);
+                                permissions.remove(perm.get(i));
                             }
                         }
                         if (permissions.size()<=0||!lacksPermissions(context,permissions)){
@@ -129,12 +129,12 @@ public class PermissionUtils {
                         for (int i=0;i<perm.size();i++) {
                             if (perm.get(i).contains("CAMERA")){
                                 if (!CameraProvider.isCameraCanUse())
-                                    permissions.remove(i);
+                                    permissions.remove(perm.get(i));
                             }else if(perm.get(i).contains("STORAGE")) {
                                 if (!AppUtils.isSDcardExist())
-                                    permissions.remove(i);
+                                    permissions.remove(perm.get(i));
                             }else if ((perm.get(i).contains("SYSTEM_ALERT_WINDOW"))){
-                                permissions.remove(i);
+                                permissions.remove(perm.get(i));
                             }
                         }
                         if (permissions.size()<=0||!lacksPermissions(context,permissions)){

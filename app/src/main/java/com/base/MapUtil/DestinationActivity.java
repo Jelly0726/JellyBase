@@ -5,7 +5,6 @@
  */
 package com.base.MapUtil;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +26,7 @@ import android.widget.TextView;
 import com.amap.api.maps.offlinemap.OfflineMapCity;
 import com.base.config.BaseBroadcast;
 import com.base.sqldao.PositionDaoUtils;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.io.Serializable;
@@ -37,7 +37,7 @@ import systemdb.PositionEntity;
 
 /**
  */
-public class DestinationActivity extends Activity implements OnClickListener,TextWatcher
+public class DestinationActivity extends BaseActivity implements OnClickListener,TextWatcher
 		,OnItemClickListener {
 
 	private ListView mRecommendList;

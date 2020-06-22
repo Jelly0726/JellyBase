@@ -5,7 +5,6 @@ import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,9 +13,10 @@ import com.base.appManager.BaseApplication;
 import com.base.encrypt.JniUtils;
 import com.base.encrypt.SafetyUtil;
 import com.base.toast.ToastUtils;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
-public class EncryptActivity extends AppCompatActivity implements View.OnClickListener {
+public class EncryptActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "body";
 
     private static final String TEST_KEY = "JA2F8AKJF3D7HF12";

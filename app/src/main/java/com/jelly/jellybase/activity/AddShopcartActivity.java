@@ -2,17 +2,17 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.base.circledialog.AddCartDialog;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * Created by JELLY on 2017/11/3.
  */
 
-public class AddShopcartActivity extends AppCompatActivity{
+public class AddShopcartActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

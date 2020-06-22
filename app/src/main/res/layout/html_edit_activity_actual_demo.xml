@@ -5,7 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
   >
-
+    <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
+    <com.base.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        />
+    <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
     <com.rex.editor.view.RichEditorNew
         android:id="@+id/richEditor"
         android:layout_width="match_parent"

@@ -53,10 +53,6 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
-            val result = fixOrientation()
-            com.base.log.DebugLog.i("onCreate fixOrientation when Oreo, result = $result")
-        }
         //无title
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         // 全屏

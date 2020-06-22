@@ -5,16 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
     android:background="#eeeeee"
     tools:context="com.base.nodeprogress.NodeProgressDemo">
-
+    <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
+    <com.base.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navi_color"/>
+    <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/status_view">
 
         <com.base.nodeprogress.NodeProgressView
             android:id="@+id/npv_NodeProgressView"

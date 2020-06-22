@@ -3,16 +3,16 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 
 import com.base.materialspinner.MaterialSpinner;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**
  * Created by JELLY on 2017/11/3.
  */
 
-public class SpinnerActivity extends AppCompatActivity{
+public class SpinnerActivity extends BaseActivity {
     private MaterialSpinner sp_product_types;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

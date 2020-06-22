@@ -32,6 +32,7 @@ import com.amap.api.maps.offlinemap.OfflineMapManager;
 import com.amap.api.maps.offlinemap.OfflineMapManager.OfflineMapDownloadListener;
 import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ import java.util.List;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity_Old extends AppCompatActivity implements
+public class OfflineMapActivity_Old extends BaseActivity implements
 		OfflineMapDownloadListener {
 	private OfflineMapManager amapManager = null;// 离线地图下载控制器
 	private List<OfflineMapProvince> provinceList = new ArrayList<OfflineMapProvince>();// 保存一级目录的省直辖市

@@ -4,8 +4,8 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
+import com.base.view.BaseActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/12/19.
  */
 
-public class LineChartActivity extends AppCompatActivity{
+public class LineChartActivity extends BaseActivity {
     private LineChart lineChart;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
