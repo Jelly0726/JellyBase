@@ -1,10 +1,9 @@
 package com.base.mypopupmenu;
 
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -165,10 +164,11 @@ public class TopMiddlePopup<T extends BaseItem> extends PopupWindow {
         }
         //7.0以后突然popwindows显示位置往上飘了
         if (android.os.Build.VERSION.SDK_INT >=24) {
-            int[] a = new int[2];
-            view.getLocationInWindow(a);
-            showAtLocation(((Activity) myContext).getWindow().getDecorView(), Gravity.NO_GRAVITY, 0
-                    , a[1]+view.getHeight());
+            Rect visibleFrame = new Rect();
+            view.getGlobalVisibleRect(visibleFrame);
+            int height = view.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            setHeight(height);
+            showAsDropDown(view, 0, 0);
         } else{
             showAsDropDown(view, 0, 0);
         }

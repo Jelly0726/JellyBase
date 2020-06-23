@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="124px"
+    android:layout_height="62dp"
     android:layout_gravity="center"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardBackgroundColor="@android:color/white"
     card_view:cardCornerRadius="0dp"
-    android:layout_margin="10px"
+    android:layout_margin="5dp"
     android:paddingBottom="0dp"
     card_view:cardElevation="4dp"
     >
@@ -35,16 +35,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="11px"
-                    android:textSize="@dimen/sp_14"
+                    android:layout_marginBottom="0dp"
+                    android:textSize="14sp"
                     android:text="待确认"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="11px"
+                    android:layout_marginTop="0dp"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:textSize="@dimen/sp_16"
+                    android:textSize="16sp"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -58,16 +58,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="11px"
-                    android:textSize="@dimen/sp_14"
+                    android:layout_marginBottom="0dp"
+                    android:textSize="14sp"
                     android:text="待付款"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:layout_marginTop="11px"
-                    android:textSize="@dimen/sp_16"
+                    android:layout_marginTop="0dp"
+                    android:textSize="16sp"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -81,8 +81,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="11px"
-                    android:textSize="@dimen/sp_14"
+                    android:layout_marginBottom="0dp"
+                    android:textSize="14sp"
                     android:text="待发货"/>
 
                 <TextView
@@ -91,9 +91,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:layout_marginTop="11px"
+                    android:layout_marginTop="0dp"
                     android:text="10"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
