@@ -3,10 +3,10 @@ package com.jelly.jellybase.activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -16,7 +16,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
  * 视频播放器gsyVideoPlayer
  * 文档地址 https://github.com/CarGuo/GSYVideoPlayer/wiki
  */
-public class GSYVideoActivity extends AppCompatActivity{
+public class GSYVideoActivity extends BaseActivity {
     StandardGSYVideoPlayer videoPlayer;
     OrientationUtils orientationUtils;
     @Override
