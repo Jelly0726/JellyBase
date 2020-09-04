@@ -17,7 +17,7 @@ const char *RSAPubKey = "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4G
 const char *RSAPrivateKey = "-----BEGIN PRIVATE KEY-----\nMIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALQeNwKtZ9FjyjiL\nY3Ai8wl0/mXO6Psc45mmN7MTf1rfZ8yObO1W2ouOyjkxePDAHkmIB+E6QWFWc0Y8\nCa7R/kc5CXLHzxCBzOiRWsHve6PoctSZf9K4UJtSH5gsnhlanSDYajqrAfY7lvch\nB4Q2pOsijiWslNIsLOOdD9BlhS57AgMBAAECgYAC82fFTx/0nzo7OOq1IJgeCeD3\nvARhxh8NxQUD6wgwGJmJEWBEIc3MxtcV9B3eG9ejLsD/oJuyQ4n57EE1sFJbwziB\nvTLwmL+yLEpghtc/J2Xo1Y22E2Czu+VI0d/WUy3MN2I4a601xxA6rg1tRvPSftDW\n49fDCAhUb5yYLZgo0QJBAPzYRxsoPtoR8LbarPBuz/dwT9U3kiGT5yXVzjv0wkmp\nHblFBi2JY37f2TJ8moLi9hWAUHwEbSrjaxZM/g5GhhkCQQC2XZvPJHGPf8aAKUFz\nx0kZDUW1m436xiKVwHBAJGeYCYk87NJwNOiCN7HafRWkjbZtx2fS3M2lzPmxWqzw\n4COzAkAZpvOn3LBrvXA3jP4IsqVkzD89OZMY1wGXhBaVXKKtiHvchRU4X3z5rUpC\n5gNjDhW7XrZLrsNIm6QMsikAV8VZAkBiZCjvXstCT/8qIJgmvkvLD2Uf8bhtp777\nKuOlR774wZRg4ak8Tt9velsj9b7alHbrzd1PYEA4B1pkfPa300aPAkBbr6fDTKhC\nsckhQPDdrLBxtjGAvJ0Rzhk54FhHa5FLX2jdDPttH/q1QZH4w1TGV68hWogCcfsE\nBha/h6Ag4H5V\n-----END PRIVATE KEY-----\n";
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, jobject context, jbyteArray src_) {
+encodeByHmacSHA1(JNIEnv *env, jobject context, jbyteArray src_) {
 //    LOGD("HmacSHA1->HMAC: Hash-based Message Authentication Code，即基于Hash的消息鉴别码");
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
@@ -54,7 +54,7 @@ Java_com_base_encrypt_JniUtils_encodeByHmacSHA1(JNIEnv *env, jobject instance, j
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeBySHA1(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -108,7 +108,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA1(JNIEnv *env, jobject instance,jobjec
     return env->NewStringUTF(hex);
 }
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeBySHA224(JNIEnv *env, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -163,7 +163,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA224(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeBySHA256(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -217,7 +217,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA256(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeBySHA384(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -272,7 +272,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA384(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeBySHA512(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -327,7 +327,7 @@ Java_com_base_encrypt_JniUtils_encodeBySHA512(JNIEnv *env, jobject instance,jobj
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeByAES(JNIEnv *env, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -377,7 +377,7 @@ Java_com_base_encrypt_JniUtils_encodeByAES(JNIEnv *env, jobject instance,jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+decodeByAES(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -426,7 +426,7 @@ Java_com_base_encrypt_JniUtils_decodeByAES(JNIEnv *env, jobject instance,jobject
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeByRSAPubKey(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -499,7 +499,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPubKey(JNIEnv *env, jobject instance,j
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context,jbyteArray src_) {
+decodeByRSAPrivateKey(JNIEnv *env, jobject context,jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -572,7 +572,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPrivateKey(JNIEnv *env, jobject instan
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+encodeByRSAPrivateKey(JNIEnv *env,jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -645,7 +645,7 @@ Java_com_base_encrypt_JniUtils_encodeByRSAPrivateKey(JNIEnv *env, jobject instan
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+decodeByRSAPubKey(JNIEnv *env, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -718,7 +718,7 @@ Java_com_base_encrypt_JniUtils_decodeByRSAPubKey(JNIEnv *env, jobject instance,j
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance,jobject context,  jbyteArray src_) {
+signByRSAPrivateKey(JNIEnv *env, jobject context,  jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -771,7 +771,7 @@ Java_com_base_encrypt_JniUtils_signByRSAPrivateKey(JNIEnv *env, jobject instance
 }
 
 extern "C" JNIEXPORT jint JNICALL
-Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,jobject context, jbyteArray src_, jbyteArray sign_) {
+verifyByRSAPubKey(JNIEnv *env,jobject context, jbyteArray src_, jbyteArray sign_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return -1;
@@ -819,7 +819,7 @@ Java_com_base_encrypt_JniUtils_verifyByRSAPubKey(JNIEnv *env, jobject instance,j
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+xOr(JNIEnv *env, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewByteArray(0);
@@ -853,7 +853,7 @@ Java_com_base_encrypt_JniUtils_xOr(JNIEnv *env, jobject instance,jobject context
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context, jbyteArray src_) {
+md5(JNIEnv *env, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1->apk-sha1值验证不通过");
         return env->NewStringUTF("非法调用");
@@ -907,11 +907,74 @@ Java_com_base_encrypt_JniUtils_md5(JNIEnv *env, jobject instance,jobject context
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_base_encrypt_JniUtils_sha1OfApk(JNIEnv *env, jobject instance, jobject context) {
+getSha1OfApk(JNIEnv *env,jobject context) {
     return env->NewStringUTF(sha1OfApk(env, context));
 }
 
 extern "C" JNIEXPORT jboolean JNICALL
-Java_com_base_encrypt_JniUtils_verifySha1OfApk(JNIEnv *env, jobject instance, jobject context) {
+verifySha1OfApk(JNIEnv *env, jobject context) {
     return verifySha1OfApk(env, context);
+}
+
+/*需要注册的函数列表，放在JNINativeMethod 类型的数组中，
+以后如果需要增加函数，只需在这里添加就行了
+参数：
+1.java中用native关键字声明的函数名
+2.签名（传进来参数类型和返回值类型的说明） 
+3.C/C++中对应函数的函数名（地址）
+*/
+static JNINativeMethod getMethods[] = {
+        {"encodeByHmacSHA1","(Landroid/content/Context;[B)[B",(void*)encodeByHmacSHA1},
+        {"encodeBySHA1","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)encodeBySHA1},
+        {"encodeBySHA224","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)encodeBySHA224},
+        {"encodeBySHA256","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)encodeBySHA256},
+        {"encodeBySHA384","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)encodeBySHA384},
+        {"encodeBySHA512","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)encodeBySHA512},
+        {"encodeByAES","(Landroid/content/Context;[B)[B",(void*)encodeByAES},
+        {"decodeByAES","(Landroid/content/Context;[B)[B",(void*)decodeByAES},
+        {"encodeByRSAPubKey","(Landroid/content/Context;[B)[B",(void*)encodeByRSAPubKey},
+        {"decodeByRSAPrivateKey","(Landroid/content/Context;[B)[B",(void*)decodeByRSAPrivateKey},
+        {"encodeByRSAPrivateKey","(Landroid/content/Context;[B)[B",(void*)encodeByRSAPrivateKey},
+        {"decodeByRSAPubKey","(Landroid/content/Context;[B)[B",(void*)decodeByRSAPubKey},
+        {"signByRSAPrivateKey","(Landroid/content/Context;[B)[B",(void*)signByRSAPrivateKey},
+        {"verifyByRSAPubKey","(Landroid/content/Context;[B[B)I",(void*)verifyByRSAPubKey},
+        {"xOr","(Landroid/content/Context;[B)[B",(void*)xOr},
+        {"md5","(Landroid/content/Context;[B)Ljava/lang/String;",(void*)md5},
+        {"sha1OfApk","(Landroid/content/Context;)Ljava/lang/String;",(void*)getSha1OfApk},
+        {"verifySha1OfApk","(Landroid/content/Context;)Z",(void*)verifySha1OfApk},
+};
+//此函数通过调用RegisterNatives方法来注册我们的函数
+static int registerNativeMethods(JNIEnv* env, const char* className,JNINativeMethod* getMethods,int methodsNum){
+    jclass clazz;
+    //找到声明native方法的类
+    clazz = env->FindClass(className);
+    if(clazz == NULL){
+        return JNI_FALSE;
+    }
+    //注册函数 参数：java类 所要注册的函数数组 注册函数的个数
+    if(env->RegisterNatives(clazz,getMethods,methodsNum) < 0){
+        return JNI_FALSE;
+    }
+    return JNI_TRUE;
+}
+
+static int registerNatives(JNIEnv* env){
+    //指定类的路径，通过FindClass 方法来找到对应的类
+    const char* className  = "com/base/encrypt/JniUtils";
+    return registerNativeMethods(env,className,getMethods, sizeof(getMethods)/ sizeof(getMethods[0]));
+}
+//回调函数
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved){
+    JNIEnv* env = NULL;
+    //获取JNIEnv
+    if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return -1;
+    }
+    assert(env != NULL);
+    //注册函数 registerNatives ->registerNativeMethods ->env->RegisterNatives
+    if(!registerNatives(env)){
+        return -1;
+    }
+    //返回jni 的版本 
+    return JNI_VERSION_1_6;
 }
