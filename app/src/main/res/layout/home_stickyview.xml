@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/home_sticky_layout"
     android:layout_width="match_parent"
-    android:layout_height="88px"
+    android:layout_height="44dp"
     android:orientation="horizontal"
-    android:paddingTop="20px"
-    android:paddingBottom="20px"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:background="#ffffff">
     <LinearLayout
         android:id="@+id/price_layout"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/home_filtrate_on"
-            android:textSize="28px"
+            android:textSize="14sp"
             android:gravity="center"
             android:text="价格"
             android:drawableRight="@mipmap/price_down"/>
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/home_filtrate_un"
-            android:textSize="28px"
+            android:textSize="14sp"
             android:gravity="center"
             android:text="分类"
             />
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/home_filtrate_un"
-            android:textSize="28px"
+            android:textSize="14sp"
             android:gravity="center"
             android:text="销量优先"
             />

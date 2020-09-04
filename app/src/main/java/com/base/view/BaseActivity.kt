@@ -34,7 +34,10 @@ import com.base.permission.PermissionUtils
 import com.base.toast.ToastUtils
 import com.jelly.jellybase.R
 import hugo.weaving.DebugLog
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 /**
  * Created by Jelly on 2017/12/5.
@@ -90,28 +93,26 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
      */
     private fun detectUsbAudioDevice() {
         launch {
-            async {
-                isKeyboard = false
-                //第二种 通过InputManager获取
-                val inputManager =
-                        getSystemService(Context.INPUT_SERVICE) as InputManager
-                //我们可以通过InputManager获取到当前的所有设备的DeviceId
-                val inputDeviceIds = inputManager.inputDeviceIds
-                for (inputDeviceId in inputDeviceIds) {
-                    val inputDevice =
-                            inputManager.getInputDevice(inputDeviceId) ?: continue
-                    com.base.log.DebugLog.i("name=" + inputDevice.name)
-                    com.base.log.DebugLog.i("getSources=" + (inputDevice.sources and InputDevice.SOURCE_KEYBOARD))
-                    com.base.log.DebugLog.i("getKeyboardType=" + inputDevice.keyboardType)
-                    com.base.log.DebugLog.i("isVirtual=" + inputDevice.isVirtual)
-                    val sources = inputDevice.sources
-                    if (!inputDevice.isVirtual
-                            && sources and InputDevice.SOURCE_KEYBOARD == InputDevice.SOURCE_KEYBOARD
-                    ) { //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
-                        if (inputDevice.keyboardType == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
-                            isKeyboard = true
-                            break
-                        }
+            isKeyboard = false
+            //第二种 通过InputManager获取
+            val inputManager =
+                    getSystemService(Context.INPUT_SERVICE) as InputManager
+            //我们可以通过InputManager获取到当前的所有设备的DeviceId
+            val inputDeviceIds = inputManager.inputDeviceIds
+            for (inputDeviceId in inputDeviceIds) {
+                val inputDevice =
+                        inputManager.getInputDevice(inputDeviceId) ?: continue
+                com.base.log.DebugLog.i("name=" + inputDevice.name)
+                com.base.log.DebugLog.i("getSources=" + (inputDevice.sources and InputDevice.SOURCE_KEYBOARD))
+                com.base.log.DebugLog.i("getKeyboardType=" + inputDevice.keyboardType)
+                com.base.log.DebugLog.i("isVirtual=" + inputDevice.isVirtual)
+                val sources = inputDevice.sources
+                if (!inputDevice.isVirtual
+                        && sources and InputDevice.SOURCE_KEYBOARD == InputDevice.SOURCE_KEYBOARD
+                ) { //KEYBOARD_TYPE_ALPHABETIC 有字母的键盘  KEYBOARD_TYPE_NONE 没有键盘  KEYBOARD_TYPE_NON_ALPHABETIC 没有字母的键盘
+                    if (inputDevice.keyboardType == InputDevice.KEYBOARD_TYPE_ALPHABETIC) {
+                        isKeyboard = true
+                        break
                     }
                 }
             }

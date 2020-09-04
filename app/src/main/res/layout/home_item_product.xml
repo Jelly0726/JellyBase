@@ -3,24 +3,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20px"
+    android:padding="10dp"
     android:background="#ffffff">
     <ImageView
         android:id="@+id/product_img"
         android:layout_width="match_parent"
-        android:layout_height="258px"
+        android:layout_height="149dp"
         android:src="@mipmap/yumi"
         android:scaleType="fitXY"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22px"
+        android:layout_marginTop="11dp"
         android:gravity="center_vertical">
         <TextView
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30px"
+            android:textSize="15sp"
             android:lines="1"
             android:singleLine="true"
             android:ellipsize="end"
@@ -32,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="22px">
+        android:layout_marginTop="11dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24px"
+            android:textSize="12sp"
             android:textColor="#313131"
             android:text="¥："
             />
@@ -44,7 +44,7 @@
             android:id="@+id/price_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28px"
+            android:textSize="14sp"
             android:textColor="#FF0000"
             android:text="22元/斤"
            />
@@ -53,18 +53,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="22px">
+        android:layout_marginBottom="11dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="22px">
+            android:layout_marginTop="11dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24px"
+                android:textSize="12sp"
                 android:textColor="#7d7d7d"
                 android:text="库存："
                 />
@@ -72,7 +72,7 @@
                 android:id="@+id/minshipment_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24px"
+                android:textSize="12sp"
                 android:textColor="#7d7d7d"
                 android:text="22斤"
                 />
@@ -83,11 +83,11 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="22px">
+            android:layout_marginTop="11dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24px"
+                android:textSize="12sp"
                 android:textColor="#7d7d7d"
                 android:text="销量："
                 />
@@ -95,7 +95,7 @@
                 android:id="@+id/repertory_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24px"
+                android:textSize="12sp"
                 android:textColor="#7d7d7d"
                 android:text="22"
                 />

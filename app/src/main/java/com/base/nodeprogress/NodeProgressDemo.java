@@ -1,8 +1,8 @@
 package com.base.nodeprogress;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
  * Created by Administrator on 2017/9/15.
  */
 
-public class NodeProgressDemo extends AppCompatActivity {
+public class NodeProgressDemo extends BaseActivity {
     List<LogisticsData> logisticsDatas;
 
     @Override

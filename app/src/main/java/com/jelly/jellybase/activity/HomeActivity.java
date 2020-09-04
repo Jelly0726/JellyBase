@@ -22,6 +22,7 @@ import com.base.appManager.BaseApplication;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
 import com.base.httpmvp.databean.ScanResult;
+import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
@@ -210,14 +211,19 @@ public class HomeActivity extends BaseActivity {
      *
      * @param type
      */
-    private void setPopup(int type) {
+    private void setPopup(int type,View view) {
+        int width=Util.getScreenWidth(BaseApplication.getInstance());
+        int height=Util.getScreenHeight(BaseApplication.getInstance());
+        DebugLog.i("width="+width+",height="+height);
         ArrayList<BaseItem> items = new ArrayList<BaseItem>();
         items.add(new BaseItem("集团客户",-1));
         items.add(new BaseItem("集团客户",-1));
         items.add(new BaseItem("集团客户",-1));
         topMiddlePopup = new TopMiddlePopup(this,
-                Util.getScreenWidth(BaseApplication.getInstance()), Util.getScreenHeight(BaseApplication.getInstance()),
+                width,
+                height,
                 onPopItem,items, type);
+        topMiddlePopup.show(view);
     }
     private boolean oNcount=false;
     private void onChangeFiltrate(int type){
@@ -366,11 +372,10 @@ public class HomeActivity extends BaseActivity {
                     break;
                 case R.id.classify_layout:
                     onChangeFiltrate(1);
-                    setPopup(Util.Anim_TopMiddle);
                     if(isSticky){
-                        topMiddlePopup.show(classify_layout1);
+                        setPopup(Util.Anim_TopMiddle,classify_layout1);
                     }else {
-                        topMiddlePopup.show(classify_layout);
+                        setPopup(Util.Anim_TopMiddle,classify_layout);
                     }
                     break;
                 case R.id.state_layout:

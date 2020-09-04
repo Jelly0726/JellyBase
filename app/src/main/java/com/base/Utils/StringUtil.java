@@ -570,7 +570,6 @@ public class StringUtil {
         return false;
     }
     /**
-     * <p>Title: validateFild</p>
      * <p>Description: 这是一个以反射机制为基础的判断对象内部的属性是否为空的方法</p>
      * @param obj      要判断的对象实例
      * @param exclFild 放行的属性, 不需要做判断的属性 或在属性上加 @Nullable 注解
