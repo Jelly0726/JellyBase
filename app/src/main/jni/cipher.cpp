@@ -1101,6 +1101,7 @@ extern "C" JNIEXPORT jboolean JNICALL
 validateSha1OfApk(JNIEnv *env,jobject obj,jobject context) {
     return verifySha1OfApk(env, context);
 }
+//========================================动态注册==================================================
 /*需要注册的函数列表，放在JNINativeMethod 类型的数组中，
 以后如果需要增加函数，只需在这里添加就行了
 参数：
@@ -1131,6 +1132,11 @@ S	    jshort	        short
 Ljava/lang/String;	jstring	    String
 L完整包名加类名;	jobject	    class
 
+举个例子:
+传入的java参数有两个 分别是 int 和 long[] 函数返回值为 String
+即函数的定义为：String getString(int a ,long[] b)
+签名就应该是 :"(I[J)Ljava/lang/String;"(不要漏掉英文分号)
+如果有内部类 则用 $ 来分隔 如:Landroid/os/FileUtils$FileStatus;
 */
 static JNINativeMethod getMethods[] = {
         {"encodeByHmacSHA1","(Landroid/content/Context;[B)[B",(void*)encodeByHmacSHA1},
@@ -1187,3 +1193,4 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved){
     //返回jni 的版本 
     return JNI_VERSION_1_6;
 }
+//========================================动态注册==================================================
