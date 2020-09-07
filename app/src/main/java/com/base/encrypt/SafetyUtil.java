@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 /**
  * 加密签名工具类
@@ -195,19 +196,43 @@ public class SafetyUtil {
 		String sign;
 		switch (type) {
 			case AES:
-				byte[] AES = jni.decodeByAES(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] AES;
+//				字符串不是Base64 不需要Base64解码
+				if (isBase64(source)){
+					AES = jni.decodeByAES(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				}else {
+					AES = jni.decodeByAES(context.getApplicationContext(),source.getBytes());
+				}
 				sign = new String(AES);
 				break;
 			case RSA_PUBKEY:
-				byte[] RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] RSA_PUBKEY;
+				//字符串不是Base64 不需要Base64解码
+				if (isBase64(source)){
+					RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				}else {
+					RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(),source.getBytes());
+				}
 				sign =  new String(RSA_PUBKEY);
 				break;
 			case RSA_PRIVATEKEY:
-				byte[] RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] RSA_PRIVATEKEY;
+				//字符串不是Base64 不需要Base64解码
+				if (isBase64(source)){
+					RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				}else {
+					RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(),source.getBytes());
+				}
 				sign = new String(RSA_PRIVATEKEY);
 				break;
 			case XOR:
-				byte[] XOR = jni.xOr(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				byte[] XOR;
+				//字符串不是Base64 不需要Base64解码
+				if (isBase64(source)){
+					XOR = jni.xOr(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+				}else {
+					XOR = jni.xOr(context.getApplicationContext(),source.getBytes());
+				}
 				sign =  new String(XOR);
 				break;
 			default:
@@ -287,5 +312,14 @@ public class SafetyUtil {
 
 			return str1.compareTo(str2);
 		}
+	}
+	/**
+	 * 使用正则判断字符串是否Base64
+	 * @param str
+	 * @return   true 是Base64 false 不是Base64
+	 */
+	private boolean isBase64(String str) {
+		String base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
+		return Pattern.matches(base64Pattern, str);
 	}
 }

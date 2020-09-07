@@ -699,6 +699,16 @@ public class StringUtil {
         }
         return max;
     }
+
+    /**
+     * 使用正则判断字符串是否Base64
+     * @param str
+     * @return   true 是Base64 false 不是Base64
+     */
+    public static boolean isBase64(String str) {
+        String base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
+        return Pattern.matches(base64Pattern, str);
+    }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());
 //        String ptCasinoMsg = "qwe123wer45.fadsf56hudh55.55fhsj6.00dj";
