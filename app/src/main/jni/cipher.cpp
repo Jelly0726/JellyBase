@@ -7,7 +7,7 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/md5.h>
-#include"zsd.h"
+#include "endorse.h"
 #include <assert.h>
 
 //换成你自己的key值
@@ -1193,4 +1193,4 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved){
     //返回jni 的版本 
     return JNI_VERSION_1_6;
 }
-//========================================动态注册==================================================
+//========================================动态注册==============================================

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include"zsd.h"
+#include "endorse.h"
 
 //换成你自己的apk-sha1值
 //NPayHelper.jsk "73C03C185B565BB1D78589B2424DF0C190265ACD";

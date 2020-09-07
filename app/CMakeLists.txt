@@ -23,7 +23,7 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/main/jni/cipher.cpp src/main/jni/zsd.cpp )
+             src/main/jni/cipher.cpp src/main/jni/endorse.cpp)
 
 #动态方式加载
 add_library(openssl SHARED IMPORTED )
