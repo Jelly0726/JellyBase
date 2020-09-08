@@ -138,8 +138,8 @@ public class Shotter {
 //                        File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/"+System.currentTimeMillis()+".jpg");
 //                        mLocalUrl = fileUri.getPath();
 ////                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-////                            mLocalUrl = FileProvider.getUriForFile(BaseApplication.getInstance(),
-////                                    BaseApplication.getInstance().getPackageName()+".fileprovider", fileUri).getPath();//通过FileProvider创建一个content类型的Uri
+////                            mLocalUrl = JellyProvider.getUriForFile(BaseApplication.getInstance(),
+////                                    JellyProvider.getProvider(context), fileUri).getPath();//通过FileProvider创建一个content类型的Uri
 ////                        mLocalUrl = getContext().getExternalFilesDir("screenshot").getAbsoluteFile()
 ////                                +
 ////                                "/"

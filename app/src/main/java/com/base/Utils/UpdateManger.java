@@ -11,9 +11,10 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StatFs;
-import android.support.v4.content.FileProvider;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
+import com.base.provider.JellyProvider;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -135,7 +136,7 @@ public class UpdateManger {
         intent.setAction(Intent.ACTION_VIEW);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", apkfile);
+            uri = JellyProvider.getUriForFile(mContext, JellyProvider.getProviderName(mContext), apkfile);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(apkfile);

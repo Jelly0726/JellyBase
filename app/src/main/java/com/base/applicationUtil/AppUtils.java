@@ -1,16 +1,13 @@
 package com.base.applicationUtil;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -34,8 +31,6 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.os.StatFs;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
-import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
@@ -50,6 +45,7 @@ import com.base.LauncherActivity;
 import com.base.appManager.BaseApplication;
 import com.base.config.ConfigKey;
 import com.base.encrypt.MD5;
+import com.base.provider.JellyProvider;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.receiver.PhoneStatReceiver;
 
@@ -63,7 +59,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -190,7 +185,7 @@ public class AppUtils {
         intent.setAction(Intent.ACTION_VIEW);
         Uri uri;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            uri = JellyProvider.getUriForFile(context, JellyProvider.getProviderName(context), file);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(file);

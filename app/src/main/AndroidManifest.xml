@@ -774,8 +774,8 @@
         <!--↑↑↑↑↑↑↑↑物流节点↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:name="com.base.provider.JellyProvider"
+            android:authorities="${applicationId}.jellybase.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

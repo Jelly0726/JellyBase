@@ -9,7 +9,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.content.FileProvider;
+
+import com.base.provider.JellyProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +35,7 @@ public class MediaUtils
         //适配Android N
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
         {
-            return FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileprovider", getOutputMediaFile(type));
+            return JellyProvider.getUriForFile(context, JellyProvider.getProviderName(context), getOutputMediaFile(type));
         } else
         {
             return Uri.fromFile(getOutputMediaFile(type));
