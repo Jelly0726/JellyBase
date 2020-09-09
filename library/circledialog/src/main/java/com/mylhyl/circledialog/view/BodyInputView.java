@@ -103,8 +103,15 @@ final class BodyInputView extends RelativeLayout implements InputView {
         mEditText = new EditText(getContext());
         mEditText.setId(android.R.id.input);
         int inputType = mInputParams.inputType;
+        if (mInputParams.type==InputParams.INPUT_MONEY){
+            inputType=InputType.TYPE_CLASS_NUMBER
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    |InputType.TYPE_NUMBER_FLAG_SIGNED
+                    |InputType.TYPE_NUMBER_VARIATION_NORMAL;
+            mInputParams.maxLen=9;
+        }
         if (inputType != InputType.TYPE_NULL) {
-            mEditText.setInputType(mInputParams.inputType);
+            mEditText.setInputType(inputType);
         }
         if (mDialogParams.typeface != null) {
             mEditText.setTypeface(mDialogParams.typeface);

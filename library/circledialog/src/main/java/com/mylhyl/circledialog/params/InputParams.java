@@ -107,7 +107,7 @@ public class InputParams implements Parcelable {
     /**
      * 输入框限制字符数量，如counter=50：中(占2个)英(1个)文总字符数
      */
-    public int maxLen;
+    public int maxLen=20;
     /**
      * 计数器外边距 [右，下] dp
      */
@@ -119,15 +119,15 @@ public class InputParams implements Parcelable {
     /**
      * 显示软键盘
      */
-    public boolean showSoftKeyboard;
+    public boolean showSoftKeyboard=true;
     /**
      * 是否禁止输入表情
      */
-    public boolean isEmojiInput;
+    public boolean isEmojiInput=false;
     /**
      * 输入限制计数器中文是否算1个字符
      */
-    public boolean isCounterAllEn;
+    public boolean isCounterAllEn=false;
     public InputParams() {
     }
 
