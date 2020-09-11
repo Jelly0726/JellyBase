@@ -89,6 +89,7 @@ import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
 import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
+import com.jelly.jellybase.tablelayout.TableLayoutActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
@@ -735,6 +736,10 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 48:// PIP模式
                     intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
+                    startActivity(intent);
+                    break;
+                case 49:// 简单的表格控件
+                    intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
                     startActivity(intent);
                     break;
             }

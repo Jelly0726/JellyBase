@@ -625,6 +625,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".tablelayout.TableLayoutActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--↑↑↑↑↑↑↑↑蓝牙配对↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓百度文字识别↓↓↓↓↓↓↓-->
         <activity android:name=".bdocr.OCRMainActivity" >
