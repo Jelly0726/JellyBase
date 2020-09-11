@@ -14,7 +14,8 @@
         android:paddingTop="0px"
         android:paddingBottom="0px"
         android:paddingLeft="0px"
-        android:paddingRight="0px">
+        android:paddingRight="0px"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +43,15 @@
                 android:textSize="14sp"
                 android:gravity="center_vertical"
                 android:text="库存200件"/>
+            <TextView
+                android:id="@+id/mark_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:gravity="center_vertical"
+                android:text="已选"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/goods_pic"
@@ -66,6 +76,29 @@
             android:layout_marginRight="15dp"/>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="23dp"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:text="选择分类"
+            android:layout_marginLeft="15dp"/>
+        <com.base.view.FlowLayout
+            android:id="@+id/classify_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+        </com.base.view.FlowLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -9,14 +9,20 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.httpmvp.databean.Goods;
+import com.base.view.FlowLayout;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 加入购物车、立即购买
@@ -33,6 +39,8 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     private TextView goods_price;
     //商品库存
     private TextView goods_repertory;
+    //已选分类
+    private TextView mark_tv;
     //减数量
     private TextView reduceGoodsNum;
     //购买数量
@@ -42,6 +50,9 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     private Goods product;
     private int count=1;
     private OnConfirmListener onConfirmListener;
+    private FlowLayout classify_layout;
+    private List<String> mList;
+    private int checkid=-1;//选择
     public static AddCartDialog getInstance() {
         AddCartDialog dialogFragment = new AddCartDialog();
         dialogFragment.setCanceledBack(false);
@@ -68,8 +79,10 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         goods_price= (TextView) view.findViewById(R.id.goods_price);
         goods_repertory= (TextView) view.findViewById(R.id.goods_repertory);
         reduceGoodsNum= (TextView) view.findViewById(R.id.reduce_goodsNum);
+        mark_tv= (TextView) view.findViewById(R.id.mark_tv);
         goodsNum= (TextView) view.findViewById(R.id.goods_Num);
         increaseGoodsNum= (TextView) view.findViewById(R.id.increase_goods_Num);
+        classify_layout= view.findViewById(R.id.classify_layout);
 
         increaseGoodsNum.setOnClickListener(this);
         reduceGoodsNum.setOnClickListener(this);
@@ -98,6 +111,54 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
         if (getActivity()!=null)
             iniData();
 
+    }
+    /**
+     * 初始化
+     * */
+    private void iniEvaluate(){
+        mList=new ArrayList<>();
+        mList.add("金典款");
+        mList.add("升级款");
+        if (mList==null)
+            return;
+        if(classify_layout.getChildCount()>0){
+            classify_layout.removeAllViewsInLayout();
+        }
+        for (int i = 0; i <mList.size(); i++) {
+            CheckBox checkBox = (CheckBox) getLayoutInflater().inflate(
+                    R.layout.addcart_classify_check, classify_layout, false);
+            checkBox.setText(mList.get(i));
+            checkBox.setTag(i);
+            if (i==0){
+                checkBox.setChecked(true);
+                checkid=i;
+                mark_tv.setText("已选”"+mList.get(i)+"“");
+            }
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        int i=(int) buttonView.getTag();
+                        if (checkid!=-1&&checkid!=i){
+                            CheckBox compoundButton= (CheckBox) classify_layout.getChildAt(checkid);
+                            checkid=i;
+                            compoundButton.setChecked(false);
+                        }else {
+                            checkid=i;
+                        }
+                        mark_tv.setText("已选”"+mList.get(i)+"“");
+                    }else {
+                        int i=(int) buttonView.getTag();
+                        if (checkid ==-1||checkid==i){
+                            checkid=i;
+                            mark_tv.setText("已选”"+mList.get(i)+"“");
+                            ((CheckBox)buttonView).setChecked(true);
+                        }
+                    }
+                }
+            });
+            classify_layout.addView(checkBox);
+        }
     }
     @Override
     public void onClick(View v) {
