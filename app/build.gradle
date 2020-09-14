@@ -42,7 +42,6 @@ android {
                 JPUSH_APPKEY : "你的appkey", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
-        buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
         //Android Studio 内置一个名为 Vector Asset Studio 的工具，在低版本SDK上编译APK期间，
         // 针对VectorDrawable脚本自动生成一组PNG位图资源BitmapDrawable，取代矢量图形（在5.0及以后的手机上运行时会正常引用VectorDrawable）。
         vectorDrawables.generatedDensities = ['hdpi', 'xxhdpi']
@@ -112,6 +111,7 @@ android {
     }
     buildTypes {
         debug {
+            buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
             buildConfigField "boolean", "LOG_DEBUG", "true"//是否输出LOG信息
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             signingConfig signingConfigs.debug
@@ -132,6 +132,7 @@ android {
             }
         }
         release {
+            buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息

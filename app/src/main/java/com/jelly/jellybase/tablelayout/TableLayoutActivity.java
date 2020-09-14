@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import win.smartown.android.library.tableLayout.TableAdapter;
-import win.smartown.android.library.tableLayout.TableLayout;
+import win.smartown.tableLayout.TableAdapter;
+import win.smartown.tableLayout.TableLayout;
 
 
 public class TableLayoutActivity extends AppCompatActivity {

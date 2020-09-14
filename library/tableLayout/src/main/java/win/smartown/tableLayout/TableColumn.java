@@ -1,4 +1,4 @@
-package win.smartown.android.library.tableLayout;
+package win.smartown.tableLayout;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -1,4 +1,4 @@
-package win.smartown.android.library.tableLayout;
+package win.smartown.tableLayout;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

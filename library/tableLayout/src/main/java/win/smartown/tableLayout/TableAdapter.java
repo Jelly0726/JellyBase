@@ -1,4 +1,4 @@
-package win.smartown.android.library.tableLayout;
+package win.smartown.tableLayout;
 
 /**
  * Created by Smartown on 2017/7/19.
