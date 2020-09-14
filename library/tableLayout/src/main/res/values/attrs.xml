@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TableLayout">
+        <!--表格填充方式-->
+        <attr name="tableMode" format="enum">
+            <!--自动根据内容填充大小-->
+            <enum name="auto" value="0" />
+            <!--一样的大小-->
+            <enum name="equallyDivide" value="1" />
+        </attr>
+        <!-- 单元格的高度-->
+        <attr name="tableRowHeight" format="dimension" />
+        <!--分割线大小-->
+        <attr name="tableDividerSize" format="dimension" />
+        <!--分割线颜色-->
+        <attr name="tableDividerColor" format="color" />
+        <!--单元格左右padding-->
+        <attr name="tableColumnPadding" format="dimension" />
+        <!--单元格对齐方式-->
+        <attr name="tableTextGravity" format="enum">
+            <enum name="center" value="0" />
+            <enum name="leftCenter" value="1" />
+            <enum name="rightCenter" value="2" />
+        </attr>
+        <!--字体大小-->
+        <attr name="tableTextSize" format="dimension" />
+        <!--文字颜色-->
+        <attr name="tableTextColor" format="color" />
+        <!--选中后文字颜色-->
+        <attr name="tableTextColorSelected" format="color" />
+        <!--单元格选中后的背景色-->
+        <attr name="backgroundColorSelected" format="color" />
+    </declare-styleable>
+    <declare-styleable name="FreeScrollView">
+        <!--滑动条距离屏幕左边距的距离-->
+        <attr name="scrollBarLeft" format="dimension"/>
+        <!--滑动条的宽度-->
+        <attr name="scrollBarWidth" format="dimension"/>
+        <!--滑动条的高度-->
+        <attr name="scrollBarHeight" format="dimension"/>
+        <!--滑动条开始时候距离屏幕左边的距离，假设滑动到最右边距离屏幕也为这个距离-->
+        <attr name="scrollBarStartDis" format="dimension"/>
+        <!--滑动条圆角角度-->
+        <attr name="mRadius" format="dimension"/>
+    </declare-styleable>
+</resources>
