@@ -4,12 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_bg"
     android:scrollbars="none"
     app:scrollBarLeft="0dp"
     app:scrollBarWidth="30dp"
     app:scrollBarHeight="10dp"
     app:scrollBarStartDis="0dp"
-    app:mRadius="1dp">
+    app:scrollBarColor="#ccc"
+    app:mRadius="1dp"
+    app:isClick="false">
 
     <win.smartown.tableLayout.TableLayout
         android:id="@+id/main_table"
@@ -17,9 +20,12 @@
         android:layout_height="wrap_content"
         android:background="#fff"
         app:backgroundColorSelected="#00000000"
+        app:firstBackgroundColor="#F2F2F2"
         app:tableColumnPadding="32dp"
         app:tableDividerColor="#ddd"
         app:tableDividerSize="1px"
+        app:tableBorderColor="#707070"
+        app:tableBorderSize="0dp"
         app:tableRowHeight="48dp"
         app:tableTextColor="#333"
         app:tableTextColorSelected="#fff"

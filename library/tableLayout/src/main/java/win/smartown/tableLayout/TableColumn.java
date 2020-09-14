@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
+ * 表格的每列
  * Created by Smartown on 2017/7/19.
  */
 public class TableColumn extends LinearLayout {
@@ -19,7 +20,6 @@ public class TableColumn extends LinearLayout {
     private String[] content;
     private Callback callback;
     private float maxTextViewWidth;
-
     public TableColumn(Context context, String[] content, Callback callback) {
         super(context);
         this.content = content;
@@ -36,7 +36,6 @@ public class TableColumn extends LinearLayout {
     private void init() {
         Log.i("TableColumn", "init");
         setOrientation(VERTICAL);
-
         initContent();
     }
 
@@ -62,7 +61,6 @@ public class TableColumn extends LinearLayout {
             addView(textView, layoutParams);
         }
     }
-
     private int getTextGravity(int tableTextGravity) {
         switch (tableTextGravity) {
             case 1:

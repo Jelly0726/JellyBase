@@ -7,9 +7,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 android {
     //生产环境域名地址
-    def API_DEV_HOST="driver.test.com"
+    def API_DEV_HOST="\"driver.test.com\""
     //开发环境域名地址
-    def API_DEBUG_HOST="driver.4000000144.com"
+    def API_DEBUG_HOST="\"driver.4000000144.com\""
 
     compileSdkVersion 28
     buildToolsVersion "28.0.3"

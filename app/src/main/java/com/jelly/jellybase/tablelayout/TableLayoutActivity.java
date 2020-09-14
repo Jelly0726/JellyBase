@@ -49,7 +49,6 @@ public class TableLayoutActivity extends AppCompatActivity {
             public int getColumnCount() {
                 return fields.length;
             }
-
             @Override
             public String[] getColumnContent(int position) {
                 int rowCount = contentList.size();
@@ -77,7 +76,6 @@ public class TableLayoutActivity extends AppCompatActivity {
             public int getColumnCount() {
                 return contentList.size();
             }
-
             @Override
             public String[] getColumnContent(int position) {
                 return contentList.get(position).toArray();

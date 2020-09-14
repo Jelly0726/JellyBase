@@ -8,9 +8,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 /**
@@ -20,14 +20,17 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 
     private int tableMode;
     private int tableRowHeight;
-    private int tableDividerSize;
+    private float tableDividerSize;
     private int tableDividerColor;
+    private float tableBorderSize;
+    private int tableBorderColor;
     private int tableColumnPadding;
     private int tableTextGravity;
     private int tableTextSize;
     private int tableTextColor;
     private int tableTextColorSelected;
     private int backgroundColorSelected;
+    private int firstBackgroundColor;
     private TableAdapter adapter;
 
     private Paint paint;
@@ -55,36 +58,40 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     }
 
     private void init(AttributeSet attrs) {
-        Log.i("TableLayout", "init");
         setOrientation(HORIZONTAL);
         setWillNotDraw(false);
         paint = new Paint();
         paint.setAntiAlias(true);
-
         if (attrs != null) {
             TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.TableLayout);
             tableMode = typedArray.getInt(R.styleable.TableLayout_tableMode, 0);
             tableRowHeight = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableRowHeight, (int) Util.dip2px(getResources(), 36));
             tableDividerSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableDividerSize, 1);
             tableDividerColor = typedArray.getColor(R.styleable.TableLayout_tableDividerColor, Color.GRAY);
+            tableBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableBorderSize, 1);
+            tableBorderColor = typedArray.getColor(R.styleable.TableLayout_tableBorderColor, Color.GRAY);
             tableColumnPadding = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableColumnPadding, 0);
             tableTextGravity = typedArray.getInt(R.styleable.TableLayout_tableTextGravity, 0);
             tableTextSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableTextSize, (int) Util.dip2px(getResources(), 12));
             tableTextColor = typedArray.getColor(R.styleable.TableLayout_tableTextColor, Color.GRAY);
             tableTextColorSelected = typedArray.getColor(R.styleable.TableLayout_tableTextColorSelected, Color.BLACK);
             backgroundColorSelected = typedArray.getColor(R.styleable.TableLayout_backgroundColorSelected, Color.TRANSPARENT);
+            firstBackgroundColor = typedArray.getColor(R.styleable.TableLayout_firstBackgroundColor, Color.TRANSPARENT);
             typedArray.recycle();
         } else {
             tableMode = 0;
             tableRowHeight = (int) Util.dip2px(getResources(), 36);
             tableDividerSize = 1;
             tableDividerColor = Color.GRAY;
+            tableBorderSize = 1;
+            tableBorderColor = Color.GRAY;
             tableColumnPadding = 0;
             tableTextGravity = 0;
             tableTextSize = (int) Util.dip2px(getResources(), 12);
             tableTextColor = Color.GRAY;
             tableTextColorSelected = Color.BLACK;
             backgroundColorSelected = Color.TRANSPARENT;
+            firstBackgroundColor = Color.TRANSPARENT;
         }
         if (isInEditMode()) {
             String[] content = {"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"};
@@ -120,36 +127,55 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+    }
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        //放在super前是后景，相反是前景，前景会覆盖子布局
+        super.dispatchDraw(canvas);
+        iniDraw(canvas);
+    }
+    private void iniDraw(Canvas canvas){
         paint.setColor(tableDividerColor);
-        int drawnWidth = 0;
+        float drawnWidth = 0;
         int maxRowCount = 0;
         int childCount = getChildCount();
+        //每列的右边框
         for (int i = 0; i < childCount; i++) {
             TableColumn column = (TableColumn) getChildAt(i);
             maxRowCount = Math.max(maxRowCount, column.getChildCount());
             if (i > 0) {
-                if (tableDividerSize > 1) {
-                    canvas.drawRect(drawnWidth - tableDividerSize / 2, 0, drawnWidth + tableDividerSize / 2, getHeight(), paint);
-                } else {
-                    canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
-                }
+                canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
+                //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
+//                if (tableDividerSize > 1) {
+//                    canvas.drawRect(drawnWidth - tableDividerSize / 2, 0, drawnWidth + tableDividerSize / 2, getHeight(), paint);
+//                } else {
+//                    canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
+//                }
             }
             drawnWidth += column.getWidth();
         }
+        //每行的下边框
         for (int i = 1; i < maxRowCount; i++) {
             float y = i * tableRowHeight;
-            if (tableDividerSize > 1) {
-                canvas.drawRect(0, y - tableDividerSize / 2, getWidth(), y + tableDividerSize / 2, paint);
-            } else {
-                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
-            }
+            canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
+            //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
+//            if (tableDividerSize > 1) {
+//                canvas.drawRect(0, y - tableDividerSize / 2, getWidth(), y + tableDividerSize / 2, paint);
+//            } else {
+//                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
+//            }
         }
-        canvas.drawRect(0, 0, tableDividerSize, getHeight(), paint);
-        canvas.drawRect(getWidth() - tableDividerSize, 0, getWidth(), getHeight(), paint);
-        canvas.drawRect(0, 0, getWidth(), tableDividerSize, paint);
-        canvas.drawRect(0, getHeight() - tableDividerSize, getWidth(), getHeight(), paint);
+        //开始画外边框
+        paint.setColor(tableBorderColor);
+        //最左边边框
+        canvas.drawRect(0, 0, tableBorderSize, getHeight(), paint);
+        //最右边边框
+        canvas.drawRect(getWidth() - tableBorderSize, 0, getWidth(), getHeight(), paint);
+        //最上边边框
+        canvas.drawRect(0, 0, getWidth(), tableBorderSize, paint);
+        //最下边边框
+        canvas.drawRect(0, getHeight() - tableBorderSize, getWidth(), getHeight(), paint);
     }
-
     @Override
     public TableLayout getTableLayout() {
         return this;
@@ -163,7 +189,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         return tableRowHeight;
     }
 
-    public int getTableDividerSize() {
+    public float getTableDividerSize() {
         return tableDividerSize;
     }
 
@@ -194,7 +220,9 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     public int getBackgroundColorSelected() {
         return backgroundColorSelected;
     }
-
+    public int getFirstBackgroundColor() {
+        return firstBackgroundColor;
+    }
     public void setAdapter(TableAdapter adapter) {
         this.adapter = adapter;
         useAdapter();
@@ -204,7 +232,15 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         removeAllViews();
         int count = adapter.getColumnCount();
         for (int i = 0; i < count; i++) {
-            addView(new TableColumn(getContext(), adapter.getColumnContent(i), this));
+            ViewGroup view=new TableColumn(getContext(), adapter.getColumnContent(i), this);
+            if (i==0){
+                //设置第一列背景色
+                view.setBackgroundColor(firstBackgroundColor);
+            }
+            //设置每行的第一个单元格北京市背景色
+            View child=view.getChildAt(0);
+            child.setBackgroundColor(firstBackgroundColor);
+            addView(view);
         }
     }
 

@@ -14,6 +14,10 @@
         <attr name="tableDividerSize" format="dimension" />
         <!--分割线颜色-->
         <attr name="tableDividerColor" format="color" />
+        <!--外边框大小-->
+        <attr name="tableBorderSize" format="dimension" />
+        <!--分边框颜色-->
+        <attr name="tableBorderColor" format="color" />
         <!--单元格左右padding-->
         <attr name="tableColumnPadding" format="dimension" />
         <!--单元格对齐方式-->
@@ -30,6 +34,8 @@
         <attr name="tableTextColorSelected" format="color" />
         <!--单元格选中后的背景色-->
         <attr name="backgroundColorSelected" format="color" />
+        <!--第一行和第一列的背景色-->
+        <attr name="firstBackgroundColor" format="color" />
     </declare-styleable>
     <declare-styleable name="FreeScrollView">
         <!--滑动条距离屏幕左边距的距离-->
@@ -42,5 +48,9 @@
         <attr name="scrollBarStartDis" format="dimension"/>
         <!--滑动条圆角角度-->
         <attr name="mRadius" format="dimension"/>
+        <!--是否允许点击 true 允许  false 不允许-->
+        <attr name="isClick" format="boolean"/>
+        <!--滚动条颜色-->
+        <attr name="scrollBarColor" format="color"/>
     </declare-styleable>
 </resources>

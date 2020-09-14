@@ -6,7 +6,6 @@ package win.smartown.tableLayout;
 public interface TableAdapter {
 
     int getColumnCount();
-
     String[] getColumnContent(int position);
 
 }
