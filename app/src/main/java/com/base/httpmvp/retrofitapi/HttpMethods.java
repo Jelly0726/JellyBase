@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import com.base.appManager.BaseApplication;
 import com.base.bankcard.BankCardInfo;
-import com.base.config.BaseConfig;
 import com.base.config.IntentAction;
 import com.base.httpmvp.databean.AboutUs;
 import com.base.httpmvp.databean.AccountDetail;
@@ -62,7 +61,7 @@ public class HttpMethods implements IGlobalManager {
 	private volatile static HttpMethods sInstance;
 	private static final String CACHE_NAME  = "retrofitcache";
 
-	public static String sBASE_URL = BaseConfig.SERVICE_IP;
+	public static String sBASE_URL =BuildConfig.API_HOST;
 	public static String sUrl = "http://" + sBASE_URL + "/";
 //	public static final String sBASE_URL = "http://120.26.208.28:8088/";
 	private static final int DEFAULT_TIMEOUT = 5;

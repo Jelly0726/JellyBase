@@ -6,6 +6,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 android {
+    //生产环境域名地址
+    def API_DEV_HOST="driver.test.com"
+    //开发环境域名地址
+    def API_DEBUG_HOST="driver.4000000144.com"
+
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
@@ -114,6 +119,7 @@ android {
             buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
             buildConfigField "boolean", "LOG_DEBUG", "true"//是否输出LOG信息
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
+            buildConfigField "String", "API_HOST", "${API_DEBUG_HOST}"//开发环境域名地址
             signingConfig signingConfigs.debug
             // 移除无用的resource文件
             shrinkResources false
@@ -136,6 +142,7 @@ android {
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
+            buildConfigField "String", "API_HOST", "${API_DEV_HOST}"//生产环境域名地址
             signingConfig signingConfigs.release
             // 移除无用的resource文件
             shrinkResources true

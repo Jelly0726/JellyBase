@@ -26,7 +26,6 @@ public class BaseConfig {
     public static final String SELF_UPDATE_CHANNEL="1003143";
     public static final int SERVICE_ID=01;//前台服务ID
     public static final String CHANNEL_ID="0101";// NotificationChannel 的Id.
-    public static String SERVICE_IP="driver.4000000144.com";
     //  向钉钉发送崩溃信息
     public static final String sendError_URL="https://oapi.dingtalk.com/robot/send?access_token=853eda618138e5237cd1b9ea758cdfe4c3db1153d384bb8ca7f6e90e0276ffd3";
 }
