@@ -29,13 +29,13 @@ public class AntiEmulator {
      */
     public static boolean verify(Context context) {
         if (
-//                notHasBlueTooth()
-//                || notHasLightSensorManager(context)||
+//                notHasBlueTooth()||
                 isFeatures()
                 || checkIsNotRealPhone()
                 || checkPipes()
                 || hasEth0Interface()
-                || hasAdbInEmulator()) {
+                || hasAdbInEmulator()
+                || notHasLightSensorManager(context)) {
             Log.i("SSSS", "检查到您的设备违规,将限制您的所有功能使用!");
             return true;
         }
@@ -53,7 +53,7 @@ public class AntiEmulator {
             Log.i("SSSS", "设备不支持蓝牙");
             return true;
         } else {
-            if (!bluetoothAdapter.isEnabled()){
+            if (!bluetoothAdapter.isEnabled()) {
                 Log.i("SSSS", "设备支持蓝牙,但蓝牙未开启");
                 return false;
                 //未打开蓝牙，才需要打开蓝牙
@@ -62,7 +62,7 @@ public class AntiEmulator {
             //蓝牙不一定有效的。获取蓝牙名称和硬件地址，若为 null 则默认为模拟器
             String name = bluetoothAdapter.getName();
             String addree = bluetoothAdapter.getAddress();
-            if (TextUtils.isEmpty(name)||TextUtils.isEmpty(addree)) {
+            if (TextUtils.isEmpty(name) || TextUtils.isEmpty(addree)) {
                 Log.i("SSSS", "无效蓝牙设备");
                 return true;
             } else {
@@ -87,12 +87,13 @@ public class AntiEmulator {
             return false;
         }
     }
+
     /**
-     *用途:根据部分特征参数设备信息来判断是否为模拟器
-     *返回:true 为模拟器
+     * 用途:根据部分特征参数设备信息来判断是否为模拟器
+     * 返回:true 为模拟器
      */
     private static boolean isFeatures() {
-        boolean isf=Build.FINGERPRINT.startsWith("generic")
+        boolean isf = Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.toLowerCase().contains("vbox")
                 || Build.FINGERPRINT.toLowerCase().contains("test-keys")
                 || Build.MODEL.contains("google_sdk")
@@ -101,16 +102,17 @@ public class AntiEmulator {
                 || Build.MANUFACTURER.contains("Genymotion")
                 || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
                 || "google_sdk".equals(Build.PRODUCT);
-        if (isf){
+        if (isf) {
             Log.i("SSSS", "存在模拟器特征参数");
-        }else {
+        } else {
             Log.i("SSSS", "不存在模拟器特征参数");
         }
         return isf;
     }
+
     /**
-     *根据CPU是否为电脑来判断是否为模拟器
-     *返回:true 为模拟器
+     * 根据CPU是否为电脑来判断是否为模拟器
+     * 返回:true 为模拟器
      */
     private static boolean checkIsNotRealPhone() {
         String cpuInfo = readCpuInfo();
@@ -212,9 +214,9 @@ public class AntiEmulator {
                 e.printStackTrace();
             }
         }
-        if (adbInEmulator){
+        if (adbInEmulator) {
             Log.i("SSSS", "存在adb");
-        }else {
+        } else {
             Log.i("SSSS", "不存在adb");
         }
         return adbInEmulator;
@@ -250,9 +252,10 @@ public class AntiEmulator {
     private static boolean isUserAMonkey() {
         return ActivityManager.isUserAMonkey();
     }
+
     /**
-     *用途:检测模拟器的特有文件
-     *返回:true 为模拟器
+     * 用途:检测模拟器的特有文件
+     * 返回:true 为模拟器
      */
     private static String[] known_pipes = {"/dev/socket/qemud", "/dev/qemu_pipe"};
 
