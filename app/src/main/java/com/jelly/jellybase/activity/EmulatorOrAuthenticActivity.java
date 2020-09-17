@@ -37,11 +37,17 @@ public class EmulatorOrAuthenticActivity extends BaseActivity {
             mUnbinder.unbind();
         }
     }
-    @OnClick(R.id.start)
+    @OnClick({R.id.start,R.id.startJniNorm,R.id.startJni})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.start:
-                result.setText("验证结果当前运行环境为："+(AntiEmulator.verify(this)? "模拟器":"真机"));
+                result.setText("Java模式验证结果当前运行环境为："+(AntiEmulator.verify(this)? "模拟器":"真机"));
+                break;
+            case R.id.startJniNorm://标准模式
+                result.setText("标准模式验证结果当前运行环境为："+(diff.strazzere.anti.AntiEmulator.check(this)?"模拟器":"真机"));
+                break;
+            case R.id.startJni://安全模式
+                result.setText("安全模式验证结果当前运行环境为："+(diff.strazzere.anti.AntiEmulator.checkSafely(this)?"模拟器":"真机"));
                 break;
         }
     }
