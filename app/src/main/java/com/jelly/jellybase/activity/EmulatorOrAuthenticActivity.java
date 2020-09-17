@@ -37,9 +37,12 @@ public class EmulatorOrAuthenticActivity extends BaseActivity {
             mUnbinder.unbind();
         }
     }
-    @OnClick({R.id.start,R.id.startJniNorm,R.id.startJni})
+    @OnClick({R.id.back_layout,R.id.start,R.id.startJniNorm,R.id.startJni})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.back_layout:
+                finish();
+                break;
             case R.id.start:
                 result.setText("Java模式验证结果当前运行环境为："+(AntiEmulator.verify(this)? "模拟器":"真机"));
                 break;
