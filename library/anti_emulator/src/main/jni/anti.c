@@ -27,14 +27,16 @@ void setupSigTrap() {
 
 // This will cause a SIGSEGV on some QEMU or be properly respected
 void tryBKPT() {
+#if defined(__arm__)
   __asm__ __volatile__ ("bkpt 255");
+#endif
 }
 
 jint Java_diff_strazzere_anti_emulator_FindEmulator_qemuBkpt(JNIEnv* env, jobject jObject) {
-  
+
   pid_t child = fork();
   int child_status, status = 0;
-  
+
   if(child == 0) {
     setupSigTrap();
     tryBKPT();
@@ -49,8 +51,8 @@ jint Java_diff_strazzere_anti_emulator_FindEmulator_qemuBkpt(JNIEnv* env, jobjec
       // Time could be adjusted here, though in my experience if the child has not returned instantly
       // then something has gone wrong and it is an emulated device
       if(i++ == 1) {
-	timeout = 1;
-	break;
+        timeout = 1;
+        break;
       }
     }
 
@@ -73,4 +75,3 @@ jint Java_diff_strazzere_anti_emulator_FindEmulator_qemuBkpt(JNIEnv* env, jobjec
 
   return status;
 }
-
