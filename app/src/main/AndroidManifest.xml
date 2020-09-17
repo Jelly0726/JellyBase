@@ -367,6 +367,10 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.EmulatorOrAuthenticActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
         <!--        如果想要应用支持 PIP，请将 android:supportsPictureInPicture 和 android:resizeableActivity 设置为 true，-->
         <activity android:name=".activity.PIPActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"

@@ -62,6 +62,7 @@ import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.CancelOrderActivity;
 import com.jelly.jellybase.activity.CopyActivity;
 import com.jelly.jellybase.activity.CrashActivity;
+import com.jelly.jellybase.activity.EmulatorOrAuthenticActivity;
 import com.jelly.jellybase.activity.EvaluateActivity;
 import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
@@ -740,6 +741,10 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 49:// 简单的表格控件
                     intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
+                    startActivity(intent);
+                    break;
+                case 50:// 判断是否真机
+                    intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
                     startActivity(intent);
                     break;
             }
