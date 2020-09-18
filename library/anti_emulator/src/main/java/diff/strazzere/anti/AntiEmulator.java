@@ -1,7 +1,6 @@
 package diff.strazzere.anti;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import diff.strazzere.anti.debugger.FindDebugger;
@@ -117,15 +116,9 @@ public class AntiEmulator {
         boolean hasGenyFiles = FindEmulator.hasGenyFiles();
         boolean haskIsNotRealPhone = FindEmulator.checkIsNotRealPhone();
         boolean hasEth0Interface = FindEmulator.hasEth0Interface();
-        boolean breakpoint=false;
         // 这个检测比较耗时
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            for (String abi : Build.SUPPORTED_ABIS) {
-                if (abi.equalsIgnoreCase("armeabi-v7a")) {
-                    breakpoint =FindEmulator.checkQemuBreakpoint();
-                }
-            }
-        }
+        boolean breakpoint =FindEmulator.checkQemuBreakpoint();
+
         log("Checking for QEmu env...");
         log("hasLightSensorManager : " + hasLightSensorManager);
         log("hasEmulatorBuild : " + hasEmulatorBuild);
@@ -166,15 +159,8 @@ public class AntiEmulator {
         boolean hasGenyFiles = FindEmulator.hasGenyFiles();
         boolean haskIsNotRealPhone = FindEmulator.checkIsNotRealPhone();
         boolean hasEth0Interface = FindEmulator.hasEth0Interface();
-        boolean breakpoint=false;
         // 这个检测比较耗时
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            for (String abi : Build.SUPPORTED_ABIS) {
-                if (abi.equalsIgnoreCase("armeabi-v7a")) {
-                    breakpoint =FindEmulator.checkQemuBreakpoint();
-                }
-            }
-        }
+        boolean breakpoint =FindEmulator.checkQemuBreakpoint();;
         log("Checking for QEmu env Safe...");
 //        log("hasLightSensorManager : " + hasLightSensorManager);
         //log("hasEmulatorBuild : " + hasEmulatorBuild);

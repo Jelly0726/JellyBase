@@ -307,16 +307,22 @@ public class FindEmulator {
     //jni
     public native static int qemuBkpt();
     public static boolean checkQemuBreakpoint() {
-        boolean hit_breakpoint = false;
+        // 这个检测比较耗时
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            for (String abi : Build.SUPPORTED_ABIS) {
+                if (abi.equalsIgnoreCase("armeabi-v7a")) {
+                    boolean hit_breakpoint = false;
+                    // Potentially you may want to see if this is a specific value
+                    int result = qemuBkpt();
 
-        // Potentially you may want to see if this is a specific value
-        int result = qemuBkpt();
-
-        if (result > 0) {
-            hit_breakpoint = true;
+                    if (result > 0) {
+                        hit_breakpoint = true;
+                    }
+                    return hit_breakpoint;
+                }
+            }
         }
-
-        return hit_breakpoint;
+        return false;
     }
 
     public static boolean hasEmulatorAdb() {

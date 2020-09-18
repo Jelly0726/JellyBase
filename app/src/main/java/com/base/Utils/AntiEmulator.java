@@ -18,6 +18,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * 检测当前运行环境
@@ -271,6 +272,23 @@ public class AntiEmulator {
         Log.i("SSSS", "不存在模拟器的特有文件");
         return false;
     }
+    // 检查是否root
+    public static boolean isDeviceRooted () {
+        boolean ret = false;
+        String path = null;
+        Map<String,String> env = System.getenv();
 
+        if (env != null && (path = env.get("PATH")) != null) {
+            String [] dirs = path.split(":");
+            for (String dir : dirs){
+                String suPath = dir + "/" + "su";
+                File suFile = new File(suPath);
+                if (suFile != null && suFile.exists()) {
+                    ret = true;
+                }
+            }
+        }
+        return ret;
+    }
 }
 

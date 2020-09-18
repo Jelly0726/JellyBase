@@ -27,6 +27,8 @@ void setupSigTrap() {
 
 // This will cause a SIGSEGV on some QEMU or be properly respected
 void tryBKPT() {
+  //asm=armeabi=armeabi-v7,aarch64=arm64-v8a,i386=x86,_x86_64=x86_64
+//#if defined(__arm64__) || defined(__aarch64__)
 #if defined(__arm__)
   __asm__ __volatile__ ("bkpt 255");
 #endif
