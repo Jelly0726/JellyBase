@@ -16,8 +16,24 @@
         <attr name="tableDividerColor" format="color" />
         <!--外边框大小-->
         <attr name="tableBorderSize" format="dimension" />
-        <!--分边框颜色-->
+        <!--外边框颜色-->
         <attr name="tableBorderColor" format="color" />
+        <!--左外边框大小-->
+        <attr name="tableLeftBorderSize" format="dimension" />
+        <!--左外边框颜色-->
+        <attr name="tableLeftBorderColor" format="color" />
+        <!--上外边框大小-->
+        <attr name="tableTopBorderSize" format="dimension" />
+        <!--上外边框颜色-->
+        <attr name="tableTopBorderColor" format="color" />
+        <!--右外边框大小-->
+        <attr name="tableRightBorderSize" format="dimension" />
+        <!--右外边框颜色-->
+        <attr name="tableRightBorderColor" format="color" />
+        <!--下外边框大小-->
+        <attr name="tableBottomBorderSize" format="dimension" />
+        <!--下外边框颜色-->
+        <attr name="tableBottomBorderColor" format="color" />
         <!--单元格左右padding-->
         <attr name="tableColumnPadding" format="dimension" />
         <!--单元格对齐方式-->

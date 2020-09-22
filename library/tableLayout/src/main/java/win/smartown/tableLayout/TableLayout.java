@@ -20,10 +20,21 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 
     private int tableMode;
     private int tableRowHeight;
+    //单元格分割线
     private float tableDividerSize;
     private int tableDividerColor;
+    //外边框
     private float tableBorderSize;
     private int tableBorderColor;
+    private float tableLeftBorderSize;
+    private int tableLeftBorderColor;
+    private float tableTopBorderSize;
+    private int tableTopBorderColor;
+    private float tableRightBorderSize;
+    private int tableRightBorderColor;
+    private float tableBottomBorderSize;
+    private int tableBottomBorderColor;
+    //单元格左右内边距
     private int tableColumnPadding;
     private int tableTextGravity;
     private int tableTextSize;
@@ -70,6 +81,14 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             tableDividerColor = typedArray.getColor(R.styleable.TableLayout_tableDividerColor, Color.GRAY);
             tableBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableBorderSize, 1);
             tableBorderColor = typedArray.getColor(R.styleable.TableLayout_tableBorderColor, Color.GRAY);
+            tableLeftBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableLeftBorderSize, 0);
+            tableLeftBorderColor = typedArray.getColor(R.styleable.TableLayout_tableLeftBorderColor, Color.GRAY);
+            tableTopBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableTopBorderSize, 0);
+            tableTopBorderColor = typedArray.getColor(R.styleable.TableLayout_tableTopBorderColor, Color.GRAY);
+            tableRightBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableRightBorderSize, 0);
+            tableRightBorderColor = typedArray.getColor(R.styleable.TableLayout_tableRightBorderColor, Color.GRAY);
+            tableBottomBorderSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableBottomBorderSize, 0);
+            tableBottomBorderColor = typedArray.getColor(R.styleable.TableLayout_tableBottomBorderColor, Color.GRAY);
             tableColumnPadding = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableColumnPadding, 0);
             tableTextGravity = typedArray.getInt(R.styleable.TableLayout_tableTextGravity, 0);
             tableTextSize = typedArray.getDimensionPixelSize(R.styleable.TableLayout_tableTextSize, (int) Util.dip2px(getResources(), 12));
@@ -165,16 +184,33 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 //                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
 //            }
         }
-        //开始画外边框
-        paint.setColor(tableBorderColor);
-        //最左边边框
-        canvas.drawRect(0, 0, tableBorderSize, getHeight(), paint);
-        //最右边边框
-        canvas.drawRect(getWidth() - tableBorderSize, 0, getWidth(), getHeight(), paint);
-        //最上边边框
-        canvas.drawRect(0, 0, getWidth(), tableBorderSize, paint);
-        //最下边边框
-        canvas.drawRect(0, getHeight() - tableBorderSize, getWidth(), getHeight(), paint);
+        //如果设置了共用边框的大小
+        if (tableBorderSize>0) {
+            //开始画外边框
+            paint.setColor(tableBorderColor);
+            //最左边边框
+            canvas.drawRect(0, 0, tableBorderSize, getHeight(), paint);
+            //最右边边框
+            canvas.drawRect(getWidth() - tableBorderSize, 0, getWidth(), getHeight(), paint);
+            //最上边边框
+            canvas.drawRect(0, 0, getWidth(), tableBorderSize, paint);
+            //最下边边框
+            canvas.drawRect(0, getHeight() - tableBorderSize, getWidth(), getHeight(), paint);
+        }else {
+            //开始画外边框
+            //最左边边框
+            paint.setColor(tableLeftBorderColor);
+            canvas.drawRect(0, 0, tableLeftBorderSize, getHeight(), paint);
+            //最右边边框
+            paint.setColor(tableRightBorderColor);
+            canvas.drawRect(getWidth() - tableRightBorderSize, 0, getWidth(), getHeight(), paint);
+            //最上边边框
+            paint.setColor(tableTopBorderColor);
+            canvas.drawRect(0, 0, getWidth(), tableTopBorderSize, paint);
+            //最下边边框
+            paint.setColor(tableBottomBorderColor);
+            canvas.drawRect(0, getHeight() - tableBottomBorderSize, getWidth(), getHeight(), paint);
+        }
     }
     @Override
     public TableLayout getTableLayout() {
@@ -223,6 +259,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     public int getFirstBackgroundColor() {
         return firstBackgroundColor;
     }
+
     public void setAdapter(TableAdapter adapter) {
         this.adapter = adapter;
         useAdapter();
