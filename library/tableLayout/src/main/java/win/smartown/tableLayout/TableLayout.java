@@ -69,10 +69,6 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     }
 
     private void init(AttributeSet attrs) {
-        setOrientation(HORIZONTAL);
-        setWillNotDraw(false);
-        paint = new Paint();
-        paint.setAntiAlias(true);
         if (attrs != null) {
             TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.TableLayout);
             tableMode = typedArray.getInt(R.styleable.TableLayout_tableMode, 0);
@@ -112,6 +108,10 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             backgroundColorSelected = Color.TRANSPARENT;
             firstBackgroundColor = Color.TRANSPARENT;
         }
+        setOrientation(HORIZONTAL);
+        setWillNotDraw(false);
+        paint = new Paint();
+        paint.setAntiAlias(true);
         if (isInEditMode()) {
             String[] content = {"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"};
             addView(new TableColumn(getContext(), content, this));
