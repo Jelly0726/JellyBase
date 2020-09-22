@@ -274,7 +274,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
                 //设置第一列背景色
                 view.setBackgroundColor(firstBackgroundColor);
             }
-            //设置每行的第一个单元格北京市背景色
+            //设置每行的第一个单元格背景色
             View child=view.getChildAt(0);
             child.setBackgroundColor(firstBackgroundColor);
             addView(view);
