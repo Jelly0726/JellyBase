@@ -14,25 +14,25 @@
         <attr name="tableDividerSize" format="dimension" />
         <!--分割线颜色-->
         <attr name="tableDividerColor" format="color" />
-        <!--外边框大小-->
+        <!--外边框大小 默认为1-->
         <attr name="tableBorderSize" format="dimension" />
         <!--外边框颜色-->
         <attr name="tableBorderColor" format="color" />
-        <!--左外边框大小-->
+        <!--左外边框大小 tableBorderSize=0 时有效-->
         <attr name="tableLeftBorderSize" format="dimension" />
-        <!--左外边框颜色-->
+        <!--左外边框颜色 tableBorderSize=0 时有效-->
         <attr name="tableLeftBorderColor" format="color" />
-        <!--上外边框大小-->
+        <!--上外边框大小 tableBorderSize=0 时有效-->
         <attr name="tableTopBorderSize" format="dimension" />
-        <!--上外边框颜色-->
+        <!--上外边框颜色 tableBorderSize=0 时有效-->
         <attr name="tableTopBorderColor" format="color" />
-        <!--右外边框大小-->
+        <!--右外边框大小 tableBorderSize=0 时有效-->
         <attr name="tableRightBorderSize" format="dimension" />
-        <!--右外边框颜色-->
+        <!--右外边框颜色 tableBorderSize=0 时有效-->
         <attr name="tableRightBorderColor" format="color" />
-        <!--下外边框大小-->
+        <!--下外边框大小 tableBorderSize=0 时有效-->
         <attr name="tableBottomBorderSize" format="dimension" />
-        <!--下外边框颜色-->
+        <!--下外边框颜色 tableBorderSize=0 时有效-->
         <attr name="tableBottomBorderColor" format="color" />
         <!--单元格左右padding-->
         <attr name="tableColumnPadding" format="dimension" />
