@@ -30,7 +30,7 @@ public class FreeScrollView extends HorizontalScrollView {
     private float mScreenWidth;//屏幕的高度
     private float scrollBarStartDis = 0;//滑动条开始时候距离屏幕左边的距离，假设滑动到最右边距离屏幕也为这个距离
     private float xPos;//滑动比例
-    private float mRadius=100;//圆角角度
+    private float scrollBarRadius=100;//圆角角度
     private int scrollBarColor;//滚动条颜色
 
     private boolean isCheck;//是否点击
@@ -65,7 +65,7 @@ public class FreeScrollView extends HorizontalScrollView {
             scrollBarWidth = typedArray.getDimensionPixelSize(R.styleable.FreeScrollView_scrollBarWidth,50);
             scrollBarHeight = typedArray.getDimensionPixelSize(R.styleable.FreeScrollView_scrollBarHeight,20);
             scrollBarStartDis = typedArray.getDimensionPixelSize(R.styleable.FreeScrollView_scrollBarStartDis,0);
-            mRadius = typedArray.getDimensionPixelSize(R.styleable.FreeScrollView_mRadius,0);
+            scrollBarRadius = typedArray.getDimensionPixelSize(R.styleable.FreeScrollView_scrollBarRadius,0);
             isClick = typedArray.getBoolean(R.styleable.FreeScrollView_isClick,false);
             scrollBarColor = typedArray.getColor(R.styleable.FreeScrollView_scrollBarColor,Color.GRAY);
         }
@@ -118,7 +118,7 @@ public class FreeScrollView extends HorizontalScrollView {
         RectF mBrounds = new RectF();
         mBrounds.set(scrollBarLeft, getHeight() - scrollBarHeight, scrollBarLeft + scrollBarWidth, getHeight());
 //        canvas.drawRect(scrollBarLeft, getHeight() - scrollBarHeight, scrollBarLeft + scrollBarWidth, getHeight(), mPaint);
-        canvas.drawRoundRect(mBrounds, mRadius, mRadius, mPaint);
+        canvas.drawRoundRect(mBrounds, scrollBarRadius, scrollBarRadius, mPaint);
     }
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {

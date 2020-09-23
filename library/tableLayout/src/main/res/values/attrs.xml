@@ -63,7 +63,7 @@
         <!--滑动条开始时候距离屏幕左边的距离，假设滑动到最右边距离屏幕也为这个距离-->
         <attr name="scrollBarStartDis" format="dimension"/>
         <!--滑动条圆角角度-->
-        <attr name="mRadius" format="dimension"/>
+        <attr name="scrollBarRadius" format="dimension"/>
         <!--是否允许点击 true 允许  false 不允许-->
         <attr name="isClick" format="boolean"/>
         <!--滚动条颜色-->

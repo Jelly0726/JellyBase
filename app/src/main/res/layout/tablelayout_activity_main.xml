@@ -11,7 +11,7 @@
     app:scrollBarHeight="10dp"
     app:scrollBarStartDis="0dp"
     app:scrollBarColor="#ccc"
-    app:mRadius="1dp"
+    app:scrollBarRadius="1dp"
     app:isClick="false">
 
     <win.smartown.tableLayout.TableLayout
