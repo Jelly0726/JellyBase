@@ -20,6 +20,8 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 
     private int tableMode;
     private int tableRowHeight;
+    //填充方向为 VERTICAL 时保存最大单元格的宽度
+    private float maxTableColumnWidth = 0;
     //单元格分割线
     private float tableDividerSize;
     private int tableDividerColor;
@@ -108,7 +110,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             backgroundColorSelected = Color.TRANSPARENT;
             firstBackgroundColor = Color.TRANSPARENT;
         }
-        setOrientation(HORIZONTAL);
+//        setOrientation(HORIZONTAL);
         setWillNotDraw(false);
         paint = new Paint();
         paint.setAntiAlias(true);
@@ -132,8 +134,15 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
-            width += child.getMeasuredWidth();
-            height = Math.max(height, child.getMeasuredHeight());
+            //填充方向为 HORIZONTAL 时宽高计算
+            if (getOrientation() == HORIZONTAL) {
+                width += child.getMeasuredWidth();
+                height = Math.max(height, child.getMeasuredHeight());
+            } else {
+                //填充方向为 VERTICAL 时宽高计算
+                width = Math.max(width, child.getMeasuredWidth());
+                height += child.getMeasuredHeight();
+            }
         }
         setMeasuredDimension(width, height);
     }
@@ -147,22 +156,30 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
+
     @Override
     protected void dispatchDraw(Canvas canvas) {
         //放在super前是后景，相反是前景，前景会覆盖子布局
         super.dispatchDraw(canvas);
         iniDraw(canvas);
     }
-    private void iniDraw(Canvas canvas){
+
+    private void iniDraw(Canvas canvas) {
         paint.setColor(tableDividerColor);
         float drawnWidth = 0;
         int maxRowCount = 0;
         int childCount = getChildCount();
-        //每列的右边框
-        for (int i = 0; i < childCount; i++) {
-            TableColumn column = (TableColumn) getChildAt(i);
-            maxRowCount = Math.max(maxRowCount, column.getChildCount());
-            if (i > 0) {
+        if (getOrientation() == VERTICAL) {
+            for (int i = 0; i < childCount; i++) {
+                TableColumn column = (TableColumn) getChildAt(i);
+                maxRowCount = Math.max(maxRowCount, column.getChildCount());
+                //每行的下边框边框
+                float y = i * tableRowHeight;
+                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
+            }
+            //每列的右边框边框
+            for (int i = 1; i < maxRowCount; i++) {
+                drawnWidth += (tableColumnPadding * 2 + maxTableColumnWidth);
                 canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
                 //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
 //                if (tableDividerSize > 1) {
@@ -171,21 +188,36 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 //                    canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
 //                }
             }
-            drawnWidth += column.getWidth();
-        }
-        //每行的下边框
-        for (int i = 1; i < maxRowCount; i++) {
-            float y = i * tableRowHeight;
-            canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
-            //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
+        } else {
+            for (int i = 0; i < childCount; i++) {
+                TableColumn column = (TableColumn) getChildAt(i);
+                maxRowCount = Math.max(maxRowCount, column.getChildCount());
+                //每列的右边框
+                if (i > 0) {
+                    canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
+                    //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
+//                if (tableDividerSize > 1) {
+//                    canvas.drawRect(drawnWidth - tableDividerSize / 2, 0, drawnWidth + tableDividerSize / 2, getHeight(), paint);
+//                } else {
+//                    canvas.drawRect(drawnWidth - tableDividerSize, 0, drawnWidth, getHeight(), paint);
+//                }
+                }
+                drawnWidth += column.getWidth();
+            }
+            //每行的下边框
+            for (int i = 1; i < maxRowCount; i++) {
+                float y = i * tableRowHeight;
+                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
+                //当分割线宽度大于时每列的分割线宽度设为一半和外边框区分开
 //            if (tableDividerSize > 1) {
 //                canvas.drawRect(0, y - tableDividerSize / 2, getWidth(), y + tableDividerSize / 2, paint);
 //            } else {
 //                canvas.drawRect(0, y - tableDividerSize, getWidth(), y, paint);
 //            }
+            }
         }
         //如果设置了共用边框的大小
-        if (tableBorderSize>0) {
+        if (tableBorderSize > 0) {
             //开始画外边框
             paint.setColor(tableBorderColor);
             //最左边边框
@@ -196,7 +228,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             canvas.drawRect(0, 0, getWidth(), tableBorderSize, paint);
             //最下边边框
             canvas.drawRect(0, getHeight() - tableBorderSize, getWidth(), getHeight(), paint);
-        }else {
+        } else {
             //开始画外边框
             //最左边边框
             paint.setColor(tableLeftBorderColor);
@@ -212,6 +244,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             canvas.drawRect(0, getHeight() - tableBottomBorderSize, getWidth(), getHeight(), paint);
         }
     }
+
     @Override
     public TableLayout getTableLayout() {
         return this;
@@ -223,6 +256,14 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
 
     public int getTableRowHeight() {
         return tableRowHeight;
+    }
+
+    public float getMaxTableColumnWidth() {
+        return maxTableColumnWidth;
+    }
+
+    public void setMaxTableColumnWidth(float maxTableColumnWidth) {
+        this.maxTableColumnWidth = maxTableColumnWidth;
     }
 
     public float getTableDividerSize() {
@@ -256,6 +297,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     public int getBackgroundColorSelected() {
         return backgroundColorSelected;
     }
+
     public int getFirstBackgroundColor() {
         return firstBackgroundColor;
     }
@@ -268,14 +310,20 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     private void useAdapter() {
         removeAllViews();
         int count = adapter.getColumnCount();
+        //当填充方向为 VERTICAL 时需要先计算出最大单元格的宽度
+        if (getOrientation() == VERTICAL) {
+            for (int i = 0; i < count; i++) {
+                ViewGroup view = new TableColumn(getContext(), adapter.getColumnContent(i), this);
+            }
+        }
         for (int i = 0; i < count; i++) {
-            ViewGroup view=new TableColumn(getContext(), adapter.getColumnContent(i), this);
-            if (i==0){
+            ViewGroup view = new TableColumn(getContext(), adapter.getColumnContent(i), this);
+            if (i == 0) {
                 //设置第一列背景色
                 view.setBackgroundColor(firstBackgroundColor);
             }
             //设置每行的第一个单元格背景色
-            View child=view.getChildAt(0);
+            View child = view.getChildAt(0);
             child.setBackgroundColor(firstBackgroundColor);
             addView(view);
         }
@@ -286,7 +334,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         for (int i = 0; i < childCount; i++) {
             TableColumn tableColumn = (TableColumn) getChildAt(i);
             if (tableColumn.getRight() >= x) {
-                if (i==0){
+                if (i == 0) {
                     return;
                 }
                 tableColumn.onClick(y);

@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#fff"
+        android:orientation="horizontal"
         app:backgroundColorSelected="#00000000"
         app:firstBackgroundColor="#F2F2F2"
         app:tableColumnPadding="32dp"

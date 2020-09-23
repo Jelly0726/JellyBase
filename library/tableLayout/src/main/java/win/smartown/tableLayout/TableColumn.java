@@ -20,6 +20,7 @@ public class TableColumn extends LinearLayout {
     private String[] content;
     private Callback callback;
     private float maxTextViewWidth;
+
     public TableColumn(Context context, String[] content, Callback callback) {
         super(context);
         this.content = content;
@@ -30,18 +31,31 @@ public class TableColumn extends LinearLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension((int) (callback.getTableLayout().getTableColumnPadding() * 2 + maxTextViewWidth), callback.getTableLayout().getTableRowHeight() * getChildCount());
+        //填充方式为 VERTICAL 时宽高计算
+        if (getOrientation()==VERTICAL) {
+            setMeasuredDimension((int) (callback.getTableLayout().getTableColumnPadding() * 2 + maxTextViewWidth),
+                    callback.getTableLayout().getTableRowHeight() * getChildCount());
+        }else {
+            //填充方式为 HORIZONTAL 时宽高计算
+            setMeasuredDimension((int) (callback.getTableLayout().getTableColumnPadding() * 2 + maxTextViewWidth) * getChildCount(),
+                    callback.getTableLayout().getTableRowHeight());
+        }
     }
 
     private void init() {
         Log.i("TableColumn", "init");
-        setOrientation(VERTICAL);
+        int orientation = callback.getTableLayout().getOrientation();
+       if (orientation==HORIZONTAL) {
+           setOrientation(VERTICAL);
+       }else {
+           setOrientation(HORIZONTAL);
+           maxTextViewWidth = callback.getTableLayout().getMaxTableColumnWidth();
+       }
         initContent();
     }
 
     private void initContent() {
         int padding = callback.getTableLayout().getTableColumnPadding();
-        maxTextViewWidth = 0;
         ArrayList<TextView> textViews = new ArrayList<>();
         for (String text : content) {
             if (TextUtils.isEmpty(text)) {
@@ -56,11 +70,13 @@ public class TableColumn extends LinearLayout {
             textView.setText(text);
             textViews.add(textView);
         }
+        callback.getTableLayout().setMaxTableColumnWidth(maxTextViewWidth);
         LayoutParams layoutParams = new LayoutParams((int) (padding * 2 + maxTextViewWidth), callback.getTableLayout().getTableRowHeight());
         for (TextView textView : textViews) {
             addView(textView, layoutParams);
         }
     }
+
     private int getTextGravity(int tableTextGravity) {
         switch (tableTextGravity) {
             case 1:
