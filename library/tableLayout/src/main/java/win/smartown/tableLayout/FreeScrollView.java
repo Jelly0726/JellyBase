@@ -107,14 +107,6 @@ public class FreeScrollView extends HorizontalScrollView {
         float rangeScrollView = mWidth - mScreenWidth;
         //滑动比例
         xPos = rangeBar / (rangeScrollView * 1.0f);
-        Log.i("dispatchDraw","mScreenWidth="+mScreenWidth);
-        Log.i("dispatchDraw","scrollBarWidth="+scrollBarWidth);
-        Log.i("dispatchDraw","mWidth="+mWidth);
-        Log.i("dispatchDraw","rangeBar="+rangeBar);
-        Log.i("dispatchDraw","rangeScrollView="+rangeScrollView);
-        Log.i("dispatchDraw","xPos="+xPos);
-        Log.i("dispatchDraw","getHeight()="+getHeight());
-        Log.i("dispatchDraw","scrollBarLeft="+scrollBarLeft);
         RectF mBrounds = new RectF();
         mBrounds.set(scrollBarLeft, getHeight() - scrollBarHeight, scrollBarLeft + scrollBarWidth, getHeight());
 //        canvas.drawRect(scrollBarLeft, getHeight() - scrollBarHeight, scrollBarLeft + scrollBarWidth, getHeight(), mPaint);
