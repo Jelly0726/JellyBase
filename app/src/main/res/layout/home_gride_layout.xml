@@ -5,14 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="62dp"
+    android:layout_height="62mm"
     android:layout_gravity="center"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardBackgroundColor="@android:color/white"
-    card_view:cardCornerRadius="0dp"
-    android:layout_margin="5dp"
-    android:paddingBottom="0dp"
-    card_view:cardElevation="4dp"
+    card_view:cardCornerRadius="0mm"
+    android:layout_margin="5mm"
+    android:paddingBottom="0mm"
+    card_view:cardElevation="4mm"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,16 +35,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="0dp"
-                    android:textSize="14sp"
+                    android:layout_marginBottom="0mm"
+                    android:textSize="14mm"
                     android:text="待确认"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="0mm"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:textSize="16sp"
+                    android:textSize="16mm"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -58,16 +58,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="0dp"
-                    android:textSize="14sp"
+                    android:layout_marginBottom="0mm"
+                    android:textSize="14mm"
                     android:text="待付款"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:layout_marginTop="0dp"
-                    android:textSize="16sp"
+                    android:layout_marginTop="0mm"
+                    android:textSize="16mm"
                     android:text="10"/>
             </LinearLayout>
             <LinearLayout
@@ -81,8 +81,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|bottom"
-                    android:layout_marginBottom="0dp"
-                    android:textSize="14sp"
+                    android:layout_marginBottom="0mm"
+                    android:textSize="14mm"
                     android:text="待发货"/>
 
                 <TextView
@@ -91,9 +91,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|top"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginTop="0mm"
                     android:text="10"
-                    android:textSize="16sp" />
+                    android:textSize="16mm" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

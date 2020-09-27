@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="10dp"
+    android:padding="10mm"
     android:background="#fff">
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="50mm"
+        android:layout_height="50mm"
+        android:layout_marginLeft="10mm"
         android:layout_gravity="center_vertical"
         android:src="@mipmap/ic_launcher"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="20mm"
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
@@ -26,26 +26,26 @@
             android:lines="1"
             android:singleLine="true"
             android:textColor="#313131"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:text="标题"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5mm"/>
         <TextView
             android:id="@+id/content_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="5mm"
             android:ellipsize="end"
             android:lines="1"
             android:singleLine="true"
             android:textColor="#959595"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:text="内容"/>
         <TextView
             android:id="@+id/time_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#959595"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:text="2018-05-30"/>
     </LinearLayout>
 </LinearLayout>

@@ -9,26 +9,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_61"
-        android:layout_marginTop="@dimen/dp_28"
-        android:layout_marginRight="@dimen/dp_30"
+        android:layout_height="61mm"
+        android:layout_marginTop="28mm"
+        android:layout_marginRight="30mm"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:background="@drawable/subscribe_date_bg">
         <ImageView
             android:id="@+id/previousTwo"
-            android:layout_width="@dimen/dp_60"
+            android:layout_width="60mm"
             android:layout_height="match_parent"
-            android:padding="@dimen/dp_20"
+            android:padding="20mm"
             android:visibility="gone"
-            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginLeft="30mm"
             app:srcCompat="@drawable/ic_previous_white_two"/>
         <ImageView
             android:id="@+id/previous"
-            android:layout_width="@dimen/dp_60"
+            android:layout_width="60mm"
             android:layout_height="match_parent"
-            android:padding="@dimen/dp_20"
-            android:layout_marginLeft="@dimen/dp_30"
+            android:padding="20mm"
+            android:layout_marginLeft="30mm"
             app:srcCompat="@drawable/ic_previous_white"/>
         <TextView
             android:id="@+id/tv_month_day"
@@ -37,29 +37,29 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_20"
+            android:textSize="20mm"
             android:textStyle="bold"
             tools:ignore="RtlSymmetry" />
         <ImageView
             android:id="@+id/next"
-            android:layout_width="@dimen/dp_60"
+            android:layout_width="60mm"
             android:layout_height="match_parent"
-            android:padding="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_30"
+            android:padding="20mm"
+            android:layout_marginRight="30mm"
             app:srcCompat="@drawable/ic_white_next"/>
         <ImageView
             android:id="@+id/nextTwo"
-            android:layout_width="@dimen/dp_60"
+            android:layout_width="60mm"
             android:layout_height="match_parent"
-            android:padding="@dimen/dp_20"
+            android:padding="20mm"
             android:visibility="gone"
-            android:layout_marginRight="@dimen/dp_30"
+            android:layout_marginRight="30mm"
             app:srcCompat="@drawable/ic_white_next_two"/>
     </LinearLayout>
     <ImageView
         android:id="@+id/close"
-        android:layout_width="@dimen/dp_60"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="60mm"
+        android:layout_height="60mm"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:src="@mipmap/ic_close"/>
@@ -67,21 +67,21 @@
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginRight="30mm"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/dp_81">
+        android:layout_marginTop="81mm">
         <com.haibin.calendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp_10"
-            app:calendar_padding="@dimen/dp_10"
+            android:paddingBottom="10mm"
+            app:calendar_padding="10mm"
             android:background="@drawable/date_picker_white_bg"
             app:select_mode="single_mode"
             app:month_view="com.base.datePicker.CustomMonthView"
-            app:calendar_height="@dimen/dp_46"
+            app:calendar_height="46mm"
             app:current_day_lunar_text_color="@color/white"
             app:current_day_text_color="@color/mainText"
             app:current_month_lunar_text_color="@color/white"
@@ -100,13 +100,13 @@
             app:week_view="com.base.datePicker.CustomWeekView"
             app:year_view="com.base.datePicker.CustomYearView"
             app:year_view_day_text_color="@color/mainText"
-            app:year_view_day_text_size="@dimen/sp_9"
+            app:year_view_day_text_size="9mm"
             app:year_view_month_text_color="@color/mainText5"
-            app:year_view_month_text_size="@dimen/sp_20"
+            app:year_view_month_text_size="20mm"
             app:year_view_scheme_color="@color/mainText5"
             app:year_view_select_text_color="@color/white"
-            app:year_view_week_height="@dimen/dp_12"
+            app:year_view_week_height="12mm"
             app:year_view_week_text_color="@color/mainText"
-            app:year_view_week_text_size="@dimen/sp_6"/>
+            app:year_view_week_text_size="6mm"/>
     </com.haibin.calendarview.CalendarLayout>
 </android.support.constraint.ConstraintLayout>

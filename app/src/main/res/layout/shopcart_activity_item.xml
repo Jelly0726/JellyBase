@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="110dp">
+    android:layout_height="110mm">
     <CheckBox
         android:id="@+id/select_box"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="17dp"
+        android:layout_width="20mm"
+        android:layout_height="20mm"
+        android:layout_marginLeft="17mm"
         android:background="@drawable/checkbox_style"
         android:button="@null"
         android:checked="false"
@@ -20,20 +20,20 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/white_round_r5"
-        android:layout_marginLeft="44dp"
-        android:layout_marginRight="17dp"
+        android:layout_marginLeft="44mm"
+        android:layout_marginRight="17mm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
         <com.base.imageView.ImageViewPlus
             android:id="@+id/photo_img"
-            android:layout_width="73dp"
-            android:layout_height="73dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="12dp"
+            android:layout_width="73mm"
+            android:layout_height="73mm"
+            android:layout_marginLeft="14mm"
+            android:layout_marginRight="12mm"
             app:srcCompat="@drawable/ic_placeholder_figure"
-            app:ivpRadius="5dp"
+            app:ivpRadius="5mm"
             app:ivpType="round"
-            app:ivpBorderWidth="0dp"
+            app:ivpBorderWidth="0mm"
             android:layout_gravity="center_vertical"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,10 +44,10 @@
                 android:id="@+id/name_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20mm"
+                android:layout_marginBottom="10mm"
                 android:textColor="#084051"
-                android:textSize="12sp"
+                android:textSize="12mm"
                 android:lines="2"
                 android:ellipsize="end"
                 android:text=""/>
@@ -55,24 +55,24 @@
                 android:id="@+id/price_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
+                android:layout_marginBottom="28mm"
                 android:textColor="#f57fdc"
-                android:textSize="13sp"
+                android:textSize="13mm"
                 android:text="¥1600"/>
         </LinearLayout>
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginRight="5mm"
+            android:layout_marginTop="13mm"
+            android:layout_marginBottom="13mm"
             android:gravity="center">
             <ImageView
                 android:id="@+id/add_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="4dp"
+                android:layout_width="30mm"
+                android:layout_height="30mm"
+                android:padding="4mm"
                 android:src="@mipmap/ic_count_add"/>
             <EditText
                 android:id="@+id/num_edit"
@@ -80,21 +80,21 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="#084051"
-                android:textSize="15sp"
+                android:textSize="15mm"
                 android:cursorVisible="true"
                 android:gravity="center"
                 android:focusable="false"
                 android:lines="1"
                 android:singleLine="true"
-                android:minWidth="30dp"
+                android:minWidth="30mm"
                 android:focusableInTouchMode="false"
                 android:background="@color/transparent"
                 android:text="12"/>
             <ImageView
                 android:id="@+id/sub_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="4dp"
+                android:layout_width="30mm"
+                android:layout_height="30mm"
+                android:padding="4mm"
                 android:src="@mipmap/ic_count_sub"/>
         </LinearLayout>
     </LinearLayout>

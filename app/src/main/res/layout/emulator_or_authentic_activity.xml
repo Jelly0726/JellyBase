@@ -6,8 +6,8 @@
     android:background="@color/main_bg">
     <View
         android:id="@+id/topBg"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="0mm"
+        android:layout_height="80mm"
         android:background="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,9 +23,9 @@
     <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
     <LinearLayout
         android:id="@+id/back_layout"
-        android:layout_width="45dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="45mm"
+        android:layout_height="0mm"
+        android:layout_marginTop="0mm"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="@+id/topBg"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,19 +34,19 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="16mm"
             android:src="@drawable/back" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="0dp"
+        android:layout_height="45mm"
+        android:layout_marginTop="0mm"
         android:gravity="center"
         android:text="是否模拟器"
         android:textColor="#333"
-        android:textSize="18sp"
+        android:textSize="18mm"
         app:layout_constraintBottom_toBottomOf="@+id/topBg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Java检测"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="20mm"
         app:layout_constraintTop_toBottomOf="@+id/topBg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jni标准模式检测"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="0mm"
         app:layout_constraintTop_toBottomOf="@+id/start"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jni安全模式检测"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="0mm"
         app:layout_constraintTop_toBottomOf="@+id/startJniNorm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="验证结果当前运行环境为:"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="30mm"
         app:layout_constraintTop_toBottomOf="@+id/startJni"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>

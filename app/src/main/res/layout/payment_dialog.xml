@@ -10,13 +10,13 @@
         android:layout_weight="1"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm"
         android:background="#fff">
         <TextView
             android:layout_width="match_parent"
@@ -24,13 +24,13 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:textColor="#313131"
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:text="选择支付方式"/>
         <TextView
             android:id="@+id/cancle_tv"
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:textColor="#9bcfea"
             android:gravity="center"
             android:text="取消"
@@ -39,13 +39,13 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="250mm"
         />
     <TextView
         android:id="@+id/confirm_tv"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:textSize="14sp"
+        android:layout_height="44mm"
+        android:textSize="14mm"
         android:textColor="#fff"
         android:gravity="center"
         android:text="确定"

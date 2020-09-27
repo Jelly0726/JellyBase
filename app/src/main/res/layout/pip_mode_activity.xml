@@ -7,8 +7,8 @@
     android:background="@color/main_bg">
     <View
         android:id="@+id/topBg"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_width="0mm"
+        android:layout_height="80mm"
         android:background="#49A42A"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -25,9 +25,9 @@
     <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
     <LinearLayout
         android:id="@+id/back_layout"
-        android:layout_width="45dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="45mm"
+        android:layout_height="0mm"
+        android:layout_marginTop="0mm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/topBg"
         app:layout_constraintTop_toBottomOf="@+id/status_view"
@@ -35,18 +35,18 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="16mm"
             app:srcCompat="@drawable/ic_back_white"
             />
     </LinearLayout>
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:textColor="@color/white"
         android:text="PIP"
-        android:textSize="18sp"
-        android:layout_marginTop="0dp"
+        android:textSize="18mm"
+        android:layout_marginTop="0mm"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

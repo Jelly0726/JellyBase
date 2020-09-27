@@ -14,13 +14,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10mm"
         android:text="购物车还没有商品"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/goShop"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10mm"
         android:text="快去逛逛吧"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

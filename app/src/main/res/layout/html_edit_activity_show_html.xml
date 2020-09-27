@@ -3,22 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowHtmlActivity">
+    >
 
     <com.rex.editor.view.RichEditorNew
         android:id="@+id/richEditor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="10mm"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvHtmlCode"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_margin="10mm"
         android:background="@android:color/white"
         android:textColor="#333333"
-        android:textSize="15sp"
+        android:textSize="15mm"
         android:visibility="gone" />
 </RelativeLayout>

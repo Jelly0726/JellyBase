@@ -15,17 +15,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,19 +37,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="订单评价"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30px"
+                android:textSize="30mm"
                 android:gravity="center"
                 android:textColor="#fe1212"
                 android:text="发布"/>
@@ -57,36 +57,36 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="118px"
+        android:layout_height="118mm"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#fff"
-        android:layout_marginTop="16px"
-        android:paddingLeft="22px"
-        android:paddingRight="22px"
-        android:paddingTop="22px"
-        android:paddingBottom="22px">
+        android:layout_marginTop="16mm"
+        android:paddingLeft="22mm"
+        android:paddingRight="22mm"
+        android:paddingTop="22mm"
+        android:paddingBottom="22mm">
         <ImageView
-            android:layout_width="68px"
-            android:layout_height="68px"
+            android:layout_width="68mm"
+            android:layout_height="68mm"
             android:src="@mipmap/yumi"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#000"
             android:text="描述相符"
-            android:layout_marginLeft="22px"
-            android:layout_marginRight="30px"/>
+            android:layout_marginLeft="22mm"
+            android:layout_marginRight="30mm"/>
         <com.willy.ratingbar.BaseRatingBar
             android:id="@+id/describeRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             rb:numStars="5"
             rb:rating="4"
-            rb:starWidth="40dp"
-            rb:starHeight="0dp"
-            rb:starPadding="0px"
+            rb:starWidth="40mm"
+            rb:starHeight="0mm"
+            rb:starPadding="0mm"
             rb:stepSize="0.5"
             rb:isIndicator="false"
             rb:clickable="true"
@@ -98,32 +98,32 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180px"
+        android:layout_height="180mm"
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:background="#fff"
-        android:layout_marginTop="16px"
-        android:paddingLeft="22px"
-        android:paddingRight="22px"
-        android:paddingTop="10px"
-        android:paddingBottom="10px">
+        android:layout_marginTop="16mm"
+        android:paddingLeft="22mm"
+        android:paddingRight="22mm"
+        android:paddingTop="10mm"
+        android:paddingBottom="10mm">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50px"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="68px"
+                android:layout_width="68mm"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/shopcart_store"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:textColor="#000"
                 android:text="店铺评分"
-                android:layout_marginLeft="22px"
-                android:layout_marginRight="30px"/>
+                android:layout_marginLeft="22mm"
+                android:layout_marginRight="30mm"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -134,20 +134,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:textColor="#727272"
                 android:text="物流服务"
-                android:layout_marginLeft="22px"
-                android:layout_marginRight="100px"/>
+                android:layout_marginLeft="22mm"
+                android:layout_marginRight="100mm"/>
             <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/logisticsRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 rb:numStars="5"
                 rb:rating="2"
-                rb:starWidth="40dp"
-                rb:starHeight="0dp"
-                rb:starPadding="0px"
+                rb:starWidth="40mm"
+                rb:starHeight="0mm"
+                rb:starPadding="0mm"
                 rb:stepSize="0.5"
                 rb:isIndicator="false"
                 rb:clickable="true"
@@ -166,20 +166,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:textColor="#727272"
                 android:text="商家服务"
-                android:layout_marginLeft="22px"
-                android:layout_marginRight="100px"/>
+                android:layout_marginLeft="22mm"
+                android:layout_marginRight="100mm"/>
             <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/storeRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 rb:numStars="5"
                 rb:rating="2"
-                rb:starWidth="40dp"
-                rb:starHeight="0dp"
-                rb:starPadding="0px"
+                rb:starWidth="40mm"
+                rb:starHeight="0mm"
+                rb:starPadding="0mm"
                 rb:stepSize="0.5"
                 rb:isIndicator="false"
                 rb:clickable="true"
@@ -195,15 +195,15 @@
         android:id="@+id/content_ed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16px"
+        android:layout_marginTop="16mm"
         android:gravity="top|left"
-        android:minHeight="180px"
+        android:minHeight="180mm"
         android:background="#fff"
-        android:paddingLeft="44px"
-        android:paddingRight="44px"
-        android:paddingTop="22px"
-        android:paddingBottom="22px"
+        android:paddingLeft="44mm"
+        android:paddingRight="44mm"
+        android:paddingTop="22mm"
+        android:paddingBottom="22mm"
         android:textColor="#313131"
-        android:textSize="24px"
+        android:textSize="24mm"
         android:hint="输入评价"/>
 </LinearLayout>

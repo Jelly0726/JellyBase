@@ -4,23 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="88px"
+    android:layout_height="88mm"
     android:gravity="center_vertical"
     android:background="#fff">
     <TextView
-        android:layout_width="150px"
+        android:layout_width="150mm"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:textColor="#727272"
-        android:layout_marginLeft="30px"
-        android:textSize="28px"
+        android:layout_marginLeft="30mm"
+        android:textSize="28mm"
         android:text="长度"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginRight="30px"
+        android:layout_marginRight="30mm"
         android:textColor="#313131"
-        android:textSize="28px"
+        android:textSize="28mm"
         android:text="17cm"/>
 </LinearLayout>

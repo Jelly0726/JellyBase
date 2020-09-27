@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="48mm">
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="30dp"
-        android:layout_height="24dp"
+        android:layout_width="30mm"
+        android:layout_height="24mm"
         android:src="@mipmap/payment_weixin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -15,11 +15,11 @@
     <TextView
         android:id="@+id/payName"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:textSize="15sp"
+        android:layout_height="0mm"
+        android:textSize="15mm"
         android:textColor="#0C293A"
         android:text="微信"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="13mm"
         android:gravity="bottom"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/mark"
@@ -27,8 +27,8 @@
     <TextView
         android:id="@+id/mark"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:textSize="8sp"
+        android:layout_height="20mm"
+        android:textSize="8mm"
         android:textColor="#91A9AC"
         android:text="推荐使用"
         android:gravity="top"
@@ -37,9 +37,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/payName"/>
     <CheckBox
         android:id="@+id/select_box"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="17dp"
+        android:layout_width="20mm"
+        android:layout_height="20mm"
+        android:layout_marginLeft="17mm"
         android:background="@drawable/checkbox_style"
         android:button="@null"
         android:checked="false"

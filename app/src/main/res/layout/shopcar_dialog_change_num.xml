@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="280dp"
-    android:layout_height="170dp">
+    android:layout_width="280mm"
+    android:layout_height="170mm">
 
     <TextView
-        android:padding="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:padding="5mm"
+        android:layout_marginStart="10mm"
+        android:layout_marginTop="10mm"
         android:textColor="@color/grey_color1"
-        android:textSize="28px"
+        android:textSize="28mm"
         android:text="修改购买数量"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -19,18 +19,18 @@
         android:focusableInTouchMode="true"
         android:id="@+id/ll_change_num"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="20mm"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40mm">
         <TextView
             android:id="@+id/dialog_reduceNum"
             android:background="@drawable/shopcar_cart_min"
-            android:layout_width="36dp"
-            android:layout_height="40dp" />
+            android:layout_width="36mm"
+            android:layout_height="40mm" />
         <EditText
             android:id="@+id/dialog_num"
             android:background="@drawable/shopcar_icon_cart_count"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textStyle="bold"
             android:textColor="@color/ic_taobao"
             android:text="1"
@@ -38,43 +38,43 @@
             android:inputType="number"
             android:maxLength="7"
             android:layout_toRightOf="@+id/dialog_reduceNum"
-            android:layout_width="70dp"
-            android:layout_height="40dp" />
+            android:layout_width="70mm"
+            android:layout_height="40mm" />
         <TextView
             android:layout_toRightOf="@+id/dialog_num"
             android:background="@drawable/shopcar_cart_max"
             android:id="@+id/dialog_increaseNum"
-            android:layout_width="36dp"
-            android:layout_height="40dp" />
+            android:layout_width="36mm"
+            android:layout_height="40mm" />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="10mm"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="20mm"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40mm">
         <TextView
             android:textStyle="bold"
             android:textColor="@color/shopcar_white"
             android:background="@color/grey_color3"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:gravity="center"
             android:text="取消"
             android:id="@+id/dialog_Nbutton"
-            android:layout_width="120dp"
+            android:layout_width="120mm"
             android:layout_height="match_parent" />
         <TextView
             android:textStyle="bold"
             android:background="@color/ic_red"
             android:textColor="@color/shopcar_white"
             android:gravity="center"
-            android:textSize="28px"
-            android:layout_marginStart="10dp"
+            android:textSize="28mm"
+            android:layout_marginStart="10mm"
             android:text="确定"
             android:id="@+id/dialog_Pbutton"
-            android:layout_width="120dp"
+            android:layout_width="120mm"
             android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

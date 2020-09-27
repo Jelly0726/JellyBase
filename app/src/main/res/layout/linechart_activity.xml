@@ -16,7 +16,7 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="0mm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/status_view"/>
 </android.support.constraint.ConstraintLayout>

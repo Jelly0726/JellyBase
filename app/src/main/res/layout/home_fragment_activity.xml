@@ -33,21 +33,21 @@
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="50mm"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
                         android:background="#90ffffff">
                         <LinearLayout
                             android:id="@+id/left_address"
-                            android:layout_width="85dp"
+                            android:layout_width="85mm"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical|left"
                             android:orientation="horizontal"
-                            android:paddingLeft="10dp"
+                            android:paddingLeft="10mm"
                             android:layout_weight="0">
                             <ImageView
                                 android:id="@+id/sousuo_img"
-                                android:layout_width="17dp"
+                                android:layout_width="17mm"
                                 android:layout_height="wrap_content"
                                 android:src="@mipmap/dingwei"/>
                             <TextView
@@ -55,26 +55,26 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
+                                android:layout_marginLeft="5mm"
                                 android:lines="1"
                                 android:singleLine="true"
                                 android:ellipsize="end"
                                 android:textColor="#313131"
-                                android:textSize="12sp"
+                                android:textSize="12mm"
                                 android:text="厦门湖里"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="35dp"
+                            android:layout_height="35mm"
                             android:orientation="horizontal"
                             android:gravity="center_vertical"
-                            android:layout_marginLeft="11dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
+                            android:layout_marginLeft="11mm"
+                            android:paddingLeft="10mm"
+                            android:paddingRight="10mm"
                             android:layout_weight="1"
                             android:background="@drawable/home_search_bg">
                             <ImageView
-                                android:layout_width="13dp"
+                                android:layout_width="13mm"
                                 android:layout_height="wrap_content"
                                 android:src="@mipmap/home_suosou"/>
                             <TextView
@@ -82,16 +82,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center|left"
-                                android:layout_marginLeft="11dp"
-                                android:textSize="12sp"
+                                android:layout_marginLeft="11mm"
+                                android:textSize="12mm"
                                 android:textColor="#727272"
                                 android:text="搜索商品"/>
                         </LinearLayout>
                         <LinearLayout
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="50mm"
+                            android:layout_height="50mm"
                             android:gravity="center_vertical|right"
-                            android:paddingRight="10dp">
+                            android:paddingRight="10mm">
                             <ImageView
                                 android:id="@+id/saomiao_img"
                                 android:layout_width="wrap_content"
@@ -102,21 +102,21 @@
                     <com.base.bgabanner.BGABanner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="115dp"
+                        android:layout_height="115mm"
                         android:scaleType="fitXY"
                         app:banner_indicatorGravity="bottom|center_horizontal"
                         app:banner_pageChangeDuration="1500"
                         app:banner_placeholderDrawable="@drawable/bga_banner_holder"
-                        app:banner_tipTextSize="12sp"
+                        app:banner_tipTextSize="12mm"
                         app:banner_transitionEffect="accordion"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="6dp"
-                        android:layout_marginLeft="0px"
-                        android:layout_marginRight="0px">
+                        android:layout_marginTop="6mm"
+                        android:layout_marginBottom="6mm"
+                        android:layout_marginLeft="0mm"
+                        android:layout_marginRight="0mm">
                         <include layout="@layout/home_gride_layout"/>
                     </LinearLayout>
                     <include
@@ -130,7 +130,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scrollbars="vertical"
-                            android:layout_marginTop="11dp"/>
+                            android:layout_marginTop="11mm"/>
                     </RelativeLayout>
                 </LinearLayout>
             </com.base.xrefreshview.XScrollView>

@@ -5,8 +5,8 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="300mm"
+        android:layout_height="60mm"
         android:layout_gravity="center_horizontal">
 
         <LinearLayout
@@ -24,8 +24,8 @@
 
         <ImageButton
             android:id="@+id/but_cancle"
-            android:layout_width="31dp"
-            android:layout_height="31dp"
+            android:layout_width="31mm"
+            android:layout_height="31mm"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
@@ -33,17 +33,17 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="367dp"
+        android:layout_width="300mm"
+        android:layout_height="367mm"
         android:background="@drawable/qrcode_dialog_bg"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         >
         <ImageView
             android:id="@+id/qr_img"
-            android:layout_width="210dp"
-            android:layout_height="210dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="210mm"
+            android:layout_height="210mm"
+            android:layout_marginTop="20mm"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"/>
         <TextView
@@ -52,30 +52,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/qr_img"
             android:textColor="#727272"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:gravity="center"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="5mm"
+            android:layout_marginLeft="10mm"
+            android:layout_marginRight="10mm"
             android:text="代收二维码，截屏或保存到相册通过聊天工具发送给代收人员，提供给送货物流人员扫描确认收货"/>
         <Button
             android:id="@+id/rebuild_btn"
-            android:layout_width="210dp"
+            android:layout_width="210mm"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="20mm"
             android:background="@drawable/qrcode_dialog_btn_bg"
             android:text="重新生成"
             android:textColor="#fff"
             android:visibility="gone"/>
         <Button
             android:id="@+id/save_btn"
-            android:layout_width="210dp"
+            android:layout_width="210mm"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="20mm"
             android:background="@drawable/qrcode_dialog_btn_bg"
             android:text="保存到相册"
             android:textColor="#fff"

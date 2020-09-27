@@ -18,33 +18,33 @@
             >
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="410px"
+                android:layout_height="410mm"
                 android:background="@mipmap/wode_db">
-                <com.base.cardView.AutoCardView
-                    android:layout_width="620px"
-                    android:layout_height="260px"
+                <com.base.cardView.CardView
+                    android:layout_width="620mm"
+                    android:layout_height="260mm"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     card_view:cardBackgroundColor="@android:color/white"
-                    card_view:cardCornerRadius="10px"
-                    android:paddingBottom="0dp"
-                    card_view:cardElevation="4dp"
-                    android:layout_marginBottom="16px"
-                    android:padding="20px"
+                    card_view:cardCornerRadius="10mm"
+                    android:paddingBottom="0mm"
+                    card_view:cardElevation="4mm"
+                    android:layout_marginBottom="16mm"
+                    android:padding="20mm"
                     android:visibility="visible">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50px"
+                        android:layout_height="50mm"
                         android:orientation="horizontal"
                         android:gravity="center"
-                        android:layout_marginTop="70px">
+                        android:layout_marginTop="70mm">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
                             android:textColor="#727272"
-                            android:textSize="24px"
+                            android:textSize="24mm"
                             android:text="昵称："/>
                         <TextView
                             android:id="@+id/name_tv"
@@ -56,15 +56,15 @@
                             android:singleLine="true"
                             android:ellipsize="end"
                             android:textColor="#313131"
-                            android:textSize="28px"
+                            android:textSize="28mm"
                             android:text=""/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="100px"
+                        android:layout_height="100mm"
                         android:orientation="horizontal"
                         android:layout_gravity="bottom"
-                        android:layout_marginBottom="20px">
+                        android:layout_marginBottom="20mm">
                         <LinearLayout
                             android:id="@+id/balance_layout"
                             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:textSize="24px"
+                                android:textSize="24mm"
                                 android:textColor="#727272"
                                 android:text="余额"/>
                             <TextView
@@ -85,13 +85,13 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:textSize="16sp"
+                                android:textSize="16mm"
                                 android:textColor="#4abc38"
                                 android:text="0"/>
                         </LinearLayout>
                         <TextView
-                            android:layout_width="1px"
-                            android:layout_height="60px"
+                            android:layout_width="1mm"
+                            android:layout_height="60mm"
                             android:layout_gravity="center_vertical"
                             android:background="#eeeeee"/>
                         <LinearLayout
@@ -105,7 +105,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:textSize="24px"
+                                android:textSize="24mm"
                                 android:textColor="#727272"
                                 android:text="银行卡"/>
                             <TextView
@@ -114,21 +114,21 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:textSize="16sp"
+                                android:textSize="16mm"
                                 android:textColor="#26b842"
                                 android:text="0"/>
                         </LinearLayout>
                     </LinearLayout>
-                </com.base.cardView.AutoCardView>
+                </com.base.cardView.CardView>
                 <com.base.imageView.CircleImageView
                     android:id="@+id/photo"
-                    android:layout_width="150px"
-                    android:layout_height="150px"
+                    android:layout_width="150mm"
+                    android:layout_height="150mm"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="60px"
-                    app:border_widthf="0px"
-                    android:elevation="5dp"
+                    android:layout_marginTop="60mm"
+                    app:border_widthf="0mm"
+                    android:elevation="5mm"
                     app:border_colorf="@android:color/transparent"
                     android:src="@mipmap/ic_launcher"
                     />
@@ -136,39 +136,39 @@
             <LinearLayout
                 android:id="@+id/message_layout"
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="88mm"
                 android:orientation="horizontal"
-                android:paddingRight="40px"
-                android:paddingLeft="40px"
+                android:paddingRight="40mm"
+                android:paddingLeft="40mm"
                 android:gravity="center_vertical"
                 android:background="#ffffff"
-                android:layout_marginTop="1px">
+                android:layout_marginTop="1mm">
                 <ImageView
-                    android:layout_width="52px"
-                    android:layout_height="52px"
+                    android:layout_width="52mm"
+                    android:layout_height="52mm"
                     android:src="@mipmap/me_message"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="28px"
+                    android:textSize="28mm"
                     android:textColor="#313131"
-                    android:layout_marginLeft="20px"
+                    android:layout_marginLeft="20mm"
                     android:text="消息通知"
                     android:gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tv_point"
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
+                    android:layout_width="5mm"
+                    android:layout_height="5mm"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="10mm"
                     android:background="@drawable/bottombar_shape_notify_point"
                     android:gravity="center"
-                    android:textSize="6sp"
+                    android:textSize="6mm"
                     android:visibility="gone" />
                 <ImageView
-                    android:layout_width="30px"
-                    android:layout_height="30px"
+                    android:layout_width="30mm"
+                    android:layout_height="30mm"
                     android:src="@mipmap/right_next"/>
             </LinearLayout>
         </LinearLayout>

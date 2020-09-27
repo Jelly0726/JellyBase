@@ -13,7 +13,7 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:background="@color/navi_color" >
         <TextView
             android:id="@+id/tv_title"
@@ -21,16 +21,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="找回密码"
-            android:textSize="20sp" />
+            android:textSize="20mm" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="40mm"
+        android:layout_marginTop="30mm"
         android:orientation="vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15mm"
+        android:layout_marginRight="15mm"
         >
 
 
@@ -44,14 +44,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20mm"
+                android:layout_marginRight="20mm"
                 android:text="中国+86"
                 android:textColor="#A2CD5A"
-                android:textSize="16sp" />
+                android:textSize="16mm" />
 
             <View
-                android:layout_width="0.1dp"
+                android:layout_width="0.1mm"
                 android:layout_height="match_parent"
                  />
 
@@ -59,13 +59,13 @@
                 android:id="@+id/et_forgetPass_PhoneNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="20mm"
                 android:background="@null"
                 android:digits="0123456789"
                 android:hint="请填入您的手机号"
                 android:inputType="number"
                 android:maxLength="11"
-                android:textSize="16sp" />
+                android:textSize="16mm" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,30 +75,30 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15mm"
+        android:layout_marginRight="15mm"
+        android:layout_marginTop="20mm"
         android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="40mm"
              >
 
             <EditText
                 android:id="@+id/et_phoneCodes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10mm"
+                android:layout_marginRight="10mm"
                 android:background="@null"
                 android:hint="请输入右侧验证码" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_showCode"
-            android:layout_width="100dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="100mm"
+            android:layout_marginLeft="10mm"
             android:layout_height="match_parent" />
 
     </LinearLayout>
@@ -107,7 +107,7 @@
         android:id="@+id/but_forgetpass_toSetCodes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="20mm"
         android:text="提交验证码"
         android:textColor="#fff" />
 

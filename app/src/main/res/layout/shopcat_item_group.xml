@@ -6,33 +6,33 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:padding="1dp"
+        android:padding="1mm"
         android:background="@color/shopcar_white"
         android:layout_width="match_parent"
-        android:layout_height="88px">
+        android:layout_height="88mm">
         <CheckBox
             android:id="@+id/store_checkBox"
             android:visibility="visible"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:minWidth="20dp"
-            android:minHeight="20dp"
+            android:minWidth="20mm"
+            android:minHeight="20mm"
             android:background="@null"
             android:button="@null"
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30px"
-            android:layout_marginLeft="22px" />
+            android:layout_marginRight="30mm"
+            android:layout_marginLeft="22mm" />
         
         <TextView
             android:textColor="@color/grey_color2"
-            android:drawablePadding="5dp"
+            android:drawablePadding="5mm"
             android:drawableLeft="@mipmap/shopcart_store"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:text="小马的店铺"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="5mm"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/store_checkBox"
             android:id="@+id/store_name"
@@ -46,8 +46,8 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:text="编辑"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:layout_width="wrap_content"
-            android:layout_height="88px" />
+            android:layout_height="88mm" />
     </RelativeLayout>
 </LinearLayout>

@@ -5,17 +5,17 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,18 +27,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="20mm"
             android:text="@string/service_name"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical|right"
-            android:paddingRight="20px">
+            android:paddingRight="20mm">
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="20mm"
+                android:layout_height="20mm"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -70,7 +70,7 @@
                     <!--android:layout_height="wrap_content"-->
                     <!--android:background="?android:attr/selectableItemBackground"-->
                     <!--android:orientation="vertical"-->
-                    <!--android:padding="15dp">-->
+                    <!--android:padding="15mm">-->
 
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
@@ -83,7 +83,7 @@
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:layout_marginTop="5mm"-->
                         <!--android:background="?android:attr/selectableItemBackground"-->
                         <!--android:text="@string/about_summary"-->
                         <!--android:textColor="@color/text_grey"-->
@@ -92,9 +92,9 @@
 
                 <!--<View-->
                     <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_marginLeft="15dp"-->
-                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:layout_height="1mm"-->
+                    <!--android:layout_marginLeft="15mm"-->
+                    <!--android:layout_marginRight="15mm"-->
                     <!--android:background="@color/divider" />-->
 
 
@@ -104,7 +104,7 @@
                     <!--android:layout_height="wrap_content"-->
                     <!--android:background="?android:attr/selectableItemBackground"-->
                     <!--android:orientation="vertical"-->
-                    <!--android:padding="15dp">-->
+                    <!--android:padding="15mm">-->
 
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
@@ -117,7 +117,7 @@
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:layout_marginTop="5mm"-->
                         <!--android:background="?android:attr/selectableItemBackground"-->
                         <!--android:text="@string/reward_summary"-->
                         <!--android:textColor="@color/text_grey"-->
@@ -127,13 +127,13 @@
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
+                <!--android:layout_height="1mm"-->
                 <!--android:background="@color/divider" />-->
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_height="1mm"-->
+                <!--android:layout_marginTop="10mm"-->
                 <!--android:background="@color/divider" />-->
 
             <!--<LinearLayout-->
@@ -148,7 +148,7 @@
                     <!--android:layout_height="wrap_content"-->
                     <!--android:background="?android:attr/selectableItemBackground"-->
                     <!--android:orientation="vertical"-->
-                    <!--android:padding="15dp">-->
+                    <!--android:padding="15mm">-->
 
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
@@ -161,7 +161,7 @@
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:layout_marginTop="5mm"-->
                         <!--android:background="?android:attr/selectableItemBackground"-->
                         <!--android:text="@string/about_summary"-->
                         <!--android:textColor="@color/text_grey"-->
@@ -170,9 +170,9 @@
 
                 <!--<View-->
                     <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="1px"-->
-                    <!--android:layout_marginLeft="15dp"-->
-                    <!--android:layout_marginRight="15dp"-->
+                    <!--android:layout_height="1mm"-->
+                    <!--android:layout_marginLeft="15mm"-->
+                    <!--android:layout_marginRight="15mm"-->
                     <!--android:background="@color/divider" />-->
 
 
@@ -182,7 +182,7 @@
                     <!--android:layout_height="wrap_content"-->
                     <!--android:background="?android:attr/selectableItemBackground"-->
                     <!--android:orientation="vertical"-->
-                    <!--android:padding="15dp">-->
+                    <!--android:padding="15mm">-->
 
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
@@ -195,7 +195,7 @@
                     <!--<TextView-->
                         <!--android:layout_width="match_parent"-->
                         <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:layout_marginTop="5mm"-->
                         <!--android:background="?android:attr/selectableItemBackground"-->
                         <!--android:text="@string/reward_summary"-->
                         <!--android:textColor="@color/text_grey"-->
@@ -205,7 +205,7 @@
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
+                <!--android:layout_height="1mm"-->
                 <!--android:background="@color/divider" />-->
         <!--</LinearLayout>-->
 

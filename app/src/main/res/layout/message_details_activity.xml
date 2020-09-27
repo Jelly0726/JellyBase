@@ -6,17 +6,17 @@
     android:background="@color/main_bg">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="#fff">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,21 +29,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="消息详情"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/right_text"
-            android:layout_width="130px"
-            android:layout_height="100px"
+            android:layout_width="130mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="#313131"
-                android:textSize="12sp"/>
+                android:textSize="12mm"/>
         </LinearLayout>
     </LinearLayout>
     <ScrollView
@@ -53,6 +53,6 @@
             android:id="@+id/messageDetail_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10mm"/>
     </ScrollView>
 </LinearLayout>

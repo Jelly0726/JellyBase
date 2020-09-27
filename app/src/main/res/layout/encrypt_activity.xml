@@ -22,9 +22,9 @@
         <EditText
             android:id="@+id/input_ori"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="200mm"
             android:background="#cacaca"
-            android:layout_margin="10dp"
+            android:layout_margin="10mm"
             android:hint="请输入有加密的字符串或者要解密的Base64字符串"
             />
         <LinearLayout
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            android:layout_margin="10dp"
+            android:layout_margin="10mm"
             />
         <LinearLayout
             android:layout_width="match_parent"

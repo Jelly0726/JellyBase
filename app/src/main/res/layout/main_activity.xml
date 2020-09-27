@@ -19,7 +19,7 @@
     <com.base.xrefreshview.XRefreshView
         android:id="@+id/xrefreshview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="0mm"
         app:layout_constraintTop_toBottomOf="@+id/status_view"
         app:layout_constraintBottom_toBottomOf="parent">
         <android.support.v7.widget.RecyclerView
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:layout_marginTop="0px"/>
+            android:layout_marginTop="0mm"/>
     </com.base.xrefreshview.XRefreshView>
     <com.base.view.FloatingDraftButton
         android:id="@+id/floatingActionButton"
@@ -35,12 +35,12 @@
         android:layout_height="wrap_content"
         app:backgroundTint="#4fb3fa"
         app:rippleColor="#0732e9"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginRight="30mm"
+        android:layout_marginBottom="60mm"
         app:srcCompat="@mipmap/dingdan"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
-        app:pressedTranslationZ="12dp"
+        app:elevation="6mm"
+        app:borderWidth="0mm"
+        app:pressedTranslationZ="12mm"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

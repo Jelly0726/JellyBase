@@ -15,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/hsv"
-        android:layout_margin="10dp"
+        android:layout_margin="10mm"
         android:layout_below="@+id/status_view"/>
 
     <HorizontalScrollView
         android:id="@+id/hsv"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:layout_alignParentBottom="true"
 
         android:background="#f1f1f1">
@@ -31,51 +31,51 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingLeft="15mm"
+            android:paddingRight="15mm">
 
             <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
+                android:layout_width="90mm"
+                android:layout_height="40mm"
                 android:background="@drawable/html_edit_button_shap"
                 android:gravity="center"
                 android:onClick="openTools"
                 android:text="OpenTools"
                 android:textColor="@android:color/white"
-                android:textSize="13sp" />
+                android:textSize="13mm" />
 
             <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
+                android:layout_width="90mm"
+                android:layout_height="40mm"
+                android:layout_marginLeft="15mm"
                 android:background="@drawable/html_edit_button_shap"
                 android:gravity="center"
                 android:onClick="getHtmlCode"
                 android:text="HtmlCode"
                 android:textColor="@android:color/white"
-                android:textSize="13sp" />
+                android:textSize="13mm" />
 
             <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
+                android:layout_width="90mm"
+                android:layout_height="40mm"
+                android:layout_marginLeft="15mm"
                 android:background="@drawable/html_edit_button_shap"
                 android:gravity="center"
                 android:onClick="publish"
                 android:text="Publish"
                 android:textColor="@android:color/white"
-                android:textSize="13sp" />
+                android:textSize="13mm" />
 
             <TextView
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
+                android:layout_width="90mm"
+                android:layout_height="40mm"
+                android:layout_marginLeft="15mm"
                 android:background="@drawable/html_edit_button_shap"
                 android:gravity="center"
                 android:onClick="getCurrChooseParams"
                 android:text="GetParams"
                 android:textColor="@android:color/white"
-                android:textSize="13sp" />
+                android:textSize="13mm" />
 
 
         </LinearLayout>
@@ -101,34 +101,34 @@
             android:id="@+id/gvList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:horizontalSpacing="10dp"
+            android:layout_marginTop="20mm"
+            android:horizontalSpacing="10mm"
             android:numColumns="4"
-            android:padding="20dp"
+            android:padding="20mm"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="10dp" />
+            android:verticalSpacing="10mm" />
 
 
         <LinearLayout
-            android:layout_width="90dp"
-            android:layout_height="40dp"
+            android:layout_width="90mm"
+            android:layout_height="40mm"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="30mm"
             android:background="@drawable/html_edit_button_shap"
             android:gravity="center"
             android:onClick="closeTools"
-            android:padding="5dp">
+            android:padding="5mm">
 
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="12mm"
+                android:layout_height="12mm"
                 android:src="@drawable/html_edit_close" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="10mm"
                 android:text="Close" />
         </LinearLayout>
     </FrameLayout>

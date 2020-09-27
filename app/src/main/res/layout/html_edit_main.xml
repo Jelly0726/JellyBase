@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10mm"
         android:layout_height="wrap_content"
         android:onClick="goActualDemo"
         android:text="实战使用（Actual Demo）" />

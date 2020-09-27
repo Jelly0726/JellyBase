@@ -25,11 +25,11 @@
     android:ellipsize="marquee"
     android:background="#ffffff"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/ms__item_height"
-    android:paddingBottom="@dimen/ms__popup_padding_top"
-    android:paddingLeft="0px"
-    android:paddingRight="0px"
-    android:paddingStart="@dimen/ms__popup_padding_top"
-    android:paddingTop="@dimen/ms__popup_padding_top"
+    android:minHeight="48mm"
+    android:paddingBottom="12mm"
+    android:paddingLeft="0mm"
+    android:paddingRight="0mm"
+    android:paddingStart="12mm"
+    android:paddingTop="12mm"
     android:singleLine="true"/>
 

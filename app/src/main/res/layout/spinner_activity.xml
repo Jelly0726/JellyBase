@@ -12,28 +12,28 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="88mm"
         android:orientation="horizontal"
         android:background="#ffffff"
-        android:layout_marginTop="1px"
-        android:paddingLeft="26px"
-        android:paddingRight="26px">
+        android:layout_marginTop="1mm"
+        android:paddingLeft="26mm"
+        android:paddingRight="26mm">
         <TextView
-            android:layout_width="230px"
+            android:layout_width="230mm"
             android:layout_height="wrap_content"
             android:textColor="#313131"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:text="选择商品类型"/>
         <com.base.materialspinner.MaterialSpinner
-            android:id="@+id/sp_product_types"
+            android:id="@+id/mm_product_types"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="24px"
-            android:paddingLeft="0px"
-            android:paddingRight="0px">
+            android:textSize="24mm"
+            android:paddingLeft="0mm"
+            android:paddingRight="0mm">
         </com.base.materialspinner.MaterialSpinner>
     </LinearLayout>
 </LinearLayout>

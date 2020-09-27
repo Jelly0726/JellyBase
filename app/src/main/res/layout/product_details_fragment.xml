@@ -22,17 +22,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="30px"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
-                android:paddingBottom="30px"
+                android:paddingTop="30mm"
+                android:paddingLeft="30mm"
+                android:paddingRight="30mm"
+                android:paddingBottom="30mm"
                 android:background="#fff">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
+                    android:layout_height="80mm"
                     android:layout_weight="1"
                     android:layout_gravity="top|left"
-                    android:textSize="28px"
+                    android:textSize="28mm"
                     android:lines="2"
                     android:ellipsize="end"
                     android:textColor="#313131"
@@ -41,49 +41,49 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0px"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
-                android:paddingBottom="22px"
+                android:paddingTop="0mm"
+                android:paddingLeft="30mm"
+                android:paddingRight="30mm"
+                android:paddingBottom="22mm"
                 android:background="#fff"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#959595"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:text="¥"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#ff1c1c"
-                    android:layout_marginLeft="5px"
-                    android:textSize="28px"
+                    android:layout_marginLeft="5mm"
+                    android:textSize="28mm"
                     android:text="254"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#959595"
-                    android:layout_marginLeft="5px"
-                    android:textSize="24px"
+                    android:layout_marginLeft="5mm"
+                    android:textSize="24mm"
                     android:text="积分"/>
                 <TextView
-                    android:layout_width="74px"
-                    android:layout_height="30px"
-                    android:layout_marginLeft="10px"
+                    android:layout_width="74mm"
+                    android:layout_height="30mm"
+                    android:layout_marginLeft="10mm"
                     android:textColor="#ff1c1c"
                     android:gravity="center"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:text="包邮"
                     android:background="@drawable/product_mailed_bg"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="0px"
-                android:paddingLeft="30px"
-                android:paddingRight="30px"
-                android:paddingBottom="30px"
+                android:paddingTop="0mm"
+                android:paddingLeft="30mm"
+                android:paddingRight="30mm"
+                android:paddingBottom="30mm"
                 android:background="#fff"
                 android:orientation="horizontal">
                 <LinearLayout
@@ -99,13 +99,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/details_text"
-                            android:textSize="24px"
+                            android:textSize="24mm"
                             android:text="库存："/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/details_text"
-                            android:textSize="24px"
+                            android:textSize="24mm"
                             android:text="100斤"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -118,13 +118,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/details_text"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="销量："/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/details_text"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="100斤"/>
                 </LinearLayout>
                 <LinearLayout
@@ -136,29 +136,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/details_text"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="发货地："/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/details_text"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="厦门"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="88px"
+                android:layout_height="88mm"
                 android:gravity="center_vertical"
-                android:layout_marginTop="16px"
-                android:paddingRight="30px"
-                android:paddingLeft="30px"
+                android:layout_marginTop="16mm"
+                android:paddingRight="30mm"
+                android:paddingLeft="30mm"
                 android:background="#fff"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="28px"
+                    android:textSize="28mm"
                     android:gravity="center"
                     android:textColor="#313131"
                     android:text="产品参数"/>
@@ -166,7 +166,7 @@
                     android:id="@+id/product_parameter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="28px"
+                    android:textSize="28mm"
                     android:textColor="#313131"
                     android:gravity="center"
                     android:text=""
@@ -176,26 +176,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="22px"
-                android:paddingBottom="22px"
+                android:paddingTop="22mm"
+                android:paddingBottom="22mm"
                 android:gravity="center">
                 <View
-                    android:layout_width="50px"
-                    android:layout_height="1px"
+                    android:layout_width="50mm"
+                    android:layout_height="1mm"
                     android:background="#727272"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#727272"
-                    android:layout_marginLeft="10px"
-                    android:layout_marginRight="10px"
+                    android:layout_marginLeft="10mm"
+                    android:layout_marginRight="10mm"
                     android:drawableLeft="@mipmap/xingqing"
-                    android:drawablePadding="20px"
-                    android:textSize="24px"
+                    android:drawablePadding="20mm"
+                    android:textSize="24mm"
                     android:text="详情"/>
                 <View
-                    android:layout_width="50px"
-                    android:layout_height="1px"
+                    android:layout_width="50mm"
+                    android:layout_height="1mm"
                     android:background="#727272"/>
             </LinearLayout>
         </LinearLayout>

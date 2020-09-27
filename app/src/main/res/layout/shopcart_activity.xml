@@ -17,42 +17,42 @@
     <View
         android:id="@+id/bgView"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="70mm"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <LinearLayout
         android:id="@+id/back_layout"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="25dp"
+        android:layout_width="45mm"
+        android:layout_height="45mm"
+        android:layout_marginTop="25mm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center_vertical">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="16mm"
             android:src="@drawable/back"
             />
     </LinearLayout>
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:textColor="#084051"
         android:gravity="center_vertical"
         android:text="购物车"
-        android:textSize="18sp"
-        android:layout_marginTop="25dp"
+        android:textSize="18mm"
+        android:layout_marginTop="25mm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingTop="10dp"
+        android:layout_width="0mm"
+        android:layout_height="0mm"
+        android:paddingTop="10mm"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bgView"
@@ -68,9 +68,9 @@
     <include
         android:id="@+id/empty_shopcart"
         android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="70dp"
+        android:layout_width="0mm"
+        android:layout_height="0mm"
+        android:layout_marginTop="70mm"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,16 +79,16 @@
     <LinearLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="66dp"
+        android:layout_height="66mm"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/white"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="1mm">
         <CheckBox
             android:id="@+id/allSelect_box"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="17dp"
+            android:layout_width="20mm"
+            android:layout_height="20mm"
+            android:layout_marginLeft="17mm"
             android:background="@drawable/checkbox_style"
             android:button="@null"
             android:checked="false"
@@ -97,9 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="10mm"
             android:text="全部"
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:textColor="#084051"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="不含运费"
-                android:textSize="10sp"
+                android:textSize="10mm"
                 android:textColor="#32000000"/>
             <TextView
                 android:id="@+id/totalPrice"
@@ -120,18 +120,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:textColor="#084051"
-                android:textSize="15sp"
+                android:textSize="15mm"
                 android:text="合计：¥0.00"/>
         </LinearLayout>
         <TextView
             android:id="@+id/settlement_tv"
-            android:layout_width="99dp"
-            android:layout_height="38dp"
+            android:layout_width="99mm"
+            android:layout_height="38mm"
             android:layout_gravity="center_vertical"
             android:background="@drawable/blue_round_r5"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="20dp"
-            android:textSize="15sp"
+            android:layout_marginLeft="13mm"
+            android:layout_marginRight="20mm"
+            android:textSize="15mm"
             android:textColor="@color/white"
             android:gravity="center"
             android:text="结算(0)"/>

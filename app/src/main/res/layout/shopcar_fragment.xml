@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_marginTop="1px">
+        android:layout_marginTop="1mm">
         <FrameLayout
             android:background="@color/shopcar_white"
             android:layout_width="match_parent"
@@ -34,25 +34,25 @@
     <!--分割线-->
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="1mm"
         android:background="@color/gray" />
     <LinearLayout
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:background="#fff">
         <CheckBox
-            android:textSize="24px"
+            android:textSize="24mm"
             android:background="@null"
             android:clickable="true"
-            android:drawablePadding="10dp"
+            android:drawablePadding="10mm"
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:text="@string/shopcar_all"
             android:id="@+id/all_checkBox"
             android:button="@null"
-            android:minHeight="20dp"
-            android:layout_marginStart="10dp"
+            android:minHeight="20mm"
+            android:layout_marginStart="10mm"
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:layout_width="wrap_content"
@@ -66,10 +66,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="10mm"
                 android:orientation="vertical"
                 android:layout_weight="0.5"
-                android:layout_width="0dp"
+                android:layout_width="0mm"
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:gravity="end"
@@ -78,15 +78,15 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="@android:color/black"
-                        android:textSize="28px"
+                        android:textSize="28mm"
                         android:text="@string/order_total"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="5mm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/total_price"
                         android:text="¥0.00"
-                        android:textSize="28px"
+                        android:textSize="28mm"
                         android:textColor="@color/ic_taobao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -97,19 +97,19 @@
                     android:text="不含运费"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24px"/>
+                    android:textSize="24mm"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/go_pay"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_width="0mm"
+                android:layout_height="60mm"
                 android:layout_weight="0.5"
                 android:background="#f58612"
                 android:gravity="center"
                 android:text="结算(0)"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="16mm" />
 
             <LinearLayout
                 android:visibility="gone"
@@ -117,41 +117,41 @@
                 android:id="@+id/share_info"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
-                android:layout_width="0dp"
-                android:layout_height="60dp">
+                android:layout_width="0mm"
+                android:layout_height="60mm">
                 <TextView
                     android:id="@+id/share_goods"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_yellow"
                     android:gravity="center"
                     android:text="分享宝贝"
                     android:layout_weight="0.3"
-                    android:layout_width="0dp"
+                    android:layout_width="0mm"
                     android:visibility="gone"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="1mm"
                     android:id="@+id/collect_goods"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_taobao"
                     android:gravity="center"
                     android:text="移到收藏夹"
                     android:layout_weight="0.3"
-                    android:layout_width="0dp"
+                    android:layout_width="0mm"
                     android:visibility="gone"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:layout_marginStart="1dp"
+                    android:layout_marginStart="1mm"
                     android:id="@+id/del_goods"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_red"
                     android:gravity="center"
                     android:text="删除"
                     android:layout_weight="0.3"
-                    android:layout_width="0dp"
+                    android:layout_width="0mm"
                     android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>

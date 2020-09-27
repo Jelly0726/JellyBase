@@ -17,16 +17,16 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_margin="16mm"
         android:layout_below="@+id/status_view">
 
         <com.base.nodeprogress.NodeProgressView
             android:id="@+id/npv_NodeProgressView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:width="2dp"
-            app:nodeRadius="5dp"
-            app:nodeTextSize="12sp"/>
+            app:width="2mm"
+            app:nodeRadius="5mm"
+            app:nodeTextSize="12mm"/>
 
     </ScrollView>
 </RelativeLayout>

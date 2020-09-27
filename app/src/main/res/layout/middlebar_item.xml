@@ -23,7 +23,7 @@
             android:id="@+id/tv_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
+            android:layout_marginLeft="10mm"
             android:text="sssds"/>
     </LinearLayout>
 </LinearLayout>

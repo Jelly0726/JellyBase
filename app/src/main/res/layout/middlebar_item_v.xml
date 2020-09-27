@@ -19,14 +19,14 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_weight="1"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:text="sssds"/>
         <ImageView
             android:id="@+id/iv_icon"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_height="2mm"
+            android:layout_marginLeft="20mm"
+            android:layout_marginRight="20mm"
             android:layout_gravity="center"
             android:src="@drawable/line_bg"/>
     </LinearLayout>
