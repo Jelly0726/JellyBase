@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,14 +35,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="添加银行卡"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,9 +51,9 @@
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="70px"
-        android:layout_marginLeft="30px"
-        android:textSize="24px"
+        android:layout_height="70mm"
+        android:layout_marginLeft="30mm"
+        android:textSize="24mm"
         android:gravity="center_vertical"
         android:textColor="#727272"
         android:text="请绑定与本人身份证一致的银行卡"/>
@@ -61,19 +61,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="30px"
-        android:paddingRight="0px"
+        android:paddingLeft="30mm"
+        android:paddingRight="0mm"
         android:background="#ffffff">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="88px"
+            android:layout_height="88mm"
             android:orientation="horizontal"
             >
             <TextView
-                android:layout_width="160px"
+                android:layout_width="160mm"
                 android:layout_height="wrap_content"
                 android:textColor="#313131"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:gravity="center_vertical"
                 android:text="持卡人"/>
             <EditText
@@ -81,10 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:paddingLeft="5px"
-                android:paddingRight="5px"
+                android:paddingLeft="5mm"
+                android:paddingRight="5mm"
                 android:gravity="center_vertical"
-                android:textSize="24px"
+                android:textSize="24mm"
                 android:textColor="#727272"
                 android:hint="请输入"
                 android:lines="1"
@@ -93,19 +93,19 @@
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1mm"
             android:layout_gravity="center_vertical"
             android:background="#eeeeee"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="88px"
+            android:layout_height="88mm"
             android:orientation="horizontal"
             >
             <TextView
-                android:layout_width="160px"
+                android:layout_width="160mm"
                 android:layout_height="wrap_content"
                 android:textColor="#313131"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:gravity="center_vertical"
                 android:text="卡号"/>
 
@@ -117,28 +117,28 @@
                 android:gravity="center_vertical"
                 android:hint="请输入"
                 android:lines="1"
-                android:paddingLeft="5px"
-                android:paddingRight="5px"
+                android:paddingLeft="5mm"
+                android:paddingRight="5mm"
                 android:singleLine="true"
                 android:textColor="#727272"
                 android:textColorHint="#c1c1c1"
-                android:textSize="24px" />
+                android:textSize="24mm" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1mm"
             android:layout_gravity="center_vertical"
             android:background="#eeeeee"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="88px"
+            android:layout_height="88mm"
             android:orientation="horizontal"
             >
             <TextView
-                android:layout_width="160px"
+                android:layout_width="160mm"
                 android:layout_height="wrap_content"
                 android:textColor="#313131"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:gravity="center_vertical"
                 android:text="开户银行"/>
             <TextView
@@ -146,7 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:textSize="24px"
+                android:textSize="24mm"
                 android:textColor="#727272"
                 android:lines="1"
                 android:singleLine="true"
@@ -155,16 +155,16 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="88mm"
         android:orientation="horizontal"
-        android:layout_marginTop="16px"
-        android:paddingLeft="30px"
+        android:layout_marginTop="16mm"
+        android:paddingLeft="30mm"
         android:background="#ffffff">
         <TextView
-            android:layout_width="160px"
+            android:layout_width="160mm"
             android:layout_height="wrap_content"
             android:textColor="#313131"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:gravity="center_vertical"
             android:text="手机号"/>
         <EditText
@@ -172,11 +172,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:paddingLeft="5px"
-            android:paddingRight="5px"
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
             android:inputType="phone"
             android:gravity="center_vertical"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:textColor="#727272"
             android:hint="银行预留手机号"
             android:lines="1"
@@ -185,37 +185,37 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="22px"
+        android:layout_height="88mm"
+        android:layout_marginTop="22mm"
         android:orientation="horizontal"
-        android:paddingLeft="30px"
+        android:paddingLeft="30mm"
         android:background="#ffffff">
         <CheckBox
             android:id="@+id/default_cb"
-            android:layout_width="88px"
-            android:layout_height="88px"
+            android:layout_width="88mm"
+            android:layout_height="88mm"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:layout_marginLeft="20px"
-            android:layout_marginRight="10px"
+            android:layout_marginLeft="20mm"
+            android:layout_marginRight="10mm"
             style="@style/CustomCheckBoxTheme"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="#313131"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:gravity="center_vertical"
             android:text="默认银行卡"/>
     </LinearLayout>
     <TextView
         android:id="@+id/commit_tv"
-        android:layout_width="688px"
-        android:layout_height="88px"
+        android:layout_width="688mm"
+        android:layout_height="88mm"
         android:textColor="#aaaaaa"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textSize="30px"
-        android:layout_marginTop="100px"
+        android:textSize="30mm"
+        android:layout_marginTop="100mm"
         android:background="@drawable/confirm_recharge_bg"
         android:text="确定"/>
 </LinearLayout>

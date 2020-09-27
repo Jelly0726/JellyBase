@@ -9,7 +9,7 @@
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="45mm"
         ></com.base.view.NoPreloadViewPager>
 
     <com.base.bottomBar.BottomBarLayout
@@ -21,37 +21,37 @@
         android:layout_alignParentBottom="true">
 
         <com.base.bottomBar.BottomBarItem
-            android:layout_width="0dp"
+            android:layout_width="0mm"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:iconHeight="20dp"
-            app:iconWidth="20dp"
+            app:iconHeight="20mm"
+            app:iconWidth="20mm"
             app:iconNormal="@mipmap/home_un"
             app:iconSelected="@mipmap/home_on"
             app:itemText="首页"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
-            app:itemTextSize="8sp"
-            app:iconMarginBottom="5px"
+            app:itemTextSize="8mm"
+            app:iconMarginBottom="5mm"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/bottombar_white_bg"/>
         <com.base.bottomBar.BottomBarItem
-            android:layout_width="0dp"
+            android:layout_width="0mm"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:iconHeight="20dp"
-            app:iconWidth="20dp"
+            app:iconHeight="20mm"
+            app:iconWidth="20mm"
             app:iconNormal="@mipmap/order_un"
             app:iconSelected="@mipmap/order_on"
             app:itemText="钱包"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
-            app:itemTextSize="8sp"
-            app:iconMarginBottom="5px"
+            app:itemTextSize="8mm"
+            app:iconMarginBottom="5mm"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/bottombar_white_bg"/>
         <com.base.bottomBar.BottomBarItem
-            android:layout_width="0dp"
+            android:layout_width="0mm"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             app:iconNormal="@mipmap/middle_on"
@@ -59,8 +59,8 @@
             app:itemText="支付"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
-            app:itemTextSize="8sp"
-            app:iconMarginBottom="5px"
+            app:itemTextSize="8mm"
+            app:iconMarginBottom="5mm"
             app:openTouchBg="true"
             app:isHeave="true"
             app:isSkip="true"
@@ -68,34 +68,34 @@
             app:touchDrawable="@drawable/bottombar_white_bg"/>
 
         <com.base.bottomBar.BottomBarItem
-            android:layout_width="0dp"
+            android:layout_width="0mm"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:iconHeight="20dp"
-            app:iconWidth="20dp"
+            app:iconHeight="20mm"
+            app:iconWidth="20mm"
             app:iconNormal="@mipmap/wallet_un"
             app:iconSelected="@mipmap/wallet_on"
             app:itemText="发现"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
-            app:itemTextSize="8sp"
-            app:iconMarginBottom="5px"
+            app:itemTextSize="8mm"
+            app:iconMarginBottom="5mm"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/bottombar_white_bg"/>
 
         <com.base.bottomBar.BottomBarItem
-            android:layout_width="0dp"
+            android:layout_width="0mm"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            app:iconHeight="20dp"
-            app:iconWidth="20dp"
+            app:iconHeight="20mm"
+            app:iconWidth="20mm"
             app:iconNormal="@mipmap/me_un"
             app:iconSelected="@mipmap/me_on"
             app:itemText="我的"
             app:textColorNormal="@color/bottombar_normal_color"
             app:textColorSelected="@color/bottombar_selected_color"
-            app:itemTextSize="8sp"
-            app:iconMarginBottom="5px"
+            app:itemTextSize="8mm"
+            app:iconMarginBottom="5mm"
             app:openTouchBg="true"
             app:touchDrawable="@drawable/bottombar_white_bg"/>
 

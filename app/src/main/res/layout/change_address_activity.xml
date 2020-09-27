@@ -14,26 +14,26 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:background="@color/navi_color"
-        android:textSize="16sp"
+        android:textSize="16mm"
         android:textColor="#313131"
         android:gravity="center"
         android:text="切换城市"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:orientation="horizontal"
-        android:layout_marginTop="1px"
+        android:layout_marginTop="1mm"
         android:gravity="center_vertical"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
         android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="当前定位"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:textColor="#727272"/>
         <TextView
             android:id="@+id/address_tv"
@@ -41,20 +41,20 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:drawableLeft="@mipmap/ic_launcher"
-            android:drawablePadding="2dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="14sp"
+            android:drawablePadding="2mm"
+            android:layout_marginLeft="5mm"
+            android:textSize="14mm"
             android:textColor="#000000"
             android:text="定位中"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:layout_height="45mm"
+        android:layout_marginTop="10mm"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
         android:textColor="#727272"
-        android:textSize="14sp"
+        android:textSize="14mm"
         android:text="选择城市"
         android:gravity="center_vertical"
         android:background="#ffffff"/>
@@ -62,42 +62,42 @@
         android:id="@+id/address_gp"
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:background="#ffffff"
-        android:layout_marginTop="1px">
+        android:layout_marginTop="1mm">
         <RadioButton
             android:id="@+id/province_rb"
-            android:layout_width="100dp"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:button="@null"
             android:gravity="center"
             android:background="@drawable/radiobutton_style_r"
             android:checked="true"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:textColor="@drawable/radiobutton_text_r"
             android:text="请选择"/>
         <RadioButton
             android:id="@+id/city_rb"
-            android:layout_width="100dp"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:button="@null"
             android:gravity="center"
             android:background="@drawable/radiobutton_style_r"
             android:checked="false"
             android:visibility="gone"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:textColor="@drawable/radiobutton_text_r"
             android:text="请选择"/>
         <RadioButton
             android:id="@+id/district_rb"
-            android:layout_width="100dp"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:button="@null"
             android:gravity="center"
             android:background="@drawable/radiobutton_style_r"
             android:checked="false"
             android:visibility="gone"
-            android:textSize="14sp"
+            android:textSize="14mm"
             android:textColor="@drawable/radiobutton_text_r"
             android:text="请选择"/>
     </RadioGroup>
@@ -106,6 +106,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginTop="1px"
+        android:layout_marginTop="1mm"
         android:background="#ffffff"/>
 </LinearLayout>

@@ -84,7 +84,7 @@ public class BaseApplication extends Application {
         //多语言切换初始化
         ChangeLanguageHelper.init(this);
         //屏幕自动适配 对单位的自定义配置, 请在 App 启动时完成
-//        configUnits();
+        configUnits();
         LiveDataBus
                 .config()
                 .supportBroadcast(this)//配置支持跨进程、跨APP通信，传入Context
@@ -205,7 +205,7 @@ public class BaseApplication extends Application {
                 //AndroidAutoSize 默认开启对 sp 的支持, 调用 UnitsManager.setSupportSP(false); 可以关闭对 sp 的支持
                 //如果关闭对 sp 的支持, 在布局时就应该使用副单位填写字体的尺寸
                 //如果开启 sp, 对其他三方库控件影响不大, 也可以不关闭对 sp 的支持, 这里我就继续开启 sp, 请自行斟酌自己的项目是否需要关闭对 sp 的支持
-//                .setSupportSP(false)
+                .setSupportSP(false)
                 //AndroidAutoSize 默认不支持副单位, 调用 UnitsManager#setSupportSubunits() 可选择一个自己心仪的副单位, 并开启对副单位的支持
                 //只能在 pt、in、mm 这三个冷门单位中选择一个作为副单位, 三个单位的适配效果其实都是一样的, 您觉的哪个单位看起顺眼就用哪个
                 //您选择什么单位就在 layout 文件中用什么单位进行布局, 我选择用 mm 为单位进行布局, 因为 mm 翻译为中文是妹妹的意思

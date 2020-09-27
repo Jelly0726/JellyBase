@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,18 +35,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="我来回答"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical|right"
-            android:paddingRight="20px">
+            android:paddingRight="20mm">
             <ImageView
-                android:layout_width="42px"
-                android:layout_height="42px"
+                android:layout_width="42mm"
+                android:layout_height="42mm"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -54,10 +54,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
-        android:paddingTop="22px"
-        android:paddingBottom="22px"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
+        android:paddingTop="22mm"
+        android:paddingBottom="22mm"
         android:background="#ffffff">
         <ImageView
             android:layout_width="wrap_content"
@@ -66,34 +66,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="22px"
+            android:layout_marginLeft="22mm"
             android:gravity="center_vertical"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#313131"
             android:text="这家店怎么样？"/>
     </LinearLayout>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="300px"
+        android:layout_height="300mm"
         android:textColor="#313131"
-        android:textSize="28px"
+        android:textSize="28mm"
         android:background="#ffffff"
         android:gravity="top|left"
-        android:lineSpacingExtra="5dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:lineSpacingExtra="5mm"
+        android:paddingTop="10mm"
+        android:paddingBottom="10mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm"
         android:textColorHint="#959595"
         android:hint="请输入"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1px"
-        android:paddingTop="30px"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
-        android:paddingBottom="30px"
+        android:layout_marginTop="1mm"
+        android:paddingTop="30mm"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
+        android:paddingBottom="30mm"
         android:background="#ffffff"
         android:orientation="horizontal">
         <android.support.v7.widget.RecyclerView
@@ -109,8 +109,8 @@
     <TextView
         android:id="@+id/let_me_answer"
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:textSize="28px"
+        android:layout_height="88mm"
+        android:textSize="28mm"
         android:textColor="#fff"
         android:gravity="center"
         android:background="@drawable/productdetails_btn_bg_g"

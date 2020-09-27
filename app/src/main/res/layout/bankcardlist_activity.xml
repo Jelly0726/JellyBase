@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,18 +35,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="银行卡"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical|right"
-            android:paddingRight="20px">
+            android:paddingRight="20mm">
             <ImageView
-                android:layout_width="42px"
-                android:layout_height="42px"
+                android:layout_width="42mm"
+                android:layout_height="42mm"
                 android:src="@mipmap/jia"/>
         </LinearLayout>
     </LinearLayout>
@@ -60,6 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:layout_marginTop="22px"/>
+            android:layout_marginTop="22mm"/>
     </com.base.xrefreshview.XRefreshView>
 </LinearLayout>

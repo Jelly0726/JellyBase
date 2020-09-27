@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="45mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/dp_1"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="45mm"
+            android:layout_height="45mm"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_10">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,14 +35,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/sp_15"
+            android:textSize="15mm"
             android:text="添加新地址"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="45mm"
+            android:layout_height="45mm"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_10">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,19 +51,19 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_8"
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_11"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:layout_marginTop="8mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="11mm"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
-            android:layout_width="@dimen/dp_100"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:textColor="#313131"
             android:text="收货人"/>
         <EditText
@@ -76,24 +76,24 @@
             android:singleLine="true"
             android:gravity="center_vertical|left"
             android:hint="输入姓名"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:background="@null"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="40mm"
         android:orientation="horizontal"
         android:layout_marginTop="0px"
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_11"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:paddingLeft="15mm"
+        android:paddingRight="11mm"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
-            android:layout_width="@dimen/dp_100"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:textColor="#313131"
             android:text="收货人电话"/>
         <EditText
@@ -107,24 +107,24 @@
             android:inputType="phone"
             android:gravity="center_vertical|left"
             android:hint="输入手机号码"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:background="@null"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="40mm"
         android:orientation="horizontal"
         android:layout_marginTop="0px"
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_11"
+        android:paddingLeft="15mm"
+        android:paddingRight="11mm"
         android:paddingTop="0px"
         android:paddingBottom="0px"
         android:background="#fff">
         <TextView
-            android:layout_width="@dimen/dp_100"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:textColor="#313131"
             android:text="所在地区"/>
         <TextView
@@ -137,8 +137,8 @@
             android:ellipsize="end"
             android:gravity="center_vertical|right"
             android:hint="请选择"
-            android:textSize="@dimen/sp_14"
-            android:drawablePadding="@dimen/dp_5"
+            android:textSize="14mm"
+            android:drawablePadding="5mm"
             android:drawableRight="@mipmap/right_next"
             android:background="@null"/>
     </LinearLayout>
@@ -147,17 +147,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="0px"
-        android:minHeight="@dimen/dp_100"
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_11"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:minHeight="100mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="11mm"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_40"
+            android:layout_width="100mm"
+            android:layout_height="40mm"
             android:gravity="center_vertical"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:textColor="#313131"
             android:text="详细地址"/>
         <EditText
@@ -166,39 +166,39 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="top|left"
-            android:paddingTop="@dimen/dp_5"
-            android:paddingLeft="@dimen/dp_5"
+            android:paddingTop="5mm"
+            android:paddingLeft="5mm"
             android:hint="输入详细地址"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:background="@null"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+        android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/dp_11"
-        android:paddingLeft="@dimen/dp_15"
-        android:paddingRight="@dimen/dp_11"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:layout_marginTop="11mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="11mm"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textSize="@dimen/sp_14"
+            android:textSize="14mm"
             android:textColor="#313131"
             android:text="设为默认地址"/>
         <CheckBox
-            android:textSize="@dimen/sp_12"
+            android:textSize="12mm"
             android:background="@null"
             android:clickable="true"
-            android:drawablePadding="@dimen/dp_5"
+            android:drawablePadding="5mm"
             android:drawableLeft="@drawable/checkbox_style"
             android:id="@+id/default_checkBox"
             android:button="@null"
-            android:minHeight="@dimen/dp_20"
+            android:minHeight="20mm"
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:layout_width="wrap_content"
@@ -211,8 +211,8 @@
     <TextView
         android:id="@+id/commit_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
-        android:textSize="@dimen/sp_14"
+        android:layout_height="45mm"
+        android:textSize="14mm"
         android:textColor="#fff"
         android:gravity="center"
         android:text="保存"

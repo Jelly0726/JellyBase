@@ -15,17 +15,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,18 +37,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="蓝牙配对"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/top_right"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical|right"
-            android:paddingRight="20px">
+            android:paddingRight="20mm">
             <ImageView
-                android:layout_width="42px"
-                android:layout_height="42px"
+                android:layout_width="42mm"
+                android:layout_height="42mm"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -59,54 +59,54 @@
         android:layout_height="wrap_content"
         android:background="#ffff"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="5mm">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="10mm"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:text="@string/scan_setting"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="12sp" />
+            android:textSize="12mm" />
 
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/setting_name"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:textSize="13sp" />
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
+            android:textSize="13mm" />
 
         <EditText
             android:id="@+id/et_mac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/setting_mac"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:textSize="13sp" />
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
+            android:textSize="13mm" />
 
         <EditText
             android:id="@+id/et_uuid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/setting_uuid"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:textSize="13sp" />
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
+            android:textSize="13mm" />
 
         <Switch
             android:id="@+id/sw_auto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
             android:text="AutoConnect ?"
-            android:textSize="13sp" />
+            android:textSize="13mm" />
 
     </LinearLayout>
 
@@ -114,14 +114,14 @@
         android:id="@+id/txt_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="5mm"
         android:layout_gravity="center_horizontal"
         />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="0dp">
+        android:padding="0mm">
 
         <Button
             android:id="@+id/btn_scan"
@@ -132,11 +132,11 @@
 
         <ImageView
             android:id="@+id/img_loading"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="10mm"
             app:srcCompat="@drawable/bluetooth_loding_24dp"
             android:visibility="invisible" />
 
@@ -146,12 +146,12 @@
         android:id="@+id/list_device"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="10mm"
         android:background="#fff"
         android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
+        android:dividerHeight="0.5mm"
+        android:paddingEnd="5mm"
+        android:paddingStart="5mm"
         android:scrollbars="none" />
 
 

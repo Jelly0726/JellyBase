@@ -11,8 +11,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="300mm"
+            android:layout_height="150mm"
             android:scaleType="centerCrop"
             android:background="@drawable/checkversion_dialog_bg" />
 
@@ -21,36 +21,36 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="15mm">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="10mm"
                 android:text="检测到新版本是否更新?"
                 android:textColor="@android:color/black"
-                android:textSize="13sp" />
+                android:textSize="13mm" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="70dp">
+                android:layout_marginTop="10mm"
+                android:layout_height="70mm">
                 <TextView
                     android:id="@+id/tv_msg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text=""
                     android:textColor="#666"
-                    android:textSize="12sp" />
+                    android:textSize="12mm" />
             </ScrollView>
 
             <Button
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="10mm"
                 android:id="@+id/versionchecklib_version_dialog_commit"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="35mm"
                 android:background="@drawable/checkversion_shape_corner"
                 android:text="升级"
                 android:textColor="@android:color/white" />

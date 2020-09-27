@@ -14,16 +14,16 @@
     <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginBottom="1px"
+        android:layout_height="45mm"
+        android:layout_marginBottom="1mm"
         android:gravity="center"
         android:background="#ffffff" >
 
         <ImageView
             android:id="@+id/destination_back"
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="wrap_content"
-            android:padding="5dp"
+            android:padding="5mm"
             android:background="@android:color/white"
             android:src="@drawable/amap_btn_back"
             />
@@ -31,12 +31,12 @@
         <EditText
             android:id="@+id/destination_edittext"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="35mm"
             android:gravity="center|left"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:textSize="16sp"
+            android:paddingLeft="5mm"
+            android:paddingRight="5mm"
+            android:textSize="16mm"
             android:textColor="#ff000000"
             android:hint="输入地址"
             android:imeOptions="actionSearch|flagNoFullscreen"
@@ -47,21 +47,21 @@
 
         <TextView
             android:id="@+id/destination_search"
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="#ff000000"
-            android:textSize="16sp"
+            android:textSize="16mm"
             android:text="搜索" />
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:background="#fff"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="10mm"
+        android:paddingRight="10mm"
         android:gravity="center_vertical">
         <TextView
             android:id="@+id/address_tv"
@@ -72,10 +72,10 @@
         <TextView
             android:id="@+id/location_tv"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
+            android:layout_height="35mm"
+            android:layout_marginLeft="20mm"
+            android:paddingRight="20mm"
+            android:paddingLeft="20mm"
             android:text="定位"
             android:gravity="center"
             android:background="@drawable/amap_btn_bg"
@@ -85,7 +85,7 @@
         android:id="@+id/recommend_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10mm">
     </ListView>
 
 </LinearLayout>

@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements
                         Permission.Group.STORAGE,
                         Permission.Group.CALENDAR,
                         Permission.Group.CAMERA,
-                        Permission.Group.LOCATION,
+                        //Permission.Group.LOCATION, //部分手机设置为仅使用时返回授权失败所以在开启定位前再请求授权
                         new String[]{
                                 Permission.READ_PHONE_STATE,
                                 Permission.CALL_PHONE

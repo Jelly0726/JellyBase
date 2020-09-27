@@ -4,10 +4,10 @@
     android:layout_height="wrap_content" 
     android:textColor="#000000"
     android:background="#ffffff"
-    android:textSize="16sp"
-    android:paddingTop="10dp"
-    android:paddingLeft="10dp"
-    android:paddingBottom="10dp"
+    android:textSize="16mm"
+    android:paddingTop="10mm"
+    android:paddingLeft="10mm"
+    android:paddingBottom="10mm"
     android:text="目的地"
     >
     

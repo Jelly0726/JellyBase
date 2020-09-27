@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="15dip"
-    android:paddingTop="15dip"
+    android:paddingBottom="15mm"
+    android:paddingTop="15mm"
     android:background="#FFFFFFFF" >
 
     <TextView
@@ -11,16 +11,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dip"
+        android:layout_marginLeft="20mm"
         android:textColor="@android:color/black"
-        android:textSize="16sp" />
+        android:textSize="16mm" />
 
     <ImageView
         android:id="@+id/group_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dip" 
+        android:layout_marginRight="20mm" 
         android:src="@drawable/amap_offlinearrow_down"
         />
 </RelativeLayout>

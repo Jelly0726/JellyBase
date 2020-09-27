@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="20dp"
+    android:padding="20mm"
     android:layout_height="wrap_content"
     android:background="@color/main_bg">
 
@@ -14,13 +14,13 @@
         android:max="100"
         android:progress="0"
 
-        android:layout_height="15dp" />
+        android:layout_height="15mm" />
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:textColor="#000000"
             android:text="@string/versionchecklib_downloading"
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             android:id="@+id/tv_progress"
             android:text="@string/versionchecklib_progress"
             android:textColor="#000000"
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content" />
     </RelativeLayout>

@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,19 +35,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="16sp"
+            android:textSize="16mm"
             android:text="复制、粘贴"
             android:textColor="#313131"/>
         <LinearLayout
             android:id="@+id/right_text"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:textColor="#313131"
                 android:text=""/>
         </LinearLayout>
@@ -59,15 +59,15 @@
         <TextView
             android:id="@+id/pintText_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="35mm"
             android:layout_weight="1"
             android:text="普通字符串"
             android:gravity="center_vertical"
-            android:layout_marginTop="1px"
+            android:layout_marginTop="1mm"
             android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12sp"/>
+            android:paddingLeft="10mm"
+            android:paddingRight="10mm"
+            android:textSize="12mm"/>
         <Button
             android:id="@+id/pintCopy_btn"
             android:layout_width="wrap_content"
@@ -81,14 +81,14 @@
         <EditText
             android:id="@+id/pintText_ed"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="35mm"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_marginTop="1px"
+            android:layout_marginTop="1mm"
             android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12sp"
+            android:paddingLeft="10mm"
+            android:paddingRight="10mm"
+            android:textSize="12mm"
             android:hint=""/>
         <Button
             android:id="@+id/pintPaste_btn"
@@ -103,15 +103,15 @@
         <TextView
             android:id="@+id/netText_tv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="35mm"
             android:layout_weight="1"
             android:text="http://www.baidu.com"
             android:gravity="center_vertical"
-            android:layout_marginTop="1px"
+            android:layout_marginTop="1mm"
             android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12sp"/>
+            android:paddingLeft="10mm"
+            android:paddingRight="10mm"
+            android:textSize="12mm"/>
         <Button
             android:id="@+id/netCopy_btn"
             android:layout_width="wrap_content"
@@ -125,14 +125,14 @@
         <EditText
             android:id="@+id/netText_ed"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="35mm"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_marginTop="1px"
+            android:layout_marginTop="1mm"
             android:background="#ffffff"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12sp"
+            android:paddingLeft="10mm"
+            android:paddingRight="10mm"
+            android:textSize="12mm"
             android:hint=""/>
         <Button
             android:id="@+id/netPaste_btn"

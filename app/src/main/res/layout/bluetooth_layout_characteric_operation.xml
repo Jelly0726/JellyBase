@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp" />
+        android:padding="10mm" />
 
     <TextView
         android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="12sp"
+        android:padding="10mm"
+        android:textSize="12mm"
         android:textStyle="bold" />
 
     <TextView
@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fadeScrollbars="false"
-        android:padding="10dp"
+        android:padding="10mm"
         android:scrollbars="vertical"
-        android:textSize="13sp" />
+        android:textSize="13mm" />
 
 </LinearLayout>

@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="45mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_marginBottom="1px"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="45mm"
+            android:layout_height="45mm"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_10">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,14 +35,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="@dimen/sp_15"
+            android:textSize="15mm"
             android:text="账户明细"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="45mm"
+            android:layout_height="45mm"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp_10">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,6 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:layout_marginTop="@dimen/dp_11"/>
+            android:layout_marginTop="11mm"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

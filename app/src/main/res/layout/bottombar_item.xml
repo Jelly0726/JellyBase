@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/mLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:layout_gravity="center_horizontal|bottom"
         android:gravity="center|bottom"
         android:orientation="vertical"
@@ -29,8 +29,8 @@
         android:id="@+id/image_flayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="1dp"
-        android:layout_marginBottom="10dp"
+        android:elevation="1mm"
+        android:layout_marginBottom="10mm"
         android:layout_gravity="bottom"
         >
         <ImageView
@@ -44,15 +44,15 @@
         <TextView
             android:id="@+id/tv_unred_num"
             android:layout_width="wrap_content"
-            android:minWidth="15dp"
+            android:minWidth="15mm"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="14mm"
             android:background="@drawable/bottombar_shape_unread"
             android:gravity="center"
             android:text="99+"
             android:textColor="@color/bottombar_white"
-            android:textSize="10sp"
+            android:textSize="10mm"
             android:visibility="gone" />
 
         <TextView
@@ -60,23 +60,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="14mm"
             android:background="@drawable/bottombar_shape_unread"
             android:gravity="center"
             android:text="NEW"
             android:textColor="@color/bottombar_white"
-            android:textSize="6sp"
+            android:textSize="6mm"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_point"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
+            android:layout_width="5mm"
+            android:layout_height="5mm"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="10mm"
             android:background="@drawable/bottombar_shape_notify_point"
             android:gravity="center"
-            android:textSize="6sp"
+            android:textSize="6mm"
             android:visibility="gone" />
 
     </FrameLayout>

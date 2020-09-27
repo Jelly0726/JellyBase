@@ -7,17 +7,17 @@
     android:background="@color/main_bg">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="#fff">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,14 +28,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="取消订单"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,12 +44,12 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="40mm"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginTop="10mm"
+        android:paddingLeft="10mm"
+        android:paddingRight="10mm"
         android:background="#fff">
         <TextView
             android:id="@+id/orderNo_tv"
@@ -58,30 +58,30 @@
             android:layout_weight="1"
             android:text="单号：487887878554654"
             android:textColor="#454545"
-            android:textSize="12sp"/>
+            android:textSize="12mm"/>
         <TextView
             android:id="@+id/time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="487887878554654"
             android:textColor="#454545"
-            android:textSize="12sp"/>
+            android:textSize="12mm"/>
     </LinearLayout>
     <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="20px"
-        android:paddingRight="40px"
-        android:paddingTop="20px"
-        android:paddingBottom="20px"
+        android:layout_marginTop="10mm"
+        android:paddingLeft="20mm"
+        android:paddingRight="40mm"
+        android:paddingTop="20mm"
+        android:paddingBottom="20mm"
         android:background="@drawable/confirm_order_bg">
         <ImageView
             android:id="@+id/order_product_img"
-            android:layout_width="150px"
-            android:layout_height="150px"
+            android:layout_width="150mm"
+            android:layout_height="150mm"
             android:src="@mipmap/nopicf"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"/>
@@ -89,8 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="30px"
-            android:layout_marginRight="30px"
+            android:layout_marginLeft="30mm"
+            android:layout_marginRight="30mm"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/order_product_name"
@@ -101,7 +101,7 @@
                 android:lines="1"
                 android:ellipsize="end"
                 android:textColor="#454545"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:text="农家自产玉米"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_menberID"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:text="买家ID："/>
                 <TextView
                     android:id="@+id/order_memberID"
@@ -122,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_menberID"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:text="海丝路"/>
             </LinearLayout>
             <LinearLayout
@@ -136,7 +136,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_price"
-                    android:textSize="24px"
+                    android:textSize="24mm"
                     android:text="¥200积分"/>
             </LinearLayout>
         </LinearLayout>
@@ -144,14 +144,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingRight="0px">
+            android:paddingRight="0mm">
             <TextView
                 android:id="@id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:textSize="28px"
+                android:textSize="28mm"
                 android:textColor="#454545"
                 android:text="¥2.5积分"/>
             <TextView
@@ -160,24 +160,24 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:textSize="24px"
-                android:layout_marginTop="10px"
+                android:textSize="24mm"
+                android:layout_marginTop="10mm"
                 android:textColor="#727272"
                 android:text="x10斤"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:layout_marginTop="10mm"
+        android:paddingLeft="10mm"
+        android:paddingRight="10mm"
         android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:textColor="#464546"
             android:gravity="center_vertical"
             android:text="取消原因"/>
@@ -185,14 +185,14 @@
             android:id="@+id/cancelCause_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="10mm"
             android:layout_weight="1"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:textColor="#454545"
             android:gravity="center_vertical|right"
             android:text="取消原因"/>
         <ImageView
-            android:layout_width="10dp"
+            android:layout_width="10mm"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/right_next"/>
@@ -201,31 +201,31 @@
         android:id="@+id/cause_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1px"
+        android:layout_marginTop="1mm"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="10mm"
         android:background="#FFFFFF">
         <TextView
             android:id="@+id/causeNum_tv"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="30mm"
+            android:layout_marginLeft="10mm"
+            android:layout_marginRight="10mm"
             android:gravity="center_vertical|right"
             android:textColor="#454545"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:text="0/100"/>
         <EditText
             android:id="@+id/cancelCause_edit"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="100mm"
             android:background="@drawable/cancelorder_edit_bg"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10mm"
+            android:layout_marginRight="10mm"
             android:gravity="top|left"
-            android:textSize="12sp"
+            android:textSize="12mm"
             android:textColor="#454545"
-            android:padding="5dp"/>
+            android:padding="5mm"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -233,12 +233,12 @@
         android:layout_weight="1"/>
     <Button
         android:id="@+id/commit_btn"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_width="200mm"
+        android:layout_height="40mm"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/orange_btn_bg"
-       android:layout_marginBottom="30dp"
+       android:layout_marginBottom="30mm"
         android:textColor="#ffffff"
-        android:textSize="12sp"
+        android:textSize="12mm"
         android:text="提交"/>
 </LinearLayout>

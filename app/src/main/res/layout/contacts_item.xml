@@ -18,15 +18,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="50mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="8dp" >
+        android:paddingLeft="8mm" >
 
         <CheckBox
             android:id="@+id/cbChecked"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="23mm"
+            android:layout_height="23mm"
             android:background="@drawable/checkbox_style"
             android:button="@null"
             android:clickable="false"
@@ -38,9 +38,9 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="8dp" >
+            android:paddingTop="5mm"
+            android:paddingBottom="5mm"
+            android:paddingLeft="8mm" >
 
             <TextView
                 android:id="@+id/title"
@@ -50,7 +50,7 @@
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="#313131"
-                android:textSize="15sp" />
+                android:textSize="15mm" />
 
             <TextView
                 android:id="@+id/number"
@@ -60,7 +60,7 @@
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="#727272"
-                android:textSize="12sp" />
+                android:textSize="12mm" />
         </LinearLayout>
     </LinearLayout>
 

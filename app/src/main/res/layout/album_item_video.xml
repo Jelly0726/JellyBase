@@ -19,8 +19,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/album_MatchParent"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="@dimen/album_dp_2"
-    app:cardElevation="@dimen/album_dp_2"
+    app:cardCornerRadius="2mm"
+    app:cardElevation="2mm"
     app:cardPreventCornerOverlap="false">
 
     <RelativeLayout
@@ -39,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/album_dp_6"
-            android:layout_marginLeft="@dimen/album_dp_6"
-            android:layout_marginStart="@dimen/album_dp_6"
+            android:layout_marginBottom="6mm"
+            android:layout_marginLeft="6mm"
+            android:layout_marginStart="6mm"
             android:drawableLeft="@drawable/album_video_white"
-            android:drawablePadding="@dimen/album_dp_4"
+            android:drawablePadding="4mm"
             android:drawableStart="@drawable/album_video_white"
             android:ellipsize="end"
             android:maxLines="1"

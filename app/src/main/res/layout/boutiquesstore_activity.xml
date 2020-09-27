@@ -8,34 +8,34 @@
     android:background="@color/main_bg">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@mipmap/dbjb">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical|left"
             android:orientation="horizontal"
-            android:paddingLeft="20px"
+            android:paddingLeft="20mm"
             android:layout_weight="0">
             <ImageView
-                android:layout_width="34px"
+                android:layout_width="34mm"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/daj_fh"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70px"
+            android:layout_height="70mm"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingLeft="20px"
-            android:paddingRight="20px"
+            android:paddingLeft="20mm"
+            android:paddingRight="20mm"
             android:layout_weight="1"
             android:background="@drawable/home_search_bg">
             <ImageView
-                android:layout_width="26px"
+                android:layout_width="26mm"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/home_suosou"/>
             <TextView
@@ -43,17 +43,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|left"
-                android:layout_marginLeft="22px"
-                android:textSize="24px"
+                android:layout_marginLeft="22mm"
+                android:textSize="24mm"
                 android:textColor="#959595"
                 android:text="搜索商品"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/shopcart_layout"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center"
-            android:paddingRight="0px"
+            android:paddingRight="0mm"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20px"
+                android:textSize="20mm"
                 android:textColor="#ffffff"
                 android:text="购物车"/>
         </LinearLayout>
@@ -90,21 +90,21 @@
                     <com.base.bgabanner.BGABanner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="272px"
+                        android:layout_height="272mm"
                         android:scaleType="fitXY"
                         app:banner_indicatorGravity="bottom|center_horizontal"
                         app:banner_pageChangeDuration="1500"
                         app:banner_placeholderDrawable="@drawable/bga_banner_holder"
-                        app:banner_tipTextSize="12sp"
+                        app:banner_tipTextSize="12mm"
                         app:banner_transitionEffect="accordion"/>
                 </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
+                    android:layout_height="80mm"
                     android:orientation="horizontal"
-                    android:paddingLeft="22px"
-                    android:paddingRight="22px"
-                    android:layout_marginTop="0px"
+                    android:paddingLeft="22mm"
+                    android:paddingRight="22mm"
+                    android:layout_marginTop="0mm"
                     android:background="#fff">
                     <TextView
                         android:id="@+id/recommend_tv"
@@ -113,14 +113,14 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:textColor="#000"
-                        android:textSize="28px"
+                        android:textSize="28mm"
                         android:text="为你推荐"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="16px"
+                    android:paddingBottom="16mm"
                     android:background="#fff">
                     <LinearLayout
                         android:id="@+id/recommend_layout1"
@@ -131,27 +131,27 @@
                         android:gravity="center"
                         android:layout_gravity="center">
                         <ImageView
-                            android:layout_width="188px"
-                            android:layout_height="114px"
-                            android:layout_marginTop="16px"
+                            android:layout_width="188mm"
+                            android:layout_height="114mm"
+                            android:layout_marginTop="16mm"
                             android:src="@mipmap/sy_jpsc1"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10px"
+                            android:layout_marginTop="10mm"
                             android:gravity="center"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#f44c4c"
-                                android:textSize="28px"
+                                android:textSize="28mm"
                                 android:text="160"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#959595"
-                                android:textSize="24px"
+                                android:textSize="24mm"
                                 android:text="积分"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -164,27 +164,27 @@
                         android:gravity="center"
                         android:layout_gravity="center">
                         <ImageView
-                            android:layout_width="188px"
-                            android:layout_height="114px"
-                            android:layout_marginTop="16px"
+                            android:layout_width="188mm"
+                            android:layout_height="114mm"
+                            android:layout_marginTop="16mm"
                             android:src="@mipmap/syjpsc2"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10px"
+                            android:layout_marginTop="10mm"
                             android:gravity="center"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#f44c4c"
-                                android:textSize="28px"
+                                android:textSize="28mm"
                                 android:text="160"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#959595"
-                                android:textSize="24px"
+                                android:textSize="24mm"
                                 android:text="积分"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -197,38 +197,38 @@
                         android:gravity="center"
                         android:layout_gravity="center">
                         <ImageView
-                            android:layout_width="188px"
-                            android:layout_height="114px"
-                            android:layout_marginTop="16px"
+                            android:layout_width="188mm"
+                            android:layout_height="114mm"
+                            android:layout_marginTop="16mm"
                             android:src="@mipmap/syjpsc3"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10px"
+                            android:layout_marginTop="10mm"
                             android:gravity="center"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#f44c4c"
-                                android:textSize="28px"
+                                android:textSize="28mm"
                                 android:text="160"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#959595"
-                                android:textSize="24px"
+                                android:textSize="24mm"
                                 android:text="积分"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
+                    android:layout_height="80mm"
                     android:orientation="horizontal"
-                    android:paddingLeft="22px"
-                    android:paddingRight="22px"
-                    android:layout_marginTop="16px"
+                    android:paddingLeft="22mm"
+                    android:paddingRight="22mm"
+                    android:layout_marginTop="16mm"
                     android:background="@mipmap/top">
                     <TextView
                         android:layout_width="match_parent"
@@ -236,22 +236,22 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:textColor="#000"
-                        android:textSize="28px"
+                        android:textSize="28mm"
                         android:text=""
                         />
                     <TextView
                         android:id="@+id/ranking_list_more"
-                        android:layout_width="100px"
+                        android:layout_width="100mm"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical|right"
                         android:textColor="#959595"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="更多"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="334px"
-                    android:layout_marginTop="1px"
+                    android:layout_height="334mm"
+                    android:layout_marginTop="1mm"
                     android:background="#ffffff"
                     android:orientation="horizontal">
                     <RelativeLayout
@@ -263,7 +263,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -274,35 +274,35 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="#313131"
-                                android:layout_marginTop="20px"
-                                android:textSize="24px"
+                                android:layout_marginTop="20mm"
+                                android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:lineSpacingExtra="5px"
+                                android:linemmacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="洗面奶洗面奶洗面奶"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10px"
-                                android:layout_marginBottom="30px"
+                                android:layout_marginTop="10mm"
+                                android:layout_marginBottom="30mm"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="20px"
+                                    android:textSize="20mm"
                                     android:textColor="#f44c4c"
                                     android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="28px"
+                                    android:textSize="28mm"
                                     android:textColor="#f44c4c"
                                     android:text="260"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="24px"
+                                    android:textSize="24mm"
                                     android:textColor="#959595"
                                     android:text="积分"/>
                             </LinearLayout>
@@ -323,7 +323,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -334,35 +334,35 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="#313131"
-                                android:layout_marginTop="20px"
-                                android:textSize="24px"
+                                android:layout_marginTop="20mm"
+                                android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:lineSpacingExtra="5px"
+                                android:linemmacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="联想笔记本电脑联想笔记本电脑联想笔记本电脑"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10px"
-                                android:layout_marginBottom="30px"
+                                android:layout_marginTop="10mm"
+                                android:layout_marginBottom="30mm"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="20px"
+                                    android:textSize="20mm"
                                     android:textColor="#f44c4c"
                                     android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="28px"
+                                    android:textSize="28mm"
                                     android:textColor="#f44c4c"
                                     android:text="260"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="24px"
+                                    android:textSize="24mm"
                                     android:textColor="#959595"
                                     android:text="积分"/>
                             </LinearLayout>
@@ -383,7 +383,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -394,35 +394,35 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="#313131"
-                                android:layout_marginTop="20px"
-                                android:textSize="24px"
+                                android:layout_marginTop="20mm"
+                                android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:lineSpacingExtra="5px"
+                                android:linemmacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="羊毛针织连衣裙女羊毛针织连衣裙女羊毛针织连衣裙女"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10px"
-                                android:layout_marginBottom="30px"
+                                android:layout_marginTop="10mm"
+                                android:layout_marginBottom="30mm"
                                 android:orientation="horizontal">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="20px"
+                                    android:textSize="20mm"
                                     android:textColor="#f44c4c"
                                     android:text="¥"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="28px"
+                                    android:textSize="28mm"
                                     android:textColor="#f44c4c"
                                     android:text="260"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="24px"
+                                    android:textSize="24mm"
                                     android:textColor="#959595"
                                     android:text="积分"/>
                             </LinearLayout>
@@ -437,10 +437,10 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80px"
-                    android:layout_marginTop="10px"
-                    android:paddingLeft="30px"
-                    android:paddingRight="30px"
+                    android:layout_height="80mm"
+                    android:layout_marginTop="10mm"
+                    android:paddingLeft="30mm"
+                    android:paddingRight="30mm"
                     android:background="#ffffff"
                     android:orientation="horizontal">
                     <TextView
@@ -448,37 +448,37 @@
                         android:layout_height="wrap_content"
                         android:textColor="#f44c4c"
                         android:layout_gravity="center_vertical"
-                        android:textSize="28px"
+                        android:textSize="28mm"
                         android:text="品牌闪购"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30px"
+                        android:layout_marginLeft="30mm"
                         android:textColor="#959595"
                         android:layout_gravity="center_vertical"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="10点/20点"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginLeft="30px"
+                        android:layout_marginLeft="30mm"
                         android:textColor="#959595"
                         android:layout_gravity="center_vertical"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="抢大牌5折券"/>
                     <TextView
                         android:id="@+id/brandflash_more"
-                        android:layout_width="100px"
+                        android:layout_width="100mm"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical|right"
                         android:textColor="#959595"
-                        android:textSize="24px"
+                        android:textSize="24mm"
                         android:text="更多"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="280px"
+                    android:layout_height="280mm"
                     android:background="#ffffff"
                     android:orientation="horizontal">
                     <RelativeLayout
@@ -490,7 +490,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -499,12 +499,12 @@
                                 android:src="@mipmap/cp1"/>
                         </LinearLayout>
                         <TextView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginLeft="30px"
-                            android:layout_marginTop="10px"
-                            android:padding="5dp"
-                            android:textSize="24px"
+                            android:layout_width="50mm"
+                            android:layout_height="50mm"
+                            android:layout_marginLeft="30mm"
+                            android:layout_marginTop="10mm"
+                            android:padding="5mm"
+                            android:textSize="24mm"
                             android:textColor="#ffffff"
                             android:gravity="center"
                             android:text="333.88积分"
@@ -519,7 +519,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -537,7 +537,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"
@@ -555,7 +555,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_marginLeft="30px"
+                            android:layout_marginLeft="30mm"
                             android:orientation="vertical">
                             <ImageView
                                 android:layout_width="wrap_content"

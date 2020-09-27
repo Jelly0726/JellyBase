@@ -25,12 +25,12 @@
         </com.amap.api.maps.MapView>
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
-            android:paddingLeft="0px">
+            android:paddingLeft="0mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,21 +38,21 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/starNavi_layout"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="200mm"
+            android:layout_height="40mm"
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="10mm"
             android:gravity="center"
             android:background="@drawable/amap_borderradius_bg">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="5dp"
+                android:drawablePadding="5mm"
                 android:drawableLeft="@drawable/amap_ic_near_24dp"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="16mm"
                 android:textColor="#0b5df5"
                 android:text="开始导航"/>
         </LinearLayout>

@@ -6,19 +6,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="56mm">
 
         <ImageView
             android:id="@+id/img_blue"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:layout_centerVertical="true"
             android:src="@drawable/bluetooth_connected_24dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="10mm"
             android:layout_toRightOf="@id/img_blue"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -27,15 +27,15 @@
                 android:id="@+id/txt_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:textSize="14sp" />
+                android:layout_marginBottom="2mm"
+                android:textSize="14mm" />
 
             <TextView
                 android:id="@+id/txt_mac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textSize="12sp" />
+                android:layout_marginTop="2mm"
+                android:textSize="12mm" />
 
         </LinearLayout>
 
@@ -52,21 +52,21 @@
                 android:id="@+id/txt_rssi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:textSize="12mm" />
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginLeft="5dp"
+                android:layout_width="18mm"
+                android:layout_height="18mm"
+                android:layout_marginLeft="5mm"
                 android:src="@drawable/bluetooth_rssi_24dp" />
 
             <Button
                 android:id="@+id/btn_connect"
-                android:layout_width="50dp"
+                android:layout_width="50mm"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="5mm"
                 android:text="@string/connect"
-                android:textSize="10sp" />
+                android:textSize="10mm" />
 
         </LinearLayout>
 
@@ -83,23 +83,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/connected"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
+                android:textSize="12mm" />
 
             <Button
                 android:id="@+id/btn_disconnect"
-                android:layout_width="50dp"
+                android:layout_width="50mm"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="5mm"
                 android:text="@string/disconnect"
-                android:textSize="10sp" />
+                android:textSize="10mm" />
 
             <Button
                 android:id="@+id/btn_detail"
-                android:layout_width="50dp"
+                android:layout_width="50mm"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="5mm"
                 android:text="@string/enter"
-                android:textSize="10sp" />
+                android:textSize="10mm" />
 
         </LinearLayout>
 

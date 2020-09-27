@@ -36,24 +36,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/amap_offlinearrow_tab1_pressed"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingLeft="20mm"
+                android:paddingRight="20mm"
+                android:paddingTop="10mm"
+                android:paddingBottom="10mm"
                 android:text="@string/all_offline"
-                android:textSize="15sp" />
+                android:textSize="15mm" />
 
             <TextView
                 android:id="@+id/downloaded_list_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/amap_offlinearrow_tab2_normal"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingLeft="20mm"
+                android:paddingRight="20mm"
+                android:paddingTop="10mm"
+                android:paddingBottom="10mm"
                 android:text="@string/download_offline"
-                android:textSize="15sp" />
+                android:textSize="15mm" />
         </LinearLayout>
     </RelativeLayout>
  <!--     
@@ -68,12 +68,12 @@
         <Button
             android:id="@+id/but_all_cancel"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="7dp"
+            android:layout_height="21mm"
+            android:layout_marginRight="5mm"
+            android:layout_marginTop="7mm"
             android:background="@drawable/offline_common_title_btn_selector_640"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
+            android:paddingLeft="6mm"
+            android:paddingRight="6mm"
             android:text="全部取消"
             android:textColor="@color/offline_down_size"
             android:textSize="@dimen/font_22" />
@@ -81,12 +81,12 @@
         <Button
             android:id="@+id/but_all_pause"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="7dp"
+            android:layout_height="21mm"
+            android:layout_marginRight="5mm"
+            android:layout_marginTop="7mm"
             android:background="@drawable/offline_common_title_btn_selector_640"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
+            android:paddingLeft="6mm"
+            android:paddingRight="6mm"
             android:text="全部暂停"
             android:textColor="@color/offline_down_size"
             android:textSize="@dimen/font_22" />
@@ -94,12 +94,12 @@
         <Button
             android:id="@+id/but_all_continue"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="7dp"
+            android:layout_height="21mm"
+            android:layout_marginRight="5mm"
+            android:layout_marginTop="7mm"
             android:background="@drawable/offline_common_title_btn_selector_640"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
+            android:paddingLeft="6mm"
+            android:paddingRight="6mm"
             android:text="全部继续"
             android:textColor="@color/offline_down_size"
             android:textSize="@dimen/font_22" />
@@ -107,11 +107,11 @@
         <Button
             android:id="@+id/but_all_updata"
             android:layout_width="wrap_content"
-            android:layout_height="21dp"
-            android:layout_marginTop="7dp"
+            android:layout_height="21mm"
+            android:layout_marginTop="7mm"
             android:background="@drawable/offline_common_title_btn_selector_640"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp"
+            android:paddingLeft="6mm"
+            android:paddingRight="6mm"
             android:text="全部更新"
             android:textColor="@color/offline_down_size"
             android:textSize="@dimen/font_22" />

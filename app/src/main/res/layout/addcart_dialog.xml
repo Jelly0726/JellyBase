@@ -10,60 +10,60 @@
         android:layout_weight="1"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="146dp"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
-        android:paddingLeft="0px"
-        android:paddingRight="0px"
+        android:layout_height="146mm"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
+        android:paddingLeft="0mm"
+        android:paddingRight="0mm"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:paddingTop="15dp"
-            android:paddingLeft="155dp"
-            android:paddingRight="45dp"
+            android:layout_marginTop="15mm"
+            android:paddingTop="15mm"
+            android:paddingLeft="155mm"
+            android:paddingRight="45mm"
             android:background="#fff">
             <TextView
                 android:id="@+id/goods_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#fe1212"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:gravity="center_vertical"
                 android:text="¥：20/斤"/>
             <TextView
                 android:id="@+id/goods_repertory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20px"
+                android:layout_marginTop="20mm"
                 android:textColor="#313131"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:gravity="center_vertical"
                 android:text="库存200件"/>
             <TextView
                 android:id="@+id/mark_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="15mm"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="12mm"
                 android:gravity="center_vertical"
                 android:text="已选"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/goods_pic"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_marginTop="0px"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="15dp"
-            android:padding="5dp"
+            android:layout_width="125mm"
+            android:layout_height="125mm"
+            android:layout_marginTop="0mm"
+            android:layout_marginLeft="15mm"
+            android:layout_marginBottom="15mm"
+            android:padding="5mm"
             android:scaleType="fitXY"
             android:src="@mipmap/yumi"
-            android:elevation="5dp"
+            android:elevation="5mm"
             android:background="@drawable/addcart_pic_bg"
             />
         <ImageView
@@ -72,31 +72,31 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/addcart_cancel"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginTop="30mm"
+            android:layout_marginRight="15mm"/>
 
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="23dp"
+        android:paddingTop="23mm"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:text="选择分类"
-            android:layout_marginLeft="15dp"/>
+            android:layout_marginLeft="15mm"/>
         <com.base.view.FlowLayout
             android:id="@+id/classify_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="14dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginTop="14mm"
+            android:layout_marginBottom="14mm"
+            android:layout_marginLeft="20mm"
+            android:layout_marginRight="20mm">
         </com.base.view.FlowLayout>
     </LinearLayout>
     <LinearLayout
@@ -106,17 +106,17 @@
         android:background="#fff">
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1mm"
             android:background="#eeeeee"
-            android:layout_marginLeft="30px"/>
+            android:layout_marginLeft="30mm"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="65mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm"
         android:background="#fff">
         <TextView
             android:layout_width="match_parent"
@@ -124,7 +124,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:textSize="15sp"
+            android:textSize="15mm"
             android:textColor="#313131"
             android:text="购买数量"/>
         <LinearLayout
@@ -135,30 +135,30 @@
             android:background="#fff">
             <TextView
                 android:gravity="center"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:text="—"
                 android:id="@+id/reduce_goodsNum"
-                android:layout_width="50dp"
-                android:layout_height="35dp" />
+                android:layout_width="50mm"
+                android:layout_height="35mm" />
 
             <TextView
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:text="1"
                 android:id="@+id/goods_Num"
                 android:layout_width="match_parent"
-                android:layout_height="35dp" />
+                android:layout_height="35mm" />
 
             <TextView
                 android:gravity="center"
-                android:textSize="14sp"
+                android:textSize="14mm"
                 android:text="+"
                 android:id="@+id/increase_goods_Num"
-                android:layout_width="50dp"
-                android:layout_height="35dp" />
+                android:layout_width="50mm"
+                android:layout_height="35mm" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -168,19 +168,19 @@
         android:background="#fff">
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1mm"
             android:background="#eeeeee"
-            android:layout_marginLeft="30px"/>
+            android:layout_marginLeft="30mm"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="20mm"
         android:background="#fff"/>
     <TextView
         android:id="@+id/confirm_tv"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:textSize="14sp"
+        android:layout_height="49mm"
+        android:textSize="14mm"
         android:textColor="#fff"
         android:gravity="center"
         android:text="确定"
