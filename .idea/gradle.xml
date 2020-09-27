@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/WebSocketClient" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/blurkit" />
+            <option value="$PROJECT_DIR$/form" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/ColorPicker" />
+            <option value="$PROJECT_DIR$/library/Common" />
+            <option value="$PROJECT_DIR$/library/FilePicker" />
+            <option value="$PROJECT_DIR$/library/ImagePicker" />
+            <option value="$PROJECT_DIR$/library/MultiplePicker" />
+            <option value="$PROJECT_DIR$/library/WheelPicker" />
+            <option value="$PROJECT_DIR$/library/anti_emulator" />
+            <option value="$PROJECT_DIR$/library/circledialog" />
+            <option value="$PROJECT_DIR$/library/htmlEditor" />
+            <option value="$PROJECT_DIR$/library/tableLayout" />
+            <option value="$PROJECT_DIR$/liveDataBus" />
+            <option value="$PROJECT_DIR$/logreport" />
+            <option value="$PROJECT_DIR$/ocr_ui" />
+            <option value="$PROJECT_DIR$/viewpagerlayoutmanager" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
