@@ -53,7 +53,7 @@ public class Subject<T> extends Observable<T>{
                 readWriteLock.writeLock().lock();
                 try {
                     for (Observer observer : observers) {
-                        observer.onUpdate(Subject.this,null);
+                        observer.onUpdate(Subject.this,"");
                     }
                 } finally {
                     readWriteLock.writeLock().unlock();
