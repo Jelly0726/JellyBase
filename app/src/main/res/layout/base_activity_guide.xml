@@ -11,7 +11,7 @@
             style="@style/MatchMatch"
             app:banner_pageChangeDuration="1000"
             app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/tranmmarent"
+            app:banner_pointContainerBackground="@android:color/transparent"
             app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
             app:banner_pointTopBottomMargin="15mm"
             app:banner_transitionEffect="fade"/>
@@ -21,7 +21,7 @@
             style="@style/MatchMatch"
             app:banner_pageChangeDuration="1000"
             app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/tranmmarent"
+            app:banner_pointContainerBackground="@android:color/transparent"
             app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
             app:banner_pointTopBottomMargin="15mm"
             app:banner_transitionEffect="alpha"/>

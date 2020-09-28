@@ -3,17 +3,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/toast_bg"
-    android:paddingBottom="10dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="10mm"
+    android:paddingLeft="20mm"
+    android:paddingRight="20mm"
+    android:paddingTop="10mm">
 
     <!--<com.facebook.drawee.view.SimpleDraweeView-->
         <!--android:id="@+id/icon"-->
-        <!--android:layout_width="24dp"-->
-        <!--android:layout_height="24dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_width="24mm"-->
+        <!--android:layout_height="24mm"-->
+        <!--android:layout_marginEnd="8mm"-->
+        <!--android:layout_marginRight="8mm"-->
         <!--android:scaleType="centerCrop"-->
         <!--android:visibility="gone" />-->
 

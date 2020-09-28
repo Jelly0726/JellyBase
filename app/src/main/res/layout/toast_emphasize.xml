@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/toast_bg"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16mm">
 
     <!--<com.facebook.drawee.view.SimpleDraweeView-->
         <!--android:id="@+id/icon"-->
-        <!--android:layout_width="40dp"-->
-        <!--android:layout_height="40dp"-->
+        <!--android:layout_width="40mm"-->
+        <!--android:layout_height="40mm"-->
         <!--android:layout_gravity="center"-->
-        <!--android:layout_marginBottom="6dp"-->
+        <!--android:layout_marginBottom="6mm"-->
         <!--android:scaleType="centerCrop"-->
         <!--android:visibility="gone" />-->
 
@@ -21,5 +21,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:textSize="16sp" />
+        android:textSize="16mm" />
 </LinearLayout>

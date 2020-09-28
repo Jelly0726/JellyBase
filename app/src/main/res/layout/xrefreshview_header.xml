@@ -2,16 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/xrefreshview_header_text"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="40mm"
     android:background="@android:color/white"
-    android:paddingBottom="0dp">
+    android:paddingBottom="0mm">
 
     <RelativeLayout
         android:id="@+id/left_images"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="50dp">
+        android:layout_marginLeft="50mm">
 
         <ImageView
             android:id="@+id/xrefreshview_header_arrow"
@@ -21,8 +21,8 @@
 
         <ProgressBar
             android:id="@+id/xrefreshview_header_progressbar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:visibility="gone" />
     </RelativeLayout>
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="15mm"
         android:layout_toLeftOf="@+id/right_text"
         android:src="@drawable/xrefresh_ok" />
 
@@ -45,7 +45,7 @@
             android:id="@+id/xrefreshview_header_hint_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:textSize="10mm"
             android:text="@string/xrefreshview_header_hint_normal" />
 
         <TextView
@@ -53,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/xrefreshview_header_hint_textview"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="2mm"
             android:text="@string/xrefreshview_never_refresh"
-            android:textSize="10sp" />
+            android:textSize="10mm" />
     </RelativeLayout>
 </RelativeLayout>

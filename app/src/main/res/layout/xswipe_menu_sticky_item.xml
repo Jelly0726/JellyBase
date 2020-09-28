@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:padding="@dimen/xswipe_dp_10"
+        android:padding="10mm"
         android:text="AAAAA"
         android:textColor="?colorAccent"/>
 

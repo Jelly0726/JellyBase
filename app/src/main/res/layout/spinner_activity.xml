@@ -27,7 +27,7 @@
             android:layout_gravity="center_vertical"
             android:text="选择商品类型"/>
         <com.base.materialspinner.MaterialSpinner
-            android:id="@+id/mm_product_types"
+            android:id="@+id/sp_product_types"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"

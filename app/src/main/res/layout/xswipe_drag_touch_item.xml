@@ -19,7 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/xswipe_select_white"
-    android:padding="5dp">
+    android:padding="5mm">
 
     <ImageView
         android:id="@+id/iv_touch"
@@ -28,15 +28,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15mm"
+        android:layout_marginRight="15mm"
         android:contentDescription="@string/app_name"
         android:src="@drawable/xswipe_action_module_black"/>
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="@dimen/xswipe_dp_70"
-        android:layout_height="@dimen/xswipe_dp_70"
+        android:layout_width="70mm"
+        android:layout_height="70mm"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
@@ -48,8 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/xswipe_dp_10"
-        android:layout_marginStart="@dimen/xswipe_dp_10"
+        android:layout_marginLeft="10mm"
+        android:layout_marginStart="10mm"
         android:layout_toEndOf="@id/iv_icon"
         android:layout_toLeftOf="@id/iv_touch"
         android:layout_toRightOf="@id/iv_icon"

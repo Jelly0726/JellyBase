@@ -10,18 +10,18 @@
     <RelativeLayout
         android:id="@+id/libTitle_RL"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45mm">
 
         <ImageView
             android:id="@+id/libPlayVideo_tv_cancel"
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:background="@color/transparent"
-            android:paddingBottom="15dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="15dp"
+            android:paddingBottom="15mm"
+            android:paddingLeft="10mm"
+            android:paddingRight="10mm"
+            android:paddingTop="15mm"
             android:onClick="videoPlayClick"
             android:src="@drawable/title_left_arrow_white"/>
 
@@ -31,19 +31,19 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="18mm"/>
 
         <ImageView
             android:id="@+id/libPlayVideo_tv_more"
-            android:layout_width="50dp"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="15dp"
+            android:paddingBottom="15mm"
             android:onClick="videoPlayClick"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp"
-            android:paddingTop="15dp"
+            android:paddingLeft="13mm"
+            android:paddingRight="13mm"
+            android:paddingTop="15mm"
             android:src="@drawable/title_more_white"/>
     </RelativeLayout>
     <VideoView

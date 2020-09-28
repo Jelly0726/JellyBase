@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:padding="10dp" >
+    android:padding="10mm" >
 
     <TextView
         android:id="@+id/popup_tv"

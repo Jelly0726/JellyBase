@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"/>
 
             <LinearLayout
-                android:layout_width="200dp"
+                android:layout_width="200mm"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:background="@color/xswipe_white"
@@ -50,14 +50,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="40mm"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_launcher"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="20mm"
                     android:background="?selectableItemBackground"
                     android:clickable="true"
                     android:gravity="center"

@@ -21,8 +21,8 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/xswipe_dp_70"
-    android:padding="@dimen/xswipe_dp_10">
+    android:minHeight="70mm"
+    android:padding="10mm">
 
     <TextView
         android:id="@+id/tv_content"

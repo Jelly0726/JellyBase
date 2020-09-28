@@ -14,14 +14,14 @@
   <ImageView
       android:id="@+id/capture_mask_top"
       android:layout_width="match_parent"
-      android:layout_height="150dp"
+      android:layout_height="150mm"
       android:layout_alignParentTop="true"
       android:background="@drawable/zxing_scanner_shadow" />
 
   <RelativeLayout
       android:id="@+id/capture_crop_view"
-      android:layout_width="240dp"
-      android:layout_height="240dp"
+      android:layout_width="240mm"
+      android:layout_height="240mm"
       android:layout_below="@+id/capture_mask_top"
       android:layout_centerHorizontal="true"
       android:background="#00000000">
@@ -35,9 +35,9 @@
     <ImageView
         android:id="@+id/capture_scan_line"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="3mm"
         android:layout_alignParentTop="true"
-        android:layout_margin="10dp"
+        android:layout_margin="10mm"
         android:src="#e44e4e" />
   </RelativeLayout>
 
@@ -72,13 +72,13 @@
 
   <ImageView
       android:id="@+id/mo_scanner_back"
-      android:layout_width="36dp"
-      android:layout_height="36dp"
-      android:layout_marginLeft="16dp"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="10dp"
+      android:layout_width="36mm"
+      android:layout_height="36mm"
+      android:layout_marginLeft="16mm"
+      android:layout_marginStart="16mm"
+      android:layout_marginTop="10mm"
       android:background="@drawable/zxing_circle_trans_selector"
-      android:padding="6dp"
+      android:padding="6mm"
       android:src="@drawable/zxing_scanner_back_img" />
 
 
@@ -91,30 +91,30 @@
 
     <ImageView
         android:id="@+id/mo_scanner_histroy"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_margin="10dp"
+        android:layout_width="36mm"
+        android:layout_height="36mm"
+        android:layout_margin="10mm"
         android:background="@drawable/zxing_circle_trans_selector"
-        android:padding="8dp"
+        android:padding="8mm"
         android:visibility="gone"
         android:src="@drawable/zxing_scanner_history_show" />
 
     <ImageView
         android:id="@+id/mo_scanner_photo"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_margin="10dp"
+        android:layout_width="36mm"
+        android:layout_height="36mm"
+        android:layout_margin="10mm"
         android:background="@drawable/zxing_circle_trans_selector"
-        android:padding="10dp"
+        android:padding="10mm"
         android:src="@drawable/zxing_scanner_local_photos" />
 
     <ImageView
         android:id="@+id/mo_scanner_light"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_margin="10dp"
+        android:layout_width="36mm"
+        android:layout_height="36mm"
+        android:layout_margin="10mm"
         android:background="@drawable/zxing_circle_trans_selector"
-        android:padding="8dp"
+        android:padding="8mm"
         android:src="@drawable/zxing_scanner_light" />
   </LinearLayout>
 
@@ -123,10 +123,10 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@+id/capture_crop_view"
-      android:layout_marginTop="16dp"
+      android:layout_marginTop="16mm"
       android:gravity="center_horizontal"
       android:text="将二维码或条形码放入框内，即可自动扫描"
       android:textColor="#ffffff"
-      android:textSize="14sp" />
+      android:textSize="14mm" />
 
 </RelativeLayout>

@@ -14,17 +14,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,14 +36,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="忘记密码"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,15 +52,15 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="220px"
-        android:layout_marginLeft="80px"
-        android:layout_marginRight="80px"
+        android:layout_height="88mm"
+        android:layout_marginTop="220mm"
+        android:layout_marginLeft="80mm"
+        android:layout_marginRight="80mm"
         android:orientation="horizontal"
         android:background="@drawable/bottom_stroke_w">
         <ImageView
-            android:layout_width="40px"
-            android:layout_height="40px"
+            android:layout_width="40mm"
+            android:layout_height="40mm"
             android:src="@mipmap/shouji"
             android:layout_gravity="center_vertical"/>
         <EditText
@@ -69,9 +69,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:paddingLeft="40px"
+            android:paddingLeft="40mm"
             android:textColor="#727272"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:background="@null"
             android:inputType="phone"
             android:lines="1"
@@ -82,25 +82,25 @@
             android:id="@+id/btn_get_ver"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10px"
+            android:layout_marginLeft="10mm"
             android:background="#00000000"
             android:textColor="#27a02d"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:text="发送验证码"
             android:gravity="center"
             android:stateListAnimator="@null"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginLeft="80px"
-        android:layout_marginRight="80px"
+        android:layout_height="88mm"
+        android:layout_marginLeft="80mm"
+        android:layout_marginRight="80mm"
         android:orientation="horizontal"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="30mm"
         android:background="@drawable/bottom_stroke_w">
         <ImageView
-            android:layout_width="40px"
-            android:layout_height="40px"
+            android:layout_width="40mm"
+            android:layout_height="40mm"
             android:src="@mipmap/mima"
             android:layout_gravity="center_vertical"/>
         <EditText
@@ -108,9 +108,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingLeft="40px"
+            android:paddingLeft="40mm"
             android:textColor="#727272"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:background="@null"
             android:inputType="text"
             android:lines="1"
@@ -121,12 +121,12 @@
     <TextView
         android:id="@+id/next_tv"
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="60px"
-        android:layout_marginLeft="80px"
-        android:layout_marginRight="80px"
+        android:layout_height="88mm"
+        android:layout_marginTop="60mm"
+        android:layout_marginLeft="80mm"
+        android:layout_marginRight="80mm"
         android:textColor="#ffffff"
-        android:textSize="28px"
+        android:textSize="28mm"
         android:text="下一步"
         android:gravity="center"
         android:background="@drawable/green_btn_bg"/>

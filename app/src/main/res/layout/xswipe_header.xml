@@ -32,7 +32,7 @@
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/xswipe_dp_10"
+        android:layout_margin="10mm"
         android:text="我们是HeaderView，点我"/>
 
 </LinearLayout>

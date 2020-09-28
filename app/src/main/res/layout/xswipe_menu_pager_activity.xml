@@ -38,21 +38,21 @@
 
             <Button
                 android:id="@+id/btn_one"
-                android:layout_width="0dp"
+                android:layout_width="0mm"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="第一个"/>
 
             <Button
                 android:id="@+id/btn_two"
-                android:layout_width="0dp"
+                android:layout_width="0mm"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="第二个"/>
 
             <Button
                 android:id="@+id/btn_three"
-                android:layout_width="0dp"
+                android:layout_width="0mm"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="第三个"/>

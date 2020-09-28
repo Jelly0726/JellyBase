@@ -12,17 +12,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,14 +34,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="更换密码"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,12 +50,12 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="16px"
-        android:layout_marginLeft="16px"
-        android:layout_marginRight="16px"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:layout_height="88mm"
+        android:layout_marginTop="16mm"
+        android:layout_marginLeft="16mm"
+        android:layout_marginRight="16mm"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
         android:background="#ffffff"
         android:orientation="horizontal">
         <EditText
@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="#aaaaaa"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:maxLength="16"
             android:lines="1"
             android:singleLine="true"
@@ -75,12 +75,12 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="0px"
-        android:layout_marginLeft="16px"
-        android:layout_marginRight="16px"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:layout_height="88mm"
+        android:layout_marginTop="0mm"
+        android:layout_marginLeft="16mm"
+        android:layout_marginRight="16mm"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
         android:background="#ffffff"
         android:orientation="horizontal">
         <EditText
@@ -93,19 +93,19 @@
             android:lines="1"
             android:singleLine="true"
             android:inputType="textPassword"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:textColorHint="#aaaaaa"
             android:hint="请输入6-16位非纯数字新密码"
             android:background="@null"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
-        android:layout_marginTop="1px"
-        android:layout_marginLeft="16px"
-        android:layout_marginRight="16px"
-        android:paddingLeft="30px"
-        android:paddingRight="30px"
+        android:layout_height="88mm"
+        android:layout_marginTop="1mm"
+        android:layout_marginLeft="16mm"
+        android:layout_marginRight="16mm"
+        android:paddingLeft="30mm"
+        android:paddingRight="30mm"
         android:background="#ffffff"
         android:orientation="horizontal">
         <EditText
@@ -118,20 +118,20 @@
             android:lines="1"
             android:singleLine="true"
             android:inputType="textPassword"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:textColorHint="#aaaaaa"
             android:hint="再次输入新密码"
             android:background="@null"/>
     </LinearLayout>
     <TextView
         android:id="@+id/commit_tv"
-        android:layout_width="688px"
-        android:layout_height="88px"
+        android:layout_width="688mm"
+        android:layout_height="88mm"
         android:textColor="#aaaaaa"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textSize="30px"
-        android:layout_marginTop="100px"
+        android:textSize="30mm"
+        android:layout_marginTop="100mm"
         android:background="@drawable/confirm_recharge_bg"
         android:text="确定"/>
 </LinearLayout>

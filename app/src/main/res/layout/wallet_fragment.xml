@@ -15,7 +15,7 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="45mm"
         android:background="#ffffff"
         android:textSize="16sp"
         android:textColor="#000000"
@@ -31,18 +31,18 @@
             <com.base.cardView.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginLeft="10mm"
+                android:layout_marginRight="10mm"
+                android:layout_marginTop="12mm"
                 card_view:startColor="@color/card47ec5e5e"
                 card_view:centreColor="@color/card20ec5e5e"
                 card_view:endColor="@color/cardview_shadow_end"
-                card_view:cardCornerRadius="15dp"
-                card_view:cardElevation="4dp"
-                card_view:contentPaddingBottom="0dp">
+                card_view:cardCornerRadius="15mm"
+                card_view:cardElevation="4mm"
+                card_view:contentPaddingBottom="0mm">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="128mm"
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:background="@drawable/wallet_balance_bg" >
@@ -50,8 +50,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="22dp"
-                        android:textSize="24px"
+                        android:layout_marginTop="22mm"
+                        android:textSize="24mm"
                         android:text="优乐积分"/>
                     <TextView
                         android:id="@+id/integral_tv"
@@ -64,39 +64,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="22dp">
+                        android:layout_marginTop="10mm"
+                        android:layout_marginBottom="22mm">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginBottom="10px"
+                            android:layout_marginBottom="10mm"
                             android:textSize="11sp"
                             android:textColor="#ffeaea"
                             android:gravity="center"
                             android:text="通兑通用"/>
                         <View
-                            android:layout_width="2px"
-                            android:layout_height="21px"
+                            android:layout_width="2mm"
+                            android:layout_height="21mm"
                             android:background="#fff"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginBottom="10px"
+                            android:layout_marginBottom="10mm"
                             android:textSize="11sp"
                             android:textColor="#ffeaea"
                             android:gravity="center"
                             android:text="消费抵现"/>
                         <View
-                            android:layout_width="2px"
-                            android:layout_height="21px"
+                            android:layout_width="2mm"
+                            android:layout_height="21mm"
                             android:background="#fff"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_marginBottom="10px"
+                            android:layout_marginBottom="10mm"
                             android:textSize="11sp"
                             android:textColor="#ffeaea"
                             android:gravity="center"
@@ -105,27 +105,27 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="78dp"
+                    android:layout_height="78mm"
                     android:orientation="horizontal"
-                    android:layout_marginTop="128dp"
+                    android:layout_marginTop="128mm"
                     android:background="@drawable/wallet_balance_bg_b">
                     <LinearLayout
                         android:id="@+id/integral_present"
                         android:layout_width="match_parent"
-                        android:layout_height="166px"
+                        android:layout_height="166mm"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:layout_margin="1px">
+                        android:layout_margin="1mm">
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
-                            android:layout_marginTop="28px"
+                            android:layout_width="19mm"
+                            android:layout_height="19mm"
+                            android:layout_marginTop="28mm"
                             android:src="@mipmap/ic_launcher"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20px"
+                            android:layout_marginTop="20mm"
                             android:text="积分兑换"
                             android:textSize="12sp"
                             android:textColor="#666666"/>
@@ -133,20 +133,20 @@
                     <LinearLayout
                         android:id="@+id/integral_details"
                         android:layout_width="match_parent"
-                        android:layout_height="166px"
+                        android:layout_height="166mm"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:layout_margin="1px">
+                        android:layout_margin="1mm">
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
-                            android:layout_marginTop="28px"
+                            android:layout_width="19mm"
+                            android:layout_height="19mm"
+                            android:layout_marginTop="28mm"
                             android:src="@mipmap/ic_launcher"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20px"
+                            android:layout_marginTop="20mm"
                             android:text="交易记录"
                             android:textSize="12sp"
                             android:textColor="#666666"/>
@@ -154,20 +154,20 @@
                     <LinearLayout
                         android:id="@+id/wallet_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="166px"
+                        android:layout_height="166mm"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:layout_margin="1px">
+                        android:layout_margin="1mm">
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
-                            android:layout_marginTop="28px"
+                            android:layout_width="19mm"
+                            android:layout_height="19mm"
+                            android:layout_marginTop="28mm"
                             android:src="@mipmap/ic_launcher"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20px"
+                            android:layout_marginTop="20mm"
                             android:text="积分充值"
                             android:textSize="12sp"
                             android:textColor="#666666"/>
@@ -175,20 +175,20 @@
                     <LinearLayout
                         android:id="@+id/coupon_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="166px"
+                        android:layout_height="166mm"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
-                        android:layout_margin="1px">
+                        android:layout_margin="1mm">
                         <ImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
-                            android:layout_marginTop="28px"
+                            android:layout_width="19mm"
+                            android:layout_height="19mm"
+                            android:layout_marginTop="28mm"
                             android:src="@mipmap/ic_launcher"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20px"
+                            android:layout_marginTop="20mm"
                             android:text="银行卡"
                             android:textSize="12sp"
                             android:textColor="#666666"/>
@@ -200,19 +200,19 @@
             <com.base.cardView.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10mm"
+                android:layout_marginRight="10mm"
+                android:layout_marginTop="12mm"
+                android:layout_marginBottom="10mm"
                 card_view:startColor="@color/card475e82ec"
                 card_view:centreColor="@color/card205e82ec"
                 card_view:endColor="@color/cardview_shadow_end"
-                card_view:cardCornerRadius="15dp"
-                card_view:cardElevation="4dp"
-                card_view:contentPaddingBottom="0dp">
+                card_view:cardCornerRadius="15mm"
+                card_view:cardElevation="4mm"
+                card_view:contentPaddingBottom="0mm">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
+                    android:layout_height="128mm"
                     android:orientation="vertical"
                     android:gravity="center_horizontal"
                     android:background="@drawable/wallet_gs_bg">
@@ -220,8 +220,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="22dp"
-                        android:textSize="26px"
+                        android:layout_marginTop="22mm"
+                        android:textSize="26mm"
                         android:text="优乐积分"/>
                     <TextView
                         android:id="@+id/gs_tv"
@@ -234,100 +234,100 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="22dp"
-                        android:textSize="22px"
+                        android:layout_marginTop="8mm"
+                        android:layout_marginBottom="22mm"
+                        android:textSize="22mm"
                         android:text="GS行情：1个GS=¥0.000000"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="128dp"
-                    android:paddingBottom="14dp"
+                    android:layout_marginTop="128mm"
+                    android:paddingBottom="14mm"
                     android:gravity="center_horizontal"
                     android:background="@drawable/wallet_gs_bg_b">
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="78dp"
+                        android:layout_height="78mm"
                         android:orientation="horizontal"
                         >
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="166px"
+                            android:layout_height="166mm"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:layout_margin="1px">
+                            android:layout_margin="1mm">
                             <ImageView
-                                android:layout_width="19dp"
-                                android:layout_height="19dp"
-                                android:layout_marginTop="28px"
+                                android:layout_width="19mm"
+                                android:layout_height="19mm"
+                                android:layout_marginTop="28mm"
                                 android:src="@mipmap/ic_launcher"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20px"
+                                android:layout_marginTop="20mm"
                                 android:text="扫一扫"
                                 android:textSize="12sp"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="166px"
+                            android:layout_height="166mm"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:layout_margin="1px">
+                            android:layout_margin="1mm">
                             <ImageView
-                                android:layout_width="19dp"
-                                android:layout_height="19dp"
-                                android:layout_marginTop="28px"
+                                android:layout_width="19mm"
+                                android:layout_height="19mm"
+                                android:layout_marginTop="28mm"
                                 android:src="@mipmap/ic_launcher"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20px"
+                                android:layout_marginTop="20mm"
                                 android:text="收款码"
                                 android:textSize="12sp"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="166px"
+                            android:layout_height="166mm"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:layout_margin="1px">
+                            android:layout_margin="1mm">
                             <ImageView
-                                android:layout_width="19dp"
-                                android:layout_height="19dp"
-                                android:layout_marginTop="28px"
+                                android:layout_width="19mm"
+                                android:layout_height="19mm"
+                                android:layout_marginTop="28mm"
                                 android:src="@mipmap/ic_launcher"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20px"
+                                android:layout_marginTop="20mm"
                                 android:text="转出"
                                 android:textSize="12sp"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="166px"
+                            android:layout_height="166mm"
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:orientation="vertical"
-                            android:layout_margin="1px">
+                            android:layout_margin="1mm">
                             <ImageView
-                                android:layout_width="19dp"
-                                android:layout_height="19dp"
-                                android:layout_marginTop="28px"
+                                android:layout_width="19mm"
+                                android:layout_height="19mm"
+                                android:layout_marginTop="28mm"
                                 android:src="@mipmap/ic_launcher"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20px"
+                                android:layout_marginTop="20mm"
                                 android:text="出入记录"
                                 android:textSize="12sp"
                                 android:textColor="#666666"/>
@@ -335,20 +335,20 @@
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_height="1mm"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
                         android:background="#eeeeee"/>
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_height="40mm"
+                        android:layout_marginTop="4mm"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
+                            android:layout_marginLeft="12mm"
+                            android:layout_marginRight="12mm"
                             android:gravity="center_vertical"
                             android:text="我的地址"
                             android:textColor="#333333"
@@ -356,11 +356,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="14dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
+                            android:layout_marginLeft="14mm"
+                            android:paddingLeft="5mm"
+                            android:paddingRight="5mm"
+                            android:paddingTop="2mm"
+                            android:paddingBottom="2mm"
                             android:textSize="10sp"
                             android:textColor="#FF5E82EC"
                             android:text="一键复制"
@@ -369,54 +369,54 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="4dp"
-                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
+                        android:layout_marginTop="4mm"
+                        android:lineSpacingExtra="5mm"
                         android:gravity="left"
                         android:text="0xgpojdsf75dsfsoi5jh48/5d5f6d5fs6h45f4xd4sf7g9sd857dadf8"
                         android:textColor="#666666"
                         android:textSize="14sp"/>
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
+                        android:layout_height="1mm"
+                        android:layout_marginTop="20mm"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
                         android:background="#eeeeee"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="13dp"
-                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
+                        android:layout_marginTop="13mm"
+                        android:lineSpacingExtra="5mm"
                         android:gravity="left"
                         android:text="        1.我的地址（字符串）是您唯一接收地址，接收/转出请注意地址正确性，人为因素导致接收/转出丢失将不负责追回。"
                         android:textColor="#666666"
-                        android:textSize="10sp"/>
+                        android:textSize="10mm"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="5dp"
-                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
+                        android:layout_marginTop="5mm"
+                        android:lineSpacingExtra="5mm"
                         android:gravity="left"
                         android:text="        2.优乐富联盟商家POS机支持GS钱包消费付款，详情请与商家沟通确认。"
                         android:textColor="#666666"
-                        android:textSize="10sp"/>
+                        android:textSize="10mm"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="5dp"
-                        android:lineSpacingExtra="5dp"
+                        android:layout_marginLeft="12mm"
+                        android:layout_marginRight="12mm"
+                        android:layout_marginTop="5mm"
+                        android:lineSpacingExtra="5mm"
                         android:gravity="left"
                         android:text="        3.目前仅支持GS钱包内部转账，请勿转出GS钱包外地址。"
                         android:textColor="#666666"
-                        android:textSize="10sp"/>
+                        android:textSize="10mm"/>
                 </LinearLayout>
             </com.base.cardView.CardView>
         </LinearLayout>

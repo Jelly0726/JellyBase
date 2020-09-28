@@ -24,42 +24,42 @@
     </FrameLayout>
     <com.jelly.jellybase.videorecord.CircularProgressView
         android:id="@+id/mProgressView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:padding="0dp"
+        android:layout_width="80mm"
+        android:layout_height="80mm"
+        android:padding="0mm"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="75mm"
         app:backColor="#FFE9E9E9"
-        app:backWidth="5dp"
+        app:backWidth="5mm"
         app:progColor="#FFFFB5FC"
-        app:progWidth="5dp"
+        app:progWidth="5mm"
         app:progress="100" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="80mm"
         android:orientation="vertical">
         <TextView
             android:id="@+id/libVideoRecorder_tv_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="5mm"
             android:background="@android:color/transparent"
-            android:padding="2dp"
+            android:padding="2mm"
             android:text="移开取消"
             android:textColor="#FF00FF29"
-            android:textSize="16sp"
+            android:textSize="16mm"
             android:visibility="gone"/>
 
         <Button
             android:id="@+id/libVideoRecorder_btn_start"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="70mm"
+            android:layout_height="70mm"
             android:background="@drawable/libvideo_recorder_default"
             android:focusable="true"
             android:text=""
             android:textColor="#FFB5FC"
-            android:textSize="18sp"/>
+            android:textSize="18mm"/>
     </LinearLayout>
 </FrameLayout>

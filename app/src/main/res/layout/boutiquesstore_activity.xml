@@ -277,7 +277,7 @@
                                 android:layout_marginTop="20mm"
                                 android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:linemmacingExtra="5mm"
+                                android:lineSpacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="洗面奶洗面奶洗面奶"/>
@@ -337,7 +337,7 @@
                                 android:layout_marginTop="20mm"
                                 android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:linemmacingExtra="5mm"
+                                android:lineSpacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="联想笔记本电脑联想笔记本电脑联想笔记本电脑"/>
@@ -397,7 +397,7 @@
                                 android:layout_marginTop="20mm"
                                 android:textSize="24mm"
                                 android:gravity="top|left"
-                                android:linemmacingExtra="5mm"
+                                android:lineSpacingExtra="5mm"
                                 android:lines="2"
                                 android:ellipsize="end"
                                 android:text="羊毛针织连衣裙女羊毛针织连衣裙女羊毛针织连衣裙女"/>

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="7dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    app:elevation="5dp">
+    android:layout_marginTop="7mm"
+    android:layout_marginLeft="5mm"
+    android:layout_marginRight="5mm"
+    app:elevation="5mm">
 
     <LinearLayout
         android:id="@+id/item_layout"
@@ -16,12 +16,12 @@
         android:orientation="horizontal">
         <CheckBox
             android:id="@+id/toggle_section"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="40mm"
+            android:layout_height="40mm"
             android:button="@null"
             android:background="@drawable/tree_section_toggle"
             android:contentDescription="Change state of section"
-            android:padding="7dp"
+            android:padding="7mm"
             />
         <TextView
             android:id="@+id/text_section"
@@ -30,10 +30,10 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@android:color/white"
-            android:padding="7dp"
+            android:padding="7mm"
             android:text="垃圾"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="14mm" />
 
         <TextView
             android:id="@+id/section_size"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/tree_section_size"
-            android:padding="8dp"
+            android:padding="8mm"
             android:text="1M" />
 
         <CheckBox
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="4dp" />
+            android:layout_margin="4mm" />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

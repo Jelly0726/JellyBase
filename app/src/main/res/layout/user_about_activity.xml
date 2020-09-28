@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,14 +35,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="关于我们"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,33 +52,33 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="30mm"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ic_launcher"/>
     <TextView
         android:id="@+id/versions_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="10mm"
         android:gravity="center"
         android:textColor="#727272"
-        android:textSize="24px"
+        android:textSize="24mm"
         android:text=""/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="88mm"
         android:orientation="horizontal"
-        android:paddingRight="30px"
-        android:paddingLeft="30px"
+        android:paddingRight="30mm"
+        android:paddingLeft="30mm"
         android:gravity="center_vertical"
         android:background="#ffffff"
-        android:layout_marginLeft="0px"
-        android:layout_marginRight="0px"
-        android:layout_marginTop="30px">
+        android:layout_marginLeft="0mm"
+        android:layout_marginRight="0mm"
+        android:layout_marginTop="30mm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#313131"
             android:text="公司名称"
             android:gravity="center_vertical"/>
@@ -86,32 +86,32 @@
             android:id="@+id/name_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="20px"
+            android:layout_marginRight="20mm"
             android:layout_weight="1"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#727272"
             android:text="公司名称"
             android:gravity="center_vertical|right"/>
         <ImageView
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:src="@mipmap/right_next"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="88mm"
         android:orientation="horizontal"
-        android:paddingRight="30px"
-        android:paddingLeft="30px"
+        android:paddingRight="30mm"
+        android:paddingLeft="30mm"
         android:gravity="center_vertical"
         android:background="#ffffff"
-        android:layout_marginLeft="0px"
-        android:layout_marginRight="0px"
-        android:layout_marginTop="1px">
+        android:layout_marginLeft="0mm"
+        android:layout_marginRight="0mm"
+        android:layout_marginTop="1mm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#313131"
             android:text="公司地址"
             android:gravity="center_vertical"/>
@@ -119,32 +119,32 @@
             android:id="@+id/address_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="20px"
+            android:layout_marginRight="20mm"
             android:layout_weight="1"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#727272"
             android:text="公司地址"
             android:gravity="center_vertical|right"/>
         <ImageView
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:src="@mipmap/right_next"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88px"
+        android:layout_height="88mm"
         android:orientation="horizontal"
-        android:paddingRight="30px"
-        android:paddingLeft="30px"
+        android:paddingRight="30mm"
+        android:paddingLeft="30mm"
         android:gravity="center_vertical"
         android:background="#ffffff"
-        android:layout_marginLeft="0px"
-        android:layout_marginRight="0px"
-        android:layout_marginTop="1px">
+        android:layout_marginLeft="0mm"
+        android:layout_marginRight="0mm"
+        android:layout_marginTop="1mm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#313131"
             android:text="联系方式"
             android:gravity="center_vertical"/>
@@ -152,15 +152,15 @@
             android:id="@+id/phone_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="20px"
+            android:layout_marginRight="20mm"
             android:layout_weight="1"
-            android:textSize="28px"
+            android:textSize="28mm"
             android:textColor="#727272"
             android:text="联系电话"
             android:gravity="center_vertical|right"/>
         <ImageView
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:src="@mipmap/right_next"/>
     </LinearLayout>
 </LinearLayout>

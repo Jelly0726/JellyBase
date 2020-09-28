@@ -38,37 +38,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/xswipe_green_normal"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:tag="sticky"
                 android:text="A"/>
 
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="AAAAA"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="AAAAA"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="AAAAA"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="AAAAA"/>
 
             <android.support.design.widget.TabLayout
@@ -80,7 +80,7 @@
                 app:tabBackground="?selectableItemBackground"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/xswipe_colorAccent"
-                app:tabIndicatorHeight="@dimen/xswipe_dp_2"
+                app:tabIndicatorHeight="2mm"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/xswipe_colorAccent"
                 app:tabTextColor="@color/xswipe_white"/>
@@ -88,174 +88,174 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="BBBB"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="BBBB"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="BBBB"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="BBBB"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/xswipe_red_normal"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:tag="sticky"
                 android:text="C"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="CCCCCC"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="CCCCCC"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="CCCCCC"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="CCCCCC"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/xswipe_green_pressed"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:tag="sticky"
                 android:text="D"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="DDDDD"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="DDDDD"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="DDDDD"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="DDDDD"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/xswipe_purple_pressed"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:tag="sticky"
                 android:text="E"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="EEEEE"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="EEEEE"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="EEEEE"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="EEEEE"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/xswipe_red_pressed"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:tag="sticky"
                 android:text="F"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="FFFFF"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="FFFFF"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="FFFFF"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/xswipe_dp_70"
+                android:layout_height="70mm"
                 android:gravity="center_vertical"
-                android:padding="@dimen/xswipe_dp_10"
+                android:padding="10mm"
                 android:text="FFFFF"/>
 
         </LinearLayout>

@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,14 +34,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30px"
+            android:textSize="30mm"
             android:text="提现"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100px"
-            android:layout_height="100px"
+            android:layout_width="100mm"
+            android:layout_height="100mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20px">
+            android:paddingLeft="20mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,40 +51,40 @@
     <TextView
         android:id="@+id/bank_tx"
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="100mm"
         android:orientation="horizontal"
         android:background="#ffffff"
-        android:layout_marginTop="22px"
-        android:paddingLeft="40px"
-        android:paddingRight="20px"
+        android:layout_marginTop="22mm"
+        android:paddingLeft="40mm"
+        android:paddingRight="20mm"
         android:gravity="center_vertical"
-        android:textSize="14sp"
+        android:textSize="14mm"
         android:textColor="#000000"
         android:text="请选择提现银行卡"/>
 
     <LinearLayout
         android:id="@+id/change_bank"
         android:layout_width="match_parent"
-        android:layout_height="100px"
-        android:layout_marginTop="22px"
+        android:layout_height="100mm"
+        android:layout_marginTop="22mm"
         android:background="#ffffff"
         android:orientation="horizontal"
-        android:paddingLeft="40px"
-        android:paddingRight="20px"
+        android:paddingLeft="40mm"
+        android:paddingRight="20mm"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/bank_logo"
-            android:layout_width="72px"
-            android:layout_height="72px"
+            android:layout_width="72mm"
+            android:layout_height="72mm"
             android:layout_gravity="center_vertical"
             android:src="@drawable/yinlian" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="72px"
+            android:layout_height="72mm"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="28px"
+            android:layout_marginLeft="28mm"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -96,7 +96,7 @@
                 android:gravity="center_vertical"
                 android:text="中国银行"
                 android:textColor="#313131"
-                android:textSize="28px" />
+                android:textSize="28mm" />
 
             <TextView
                 android:id="@+id/bank_no"
@@ -106,13 +106,13 @@
                 android:gravity="center_vertical"
                 android:text="尾号123"
                 android:textColor="#727272"
-                android:textSize="24px"
+                android:textSize="24mm"
                 android:visibility="visible" />
         </LinearLayout>
 
         <ImageView
-            android:layout_width="30px"
-            android:layout_height="30px"
+            android:layout_width="30mm"
+            android:layout_height="30mm"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/right_next" />
     </LinearLayout>
@@ -122,26 +122,26 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
-        android:paddingTop="20px"
-        android:paddingLeft="40px"
-        android:paddingBottom="10px"
-        android:textSize="28px"
+        android:paddingTop="20mm"
+        android:paddingLeft="40mm"
+        android:paddingBottom="10mm"
+        android:textSize="28mm"
         android:textColor="#313131"
         android:text="提现金额"
         android:background="#ffffff"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90px"
+        android:layout_height="90mm"
         android:orientation="horizontal"
         android:background="#ffffff"
-        android:layout_marginTop="0px"
-        android:paddingLeft="40px">
+        android:layout_marginTop="0mm"
+        android:paddingLeft="40mm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:textSize="46px"
+            android:textSize="46mm"
             android:textColor="#313131"
             android:text="¥"/>
         <EditText
@@ -152,7 +152,7 @@
             android:gravity="center_vertical"
             android:textColor="#313131"
             android:textColorHint="#aaaaaa"
-            android:textSize="24px"
+            android:textSize="24mm"
             android:background="@null"
             android:hint="请输入提现金额"
             android:lines="1"
@@ -163,22 +163,22 @@
         android:id="@+id/charge_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="40px"
-        android:paddingRight="40px"
-        android:layout_marginTop="5dp"
+        android:paddingLeft="40mm"
+        android:paddingRight="40mm"
+        android:layout_marginTop="5mm"
         android:textColor="#313131"
-        android:textSize="12sp"
+        android:textSize="12mm"
         android:gravity="left"
         android:text="手续费：¥0元"/>
     <TextView
         android:id="@+id/commit_tv"
-        android:layout_width="688px"
-        android:layout_height="88px"
+        android:layout_width="688mm"
+        android:layout_height="88mm"
         android:textColor="#ffffff"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
-        android:textSize="30px"
-        android:layout_marginTop="100px"
+        android:textSize="30mm"
+        android:layout_marginTop="100mm"
         android:background="@drawable/confirm_recharge_bg"
         android:text="确认提现"/>
 </LinearLayout>
