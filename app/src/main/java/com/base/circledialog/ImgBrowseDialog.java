@@ -22,7 +22,7 @@ import com.jelly.jellybase.R;
  */
 public class ImgBrowseDialog extends BaseCircleDialog {
     private ImageView imageView;
-    private String url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602328710595&di=8bb7732f56834ef513a65c4949ad4557&imgtype=0&src=http%3A%2F%2Fa1.att.hudong.com%2F05%2F00%2F01300000194285122188000535877.jpg";//图片地址
+    private String url = "";//图片地址
 
     public static ImgBrowseDialog getInstance() {
         ImgBrowseDialog dialogFragment = new ImgBrowseDialog();
@@ -76,7 +76,7 @@ public class ImgBrowseDialog extends BaseCircleDialog {
     }
 
     public void setUrl(String url) {
-//        this.url = url;
+        this.url = url;
         DebugLog.i("url="+url);
         if (getActivity() != null) {
             iniView();
