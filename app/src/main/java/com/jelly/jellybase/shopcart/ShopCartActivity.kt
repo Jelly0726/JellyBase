@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
-import com.base.Utils.DecimalUtils
+import com.base.Utils.RMBUtils
 import com.base.appManager.BaseApplication.getInstance
 import com.base.applicationUtil.AppUtils
 import com.base.eventBus.NetEvent
@@ -333,7 +333,7 @@ class ShopCartActivity : BaseActivity(), SwipeItemClickListener
 //            shopingToal+=java.lang.Double.parseDouble(goods.price) * goods.goodsNum
 //            shopingCount+=goods.goodsNum
         }
-        totalPrice!!.text = "合计：¥" + DecimalUtils.getTwoDecimal1(mtotalPrice) + ""
+        totalPrice!!.text = "合计：¥" + RMBUtils.getTwoDecimal1(mtotalPrice) + ""
         settlement_tv!!.text = "结算(" + selectList.size + ")"
         if (mDataList.size == 0) {
             clearCart()
