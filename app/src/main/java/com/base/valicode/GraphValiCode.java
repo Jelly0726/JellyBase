@@ -101,6 +101,34 @@ public class GraphValiCode {
         return bp;
     }
     //验证码图片
+    public Bitmap createBitmap(String valCode) {
+        padding_left = 0;
+
+        Bitmap bp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bp);
+
+        code = valCode;
+
+        c.drawColor(Color.WHITE);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setTextSize(font_size);
+        //画验证码
+        for (int i = 0; i < code.length(); i++) {
+            randomTextStyle(paint);
+            randomPadding();
+            c.drawText(code.charAt(i) + "", padding_left, padding_top, paint);
+        }
+        //画线条
+        for (int i = 0; i < line_number; i++) {
+            drawLine(c, paint);
+        }
+
+        c.save();//保存
+        c.restore();//
+        return bp;
+    }
+    //验证码图片
     public Bitmap createBitmap() {
         return createBitmap(DEFAULT_MILLISINFUTURE,DEFAULT_COUNTDOWNUNTERVAL);
     }
