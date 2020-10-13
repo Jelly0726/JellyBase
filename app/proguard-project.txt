@@ -835,6 +835,8 @@ public void xxxxxx(**);
 
 -keep class com.base.sqldao.**{*;}
 -keep class com.base.encrypt.**{*;}
+-keep class android.content.pm.**{*;}
+-keep class com.android.internal.telephony.**{*;}
 -keep class systemdb.**{*;}
 -keep class com.base.eventBus.**{*;}
 -keep class com.base.model.**{*;}
