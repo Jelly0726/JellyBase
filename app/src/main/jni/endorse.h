@@ -3,10 +3,10 @@
 //
 #include <android/log.h>
 
-#ifndef OPENSSL_ZSD_H
-#define OPENSSL_ZSD_H
+#ifndef OPENSSL_ENDORSE_H
+#define OPENSSL_ENDORSE_H
 
-#endif //OPENSSL_ZSD_H
+#endif //OPENSSL_ENDORSE_H
 
 #if 1
 #define TAG "cipher"
