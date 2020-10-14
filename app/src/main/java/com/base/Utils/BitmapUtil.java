@@ -36,13 +36,15 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
-import android.support.annotation.ColorInt;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
@@ -55,6 +57,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static android.view.View.DRAWING_CACHE_QUALITY_HIGH;
 
 /**
  * 图片工具类
@@ -124,15 +128,15 @@ public class BitmapUtil {
         }
     }
     /**
-     * 保存Bitmap到sd卡中
+     * 保存Bitmap到系统相册
      */
-    private boolean saveImage(Context context,Bitmap bmp) {
+    public static boolean saveImage(Context context,Bitmap bmp) {
         try {
             //保存到系统相册
             MediaStore.Images.Media.insertImage(context.getContentResolver(), bmp, "title", "description");
 //            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 //            Uri uri = Uri.fromFile(file);
-//            intent.setData(uri);
+//            intent.notifyDataSetChanged(uri);
 //            //这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
 //            context.sendBroadcast(intent);
             return true;
@@ -367,14 +371,14 @@ public class BitmapUtil {
         if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1,
                     drawable.getOpacity() != PixelFormat.OPAQUE
-                            ? Bitmap.Config.ARGB_8888
-                            : Bitmap.Config.RGB_565);
+                            ? Config.ARGB_8888
+                            : Config.RGB_565);
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
                     drawable.getIntrinsicHeight(),
                     drawable.getOpacity() != PixelFormat.OPAQUE
-                            ? Bitmap.Config.ARGB_8888
-                            : Bitmap.Config.RGB_565);
+                            ? Config.ARGB_8888
+                            : Config.RGB_565);
         }
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -963,7 +967,7 @@ public class BitmapUtil {
         if (isEmptyBitmap(src)) return null;
         int newWidth = src.getWidth() + borderWidth;
         int newHeight = src.getHeight() + borderHeight;
-        Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+        Bitmap out = Bitmap.createBitmap(newWidth, newHeight, Config.ARGB_8888);
         Canvas canvas = new Canvas(out);
         Rect rec = new Rect();
         rec.bottom=newHeight--;
@@ -999,7 +1003,7 @@ public class BitmapUtil {
                 srcWidth, reflectionHeight, matrix, false);
         if (null == reflectionBitmap) return null;
         Bitmap out = Bitmap.createBitmap(srcWidth, srcHeight + reflectionHeight,
-                Bitmap.Config.ARGB_8888);
+                Config.ARGB_8888);
         if (null == out) return null;
         Canvas canvas = new Canvas(out);
         canvas.drawBitmap(src, 0, 0, null);
@@ -1033,7 +1037,7 @@ public class BitmapUtil {
         }
 
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
-                Bitmap.Config.ARGB_8888);
+                Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
@@ -1041,7 +1045,7 @@ public class BitmapUtil {
         return bitmap;
     }
     /**
-     * view转bitmap
+     * view转bitmap (view的布局会发生改变)
      * @param view
      * @return
      */
@@ -1069,7 +1073,7 @@ public class BitmapUtil {
         view.buildDrawingCache();  //启用DrawingCache并创建位图
         Bitmap bitmap1=view.getDrawingCache();
         if (bitmap1==null){
-            bitmap1=BitmapUtil.loadBitmapFromView(view, false);
+            bitmap1= BitmapUtil.loadBitmapFromView(view, false);
         }
         Bitmap bitmap = Bitmap.createBitmap(bitmap1); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
         view.setDrawingCacheEnabled(false);  //禁用DrawingCahce否则会影响性能
@@ -1120,7 +1124,7 @@ public class BitmapUtil {
             return null;
         }
 //      Bitmap  bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), HDConstantSet.BITMAP_QUALITY);
-        Bitmap  bitmap = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap  bitmap = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
         c.translate(-v.getScrollX(), -v.getScrollY());
         //c.drawColor(Color.WHITE);
@@ -1215,6 +1219,48 @@ public class BitmapUtil {
         return bitmap;
     }
 
+    /**
+     * 新建Bitmap，将View中内容绘制到Bitmap上
+     * @param view
+     * @return
+     */
+    public static Bitmap createBitmapFromView(View view) {
+        //是ImageView直接获取
+        if (view instanceof ImageView) {
+            Drawable drawable = ((ImageView) view).getDrawable();
+            if (drawable instanceof BitmapDrawable) {
+                return ((BitmapDrawable) drawable).getBitmap();
+            }
+        }
+        view.clearFocus();
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        if (bitmap != null) {
+            Canvas canvas = new Canvas(bitmap);
+            view.draw(canvas);
+            canvas.setBitmap(null);
+        }
+        return bitmap;
+    }
+    /**
+     * 该方式原理主要是：View组件显示的内容可以通过cache机制保存为bitmap
+     */
+    public static Bitmap getBitmapFromView(View view) {
+        Bitmap bitmap = null;
+        //开启view缓存bitmap
+        view.setDrawingCacheEnabled(true);
+        //设置view缓存Bitmap质量
+        view.setDrawingCacheQuality(DRAWING_CACHE_QUALITY_HIGH);
+        //获取缓存的bitmap
+        Bitmap cache = view.getDrawingCache();
+        if (cache != null && !cache.isRecycled()) {
+            bitmap = Bitmap.createBitmap(cache);
+        }
+        //销毁view缓存bitmap
+        view.destroyDrawingCache();
+        //关闭view缓存bitmap
+        view.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
     /**
      * 添加文字水印
      * @param src      源图片
@@ -1317,9 +1363,9 @@ public class BitmapUtil {
      * @return
      */
     public static Drawable getDrawable(int src,int width,int height){
-        Drawable otherDrawable =BaseApplication.getInstance().getResources().getDrawable(src);
+        Drawable otherDrawable = BaseApplication.getInstance().getResources().getDrawable(src);
         otherDrawable.setBounds(0,0, AppUtils.dipTopx(BaseApplication.getInstance(), width)
-                ,AppUtils.dipTopx(BaseApplication.getInstance(), height));//第一0是距左边距离，第二0是距上边距离，30、35分别是长宽
+                , AppUtils.dipTopx(BaseApplication.getInstance(), height));//第一0是距左边距离，第二0是距上边距离，30、35分别是长宽
         return otherDrawable;
     }
     /**
@@ -1342,6 +1388,7 @@ public class BitmapUtil {
                 || path.endsWith(".JPEG") || path.endsWith(".BMP")
                 || path.endsWith(".GIF");
     }
+
 
     /**
      * 获取图片类型
