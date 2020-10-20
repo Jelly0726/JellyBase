@@ -12,10 +12,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.mylhyl.circledialog.internal.BackgroundHelper;
-import com.mylhyl.circledialog.internal.Controller;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.mylhyl.circledialog.callback.CircleItemLabel;
 import com.mylhyl.circledialog.callback.CircleItemViewBinder;
+import com.mylhyl.circledialog.internal.BackgroundHelper;
+import com.mylhyl.circledialog.internal.Controller;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.ItemsParams;
 import com.mylhyl.circledialog.res.drawable.CircleDrawableSelector;
@@ -25,11 +30,6 @@ import com.mylhyl.circledialog.view.listener.OnRvItemClickListener;
 
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by hupei on 2018/4/18.
@@ -109,6 +109,8 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         }
         setLayoutManager(mLayoutManager);
         setHasFixedSize(true);
+        //加个下方的内边距，让item和边框有个距离
+        setPadding(0,0,0,20);
     }
 
     private void createItemDecoration() {
