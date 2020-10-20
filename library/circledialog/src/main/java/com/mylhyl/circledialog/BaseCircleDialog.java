@@ -92,6 +92,7 @@ public final class BaseCircleDialog extends AbsBaseCircleDialog implements Dialo
         setAlpha(dialogParams.alpha);
         setX(dialogParams.xOff);
         setY(dialogParams.yOff);
+        setBackgroundColor(dialogParams.backgroundColor);
         if (mParams != null && mParams.inputParams != null &&
                 mParams.inputParams.showSoftKeyboard && mController != null) {
             setSoftInputMode();
