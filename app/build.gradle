@@ -428,6 +428,8 @@ repositories {
         implementation project(path: ':library:tableLayout')
         //检测当前运行环境
         implementation project(path: ':library:anti_emulator')
+        //设置角标
+        implementation project(path: ':library:ShortcutBadger')
 //        implementation files('libs/libss/email-activation.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里

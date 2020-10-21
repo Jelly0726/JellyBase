@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/library/FilePicker" />
             <option value="$PROJECT_DIR$/library/ImagePicker" />
             <option value="$PROJECT_DIR$/library/MultiplePicker" />
+            <option value="$PROJECT_DIR$/library/ShortcutBadger" />
             <option value="$PROJECT_DIR$/library/WheelPicker" />
             <option value="$PROJECT_DIR$/library/anti_emulator" />
             <option value="$PROJECT_DIR$/library/circledialog" />

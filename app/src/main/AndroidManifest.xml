@@ -372,6 +372,14 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.BadgeMainActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="${applicationId}.action.BADGE_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <!--        如果想要应用支持 PIP，请将 android:supportsPictureInPicture 和 android:resizeableActivity 设置为 true，-->
         <activity android:name=".activity.PIPActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
@@ -852,6 +860,9 @@
         <service android:name=".server.LocationService"
             android:enabled="true"
             />
+        <service
+            android:name=".server.BadgeIntentService"
+            android:exported="false"></service>
         <service android:name="com.base.mic.MicService"/>
         <!--↓↓↓极光推送↓↓↓-->
         <receiver

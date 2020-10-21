@@ -14,11 +14,12 @@ import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.base.permission.CallBack;
 import com.base.permission.PermissionUtils;
-import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.yanzhenjie.permission.runtime.Permission;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -133,10 +134,10 @@ public class LauncherActivity extends BaseActivity {
                             msg.append(permission);
                             msg.append("\n");
                         }
-                        if (msg.length() > 0) {
-                            ToastUtils.showShort(LauncherActivity.this, msg.toString());
-                            return;
-                        }
+//                        if (msg.length() > 0) {
+//                            ToastUtils.showShort(LauncherActivity.this, msg.toString());
+//                            return;
+//                        }
 						new Handler().postDelayed(new Runnable() {
 							public void run() {
 								if (BaseApplication.getInstance().isLogin()) {
@@ -169,6 +170,31 @@ public class LauncherActivity extends BaseActivity {
                         Permission.CALL_PHONE,//拨打电话
                         android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==0&&resultCode==0){
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    if (BaseApplication.getInstance().isLogin()) {
+                        //BaseApplication.getInstance().goLoginActivity();
+                        BaseApplication.getInstance().goMainActivity();//进入主界面
+                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+                        finish();
+                    } else {
+                        if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+                            BaseApplication.getInstance().goLoginActivity();
+                        } else {
+                            BaseApplication.getInstance().goMainActivity();//进入主界面
+                        }
+                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+                        finish();
+                    }
+                }
+            }, 1000);
+        }
     }
 
     @Override

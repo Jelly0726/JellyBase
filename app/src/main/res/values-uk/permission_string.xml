@@ -35,7 +35,7 @@
     <string name="message_error_storage">Please check the external storage device.</string>
 
     <string name="alert_for_doze_mode_title">Tips</string>
-    <string name="alert_for_doze_mode_content">Please allow JellyBase to run in the background, otherwise you may not receive notifications from some JellyBase apps.</string>
+    <string name="alert_for_doze_mode_content">Please allow %1$s to run in the background, otherwise you may not receive notifications from some %1$s apps.</string>
     <string name="alert_for_doze_mode_yes">Allow</string>
     <string name="alert_for_doze_mode_no">Deny</string>
 </resources>

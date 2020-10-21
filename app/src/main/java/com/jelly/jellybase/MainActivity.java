@@ -58,6 +58,7 @@ import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.AutoTextAvtivity;
+import com.jelly.jellybase.activity.BadgeMainActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.CancelOrderActivity;
 import com.jelly.jellybase.activity.CopyActivity;
@@ -745,6 +746,10 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 50:// 判断是否真机
                     intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
+                    startActivity(intent);
+                    break;
+                case 51:// 添加角标
+                    intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
                     startActivity(intent);
                     break;
             }

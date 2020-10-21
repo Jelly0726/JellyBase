@@ -110,7 +110,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         setLayoutManager(mLayoutManager);
         setHasFixedSize(true);
         //加个下方的内边距，让item和边框有个距离
-        setPadding(0,0,0,20);
+//        setPadding(0,0,0,20);
     }
 
     private void createItemDecoration() {

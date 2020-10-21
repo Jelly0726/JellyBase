@@ -67,12 +67,6 @@ abstract class AbsBuildViewItems extends AbsBuildView {
     @Override
     public ButtonView buildButton() {
         ItemsButton itemsButton = new ItemsButton(mContext, mParams);
-        if (!itemsButton.isEmpty()&&mParams.itemsParams.bottomMargin==0L
-                &&(mParams.positiveParams.topMargin==0L
-                ||mParams.negativeParams.topMargin==0L)) {
-            DividerView dividerView = new DividerView(mContext, LinearLayout.HORIZONTAL);
-            mRoot.addView(dividerView);
-        }
         mRoot.addView(itemsButton);
         return itemsButton;
     }
