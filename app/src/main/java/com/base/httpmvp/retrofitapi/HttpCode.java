@@ -6,6 +6,10 @@ package com.base.httpmvp.retrofitapi;
  */
 public class HttpCode {
     /**
+     *浏览器请求成功
+     */
+    public static final int SUCCEED_CODE = 200;
+    /**
      * 请求成功
      */
     public static final int SUCCEED = 1;

@@ -90,10 +90,11 @@ public class HttpUtils {
         if (HttpUtils.isJson(string)) {
             HttpResult httpResult = new Gson().fromJson(string, HttpResult.class);
             if (httpResult.getStatus()!= HttpCode.SUCCEED
+                    &&httpResult.getStatus()!= HttpCode.SUCCEED_CODE
                     &&httpResult.getStatus()!=HttpCode.TOKEN_INVALID
                     &&httpResult.getStatus()!=HttpCode.TOKEN_NOT_EXIST
                     &&!TextUtils.isEmpty(httpResult.getMsg())) {
-                throw new ApiException(httpResult.getMsg());
+                throw new ApiException("HttpUtils:校验服务器返回码="+httpResult.getStatus()+",Message="+httpResult.getMsg());
             }
         }
     }
