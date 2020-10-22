@@ -1,7 +1,7 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.AccountDetailContact;
-import com.base.httpmvp.databean.AccountDetail;
+import com.base.model.AccountDetail;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;

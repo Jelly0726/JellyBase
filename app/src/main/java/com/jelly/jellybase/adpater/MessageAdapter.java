@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.appManager.BaseApplication;
-import com.base.httpmvp.databean.Message;
+import com.base.model.Message;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;

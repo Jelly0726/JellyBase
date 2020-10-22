@@ -1,4 +1,4 @@
-package com.base.httpmvp.databean;
+package com.base.model;
 
 /**
  * Created by Administrator on 2018/1/19.

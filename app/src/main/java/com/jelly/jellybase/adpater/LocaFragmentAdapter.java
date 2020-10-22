@@ -22,7 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.httpmvp.databean.AccountDetail;
+import com.base.model.AccountDetail;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;

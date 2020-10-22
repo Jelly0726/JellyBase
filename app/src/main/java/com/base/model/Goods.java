@@ -1,4 +1,4 @@
-package com.base.httpmvp.databean;
+package com.base.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

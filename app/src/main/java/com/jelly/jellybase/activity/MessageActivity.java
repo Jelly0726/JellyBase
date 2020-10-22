@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.MessageContact;
-import com.base.httpmvp.databean.Message;
+import com.base.model.Message;
 import com.base.httpmvp.presenter.MessagePresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.xrefreshview.XRefreshView;

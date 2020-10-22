@@ -2,12 +2,12 @@ package com.base.httpmvp.retrofitapi;
 
 
 import com.base.bankcard.BankCardInfo;
-import com.base.httpmvp.databean.AboutUs;
-import com.base.httpmvp.databean.AccountDetail;
-import com.base.httpmvp.databean.AppVersion;
-import com.base.httpmvp.databean.Message;
-import com.base.httpmvp.databean.PersonalInfo;
-import com.base.httpmvp.databean.UploadData;
+import com.base.model.AboutUs;
+import com.base.model.AccountDetail;
+import com.base.model.AppVersion;
+import com.base.model.Message;
+import com.base.model.PersonalInfo;
+import com.base.model.UploadData;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;

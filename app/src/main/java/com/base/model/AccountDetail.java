@@ -1,4 +1,4 @@
-package com.base.httpmvp.databean;
+package com.base.model;
 
 import java.io.Serializable;
 

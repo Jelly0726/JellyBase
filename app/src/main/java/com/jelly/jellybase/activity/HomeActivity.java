@@ -21,7 +21,7 @@ import com.base.MapUtil.DestinationActivity;
 import com.base.appManager.BaseApplication;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
-import com.base.httpmvp.databean.ScanResult;
+import com.base.model.ScanResult;
 import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;

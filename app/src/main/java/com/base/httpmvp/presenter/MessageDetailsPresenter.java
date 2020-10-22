@@ -2,7 +2,7 @@ package com.base.httpmvp.presenter;
 
 
 import com.base.httpmvp.contact.MessageDetailsContact;
-import com.base.httpmvp.databean.Message;
+import com.base.model.Message;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;

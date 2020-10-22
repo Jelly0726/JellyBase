@@ -14,7 +14,7 @@ import com.base.circledialog.callback.ConfigDialog;
 import com.base.circledialog.params.DialogParams;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SettingContact;
-import com.base.httpmvp.databean.AppVersion;
+import com.base.model.AppVersion;
 import com.base.httpmvp.presenter.SettingPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.BaseActivityImpl;

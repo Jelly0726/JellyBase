@@ -1,4 +1,4 @@
-package com.base.httpmvp.databean;
+package com.base.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.base.httpmvp.contact.AccountDetailContact;
-import com.base.httpmvp.databean.AccountDetail;
+import com.base.model.AccountDetail;
 import com.base.httpmvp.presenter.AccountDetailPresenter;
 import com.base.httpmvp.retrofitapi.methods.ResultData;
 import com.base.httpmvp.view.BaseActivityImpl;

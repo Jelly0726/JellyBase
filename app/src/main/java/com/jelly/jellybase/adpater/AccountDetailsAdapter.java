@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.httpmvp.databean.AccountDetail;
+import com.base.model.AccountDetail;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 

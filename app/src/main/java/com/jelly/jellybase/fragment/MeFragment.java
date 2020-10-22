@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
-import com.base.httpmvp.databean.MyInfo;
+import com.base.model.MyInfo;
 import com.base.multiClick.AntiShake;
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XNestedScrollView;

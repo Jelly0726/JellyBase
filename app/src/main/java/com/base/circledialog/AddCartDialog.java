@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.httpmvp.databean.Goods;
+import com.base.model.Goods;
 import com.base.view.FlowLayout;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;

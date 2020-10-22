@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.base.appManager.BaseApplication;
 import com.base.httpmvp.contact.MessageDetailsContact;
-import com.base.httpmvp.databean.Message;
+import com.base.model.Message;
 import com.base.httpmvp.presenter.MessageDetailsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.mprogressdialog.MProgressUtil;

@@ -1,9 +1,9 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.PersonalInfoContact;
-import com.base.httpmvp.databean.PersonalInfo;
-import com.base.httpmvp.databean.UploadBean;
-import com.base.httpmvp.databean.UploadData;
+import com.base.model.PersonalInfo;
+import com.base.model.UploadBean;
+import com.base.model.UploadData;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
