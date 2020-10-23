@@ -101,7 +101,7 @@
             android:textColor="@drawable/radiobutton_text_r"
             android:text="请选择"/>
     </RadioGroup>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

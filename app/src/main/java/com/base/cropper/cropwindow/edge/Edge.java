@@ -14,7 +14,7 @@
 package com.base.cropper.cropwindow.edge;
 
 import android.graphics.RectF;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.base.cropper.util.AspectRatioUtil;
 

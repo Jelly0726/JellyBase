@@ -16,8 +16,8 @@
 package com.jelly.jellybase.swipeRefresh.activity.move;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;

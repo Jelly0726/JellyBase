@@ -3,8 +3,8 @@ package com.base.sqldao;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
+import androidx.annotation.NonNull;
+import androidx.collection.ArrayMap;
 import android.text.TextUtils;
 import android.util.Log;
 

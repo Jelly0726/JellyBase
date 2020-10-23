@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;

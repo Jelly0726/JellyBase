@@ -1,11 +1,11 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +19,7 @@ import com.base.applicationUtil.AppUtils;
 import com.base.model.PayMothod;
 import com.base.recyclerViewUtil.ItemDecoration;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ import java.util.List;
  * 支付方式选择框
  * Created by hupei on 2017/4/5.
  */
-public class PaymentDialog extends BaseCircleDialog implements View.OnClickListener{
+public class PaymentDialog extends AbsBaseCircleDialog implements View.OnClickListener{
     //确定
     private TextView confirm_tv;
     //取消
@@ -47,7 +48,6 @@ public class PaymentDialog extends BaseCircleDialog implements View.OnClickListe
 
     public static PaymentDialog getInstance() {
         PaymentDialog dialogFragment = new PaymentDialog();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
         dialogFragment.setWidth(1f);

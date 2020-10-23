@@ -14,7 +14,7 @@ import android.nfc.tech.IsoDep;
 import android.nfc.tech.NfcF;
 import android.nfc.tech.NfcV;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;

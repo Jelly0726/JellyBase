@@ -1,7 +1,7 @@
 package com.base.provider;
 
 import android.content.Context;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
 
 public class JellyProvider extends FileProvider {
     /**

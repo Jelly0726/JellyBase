@@ -1,8 +1,8 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.base.materialspinner.MaterialSpinner;
 import com.base.view.BaseActivity;

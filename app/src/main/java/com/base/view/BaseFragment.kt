@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.hardware.input.InputManager
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.*
 import com.base.SystemBar.StatusBarUtil
 import hugo.weaving.DebugLog

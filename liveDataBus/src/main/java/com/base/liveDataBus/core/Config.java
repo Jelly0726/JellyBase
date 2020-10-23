@@ -2,7 +2,7 @@ package com.base.liveDataBus.core;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.base.liveDataBus.ipc.json.JsonConverter;
 import com.base.liveDataBus.logger.Logger;

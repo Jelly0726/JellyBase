@@ -1,4 +1,4 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,12 +12,13 @@ import android.widget.ImageView;
 import com.base.screenCapture.ScreenUtils;
 import com.base.zxing.CreateQRImage;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 /**
  * 二维码框-自定义
  * Created by hupei on 2017/4/5.
  */
-public class QRDialogLogout extends BaseCircleDialog implements View.OnClickListener {
+public class QRDialogLogout extends AbsBaseCircleDialog implements View.OnClickListener {
     private ImageView imageView;
     private Button rebuild_btn;
     private Button save_btn;
@@ -26,7 +27,6 @@ public class QRDialogLogout extends BaseCircleDialog implements View.OnClickList
 
     public static QRDialogLogout getInstance() {
         QRDialogLogout dialogFragment = new QRDialogLogout();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
         dialogFragment.setWidth(1f);

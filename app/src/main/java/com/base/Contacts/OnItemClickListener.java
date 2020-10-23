@@ -1,6 +1,6 @@
 package com.base.Contacts;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface  OnItemClickListener{
     /**

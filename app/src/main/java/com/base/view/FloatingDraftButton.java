@@ -8,7 +8,7 @@ package com.base.view;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.DecelerateInterpolator;

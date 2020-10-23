@@ -17,8 +17,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import com.jelly.jellybase.R;
 

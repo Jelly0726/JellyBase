@@ -10,11 +10,11 @@ import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.base.toast.ToastUtils;
-import com.base.circledialog.CircleDialog;
-import com.base.circledialog.callback.ConfigDialog;
-import com.base.circledialog.callback.ConfigText;
-import com.base.circledialog.params.DialogParams;
-import com.base.circledialog.params.TextParams;
+import com.base.dialog.CircleDialog;
+import com.base.dialog.callback.ConfigDialog;
+import com.base.dialog.callback.ConfigText;
+import com.base.dialog.params.DialogParams;
+import com.base.dialog.params.TextParams;
 import com.base.config.BaseConfig;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;

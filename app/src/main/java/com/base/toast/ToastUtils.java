@@ -2,10 +2,10 @@ package com.base.toast;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;

@@ -3,7 +3,7 @@ package com.jelly.jellybase.activity;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.base.view.BaseActivity;
 import com.github.mikephil.charting.charts.LineChart;

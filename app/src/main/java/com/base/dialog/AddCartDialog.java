@@ -1,9 +1,9 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import com.base.view.FlowLayout;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * 加入购物车、立即购买
  * Created by hupei on 2017/4/5.
  */
-public class AddCartDialog extends BaseCircleDialog implements View.OnClickListener {
+public class AddCartDialog extends AbsBaseCircleDialog implements View.OnClickListener {
     //确定
     private TextView confirm_tv;
     //取消
@@ -55,7 +56,6 @@ public class AddCartDialog extends BaseCircleDialog implements View.OnClickListe
     private int checkid=-1;//选择
     public static AddCartDialog getInstance() {
         AddCartDialog dialogFragment = new AddCartDialog();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
         dialogFragment.setWidth(1f);

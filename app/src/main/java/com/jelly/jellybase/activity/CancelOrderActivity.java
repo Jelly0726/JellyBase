@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.circledialog.CircleDialog;
-import com.base.circledialog.callback.ConfigDialog;
-import com.base.circledialog.params.DialogParams;
+import com.base.dialog.CircleDialog;
+import com.base.dialog.callback.ConfigDialog;
+import com.base.dialog.params.DialogParams;
 import com.base.httpmvp.contact.CancelOrderContact;
 import com.base.httpmvp.presenter.CancelOrderPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;

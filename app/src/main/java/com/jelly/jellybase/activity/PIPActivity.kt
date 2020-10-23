@@ -1,6 +1,6 @@
 package com.jelly.jellybase.activity
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle

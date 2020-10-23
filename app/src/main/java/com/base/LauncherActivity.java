@@ -9,7 +9,7 @@ import android.view.Menu;
 import com.base.appManager.AppSubject;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
-import com.base.circledialog.PrivacyDialog;
+import com.base.dialog.PrivacyDialog;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.base.permission.CallBack;

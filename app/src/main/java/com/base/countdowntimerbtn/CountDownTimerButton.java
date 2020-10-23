@@ -15,7 +15,7 @@ import com.jelly.jellybase.R;
  * Created by Jim on 2017/6/15.
  */
 
-public class CountDownTimerButton extends android.support.v7.widget.AppCompatButton {
+public class CountDownTimerButton extends androidx.appcompat.widget.AppCompatButton {
 
     private final String TAG = CountDownTimerButton.class.getSimpleName();
     private final int STATE_STARTCOUNT = 0;

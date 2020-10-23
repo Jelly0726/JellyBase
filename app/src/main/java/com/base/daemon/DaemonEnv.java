@@ -3,7 +3,7 @@ package com.base.daemon;
 import android.app.*;
 import android.content.*;
 import android.os.*;
-import android.support.annotation.*;
+import androidx.annotation.*;
 
 import java.util.*;
 

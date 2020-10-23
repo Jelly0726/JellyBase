@@ -16,7 +16,8 @@
  */
 package com.rex.editor.common;
 
-import android.support.v4.util.ArraySet;
+
+import androidx.collection.ArraySet;
 
 import java.util.Arrays;
 import java.util.EnumSet;

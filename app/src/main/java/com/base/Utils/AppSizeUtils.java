@@ -10,7 +10,7 @@ import android.content.pm.PackageStats;
 import android.os.Build;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.lang.reflect.Method;

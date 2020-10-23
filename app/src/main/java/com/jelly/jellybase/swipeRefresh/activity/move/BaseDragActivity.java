@@ -17,9 +17,9 @@ package com.jelly.jellybase.swipeRefresh.activity.move;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;

@@ -1,9 +1,9 @@
 package com.base.liveDataBus.core;
 
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
 
 /**
  * Created by liaohailiang on 2019-08-28.

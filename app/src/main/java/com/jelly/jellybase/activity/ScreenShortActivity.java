@@ -1,10 +1,10 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
-import com.base.circledialog.QRDialogLogout;
+import com.base.dialog.QRDialogLogout;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 

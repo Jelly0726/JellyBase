@@ -1,4 +1,4 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,19 +22,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
+
+
 /**
  * 隐私政策弹窗
  */
-public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListener {
+public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickListener {
     private TextView textView;
     private String details;//内容
     private OnClickListener onClickListener;
     public static PrivacyDialog getInstance() {
         PrivacyDialog dialogFragment = new PrivacyDialog();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
-        dialogFragment.setWidth(0.6f);
+        dialogFragment.setWidth(0.8f);
+        dialogFragment.setMaxHeight(0.7f);
         return dialogFragment;
     }
 
@@ -50,22 +53,79 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
                 , ViewGroup.LayoutParams.WRAP_CONTENT);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setBackground(shapeSolid(context));
+        //标题
+        LinearLayout.LayoutParams titleParams=  new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
+                ,ViewGroup.LayoutParams.WRAP_CONTENT, 0f);
+        titleParams.setMargins(dp2px(context, 0f)
+                , dp2px(context, 15f)
+                , dp2px(context, 0f)
+                , dp2px(context, 0f));
+        TextView title = new TextView(context);
+        title.setId(1);
+        title.setText("隐私协议政策");
+        title.setGravity(Gravity.CENTER);
+        title.setTextColor(Color.parseColor("#FF000000"));
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f);
+        linearLayout.addView(title, titleParams);
         //文本
         textView = new TextView(context);
         textView.setId(0);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
-                , ViewGroup.LayoutParams.MATCH_PARENT);
+                , ViewGroup.LayoutParams.MATCH_PARENT,1);
         textParams.setMargins(dp2px(context, 15f)
                 , dp2px(context, 15f)
                 , dp2px(context, 15f)
                 , dp2px(context, 15f));
         textView.setTextColor(Color.parseColor("#FF000000"));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
-        textView.setText(Html.fromHtml("<b>text3:</b>  " +
-                "Text with a " + "<a href=\"http://www.baidu.com\">link</a> " +
-                "点击这个连接---" +
-                "<a href=\"http://www.dewen.io/q/1744\">连接</a> " +
-                "created in the Java source code using HTML."));
+        textView.setText(Html.fromHtml("使用第三方应用\n" +
+                "这种查看内容效果时最好的，这个需要提示用户下载第三方，你可以写连接到应用市场的代码，也可以直接提示让用户自己下载\n" +
+                "下载完成之后使用下面代码调用可以读取 doc 或 docx 文件的程序\n" +
+                "\n" +
+                "Intent intent = getWordFileIntent(wordInfo.getPath());\n" +
+                "try {\n" +
+                "      getContext().startActivity(intent);\n" +
+                "}catch (Exception e) {\n" +
+                "      Toast.makeText(getContext(),\"找不到可以打开该文件的程序\",Toast.LENGTH_SHORT).show();\n" +
+                "                }\n" +
+                "\n" +
+                "//android获取一个用于打开Word文件的intent\n" +
+                "    public static Intent getWordFileIntent(String param )\n" +
+                "    {\n" +
+                "        Intent intent = new Intent(\"android.intent.action.VIEW\");\n" +
+                "        intent.addCategory(\"android.intent.category.DEFAULT\");\n" +
+                "        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);\n" +
+                "        Uri uri = Uri.fromFile(new File(param ));\n" +
+                "        intent.setDataAndType(uri, \"application/msword\");\n" +
+                "        return intent;\n" +
+                "    }\n" +
+                "调用\n" +
+                "\n" +
+                "Button open = (Button) findViewById(R.id.open);\n" +
+                "        content = (WebView) findViewById(R.id.content);\n" +
+                "        WebSettings settings = content.getSettings();\n" +
+                "        settings.setUseWideViewPort(true);\n" +
+                "        settings.setLoadWithOverviewMode(true);\n" +
+                "        settings.setSupportZoom(true);\n" +
+                "        settings.setBuiltInZoomControls(true);// 设置WebView可触摸放大缩小\n" +
+                "        settings.setUseWideViewPort(true);\n" +
+                "\n" +
+                "        open.setOnClickListener(new OnClickListener() {\n" +
+                "\n" +
+                "            @Override\n" +
+                "            public void onClick(View v) {\n" +
+                "                String path = Environment.getExternalStorageDirectory()\n" +
+                "                        + \"/xx/a.docx\";\n" +
+                "                Log.d(TAG, \"path=\" + path);\n" +
+                "                // tm-extractors-0.4.jar与poi的包在编译时会冲突，二者只能同时导入一个\n" +
+                "                WordUtil wu = new WordUtil(path);\n" +
+                "                Log.d(TAG, \"htmlPath=\" + wu.htmlPath);\n" +
+                "                content.loadUrl(\"file:///\" + wu.htmlPath);\n" +
+                "            }\n" +
+                "        });\n" +
+                "答案参考\n" +
+                "http://blog.csdn.net/liubo253/article/details/54614886\n" +
+                "http://blog.csdn.net/aqi00/article/details/69942521#comments"));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         CharSequence str = textView.getText();
         if (str instanceof Spannable) {
@@ -102,19 +162,23 @@ public class PrivacyDialog extends BaseCircleDialog implements View.OnClickListe
         left.setText("暂不使用");
         left.setGravity(Gravity.CENTER);
         left.setTextColor(Color.parseColor("#FF000000"));
-        left.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+        left.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
         left.setOnClickListener(this);
+        bottomLayout.addView(left, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                , ViewGroup.LayoutParams.MATCH_PARENT, 1f));
+        //竖线
+        View line1 = new View(context);
+        line1.setBackgroundColor(Color.parseColor("#fff4fafb"));
+        bottomLayout.addView(line1, new LinearLayout.LayoutParams(3, ViewGroup.LayoutParams.MATCH_PARENT,0f));
         //右边按钮
         TextView right = new TextView(context);
         right.setId(2);
         right.setText("同意");
         right.setGravity(Gravity.CENTER);
         right.setTextColor(Color.parseColor("#FF000000"));
-        right.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+        right.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
         right.setOnClickListener(this);
 
-        bottomLayout.addView(left, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
-                , ViewGroup.LayoutParams.MATCH_PARENT, 1f));
         bottomLayout.addView(right, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 

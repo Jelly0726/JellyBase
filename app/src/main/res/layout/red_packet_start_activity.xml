@@ -111,7 +111,7 @@
                     android:textSize="@dimen/textsize_8"
                     android:textColor="@color/text_black"
                     />
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_service"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                     android:textSize="@dimen/textsize_8"
                     android:textColor="@color/text_black"
                     />
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_notification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                     android:textSize="@dimen/textsize_8"
                     android:textColor="@color/text_black"
                     />
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_wechat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                     android:textSize="@dimen/textsize_8"
                     android:textColor="@color/text_black"
                     />
-                <android.support.v7.widget.SwitchCompat
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -1,20 +1,20 @@
 package com.base.liveDataBus.core;
 
 
-import android.arch.lifecycle.ExternalLiveData;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.MainThread;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ExternalLiveData;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 
 import com.base.liveDataBus.ipc.IpcConst;
 import com.base.liveDataBus.ipc.encode.IEncoder;
@@ -254,6 +254,7 @@ public final class LiveDataBusCore {
         private void postInternal(T value) {
             logger.log(Level.INFO, "post: " + value + " with key: " + key);
             liveData.setValue(value);
+//            liveData.postValue(value);
         }
 
         @MainThread
@@ -327,7 +328,7 @@ public final class LiveDataBusCore {
             }
 
             @Override
-            public void removeObserver(@NonNull Observer<T> observer) {
+            public void removeObserver(@NonNull Observer<? super T> observer) {
                 super.removeObserver(observer);
                 if (autoClear && !liveData.hasObservers()) {
                     LiveDataBusCore.get().bus.remove(key);

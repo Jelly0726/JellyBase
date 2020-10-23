@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
+import androidx.core.app.ActivityCompat;
 
 import com.alibaba.fastjson.JSON;
 import com.base.appManager.BaseApplication;

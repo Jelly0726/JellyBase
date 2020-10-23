@@ -30,7 +30,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.os.StatFs;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;

@@ -1,6 +1,6 @@
 package com.base.xrefreshview.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.xrefreshview.XRefreshView;
 

@@ -16,11 +16,11 @@
 package com.jelly.jellybase.swipeRefresh.activity.move;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;

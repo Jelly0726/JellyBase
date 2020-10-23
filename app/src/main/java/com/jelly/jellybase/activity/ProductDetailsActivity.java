@@ -1,8 +1,8 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.base.Utils.MyDate;
 import com.base.bgabanner.BGABanner;
-import com.base.circledialog.AddCartDialog;
+import com.base.dialog.AddCartDialog;
 import com.base.eventBus.NetEvent;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;

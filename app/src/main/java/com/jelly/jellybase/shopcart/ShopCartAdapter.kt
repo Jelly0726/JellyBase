@@ -1,9 +1,9 @@
 package com.luolifen.easybio.shopcart
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +16,15 @@ import com.base.SwipeRefresh.stick.StickAdapter
 import com.base.Utils.StringUtil
 import com.base.appManager.BaseApplication
 import com.base.applicationUtil.AppUtils
-import com.base.circledialog.CircleDialog
-import com.base.circledialog.callback.ConfigButton
-import com.base.circledialog.callback.ConfigDialog
-import com.base.circledialog.callback.ConfigInput
-import com.base.circledialog.callback.ConfigTitle
-import com.base.circledialog.params.ButtonParams
-import com.base.circledialog.params.DialogParams
-import com.base.circledialog.params.InputParams
-import com.base.circledialog.params.TitleParams
+import com.base.dialog.CircleDialog
+import com.base.dialog.callback.ConfigButton
+import com.base.dialog.callback.ConfigDialog
+import com.base.dialog.callback.ConfigInput
+import com.base.dialog.callback.ConfigTitle
+import com.base.dialog.params.ButtonParams
+import com.base.dialog.params.DialogParams
+import com.base.dialog.params.InputParams
+import com.base.dialog.params.TitleParams
 import com.base.imageView.ImageViewPlus
 import com.bumptech.glide.Glide
 import com.jelly.jellybase.R

@@ -1,4 +1,4 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,17 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 
 /**
  * 注销框-自定义
  * Created by hupei on 2017/4/5.
  */
-public class DialogLogout extends BaseCircleDialog implements View.OnClickListener {
+public class DialogLogout extends AbsBaseCircleDialog implements View.OnClickListener {
 
     public static DialogLogout getInstance() {
         DialogLogout dialogFragment = new DialogLogout();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.BOTTOM);
         dialogFragment.setWidth(1f);

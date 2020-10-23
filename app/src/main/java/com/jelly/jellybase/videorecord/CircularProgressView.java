@@ -13,7 +13,7 @@ import android.graphics.Shader;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;

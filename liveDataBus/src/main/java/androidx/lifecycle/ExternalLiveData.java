@@ -1,11 +1,13 @@
-package android.arch.lifecycle;
-import android.support.annotation.NonNull;
+package androidx.lifecycle;
+
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import static android.arch.lifecycle.Lifecycle.State.CREATED;
-import static android.arch.lifecycle.Lifecycle.State.DESTROYED;
+import static androidx.lifecycle.Lifecycle.State.CREATED;
+import static androidx.lifecycle.Lifecycle.State.DESTROYED;
 
 /**
  * Created by liaohailiang on 2019/1/21.
@@ -15,14 +17,14 @@ public class ExternalLiveData<T> extends MutableLiveData<T> {
     public static final int START_VERSION = LiveData.START_VERSION;
 
     @Override
-    public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
+    public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
         if (owner.getLifecycle().getCurrentState() == DESTROYED) {
             // ignore
             return;
         }
         try {
             //use ExternalLifecycleBoundObserver instead of LifecycleBoundObserver
-            LifecycleBoundObserver wrapper = new ExternalLifecycleBoundObserver(owner, observer);
+            LifecycleBoundObserver wrapper = new ExternalLifecycleBoundObserver(owner, (Observer<T>) observer);
             LifecycleBoundObserver existing = (LifecycleBoundObserver) callMethodPutIfAbsent(observer, wrapper);
             if (existing != null && !existing.isAttachedTo(owner)) {
                 throw new IllegalArgumentException("Cannot add the same observer"

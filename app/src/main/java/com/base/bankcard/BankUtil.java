@@ -4,7 +4,7 @@ package com.base.bankcard;
  * Created by Administrator on 2017/2/15.
  */
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * 通过银行的Bin号 来获取 银行名称

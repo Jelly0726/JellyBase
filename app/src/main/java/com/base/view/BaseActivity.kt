@@ -10,7 +10,7 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.hardware.input.InputManager
 import android.os.*
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.util.AttributeSet
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -22,11 +22,11 @@ import com.base.appManager.BaseApplication
 import com.base.appManager.Observable
 import com.base.appManager.Observer
 import com.base.applicationUtil.AppPrefs
-import com.base.circledialog.CircleDialog
-import com.base.circledialog.callback.ConfigDialog
-import com.base.circledialog.callback.ConfigText
-import com.base.circledialog.params.DialogParams
-import com.base.circledialog.params.TextParams
+import com.base.dialog.CircleDialog
+import com.base.dialog.callback.ConfigDialog
+import com.base.dialog.callback.ConfigText
+import com.base.dialog.params.DialogParams
+import com.base.dialog.params.TextParams
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken

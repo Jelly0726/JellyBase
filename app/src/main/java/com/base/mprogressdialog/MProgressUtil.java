@@ -1,7 +1,7 @@
 package com.base.mprogressdialog;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import com.jelly.jellybase.R;
 import com.maning.mndialoglibrary.MProgressDialog;

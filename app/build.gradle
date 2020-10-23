@@ -11,15 +11,15 @@ android {
     //开发环境域名地址
     def API_DEBUG_HOST="\"driver.4000000144.com\""
 
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.jelly.jellybase"
-        minSdkVersion 18
-        targetSdkVersion 28
+        minSdkVersion 19
+        targetSdkVersion 29
         versionCode 3
         versionName "1.0.3F" //versionName 包含"F"表示强制更新
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
         multiDexEnabled true
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
@@ -231,13 +231,11 @@ repositories {
         //百度智能更新 SDK 的 AAR 文件
         implementation(name: 'autoupdatesdk-release', ext: 'aar')
         implementation fileTree(include: ['*.jar'], dir: 'libs')
-        androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        })
-        implementation 'com.android.support:appcompat-v7:27.1.0'
-        //VectorDrawable需要Support Library 23.2+
-        implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+        implementation 'androidx.appcompat:appcompat:1.1.0'
+        implementation 'androidx.core:core-ktx:1.2.0'
         testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
         //屏幕适配
         implementation 'me.jessyan:autosize:1.2.1'
 //      kotlin协程
@@ -245,15 +243,15 @@ repositories {
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"
         implementation "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
         //recyclerview
-        implementation 'com.android.support:design:27.1.0'
+        implementation 'androidx.recyclerview:recyclerview:1.0.0'
+        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
         //butterknife注解式绑定id  androidx 10.0.0
         implementation 'com.jakewharton:butterknife:8.8.1'
         annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
         //butterknife注解式绑定id kotlin
         kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-        implementation 'com.android.support:recyclerview-v7:26.1.0'
-        implementation 'com.android.support:cardview-v7:26.1.0'
 
         //多进程数据共享SharedPreferences
         implementation 'net.grandcentrix.tray:tray:0.12.0'
@@ -415,7 +413,7 @@ repositories {
         implementation project(path: ':form')
         implementation project(path: ':LiveDataBus')
         //弹窗对话框
-//        implementation project(path: ':library:circleDialog')
+        implementation project(path: ':library:circleDialog')
         //应用宝自动升级
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')

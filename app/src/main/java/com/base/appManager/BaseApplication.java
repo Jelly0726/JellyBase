@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 

@@ -13,7 +13,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.service.notification.StatusBarNotification;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;

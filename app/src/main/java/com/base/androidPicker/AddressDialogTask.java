@@ -3,7 +3,7 @@ package com.base.androidPicker;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.base.addressmodel.Province;

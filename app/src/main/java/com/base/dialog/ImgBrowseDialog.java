@@ -1,4 +1,4 @@
-package com.base.circledialog;
+package com.base.dialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,11 +16,12 @@ import androidx.annotation.Nullable;
 import com.base.log.DebugLog;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 /**
  * 浏览图片
  */
-public class ImgBrowseDialog extends BaseCircleDialog {
+public class ImgBrowseDialog extends AbsBaseCircleDialog {
     private ImageView imageView;
     private String url = "";//图片地址
 

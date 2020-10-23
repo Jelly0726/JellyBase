@@ -13,7 +13,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
 import com.yxc.websocketclientdemo.MainActivity;
@@ -24,7 +24,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 
-import static android.support.v4.app.NotificationCompat.VISIBILITY_PUBLIC;
+import static androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC;
 
 public class JWebSocketClientService extends Service {
     public JWebSocketClient client;

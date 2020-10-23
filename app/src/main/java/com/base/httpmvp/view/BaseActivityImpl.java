@@ -1,7 +1,7 @@
 package com.base.httpmvp.view;
 
 import android.os.Bundle;
-import android.support.annotation.CheckResult;
+import androidx.annotation.CheckResult;
 
 import com.base.appManager.BaseApplication;
 import com.base.httpmvp.presenter.IBasePresenter;

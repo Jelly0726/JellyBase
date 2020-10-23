@@ -15,7 +15,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * A rounded rectangle drawable which also includes a shadow around.
@@ -74,10 +74,10 @@ class RoundRectDrawableWithShadow extends Drawable {
 
     RoundRectDrawableWithShadow(Resources resources, ColorStateList backgroundColor, float radius,
                                 float shadowSize, float maxShadowSize) {
-        mShadowStartColor = resources.getColor(android.support.v7.cardview.R.color.cardview_shadow_start_color);
+        mShadowStartColor = resources.getColor(androidx.appcompat.cardview.R.color.cardview_shadow_start_color);
         mShadowCentreColor=mShadowStartColor;
-        mShadowEndColor = resources.getColor(android.support.v7.cardview.R.color.cardview_shadow_end_color);
-        mInsetShadow = resources.getDimensionPixelSize(android.support.v7.cardview.R.dimen.cardview_compat_inset_shadow);
+        mShadowEndColor = resources.getColor(androidx.appcompat.cardview.R.color.cardview_shadow_end_color);
+        mInsetShadow = resources.getDimensionPixelSize(androidx.appcompat.cardview.R.dimen.cardview_compat_inset_shadow);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         setBackground(backgroundColor);
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -93,7 +93,7 @@ class RoundRectDrawableWithShadow extends Drawable {
         mShadowStartColor = startColor;
         mShadowCentreColor=centreColor;
         mShadowEndColor = endColor;
-        mInsetShadow = resources.getDimensionPixelSize(android.support.v7.cardview.R.dimen.cardview_compat_inset_shadow);
+        mInsetShadow = resources.getDimensionPixelSize(androidx.appcompat.cardview.R.dimen.cardview_compat_inset_shadow);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         setBackground(backgroundColor);
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
