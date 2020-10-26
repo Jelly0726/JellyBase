@@ -22,17 +22,17 @@ import com.base.appManager.BaseApplication
 import com.base.appManager.Observable
 import com.base.appManager.Observer
 import com.base.applicationUtil.AppPrefs
-import com.base.dialog.CircleDialog
-import com.base.dialog.callback.ConfigDialog
-import com.base.dialog.callback.ConfigText
-import com.base.dialog.params.DialogParams
-import com.base.dialog.params.TextParams
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken
 import com.base.permission.PermissionUtils
 import com.base.toast.ToastUtils
 import com.jelly.jellybase.R
+import com.mylhyl.circledialog.CircleDialog
+import com.mylhyl.circledialog.callback.ConfigDialog
+import com.mylhyl.circledialog.callback.ConfigText
+import com.mylhyl.circledialog.params.DialogParams
+import com.mylhyl.circledialog.params.TextParams
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -272,7 +272,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
         AppSubject.getInstance().detach(this)
         super.onDestroy()
         if (circleDialog != null) {
-            circleDialog!!.onDismiss()
+            circleDialog!!.dismiss()
             circleDialog = null
         }
     }
@@ -343,8 +343,8 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
                 0 -> if (circleDialog == null) {
                     synchronized(BaseApplication.getInstance()) {
                         if (circleDialog == null) {
-                            circleDialog = CircleDialog.Builder(this@BaseActivity)
-                                    .configDialog(object : ConfigDialog() {
+                            circleDialog = CircleDialog.Builder()
+                                    .configDialog(object : ConfigDialog {
                                         override fun onConfig(params: DialogParams) {
                                             params.width = 0.6f
                                         }
@@ -352,7 +352,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
                                     .setCanceledOnTouchOutside(false)
                                     .setCancelable(false)
                                     .setTitle("登录过期！")
-                                    .configText(object : ConfigText() {
+                                    .configText(object : ConfigText {
                                         override fun onConfig(params: TextParams) {
                                             params.gravity = Gravity.LEFT
                                             params.textColor = Color.parseColor("#FF1F50F1")
@@ -371,7 +371,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
                                                 or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                         BaseApplication.getInstance().startActivity(intent1)
                                     }
-                            circleDialog!!.show()
+                            circleDialog!!.show(supportFragmentManager)
                         }
                     }
                 }

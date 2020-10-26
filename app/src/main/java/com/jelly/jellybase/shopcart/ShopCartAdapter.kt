@@ -16,19 +16,19 @@ import com.base.SwipeRefresh.stick.StickAdapter
 import com.base.Utils.StringUtil
 import com.base.appManager.BaseApplication
 import com.base.applicationUtil.AppUtils
-import com.base.dialog.CircleDialog
-import com.base.dialog.callback.ConfigButton
-import com.base.dialog.callback.ConfigDialog
-import com.base.dialog.callback.ConfigInput
-import com.base.dialog.callback.ConfigTitle
-import com.base.dialog.params.ButtonParams
-import com.base.dialog.params.DialogParams
-import com.base.dialog.params.InputParams
-import com.base.dialog.params.TitleParams
 import com.base.imageView.ImageViewPlus
 import com.bumptech.glide.Glide
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
+import com.mylhyl.circledialog.CircleDialog
+import com.mylhyl.circledialog.callback.ConfigButton
+import com.mylhyl.circledialog.callback.ConfigDialog
+import com.mylhyl.circledialog.callback.ConfigInput
+import com.mylhyl.circledialog.callback.ConfigTitle
+import com.mylhyl.circledialog.params.ButtonParams
+import com.mylhyl.circledialog.params.DialogParams
+import com.mylhyl.circledialog.params.InputParams
+import com.mylhyl.circledialog.params.TitleParams
 
 class ShopCartAdapter(context: Context) :
     RecyclerView.Adapter<ShopCartAdapter.GroupViewHolder>(),
@@ -74,8 +74,8 @@ class ShopCartAdapter(context: Context) :
             if (circleDialog == null) {
                 synchronized(context) {
                     if (circleDialog == null) {
-                        circleDialog = CircleDialog.Builder(context as AppCompatActivity)
-                            .configDialog(object : ConfigDialog() {
+                        circleDialog = CircleDialog.Builder()
+                            .configDialog(object : ConfigDialog {
                                 override fun onConfig(params: DialogParams) {
                                     params.width = 0.6f
                                 }
@@ -83,7 +83,7 @@ class ShopCartAdapter(context: Context) :
                             .setCanceledOnTouchOutside(false)
                             .setCancelable(false)
                             .setTitle("编辑数量")
-                            .configTitle(object : ConfigTitle() {
+                            .configTitle(object : ConfigTitle {
                                 override fun onConfig(params: TitleParams) {
                                     params.textSize =
                                         AppUtils.spTopx(BaseApplication.getInstance(), 15f)
@@ -91,7 +91,7 @@ class ShopCartAdapter(context: Context) :
                                         ContextCompat.getColor(context, R.color.mainText)
                                 }
                             })
-                            .configInput(object : ConfigInput() {
+                            .configInput(object : ConfigInput {
                                 override fun onConfig(params: InputParams) {
                                     params.type = InputParams.INPUT_MONEY
                                     params.digits = 0
@@ -103,7 +103,7 @@ class ShopCartAdapter(context: Context) :
                                 }
                             })
                             .setInputHeight(AppUtils.dipTopx(BaseApplication.getInstance(), 40f))
-                            .configPositive(object : ConfigButton() {
+                            .configPositive(object : ConfigButton {
                                 override fun onConfig(params: ButtonParams) {
                                     params.textSize =
                                         AppUtils.spTopx(BaseApplication.getInstance(), 15f)
@@ -123,9 +123,11 @@ class ShopCartAdapter(context: Context) :
                                             holder.num_edit,
                                             holder.select_box.isChecked
                                         )
-                                }
+                                    true
+                                }else
+                                false
                             }
-                        circleDialog!!.show()
+                        circleDialog!!.show((context as AppCompatActivity).supportFragmentManager)
                     }
                 }
             }

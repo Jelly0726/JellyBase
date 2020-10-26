@@ -11,14 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.params.DialogParams;
 import com.base.httpmvp.contact.CancelOrderContact;
 import com.base.httpmvp.presenter.CancelOrderPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.params.DialogParams;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,7 +100,7 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Pre
                 finish();
                 break;
             case R.id.commit_btn:
-                new CircleDialog.Builder(CancelOrderActivity.this)
+                new CircleDialog.Builder()
                         .configDialog(new ConfigDialog() {
                             @Override
                             public void onConfig(DialogParams params) {
@@ -117,7 +117,7 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Pre
                             public void onClick(View v) {
                             }
                         })
-                        .show();
+                        .show(getSupportFragmentManager());
                 break;
             case R.id.cancelCause_tv:
                 if (causePicker!=null)

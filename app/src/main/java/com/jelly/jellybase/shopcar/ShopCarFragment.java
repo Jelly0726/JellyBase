@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,8 @@ import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigButton;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.params.ButtonParams;
-import com.base.dialog.params.DialogParams;
+import androidx.appcompat.app.AlertDialog;
+
 import com.base.view.BaseFragment;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnBottomLoadMoreTime;
@@ -30,6 +26,11 @@ import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.adapter.ShopcatAdapter;
 import com.jelly.jellybase.shopcar.entity.GoodsInfo;
 import com.jelly.jellybase.shopcar.entity.StoreInfo;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigButton;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.params.ButtonParams;
+import com.mylhyl.circledialog.params.DialogParams;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -431,7 +432,7 @@ public class ShopCarFragment extends BaseFragment implements
                     UtilTool.toast(mcontext, "多个商家不能同时支付");
                     return;
                 }
-                new CircleDialog.Builder(getActivity())
+                new CircleDialog.Builder()
                         .configDialog(new ConfigDialog() {
                             @Override
                             public void onConfig(DialogParams params) {
@@ -462,7 +463,7 @@ public class ShopCarFragment extends BaseFragment implements
 //                                startActivity(intent);
                             }
                         })
-                        .show();
+                        .show(getActivity().getSupportFragmentManager());
 
                 break;
             case R.id.share_goods:

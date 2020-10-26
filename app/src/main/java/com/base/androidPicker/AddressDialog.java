@@ -2,8 +2,6 @@ package com.base.androidPicker;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +10,18 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.addressmodel.Address;
 import com.base.addressmodel.Area;
 import com.base.addressmodel.City;
 import com.base.addressmodel.Province;
-import com.base.dialog.BaseCircleDialog;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AddressAdapter;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import butterknife.Unbinder;
  * 地址选择器
  * Created by hupei on 2017/4/5.
  */
-public class AddressDialog extends BaseCircleDialog {
+public class AddressDialog extends AbsBaseCircleDialog {
     protected View rootView;
     private Unbinder mUnbinder;
     @BindView(R.id.cancel_img)
@@ -59,7 +60,6 @@ public class AddressDialog extends BaseCircleDialog {
     private OnAddressPickListener onConfirmListener;
     public static AddressDialog getInstance() {
         AddressDialog dialogFragment = new AddressDialog();
-        dialogFragment.setCanceledBack(false);
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
         dialogFragment.setWidth(1f);

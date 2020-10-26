@@ -15,7 +15,10 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+
 import androidx.annotation.Nullable;
+
+import com.jelly.jellybase.R;
 
 /**
  * A rounded rectangle drawable which also includes a shadow around.
@@ -74,10 +77,10 @@ class RoundRectDrawableWithShadow extends Drawable {
 
     RoundRectDrawableWithShadow(Resources resources, ColorStateList backgroundColor, float radius,
                                 float shadowSize, float maxShadowSize) {
-        mShadowStartColor = resources.getColor(androidx.appcompat.cardview.R.color.cardview_shadow_start_color);
+        mShadowStartColor = resources.getColor(R.color.cardview_shadow_start_color);
         mShadowCentreColor=mShadowStartColor;
-        mShadowEndColor = resources.getColor(androidx.appcompat.cardview.R.color.cardview_shadow_end_color);
-        mInsetShadow = resources.getDimensionPixelSize(androidx.appcompat.cardview.R.dimen.cardview_compat_inset_shadow);
+        mShadowEndColor = resources.getColor(R.color.cardview_shadow_end_color);
+        mInsetShadow = resources.getDimensionPixelSize(R.dimen.cardview_compat_inset_shadow);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         setBackground(backgroundColor);
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
@@ -93,7 +96,7 @@ class RoundRectDrawableWithShadow extends Drawable {
         mShadowStartColor = startColor;
         mShadowCentreColor=centreColor;
         mShadowEndColor = endColor;
-        mInsetShadow = resources.getDimensionPixelSize(androidx.appcompat.cardview.R.dimen.cardview_compat_inset_shadow);
+        mInsetShadow = resources.getDimensionPixelSize(R.dimen.cardview_compat_inset_shadow);
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         setBackground(backgroundColor);
         mCornerShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);

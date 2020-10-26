@@ -3,16 +3,17 @@ package com.base.social;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.base.dialog.BaseCircleDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
@@ -25,7 +26,7 @@ import java.util.List;
  * 分享选择框
  * Created by hupei on 2017/4/5.
  */
-public class ShareDialog extends BaseCircleDialog {
+public class ShareDialog extends AbsBaseCircleDialog {
 
     private OnConfirmListener onConfirmListener;
     private SwipeMenuRecyclerView mRecyclerView;
@@ -34,7 +35,6 @@ public class ShareDialog extends BaseCircleDialog {
     private ShareItem shareItem;
     public static ShareDialog getInstance() {
         ShareDialog dialogFragment = new ShareDialog();
-        dialogFragment.setCanceledBack(true);
         dialogFragment.setCanceledOnTouchOutside(true);
         dialogFragment.setGravity(Gravity.BOTTOM);
         dialogFragment.setDimEnabled(true);

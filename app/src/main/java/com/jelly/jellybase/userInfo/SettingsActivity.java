@@ -7,19 +7,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
-import com.base.toast.ToastUtils;
 import com.base.appManager.AppSubject;
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.params.DialogParams;
 import com.base.config.IntentAction;
 import com.base.httpmvp.contact.SettingContact;
-import com.base.model.AppVersion;
 import com.base.httpmvp.presenter.SettingPresenter;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.model.AppVersion;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.params.DialogParams;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 /**
@@ -107,7 +107,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
 //                    startActivity(intent);
                     break;
                 case R.id.exit_tv:
-                    new CircleDialog.Builder(SettingsActivity.this)
+                    new CircleDialog.Builder()
                             .configDialog(new ConfigDialog() {
                                 @Override
                                 public void onConfig(DialogParams params) {
@@ -134,7 +134,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                                     finish();
                                 }
                             })
-                            .show();
+                            .show(getSupportFragmentManager());
 
                     break;
             }
@@ -146,7 +146,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
          */
         @Override
         public void onNoUpdateFound() {
-            new CircleDialog.Builder(SettingsActivity.this)
+            new CircleDialog.Builder()
                     .configDialog(new ConfigDialog() {
                         @Override
                         public void onConfig(DialogParams params) {
@@ -163,7 +163,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
                         public void onClick(View v) {
                         }
                     })
-                    .show();
+                    .show(getSupportFragmentManager());
         }
 
         /**

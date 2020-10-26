@@ -12,13 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.Utils.MyDate;
-import com.base.dialog.BaseCircleDialog;
 import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import butterknife.Unbinder;
  * 日历选择-自定义
  * Created by hupei on 2017/4/5.
  */
-public class DatePickerDialog extends BaseCircleDialog implements CalendarView.OnCalendarSelectListener,
+public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarView.OnCalendarSelectListener,
         CalendarView.OnYearChangeListener,
         CalendarView.OnYearViewChangeListener,
         CalendarView.OnMonthChangeListener,
@@ -56,7 +56,6 @@ public class DatePickerDialog extends BaseCircleDialog implements CalendarView.O
 
     public static DatePickerDialog getInstance() {
         DatePickerDialog dialogFragment = new DatePickerDialog();
-        dialogFragment.setCanceledBack(true);
         dialogFragment.setCanceledOnTouchOutside(true);
         dialogFragment.setGravity(Gravity.CENTER);
         dialogFragment.setWidth(0.4f);
