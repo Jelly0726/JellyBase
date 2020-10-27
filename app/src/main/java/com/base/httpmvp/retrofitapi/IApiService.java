@@ -48,6 +48,16 @@ Call<HttpResult<News>> post(@Url String url, @QueryMap Map<String, String> map);
  你如果执意要用@Path,也不是不可以,需要这样写
  @POST("{url}")
  Call<HttpResult<News>> post(@Path(value = "url", encoded = true) String url);
+
+ @其他声明
+ @请求方式("请求地址")
+ Observable<请求返回的实体> 请求方法名(请求参数)；
+ 请求地址，填写基础请求路径baseUrl后续的部分即可，当然填写完整地址也是可以的
+ 或者
+ @其他声明
+ @请求方式
+ Observable<请求返回的实体> 请求方法名(@Url String 请求地址，请求参数)；
+ 请求地址，需填写完整的地址。
  */
 
 public interface IApiService {
