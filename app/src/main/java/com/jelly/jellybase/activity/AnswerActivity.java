@@ -4,22 +4,23 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.album.AlbumAdapter;
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigButton;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.params.ButtonParams;
-import com.base.dialog.params.DialogParams;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigButton;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.params.ButtonParams;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.view.listener.OnRvItemClickListener;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
@@ -97,7 +98,7 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
     }
     private void showDialog(){
         final String[] items = {"拍照", "从相册选择"};
-        new CircleDialog.Builder(this)
+        new CircleDialog.Builder()
                 .configDialog(new ConfigDialog() {
                     @Override
                     public void onConfig(DialogParams params) {
@@ -107,9 +108,9 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                 })
                 .setTitle("标题")
                 .setTitleColor(Color.BLUE)
-                .setItems(items, new AdapterView.OnItemClickListener() {
+                .setItems(items, new OnRvItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemClick(View view, int position) {
                         switch (position){
                             case 0:
                                 cameraImage();
@@ -118,7 +119,9 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                                 selectImage();
                                 break;
                         }
+                        return true;
                     }
+
                 })
                 .setNegative("取消", null)
                 .configNegative(new ConfigButton() {
@@ -128,7 +131,7 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                         params.textColor = Color.RED;
                     }
                 })
-                .show();
+                .show(getSupportFragmentManager());
     }
     /**
      * camera picture, from album.

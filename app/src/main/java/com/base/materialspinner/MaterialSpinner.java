@@ -299,10 +299,10 @@ public class MaterialSpinner extends TextView {
    *     the item's position
    */
   public void setSelectedIndex(int position) {
+    selectedIndex = position;
     if (adapter != null) {
       if (position >= 0 && position <= adapter.getCount()) {
         adapter.notifyItemSelected(position);
-        selectedIndex = position;
         setText(adapter.get(position).toString());
       } else {
         throw new IllegalArgumentException("Position must be lower than adapter count!");

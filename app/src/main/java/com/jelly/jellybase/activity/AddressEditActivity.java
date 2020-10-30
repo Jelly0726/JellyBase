@@ -13,20 +13,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.password.PwdCheckUtil;
 import com.base.Utils.StringUtil;
-import com.base.toast.ToastUtils;
 import com.base.androidPicker.AddressPickTask;
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.callback.ConfigText;
-import com.base.dialog.params.DialogParams;
-import com.base.dialog.params.TextParams;
 import com.base.httpmvp.contact.OperaAddressContact;
 import com.base.httpmvp.presenter.OperaAddressPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.password.PwdCheckUtil;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.RecevierAddress;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.callback.ConfigText;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.params.TextParams;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
@@ -160,7 +160,7 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
                 presenter.operaAddress(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
                 break;
             case R.id.delete_address:
-                CircleDialog.Builder circleDialog = new CircleDialog.Builder(AddressEditActivity.this)
+                CircleDialog.Builder circleDialog = new CircleDialog.Builder()
                         .configDialog(new ConfigDialog() {
                             @Override
                             public void onConfig(DialogParams params) {
@@ -191,7 +191,7 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
                             public void onClick(View v) {
                             }
                         });
-                circleDialog.show();
+                circleDialog.show(getSupportFragmentManager());
                 break;
         }
     }

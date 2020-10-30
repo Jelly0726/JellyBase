@@ -9,16 +9,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import com.base.toast.ToastUtils;
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.callback.ConfigText;
-import com.base.dialog.params.DialogParams;
-import com.base.dialog.params.TextParams;
 import com.base.config.BaseConfig;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.weixinpay.PayUtil;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.callback.ConfigText;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.params.TextParams;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -71,7 +71,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 			switch (baseResp.errCode) {
 				case BaseResp.ErrCode.ERR_OK:
 					result = R.string.errcode_success;
-					new CircleDialog.Builder(this)
+					new CircleDialog.Builder()
 							.configDialog(new ConfigDialog() {
 								@Override
 								public void onConfig(DialogParams params) {
@@ -101,7 +101,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 									}
 									finish();
 								}
-							}).show();
+							}).show(getSupportFragmentManager());
 					break;
 				case BaseResp.ErrCode.ERR_USER_CANCEL:
 					result = R.string.errcode_cancel;

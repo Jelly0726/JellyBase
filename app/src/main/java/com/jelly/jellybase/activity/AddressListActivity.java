@@ -4,25 +4,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.ToastUtils;
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.callback.ConfigText;
-import com.base.dialog.params.DialogParams;
-import com.base.dialog.params.TextParams;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.base.httpmvp.contact.AddressContact;
 import com.base.httpmvp.presenter.AddressPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
 import com.base.xrefreshview.listener.OnItemClickListener;
@@ -30,6 +26,11 @@ import com.base.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AddressListAdapter;
 import com.jelly.jellybase.datamodel.RecevierAddress;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.callback.ConfigText;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.params.TextParams;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.ArrayList;
@@ -126,7 +127,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
             @Override
             public void delete(final int id,final int position) {
 
-                CircleDialog.Builder circleDialog = new CircleDialog.Builder(AddressListActivity.this)
+                CircleDialog.Builder circleDialog = new CircleDialog.Builder()
                         .configDialog(new ConfigDialog() {
                             @Override
                             public void onConfig(DialogParams params) {
@@ -159,7 +160,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
                             public void onClick(View v) {
                             }
                         });
-                circleDialog.show();
+                circleDialog.show(getSupportFragmentManager());
 
             }
         });

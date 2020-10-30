@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 自定义流式布局
  */
@@ -198,19 +199,38 @@ public class FlowLayout extends ViewGroup {
      * 当手指移动的时候，才将事件拦截；
      * 因此，我们在onTouchEvent()方法中，只能将ACTION_MOVE的第一次触发作为手指按下
      */
+    private int lastX;
+    private int lastY;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         boolean intercepted = false;
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                intercepted = false;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                intercepted = true;
-                break;
-            case MotionEvent.ACTION_UP:
-                intercepted = false;
-                break;
+        if (scrollable) {
+            int rawX = (int) ev.getRawX();
+            int rawY = (int) ev.getRawY();
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    lastX = rawX;
+                    lastY = rawY;
+                    intercepted = false;
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    //计算手指移动了多少
+                    int dx = rawX - lastX;
+                    int dy = rawY - lastY;
+//                //这里修复一些华为手机无法触发点击事件的问题
+                    int distance = (int) Math.sqrt(dx * dx + dy * dy);
+                    if (distance <= 5) {
+                        intercepted = false;
+                        break;
+                    }
+                    lastX=rawX;
+                    lastY=rawY;
+                    intercepted = true;
+                    break;
+                case MotionEvent.ACTION_UP:
+                    intercepted = false;
+                    break;
+            }
         }
         return intercepted;
     }

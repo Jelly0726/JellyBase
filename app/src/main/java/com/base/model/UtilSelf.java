@@ -1,4 +1,4 @@
-package com.base.Utils;
+package com.base.model;
 
 /**
  *

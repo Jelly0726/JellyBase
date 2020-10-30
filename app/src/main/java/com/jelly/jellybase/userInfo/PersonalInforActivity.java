@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,18 +13,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.dialog.CircleDialog;
-import com.base.dialog.callback.ConfigButton;
-import com.base.dialog.callback.ConfigDialog;
-import com.base.dialog.params.ButtonParams;
-import com.base.dialog.params.DialogParams;
+import androidx.annotation.NonNull;
+
 import com.base.httpmvp.contact.PersonalInfoContact;
+import com.base.httpmvp.presenter.PersonalInfoPresenter;
+import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.model.PersonalInfo;
 import com.base.model.Sex;
 import com.base.model.UploadBean;
 import com.base.model.UploadData;
-import com.base.httpmvp.presenter.PersonalInfoPresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;
@@ -34,6 +29,12 @@ import com.base.xrefreshview.XScrollView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
+import com.mylhyl.circledialog.CircleDialog;
+import com.mylhyl.circledialog.callback.ConfigButton;
+import com.mylhyl.circledialog.callback.ConfigDialog;
+import com.mylhyl.circledialog.params.ButtonParams;
+import com.mylhyl.circledialog.params.DialogParams;
+import com.mylhyl.circledialog.view.listener.OnRvItemClickListener;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
@@ -186,7 +187,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     }
     private void showDialog(){
         final String[] items = {"拍照", "从相册选择"};
-        new CircleDialog.Builder(this)
+        new CircleDialog.Builder()
                 .configDialog(new ConfigDialog() {
                     @Override
                     public void onConfig(DialogParams params) {
@@ -196,9 +197,9 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 })
                 .setTitle("标题")
                 .setTitleColor(Color.BLUE)
-                .setItems(items, new AdapterView.OnItemClickListener() {
+                .setItems(items, new OnRvItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemClick(View view, int position) {
                         switch (position){
                             case 0:
                                 cameraImage();
@@ -207,6 +208,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                                 selectImage();
                                 break;
                         }
+                        return true;
                     }
                 })
                 .setNegative("取消", null)
@@ -217,7 +219,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         params.textColor = Color.RED;
                     }
                 })
-                .show();
+                .show(getSupportFragmentManager());
     }
     /**
      * camera picture, from album.
