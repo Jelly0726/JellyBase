@@ -19,11 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
-
 
 /**
  * 隐私政策弹窗
@@ -36,8 +35,8 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
         PrivacyDialog dialogFragment = new PrivacyDialog();
         dialogFragment.setCanceledOnTouchOutside(false);
         dialogFragment.setGravity(Gravity.CENTER);
-        dialogFragment.setWidth(0.8f);
-        dialogFragment.setMaxHeight(0.7f);
+        dialogFragment.setWidth(0.7f);
+        dialogFragment.setMaxHeight(0.5f);
         return dialogFragment;
     }
 
@@ -59,73 +58,30 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
         titleParams.setMargins(dp2px(context, 0f)
                 , dp2px(context, 15f)
                 , dp2px(context, 0f)
-                , dp2px(context, 0f));
+                , dp2px(context, 15f));
         TextView title = new TextView(context);
         title.setId(1);
-        title.setText("隐私协议政策");
+        title.setText("隐私保护提示");
         title.setGravity(Gravity.CENTER);
         title.setTextColor(Color.parseColor("#FF000000"));
         title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f);
         linearLayout.addView(title, titleParams);
+
+        ScrollView scrollView=new ScrollView(context);
+        LinearLayout.LayoutParams scrollParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+                , ViewGroup.LayoutParams.MATCH_PARENT,1);
         //文本
         textView = new TextView(context);
         textView.setId(0);
         LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT,1);
         textParams.setMargins(dp2px(context, 15f)
+                , dp2px(context, 0f)
                 , dp2px(context, 15f)
-                , dp2px(context, 15f)
-                , dp2px(context, 15f));
+                , dp2px(context, 0f));
         textView.setTextColor(Color.parseColor("#FF000000"));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
-        textView.setText(Html.fromHtml("使用第三方应用\n" +
-                "这种查看内容效果时最好的，这个需要提示用户下载第三方，你可以写连接到应用市场的代码，也可以直接提示让用户自己下载\n" +
-                "下载完成之后使用下面代码调用可以读取 doc 或 docx 文件的程序\n" +
-                "\n" +
-                "Intent intent = getWordFileIntent(wordInfo.getPath());\n" +
-                "try {\n" +
-                "      getContext().startActivity(intent);\n" +
-                "}catch (Exception e) {\n" +
-                "      Toast.makeText(getContext(),\"找不到可以打开该文件的程序\",Toast.LENGTH_SHORT).show();\n" +
-                "                }\n" +
-                "\n" +
-                "//android获取一个用于打开Word文件的intent\n" +
-                "    public static Intent getWordFileIntent(String param )\n" +
-                "    {\n" +
-                "        Intent intent = new Intent(\"android.intent.action.VIEW\");\n" +
-                "        intent.addCategory(\"android.intent.category.DEFAULT\");\n" +
-                "        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);\n" +
-                "        Uri uri = Uri.fromFile(new File(param ));\n" +
-                "        intent.setDataAndType(uri, \"application/msword\");\n" +
-                "        return intent;\n" +
-                "    }\n" +
-                "调用\n" +
-                "\n" +
-                "Button open = (Button) findViewById(R.id.open);\n" +
-                "        content = (WebView) findViewById(R.id.content);\n" +
-                "        WebSettings settings = content.getSettings();\n" +
-                "        settings.setUseWideViewPort(true);\n" +
-                "        settings.setLoadWithOverviewMode(true);\n" +
-                "        settings.setSupportZoom(true);\n" +
-                "        settings.setBuiltInZoomControls(true);// 设置WebView可触摸放大缩小\n" +
-                "        settings.setUseWideViewPort(true);\n" +
-                "\n" +
-                "        open.setOnClickListener(new OnClickListener() {\n" +
-                "\n" +
-                "            @Override\n" +
-                "            public void onClick(View v) {\n" +
-                "                String path = Environment.getExternalStorageDirectory()\n" +
-                "                        + \"/xx/a.docx\";\n" +
-                "                Log.d(TAG, \"path=\" + path);\n" +
-                "                // tm-extractors-0.4.jar与poi的包在编译时会冲突，二者只能同时导入一个\n" +
-                "                WordUtil wu = new WordUtil(path);\n" +
-                "                Log.d(TAG, \"htmlPath=\" + wu.htmlPath);\n" +
-                "                content.loadUrl(\"file:///\" + wu.htmlPath);\n" +
-                "            }\n" +
-                "        });\n" +
-                "答案参考\n" +
-                "http://blog.csdn.net/liubo253/article/details/54614886\n" +
-                "http://blog.csdn.net/aqi00/article/details/69942521#comments"));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
+        textView.setText(Html.fromHtml("<p style=\"text-align:center;a:link {font-size: 12px;color: #000000;text-decoration: none;} a:visited {font-size: 12px; color: #000000; text-decoration: none;}\" class=\"p\"><span style=\"font-size:14px\">亲，感谢您信任并使用江平生物订货管理系统！我们依据最新的监督要求更新了<a href=\"/\">《隐私权政策》</a>，特向您说明如下:<br/><br/>1.为向您提供交易相关基本功能，我们会收集、使用必要的信息;<br/><br/>2.为向您提供订单动态，优惠活动等信息服务，您需要授权我们获取通知权限，您有权拒绝或取消授权，取消后将不影响您使用我们提供的其他服务;<br/><br/>3.我们会采取业界先进的安全措施保护您的信息安全;<br/><br/>4.未经您的同意，我们不会从第三方处获取、共享或向其提供您的信息</span></p>\n"));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         CharSequence str = textView.getText();
         if (str instanceof Spannable) {
@@ -144,14 +100,15 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
                 style.setSpan(clickSpan, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 //设置前景色
                 style.setSpan(new ForegroundColorSpan(Color.parseColor("#0AC3BC")),
-                        sp.getSpanStart(url), sp.getSpanEnd(url) + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        sp.getSpanStart(url), sp.getSpanEnd(url), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             textView.setText(style);
         }
-        linearLayout.addView(textView, textParams);
+        scrollView.addView(textView, textParams);
+        linearLayout.addView(scrollView,scrollParams);
         //横线
         View line = new View(context);
-        line.setBackgroundColor(Color.parseColor("#fff4fafb"));
+        line.setBackgroundColor(Color.parseColor("#fff2f2f2"));
         linearLayout.addView(line, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 3));
         //底部按钮布局
         LinearLayout bottomLayout = new LinearLayout(context);
@@ -162,28 +119,28 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
         left.setText("暂不使用");
         left.setGravity(Gravity.CENTER);
         left.setTextColor(Color.parseColor("#FF000000"));
-        left.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+        left.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f);
         left.setOnClickListener(this);
         bottomLayout.addView(left, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT, 1f));
         //竖线
         View line1 = new View(context);
-        line1.setBackgroundColor(Color.parseColor("#fff4fafb"));
-        bottomLayout.addView(line1, new LinearLayout.LayoutParams(3, ViewGroup.LayoutParams.MATCH_PARENT,0f));
+        line1.setBackgroundColor(Color.parseColor("#fff2f2f2"));
+        bottomLayout.addView(line1, new LinearLayout.LayoutParams(3, ViewGroup.LayoutParams.MATCH_PARENT));
         //右边按钮
         TextView right = new TextView(context);
         right.setId(2);
-        right.setText("同意");
+        right.setText("已阅读并同意");
         right.setGravity(Gravity.CENTER);
         right.setTextColor(Color.parseColor("#FF000000"));
-        right.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
+        right.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f);
         right.setOnClickListener(this);
 
         bottomLayout.addView(right, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
                 , ViewGroup.LayoutParams.MATCH_PARENT, 1f));
 
         linearLayout.addView(bottomLayout
-                , new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(context, 40f)));
+                , new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp2px(context, 45f)));
         rootLayout.addView(linearLayout, layoutParams);
         return rootLayout;
     }
@@ -260,7 +217,8 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
         }
         @Override
         public void onClick(View widget) {
-            Toast.makeText(getActivity(),"click link="+url,Toast.LENGTH_SHORT).show();
+            PrivacyReadDialog privacyDialog = PrivacyReadDialog.getInstance();
+            privacyDialog.show(getChildFragmentManager(), "PrivacyDialog");
         }
     }
     public interface OnClickListener{
