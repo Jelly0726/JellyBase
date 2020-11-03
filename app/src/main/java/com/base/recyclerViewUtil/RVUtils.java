@@ -2,13 +2,13 @@ package com.base.recyclerViewUtil;
 
 
 import android.graphics.Rect;
+import android.view.View;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.view.View;
-
-import androidx.annotation.NonNull;
 
 import java.io.ObjectStreamException;
 
@@ -299,5 +299,39 @@ public class RVUtils {
             }
         }
         return index;
+    }
+    /**
+     * 获取第一个可见的item坐标
+     * @param recyclerView
+     * @return
+     */
+    public int getFirstVisibleItemPosition(RecyclerView recyclerView){
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        //判断是当前layoutManager是否为LinearLayoutManager
+        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+        if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+            //获取第一个可见view的位置
+            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+            return firstItemPosition;
+        }
+        return 0;
+    }
+    /**
+     * 获取最后一个可见的item坐标
+     * @param recyclerView
+     * @return
+     */
+    public int getLastVisibleItemPosition(RecyclerView recyclerView){
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        //判断是当前layoutManager是否为LinearLayoutManager
+        // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+        if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
+            //获取最后一个可见view的位置
+            int lastItemPosition = linearManager.findLastVisibleItemPosition();
+            return lastItemPosition;
+        }
+        return 0;
     }
 }
