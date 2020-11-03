@@ -303,15 +303,20 @@ public class RVUtils {
     /**
      * 获取第一个可见的item坐标
      * @param recyclerView
+     * @param isCompletely  是否完全可见 true 完全可见
      * @return
      */
-    public int getFirstVisibleItemPosition(RecyclerView recyclerView){
+    public int getFirstVisibleItemPosition(RecyclerView recyclerView,boolean isCompletely){
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         //判断是当前layoutManager是否为LinearLayoutManager
         // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
         if (layoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
             //获取第一个可见view的位置
+            if (isCompletely){
+                int firstItemPosition = linearManager.findFirstCompletelyVisibleItemPosition();
+                return firstItemPosition;
+            }
             int firstItemPosition = linearManager.findFirstVisibleItemPosition();
             return firstItemPosition;
         }
@@ -320,15 +325,20 @@ public class RVUtils {
     /**
      * 获取最后一个可见的item坐标
      * @param recyclerView
+     * @param isCompletely 是否完全可见 true 完全可见
      * @return
      */
-    public int getLastVisibleItemPosition(RecyclerView recyclerView){
+    public int getLastVisibleItemPosition(RecyclerView recyclerView,boolean isCompletely){
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         //判断是当前layoutManager是否为LinearLayoutManager
         // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
         if (layoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
             //获取最后一个可见view的位置
+            if (isCompletely){
+                int lastItemPosition = linearManager.findLastCompletelyVisibleItemPosition();
+                return lastItemPosition;
+            }
             int lastItemPosition = linearManager.findLastVisibleItemPosition();
             return lastItemPosition;
         }
