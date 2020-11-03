@@ -40,7 +40,7 @@ public class RVUtils {
      * @param isCompletely 是否完全可见
      * @return
      */
-    public int[] findRangeLinear(@NonNull LinearLayoutManager manager, boolean isCompletely) {
+    public int[] findRangeLinear(@NonNull LinearLayoutManager manager,boolean isCompletely) {
         //findFirstVisibleItemPosition()  返回当前第一个可见Item的position
         // findFirstCompletelyVisibleItemPosition() 返回当前第一个完全可见Item的position
         int[] range = new int[2];
@@ -60,7 +60,7 @@ public class RVUtils {
      * @param isCompletely 是否完全可见
      * @return
      */
-    public int[] findRangeGrid(@NonNull GridLayoutManager manager, boolean isCompletely) {
+    public int[] findRangeGrid(@NonNull GridLayoutManager manager,boolean isCompletely) {
         //findFirstVisibleItemPosition()  返回当前第一个可见Item的position
         // findFirstCompletelyVisibleItemPosition() 返回当前第一个完全可见Item的position
         int[] range = new int[2];
@@ -122,7 +122,7 @@ public class RVUtils {
      * @param position
      * @param isCompletely  是否完全可见
      */
-    public void smoothMoveToPosition(RecyclerView recyclerView, int position, boolean isCompletely) {
+    public void smoothMoveToPosition(@NonNull RecyclerView recyclerView,int position,boolean isCompletely) {
         if (recyclerView == null) return;
         if (position<0)return;
         LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -154,7 +154,7 @@ public class RVUtils {
      * @param position
      * @param isCompletely 是否完全可见
      */
-    public void moveToMiddle(RecyclerView recyclerView, int position,boolean isCompletely) {
+    public void moveToMiddle(@NonNull RecyclerView recyclerView, int position,boolean isCompletely) {
         if (recyclerView == null) return;
         if (position<0)return;
         LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -196,7 +196,7 @@ public class RVUtils {
      *
      * 参照 飞聊app 解决方案
      */
-    public void setFixHideForRecyclerView(RecyclerView recyclerView, View view) {
+    public void setFixHideForRecyclerView(@NonNull RecyclerView recyclerView, View view) {
         if (null != recyclerView && null != view) {
             int height = view.getHeight();
             Rect rect = new Rect();
@@ -219,7 +219,7 @@ public class RVUtils {
      * @param position
      * @return    可见百分数0 不可见  100 百分百可见
      */
-    public int calculateItemVisiblePercent(RecyclerView recyclerView,int position) {
+    public int calculateItemVisiblePercent(@NonNull RecyclerView recyclerView,int position) {
         if (position <0) return 0;
         if (recyclerView == null) return 0;
         LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
@@ -255,7 +255,7 @@ public class RVUtils {
      * @param percent      给定百分数
      * @return
      */
-    public int getItemVisiblePosition(RecyclerView recyclerView,int percent){
+    public int getItemVisiblePosition(@NonNull RecyclerView recyclerView,int percent){
         if (recyclerView == null) return -1;
         LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
         if (mLayoutManager==null)return -1;
@@ -273,6 +273,9 @@ public class RVUtils {
             int visiblePercent;
             //根据position获得对应的view
             View itemView = mLayoutManager.findViewByPosition(position);
+            if (itemView==null){
+                return index;
+            }
             int itemHeight = itemView.getHeight();
             Rect rowRect = new Rect();
             //获取item可见区域相对屏幕左上角的位置坐标
@@ -300,13 +303,14 @@ public class RVUtils {
         }
         return index;
     }
+
     /**
      * 获取第一个可见的item坐标
      * @param recyclerView
      * @param isCompletely  是否完全可见 true 完全可见
      * @return
      */
-    public int getFirstVisibleItemPosition(RecyclerView recyclerView,boolean isCompletely){
+    public int getFirstVisibleItemPosition(@NonNull RecyclerView recyclerView,boolean isCompletely){
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         //判断是当前layoutManager是否为LinearLayoutManager
         // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
@@ -320,7 +324,7 @@ public class RVUtils {
             int firstItemPosition = linearManager.findFirstVisibleItemPosition();
             return firstItemPosition;
         }
-        return 0;
+        return -1;
     }
     /**
      * 获取最后一个可见的item坐标
@@ -328,7 +332,7 @@ public class RVUtils {
      * @param isCompletely 是否完全可见 true 完全可见
      * @return
      */
-    public int getLastVisibleItemPosition(RecyclerView recyclerView,boolean isCompletely){
+    public int getLastVisibleItemPosition(@NonNull RecyclerView recyclerView,boolean isCompletely){
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         //判断是当前layoutManager是否为LinearLayoutManager
         // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
@@ -342,6 +346,6 @@ public class RVUtils {
             int lastItemPosition = linearManager.findLastVisibleItemPosition();
             return lastItemPosition;
         }
-        return 0;
+        return -1;
     }
 }
