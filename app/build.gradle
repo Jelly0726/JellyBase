@@ -393,8 +393,8 @@ repositories {
         implementation 'com.yanzhenjie:recyclerview-swipe:1.1.4'
 
         //权限申请
-        implementation 'com.yanzhenjie.permission:support:2.0.1'
-
+//        implementation 'com.yanzhenjie.permission:support:2.0.1'
+        implementation project(path: ':library:permission')
         //Java加密解密所需工具
         implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
 

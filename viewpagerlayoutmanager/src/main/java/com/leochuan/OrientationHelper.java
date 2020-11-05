@@ -17,9 +17,10 @@
 package com.leochuan;
 
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Helper class for LayoutManagers to abstract measurements depending on the View's orientation.
