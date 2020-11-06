@@ -74,6 +74,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      * @return
      */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        com.base.log.DebugLog.i("SSSS", "onCreateView=====$this")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 

@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import androidx.annotation.Nullable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -19,6 +18,8 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import androidx.annotation.Nullable;
 
 import com.jelly.jellybase.R;
 
@@ -459,6 +460,9 @@ public class PieChartView extends View {
 
     public void setData(ArrayList<PieChartBean> mDatas) {
         this.mDatas = mDatas;
+        sumPercent = 0;
+        sumValues = 0;
+        minAnge = 1;
         initData(mDatas);
         invalidate();
     }

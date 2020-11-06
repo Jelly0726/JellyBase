@@ -29,9 +29,6 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import androidx.annotation.ColorInt;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,6 +40,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.jelly.jellybase.R;
 
@@ -142,9 +143,10 @@ public class MaterialSpinner extends TextView {
     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
       @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position >= selectedIndex && position < adapter.getCount()) {
-          position++;
-        }
+        //使选中的项不在下拉框显示
+//        if (position >= selectedIndex && position < adapter.getCount()) {
+//          position++;
+//        }
         selectedIndex = position;
         nothingSelected = false;
         Object item = adapter.get(position);
