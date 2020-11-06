@@ -33,15 +33,18 @@ final class MaterialSpinnerAdapterWrapper extends MaterialSpinnerBaseAdapter {
   }
 
   @Override public int getCount() {
-    return listAdapter.getCount() - 1;
+    //使选中的项不在下拉框显示
+//    return listAdapter.getCount() - 1;
+    return listAdapter.getCount();
   }
 
   @Override public Object getItem(int position) {
-    if (position >= getSelectedIndex()) {
-      return listAdapter.getItem(position + 1);
-    } else {
+    //使选中的项不在下拉框显示
+//    if (position >= getSelectedIndex()) {
+//      return listAdapter.getItem(position + 1);
+//    } else {
       return listAdapter.getItem(position);
-    }
+//    }
   }
 
   @Override public Object get(int position) {

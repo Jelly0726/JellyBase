@@ -23,31 +23,38 @@ import java.util.List;
 
 public class MaterialSpinnerAdapter<T> extends MaterialSpinnerBaseAdapter {
 
-  private final List<T> items;
+    private final List<T> items;
 
-  public MaterialSpinnerAdapter(Context context, List<T> items) {
-    super(context);
-    this.items = items;
-  }
-
-  @Override public int getCount() {
-    return items.size() - 1;
-  }
-
-  @Override public T getItem(int position) {
-    if (position >= getSelectedIndex()) {
-      return items.get(position + 1);
-    } else {
-      return items.get(position);
+    public MaterialSpinnerAdapter(Context context, List<T> items) {
+        super(context);
+        this.items = items;
     }
-  }
 
-  @Override public T get(int position) {
-    return items.get(position);
-  }
+    @Override
+    public int getCount() {
+        //使选中的项不在下拉框显示
+//    return items.size() - 1;
+        return items.size();
+    }
 
-  @Override public List<T> getItems() {
-    return items;
-  }
+    @Override
+    public T getItem(int position) {
+        //使选中的项不在下拉框显示
+//    if (position >= getSelectedIndex()) {
+//      return items.get(position + 1);
+//    } else {
+        return items.get(position);
+//    }
+    }
+
+    @Override
+    public T get(int position) {
+        return items.get(position);
+    }
+
+    @Override
+    public List<T> getItems() {
+        return items;
+    }
 
 }
