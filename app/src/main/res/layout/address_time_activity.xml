@@ -12,18 +12,18 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88mm"
+        android:layout_height="44mm"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
         android:background="#ffffff"
-        android:layout_marginTop="22mm"
-        android:paddingLeft="20mm"
-        android:paddingRight="20mm">
+        android:layout_marginTop="11mm"
+        android:paddingLeft="10mm"
+        android:paddingRight="10mm">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#313131"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10mm"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="#727272"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:gravity="center_vertical|right"
             android:layout_gravity="center_vertical"
             android:drawableRight="@drawable/arrow_drop_down_black_24dp"
@@ -41,18 +41,18 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80mm"
+        android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="16mm"
-        android:paddingLeft="30mm"
-        android:paddingRight="30mm"
+        android:layout_marginTop="86mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm"
         android:background="#ffffff">
         <TextView
-            android:layout_width="200mm"
+            android:layout_width="100mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textColor="#b7b7b7"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:visibility="gone"
             android:text="选择开始日期"/>
         <TextView
@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|left"
             android:textColor="#313131"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:hint="选择开始日期"
             android:textColorHint="#b7b7b7"
             android:drawableRight="@drawable/arrow_drop_down_black_24dp"/>

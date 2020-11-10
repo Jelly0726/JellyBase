@@ -2,6 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
+    <com.base.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        />
+    <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
     <include layout="@layout/shopcar_acitonbar"/>
     <com.base.xrefreshview.XRefreshView
         android:id="@+id/xrefreshview"
@@ -43,7 +51,7 @@
         android:layout_height="50mm"
         android:background="#fff">
         <CheckBox
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:background="@null"
             android:clickable="true"
             android:drawablePadding="10mm"
@@ -78,7 +86,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textColor="@android:color/black"
-                        android:textSize="28mm"
+                        android:textSize="14mm"
                         android:text="@string/order_total"
                         android:layout_marginStart="5mm"
                         android:layout_width="wrap_content"
@@ -86,7 +94,7 @@
                     <TextView
                         android:id="@+id/total_price"
                         android:text="¥0.00"
-                        android:textSize="28mm"
+                        android:textSize="14mm"
                         android:textColor="@color/ic_taobao"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -97,13 +105,13 @@
                     android:text="不含运费"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24mm"/>
+                    android:textSize="12mm"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/go_pay"
                 android:layout_width="0mm"
-                android:layout_height="60mm"
+                android:layout_height="50mm"
                 android:layout_weight="0.5"
                 android:background="#f58612"
                 android:gravity="center"
@@ -118,10 +126,10 @@
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
                 android:layout_width="0mm"
-                android:layout_height="60mm">
+                android:layout_height="50mm">
                 <TextView
                     android:id="@+id/share_goods"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_yellow"
                     android:gravity="center"
@@ -133,7 +141,7 @@
                 <TextView
                     android:layout_marginStart="1mm"
                     android:id="@+id/collect_goods"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_taobao"
                     android:gravity="center"
@@ -145,7 +153,7 @@
                 <TextView
                     android:layout_marginStart="1mm"
                     android:id="@+id/del_goods"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:textColor="@android:color/white"
                     android:background="@color/ic_red"
                     android:gravity="center"

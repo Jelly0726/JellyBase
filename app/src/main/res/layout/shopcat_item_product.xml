@@ -14,12 +14,12 @@
         <CheckBox
             android:id="@+id/single_checkBox"
             android:visibility="visible"
-            android:layout_marginEnd="20mm"
-            android:layout_marginStart="22mm"
+            android:layout_marginEnd="10mm"
+            android:layout_marginStart="11mm"
             android:gravity="center"
             android:layout_gravity="center_vertical"
-            android:minWidth="20mm"
-            android:minHeight="20mm"
+            android:minWidth="10mm"
+            android:minHeight="10mm"
             android:background="@null"
             android:button="@null"
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
@@ -31,8 +31,8 @@
             android:layout_marginTop="5mm"
             android:scaleType="centerCrop"
             android:src="@drawable/shopcar_cmaz"
-            android:layout_width="184mm"
-            android:layout_height="184mm"
+            android:layout_width="92mm"
+            android:layout_height="92mm"
             app:roundType="round"
             app:roundRadius="2mm"/>
 
@@ -46,11 +46,11 @@
             
             <TextView
                 android:text="五月天【沉梦昂志】2050年演唱会 武汉站"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:textColor="#313131"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:layout_marginRight="80mm"
+                android:layout_marginRight="40mm"
                 android:id="@+id/goods_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -63,7 +63,7 @@
                 android:layout_centerVertical="true"
                 android:text="门票:内场 类型:憨人"
                 android:visibility="gone"
-                android:textSize="24mm"
+                android:textSize="12mm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -81,10 +81,10 @@
                 android:layout_centerVertical="true"
                 android:lines="1"
                 android:textColor="#727272"
-                android:textSize="24mm"
+                android:textSize="12mm"
                 android:text="批发价："/>
             <TextView
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:id="@+id/goods_price"
                 android:layout_toRightOf="@id/title"
                 android:textColor="#fe1212"
@@ -94,7 +94,7 @@
                 android:lines="1"
                 android:text="100000/斤" />
             <TextView
-                android:textSize="24mm"
+                android:textSize="12mm"
                 android:text=""
                 android:visibility="gone"
                 android:layout_toRightOf="@id/goods_price"
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:textColor="#727272"
                 android:text="x1"
                 android:layout_marginEnd="10mm"
@@ -144,54 +144,54 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
-                        android:textSize="28mm"
+                        android:textSize="14mm"
                         android:text="—"
                         android:id="@+id/reduce_goodsNum"
-                        android:layout_width="50mm"
-                        android:layout_height="35mm" />
+                        android:layout_width="25mm"
+                        android:layout_height="17mm" />
 
                     <TextView
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="28mm"
+                        android:textSize="14mm"
                         android:text="1"
                         android:id="@+id/goods_Num"
                         android:layout_width="match_parent"
-                        android:layout_height="35mm" />
+                        android:layout_height="17mm" />
 
                     <TextView
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:gravity="center"
-                        android:textSize="28mm"
+                        android:textSize="14mm"
                         android:text="+"
                         android:id="@+id/increase_goods_Num"
-                        android:layout_width="50mm"
-                        android:layout_height="35mm" />
+                        android:layout_width="15mm"
+                        android:layout_height="17mm" />
                 </LinearLayout>
                 <TextView
                     android:layout_marginStart="0mm"
-                    android:layout_marginTop="20mm"
+                    android:layout_marginTop="10mm"
                     android:layout_marginRight="10mm"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:id="@+id/goodsSize"
                     android:text="门票:内场 类型:憨人"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:layout_marginStart="0mm"
-                    android:layout_marginTop="20mm"
+                    android:layout_marginTop="10mm"
                     android:layout_marginRight="10mm"
                     android:maxLines="2"
                     android:ellipsize="end"
                     android:id="@+id/goodsName"
                     android:text=""
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -199,7 +199,7 @@
 
             <TextView
                 android:id="@+id/del_goods"
-                android:textSize="24mm"
+                android:textSize="12mm"
                 android:gravity="center"
                 android:background="@color/ic_red"
                 android:textColor="@android:color/white"

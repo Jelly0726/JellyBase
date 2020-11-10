@@ -9,27 +9,27 @@
         android:padding="1mm"
         android:background="@color/shopcar_white"
         android:layout_width="match_parent"
-        android:layout_height="88mm">
+        android:layout_height="44mm">
         <CheckBox
             android:id="@+id/store_checkBox"
             android:visibility="visible"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:minWidth="20mm"
-            android:minHeight="20mm"
+            android:minWidth="10mm"
+            android:minHeight="10mm"
             android:background="@null"
             android:button="@null"
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30mm"
-            android:layout_marginLeft="22mm" />
+            android:layout_marginRight="15mm"
+            android:layout_marginLeft="11mm" />
         
         <TextView
             android:textColor="@color/grey_color2"
             android:drawablePadding="5mm"
             android:drawableLeft="@mipmap/shopcart_store"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:text="小马的店铺"
             android:gravity="center_vertical"
             android:layout_marginTop="5mm"
@@ -46,8 +46,8 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:text="编辑"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:layout_width="wrap_content"
-            android:layout_height="88mm" />
+            android:layout_height="44mm" />
     </RelativeLayout>
 </LinearLayout>
