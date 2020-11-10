@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 灰色阴影 -->
-    <item  android:left="0dp"
-        android:top="0dp"
-        android:bottom="0dp"
-        android:right="0dp">
+    <item  android:left="0mm"
+        android:top="0mm"
+        android:bottom="0mm"
+        android:right="0mm">
         <shape>
             <!--实心，设置形状的填充色-->
             <solid android:color="#1cec5e5e"/>
             <!--边框，描边-->
-            <stroke android:width="0dp" android:color="#1cec5e5e"/>
+            <stroke android:width="0mm" android:color="#1cec5e5e"/>
             <!--圆角,radius是半径-->
-            <!--<corners android:radius="5dp" />-->
-            <corners android:topRightRadius="0dp"
-                android:topLeftRadius="0dp"
-                android:bottomLeftRadius="15dp"
-                android:bottomRightRadius="15dp" />
+            <!--<corners android:radius="5mm" />-->
+            <corners android:topRightRadius="0mm"
+                android:topLeftRadius="0mm"
+                android:bottomLeftRadius="15mm"
+                android:bottomRightRadius="15mm" />
 
             <!--渐变
             android:angle 代表渐变颜色的角度， 0 is left to right, 90 is bottom to top. 必须是45的整数倍.
@@ -46,38 +46,38 @@
             android:startColor="#1cec5e5e"
             android:endColor="#00000000"/>
             <!--边距-->
-            <padding android:bottom="0dp"
-                android:top="0dp"
-                android:right="0dp"
-                android:left="0dp"/>
+            <padding android:bottom="0mm"
+                android:top="0mm"
+                android:right="0mm"
+                android:left="0mm"/>
         </shape>
     </item>
     <!-- 白色前景 -->
-    <item  android:left="0dp"
-        android:top="0dp"
-        android:bottom="0dp"
-        android:right="0dp">
+    <item  android:left="0mm"
+        android:top="0mm"
+        android:bottom="0mm"
+        android:right="0mm">
         <shape>
             <!--实心，设置形状的填充色-->
             <solid android:color="#ffffff"/>
             <!--边框，描边-->
-            <stroke android:width="0dp" android:color="#ffffff"/>
+            <stroke android:width="0mm" android:color="#ffffff"/>
             <!--圆角,radius是半径-->
-            <!--<corners android:radius="5dp" />-->
-            <corners android:topRightRadius="0dp"
-                android:topLeftRadius="0dp"
-                android:bottomLeftRadius="15dp"
-                android:bottomRightRadius="15dp" />
+            <!--<corners android:radius="5mm" />-->
+            <corners android:topRightRadius="0mm"
+                android:topLeftRadius="0mm"
+                android:bottomLeftRadius="15mm"
+                android:bottomRightRadius="15mm" />
 
             <!--渐变-->
             <!--<gradient android:angle="315"-->
             <!--android:startColor="#eca75e"-->
             <!--android:endColor="#ec5e5e"/>-->
             <!--边距-->
-            <padding android:bottom="0dp"
-                android:top="0dp"
-                android:right="0dp"
-                android:left="0dp"/>
+            <padding android:bottom="0mm"
+                android:top="0mm"
+                android:right="0mm"
+                android:left="0mm"/>
         </shape>
     </item>
 </layer-list>

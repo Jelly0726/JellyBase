@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- 高度40 -->
-    <size android:height="15dp"/>
+    <size android:height="15mm"/>
     <!-- 圆角弧度 20 -->
-    <corners android:radius="10dp"/>
+    <corners android:radius="10mm"/>
     <!-- 变化率 -->
     <gradient
         android:endColor="#33da33"

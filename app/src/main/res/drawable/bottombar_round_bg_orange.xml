@@ -6,15 +6,15 @@
     android:useLevel="false" >
     <solid android:color="#fff39800" />
     <padding
-        android:left="2dp"
-        android:top="1dp"
-        android:right="2dp"
-        android:bottom="1dp" />
+        android:left="2mm"
+        android:top="1mm"
+        android:right="2mm"
+        android:bottom="1mm" />
     <solid
         android:color="#fff39800" />
     <stroke
-        android:width="0dp"
+        android:width="0mm"
         android:color="@android:color/white" />
-    <size android:width="15dp"
-        android:height="15dp" />
+    <size android:width="15mm"
+        android:height="15mm" />
 </shape>

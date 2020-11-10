@@ -63,7 +63,7 @@
         android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
-            android:layout_width="200px"
+            android:layout_width="200mm"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="14mm"
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="0px"
+        android:layout_marginTop="0mm"
         android:paddingLeft="15mm"
         android:paddingRight="11mm"
         android:paddingTop="0mm"
@@ -117,11 +117,11 @@
         android:layout_width="match_parent"
         android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="0px"
+        android:layout_marginTop="0mm"
         android:paddingLeft="15mm"
         android:paddingRight="11mm"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
             android:layout_width="100mm"
@@ -141,7 +141,7 @@
             android:gravity="center_vertical|right"
             android:hint="请选择"
             android:textSize="14mm"
-            android:drawablePadding="10px"
+            android:drawablePadding="10mm"
             android:drawableRight="@mipmap/right_next"
             android:background="@null"/>
     </LinearLayout>
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="0px"
+        android:layout_marginTop="0mm"
         android:minHeight="100mm"
         android:paddingLeft="15mm"
         android:paddingRight="11mm"
@@ -182,8 +182,8 @@
         android:layout_marginTop="11mm"
         android:paddingLeft="15mm"
         android:paddingRight="11mm"
-        android:paddingTop="0px"
-        android:paddingBottom="0px"
+        android:paddingTop="0mm"
+        android:paddingBottom="0mm"
         android:background="#fff">
         <TextView
             android:layout_width="match_parent"

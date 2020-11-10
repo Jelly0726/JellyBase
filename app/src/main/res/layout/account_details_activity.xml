@@ -16,7 +16,7 @@
         android:layout_height="45mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"

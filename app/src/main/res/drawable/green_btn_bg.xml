@@ -6,23 +6,23 @@
             <!--实心，设置形状的填充色-->
             <solid android:color="#27a02d"/>
             <!--边框，描边-->
-            <stroke android:width="0.2dp" android:color="#27a02d"/>
+            <stroke android:width="0.2mm" android:color="#27a02d"/>
             <!--圆角,radius是半径-->
-            <!--<corners android:radius="5dp" />-->
-           <corners android:topRightRadius="5dp"
-               android:topLeftRadius="5dp"
-               android:bottomLeftRadius="5dp"
-               android:bottomRightRadius="5dp" />
+            <!--<corners android:radius="5mm" />-->
+           <corners android:topRightRadius="5mm"
+               android:topLeftRadius="5mm"
+               android:bottomLeftRadius="5mm"
+               android:bottomRightRadius="5mm" />
 
            <!--渐变-->
             <!--<gradient android:angle="270"-->
             <!--android:endColor="#9B30FF"-->
             <!--android:startColor="#13C7AF"/>-->
             <!--边距-->
-            <padding android:bottom="0dp"
-                android:top="0dp"
-                android:right="0dp"
-                android:left="0dp"/>
+            <padding android:bottom="0mm"
+                android:top="0mm"
+                android:right="0mm"
+                android:left="0mm"/>
         </shape>
     </item>
 

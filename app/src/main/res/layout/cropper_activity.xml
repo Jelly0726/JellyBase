@@ -35,7 +35,7 @@
             android:id="@+id/shoppingcat_num"
             android:textColor="#ffffff"
             android:gravity="center"
-            android:textSize="17sp"
+            android:textSize="17mm"
             android:layout_width="wrap_content"
             android:layout_height="45mm" />
         <TextView
