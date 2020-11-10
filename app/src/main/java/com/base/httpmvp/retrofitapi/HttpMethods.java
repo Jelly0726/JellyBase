@@ -61,8 +61,6 @@ public class HttpMethods implements IGlobalManager {
 	private volatile static HttpMethods sInstance;
 	private static final String CACHE_NAME  = "retrofitcache";
 
-	public static String sBASE_URL =BuildConfig.API_HOST;
-	public static String sUrl = "http://" + sBASE_URL + "/";
 //	public static final String sBASE_URL = "http://120.26.208.28:8088/";
 	private static final int DEFAULT_TIMEOUT = 5;
 
@@ -110,7 +108,7 @@ public class HttpMethods implements IGlobalManager {
 							.addConverterFactory(ScalarsConverterFactory.create())
 							//.addConverterFactory(new MGsonConverterFactory())
 							.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-							.baseUrl(sUrl)
+							.baseUrl(BuildConfig.API_HOST)
 							.build();
 				}
 			}

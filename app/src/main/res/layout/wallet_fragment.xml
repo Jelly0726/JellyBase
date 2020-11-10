@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="45mm"
         android:background="#ffffff"
-        android:textSize="16sp"
+        android:textSize="16mm"
         android:textColor="#000000"
         android:gravity="center"
         android:text="钱包"/>
@@ -57,7 +57,7 @@
                         android:id="@+id/integral_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30sp"
+                        android:textSize="30mm"
                         android:textColor="#ffffff"
                         android:text="000"/>
                     <LinearLayout
@@ -71,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginBottom="10mm"
-                            android:textSize="11sp"
+                            android:textSize="11mm"
                             android:textColor="#ffeaea"
                             android:gravity="center"
                             android:text="通兑通用"/>
@@ -84,7 +84,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginBottom="10mm"
-                            android:textSize="11sp"
+                            android:textSize="11mm"
                             android:textColor="#ffeaea"
                             android:gravity="center"
                             android:text="消费抵现"/>
@@ -97,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginBottom="10mm"
-                            android:textSize="11sp"
+                            android:textSize="11mm"
                             android:textColor="#ffeaea"
                             android:gravity="center"
                             android:text="游戏增值"/>
@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20mm"
                             android:text="积分兑换"
-                            android:textSize="12sp"
+                            android:textSize="12mm"
                             android:textColor="#666666"/>
                     </LinearLayout>
                     <LinearLayout
@@ -148,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20mm"
                             android:text="交易记录"
-                            android:textSize="12sp"
+                            android:textSize="12mm"
                             android:textColor="#666666"/>
                     </LinearLayout>
                     <LinearLayout
@@ -169,7 +169,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20mm"
                             android:text="积分充值"
-                            android:textSize="12sp"
+                            android:textSize="12mm"
                             android:textColor="#666666"/>
                     </LinearLayout>
                     <LinearLayout
@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20mm"
                             android:text="银行卡"
-                            android:textSize="12sp"
+                            android:textSize="12mm"
                             android:textColor="#666666"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -227,7 +227,7 @@
                         android:id="@+id/gs_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30sp"
+                        android:textSize="30mm"
                         android:textColor="#ffffff"
                         android:text="000"/>
                     <TextView
@@ -269,7 +269,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20mm"
                                 android:text="扫一扫"
-                                android:textSize="12sp"
+                                android:textSize="12mm"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
@@ -289,7 +289,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20mm"
                                 android:text="收款码"
-                                android:textSize="12sp"
+                                android:textSize="12mm"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
@@ -309,7 +309,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20mm"
                                 android:text="转出"
-                                android:textSize="12sp"
+                                android:textSize="12mm"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                         <LinearLayout
@@ -329,7 +329,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20mm"
                                 android:text="出入记录"
-                                android:textSize="12sp"
+                                android:textSize="12mm"
                                 android:textColor="#666666"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -352,7 +352,7 @@
                             android:gravity="center_vertical"
                             android:text="我的地址"
                             android:textColor="#333333"
-                            android:textSize="14sp"/>
+                            android:textSize="14mm"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -361,7 +361,7 @@
                             android:paddingRight="5mm"
                             android:paddingTop="2mm"
                             android:paddingBottom="2mm"
-                            android:textSize="10sp"
+                            android:textSize="10mm"
                             android:textColor="#FF5E82EC"
                             android:text="一键复制"
                             android:background="@drawable/wallet_copy_text_bg"/>
@@ -376,7 +376,7 @@
                         android:gravity="left"
                         android:text="0xgpojdsf75dsfsoi5jh48/5d5f6d5fs6h45f4xd4sf7g9sd857dadf8"
                         android:textColor="#666666"
-                        android:textSize="14sp"/>
+                        android:textSize="14mm"/>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1mm"

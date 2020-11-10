@@ -7,17 +7,17 @@
     android:background="@color/main_bg">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100mm"
+        android:layout_height="50mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_marginBottom="1mm"
         android:background="#fff">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100mm"
-            android:layout_height="100mm"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20mm">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -28,14 +28,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30mm"
+            android:textSize="15mm"
             android:text="取消订单"
             android:textColor="#313131"/>
         <LinearLayout
-            android:layout_width="100mm"
-            android:layout_height="100mm"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20mm">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,16 +72,16 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10mm"
-        android:paddingLeft="20mm"
-        android:paddingRight="40mm"
-        android:paddingTop="20mm"
-        android:paddingBottom="20mm"
+        android:layout_marginTop="5mm"
+        android:paddingLeft="10mm"
+        android:paddingRight="20mm"
+        android:paddingTop="10mm"
+        android:paddingBottom="10mm"
         android:background="@drawable/confirm_order_bg">
         <ImageView
             android:id="@+id/order_product_img"
-            android:layout_width="150mm"
-            android:layout_height="150mm"
+            android:layout_width="75mm"
+            android:layout_height="75mm"
             android:src="@mipmap/nopicf"
             android:scaleType="fitXY"
             android:layout_gravity="center_vertical"/>
@@ -89,8 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="30mm"
-            android:layout_marginRight="30mm"
+            android:layout_marginLeft="15mm"
+            android:layout_marginRight="15mm"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/order_product_name"
@@ -101,7 +101,7 @@
                 android:lines="1"
                 android:ellipsize="end"
                 android:textColor="#454545"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:text="农家自产玉米"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_menberID"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:text="买家ID："/>
                 <TextView
                     android:id="@+id/order_memberID"
@@ -122,7 +122,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_menberID"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:text="海丝路"/>
             </LinearLayout>
             <LinearLayout
@@ -136,7 +136,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:textColor="@color/order_price"
-                    android:textSize="24mm"
+                    android:textSize="12mm"
                     android:text="¥200积分"/>
             </LinearLayout>
         </LinearLayout>
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:textColor="#454545"
                 android:text="¥2.5积分"/>
             <TextView
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:gravity="right"
-                android:textSize="24mm"
+                android:textSize="12mm"
                 android:layout_marginTop="10mm"
                 android:textColor="#727272"
                 android:text="x10斤"/>
@@ -168,11 +168,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40mm"
+        android:layout_height="20mm"
         android:orientation="horizontal"
-        android:layout_marginTop="10mm"
-        android:paddingLeft="10mm"
-        android:paddingRight="10mm"
+        android:layout_marginTop="5mm"
+        android:paddingLeft="5mm"
+        android:paddingRight="5mm"
         android:background="#ffffff">
         <TextView
             android:layout_width="wrap_content"

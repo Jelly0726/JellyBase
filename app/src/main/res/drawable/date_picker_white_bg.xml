@@ -3,10 +3,10 @@
     <item>
         <shape>
             <solid android:color="#ffffff"/>
-            <corners android:topLeftRadius="@dimen/dp_0"
-                android:topRightRadius="@dimen/dp_0"
-                android:bottomLeftRadius="@dimen/dp_20"
-                android:bottomRightRadius="@dimen/dp_20"/>
+            <corners android:topLeftRadius="0mm"
+                android:topRightRadius="0mm"
+                android:bottomLeftRadius="20mm"
+                android:bottomRightRadius="20mm"/>
         </shape>
     </item>
 </layer-list>

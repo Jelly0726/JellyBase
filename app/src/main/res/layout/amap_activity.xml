@@ -25,8 +25,8 @@
         </com.amap.api.maps.MapView>
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100mm"
-            android:layout_height="100mm"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
@@ -38,8 +38,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/starNavi_layout"
-            android:layout_width="200mm"
-            android:layout_height="40mm"
+            android:layout_width="100mm"
+            android:layout_height="20mm"
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"

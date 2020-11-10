@@ -29,26 +29,26 @@ android:orientation="vertical" >
         android:orientation="horizontal" >
 
         <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="3dp"
+            android:layout_width="0mm"
+            android:layout_height="50mm"
+            android:layout_margin="3mm"
             android:layout_weight="1"
             android:background="@drawable/rdobtn_selecter"
             android:button="@null"
             android:gravity="center"
             android:text="10元"
-            android:textSize="25sp" />
+            android:textSize="15mm" />
 
         <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="3dp"
+            android:layout_width="0mm"
+            android:layout_height="50mm"
+            android:layout_margin="3mm"
             android:layout_weight="1"
             android:background="@drawable/rdobtn_selecter"
             android:button="@null"
             android:gravity="center"
             android:text="20元"
-            android:textSize="25sp" />
+            android:textSize="15mm" />
 
        ...
     </LinearLayout>
@@ -59,15 +59,15 @@ android:orientation="vertical" >
         android:orientation="horizontal" >
 
         <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="3dp"
+            android:layout_width="0mm"
+            android:layout_height="50mm"
+            android:layout_margin="3mm"
             android:layout_weight="1"
             android:background="@drawable/rdobtn_selecter"
             android:button="@null"
             android:gravity="center"
             android:text="80元"
-            android:textSize="25sp" />
+            android:textSize="15mm" />
 
        ...
     </LinearLayout>

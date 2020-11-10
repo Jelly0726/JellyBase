@@ -2,18 +2,19 @@ package com.jelly.jellybase.activity;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.base.httpmvp.contact.AccountDetailContact;
-import com.base.model.AccountDetail;
 import com.base.httpmvp.presenter.AccountDetailPresenter;
 import com.base.httpmvp.retrofitapi.methods.ResultData;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.model.AccountDetail;
 import com.base.multiClick.AntiShake;
 import com.base.recyclerViewUtil.ItemDecoration;
 import com.base.toast.ToastUtils;
@@ -100,10 +101,10 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     }
     protected RecyclerView.ItemDecoration createItemDecoration() {
         Rect rect=new Rect();
-        rect.top=getResources().getDimensionPixelOffset(R.dimen.dp_1);
-        rect.bottom=getResources().getDimensionPixelOffset(R.dimen.dp_1);
-        rect.left=getResources().getDimensionPixelOffset(R.dimen.dp_1);
-        rect.right=getResources().getDimensionPixelOffset(R.dimen.dp_1);
+        rect.top=1;
+        rect.bottom=1;
+        rect.left=1;
+        rect.right=1;
         return new ItemDecoration(rect,1,ItemDecoration.NONE, ContextCompat.getColor(this, R.color.main_bg));
     }
     @Override

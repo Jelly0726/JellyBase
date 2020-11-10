@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/blurkit" />
             <option value="$PROJECT_DIR$/form" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/CheckVersionLib" />
             <option value="$PROJECT_DIR$/library/ColorPicker" />
             <option value="$PROJECT_DIR$/library/Common" />
             <option value="$PROJECT_DIR$/library/FilePicker" />

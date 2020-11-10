@@ -5,26 +5,26 @@
         <shape>
             <!--实心，设置形状的填充色-->
             <solid android:color="#00000000"/>
-            <size android:height="60px"
-                android:width="60px"/>
+            <size android:height="60mm"
+                android:width="60mm"/>
             <!--边框，描边-->
-            <stroke android:width="0dp" android:color="#00000000"/>
+            <stroke android:width="0mm" android:color="#00000000"/>
             <!--圆角,radius是半径-->
-            <!--<corners android:radius="5dp" />-->
-           <corners android:topRightRadius="0dip"
-               android:topLeftRadius="0dip"
-               android:bottomLeftRadius="0dip"
-               android:bottomRightRadius="0dip" />
+            <!--<corners android:radius="5mm" />-->
+           <corners android:topRightRadius="0mm"
+               android:topLeftRadius="0mm"
+               android:bottomLeftRadius="0mm"
+               android:bottomRightRadius="0mm" />
 
            <!--渐变-->
             <!--<gradient android:angle="270"-->
             <!--android:endColor="#9B30FF"-->
             <!--android:startColor="#13C7AF"/>-->
             <!--边距-->
-            <padding android:bottom="0dp"
-                android:top="0dp"
-                android:right="0dp"
-                android:left="0dp"/>
+            <padding android:bottom="0mm"
+                android:top="0mm"
+                android:right="0mm"
+                android:left="0mm"/>
         </shape>
     </item>
 

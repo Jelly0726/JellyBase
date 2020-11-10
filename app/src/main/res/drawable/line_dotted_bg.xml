@@ -4,11 +4,11 @@
     <item>
         <shape
             android:shape="line">
-            <size android:width="1dp" />
+            <size android:width="1mm" />
             <stroke
-                android:dashGap="2dp"
-                android:dashWidth="3dp"
-                android:width="1dp"
+                android:dashGap="2mm"
+                android:dashWidth="3mm"
+                android:width="1mm"
                 android:color="#7d707070" />
         </shape>
     </item>
