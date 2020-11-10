@@ -377,7 +377,7 @@ repositories {
         implementation 'com.github.maning0303:MNProgressHUD:V1.1.8'
 
         //检查版本
-        implementation 'com.allenliu.versionchecklib:library:2.0.8'
+        implementation 'com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx'
 
         //Android平台下的富文本解析器，支持Html和Markdown
         implementation 'com.zzhoujay.richtext:richtext:3.0.7'// latest-version  3.0.4

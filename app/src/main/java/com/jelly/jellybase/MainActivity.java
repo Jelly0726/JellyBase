@@ -392,7 +392,7 @@ public class MainActivity extends BaseActivity {
                             public void onShouldForceUpdate() {
                                 if (!isDownload) {
                                     if (tmSelfUpdateUpdateInfo.versionname.contains("F")) {
-                                        builder.excuteMission(MainActivity.this);
+                                        builder.executeMission(MainActivity.this);
                                     }
                                 }
                             }
@@ -415,7 +415,7 @@ public class MainActivity extends BaseActivity {
 
                             }
                         });
-                        builder.excuteMission(MainActivity.this);
+                        builder.executeMission(MainActivity.this);
                         break;
                     case TMSelfUpdateUpdateInfo.UpdateMethod_ByPatch:
                         //省流量更新
