@@ -1,13 +1,14 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.base.Utils.MyDate;
 import com.base.bgabanner.BGABanner;
@@ -38,7 +39,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -77,8 +77,6 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        setContentView(R.layout.product_details_activity);
-        ButterKnife.bind(this);
         isShanGou=getIntent().getBooleanExtra("isShanGou",false);
         iniView();
         processLogic();
@@ -88,6 +86,10 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
         Sofia.with(this)
         // 状态栏浅色字体。
         .statusBarLightFont();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.product_details_activity;
     }
     private void iniView(){
         banner.setDelegate(new BGABanner.Delegate<ImageView, String>() {

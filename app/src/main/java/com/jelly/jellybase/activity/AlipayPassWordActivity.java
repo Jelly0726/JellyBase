@@ -2,9 +2,10 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.base.passwordView.Callback;
 import com.base.passwordView.PasswordKeypad;
@@ -21,8 +22,11 @@ public class AlipayPassWordActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alipay_password_activity);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.alipay_password_activity;
     }
     private void iniView(){
         mKeypad = new PasswordKeypad();

@@ -15,6 +15,8 @@ import android.util.AttributeSet
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import butterknife.ButterKnife
+import butterknife.Unbinder
 import cn.jpush.android.api.JPushInterface
 import com.base.SystemBar.StatusBarUtil
 import com.base.appManager.AppSubject
@@ -43,7 +45,8 @@ import kotlinx.coroutines.launch
  * Created by Jelly on 2017/12/5.
  */
 @DebugLog
-open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by MainScope(){
+abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope() {
+    private lateinit var mUnbinder: Unbinder
     private var mRecevier: InnerRecevier? = null
     private var mFilter: IntentFilter? = null
     private var isResume = false
@@ -55,6 +58,10 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
 //    public Presentation mPresentation;//双屏客显
     }
 
+    /**
+     * 当前Activity的布局
+     */
+    abstract fun getLayoutId(): Int
     override fun onCreate(savedInstanceState: Bundle?) {
         //无title
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -74,6 +81,9 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
             StrictMode.setThreadPolicy(policy)
         }
         //====
+        if (getLayoutId() > 0)
+            setContentView(getLayoutId())
+        mUnbinder = ButterKnife.bind(this)
         getExtra()
         mRecevier = InnerRecevier()
         mFilter = IntentFilter()
@@ -146,7 +156,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
     /**
      * 获取Intent传值
      */
-    open fun getExtra(){
+    open fun getExtra() {
 
     }
 
@@ -271,6 +281,7 @@ open class BaseActivity : AppCompatActivity(), Observer<Any> , CoroutineScope by
         }
         AppSubject.getInstance().detach(this)
         super.onDestroy()
+        mUnbinder?.let { it.unbind() }
         if (circleDialog != null) {
             circleDialog!!.dismiss()
             circleDialog = null

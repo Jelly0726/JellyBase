@@ -25,7 +25,6 @@ public class GraphValiCodeActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.graphvalicode_activity);
 
         et_phoneCode = (EditText) findViewById(R.id.et_phoneCodes);
         Button but_toSetCode = (Button) findViewById(R.id.but_forgetpass_toSetCodes);
@@ -33,7 +32,10 @@ public class GraphValiCodeActivity extends BaseActivity implements View.OnClickL
         iv_showCode = (ImageView) findViewById(R.id.iv_showCode);
         iv_showCode.setOnClickListener(this);
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.graphvalicode_activity;
+    }
     @Override
     protected void onDestroy() {
         GraphValiCode.getInstance().onDestroy();

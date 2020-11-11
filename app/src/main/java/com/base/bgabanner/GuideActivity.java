@@ -27,10 +27,13 @@ public class GuideActivity extends BaseActivity {
         setListener();
         processLogic();
     }
+    @Override
+    public int getLayoutId(){
+        return R.layout.base_activity_guide;
+    }
     private void iniBar(){
     }
     private void initView() {
-        setContentView(R.layout.base_activity_guide);
         mBackgroundBanner = (BGABanner) findViewById(R.id.banner_guide_background);
         mForegroundBanner = (BGABanner) findViewById(R.id.banner_guide_foreground);
         mForegroundBanner.setDelegate(new BGABanner.Delegate<ImageView, String>() {

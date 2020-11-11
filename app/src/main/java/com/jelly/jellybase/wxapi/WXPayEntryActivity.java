@@ -38,13 +38,15 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.weixinpay_activity);
 
 		initView();
 		mApi = WXAPIFactory.createWXAPI(this, BaseConfig.WechatPay_APP_ID);
 		mApi.handleIntent(getIntent(), this);
 	}
-
+	@Override
+	public int getLayoutId(){
+		return R.layout.weixinpay_activity;
+	}
 	private void initView(){
 		left_back = (LinearLayout) findViewById(R.id.left_back);
 		left_back.setOnClickListener(mListener);

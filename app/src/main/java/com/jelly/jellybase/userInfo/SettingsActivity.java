@@ -37,10 +37,12 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_settings_activity);
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_settings_activity;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

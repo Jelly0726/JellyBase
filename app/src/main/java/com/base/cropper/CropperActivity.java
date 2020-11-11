@@ -14,7 +14,6 @@ import com.jelly.jellybase.R;
 import java.io.IOException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CropperActivity extends BaseActivity {
@@ -26,9 +25,11 @@ public class CropperActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         imageUri=getIntent().getData();
         if (imageUri==null)return;
-        setContentView(R.layout.cropper_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.cropper_activity;
     }
     private void iniView(){
         try {

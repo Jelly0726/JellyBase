@@ -21,7 +21,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vedio_record_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.RECORD_AUDIO,
@@ -42,5 +41,9 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.vedio_record_main;
     }
 }

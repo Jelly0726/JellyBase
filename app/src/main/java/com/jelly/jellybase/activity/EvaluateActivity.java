@@ -13,7 +13,6 @@ import com.jelly.jellybase.R;
 import com.willy.ratingbar.BaseRatingBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -37,11 +36,12 @@ public class EvaluateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.evaluate_activity);
-        ButterKnife.bind(this);
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.evaluate_activity;
+    }
 
     private void iniView(){
         describeRatingBar.setRating(4);

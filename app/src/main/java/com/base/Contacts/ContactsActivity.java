@@ -5,9 +5,6 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.Contacts.adapter.ContactsSortAdapter;
 import com.base.Contacts.model.SortModel;
@@ -39,7 +40,6 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ContactsActivity extends BaseActivity implements OnItemClickListener{
@@ -70,11 +70,12 @@ public class ContactsActivity extends BaseActivity implements OnItemClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.contacts_activity);
-		ButterKnife.bind(this);
 		init();
 	}
-
+	@Override
+	public int getLayoutId(){
+		return R.layout.contacts_activity;
+	}
 	private void init() {
 		initView();
 		initListener();

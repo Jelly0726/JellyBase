@@ -29,9 +29,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -40,7 +38,6 @@ import butterknife.Unbinder;
 
 public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContact.Presenter>
         implements AccountDetailContact.View{
-    private Unbinder unbinder;
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.mRecyclerView)
@@ -56,18 +53,18 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.account_details_activity);
-        unbinder=ButterKnife.bind(this);
         iniView();
         iniXRefreshView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.account_details_activity;
     }
     private void iniView (){
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (unbinder!=null)
-            unbinder.unbind();
     }
     private void iniXRefreshView(){
         mRefreshLayout.setOnRefreshListener(mRefreshListener);

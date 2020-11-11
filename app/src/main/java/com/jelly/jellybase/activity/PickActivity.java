@@ -1,9 +1,10 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.base.Utils.MyDate;
 import com.base.androidPicker.AddressPickTask;
@@ -31,8 +32,11 @@ public class PickActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.address_time_activity);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.address_time_activity;
     }
     private void iniView(){
         select_address=(TextView) findViewById(R.id.select_address);

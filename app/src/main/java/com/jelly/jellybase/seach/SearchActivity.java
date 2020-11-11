@@ -35,9 +35,12 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity);
         iniView();
         iniHistory();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.search_activity;
     }
     private void iniView(){
         cancel_tv= (TextView) findViewById(R.id.cancel_tv);

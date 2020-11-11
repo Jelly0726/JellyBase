@@ -36,7 +36,6 @@ public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.amap_basic_navi);
 		mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
 		mAMapNaviView.onCreate(savedInstanceState);
 		mAMapNaviView.setAMapNaviViewListener(this);
@@ -56,7 +55,10 @@ public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener
             mAMapNavi.startNavi(NaviType.EMULATOR);
 		}
 	}
-
+	@Override
+	public int getLayoutId(){
+		return R.layout.amap_basic_navi;
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();

@@ -6,15 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.base.toast.ToastUtils;
 import com.base.idcart.IDCard;
 import com.base.idcart.IDCardUtils;
 import com.base.idcart.IDEntity;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class IDCartActivity extends BaseActivity{
@@ -29,8 +28,6 @@ public class IDCartActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.idcart_activity);
-        ButterKnife.bind(this);
         IDCard_edit.setKeyListener(new NumberKeyListener() {
             @Override
             public int getInputType() {
@@ -45,9 +42,16 @@ public class IDCartActivity extends BaseActivity{
         });
 
     }
-    @OnClick({R.id.IDCard_btn,R.id.IDCardUtils_btn,R.id.IDEntity_btn})
+    @Override
+    public int getLayoutId(){
+        return R.layout.idcart_activity;
+    }
+    @OnClick({R.id.left_back,R.id.IDCard_btn,R.id.IDCardUtils_btn,R.id.IDEntity_btn})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.left_back:
+                finish();
+                break;
             case R.id.IDCard_btn:
                 String IDCar=IDCard_edit.getText().toString().toUpperCase();
                 if (!IDCard.IDCardValidate(IDCar)){

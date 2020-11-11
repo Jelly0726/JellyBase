@@ -5,8 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
 import android.view.View;
+
+import androidx.core.app.ActivityCompat;
 
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -23,10 +24,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.html_edit_main);
         verifyStoragePermissions(this);
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.html_edit_main;
+    }
 
 
     public void goSimpleCalls(View view){

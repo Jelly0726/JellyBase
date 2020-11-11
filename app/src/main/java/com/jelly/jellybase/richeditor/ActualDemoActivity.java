@@ -28,7 +28,6 @@ public class ActualDemoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.html_edit_activity_actual_demo);
         richEditor = findViewById(R.id.richEditor);
         //自动为视频添加缩略图
         richEditor.setNeedAutoPosterUrl(true);
@@ -42,7 +41,10 @@ public class ActualDemoActivity extends BaseActivity {
         //3.替换掉html中本地的src
         //4.将html code存到服务器
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.html_edit_activity_actual_demo;
+    }
 
     private String orginHtml = "";
     private int index = 0;

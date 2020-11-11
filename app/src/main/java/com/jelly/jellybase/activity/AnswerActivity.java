@@ -63,8 +63,11 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DisplayUtils.initScreen(this);
-        setContentView(R.layout.answer_activity);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.answer_activity;
     }
     private void iniView(){
         left_back= (LinearLayout) findViewById(R.id.left_back);

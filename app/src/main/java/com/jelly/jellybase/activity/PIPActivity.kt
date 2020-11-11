@@ -21,18 +21,16 @@ import kotlinx.android.synthetic.main.pip_mode_activity.*
  * PIP模式
  */
 class PIPActivity :BaseActivity(){
-    private lateinit var mUnbinder: Unbinder
     private lateinit var mObserver: Observer<Any>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.pip_mode_activity)
-        mUnbinder=ButterKnife.bind(this)
         iniView()
     }
-
+    override fun getLayoutId(): Int {
+        return R.layout.pip_mode_activity
+    }
     override fun onDestroy() {
         super.onDestroy()
-        mUnbinder?.let { it.unbind() }
         LiveDataBus.get("PIPActivity").removeObserver(mObserver)
     }
     private fun iniView(){

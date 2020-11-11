@@ -2,9 +2,10 @@ package com.jelly.jellybase.activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
 
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -22,11 +23,13 @@ public class GSYVideoActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gsyvideo_activity);
         init();
 
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.gsyvideo_activity;
+    }
     private void init() {
         videoPlayer =  (StandardGSYVideoPlayer)findViewById(R.id.video_player);
         String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";

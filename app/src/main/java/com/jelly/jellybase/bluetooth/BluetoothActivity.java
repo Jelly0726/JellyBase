@@ -14,9 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +25,10 @@ import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -45,7 +46,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 /**
  * 扫描传统蓝牙
@@ -69,8 +69,6 @@ public class BluetoothActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bluetooth_activity);
-        ButterKnife.bind(this);
         bluetoothPermissions();
         lv_bluetooth = (ListView) findViewById(R.id.lv_bluetooth);
         if (BluetoothUtil.getBlueToothStatus(this) == true) {
@@ -149,7 +147,10 @@ public class BluetoothActivity extends BaseActivity implements
         });
         lv_bluetooth.setAdapter(adapter);
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.bluetooth_activity;
+    }
     // 定义获取基于地理位置的动态权限
     private void bluetoothPermissions() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)

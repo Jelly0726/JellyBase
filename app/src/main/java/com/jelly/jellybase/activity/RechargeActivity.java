@@ -43,7 +43,6 @@ public class RechargeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recharge_activity);
         /**
          * 开始监听，注册广播
          */
@@ -54,7 +53,10 @@ public class RechargeActivity extends BaseActivity {
         }
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.recharge_activity;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

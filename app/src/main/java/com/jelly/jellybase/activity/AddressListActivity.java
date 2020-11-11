@@ -63,11 +63,13 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addressreceiver_activity);
         iniView();
         iniXRefreshView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.addressreceiver_activity;
+    }
     @Override
     public AddressContact.Presenter initPresenter() {
         return new AddressPresenter(this);

@@ -24,9 +24,12 @@ public class LineChartActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.linechart_activity);
         lineChart=findViewById(R.id.chart);
         setData(45, 100);
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.linechart_activity;
     }
     private void setData(int count, float range) {
 

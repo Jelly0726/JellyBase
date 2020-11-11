@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.ToastUtils;
 import com.base.bankcard.BandCardEditText;
 import com.base.httpmvp.contact.AddBankCartContact;
 import com.base.httpmvp.presenter.AddBankPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -53,9 +52,11 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bankcard_add_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.bankcard_add_activity;
     }
     private void iniView(){
         bankCard_id.setBankCardListener(new BandCardEditText.BankCardListener() {

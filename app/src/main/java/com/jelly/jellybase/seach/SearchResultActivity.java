@@ -5,14 +5,18 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.appManager.BaseApplication;
+import com.base.mypopupmenu.BaseItem;
+import com.base.mypopupmenu.TopMiddlePopup;
+import com.base.mypopupmenu.Util;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XRefreshViewFooter;
@@ -20,9 +24,6 @@ import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
-import com.base.mypopupmenu.BaseItem;
-import com.base.mypopupmenu.TopMiddlePopup;
-import com.base.mypopupmenu.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,10 +56,13 @@ public class SearchResultActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_result_activity);
         search=getIntent().getStringExtra("search");
         iniView();
         iniXRefreshView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.search_result_activity;
     }
     private void iniView(){
         left_back= (LinearLayout) findViewById(R.id.left_back);

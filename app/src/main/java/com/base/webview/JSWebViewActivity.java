@@ -11,8 +11,6 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -21,6 +19,9 @@ import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.log.DebugLog;
@@ -35,7 +36,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -73,8 +73,6 @@ public class JSWebViewActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setContentView(R.layout.base_tbs_webview);
-        ButterKnife.bind(this);
         webTools = (WebTools) getIntent().getParcelableExtra(WebConfig.CONTENT);
         if (webTools == null) {
             webTools = new WebTools();
@@ -88,7 +86,10 @@ public class JSWebViewActivity extends BaseActivity {
         //WebView
         init();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.base_tbs_webview;
+    }
     private void init() {
         //mRefreshLayout.setEnabled(false);//关闭滑动刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

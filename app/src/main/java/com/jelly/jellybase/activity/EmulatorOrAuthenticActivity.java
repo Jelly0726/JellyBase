@@ -11,31 +11,26 @@ import com.jelly.jellybase.R;
 import org.jetbrains.annotations.Nullable;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 判断是否真机
  */
 public class EmulatorOrAuthenticActivity extends BaseActivity {
-    private Unbinder mUnbinder;
     @BindView(R.id.result)
     TextView result;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.emulator_or_authentic_activity);
-        mUnbinder= ButterKnife.bind(this);
 
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.emulator_or_authentic_activity;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mUnbinder!=null){
-            mUnbinder.unbind();
-        }
     }
     @OnClick({R.id.back_layout,R.id.start,R.id.startJniNorm,R.id.startJni})
     public void onClick(View view){

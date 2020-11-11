@@ -3,17 +3,18 @@ package com.jelly.jellybase.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.base.toast.ToastUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.contact.BankCartListContact;
 import com.base.httpmvp.presenter.BankListPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
@@ -33,7 +34,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -60,10 +60,12 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bankcardlist_activity);
-        ButterKnife.bind(this);
         iniView();
         iniXRefreshView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.bankcardlist_activity;
     }
     private void iniView(){
     }

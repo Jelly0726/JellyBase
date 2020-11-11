@@ -13,9 +13,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.base.bluetooth.BleManager;
 import com.base.bluetooth.callback.BleGattCallback;
@@ -51,7 +52,6 @@ import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -88,8 +88,6 @@ public class BluetoothBLEActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bluetooth_activity_main);
-        ButterKnife.bind(this);
         initView();
 
         BleManager.getInstance().init(getApplication());
@@ -107,7 +105,10 @@ public class BluetoothBLEActivity extends BaseActivity {
 
 
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.bluetooth_activity_main;
+    }
     @Override
     protected void onResume() {
         super.onResume();

@@ -12,7 +12,6 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AutoTextAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AutoTextAvtivity extends BaseActivity{
@@ -30,9 +29,11 @@ public class AutoTextAvtivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.autotext_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.autotext_activity;
     }
     private void iniView(){
         adapter=new AutoTextAdapter(this);

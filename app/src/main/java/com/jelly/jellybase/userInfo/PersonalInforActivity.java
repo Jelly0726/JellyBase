@@ -48,7 +48,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.SinglePicker;
@@ -110,7 +109,6 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         super.onCreate(savedInstanceState);
         parentView = getLayoutInflater().inflate(R.layout.personal_info_activity, null);
         setContentView(parentView);
-        ButterKnife.bind(this);
         userInfo= (PersonalInfo) getIntent().getSerializableExtra("userInfo");
         if (sexList==null){
             sexList = new ArrayList<>();
@@ -123,6 +121,10 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         initXRefreshView();
         presenter.getInfo(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
 
+    }
+    @Override
+    public int getLayoutId(){
+        return -1;
     }
     private void iniView(){
         if (userInfo!=null) {

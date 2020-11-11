@@ -21,7 +21,6 @@ import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.params.DialogParams;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.SinglePicker;
 
@@ -59,12 +58,13 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Pre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cancelorder_activity);
-        ButterKnife.bind(this);
         iniView();
         iniCause();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.cancelorder_activity;
+    }
     @Override
     public CancelOrderContact.Presenter initPresenter() {
         return new CancelOrderPresenter(this);
