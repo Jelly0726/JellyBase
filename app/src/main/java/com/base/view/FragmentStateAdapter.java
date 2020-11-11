@@ -1,9 +1,11 @@
 package com.base.view;
 
+import android.view.ViewGroup;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,23 @@ import java.util.List;
 
 public class FragmentStateAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
+    private FragmentManager fm;
     public FragmentStateAdapter(FragmentManager fm, List<Fragment> mFragmentList) {
         super(fm);
         this.mFragmentList=mFragmentList;
+        this.fm=fm;
     }
 
     public void setFragmentData(List<Fragment> mFragmentList){
+        if(this.mFragmentList != null && fm != null){
+            FragmentTransaction ft = fm.beginTransaction();
+            for(Fragment f:this.mFragmentList){
+                ft.remove(f);
+            }
+            ft.commit();
+            ft=null;
+            fm.executePendingTransactions();
+        }
         this.mFragmentList=mFragmentList;
         notifyDataSetChanged();
     }

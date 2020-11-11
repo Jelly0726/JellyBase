@@ -2,19 +2,18 @@ package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
@@ -44,9 +43,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cn.jpush.android.api.JPushInterface;
 import systemdb.Login;
 
@@ -56,7 +53,6 @@ import systemdb.Login;
 
 public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter>
         implements LoginContact.View{
-    private Unbinder mUnbinder;
     @BindView(R.id.login_tv)
     TextView login_tv;
     @BindView(R.id.forget_pwd)
@@ -78,13 +74,9 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     private double from=-1;
     private ThirdInfoEntity openInfo;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.user_pwlogin_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.user_pwlogin_fragment;
     }
-
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -98,7 +90,6 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {

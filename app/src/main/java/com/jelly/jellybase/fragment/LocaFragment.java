@@ -2,12 +2,10 @@ package com.jelly.jellybase.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.base.model.AccountDetail;
 import com.base.view.BaseFragment;
@@ -22,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import systemdb.PositionEntity;
 
 /**
@@ -31,7 +27,6 @@ import systemdb.PositionEntity;
  */
 
 public class LocaFragment extends BaseFragment {
-    private Unbinder mUnbinder;
     private PositionEntity entity;
 
     @BindView(R.id.recycler_view_test_rv)
@@ -44,13 +39,9 @@ public class LocaFragment extends BaseFragment {
     private int startRownumber=0;
     private int pageSize=10;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.loca_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.loca_fragment;
     }
-
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -64,7 +55,6 @@ public class LocaFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {

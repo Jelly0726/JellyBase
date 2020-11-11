@@ -3,13 +3,12 @@ package com.jelly.jellybase.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
@@ -25,16 +24,13 @@ import com.jelly.jellybase.activity.BankCardListActivity;
 import com.jelly.jellybase.activity.MessageActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2018/1/6.
  */
 
 public class MeFragment extends BaseFragment {
-    private Unbinder mUnbinder;
     @BindView(R.id.xrefreshview)
     XRefreshView xRefreshView;
     @BindView(R.id.nestedScroll_view)
@@ -55,13 +51,9 @@ public class MeFragment extends BaseFragment {
     TextView banksqy_tv;
     private MyInfo myInfo;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.me_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.me_fragment;
     }
-
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -109,7 +101,6 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {
