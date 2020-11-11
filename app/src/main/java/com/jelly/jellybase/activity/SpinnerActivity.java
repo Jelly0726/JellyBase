@@ -17,8 +17,11 @@ public class SpinnerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.spinner_activity);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.spinner_activity;
     }
     private void iniView(){
         sp_product_types= (MaterialSpinner) findViewById(R.id.sp_product_types);

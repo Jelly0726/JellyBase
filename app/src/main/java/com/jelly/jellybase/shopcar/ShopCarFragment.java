@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,9 +37,7 @@ import java.util.Map;
 import java.util.Random;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 /**
@@ -51,7 +47,6 @@ import butterknife.Unbinder;
 public class ShopCarFragment extends BaseFragment implements
         ShopcatAdapter.CheckInterface, ShopcatAdapter.ModifyCountInterface,
         ShopcatAdapter.GroupEditorListener {
-    private Unbinder mUnbinder;
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.listView)
@@ -99,11 +94,8 @@ public class ShopCarFragment extends BaseFragment implements
     public ShopCarFragment() {
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.shopcar_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.shopcar_fragment;
     }
     public static ShopCarFragment newInstance() {
         return new ShopCarFragment();
@@ -112,7 +104,6 @@ public class ShopCarFragment extends BaseFragment implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
 
     @Override

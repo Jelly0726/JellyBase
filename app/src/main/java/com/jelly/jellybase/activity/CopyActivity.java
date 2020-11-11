@@ -13,13 +13,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.ToastUtils;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CopyActivity extends BaseActivity{
@@ -53,9 +52,11 @@ public class CopyActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.copy_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.copy_activity;
     }
     private void iniView(){
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);

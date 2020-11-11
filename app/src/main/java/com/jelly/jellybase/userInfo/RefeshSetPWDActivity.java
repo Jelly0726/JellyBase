@@ -10,15 +10,15 @@ import android.widget.TextView;
 
 import com.base.appManager.AppSubject;
 import com.base.appManager.BaseApplication;
-import com.base.encrypt.MD5;
-import com.base.password.PwdCheckUtil;
-import com.base.toast.ToastUtils;
 import com.base.config.IntentAction;
+import com.base.encrypt.MD5;
 import com.base.httpmvp.contact.SetPwdContact;
 import com.base.httpmvp.presenter.SetPassWordActivityPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.password.PwdCheckUtil;
 import com.base.sqldao.LoginDaoUtils;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -51,10 +50,11 @@ public class RefeshSetPWDActivity extends BaseActivityImpl<SetPwdContact.Present
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_setpwd_activity);
-        // 进行id绑定
-        ButterKnife.bind(this);
         phone=getIntent().getStringExtra("phone");
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_setpwd_activity;
     }
     @OnClick({ R.id.next_tv, R.id.left_back})
     public void onClick(View v) {

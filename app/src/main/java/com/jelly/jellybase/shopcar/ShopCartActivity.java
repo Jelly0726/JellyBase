@@ -14,7 +14,6 @@ public class ShopCartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopcart_fragment_activity);
         if (savedInstanceState != null) {
             shopCarFragment = (ShopCarFragment) getSupportFragmentManager()
                     .getFragment(savedInstanceState, "shopCarFragment");
@@ -26,7 +25,10 @@ public class ShopCartActivity extends BaseActivity {
                 .commit();
 
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.shopcart_fragment_activity;
+    }
 
     /**
      * 当活动被回收时，存储当前的状态。

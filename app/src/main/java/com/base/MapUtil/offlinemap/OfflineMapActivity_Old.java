@@ -101,7 +101,6 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 		// Demo中为了其他界面可以使用下载的离线地图，使用默认位置存储，屏蔽了自定义设置
 		// MapsInitialihenger.sdcardDir =OffLineMapUtils.getSdCacheDir(this);
 
-		setContentView(R.layout.amap_offlinemap_activity_old);
 		context = OfflineMapActivity_Old.this;
 		initDialog();
 
@@ -110,7 +109,10 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 		expandableListView.setAdapter(adapter);
 
 	}
-
+	@Override
+	public int getLayoutId(){
+		return R.layout.amap_offlinemap_activity_old;
+	}
 	/**
 	 * 初始化如果已下载的城市多的话，会比较耗时
 	 */

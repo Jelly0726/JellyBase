@@ -1,10 +1,11 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.tree.adapter.IMultipleItem;
 import com.base.tree.adapter.SectionExpandHelper;
@@ -28,11 +29,13 @@ public class TreeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tree_activity);
         mSectionList = new ArrayList<>();
         findView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.tree_activity;
+    }
     public void findView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
         mHelper = new SectionExpandHelper(TreeActivity.this, mRecyclerView, new IMultipleItem() {

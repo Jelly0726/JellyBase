@@ -1,10 +1,9 @@
 package com.jelly.jellybase.fragment;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.base.view.BaseFragment;
 import com.base.webview.tbs.TBSClientCallBack;
@@ -15,27 +14,20 @@ import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2018/1/6.
  */
 
 public class HomeFragment extends BaseFragment {
-    private Unbinder mUnbinder;
     @BindView(R.id.webView)
     X5WebView webView;
     @BindView(R.id.custom_view)
     XRefreshView custom_view;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.home_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.home_fragment;
     }
-
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
@@ -53,7 +45,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {

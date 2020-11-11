@@ -2,15 +2,16 @@ package com.jelly.jellybase.userInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.annotation.IdRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
@@ -34,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -59,8 +59,6 @@ public class LoginActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_login_activity);
-        ButterKnife.bind(this);
         iniView();
         AppPrefs.remove(getApplicationContext(),
                 ConfigKey.DEFAULT_BANK);
@@ -91,7 +89,10 @@ public class LoginActivity extends BaseActivity implements
             }
         });
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_login_activity;
+    }
     @Override
     public void getExtra() {
         super.getExtra();

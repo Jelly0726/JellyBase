@@ -4,10 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,12 +13,20 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.base.MapUtil.DestinationActivity;
 import com.base.appManager.BaseApplication;
 import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
-import com.base.model.ScanResult;
 import com.base.log.DebugLog;
+import com.base.model.ScanResult;
+import com.base.mypopupmenu.BaseItem;
+import com.base.mypopupmenu.TopMiddlePopup;
+import com.base.mypopupmenu.Util;
 import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.base.xrefreshview.XRefreshView;
@@ -37,9 +41,6 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.HomeAdapter;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.datamodel.Product;
-import com.base.mypopupmenu.BaseItem;
-import com.base.mypopupmenu.TopMiddlePopup;
-import com.base.mypopupmenu.Util;
 import com.jelly.jellybase.seach.SearchActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -111,6 +112,10 @@ public class HomeActivity extends BaseActivity {
         iniXRefreshView();
         iniBanner();
         processLogic();
+    }
+    @Override
+    public int getLayoutId(){
+        return -1;
     }
     private void iniView (){
         saomiao_img= (ImageView) findViewById(R.id.saomiao_img);

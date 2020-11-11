@@ -50,9 +50,12 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.withdraw_activity);
         charge=getIntent().getDoubleExtra("charge",0);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.withdraw_activity;
     }
     @SuppressLint("WrongViewCast")
     private void iniView(){

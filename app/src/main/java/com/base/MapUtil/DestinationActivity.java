@@ -65,7 +65,6 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 	private int from=0;
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.amap_destination);
 		type=getIntent().getIntExtra("type",0);
 		from=getIntent().getIntExtra("from",0);
 
@@ -118,7 +117,10 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 
 		resultCode=getIntent().getIntExtra("resultCode",-1);
 	}
-
+	@Override
+	public int getLayoutId(){
+		return R.layout.amap_destination;
+	}
 	@Override
 	public void afterTextChanged(Editable arg0) {
 		// TODO Auto-generated method stub

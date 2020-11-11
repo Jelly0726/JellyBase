@@ -18,7 +18,6 @@ import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SingMD5Activity extends BaseActivity{
@@ -54,9 +53,11 @@ public class SingMD5Activity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.singmd5_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.singmd5_activity;
     }
     private void iniView(){
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);

@@ -2,9 +2,7 @@ package com.jelly.jellybase.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -18,15 +16,12 @@ import com.jelly.jellybase.datamodel.CurrentItem;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
 public class ProductDetailsFragment extends BaseFragment {
-    private Unbinder mUnbinder;
     @BindView(R.id.product_parameter)
     TextView product_parameter;
     @BindView(R.id.custom_view)
@@ -34,17 +29,12 @@ public class ProductDetailsFragment extends BaseFragment {
     @BindView(R.id.xscrollview)
     XScrollView scrollView;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.product_details_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.product_details_fragment;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
 
     @Override

@@ -1,8 +1,9 @@
 package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.base.dialog.AddCartDialog;
 import com.base.view.BaseActivity;
@@ -16,8 +17,11 @@ public class AddShopcartActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_shopcart_activity);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.add_shopcart_activity;
     }
     private void iniView(){
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {

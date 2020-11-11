@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.amap.api.maps.AMapException;
 import com.amap.api.maps.MapView;
@@ -127,13 +128,15 @@ public class OfflineMapActivity extends BaseActivity implements
 		 */
         // Demo中为了其他界面可以使用下载的离线地图，使用默认位置存储，屏蔽了自定义设置
         // MapsInitialihenger.sdcardDir =OffLineMapUtils.getSdCacheDir(this);
-        setContentView(R.layout.amap_offline_map_layout);
 
 //		initDialog();
 
         init();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.amap_offline_map_layout;
+    }
     /**
      * 初始化如果已下载的城市多的话，会比较耗时
      */

@@ -8,12 +8,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.encrypt.MD5;
-import com.base.password.PwdCheckUtil;
-import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.UpdataPwdContact;
 import com.base.httpmvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.password.PwdCheckUtil;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -44,9 +43,11 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_changepwd_activity);
-        ButterKnife.bind(this);
         iniView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_changepwd_activity;
     }
     private void iniView(){
     }

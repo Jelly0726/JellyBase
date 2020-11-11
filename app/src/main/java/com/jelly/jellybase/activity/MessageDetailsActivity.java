@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 import com.base.appManager.BaseApplication;
 import com.base.httpmvp.contact.MessageDetailsContact;
-import com.base.model.Message;
 import com.base.httpmvp.presenter.MessageDetailsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.model.Message;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
@@ -21,7 +21,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,11 +41,12 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
             finish();
             return;
         }
-        setContentView(R.layout.message_details_activity);
-        ButterKnife.bind(this);
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.message_details_activity;
+    }
     @Override
     public MessageDetailsContact.Presenter initPresenter() {
         return new MessageDetailsPresenter(this) ;

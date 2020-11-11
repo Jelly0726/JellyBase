@@ -27,7 +27,6 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -62,15 +61,16 @@ public class BaseWebViewActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setContentView(R.layout.base_webview_activity);
-        ButterKnife.bind(this);
         webTools = getIntent().getParcelableExtra(WebConfig.CONTENT);
         if (webTools == null) {
             webTools = new WebTools();
         }
         iniWebView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.base_webview_activity;
+    }
     private void iniWebView() {
         //WebView
         mWebView = new X5WebView(this, null);

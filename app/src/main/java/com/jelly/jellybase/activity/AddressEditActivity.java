@@ -33,7 +33,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
@@ -69,12 +68,13 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Pr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addaddress_edit_activity);
-        ButterKnife.bind(this);
         recevierAddress= (RecevierAddress) getIntent().getSerializableExtra("recevierAddress");
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.addaddress_edit_activity;
+    }
     @Override
     public OperaAddressContact.Presenter initPresenter() {
         return new OperaAddressPresenter(this);

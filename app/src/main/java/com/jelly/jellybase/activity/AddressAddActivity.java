@@ -11,10 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.androidPicker.AddressPickTask;
-import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.OperaAddressContact;
 import com.base.httpmvp.presenter.OperaAddressPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
@@ -55,11 +54,12 @@ public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Pre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addaddress_activity);
-        ButterKnife.bind(this);
         iniView();
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.addaddress_activity;
+    }
     @Override
     public OperaAddressContact.Presenter initPresenter() {
         return new OperaAddressPresenter(this);

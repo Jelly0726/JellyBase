@@ -8,14 +8,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.encrypt.MD5;
-import com.base.toast.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.base.encrypt.MD5;
 import com.base.httpmvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.presenter.UpdatePhonePresenter;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -48,11 +47,12 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_changephone_activity);
-        // 进行id绑定
-        ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_changephone_activity;
     }
     @Override
     public void onBackPressed() {

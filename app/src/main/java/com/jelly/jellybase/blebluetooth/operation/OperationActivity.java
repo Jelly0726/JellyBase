@@ -4,12 +4,13 @@ package com.jelly.jellybase.blebluetooth.operation;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.base.bluetooth.BleManager;
 import com.base.bluetooth.data.BleDevice;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OperationActivity extends BaseActivity implements Observer {
@@ -46,15 +46,16 @@ public class OperationActivity extends BaseActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.bluetooth_activity_operation);
-        ButterKnife.bind(this);
         initData();
         initView();
         initPage();
 
         ObserverManager.getInstance().addObserver(this);
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.bluetooth_activity_operation;
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -34,12 +34,15 @@ public class BalanceActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.balance_activity);
         charge=getIntent().getDoubleExtra("charge",0);
         ButterKnife.bind(this);
         iniView ();
         balance=getIntent().getStringExtra("Balance");
         iniData();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.balance_activity;
     }
     private void iniView (){
     }

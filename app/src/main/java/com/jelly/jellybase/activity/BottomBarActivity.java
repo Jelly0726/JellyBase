@@ -3,8 +3,9 @@ package com.jelly.jellybase.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.fragment.app.Fragment;
 import android.view.KeyEvent;
+
+import androidx.fragment.app.Fragment;
 
 import com.base.addressmodel.Address;
 import com.base.appManager.BaseApplication;
@@ -37,7 +38,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import systemdb.Login;
 import systemdb.PositionEntity;
 
@@ -58,8 +58,6 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         EventBus.getDefault().register(this);
         login= LoginDaoUtils.getInstance(getApplicationContext())
                 .getItem();
-        setContentView(R.layout.bottombar_activity);
-        ButterKnife.bind(this);
         initView();
         initData();
         initListener();
@@ -68,6 +66,10 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
         startService(stateGuardService);
         //isLogin();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.bottombar_activity;
     }
     @Override
     protected void onDestroy() {

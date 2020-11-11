@@ -2,13 +2,14 @@ package com.jelly.jellybase.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.base.addressmodel.Address;
@@ -26,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.ConvertUtils;
 import systemdb.PositionEntity;
@@ -62,10 +62,12 @@ public class ChangeAddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         entity= (PositionEntity) getIntent().getSerializableExtra("entity");
         address= (Address) getIntent().getParcelableExtra("address");
-        setContentView(R.layout.change_address_activity);
-        ButterKnife.bind(this);
         iniData();
         iniXRefreshView();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.change_address_activity;
     }
     private void iniData(){
         if (entity!=null){

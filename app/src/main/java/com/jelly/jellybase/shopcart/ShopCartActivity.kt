@@ -28,7 +28,6 @@ import java.util.*
 
 class ShopCartActivity : BaseActivity(), SwipeItemClickListener
     {
-    private var mUnbinder: Unbinder? = null
     protected lateinit var mLayoutManager: RecyclerView.LayoutManager
     protected lateinit var mItemDecoration: RecyclerView.ItemDecoration
     protected lateinit var mAdapter: ShopCartAdapter
@@ -178,18 +177,17 @@ class ShopCartActivity : BaseActivity(), SwipeItemClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.shopcart_activity)
-        mUnbinder=ButterKnife.bind(this)
         iniSofia()
         iniView()
         iniRecyclerView()
         page = 1
 //        presenter.getShoppingCart(true, lifecycleProvider.bindUntilEvent<Any>(ActivityEvent.DESTROY))
     }
-
+        override fun getLayoutId(): Int {
+            return R.layout.shopcart_activity
+        }
     override fun onDestroy() {
         super.onDestroy()
-        mUnbinder!!.unbind()
         val netEvent= NetEvent<Any>()
         netEvent.eventType="RefreshShopcart"
         LiveDataBus.get("MainActivity").postDelay(netEvent,50)

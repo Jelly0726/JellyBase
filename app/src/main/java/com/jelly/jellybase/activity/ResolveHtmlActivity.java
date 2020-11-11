@@ -2,15 +2,16 @@ package com.jelly.jellybase.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.base.view.BaseActivity;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
 import com.base.appManager.BaseApplication;
 import com.base.richtext.OkHttpImageDownloader;
+import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
@@ -22,24 +23,23 @@ import com.zzhoujay.richtext.callback.DrawableGetter;
 import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017/12/18.
  */
 
 public class ResolveHtmlActivity extends BaseActivity {
-    private Unbinder unbinder;
     @BindView(R.id.productDetail_tv)
     TextView productDetail_tv;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.resolve_html_activity);
-        unbinder= ButterKnife.bind(this);
         iniVew();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.resolve_html_activity;
     }
     private void iniVew(){
         String html="<h1>百度一下,你就知道官</h1>"
@@ -104,7 +104,6 @@ public class ResolveHtmlActivity extends BaseActivity {
         RichText.clear(this);
         //在应用退出时调用
         RichText.recycle();
-        unbinder.unbind();
     }
     @OnClick({R.id.left_back})
     public void onClick(View view){

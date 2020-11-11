@@ -2,11 +2,12 @@ package com.jelly.jellybase.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
@@ -57,7 +58,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -99,8 +99,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         address=getIntent().getStringExtra("address");
         name=getIntent().getStringExtra("name");
 
-        setContentView(R.layout.amap_activity);
-        ButterKnife.bind(this);
         MProgressUtil.getInstance().initialize(this.getApplicationContext());
         initAmap(savedInstanceState);
         initNavi();
@@ -109,6 +107,10 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         HermesManager.getHermesManager().addEvent(this);
         Intent intent=new Intent(this, LocationService.class);
         startService(intent);
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.amap_activity;
     }
     private void initAmap(Bundle savedInstanceState){
         aMapView.onCreate(savedInstanceState);//必须写

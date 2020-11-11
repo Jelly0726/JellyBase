@@ -64,7 +64,6 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.encrypt_activity);
         input = (EditText)findViewById(R.id.input_ori);
         resultText = (TextView)findViewById(R.id.text_result);
 
@@ -103,7 +102,10 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.btn_copy_sign).setOnClickListener(this);
         findViewById(R.id.btn_past_sign).setOnClickListener(this);
     }
-
+    @Override
+    public int getLayoutId(){
+        return R.layout.encrypt_activity;
+    }
 
     @Override
     public void onClick(View v) {

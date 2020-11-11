@@ -21,7 +21,6 @@ public class BadgeMainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.badge_main_activity);
         mCountEditText = findViewById(R.id.et_count);
         findViewById(R.id.btn_set).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,5 +103,9 @@ public class BadgeMainActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), "success=" + success, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.badge_main_activity;
     }
 }

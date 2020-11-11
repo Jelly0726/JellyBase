@@ -6,17 +6,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
-import com.base.toast.ToastUtils;
 import com.base.httpmvp.contact.AboutContact;
-import com.base.model.AboutUs;
 import com.base.httpmvp.presenter.AboutUsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.model.AboutUs;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -39,11 +38,12 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_about_activity);
-        //绑定id
-        ButterKnife.bind(this);
         iniView();
         presenter.aboutUs(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_about_activity;
     }
     private void iniView(){
 

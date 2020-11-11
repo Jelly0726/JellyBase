@@ -1,20 +1,24 @@
 package com.base.view
 
+import android.R
 import android.app.Activity
 import android.content.Context
 import android.hardware.input.InputManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.*
-import com.base.SystemBar.StatusBarUtil
+import androidx.fragment.app.Fragment
+import butterknife.ButterKnife
+import butterknife.Unbinder
+import com.base.sofia.StatusBarUtil
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
+
 /**
- * Created by Jelly on 2017/9/21.
+ * Created by Administrator on 2017/9/21.
  * * Fragment基类，封装了懒加载的实现
  * 1、Viewpager + Fragment情况下，fragment的生命周期因Viewpager的缓存机制而失去了具体意义
  * 该抽象类自定义新的回调方法，当fragment可见状态改变时会触发的回调方法，和 Fragment 第一次可见时会回调的方法
@@ -23,8 +27,8 @@ import kotlinx.coroutines.launch
  */
 @DebugLog
 abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
-    @JvmField
     protected var rootView: View? = null
+    private lateinit var mUnbinder: Unbinder
     //是否可见
     var isFragmentVisible = false
         private set
@@ -67,15 +71,32 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
     }
 
     /**
+     * 当前Fragment的布局
+     */
+    abstract fun getLayoutId():Int
+    /**
      * 初始化Fragment的布局。加载布局和findViewById的操作通常在此函数内完成，但是不建议执行耗时的操作
      * @param inflater
      * @param container
      * @param savedInstanceState
      * @return
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        com.base.log.DebugLog.i("SSSS", "onCreateView=====$this")
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        if (null == rootView) {
+            rootView = inflater.inflate(getLayoutId(), container, false)
+        }
+        // 缓存的viewiew需要判断是否已经被加过parent，
+        // 如果有parent需要从parent删除，要不然会发生这个view已经有parent的错误。
+        val parent = rootView!!.getParent() as ViewGroup?
+        parent?.let {
+            it.removeView(rootView)
+        }
+        mUnbinder = ButterKnife.bind(this, rootView!!)
+        return rootView
     }
 
     //setUserVisibleHint()在Fragment创建时会先被调用一次，传入isVisibleToUser = false
@@ -92,22 +113,34 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
             return
         }
         iniSofia()
-        com.base.log.DebugLog.i("SSSS", "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this")
+        com.base.log.DebugLog.i(
+                "SSSS",
+                "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this"
+        )
         if (isFirstVisible && isVisibleToUser) {
             onFragmentFirstVisible()
             isFirstVisible = false
-            com.base.log.DebugLog.i("SSSS", "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this)
+            com.base.log.DebugLog.i(
+                    "SSSS",
+                    "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this
+            )
         }
         if (isVisibleToUser) {
             isFragmentVisible = true
             onFragmentVisibleChange(true)
-            com.base.log.DebugLog.i("SSSS", "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this")
+            com.base.log.DebugLog.i(
+                    "SSSS",
+                    "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this"
+            )
             return
         }
         if (isFragmentVisible) {
             isFragmentVisible = false
             onFragmentVisibleChange(false)
-            com.base.log.DebugLog.i("SSSS", "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this")
+            com.base.log.DebugLog.i(
+                    "SSSS",
+                    "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this"
+            )
         }
     }
 
@@ -165,10 +198,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
                 for (inputDeviceId in inputDeviceIds) {
                     val inputDevice =
                             inputManager.getInputDevice(inputDeviceId) ?: continue
-                    com.base.log.DebugLog.i("name=" + inputDevice.name)
-                    com.base.log.DebugLog.i("getSources=" + (inputDevice.sources and InputDevice.SOURCE_KEYBOARD))
-                    com.base.log.DebugLog.i("getKeyboardType=" + inputDevice.keyboardType)
-                    com.base.log.DebugLog.i("isVirtual=" + inputDevice.isVirtual)
                     val sources = inputDevice.sources
                     if (!inputDevice.isVirtual
                             && sources and InputDevice.SOURCE_KEYBOARD == InputDevice.SOURCE_KEYBOARD
@@ -197,9 +226,11 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
     fun setDisable(disable: Boolean) {
         isDisable = disable
         if (disable) { //在BaseActivity里禁用软键盘
-            activity!!.window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            activity!!.window
+                    .addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         } else { //在需要打开的Activity取消禁用软键盘
-            activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            activity!!.window
+                    .clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
         }
     }
 
@@ -208,14 +239,20 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      * @param view
      * @param savedInstanceState
      */
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) { //如果setUserVisibleHint()在rootView创建前调用时，那么
+    override fun onViewCreated(
+            view: View,
+            savedInstanceState: Bundle?
+    ) { //如果setUserVisibleHint()在rootView创建前调用时，那么
 //就等到rootView创建完后才回调onFragmentVisibleChange(true)
 //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
         com.base.log.DebugLog.i("SSSS", "onViewCreated=====$this  rootView=$rootView")
         if (rootView == null) {
             rootView = view
         }
-        super.onViewCreated((if (isReuseView && rootView != null) rootView!! else view), savedInstanceState)
+        super.onViewCreated(
+                (if (isReuseView && rootView != null) rootView!! else view),
+                savedInstanceState
+        )
     }
 
     /**
@@ -234,7 +271,10 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      */
     override fun onStart() {
         super.onStart()
-        com.base.log.DebugLog.i("SSSS", "onStart=====$this  getUserVisibleHint()=$userVisibleHint")
+        com.base.log.DebugLog.i(
+                "SSSS",
+                "onStart=====$this  getUserVisibleHint()=$userVisibleHint"
+        )
     }
 
     /**
@@ -244,9 +284,15 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         super.onResume()
         //告诉FragmentActivity，当前Fragment在栈顶
         if (mBackInterface != null) mBackInterface!!.setSelectedFragment(this)
-        com.base.log.DebugLog.i("SSSS", "onResume=====$this  getUserVisibleHint()=$userVisibleHint")
+        com.base.log.DebugLog.i(
+                "SSSS",
+                "onResume=====$this  getUserVisibleHint()=$userVisibleHint"
+        )
         if (userVisibleHint) {
-            com.base.log.DebugLog.i("SSSS", "onResume=====$this  isFirstVisible()=$isFirstVisible")
+            com.base.log.DebugLog.i(
+                    "SSSS",
+                    "onResume=====$this  isFirstVisible()=$isFirstVisible"
+            )
             if (isFirstVisible) {
                 onFragmentFirstVisible()
                 isFirstVisible = false
@@ -281,6 +327,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         //结束协程
         cancel()
         super.onDestroyView()
+        mUnbinder?.let { it.unbind() }
         com.base.log.DebugLog.i("SSSS", "onDestroyView=====$this")
     }
 

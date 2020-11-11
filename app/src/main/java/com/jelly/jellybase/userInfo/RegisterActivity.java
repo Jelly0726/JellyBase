@@ -9,13 +9,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.toast.ToastUtils;
 import com.base.countdowntimerbtn.CountDownTimerButton;
 import com.base.httpmvp.contact.RegisterContact;
 import com.base.httpmvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.WebConfig;
 import com.base.webview.WebTools;
@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -55,11 +54,12 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_register_activity);
-        // 进行id绑定
-        ButterKnife.bind(this);
         iniView();
         initCountDownBtn();
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.user_register_activity;
     }
     private void iniView(){
         agree.setChecked(false);

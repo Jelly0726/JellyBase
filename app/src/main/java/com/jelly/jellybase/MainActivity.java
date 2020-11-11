@@ -123,7 +123,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
         iniXRefreshView();
         //启动或停止守护服务，运行在:watch子进程中
         TraceServiceImpl.sShouldStopService = true;//true  表示停止服务，false  表示启动服务
@@ -168,6 +167,10 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.main_activity;
     }
     //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。
     private class MyCheckUpdateCallback implements CPCheckUpdateCallback {

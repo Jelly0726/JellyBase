@@ -2,13 +2,12 @@ package com.jelly.jellybase.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.base.addressmodel.Address;
 import com.base.appManager.BaseApplication;
@@ -26,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import systemdb.PositionEntity;
 
 
@@ -37,7 +34,6 @@ import systemdb.PositionEntity;
  */
 
 public class MiddleFragment extends BaseFragment{
-    private Unbinder mUnbinder;
     private static final int areaRresultCode=0;
     private PositionEntity entity;
     private Address address;
@@ -52,13 +48,9 @@ public class MiddleFragment extends BaseFragment{
     private FragmentAdapter myAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (rootView == null)
-            rootView = inflater.inflate(R.layout.location_fragment, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public int getLayoutId() {
+        return R.layout.location_fragment;
     }
-
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -72,7 +64,6 @@ public class MiddleFragment extends BaseFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
     @Override
     public void setData(String json) {

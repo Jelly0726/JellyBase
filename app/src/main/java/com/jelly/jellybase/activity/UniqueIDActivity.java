@@ -11,7 +11,6 @@ import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UniqueIDActivity extends BaseActivity{
@@ -45,8 +44,10 @@ public class UniqueIDActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.uniqueid_activity);
-        ButterKnife.bind(this);
+    }
+    @Override
+    public int getLayoutId(){
+        return R.layout.uniqueid_activity;
     }
     @OnClick({R.id.left_back,R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5,R.id.button6})
     public void onClick(View view){
