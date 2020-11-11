@@ -86,11 +86,14 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        if (null != rootView) {
-            val parent = rootView!!.getParent() as ViewGroup?
-            parent?.removeView(rootView)
-        } else {
+        if (null == rootView) {
             rootView = inflater.inflate(getLayoutId(), container, false)
+        }
+        // 缓存的viewiew需要判断是否已经被加过parent，
+        // 如果有parent需要从parent删除，要不然会发生这个view已经有parent的错误。
+        val parent = rootView!!.getParent() as ViewGroup?
+        parent?.let {
+            it.removeView(rootView)
         }
         mUnbinder = ButterKnife.bind(this, rootView!!)
         return rootView
