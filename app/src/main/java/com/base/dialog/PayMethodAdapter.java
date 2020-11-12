@@ -1,14 +1,14 @@
 package com.base.dialog;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.base.BaseAdapter;
 import com.base.Utils.StringUtil;
@@ -17,6 +17,8 @@ import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * 支付方式
@@ -105,17 +107,17 @@ public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
         this.onCheckListen = onCheckListen;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends BaseAdapter.ViewHolder {
+        @BindView(R.id.icon)
         public ImageView icon;
+        @BindView(R.id.checkbox)
         public CheckBox checkbox;
+        @BindView(R.id.payName)
         public TextView payName;
+        @BindView(R.id.mark)
         public TextView mark;
         public ViewHolder(View itemView){
             super(itemView);
-            icon = itemView.findViewById(R.id.icon);
-            checkbox = itemView.findViewById(R.id.select_box);
-            payName = itemView.findViewById(R.id.payName);
-            mark = itemView.findViewById(R.id.mark);
         }
 
     }
