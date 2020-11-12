@@ -411,6 +411,12 @@ public static java.lang.String TABLENAME;
   **[] $VALUES;
   public *;
 }
+  -keep class * extends com.bumptech.glide.module.AppGlideModule {
+   <init>(...);
+  }
+  -keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
+    *** rewind();
+  }
 #glide如果你的API级别<=Android API 27 则需要添加
 -dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder
   #====================socialhelper====================
