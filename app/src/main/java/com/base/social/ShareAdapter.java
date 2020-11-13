@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.BaseAdapter;
 import com.base.applicationUtil.AppUtils;
@@ -76,7 +77,7 @@ public class ShareAdapter extends BaseAdapter<ShareAdapter.ViewHolder> {
     /**
      * item的ViewHolder
      */
-    static class ViewHolder extends BaseAdapter.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
         public ViewHolder(View itemView) {

@@ -7,9 +7,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 android {
     //生产环境域名地址
-    def API_DEV_HOST="\"http://driver.test.com/\""
+    def API_DEV_HOST = "\"http://driver.test.com/\""
     //开发环境域名地址
-    def API_DEBUG_HOST="\"http://driver.4000000144.com/\""
+    def API_DEBUG_HOST = "\"http://driver.4000000144.com/\""
 
     compileSdkVersion 29
     buildToolsVersion "28.0.3"
@@ -30,13 +30,13 @@ android {
 //                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
                 cppFlags "-std=c++11 -frtti -fexceptions"
                 //设置支持的SO库架构
-                abiFilters  "armeabi-v7a", "x86", "arm64-v8a"  //输出指定三种abi体系结构下的so库。
+                abiFilters "armeabi-v7a", "x86", "arm64-v8a"  //输出指定三种abi体系结构下的so库。
             }
         }
         //ndk编译生成.so文件
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
 //            moduleName "testjni"         //生成的so名字
-            abiFilters  "armeabi-v7a", "x86" , "arm64-v8a"//输出指定三种abi体系结构下的so库。
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a"//输出指定三种abi体系结构下的so库。
 //            //极光推送选择要添加的对应cpu类型的.so库。
 //            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','arm64-v8a','x86', 'x86_64', 'mips', 'mips64'
 //            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
@@ -111,7 +111,7 @@ android {
             //libocr-sdk.so 为百度文字识别需要的so文件
             //libAMapSDK_NAVI_v7_5_0.so libmsc.so libneonuijni.so 为高德需要的so文件
             // libcrypto.so libssl.so 为加密需要的so文件
-            jniLibs.srcDirs=['libs']
+            jniLibs.srcDirs = ['libs']
         }
     }
     buildTypes {
@@ -297,14 +297,14 @@ repositories {
 //            exclude group: 'com.android.support'
 //        }
         //时间和地址选择器 示例 AndroidPicker-master
-        implementation project(path:':library:Common')
-        implementation project(path:':library:WheelPicker')
+        implementation project(path: ':library:Common')
+        implementation project(path: ':library:WheelPicker')
         //文件选择器 示例 AndroidPicker-master
-        implementation project(path:':library:FilePicker')
+        implementation project(path: ':library:FilePicker')
         //颜色选择器 示例 AndroidPicker-master
-        implementation project(path:':library:ColorPicker')
+        implementation project(path: ':library:ColorPicker')
         //多级选择器 示例 AndroidPicker-master
-        implementation project(path:':library:MultiplePicker')
+        implementation project(path: ':library:MultiplePicker')
 
         //高德地图so及jar
 
@@ -349,8 +349,9 @@ repositories {
         implementation 'com.android.support:multidex:1.0.1'
 
         //glide图片加载库
-        implementation 'com.github.bumptech.glide:glide:3.7.0'
-
+//        implementation 'com.github.bumptech.glide:glide:3.7.0'
+        api 'com.github.bumptech.glide:glide:4.11.0'
+        annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
         //微信支付
         implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
@@ -438,6 +439,8 @@ repositories {
 //        implementation files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
 //        implementation files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里
         implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
+        //文件选择器
+        implementation project(path: ':library:FileChooser')
 
     }
 }

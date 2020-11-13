@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity {
                         Permission.Group.STORAGE,//存储
                         Permission.Group.CALENDAR,//日历
                         Permission.Group.CAMERA,//照相机
-                        Permission.Group.CONTACTS,//联系人
+//                        Permission.Group.CONTACTS,//联系人
                         //Permission.Group.LOCATION,//定位 部分手机设置为仅使用时返回授权失败所以在开启定位前再请求授权
                         //Permission.SENSORS,//传感器，感应器；感测器
                         Permission.Group.SMS,//短信
@@ -753,6 +753,14 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 51:// 添加角标
                     intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 52:// 选择器
+                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.androidpicker.MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 53:// 文件选择器
+                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
                     startActivity(intent);
                     break;
             }

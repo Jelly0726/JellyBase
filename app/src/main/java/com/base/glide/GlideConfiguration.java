@@ -1,9 +1,11 @@
 package com.base.glide;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.Registry;
 import com.bumptech.glide.module.GlideModule;
 
 /**
@@ -15,11 +17,10 @@ import com.bumptech.glide.module.GlideModule;
 public class GlideConfiguration implements GlideModule{
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
+//        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
     }
-
     @Override
-    public void registerComponents(Context context, Glide glide) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
 
     }
 }
