@@ -4,6 +4,8 @@ package com.base
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
+import butterknife.ButterKnife
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 

@@ -709,6 +709,14 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!--↑↑↑↑↑↑↑qq配置结束↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓androidpicker↓↓↓↓↓↓↓-->
+        <activity android:name=".androidpicker.MainActivity">
+        </activity>
+        <activity android:name=".androidpicker.NestActivity"/>
+        <!--↑↑↑↑↑↑↑androidpicker↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓文件选择器↓↓↓↓↓↓↓-->
+        <activity android:name=".filepicker.MainActivity"/>
+        <!--↑↑↑↑↑↑↑androidpicker↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信支付回调↓↓↓↓↓↓↓-->
         <activity android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"

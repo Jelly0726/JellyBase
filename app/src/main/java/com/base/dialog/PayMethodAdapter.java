@@ -1,14 +1,15 @@
 package com.base.dialog;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.BaseAdapter;
 import com.base.Utils.StringUtil;
@@ -112,10 +113,10 @@ public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
         public TextView mark;
         public ViewHolder(View itemView){
             super(itemView);
-            icon = itemView.findViewById(R.id.icon);
-            checkbox = itemView.findViewById(R.id.select_box);
-            payName = itemView.findViewById(R.id.payName);
-            mark = itemView.findViewById(R.id.mark);
+            icon=itemView.findViewById(R.id.icon);
+            checkbox=itemView.findViewById(R.id.checkbox);
+            payName=itemView.findViewById(R.id.payName);
+            mark=itemView.findViewById(R.id.mark);
         }
 
     }

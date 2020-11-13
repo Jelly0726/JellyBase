@@ -10,12 +10,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.annotation.StyleRes;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,9 +20,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
+
+import com.base.imageView.ImageViewPlus;
 import com.base.toast.ToastUtils.Duration;
 import com.base.toast.ToastUtils.Type;
-import com.base.imageView.ImageViewPlus;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
@@ -219,9 +220,9 @@ public class CustomToast implements IToast {
                 ImageViewPlus draweeView = mView.findViewById(R.id.icon);
                 if (mLeftGifUri != null) {
                     Glide.with(mContext)
-                            .load(mLeftGifUri)
                             .asGif()
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .load(mLeftGifUri)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .centerCrop()
                             .into(draweeView);
                     draweeView.setVisibility(View.VISIBLE);
