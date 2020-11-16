@@ -16,13 +16,14 @@
 package com.base.album;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jelly.jellybase.R;
 import com.yanzhenjie.album.Album;
@@ -89,28 +90,28 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
                 if(mAlbumFiles==null){
-                    ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
+                    ((ImageViewHolder) holder).setData(R.drawable.ic_picker_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((ImageViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
+                        ((ImageViewHolder) holder).setData(R.drawable.ic_picker_camera);
                     }
                 }
                 break;
             }
             case AlbumFile.TYPE_VIDEO: {
                 if(mAlbumFiles==null){
-                    ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
+                    ((VideoViewHolder) holder).setData(R.drawable.ic_picker_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((VideoViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
+                        ((VideoViewHolder) holder).setData(R.drawable.ic_picker_camera);
                     }
                 }
                 break;

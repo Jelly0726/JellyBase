@@ -1,0 +1,12 @@
+<resources>
+    <!--
+        * ScrollView限制最大高度
+        * ScrollView 限制子布局最大高度。
+        * 子布局未达到最大高度时，自适应高度且不能滚动
+        * 子布局达到最大高度时，可滚动。
+        -->
+    <declare-styleable name="MaxHeightScrollView">
+        <attr name="max_height" format="dimension" />
+    </declare-styleable>
+
+</resources>
