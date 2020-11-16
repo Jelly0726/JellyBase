@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     .showFolderView(true)
                     .enableSelectAll(false)
                     .enableImagePicker(true)
-                    .setCameraPlaceholder(R.drawable.ic_camera)
+                    .setCameraPlaceholder(R.drawable.ic_picker_camera)
                     .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .pickPhoto(this, CUSTOM_REQUEST_CODE);
         }

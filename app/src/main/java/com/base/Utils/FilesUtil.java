@@ -173,6 +173,41 @@ public class FilesUtil {
         }
         return null;
     }
+    /**
+     * 根据资源ID获取资源的uri
+     * @param resId
+     * @return
+     */
+    public Uri getUriByResId(int resId){
+        Uri uri = Uri.parse("res:///" + resId);
+        return uri;
+    }
+    /**
+     * 根据Android资源ID获取Android资源的uri
+     * @param resId
+     * @return
+     */
+    public Uri getUriByAndroidResId(Context context,int resId){
+        //*获取Res资源的url  ContentResolver.SCHEME_ANDROID_RESOURCE*/
+        Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + resId);
+        return uri;
+    }
+    /**
+     * 根据Asset资源名称获取Asset资源的uri
+     * @param resName
+     * @return
+     */
+    public Uri getUriFromAsset(Context context,String resName){
+        //*获取asset资源的url,ContentResolver.SCHEME_FILE*/
+        Uri uri = Uri.parse("file:///android_asset/" + resName);
+        return uri;
+    }
+
+    /**
+     * 根据Uri获取真实路径
+     * @param contentUri
+     * @return
+     */
     public String getRealPathFromURI(Uri contentUri) {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
