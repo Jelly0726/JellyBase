@@ -374,7 +374,8 @@ repositories {
 ////        exclude group: 'com.github.bumptech.glide'
 ////        exclude group:'com.android.support'
 //        }
-
+        //图片预览
+        implementation project(path: ':library:ImagePreview')
         //ProgressDialog
         implementation 'com.github.maning0303:MNProgressHUD:V1.1.8'
 

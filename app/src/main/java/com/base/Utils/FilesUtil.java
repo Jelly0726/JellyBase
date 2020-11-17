@@ -312,6 +312,23 @@ public class FilesUtil {
         }
     }
     /**
+     * 使用第三方APP打开PDF：（APP外部打开，适用于本地PDF）
+     * @param context
+     * @param FILE_NAME
+     */
+    public static void openPDFInNative(Context context, String FILE_NAME) {
+        File file = new File(context.getExternalCacheDir(),FILE_NAME);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(file);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(uri, "application/pdf");
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        }
+    }
+    /**
      *@author chenzheng_Java
      *保存用户输入的内容到文件
      */
