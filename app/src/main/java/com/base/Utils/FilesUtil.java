@@ -2,15 +2,20 @@ package com.base.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Browser;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.base.appManager.BaseApplication;
@@ -28,6 +33,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -174,13 +186,19 @@ public class FilesUtil {
         return null;
     }
     /**
-     * 根据资源ID获取资源的uri
-     * @param resId
+     得到资源文件中图片的Uri
+     * @param context 上下文对象
+     * @param resId 资源id
+     * @return Uri
      * @return
      */
-    public Uri getUriByResId(int resId){
-        Uri uri = Uri.parse("res:///" + resId);
-        return uri;
+    public Uri getUriByResId(Context context,int resId){
+        Resources resources = context.getResources();
+        String path = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                + resources.getResourcePackageName(resId) + "/"
+                + resources.getResourceTypeName(resId) + "/"
+                + resources.getResourceEntryName(resId);
+        return Uri.parse(path);
     }
     /**
      * 根据Android资源ID获取Android资源的uri
@@ -197,14 +215,14 @@ public class FilesUtil {
      * @param resName
      * @return
      */
-    public Uri getUriFromAsset(Context context,String resName){
+    public Uri getUriFromAsset(String resName){
         //*获取asset资源的url,ContentResolver.SCHEME_FILE*/
         Uri uri = Uri.parse("file:///android_asset/" + resName);
         return uri;
     }
 
     /**
-     * 根据Uri获取真实路径
+     * 根据Uri获取真实路径(用于相册)
      * @param contentUri
      * @return
      */
@@ -218,6 +236,106 @@ public class FilesUtil {
             cursor.close();
         }
         return res;
+    }
+//    public String getFileName(String url) {
+//        String fileName = null;
+//        if (!TextUtils.isEmpty(url)) {
+//            try {
+//                OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象
+//                Request request = new Request.Builder()
+//                        .url(url)//请求接口。如果需要传参拼接到接口后面。
+//                        .build();//创建Request 对象
+//                Response response = client.newCall(request).execute();//得到Response 对象
+//                HttpUrl realUrl = response.request().url();
+//                Log.e("zmm", "real:" + realUrl);
+//                if (realUrl != null) {
+//                    String temp = realUrl.toString();
+//                    fileName = temp.substring(temp.lastIndexOf("/") + 1);
+//
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("zmm", "Get File Name:error" + e);
+//            }
+//        }
+//        Log.e("zmm", "fileName--->" + fileName);
+//        return fileName;
+//    }
+
+    /**
+     * 根据URL得到文件名称
+     * @param url
+     * @return
+     */
+    public String getFileName(String url) {
+        String filename = "";
+        boolean isok = false;
+        // 从UrlConnection中获取文件名称
+        try {
+            URL myURL = new URL(url);
+
+            URLConnection conn = myURL.openConnection();
+            if (conn == null) {
+                return null;
+            }
+            Map<String, List<String>> hf = conn.getHeaderFields();
+            if (hf == null) {
+                return null;
+            }
+            Set<String> key = hf.keySet();
+            if (key == null) {
+                return null;
+            }
+            // Log.i("test", "getContentType:" + conn.getContentType() + ",Url:"
+            // + conn.getURL().toString());
+            for (String skey : key) {
+                List<String> values = hf.get(skey);
+                for (String value : values) {
+                    String result;
+                    try {
+                        result = new String(value.getBytes("ISO-8859-1"), "GBK");
+                        int location = result.indexOf("filename");
+                        if (location >= 0) {
+                            result = result.substring(location
+                                    + "filename".length());
+                            filename = result
+                                    .substring(result.indexOf("=") + 1);
+                            isok = true;
+                        }
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }// ISO-8859-1 UTF-8 gb2312
+                }
+                if (isok) {
+                    break;
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 从路径中获取
+        if (filename == null || "".equals(filename)) {
+            filename = url.substring(url.lastIndexOf("/") + 1);
+        }
+        return filename;
+    }
+
+    /**
+     * 使用浏览器打开PDF：（APP外部打开，适用于加载网络PDF）
+     * @param context
+     * @param url
+     */
+    public static void openPDFInBrowser(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("error", "Activity was not found for intent, " + intent.toString());
+        }
     }
     /**
      *@author chenzheng_Java
