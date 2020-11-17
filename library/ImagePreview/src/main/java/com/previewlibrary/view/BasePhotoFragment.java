@@ -203,20 +203,20 @@ public class BasePhotoFragment extends Fragment {
             rootView.setTag(beanViewInfo.getUrl());
             //是否展示动画
             isTransPhoto = bundle.getBoolean(KEY_TRANS_PHOTO, false);
-            if (beanViewInfo.getUrl().toLowerCase().contains(".gif")) {
+            if (beanViewInfo.getUrl().toLowerCase().endsWith(".gif")) {
                 imageView.setZoomable(false);
                 //加载图
                 ZoomMediaLoader.getInstance().getLoader().displayGifImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);
-            } else if (beanViewInfo.getUrl().toLowerCase().contains(".pdf")) {
+            } else if (ImageUtils.isImage(beanViewInfo.getUrl())) {//图片
+                //加载图
+                ZoomMediaLoader.getInstance().getLoader().displayImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);
+            } else {
                 imageView.setVisibility(View.VISIBLE);
                 loading.setVisibility(View.GONE);
                 btnVideo.setVisibility(View.GONE);
                 openFile.setVisibility(View.VISIBLE);
                 fileName.setText(ImageUtils.getFileName(beanViewInfo.getUrl()));
                 imageView.setImageBitmap(ImageUtils.getViewBitmap(pdfLayout,dipTopx(400),dipTopx(400)));
-            } else {
-                //加载图
-                ZoomMediaLoader.getInstance().getLoader().displayImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);
             }
 
         }

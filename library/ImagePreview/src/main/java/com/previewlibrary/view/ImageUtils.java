@@ -180,5 +180,15 @@ public class ImageUtils {
         }
         return bitmap;
     }
-
+    /**
+     * 根据文件名判断文件是否为图片
+     *
+     * @param filePath 　文件路径
+     */
+    public static boolean isImage(String filePath) {
+        String path = filePath.toUpperCase();
+        return path.endsWith(".PNG") || path.endsWith(".JPG")
+                || path.endsWith(".JPEG") || path.endsWith(".BMP")
+                || path.endsWith(".GIF");
+    }
 }
