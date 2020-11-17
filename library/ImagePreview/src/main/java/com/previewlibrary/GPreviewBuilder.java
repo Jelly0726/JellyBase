@@ -19,6 +19,18 @@ import java.util.List;
  * Created by yangc on 2017/9/12.
  * E-Mail:yangchaojiang@outlook.com
  * Deprecated:
+ *
+  GPreviewBuilder.from(this@OrderDetailsActivity) //activity实例必须
+  //.to(CustomActivity::class.java) //自定义Activity 使用默认的预览不需要
+  .setData(mThumb) //集合
+  //.setUserFragment(UserFragment::class.java) //自定义Fragment 使用默认的预览不需要
+  .setCurrentIndex(0)
+ .setSingleFling(true) //是否在黑屏区域点击返回
+ .setDrag(false) //是否禁用图片拖拽返回
+ .setType(GPreviewBuilder.IndicatorType.Dot) //指示器类型
+ .start() //启动
+ *
+ *
  */
 
 public final class GPreviewBuilder {
