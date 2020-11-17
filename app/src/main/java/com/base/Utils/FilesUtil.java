@@ -2,16 +2,24 @@ package com.base.Utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Browser;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.base.appManager.BaseApplication;
 
@@ -30,6 +38,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -174,13 +187,19 @@ public class FilesUtil {
         return null;
     }
     /**
-     * 根据资源ID获取资源的uri
-     * @param resId
+     得到资源文件中图片的Uri
+     * @param context 上下文对象
+     * @param resId 资源id
+     * @return Uri
      * @return
      */
-    public Uri getUriByResId(int resId){
-        Uri uri = Uri.parse("res:///" + resId);
-        return uri;
+    public Uri getUriByResId(Context context,int resId){
+        Resources resources = context.getResources();
+        String path = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                + resources.getResourcePackageName(resId) + "/"
+                + resources.getResourceTypeName(resId) + "/"
+                + resources.getResourceEntryName(resId);
+        return Uri.parse(path);
     }
     /**
      * 根据Android资源ID获取Android资源的uri
@@ -197,14 +216,14 @@ public class FilesUtil {
      * @param resName
      * @return
      */
-    public Uri getUriFromAsset(Context context,String resName){
+    public Uri getUriFromAsset(String resName){
         //*获取asset资源的url,ContentResolver.SCHEME_FILE*/
         Uri uri = Uri.parse("file:///android_asset/" + resName);
         return uri;
     }
 
     /**
-     * 根据Uri获取真实路径
+     * 根据Uri获取真实路径(用于相册)
      * @param contentUri
      * @return
      */
@@ -218,6 +237,96 @@ public class FilesUtil {
             cursor.close();
         }
         return res;
+    }
+//    public String getFileName(String url) {
+//        String fileName = null;
+//        if (!TextUtils.isEmpty(url)) {
+//            try {
+//                OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象
+//                Request request = new Request.Builder()
+//                        .url(url)//请求接口。如果需要传参拼接到接口后面。
+//                        .build();//创建Request 对象
+//                Response response = client.newCall(request).execute();//得到Response 对象
+//                HttpUrl realUrl = response.request().url();
+//                Log.e("zmm", "real:" + realUrl);
+//                if (realUrl != null) {
+//                    String temp = realUrl.toString();
+//                    fileName = temp.substring(temp.lastIndexOf("/") + 1);
+//
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.e("zmm", "Get File Name:error" + e);
+//            }
+//        }
+//        Log.e("zmm", "fileName--->" + fileName);
+//        return fileName;
+//    }
+
+    /**
+     * 根据URL得到文件名称
+     * @param url
+     * @return
+     */
+    public String getFileName(@NonNull String url) {
+        String filename = "";
+        if (!TextUtils.isEmpty(url)) {
+            try {
+                OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象
+                Request request = new Request.Builder()
+                        .url(url)//请求接口。如果需要传参拼接到接口后面。
+                        .build();//创建Request 对象
+                Response response = client.newCall(request).execute();//得到Response 对象
+                HttpUrl realUrl = response.request().url();
+                Log.e("zmm", "real:" + realUrl);
+                if (realUrl != null) {
+                    String temp = realUrl.toString();
+                    filename = temp.substring(temp.lastIndexOf("/") + 1);
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("zmm", "Get File Name:error" + e);
+            }
+            // 从路径中获取
+            if (filename == null || "".equals(filename)) {
+                filename = url.substring(url.lastIndexOf("/") + 1);
+            }
+        }
+        return filename;
+    }
+
+    /**
+     * 使用浏览器打开PDF：（APP外部打开，适用于加载网络PDF）
+     * @param context
+     * @param url
+     */
+    public void openPDFInBrowser(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("error", "Activity was not found for intent, " + intent.toString());
+        }
+    }
+    /**
+     * 使用第三方APP打开PDF：（APP外部打开，适用于本地PDF）
+     * @param context
+     * @param FILE_NAME
+     */
+    public static void openPDFInNative(Context context, String FILE_NAME) {
+        File file = new File(context.getExternalCacheDir(),FILE_NAME);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(file);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(uri, "application/pdf");
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.w("URLSpan", "Activity was not found for intent, " + intent.toString());
+        }
     }
     /**
      *@author chenzheng_Java
@@ -566,7 +675,7 @@ public class FilesUtil {
      * @param context
      * @param ss
      */
-    public static void saveFileHtml(Context context, String ss) {
+    public void saveFileHtml(Context context, String ss) {
         try{
             String sdd= Environment.getDataDirectory()+"/files/index.html";
             InputStream in =getStringStream(ss);
@@ -585,7 +694,7 @@ public class FilesUtil {
     /**
      * 将一个字符串转化为输入流
      */
-    public static InputStream getStringStream(String sInputString){
+    public InputStream getStringStream(String sInputString){
         if (sInputString != null && !sInputString.trim().equals("")){
             try{
                 ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
@@ -600,7 +709,7 @@ public class FilesUtil {
     /**
      * 将一个输入流转化为字符串
      */
-    public static String getStreamString(InputStream tInputStream){
+    public String getStreamString(InputStream tInputStream){
         if (tInputStream != null){
             try{
                 BufferedReader tBufferedReader = new BufferedReader(new InputStreamReader(tInputStream));
@@ -621,7 +730,7 @@ public class FilesUtil {
      * @param string
      * @return
      */
-    private static boolean isEmpty(String string){
+    private boolean isEmpty(String string){
         if (string!=null){
             if (!string.toLowerCase().equals("null")
                     &&string.trim().length()>0){

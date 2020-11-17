@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/library/FileChooser" />
             <option value="$PROJECT_DIR$/library/FilePicker" />
             <option value="$PROJECT_DIR$/library/ImagePicker" />
+            <option value="$PROJECT_DIR$/library/ImagePreview" />
             <option value="$PROJECT_DIR$/library/MultiplePicker" />
             <option value="$PROJECT_DIR$/library/ShortcutBadger" />
             <option value="$PROJECT_DIR$/library/WheelPicker" />
