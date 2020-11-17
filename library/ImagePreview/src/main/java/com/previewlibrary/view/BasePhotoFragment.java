@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,7 +51,7 @@ public class BasePhotoFragment extends Fragment {
     protected View btnVideo;
     protected LinearLayout pdfLayout;
     protected TextView fileName;
-    protected Button openFile;
+    protected ImageView openFile;
     public static VideoClickListener listener;
 
     public static BasePhotoFragment getInstance(Class<? extends BasePhotoFragment> fragmentClass,
@@ -150,12 +150,6 @@ public class BasePhotoFragment extends Fragment {
 
             }
         });
-        pdfLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((GPreviewActivity) getActivity()).finish();
-            }
-        });
         openFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,11 +208,12 @@ public class BasePhotoFragment extends Fragment {
                 //加载图
                 ZoomMediaLoader.getInstance().getLoader().displayGifImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);
             } else if (beanViewInfo.getUrl().toLowerCase().contains(".pdf")) {
-                imageView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
                 loading.setVisibility(View.GONE);
                 btnVideo.setVisibility(View.GONE);
-                pdfLayout.setVisibility(View.VISIBLE);
+                openFile.setVisibility(View.VISIBLE);
                 fileName.setText(ImageUtils.getFileName(beanViewInfo.getUrl()));
+                imageView.setImageBitmap(ImageUtils.getViewBitmap(pdfLayout,dipTopx(400),dipTopx(400)));
             } else {
                 //加载图
                 ZoomMediaLoader.getInstance().getLoader().displayImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);
@@ -313,5 +308,14 @@ public class BasePhotoFragment extends Fragment {
 
     public IThumbViewInfo getBeanViewInfo() {
         return beanViewInfo;
+    }
+    /**
+     * 根据手机分辨率从DP转成PX
+     * @param dpValue
+     * @return
+     */
+    private int dipTopx( float dpValue) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 }
