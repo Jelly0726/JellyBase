@@ -15,8 +15,11 @@ import android.os.Environment;
 import android.provider.Browser;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.base.appManager.BaseApplication;
 
@@ -33,15 +36,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -267,57 +268,30 @@ public class FilesUtil {
      * @param url
      * @return
      */
-    public String getFileName(String url) {
+    public String getFileName(@NonNull String url) {
         String filename = "";
-        boolean isok = false;
-        // 从UrlConnection中获取文件名称
-        try {
-            URL myURL = new URL(url);
+        if (!TextUtils.isEmpty(url)) {
+            try {
+                OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象
+                Request request = new Request.Builder()
+                        .url(url)//请求接口。如果需要传参拼接到接口后面。
+                        .build();//创建Request 对象
+                Response response = client.newCall(request).execute();//得到Response 对象
+                HttpUrl realUrl = response.request().url();
+                Log.e("zmm", "real:" + realUrl);
+                if (realUrl != null) {
+                    String temp = realUrl.toString();
+                    filename = temp.substring(temp.lastIndexOf("/") + 1);
 
-            URLConnection conn = myURL.openConnection();
-            if (conn == null) {
-                return null;
-            }
-            Map<String, List<String>> hf = conn.getHeaderFields();
-            if (hf == null) {
-                return null;
-            }
-            Set<String> key = hf.keySet();
-            if (key == null) {
-                return null;
-            }
-            // Log.i("test", "getContentType:" + conn.getContentType() + ",Url:"
-            // + conn.getURL().toString());
-            for (String skey : key) {
-                List<String> values = hf.get(skey);
-                for (String value : values) {
-                    String result;
-                    try {
-                        result = new String(value.getBytes("ISO-8859-1"), "GBK");
-                        int location = result.indexOf("filename");
-                        if (location >= 0) {
-                            result = result.substring(location
-                                    + "filename".length());
-                            filename = result
-                                    .substring(result.indexOf("=") + 1);
-                            isok = true;
-                        }
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }// ISO-8859-1 UTF-8 gb2312
                 }
-                if (isok) {
-                    break;
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("zmm", "Get File Name:error" + e);
             }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // 从路径中获取
-        if (filename == null || "".equals(filename)) {
-            filename = url.substring(url.lastIndexOf("/") + 1);
+            // 从路径中获取
+            if (filename == null || "".equals(filename)) {
+                filename = url.substring(url.lastIndexOf("/") + 1);
+            }
         }
         return filename;
     }
@@ -327,7 +301,7 @@ public class FilesUtil {
      * @param context
      * @param url
      */
-    public static void openPDFInBrowser(Context context, String url) {
+    public void openPDFInBrowser(Context context, String url) {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         intent.putExtra(Browser.EXTRA_APPLICATION_ID, context.getPackageName());
@@ -684,7 +658,7 @@ public class FilesUtil {
      * @param context
      * @param ss
      */
-    public static void saveFileHtml(Context context, String ss) {
+    public void saveFileHtml(Context context, String ss) {
         try{
             String sdd= Environment.getDataDirectory()+"/files/index.html";
             InputStream in =getStringStream(ss);
@@ -703,7 +677,7 @@ public class FilesUtil {
     /**
      * 将一个字符串转化为输入流
      */
-    public static InputStream getStringStream(String sInputString){
+    public InputStream getStringStream(String sInputString){
         if (sInputString != null && !sInputString.trim().equals("")){
             try{
                 ByteArrayInputStream tInputStringStream = new ByteArrayInputStream(sInputString.getBytes());
@@ -718,7 +692,7 @@ public class FilesUtil {
     /**
      * 将一个输入流转化为字符串
      */
-    public static String getStreamString(InputStream tInputStream){
+    public String getStreamString(InputStream tInputStream){
         if (tInputStream != null){
             try{
                 BufferedReader tBufferedReader = new BufferedReader(new InputStreamReader(tInputStream));
@@ -739,7 +713,7 @@ public class FilesUtil {
      * @param string
      * @return
      */
-    private static boolean isEmpty(String string){
+    private boolean isEmpty(String string){
         if (string!=null){
             if (!string.toLowerCase().equals("null")
                     &&string.trim().length()>0){
