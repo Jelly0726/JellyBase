@@ -4,10 +4,11 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.HttpCode;
-import com.base.httpmvp.retrofitapi.methods.HttpState;
+import com.base.httpmvp.retrofitapi.HttpUtils;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
+import com.base.httpmvp.retrofitapi.methods.HttpState;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 
@@ -44,6 +45,9 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
         Log.i("ss","response="+response);
         if (TextUtils.isEmpty(response)){
             throw new ApiException("服务器返回数据异常!");
+        }
+        if (!HttpUtils.isJson(response)){
+            throw new ApiException("非法数据格式!"+response);
         }
         HttpState httpState = gson.fromJson(response, HttpState.class);
         if (!httpState.isReturnState()) {
