@@ -321,7 +321,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
      * 广播接收者
      */
     internal inner class InnerRecevier : BroadcastReceiver() {
-        val SYSTEM_DIALOG_REASON_KEY = "reason"
+        private val SYSTEM_DIALOG_REASON_KEY = "reason"
         val SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions"
         val SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps"
         val SYSTEM_DIALOG_REASON_HOME_KEY = "homekey"
@@ -355,21 +355,15 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                     synchronized(BaseApplication.getInstance()) {
                         if (circleDialog == null) {
                             circleDialog = CircleDialog.Builder()
-                                    .configDialog(object : ConfigDialog {
-                                        override fun onConfig(params: DialogParams) {
-                                            params.width = 0.6f
-                                        }
-                                    })
+                                    .configDialog { params -> params.width = 0.6f }
                                     .setCanceledOnTouchOutside(false)
                                     .setCancelable(false)
                                     .setTitle("登录过期！")
-                                    .configText(object : ConfigText {
-                                        override fun onConfig(params: TextParams) {
-                                            params.gravity = Gravity.LEFT
-                                            params.textColor = Color.parseColor("#FF1F50F1")
-                                            params.padding = intArrayOf(20, 0, 20, 0)
-                                        }
-                                    })
+                                    .configText { params ->
+                                        params.gravity = Gravity.LEFT
+                                        params.textColor = Color.parseColor("#FF1F50F1")
+                                        params.padding = intArrayOf(20, 0, 20, 0)
+                                    }
                                     .setText("登录过期或异地登录，请重新登录!")
                                     .setPositive("确定") {
                                         circleDialog = null
