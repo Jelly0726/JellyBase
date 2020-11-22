@@ -75,43 +75,33 @@ class ShopCartAdapter(context: Context) :
                 synchronized(context) {
                     if (circleDialog == null) {
                         circleDialog = CircleDialog.Builder()
-                            .configDialog(object : ConfigDialog {
-                                override fun onConfig(params: DialogParams) {
-                                    params.width = 0.6f
-                                }
-                            })
-                            .setCanceledOnTouchOutside(false)
+                            .configDialog { params -> params.width = 0.6f }
+                                .setCanceledOnTouchOutside(false)
                             .setCancelable(false)
                             .setTitle("编辑数量")
-                            .configTitle(object : ConfigTitle {
-                                override fun onConfig(params: TitleParams) {
-                                    params.textSize =
+                            .configTitle { params ->
+                                params.textSize =
                                         AppUtils.spTopx(BaseApplication.getInstance(), 15f)
-                                    params.textColor =
+                                params.textColor =
                                         ContextCompat.getColor(context, R.color.mainText)
-                                }
-                            })
-                            .configInput(object : ConfigInput {
-                                override fun onConfig(params: InputParams) {
+                            }
+                                .configInput { params ->
                                     params.type = InputParams.INPUT_MONEY
                                     params.digits = 0
                                     params.text = holder.num_edit.text.toString()
                                     params.textSize =
-                                        AppUtils.spTopx(BaseApplication.getInstance(), 15f)
+                                            AppUtils.spTopx(BaseApplication.getInstance(), 15f)
                                     params.textColor =
-                                        ContextCompat.getColor(context, R.color.mainText)
+                                            ContextCompat.getColor(context, R.color.mainText)
                                 }
-                            })
-                            .setInputHeight(AppUtils.dipTopx(BaseApplication.getInstance(), 40f))
-                            .configPositive(object : ConfigButton {
-                                override fun onConfig(params: ButtonParams) {
-                                    params.textSize =
+                                .setInputHeight(AppUtils.dipTopx(BaseApplication.getInstance(), 40f))
+                            .configPositive { params ->
+                                params.textSize =
                                         AppUtils.spTopx(BaseApplication.getInstance(), 15f)
-                                    params.textColor =
+                                params.textColor =
                                         ContextCompat.getColor(context, R.color.mainText)
-                                }
-                            })
-                            .setPositiveInput("确定") { text, v ->
+                            }
+                                .setPositiveInput("确定") { text, v ->
                                 if (!StringUtil.isEmpty(text)) {
                                     circleDialog = null
                                     //                                            mListItems.get(position).setGoodsNum(Integer.parseInt(text));
