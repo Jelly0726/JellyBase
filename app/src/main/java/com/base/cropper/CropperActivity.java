@@ -49,7 +49,7 @@ public class CropperActivity extends BaseActivity {
                 Bitmap cropBitMap = cropImageView.getCroppedImage();
                 if (cropBitMap==null)return;
                 cropImageView.setImageBitmap(cropBitMap);
-                String path= BitmapUtil.saveBitmap(this, cropBitMap);
+                String path= BitmapUtil.getInstance().saveBitmap(this, cropBitMap);
                 Intent intent=getIntent();
                 intent.putExtra(BitmapUtil.PATH, path);
                 setResult(BitmapUtil.IMG_CROP, intent);

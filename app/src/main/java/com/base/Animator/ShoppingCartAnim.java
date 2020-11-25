@@ -78,7 +78,7 @@ public class ShoppingCartAnim {
      */
     public void startAnim(View startView, View endView) {
 //        buyImg.setImageResource(R.drawable.sign);// 设置buyImg的图片
-        buyImg.setImageBitmap(BitmapUtil.createBitmapFromView(startView));//也可以设置bitmap，可以用商品缩略图来播放动画
+        buyImg.setImageBitmap(BitmapUtil.getInstance().createBitmapFromView(startView));//也可以设置bitmap，可以用商品缩略图来播放动画
         root.addView(buyImg);//将动画参照imageview放入
         // 这是获取起始目标view在屏幕的X、Y坐标（这也是动画开始的坐标）
         startView.getLocationInWindow(start_location);
