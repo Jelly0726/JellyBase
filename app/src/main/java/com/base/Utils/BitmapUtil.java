@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -41,7 +42,6 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -58,7 +58,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -123,6 +122,7 @@ public class BitmapUtil {
 
     /**
      * 首先保存图片(私有分区)
+     *
      * @param context
      * @param bitmap
      * @return
@@ -151,10 +151,11 @@ public class BitmapUtil {
             return file.getAbsolutePath();
         }
     }
+
     /**
      * 保存Bitmap到系统相册(共享分区)
      */
-    public boolean saveImage(Context context,Bitmap bitmap) {
+    public boolean saveImage(Context context, Bitmap bitmap) {
         if (Build.VERSION.SDK_INT >= 29) {
 //            boolean isTrue = saveSignImage(bitName, bitmap);
             saveSignImage(context, bitmap);
@@ -162,70 +163,43 @@ public class BitmapUtil {
 //            file= getPrivateAlbumStorageDir(NewPeoActivity.this, bitName,brand);
 //            return isTrue;
         }
-        String fileName;
-        File file;
-        String brand = Build.BRAND;
         String bitName = System.currentTimeMillis() + ".jpg";
-        if (brand.equals("xiaomi")) { // 小米手机brand.equals("xiaomi")
-            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + bitName;
-        } else if (brand.equalsIgnoreCase("Huawei")) {
-            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + bitName;
-        } else { // Meizu 、Oppo
-            fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/" + bitName;
+        // 插入图库
+        String uri = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, bitName, null);
+        String realPath = getRealPathFromURI(Uri.parse(uri), context);//得到绝对地址
+        if (!realPath.equals("")) {
+            File file = new File(realPath);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+        } else {
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse(uri)));
         }
-//        fileName = Environment.getExternalStorageDirectory().getPath() + "/DCIM/Camera/" + bitName;
-        Log.v("saveBitmap brand", "" + brand);
-        file = new File(fileName);
-        if (file.exists()) {
-            file.delete();
-        }
-        FileOutputStream out;
-        try {
-            out = new FileOutputStream(file);
-            // 格式为 JPEG，照相机拍出的图片为JPEG格式的，PNG格式的不能显示在相册中
-            if (bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)) {
-                out.flush();
-                out.close();
-                // 插入图库
-                if (Build.VERSION.SDK_INT >= 29) {
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
-                    values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                    Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                } else {
-                    MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), bitName, null);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            Log.e("FileNotFoundException", "FileNotFoundException:" + e.getMessage().toString());
-            e.printStackTrace();
-            return false;
-        } catch (IOException e) {
-            Log.e("IOException", "IOException:" + e.getMessage().toString());
-            e.printStackTrace();
-            return false;
-        } catch (Exception e) {
-            Log.e("IOException", "IOException:" + e.getMessage().toString());
-            e.printStackTrace();
-            return false;
-            // 发送广播，通知刷新图库的显示
-        }
-//        if(Build.VERSION.SDK_INT >= 29){
-//            copyPrivateToDownload(this,file.getAbsolutePath(),bitName);
-//        }
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + fileName)));
         return true;
 
     }
 
+    //得到绝对地址,用于给图片标识时间,不然保存下来的图片会是1970年的陈年老图
+    private String getRealPathFromURI(Uri contentUri, Context context) {
+        String[] proj = new String[]{MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor != null) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String fileStr = cursor.getString(columnIndex);
+            cursor.close();
+            return fileStr;
+        }
+        return "";
+    }
+
     /**
-     *   //将文件保存到公共的媒体文件夹
-     *     //这里的filepath不是绝对路径，而是某个媒体文件夹下的子路径，和沙盒子文件夹类似
+     * //将文件保存到公共的媒体文件夹
+     * //这里的filepath不是绝对路径，而是某个媒体文件夹下的子路径，和沙盒子文件夹类似
+     *
      * @param context
      * @param bitmap
      * @return
      */
-    public void saveSignImage(/*String filePath,*/Context context,Bitmap bitmap) {
+    public void saveSignImage(/*String filePath,*/Context context, Bitmap bitmap) {
         String fileName = System.currentTimeMillis() + ".jpg";
         try {
             //设置保存参数到ContentValues中
@@ -252,7 +226,7 @@ public class BitmapUtil {
                 //使用流将内容写入该uri中即可
                 OutputStream outputStream = context.getContentResolver().openOutputStream(uri);
                 if (outputStream != null) {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     outputStream.flush();
                     outputStream.close();
                 }
@@ -260,6 +234,7 @@ public class BitmapUtil {
         } catch (Exception e) {
         }
     }
+
     /**
      * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
      */
