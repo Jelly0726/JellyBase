@@ -103,12 +103,12 @@ public class FilesUtil {
     private FilesUtil(){
 
     }
-    private static FilesUtil filesUtil;
+    private static FilesUtil instance;
     public static synchronized FilesUtil getInstance(){
-        if (filesUtil==null) {
-            filesUtil=new FilesUtil();
+        if (instance==null) {
+            instance=new FilesUtil();
         }
-        return filesUtil;
+        return instance;
     }
     /**
      * 打开文件选择器
@@ -311,6 +311,7 @@ public class FilesUtil {
             Log.w("error", "Activity was not found for intent, " + intent.toString());
         }
     }
+
     /**
      * 使用第三方APP打开PDF：（APP外部打开，适用于本地PDF）
      * @param context
