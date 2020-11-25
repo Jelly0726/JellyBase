@@ -58,10 +58,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.View.DRAWING_CACHE_QUALITY_HIGH;
 
@@ -234,7 +237,30 @@ public class BitmapUtil {
         } catch (Exception e) {
         }
     }
-
+    /**
+     * 保存图片到共享目录，不用SAF存储
+     * @param context
+     * @param bitmap  图片bitmap
+     * @param fileName  图片名称
+     * @param mime_type 类型：图片为image/jpeg，视频为video/mpeg
+     */
+    public boolean addToAlbum(Context context, Bitmap bitmap, String fileName,String mime_type) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, fileName);
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, mime_type);
+        Uri uri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        OutputStream outputStream = null;
+        try {
+            outputStream = context.getContentResolver().openOutputStream(uri);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     /**
      * 创建图片地址uri,用于保存拍照后的照片 Android 10以后使用这种方法
      */
@@ -247,7 +273,106 @@ public class BitmapUtil {
             return context.getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, new ContentValues());
         }
     }
+    /**
+     * 读取共享目录下图片文件
+     * @param context  上下文
+     * @param filename 文件名称（带后缀a.jpg），是MediaStore查找文件的条件之一
+     * @return
+     */
+    public List<InputStream> getImageFile(Context context, String filename)  {
+        String[] projection = {MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.DATE_ADDED,
+                MediaStore.Images.Thumbnails.DATA
+        };
+        List<InputStream> insList = new ArrayList<>();
+        ContentResolver resolver = context.getContentResolver();
+        String sortOrder = MediaStore.Images.Media.DATE_MODIFIED + " DESC";//根据日期降序查询
+        String selection = MediaStore.Images.Media.DISPLAY_NAME + "='" + filename + "'";   //查询条件 “显示名称为？”
+        Cursor cursor =  resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, selection, null, sortOrder);
+        if (cursor != null && cursor.moveToFirst()) {
+            //媒体数据库中查询到的文件id
+            int columnId = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+            do {
+                //通过mediaId获取它的uri
+                int mediaId = cursor.getInt(columnId);
+//                String tPath = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA)); //获取图片路径
+                Uri itemUri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + mediaId );
+                try {
+                    //通过uri获取到inputStream
+                    ContentResolver cr = context.getContentResolver();
+                    InputStream ins=cr.openInputStream(itemUri);
+                    insList.add(ins);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        return insList;
+    }
+    /**
+     * 读取共享目录下视频文件
+     * @param context
+     * @param filename 文件名称（带后缀a.mp4），是MediaStore查找文件的条件之一
+     * @return
+     */
+    public List<InputStream> getVideoFile(Context context, String filename)  {
+        String[] projection = {MediaStore.Video.Media._ID,
+                MediaStore.Video.Media.DATA,
+                MediaStore.Video.Media.DATE_ADDED,
+                MediaStore.Video.Thumbnails.DATA
+        };
+        List<InputStream> insList = new ArrayList<>();
+        ContentResolver resolver = context.getContentResolver();
+        String sortOrder = MediaStore.Video.Media.DATE_MODIFIED + " DESC";//根据日期降序查询
+        String selection = MediaStore.Video.Media.DISPLAY_NAME + "='" + filename + "'";   //查询条件 “显示名称为？”
+        Cursor cursor =  resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, projection, selection, null, sortOrder);
+        if (cursor != null && cursor.moveToFirst()) {
+            //媒体数据库中查询到的文件id
+            int columnId = cursor.getColumnIndex(MediaStore.Video.Media._ID);
+            do {
+                //通过mediaId获取它的uri
+                int mediaId = cursor.getInt(columnId);
+//                String tPath = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA)); //获取图片路径
+                Uri itemUri = Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "" + mediaId );
+                try {
+                    //通过uri获取到inputStream
+                    ContentResolver cr = context.getContentResolver();
+                    InputStream ins=cr.openInputStream(itemUri);
+                    insList.add(ins);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+        }
+        return insList;
+    }
 
+    /**
+     * 将文件路径转为uri
+     * @param context
+     * @param path 文件路径
+     * @return
+     */
+    public Uri getImageContentUri(Context context, String path) {
+        Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID }, MediaStore.Images.Media.DATA + "=? ",
+                new String[] { path }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            // 如果图片不在手机的共享图片数据库，就先把它插入。
+            if (new File(path).exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, path);
+                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
     /**
      * Receiver扫描更新图库图片
      **/
