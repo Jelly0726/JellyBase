@@ -1,5 +1,6 @@
 package com.jelly.jellybase.androidpicker;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;

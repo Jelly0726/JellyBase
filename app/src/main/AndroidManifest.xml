@@ -119,6 +119,8 @@
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
     <!--加android:extractNativeLibs="false" 会导致加固后不能安装-->
     <!--本工程的属性和第三方工程里的属性名称相同  加 tools:replace="android:icon, android:theme"-->
+    <!-- 适配Android 安卓10前使用  android:requestLegacyExternalStorage="true" 只有一个值不能设置为false-->
+    <!--    android:usesCleartextTraffic="true" 指示应用程序是否打算使用明文网络流量，例如明文HTTP   -->
     <application
         android:name="com.base.appManager.BaseApplication"
         android:allowBackup="true"

@@ -232,16 +232,14 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         Album.camera(this) // 相机功能。
                 .image() // 拍照。
                 //.filePath(fileUri.getPath()) // 文件保存路径，非必须。
-                .requestCode(200)
                 .onResult(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction(@NonNull String result) {
                         File fileUri = new File(result);
                         AlbumFile albumFile=new AlbumFile();
                         albumFile.setPath(result);
                         albumFile.setChecked(true);
                         albumFile.setMediaType(AlbumFile.TYPE_IMAGE);
-                        albumFile.setName(fileUri.getName());
 
                         if(mAlbumFiles!=null){
                             mAlbumFiles.clear();
@@ -256,7 +254,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 })
                 .onCancel(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction(@NonNull String result) {
                     }
                 })
                 .start();
@@ -267,12 +265,11 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     private void selectImage() {
         Album.image(this)
                 .singleChoice()//单选
-                .requestCode(200)
                 .camera(false)
                 .columnCount(2)
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull ArrayList<AlbumFile> result) {
+                    public void onAction( @NonNull ArrayList<AlbumFile> result) {
                         if(mAlbumFiles!=null){
                             mAlbumFiles.clear();
                             mAlbumFiles.addAll(result);
@@ -285,7 +282,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 })
                 .onCancel(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction( @NonNull String result) {
                         Toast.makeText(PersonalInforActivity.this,"取消", Toast.LENGTH_LONG).show();
                     }
                 })
@@ -508,8 +505,8 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     public void uploadSuccess(Object mCallBackVo) {
         uploadData=(UploadData)mCallBackVo;
         Album.getAlbumConfig().
-                getAlbumLoader().
-                loadAlbumFile(store_img, mAlbumFiles.get(0), 100, 100);
+                getAlbumLoader()
+                .load( store_img, mAlbumFiles.get(0));
     }
 
     @Override
