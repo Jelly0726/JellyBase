@@ -9,4 +9,8 @@
 <!--            <certificates src="user" />-->
         </trust-anchors>
     </base-config>
+    <!--    设置只允许部分域名http访问 -->
+    <!--    <domain-config cleartextTrafficPermitted="true">-->
+    <!--        <domain includeSubdomains="true">sample.domain.com</domain>-->
+    <!--    </domain-config>-->
 </network-security-config>
