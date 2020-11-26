@@ -120,7 +120,9 @@
     <!--加android:extractNativeLibs="false" 会导致加固后不能安装-->
     <!--本工程的属性和第三方工程里的属性名称相同  加 tools:replace="android:icon, android:theme"-->
     <!-- 适配Android 安卓10前使用  android:requestLegacyExternalStorage="true" 只有一个值不能设置为false-->
-    <!--    android:usesCleartextTraffic="true" 指示应用程序是否打算使用明文网络流量，例如明文HTTP   -->
+    <!--    android:usesCleartextTraffic="true" 指示应用程序是否打算使用明文网络流量，例如明文HTTP  推荐使用HTTPS -->
+    <!--  同时在清单文件中配置 android:usesCleartextTraffic="true" 和network_security_config.xml 文件时，
+  对Android9.0明文请求也是不支持的，它们是互斥的  -->
     <application
         android:name="com.base.appManager.BaseApplication"
         android:allowBackup="true"
@@ -129,7 +131,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         tools:replace="android:icon, android:theme"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_config"
         android:theme="@style/AppTheme">
         <!--适配全面屏设置-->
