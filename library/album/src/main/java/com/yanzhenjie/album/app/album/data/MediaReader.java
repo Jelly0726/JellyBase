@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.annotation.WorkerThread;
 
@@ -85,10 +84,9 @@ public class MediaReader {
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 Uri itemUri = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {//大于29
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {//大于等于29
                     //媒体数据库中查询到的文件id
                     int columnId = cursor.getColumnIndex(MediaStore.Images.Media._ID);
-                    Log.i("SSSS", "columnId="+ columnId);
                     // true : 应用以兼容模式运行
                     //false：应用以分区存储特性运行
                     if (!Environment.isExternalStorageLegacy() && columnId > -1) {
@@ -172,7 +170,7 @@ public class MediaReader {
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 Uri itemUri = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {//大于29
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {//大于等于29
                     //媒体数据库中查询到的文件id
                     int columnId = cursor.getColumnIndex(MediaStore.Video.Media._ID);
                     // true : 应用以兼容模式运行

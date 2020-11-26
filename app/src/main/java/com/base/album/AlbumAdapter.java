@@ -16,7 +16,6 @@
 package com.base.album;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,14 +157,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public void setData(AlbumFile albumFile) {
             mIvImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            if (TextUtils.isEmpty(albumFile.getBucketName())){
-                Album.getAlbumConfig().
-                        getAlbumLoader().
-                        load(mIvImage, albumFile.getPath());
-            }else
-                Album.getAlbumConfig().
-                        getAlbumLoader().
-                        load(mIvImage, albumFile);
+            Album.getAlbumConfig().
+                    getAlbumLoader().
+                    load(mIvImage, albumFile);
+
         }
         public void setData(int id) {
             mIvImage.setScaleType(ImageView.ScaleType.CENTER);

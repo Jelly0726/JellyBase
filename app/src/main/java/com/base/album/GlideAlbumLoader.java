@@ -15,6 +15,8 @@
  */
 package com.base.album;
 
+import android.os.Build;
+import android.os.Environment;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 
@@ -32,12 +34,23 @@ import java.io.File;
 public class GlideAlbumLoader implements AlbumLoader {
     @Override
     public void load(ImageView imageView, AlbumFile albumFile) {
-        load(imageView, albumFile.getPath());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                !Environment.isExternalStorageLegacy() &&
+                albumFile.getUri() != null) {//大于等于29并且应用以分区存储特性运行
+            Glide.with(imageView.getContext())
+                    .load(albumFile.getUri())
+                    .skipMemoryCache(true)//不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
+                    .dontAnimate()
+                    .into(imageView);
+        } else {
+            load(imageView, albumFile.getPath());
+        }
     }
 
     @Override
     public void load(ImageView imageView, String imagePath) {
-        DebugLog.i("imagePath="+imagePath);
+        DebugLog.i("imagePath=" + imagePath);
         if (URLUtil.isNetworkUrl(imagePath)) {
             Glide.with(imageView.getContext())
                     .load(imagePath)
