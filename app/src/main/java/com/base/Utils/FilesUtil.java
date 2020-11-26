@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.Browser;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.base.appManager.BaseApplication;
 
@@ -35,6 +38,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -374,7 +378,143 @@ public class FilesUtil {
             e.printStackTrace();
         }
     }
+    /**
+     * android10及以上 >=29
+     * 创建并获取公共目录下的文件路径
+     * @param context
+     * @param fileName  指文件名，不包含路径
+     * @param fileType   文件类型
+     * @param relativePath   包含某个媒体下的子路径
+     * @return
+     */
+    public Uri insertFileIntoMediaStore(Context context, String fileName, String fileType, String relativePath) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return null;
+        }
+        ContentResolver resolver = context.getContentResolver();
+        //设置文件参数到ContentValues中
+        ContentValues values = new ContentValues();
+        //设置文件名
+        values.put(MediaStore.Downloads.DISPLAY_NAME, fileName);
+        //设置文件描述，这里以文件名为例子
+        values.put(MediaStore.Downloads.BUCKET_DISPLAY_NAME, fileName);
+        //设置文件类型 "application/vnd.android.package-archive"
+        values.put(MediaStore.Downloads.MIME_TYPE, fileType);
+        //注意RELATIVE_PATH需要targetVersion=29
+        //故该方法只可在Android10的手机上执行
+        values.put(MediaStore.Downloads.RELATIVE_PATH, relativePath);
+        //EXTERNAL_CONTENT_URI代表外部存储器
+        Uri external = MediaStore.Downloads.EXTERNAL_CONTENT_URI;
+        //insertUri表示文件保存的uri路径
+        Uri insertUri = resolver.insert(external, values);
+        return insertUri;
+    }
 
+    /**
+     * 公共目录下的指定文件夹下创建文件
+     * @param context
+     * @param insertUri  共享分区路径uri
+     * @param sourcePath 要复制的源文件路径
+     */
+    public void saveFile(Context context, Uri insertUri,String sourcePath) {
+        if (insertUri == null) {
+            return;
+        }
+        String mFilePath = insertUri.toString();
+        ContentResolver resolver = context.getContentResolver();
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            os = resolver.openOutputStream(insertUri);
+            if (os == null) {
+                return;
+            }
+            int read;
+            File sourceFile = new File(sourcePath);
+            if (sourceFile.exists()) { // 文件存在时
+                is = new FileInputStream(sourceFile); // 读入原文件
+                byte[] buffer = new byte[1024];
+                while ((read = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, read);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    /**
+     * 使用存储访问框架（SAF）在mUri目录下创建文件
+     * @param context
+     * @param mUri
+     * @param fileName
+     * @param mimeType
+     */
+    public void createFile(Context context,Uri mUri,String fileName,String mimeType) {
+        DocumentFile documentFile = DocumentFile.fromTreeUri(context, mUri);
+        DocumentFile file = documentFile.createFile(mimeType, fileName);
+        if (file != null && file.exists()) {
+//            LogUtil.log(file.getName() + " created");
+        }
+    }
+
+    /**
+     * 使用存储访问框架（SAF）删除mUri目录下的文件
+     * @param context
+     * @param mUri
+     * @param fileName
+     */
+    private void deleteFile(Context context,Uri mUri,String fileName) {
+        DocumentFile documentFile = DocumentFile.fromTreeUri(context, mUri);
+        // listFiles()，列出所有的子文件和文件夹
+        for (DocumentFile file : documentFile.listFiles()) {
+            if (file.isFile() && fileName.equals(file.getName())) {
+                boolean delete = file.delete();
+//                LogUtil.log("deleteFile: " + delete);
+                break;
+            }
+        }
+    }
+
+    /**
+     *在 mUri目录下的文件中写入数据
+     * @param context
+     * @param uri
+     * @param cont     数据
+     */
+    public void writeFile(Context context,Uri uri,String cont) {
+        try {
+            ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(uri, "w");
+            //这种方法会覆盖原来文件内容
+            OutputStreamWriter output =
+                    new OutputStreamWriter(new FileOutputStream(pfd.getFileDescriptor()));
+            // 不能传uri.toString(),否则FileNotFoundException
+            // OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(uri.toString(), true));
+            output.write(cont);
+            output.close();
+//            LogUtil.log("写入成功。");
+        } catch (IOException e) {
+//            LogUtil.log(e);
+        }
+    }
+    /**
+     * 使用MediaStore删除文件
+     * @param context
+     * @param fileUri
+     */
+    public void deleteFile (Context context, Uri fileUri) {
+        context.getContentResolver().delete(fileUri, null, null);
+    }
     /**
      * 读取文件夹返回文件夹下的文件组
      * @param patch

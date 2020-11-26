@@ -1,0 +1,15 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+//    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion  29
+        versionCode 3
+        versionName "1.0.3"
+    }
+}
+
+//apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

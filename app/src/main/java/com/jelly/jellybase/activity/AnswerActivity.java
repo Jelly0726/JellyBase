@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.album.AlbumAdapter;
+import com.base.applicationUtil.AppUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.CircleDialog;
@@ -26,7 +27,6 @@ import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.impl.OnItemClickListener;
 import com.yanzhenjie.album.util.AlbumUtils;
-import com.yanzhenjie.album.util.DisplayUtils;
 import com.yanzhenjie.album.widget.divider.Divider;
 
 import java.io.File;
@@ -62,7 +62,6 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DisplayUtils.initScreen(this);
         iniView();
     }
     @Override
@@ -77,7 +76,7 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
         Divider divider = AlbumUtils.getDivider(Color.WHITE);
         recyclerView.addItemDecoration(divider);
 
-        int itemSize = (DisplayUtils.sScreenWidth - (divider.getWidth() * 4)) / 3;
+        int itemSize = (AppUtils.getScreenWidth(this) - (divider.getWidth() * 4)) / 3;
         mAdapter = new AlbumAdapter(this, itemSize, new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -145,16 +144,14 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
         Album.camera(this) // 相机功能。
                 .image() // 拍照。
                 //.filePath(fileUri.getPath()) // 文件保存路径，非必须。
-                .requestCode(200)
                 .onResult(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction(@NonNull String result) {
                         File fileUri = new File(result);
                         AlbumFile albumFile=new AlbumFile();
                         albumFile.setPath(result);
                         albumFile.setChecked(true);
                         albumFile.setMediaType(AlbumFile.TYPE_IMAGE);
-                        albumFile.setName(fileUri.getName());
 
                         if(mAlbumFiles!=null){
                             mAlbumFiles.add(albumFile);
@@ -163,12 +160,11 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                             mAlbumFiles.add(albumFile);
                         }
                         mAdapter.notifyDataSetChanged(mAlbumFiles);
-
                     }
                 })
                 .onCancel(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction(@NonNull String result) {
                     }
                 })
                 .start();
@@ -179,14 +175,13 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
     private void selectImage() {
         Album.image(this)
                 .multipleChoice()
-                .requestCode(200)
                 .camera(true)
                 .columnCount(2)
                 .selectCount(3)
                 .checkedList(mAlbumFiles)
                 .onResult(new Action<ArrayList<AlbumFile>>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull ArrayList<AlbumFile> result) {
+                    public void onAction(@NonNull ArrayList<AlbumFile> result) {
                         if(mAlbumFiles!=null){
                             mAlbumFiles.clear();
                             mAlbumFiles.addAll(result);
@@ -198,7 +193,7 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                 })
                 .onCancel(new Action<String>() {
                     @Override
-                    public void onAction(int requestCode, @NonNull String result) {
+                    public void onAction(@NonNull String result) {
                         Toast.makeText(AnswerActivity.this,"取消", Toast.LENGTH_LONG).show();
                     }
                 })
@@ -218,7 +213,7 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
                     .currentPosition(position)
                     .onResult(new Action<ArrayList<AlbumFile>>() {
                         @Override
-                        public void onAction(int requestCode, @NonNull ArrayList<AlbumFile> result) {
+                        public void onAction(@NonNull ArrayList<AlbumFile> result) {
                             mAlbumFiles = result;
                             mAdapter.notifyDataSetChanged(mAlbumFiles);
                         }

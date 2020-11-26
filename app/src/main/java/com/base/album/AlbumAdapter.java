@@ -16,7 +16,6 @@
 package com.base.album;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,28 +89,28 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (viewType) {
             case AlbumFile.TYPE_IMAGE: {
                 if(mAlbumFiles==null){
-                    ((ImageViewHolder) holder).setData(R.drawable.ic_picker_camera);
+                    ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((ImageViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((ImageViewHolder) holder).setData(R.drawable.ic_picker_camera);
+                        ((ImageViewHolder) holder).setData(R.drawable.ic_camera);
                     }
                 }
                 break;
             }
             case AlbumFile.TYPE_VIDEO: {
                 if(mAlbumFiles==null){
-                    ((VideoViewHolder) holder).setData(R.drawable.ic_picker_camera);
+                    ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
                     break;
                 }
                 if(position<=mAlbumFiles.size()-1){
                     ((VideoViewHolder) holder).setData(mAlbumFiles.get(position));
                 }else {
                     if(position<=maxItem-1){
-                        ((VideoViewHolder) holder).setData(R.drawable.ic_picker_camera);
+                        ((VideoViewHolder) holder).setData(R.drawable.ic_camera);
                     }
                 }
                 break;
@@ -158,14 +157,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         public void setData(AlbumFile albumFile) {
             mIvImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            if (TextUtils.isEmpty(albumFile.getName())){
-                Album.getAlbumConfig().
-                        getAlbumLoader().
-                        loadImage(mIvImage, albumFile.getPath(), itemSize, itemSize);
-            }else
             Album.getAlbumConfig().
                     getAlbumLoader().
-                    loadAlbumFile(mIvImage, albumFile, itemSize, itemSize);
+                    load(mIvImage, albumFile);
+
         }
         public void setData(int id) {
             mIvImage.setScaleType(ImageView.ScaleType.CENTER);
@@ -205,7 +200,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             mIvImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Album.getAlbumConfig().
                     getAlbumLoader().
-                    loadAlbumFile(mIvImage, albumFile, itemSize, itemSize);
+                    load(mIvImage, albumFile);
             mTvDuration.setText(AlbumUtils.convertDuration(albumFile.getDuration()));
         }
         public void setData(int id) {
