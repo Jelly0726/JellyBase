@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <!-- 配置7.0抓包-start -->
-    <debug-overrides>
-        <trust-anchors>
-            <!-- Trust user added CAs while debuggable only -->
-            <certificates src="user" />
-        </trust-anchors>
-    </debug-overrides>
+<!--    <debug-overrides>-->
+<!--        <trust-anchors>-->
+<!--            &lt;!&ndash; Trust user added CAs while debuggable only &ndash;&gt;-->
+<!--            <certificates src="user" />-->
+<!--        </trust-anchors>-->
+<!--    </debug-overrides>-->
     <!-- 配置7.0抓包-end -->
     <!-- 配置9.0明文请求-start -->
     <!-- 设置允许http明文传输-->
