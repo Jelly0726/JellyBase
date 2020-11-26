@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.Browser;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.base.appManager.BaseApplication;
 
@@ -451,7 +453,60 @@ public class FilesUtil {
             }
         }
     }
+    /**
+     * 使用存储访问框架（SAF）在mUri目录下创建文件
+     * @param context
+     * @param mUri
+     * @param fileName
+     * @param mimeType
+     */
+    public void createFile(Context context,Uri mUri,String fileName,String mimeType) {
+        DocumentFile documentFile = DocumentFile.fromTreeUri(context, mUri);
+        DocumentFile file = documentFile.createFile(mimeType, fileName);
+        if (file != null && file.exists()) {
+//            LogUtil.log(file.getName() + " created");
+        }
+    }
 
+    /**
+     * 使用存储访问框架（SAF）删除mUri目录下的文件
+     * @param context
+     * @param mUri
+     * @param fileName
+     */
+    private void deleteFile(Context context,Uri mUri,String fileName) {
+        DocumentFile documentFile = DocumentFile.fromTreeUri(context, mUri);
+        // listFiles()，列出所有的子文件和文件夹
+        for (DocumentFile file : documentFile.listFiles()) {
+            if (file.isFile() && fileName.equals(file.getName())) {
+                boolean delete = file.delete();
+//                LogUtil.log("deleteFile: " + delete);
+                break;
+            }
+        }
+    }
+
+    /**
+     *在 mUri目录下的文件中写入数据
+     * @param context
+     * @param uri
+     * @param cont     数据
+     */
+    public void writeFile(Context context,Uri uri,String cont) {
+        try {
+            ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(uri, "w");
+            //这种方法会覆盖原来文件内容
+            OutputStreamWriter output =
+                    new OutputStreamWriter(new FileOutputStream(pfd.getFileDescriptor()));
+            // 不能传uri.toString(),否则FileNotFoundException
+            // OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(uri.toString(), true));
+            output.write(cont);
+            output.close();
+//            LogUtil.log("写入成功。");
+        } catch (IOException e) {
+//            LogUtil.log(e);
+        }
+    }
     /**
      * 使用MediaStore删除文件
      * @param context
