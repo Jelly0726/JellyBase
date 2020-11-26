@@ -1,5 +1,6 @@
 package com.base.permission;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -35,6 +36,7 @@ import static android.content.Context.POWER_SERVICE;
 public class PermissionUtils {
     //设置请求码
     public static final int REQUEST_CODE_SETTING = 300;
+    public static final int REQ_CODE=520;
     private static final String SHOW_DOZE_ALERT_KEY = "SHOW_DOZE_ALERT_KEY";
 
     private PermissionUtils() {
@@ -263,5 +265,25 @@ public class PermissionUtils {
                 ignored.printStackTrace();
             }
         }
+    }
+    /**
+     * 申请目录的访问权限
+     * 会打开系统的文件目录，由用户自己选择允许访问的目录，不用申请WRITE/READ_EXTERNAL_STORAGE权限。
+     * 允许之后通过onActivityResult()的intent.getData()得到该目录的Uri，通过Uri可获取子目录和文件。
+     * 这种方式的缺点是应用重装后权限失效，即使保存这个Uri也没用。
+     *
+     * Uri dirUri = intent.getData();
+     * // 持久化；应用重装后权限失效，即使知道这个uri也没用
+     * SPUtil.setValue(this, SP_DOC_KEY, dirUri.toString());
+     * //重要：少这行代码手机重启后会失去权限
+     * getContentResolver().takePersistableUriPermission(dirUri,
+     *         Intent.FLAG_GRANT_READ_URI_PERMISSION);
+     * @param activity
+     */
+    public void openFilePermission(Activity activity){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
+                Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        activity.startActivityForResult(intent, REQ_CODE);
     }
 }
