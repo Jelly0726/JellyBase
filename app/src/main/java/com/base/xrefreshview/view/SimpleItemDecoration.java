@@ -5,15 +5,16 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+
 import androidx.annotation.ColorInt;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.view.View;
 
 import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 /**
  * 项目名称：RefreshAndLoad
@@ -78,7 +79,7 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
             final View child = parent.getChildAt(i);
             int childPosition = parent.getChildAdapterPosition(child);
             if (childPosition < 0) continue;
-            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            if (child instanceof SwipeRecyclerView.LoadMoreView) continue;
             final int left = child.getLeft();
             final int top = child.getBottom();
             final int right = child.getRight();
@@ -96,7 +97,7 @@ public class SimpleItemDecoration extends RecyclerView.ItemDecoration{
             final View child = parent.getChildAt(i);
             int childPosition = parent.getChildAdapterPosition(child);
             if (childPosition < 0) continue;
-            if (child instanceof SwipeMenuRecyclerView.LoadMoreView) continue;
+            if (child instanceof SwipeRecyclerView.LoadMoreView) continue;
             final int left =  child.getRight();
             final int top = child.getTop();
             final int right = left + space;

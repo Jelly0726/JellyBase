@@ -21,7 +21,7 @@ import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AccountDetailsAdapter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.mRecyclerView)
-    SwipeMenuRecyclerView mRecyclerView;
+    SwipeRecyclerView mRecyclerView;
     @BindView(R.id.mRefreshLayout)
     SwipeRefreshLayout mRefreshLayout;
     private LinearLayoutManager layoutManager;
@@ -122,7 +122,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     /**
      * 加载更多。
      */
-    private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+    private SwipeRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeRecyclerView.LoadMoreListener() {
         @Override
         public void onLoadMore() {
             if (mMaxToal>(page*size)){

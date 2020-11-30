@@ -16,22 +16,23 @@
 package com.jelly.jellybase.swipeRefresh.activity.load;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ import java.util.List;
 public class DefaultActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mRefreshLayout;
-    private SwipeMenuRecyclerView mRecyclerView;
+    private SwipeRecyclerView mRecyclerView;
     private MainAdapter mAdapter;
     private List<String> mDataList;
 
@@ -62,10 +63,10 @@ public class DefaultActivity extends AppCompatActivity {
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
 
-        mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (SwipeRecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         mRecyclerView.addItemDecoration(new DefaultItemDecoration(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
-        mRecyclerView.setSwipeItemClickListener(mItemClickListener); // RecyclerView Item点击监听。
+        mRecyclerView.setOnItemClickListener(mItemClickListener); // RecyclerView Item点击监听。
 
         mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
         mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
@@ -95,7 +96,7 @@ public class DefaultActivity extends AppCompatActivity {
     /**
      * 加载更多。
      */
-    private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+    private SwipeRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeRecyclerView.LoadMoreListener() {
         @Override
         public void onLoadMore() {
             mRecyclerView.postDelayed(new Runnable() {
@@ -123,7 +124,7 @@ public class DefaultActivity extends AppCompatActivity {
     /**
      * Item点击监听。
      */
-    private SwipeItemClickListener mItemClickListener = new SwipeItemClickListener() {
+    private OnItemClickListener mItemClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(View itemView, int position) {
             Toast.makeText(DefaultActivity.this, "第" + position + "个", Toast.LENGTH_SHORT).show();

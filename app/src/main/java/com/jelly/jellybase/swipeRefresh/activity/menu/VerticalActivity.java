@@ -18,18 +18,19 @@ package com.jelly.jellybase.swipeRefresh.activity.menu;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
 import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeMenu;
+import com.yanzhenjie.recyclerview.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
 
 import java.util.List;
 /**
@@ -60,7 +61,7 @@ public class VerticalActivity extends BaseActivity {
      */
     private SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
         @Override
-        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+        public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int position) {
             int width = getResources().getDimensionPixelSize(R.dimen.xswipe_dp_70);
 
             /*
@@ -70,8 +71,8 @@ public class VerticalActivity extends BaseActivity {
              * 3. 菜单高度是和Item Content的高度一样的，你可以设置Item的padding和margin。
              */
 
-            swipeLeftMenu.setOrientation(SwipeMenu.VERTICAL);
-            swipeRightMenu.setOrientation(SwipeMenu.VERTICAL);
+            leftMenu.setOrientation(SwipeMenu.VERTICAL);
+            rightMenu.setOrientation(SwipeMenu.VERTICAL);
             // 添加左侧的，如果不添加，则左侧不会出现菜单。
             {
                 SwipeMenuItem addItem = new SwipeMenuItem(VerticalActivity.this)
@@ -80,7 +81,7 @@ public class VerticalActivity extends BaseActivity {
                         .setWidth(width)
                         .setHeight(0)
                         .setWeight(1);
-                swipeLeftMenu.addMenuItem(addItem); // 添加菜单到左侧。
+                leftMenu.addMenuItem(addItem); // 添加菜单到左侧。
 
                 SwipeMenuItem closeItem = new SwipeMenuItem(VerticalActivity.this)
                         .setBackground(R.drawable.xswipe_selector_red)
@@ -88,7 +89,7 @@ public class VerticalActivity extends BaseActivity {
                         .setWidth(width)
                         .setHeight(0)
                         .setWeight(1);
-                swipeLeftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
+                leftMenu.addMenuItem(closeItem); // 添加菜单到左侧。
             }
 
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
@@ -101,7 +102,7 @@ public class VerticalActivity extends BaseActivity {
                         .setWidth(width)
                         .setHeight(0)
                         .setWeight(1);
-                swipeRightMenu.addMenuItem(deleteItem);// 添加菜单到右侧。
+                rightMenu.addMenuItem(deleteItem);// 添加菜单到右侧。
 
                 SwipeMenuItem addItem = new SwipeMenuItem(VerticalActivity.this)
                         .setBackground(R.drawable.xswipe_selector_green)
@@ -110,7 +111,7 @@ public class VerticalActivity extends BaseActivity {
                         .setWidth(width)
                         .setHeight(0)
                         .setWeight(1);
-                swipeRightMenu.addMenuItem(addItem); // 添加菜单到右侧。
+                rightMenu.addMenuItem(addItem); // 添加菜单到右侧。
             }
         }
     };
