@@ -4,17 +4,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.base.Utils.ColorUtils;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 
 /**
@@ -74,15 +74,15 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
         outRect.set(0, 0,0,0);
         int hCounnt=0;
         int fCounnt=0;
-        if (parent instanceof SwipeMenuRecyclerView) {
-            hCounnt=((SwipeMenuRecyclerView)parent).getHeaderItemCount();
-            fCounnt=((SwipeMenuRecyclerView)parent).getFooterItemCount();
+        if (parent instanceof SwipeRecyclerView) {
+            hCounnt=((SwipeRecyclerView)parent).getHeaderCount();
+            fCounnt=((SwipeRecyclerView)parent).getFooterCount();
         }
         if (hCounnt>0&&fCounnt>0){
             type=ALL_HAVE;
         }else if (hCounnt>0){
             type = HEAD;
-        }else if (fCounnt>0 &&(view instanceof SwipeMenuRecyclerView.LoadMoreView)){
+        }else if (fCounnt>0 &&(view instanceof SwipeRecyclerView.LoadMoreView)){
             type = FOOT;
         }
         if ( parent.getChildAdapterPosition(view)<hCounnt||parent.getChildLayoutPosition(view)
@@ -341,15 +341,15 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
     private boolean isHanderOrFooter(View view,RecyclerView parent){
         int hCounnt=0;
         int fCounnt=0;
-        if (parent instanceof SwipeMenuRecyclerView) {
-            hCounnt=((SwipeMenuRecyclerView)parent).getHeaderItemCount();
-            fCounnt=((SwipeMenuRecyclerView)parent).getFooterItemCount();
+        if (parent instanceof SwipeRecyclerView) {
+            hCounnt=((SwipeRecyclerView)parent).getHeaderCount();
+            fCounnt=((SwipeRecyclerView)parent).getFooterCount();
         }
         if ( parent.getChildAdapterPosition(view)<hCounnt||parent.getChildLayoutPosition(view)
                 >= parent.getAdapter().getItemCount()-fCounnt) {
             if(type==NONE){
                 return false;
-            }else if(type==ALL_HAVE || type == HEAD || type == FOOT || (view instanceof SwipeMenuRecyclerView.LoadMoreView)){
+            }else if(type==ALL_HAVE || type == HEAD || type == FOOT || (view instanceof SwipeRecyclerView.LoadMoreView)){
                 return true;
             }
         }

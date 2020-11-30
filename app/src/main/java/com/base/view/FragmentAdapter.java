@@ -1,10 +1,11 @@
 package com.base.view;
 
+import android.view.ViewGroup;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,58 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragmentList.size();
+    }
+    /**
+     * @return 是否fragment被系统给detach或者销毁了
+     */
+    private boolean isFragmentsDetachedOrDestroyed() {
+        if (getCount() > 0 && mFragmentList != null && mFragmentList.size() > 0) {
+            for (int i = 0; i < mFragmentList.size(); i++) {
+                if (mFragmentList.get(i) == null ||
+                        mFragmentList.get(i).isDetached() ||
+                        !mFragmentList.get(i).isAdded()) {
+                    return true;
+                }
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * @return 是否fragment被系统给detach或者销毁了
+     */
+    private boolean isFragmentsDetachedOrDestroyed(int position) {
+        if (getCount() > 0 &&
+                mFragmentList != null &&
+                mFragmentList.size() > 0&&
+                position<mFragmentList.size()) {
+            if (mFragmentList.get(position) == null ||
+                    mFragmentList.get(position).isDetached() ||
+                    !mFragmentList.get(position).isAdded()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * @return 是否fragment被系统给detach或者销毁了
+     */
+    private boolean isFragmentsDetachedOrDestroyed(Fragment fragment) {
+        if (getCount() > 0 &&
+                mFragmentList != null &&
+                mFragmentList.size() > 0) {
+            if (fragment == null ||
+                    fragment.isDetached() ||
+                    !fragment.isAdded()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+        return false;
     }
     @Override
     public Object instantiateItem(ViewGroup container, int position) {

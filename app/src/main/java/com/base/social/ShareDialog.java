@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
 public class ShareDialog extends AbsBaseCircleDialog {
 
     private OnConfirmListener onConfirmListener;
-    private SwipeMenuRecyclerView mRecyclerView;
+    private SwipeRecyclerView mRecyclerView;
     private ShareAdapter adapter;
     private List<ShareItem>  items=new ArrayList<>();
     private ShareItem shareItem;
@@ -49,7 +49,7 @@ public class ShareDialog extends AbsBaseCircleDialog {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
-        SwipeMenuRecyclerView mRecyclerView=new SwipeMenuRecyclerView(context);
+        SwipeRecyclerView mRecyclerView=new SwipeRecyclerView(context);
         LinearLayout.LayoutParams lpy = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         mRecyclerView.setLayoutParams(lpy);
@@ -64,11 +64,11 @@ public class ShareDialog extends AbsBaseCircleDialog {
         super.onActivityCreated(savedInstanceState);
         LinearLayout view = (LinearLayout) getView();
         adapter=new ShareAdapter(getActivity(),items);
-        mRecyclerView= (SwipeMenuRecyclerView) view.getChildAt(0);
+        mRecyclerView= (SwipeRecyclerView) view.getChildAt(0);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
         mRecyclerView.addItemDecoration(new DefaultItemDecoration(ContextCompat.getColor(getActivity()
                 , R.color.white)));
-        mRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+        mRecyclerView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 shareItem=items.get(position);

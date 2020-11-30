@@ -26,12 +26,12 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
 import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
+import com.yanzhenjie.recyclerview.SwipeMenu;
+import com.yanzhenjie.recyclerview.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +52,7 @@ public class ViewTypeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mRecyclerView.setSwipeMenuCreator(swipeMenuCreator);
-        mRecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mDataList);
     }
@@ -144,18 +144,17 @@ public class ViewTypeActivity extends BaseActivity {
     /**
      * RecyclerView的Item的Menu点击监听。
      */
-    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+    private OnItemMenuClickListener mMenuItemClickListener = new OnItemMenuClickListener() {
         @Override
-        public void onItemClick(SwipeMenuBridge menuBridge) {
+        public void onItemClick(SwipeMenuBridge menuBridge,int adapterPosition) {
             menuBridge.closeMenu();
 
             int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-            int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
 
-            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+            if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
                 Toast.makeText(ViewTypeActivity.this, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
-            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+            } else if (direction == SwipeRecyclerView.LEFT_DIRECTION) {
                 Toast.makeText(ViewTypeActivity.this, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             }
         }

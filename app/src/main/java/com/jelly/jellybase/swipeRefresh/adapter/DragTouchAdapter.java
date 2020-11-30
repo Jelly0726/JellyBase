@@ -16,14 +16,15 @@
 package com.jelly.jellybase.swipeRefresh.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.jelly.jellybase.R;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.List;
 
@@ -35,10 +36,10 @@ import java.util.List;
  */
 public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
 
-    private SwipeMenuRecyclerView mMenuRecyclerView;
+    private SwipeRecyclerView mMenuRecyclerView;
     private List<String> mDataList;
 
-    public DragTouchAdapter(Context context, SwipeMenuRecyclerView menuRecyclerView) {
+    public DragTouchAdapter(Context context, SwipeRecyclerView menuRecyclerView) {
         super(context);
         this.mMenuRecyclerView = menuRecyclerView;
     }
@@ -69,7 +70,7 @@ public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         TextView tvTitle;
-        SwipeMenuRecyclerView mMenuRecyclerView;
+        SwipeRecyclerView mMenuRecyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);

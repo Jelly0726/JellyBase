@@ -16,12 +16,13 @@
 package com.jelly.jellybase.swipeRefresh.activity.move;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.jelly.jellybase.swipeRefresh.adapter.DragTouchAdapter;
-import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
+import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 
 import java.util.Collections;
 /**

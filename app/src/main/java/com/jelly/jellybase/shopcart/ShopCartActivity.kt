@@ -21,12 +21,12 @@ import com.base.toast.ToastUtils
 import com.base.view.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
-import com.yanzhenjie.recyclerview.swipe.*
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration
+import com.yanzhenjie.recyclerview.*
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration
 import kotlinx.android.synthetic.main.shopcart_activity.*
 import java.util.*
 
-class ShopCartActivity : BaseActivity(), SwipeItemClickListener
+class ShopCartActivity : BaseActivity(), OnItemClickListener
     {
     protected lateinit var mLayoutManager: RecyclerView.LayoutManager
     protected lateinit var mItemDecoration: RecyclerView.ItemDecoration
@@ -52,7 +52,7 @@ class ShopCartActivity : BaseActivity(), SwipeItemClickListener
     /**
      * 加载更多。
      */
-    private val mLoadMoreListener = SwipeMenuRecyclerView.LoadMoreListener {
+    private val mLoadMoreListener = SwipeRecyclerView.LoadMoreListener {
         if (mMaxToal > page * size) {
             page++
 //            presenter.getShoppingCart(false, lifecycleProvider.bindUntilEvent<Any>(ActivityEvent.DESTROY))
@@ -91,16 +91,15 @@ class ShopCartActivity : BaseActivity(), SwipeItemClickListener
     /**
      * RecyclerView的Item的Menu点击监听。
      */
-    private val mMenuItemClickListener = SwipeMenuItemClickListener { swipeMenuBridge: SwipeMenuBridge ->
+    private val mMenuItemClickListener = OnItemMenuClickListener{ swipeMenuBridge: SwipeMenuBridge, menuPosition: Int ->
         swipeMenuBridge.closeMenu()
 
         val direction = swipeMenuBridge.direction // 左侧还是右侧菜单。
-        val menuPosition = swipeMenuBridge.position // 菜单在RecyclerView的Item中的Position。
-        if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+        if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
             cartInfo = mDataList[menuPosition]
             mPosition = menuPosition
 //            presenter.deleteShoppingCart(true, lifecycleProvider.bindUntilEvent<Any>(ActivityEvent.DESTROY))
-        } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+        } else if (direction == SwipeRecyclerView.LEFT_DIRECTION) {
             //                Toast.makeText(ShopCartActivity.this, "list第" + position + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
         }
     }
@@ -237,13 +236,13 @@ class ShopCartActivity : BaseActivity(), SwipeItemClickListener
         mItemDecoration = createItemDecoration()
         mRecyclerView.layoutManager = mLayoutManager
         mRecyclerView.addItemDecoration(mItemDecoration)
-        mRecyclerView.setSwipeItemClickListener(this)
+        mRecyclerView.setOnItemClickListener(this)
         mRecyclerView.useDefaultLoadMore() // 使用默认的加载更多的View。
         mRecyclerView.setLoadMoreListener(mLoadMoreListener) // 加载更多的监听。
         mRecyclerView.isLongPressDragEnabled = false // 长按拖拽，默认关闭。
         mRecyclerView.isItemViewSwipeEnabled = false // 滑动删除，默认关闭。
         mRecyclerView.setSwipeMenuCreator(swipeMenuCreator)
-        mRecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener)
+        mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener)
         mRecyclerView.adapter = mAdapter
         mDataList = ArrayList()
         mAdapter.checkInterface = checkInterface

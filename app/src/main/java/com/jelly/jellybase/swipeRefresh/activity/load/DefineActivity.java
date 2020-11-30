@@ -17,13 +17,6 @@ package com.jelly.jellybase.swipeRefresh.activity.load;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -33,12 +26,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;
-import com.yanzhenjie.loading.LoadingView;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ import java.util.List;
 public class DefineActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mRefreshLayout;
-    private SwipeMenuRecyclerView mRecyclerView;
+    private SwipeRecyclerView mRecyclerView;
     private MainAdapter mAdapter;
     private List<String> mDataList;
 
@@ -69,10 +69,10 @@ public class DefineActivity extends AppCompatActivity {
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
 
-        mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (SwipeRecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DefaultItemDecoration(ContextCompat.getColor(this, R.color.xswipe_divider_color)));
-        mRecyclerView.setSwipeItemClickListener(mItemClickListener);
+        mRecyclerView.setOnItemClickListener(mItemClickListener);
 
         // 自定义的核心就是DefineLoadMoreView类。
         DefineLoadMoreView loadMoreView = new DefineLoadMoreView(this);
@@ -105,7 +105,7 @@ public class DefineActivity extends AppCompatActivity {
     /**
      * 加载更多。
      */
-    private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+    private SwipeRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeRecyclerView.LoadMoreListener() {
         @Override
         public void onLoadMore() {
             mRecyclerView.postDelayed(new Runnable() {
@@ -133,7 +133,7 @@ public class DefineActivity extends AppCompatActivity {
     /**
      * Item点击监听。
      */
-    private SwipeItemClickListener mItemClickListener = new SwipeItemClickListener() {
+    private OnItemClickListener mItemClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(View itemView, int position) {
             Toast.makeText(DefineActivity.this, "第" + position + "个", Toast.LENGTH_SHORT).show();
@@ -158,12 +158,11 @@ public class DefineActivity extends AppCompatActivity {
     /**
      * 这是这个类的主角，如何自定义LoadMoreView。
      */
-    static final class DefineLoadMoreView extends LinearLayout implements SwipeMenuRecyclerView.LoadMoreView, View.OnClickListener {
+    static final class DefineLoadMoreView extends LinearLayout implements SwipeRecyclerView.LoadMoreView, View.OnClickListener {
 
-        private LoadingView mLoadingView;
         private TextView mTvMessage;
 
-        private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener;
+        private SwipeRecyclerView.LoadMoreListener mLoadMoreListener;
 
         public DefineLoadMoreView(Context context) {
             super(context);
@@ -177,14 +176,7 @@ public class DefineActivity extends AppCompatActivity {
             setMinimumHeight(minHeight);
 
             inflate(context, R.layout.xswipe_fotter_loadmore, this);
-            mLoadingView = (LoadingView) findViewById(R.id.loading_view);
             mTvMessage = (TextView) findViewById(R.id.tv_message);
-
-            int color1 = ContextCompat.getColor(getContext(), R.color.xswipe_colorPrimary);
-            int color2 = ContextCompat.getColor(getContext(), R.color.xswipe_colorPrimaryDark);
-            int color3 = ContextCompat.getColor(getContext(), R.color.xswipe_colorAccent);
-
-            mLoadingView.setCircleColors(color1, color2, color3);
             setOnClickListener(this);
         }
 
@@ -194,7 +186,6 @@ public class DefineActivity extends AppCompatActivity {
         @Override
         public void onLoading() {
             setVisibility(VISIBLE);
-            mLoadingView.setVisibility(VISIBLE);
             mTvMessage.setVisibility(VISIBLE);
             mTvMessage.setText("正在努力加载，请稍后");
         }
@@ -211,11 +202,9 @@ public class DefineActivity extends AppCompatActivity {
                 setVisibility(VISIBLE);
 
                 if (dataEmpty) {
-                    mLoadingView.setVisibility(GONE);
                     mTvMessage.setVisibility(VISIBLE);
                     mTvMessage.setText("暂时没有数据");
                 } else {
-                    mLoadingView.setVisibility(GONE);
                     mTvMessage.setVisibility(VISIBLE);
                     mTvMessage.setText("没有更多数据啦");
                 }
@@ -228,11 +217,10 @@ public class DefineActivity extends AppCompatActivity {
          * 调用了setAutoLoadMore(false)后，在需要加载更多的时候，这个方法会被调用，并传入加载更多的listener。
          */
         @Override
-        public void onWaitToLoadMore(SwipeMenuRecyclerView.LoadMoreListener loadMoreListener) {
+        public void onWaitToLoadMore(SwipeRecyclerView.LoadMoreListener loadMoreListener) {
             this.mLoadMoreListener = loadMoreListener;
 
             setVisibility(VISIBLE);
-            mLoadingView.setVisibility(GONE);
             mTvMessage.setVisibility(VISIBLE);
             mTvMessage.setText("点我加载更多");
         }
@@ -246,7 +234,6 @@ public class DefineActivity extends AppCompatActivity {
         @Override
         public void onLoadError(int errorCode, String errorMessage) {
             setVisibility(VISIBLE);
-            mLoadingView.setVisibility(GONE);
             mTvMessage.setVisibility(VISIBLE);
 
             // 这里要不直接设置错误信息，要不根据errorCode动态设置错误数据。

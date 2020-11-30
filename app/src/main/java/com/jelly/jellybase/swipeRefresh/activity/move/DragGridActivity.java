@@ -16,15 +16,16 @@
 package com.jelly.jellybase.swipeRefresh.activity.move;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SwitchCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.jelly.jellybase.R;
-import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
+import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 
 import java.util.Collections;
 /**
@@ -71,8 +72,8 @@ public class DragGridActivity extends BaseDragActivity {
                 if (srcHolder.getItemViewType() != targetHolder.getItemViewType()) return false;
 
                 // 真实的Position：通过ViewHolder拿到的position都需要减掉HeadView的数量。
-                int fromPosition = srcHolder.getAdapterPosition() - mRecyclerView.getHeaderItemCount();
-                int toPosition = targetHolder.getAdapterPosition() - mRecyclerView.getHeaderItemCount();
+                int fromPosition = srcHolder.getAdapterPosition() - mRecyclerView.getHeaderCount();
+                int toPosition = targetHolder.getAdapterPosition() - mRecyclerView.getHeaderCount();
 
                 if (fromPosition < toPosition)
                     for (int i = fromPosition; i < toPosition; i++)
@@ -88,9 +89,9 @@ public class DragGridActivity extends BaseDragActivity {
             @Override
             public void onItemDismiss(RecyclerView.ViewHolder srcHolder) {
                 int adapterPosition = srcHolder.getAdapterPosition();
-                int position = adapterPosition - mRecyclerView.getHeaderItemCount();
+                int position = adapterPosition - mRecyclerView.getHeaderCount();
 
-                if (mRecyclerView.getHeaderItemCount() > 0 && adapterPosition == 0) { // HeaderView。
+                if (mRecyclerView.getHeaderCount() > 0 && adapterPosition == 0) { // HeaderView。
                     mRecyclerView.removeHeaderView(mHeaderView);
                     Toast.makeText(DragGridActivity.this, "HeaderView被删除。", Toast.LENGTH_SHORT).show();
                 } else { // 普通Item。

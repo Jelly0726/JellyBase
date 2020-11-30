@@ -17,29 +17,30 @@ package com.jelly.jellybase.swipeRefresh.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-import com.yanzhenjie.recyclerview.swipe.widget.DefaultItemDecoration;
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
+import com.yanzhenjie.recyclerview.SwipeMenu;
+import com.yanzhenjie.recyclerview.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,12 +48,12 @@ import java.util.List;
 /**
  * Created by YanZhenjie on 2017/7/21.
  */
-public class BaseActivity extends AppCompatActivity implements SwipeItemClickListener {
+public class BaseActivity extends AppCompatActivity implements OnItemClickListener {
 
     protected Toolbar mToolbar;
     protected ActionBar mActionBar;
     private SwipeRefreshLayout mRefreshLayout;
-    protected SwipeMenuRecyclerView mRecyclerView;
+    protected SwipeRecyclerView mRecyclerView;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected RecyclerView.ItemDecoration mItemDecoration;
 
@@ -65,7 +66,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeItemClickLis
         setContentView(getContentView());
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mRecyclerView = (SwipeMenuRecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (SwipeRecyclerView) findViewById(R.id.recycler_view);
 
 
         setSupportActionBar(mToolbar);
@@ -81,13 +82,13 @@ public class BaseActivity extends AppCompatActivity implements SwipeItemClickLis
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(mItemDecoration);
-        mRecyclerView.setSwipeItemClickListener(this);
+        mRecyclerView.setOnItemClickListener(this);
         mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
         mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
         mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
         mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
         mRecyclerView.setSwipeMenuCreator(swipeMenuCreator);
-        mRecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener);
 
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
@@ -117,7 +118,7 @@ public class BaseActivity extends AppCompatActivity implements SwipeItemClickLis
     /**
      * 加载更多。
      */
-    private SwipeMenuRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeMenuRecyclerView.LoadMoreListener() {
+    private SwipeRecyclerView.LoadMoreListener mLoadMoreListener = new SwipeRecyclerView.LoadMoreListener() {
         @Override
         public void onLoadMore() {
             mRecyclerView.postDelayed(new Runnable() {
@@ -191,18 +192,17 @@ public class BaseActivity extends AppCompatActivity implements SwipeItemClickLis
     /**
      * RecyclerView的Item的Menu点击监听。
      */
-    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+    private OnItemMenuClickListener mMenuItemClickListener = new OnItemMenuClickListener() {
         @Override
-        public void onItemClick(SwipeMenuBridge menuBridge) {
+        public void onItemClick(SwipeMenuBridge menuBridge,int adapterPosition) {
             menuBridge.closeMenu();
 
             int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-            int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
 
-            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+            if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
                 Toast.makeText(BaseActivity.this, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
-            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+            } else if (direction == SwipeRecyclerView.LEFT_DIRECTION) {
                 Toast.makeText(BaseActivity.this, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             }
         }

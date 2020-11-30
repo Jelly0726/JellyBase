@@ -57,13 +57,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bgView"
         app:layout_constraintBottom_toTopOf="@+id/bottom_layout">
-        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
             android:id="@+id/mRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
 
-        </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
+        </com.yanzhenjie.recyclerview.SwipeRecyclerView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <include
         android:id="@+id/empty_shopcart"

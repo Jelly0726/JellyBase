@@ -21,12 +21,12 @@ import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.BankCardListAdapter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
+import com.yanzhenjie.recyclerview.SwipeMenu;
+import com.yanzhenjie.recyclerview.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     LinearLayout top_right;
 
     @BindView(R.id.recycler_view_test_rv)
-    SwipeMenuRecyclerView recyclerView;
+    SwipeRecyclerView recyclerView;
     @BindView(R.id.xrefreshview)
     XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
@@ -100,7 +100,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
 //        recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
 //        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
-        recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+        recyclerView.setOnItemMenuClickListener(mMenuItemClickListener);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
@@ -195,23 +195,22 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     /**
      * RecyclerView的Item的Menu点击监听。
      */
-    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+    private OnItemMenuClickListener mMenuItemClickListener = new OnItemMenuClickListener() {
         @Override
-        public void onItemClick(SwipeMenuBridge menuBridge) {
+        public void onItemClick(SwipeMenuBridge menuBridge,int adapterPosition) {
             menuBridge.closeMenu();
 
             int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
-            int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
             int menuPosition = menuBridge.getPosition(); // 菜单在RecyclerView的Item中的Position。
 
-            if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
+            if (direction == SwipeRecyclerView.RIGHT_DIRECTION) {
                 if (adapterPosition<mList.size()){
                     bankCardInfo=mList.get(adapterPosition);
                     if (bankCardInfo!=null){
                       //  presenter.deleteBank(lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
                     }
                 }
-            } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
+            } else if (direction == SwipeRecyclerView.LEFT_DIRECTION) {
             }
         }
     };
