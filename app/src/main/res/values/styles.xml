@@ -5,7 +5,12 @@
         <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
         <!--Customize your theme here.-->
         <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <!--解决Only fullscreen opaque activities can request orientation 和 设置横屏不起作用 不设置
+       windowIsTranslucent
+       windowSwipeToDismiss
+       windowIsFloating
+       为 true -->
+        <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
