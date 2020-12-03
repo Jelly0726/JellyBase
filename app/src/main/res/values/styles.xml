@@ -60,4 +60,13 @@
     <style name="AppTheme.AppBarDark" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.Popup" parent="ThemeOverlay.AppCompat.Light"/>
     <!--↑↑↑↑↑内容入侵状态栏。↑↑↑↑↑-->
+    <!--设置TabLayout内文字的字体大小-->
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Button">
+        <item name="tabPaddingStart">0mm</item>
+        <item name="tabPaddingEnd">0mm</item>
+        <item name="tabPaddingTop">0mm</item>
+        <item name="tabPaddingBottom">0mm</item>
+        <item name="android:textSize">12mm</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>
