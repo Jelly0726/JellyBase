@@ -17,13 +17,14 @@ import com.base.model.PayMothod;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 支付方式
  */
 public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
-    private List<PayMothod> mDataList;
+    private List<PayMothod> mDataList=new ArrayList<>();
     private ViewHolder couponVH;
     private int mSelectedPos = -1;
     private OnCheckListen onCheckListen;
@@ -33,7 +34,9 @@ public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
 
     @Override
     public void notifyDataSetChanged(List dataList) {
-        mDataList = dataList;
+        //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+        this.mDataList.clear();
+        this.mDataList.addAll(dataList);
         notifyDataSetChanged();
     }
 

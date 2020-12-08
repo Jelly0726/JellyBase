@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.base.appManager.BaseApplication;
 import com.base.encrypt.JniUtils;
 import com.base.encrypt.SafetyUtil;
+import com.base.log.DebugLog;
 import com.base.toast.ToastUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.R;
@@ -61,14 +62,19 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
     private ClipboardManager mClipboardManager;
     private JniUtils jni;
+    private static String mKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         input = (EditText)findViewById(R.id.input_ori);
         resultText = (TextView)findViewById(R.id.text_result);
 
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         jni = new JniUtils();
+
+        mKey=SafetyUtil.getInstance().getAESRandomKeyString();
+        DebugLog.i("秘钥="+mKey);
 
         findViewById(R.id.btn_sha1OfApk).setOnClickListener(this);
         findViewById(R.id.btn_apk).setOnClickListener(this);
@@ -89,6 +95,8 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
         findViewById(R.id.btn_AES_sign).setOnClickListener(this);
         findViewById(R.id.btn_AESs_sign).setOnClickListener(this);
+        findViewById(R.id.btn_AES_key).setOnClickListener(this);
+        findViewById(R.id.btn_AESs_key).setOnClickListener(this);
 
         findViewById(R.id.btn_RSA_sign).setOnClickListener(this);
         findViewById(R.id.btn_RSAs_sign).setOnClickListener(this);
@@ -150,6 +158,12 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_AESs_sign:
                 result="AES解密->" +SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.AES);
+                break;
+            case R.id.btn_AES_key:
+                result ="AES加密编码->" + SafetyUtil.getInstance().encryptByAESEncrypt(BaseApplication.getInstance(),ori,mKey);
+                break;
+            case R.id.btn_AESs_key:
+                result="AES解密->" +SafetyUtil.getInstance().decryptByAESEncrypt(BaseApplication.getInstance(),ori,mKey);
                 break;
             case R.id.btn_RSA_sign:
                 result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);

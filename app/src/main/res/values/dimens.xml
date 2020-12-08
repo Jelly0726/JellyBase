@@ -1,3 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 解决TabLayout 字体大小不一致 把多行字体大小设置位于默认字体大小一致！  -->
+    <dimen name="design_tab_text_size_2line" tools:ignore="PrivateResource">12mm</dimen>
 </resources>

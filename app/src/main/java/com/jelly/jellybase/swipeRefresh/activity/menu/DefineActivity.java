@@ -26,9 +26,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.yanzhenjie.recyclerview.SwipeMenuLayout;
 
 import java.util.List;
@@ -77,6 +77,7 @@ public class DefineActivity extends BaseActivity {
 
         @Override
         public void notifyDataSetChanged(List dataList) {
+            notifyDataSetChanged();
         }
 
         @Override

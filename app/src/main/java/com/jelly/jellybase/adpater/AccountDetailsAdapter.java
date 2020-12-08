@@ -17,21 +17,23 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.base.BaseAdapter;
 import com.base.model.AccountDetail;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDetailsAdapter extends BaseAdapter<AccountDetailsAdapter.ViewHolder> {
 
-    private List<AccountDetail> mList;
+    private List<AccountDetail> mList=new ArrayList<>();
 
     public AccountDetailsAdapter(Context context) {
         super(context);
@@ -39,7 +41,9 @@ public class AccountDetailsAdapter extends BaseAdapter<AccountDetailsAdapter.Vie
 
     @Override
     public void notifyDataSetChanged(List dataList) {
-        this.mList=dataList;
+        //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+        this.mList.clear();
+        this.mList.addAll(dataList);
         notifyDataSetChanged();
     }
     @NonNull

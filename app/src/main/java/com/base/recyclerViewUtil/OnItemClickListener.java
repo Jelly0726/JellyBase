@@ -2,7 +2,7 @@ package com.base.recyclerViewUtil;
 
 import android.view.View;
 
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
+import com.base.BaseAdapter;
 
 
 /**

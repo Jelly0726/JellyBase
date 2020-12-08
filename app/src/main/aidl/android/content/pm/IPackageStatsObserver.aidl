@@ -1,4 +1,4 @@
-// IPackageStatsObserver.aidl.aidl
+// IPackageStatsObserver.aidl.aidl  清理缓存
 package android.content.pm;
 
 // Declare any non-default types here with import statements

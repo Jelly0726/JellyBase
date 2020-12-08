@@ -2,6 +2,7 @@
 package com.base
 
 import android.content.Context
+import android.os.Handler
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import kotlinx.coroutines.MainScope
 abstract class BaseAdapter<VH : RecyclerView.ViewHolder?>(val context: Context)
     : RecyclerView.Adapter<VH>(), CoroutineScope by MainScope() {
     val inflater: LayoutInflater
-
     abstract fun notifyDataSetChanged(dataList: List<*>?)
 
     init {

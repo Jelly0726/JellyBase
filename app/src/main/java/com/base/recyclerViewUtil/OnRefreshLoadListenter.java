@@ -1,7 +1,7 @@
 package com.base.recyclerViewUtil;
 
 
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
+import com.base.BaseAdapter;
 
 public interface OnRefreshLoadListenter {
     /**
