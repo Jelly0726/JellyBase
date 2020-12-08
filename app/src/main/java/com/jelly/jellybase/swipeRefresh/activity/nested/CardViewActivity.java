@@ -57,7 +57,7 @@ public class CardViewActivity extends BaseActivity {
      */
     private static class MenuCardAdapter extends BaseAdapter<DefaultViewHolder> {
 
-        private List<String> mDataList;
+        private List<String> mDataList=new ArrayList<>();
 
         MenuCardAdapter(Context context) {
             super(context);
@@ -65,14 +65,10 @@ public class CardViewActivity extends BaseActivity {
 
         @Override
         public void notifyDataSetChanged(List dataList) {
-            this.mDataList = dataList;
             //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    notifyDataSetChanged();
-                }
-            }, 500);
+            this.mDataList.clear();
+            this.mDataList.addAll(dataList);
+            notifyDataSetChanged();
         }
 
 

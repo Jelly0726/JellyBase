@@ -28,11 +28,12 @@ import com.base.BaseAdapter;
 import com.base.model.AccountDetail;
 import com.jelly.jellybase.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDetailsAdapter extends BaseAdapter<AccountDetailsAdapter.ViewHolder> {
 
-    private List<AccountDetail> mList;
+    private List<AccountDetail> mList=new ArrayList<>();
 
     public AccountDetailsAdapter(Context context) {
         super(context);
@@ -40,14 +41,10 @@ public class AccountDetailsAdapter extends BaseAdapter<AccountDetailsAdapter.Vie
 
     @Override
     public void notifyDataSetChanged(List dataList) {
-        this.mList=dataList;
         //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
-        getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        }, 500);
+        this.mList.clear();
+        this.mList.addAll(dataList);
+        notifyDataSetChanged();
     }
     @NonNull
     @Override

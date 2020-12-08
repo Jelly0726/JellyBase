@@ -77,13 +77,7 @@ public class DefineActivity extends BaseActivity {
 
         @Override
         public void notifyDataSetChanged(List dataList) {
-            //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    DefineAdapter.super.notifyDataSetChanged();
-                }
-            }, 500);
+            notifyDataSetChanged();
         }
 
         @Override

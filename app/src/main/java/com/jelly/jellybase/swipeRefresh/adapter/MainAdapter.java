@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,21 +33,17 @@ import java.util.List;
  */
 public class MainAdapter extends BaseAdapter<MainAdapter.ViewHolder> {
 
-    private List<String> mDataList;
+    private List<String> mDataList=new ArrayList<>();
 
     public MainAdapter(Context context) {
         super(context);
     }
 
     public void notifyDataSetChanged(List dataList) {
-        this.mDataList = dataList;
         //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
-        getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MainAdapter.super.notifyDataSetChanged();
-            }
-        }, 500);
+        this.mDataList.clear();
+        this.mDataList.addAll(dataList);
+        notifyDataSetChanged();
     }
 
     @Override

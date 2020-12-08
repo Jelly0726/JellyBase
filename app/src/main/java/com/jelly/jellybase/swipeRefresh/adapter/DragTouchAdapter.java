@@ -27,6 +27,7 @@ import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ import java.util.List;
 public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
 
     private SwipeRecyclerView mMenuRecyclerView;
-    private List<String> mDataList;
+    private List<String> mDataList=new ArrayList<>();
 
     public DragTouchAdapter(Context context, SwipeRecyclerView menuRecyclerView) {
         super(context);
@@ -47,14 +48,10 @@ public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
 
     @Override
     public void notifyDataSetChanged(List dataList) {
-        this.mDataList = dataList;
         //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
-        getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        }, 500);
+        this.mDataList.clear();
+        this.mDataList.addAll(dataList);
+        notifyDataSetChanged();
     }
 
     @Override
