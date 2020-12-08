@@ -1,18 +1,24 @@
 package com.base.encrypt;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.ObjectStreamException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
+
+import javax.crypto.KeyGenerator;
 
 /**
  * 加密签名工具类
@@ -185,7 +191,6 @@ public class SafetyUtil {
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
-
 	/**
 	 * 字符串解密
 	 * @param source  源字符串(Base64)
@@ -199,9 +204,9 @@ public class SafetyUtil {
 				byte[] AES;
 //				字符串不是Base64 不需要Base64解码
 				if (isBase64(source)){
-					AES = jni.decodeByAES(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
+					AES = jni.decodeByAESEncrypt(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 				}else {
-					AES = jni.decodeByAES(context.getApplicationContext(),source.getBytes());
+					AES = jni.decodeByAESEncrypt(context.getApplicationContext(),source.getBytes());
 				}
 				sign = new String(AES);
 				break;
@@ -240,6 +245,45 @@ public class SafetyUtil {
 				break;
 		}
 		return sign;
+	}
+	/**
+	 *
+	 * AES加密字符串
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String encryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+source);
+//		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
+//		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		byte[] su=jni.encryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
+		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 *
+	 * AES解密
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String decryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "解密前:"+source);
+		//AESEncrypt
+//		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		String sign=new String(jni.decryptAESCipher(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		Log.i("SafetyUtil", "解密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
 	/**
 	 * 使用 Map按key进行排序
@@ -283,7 +327,7 @@ public class SafetyUtil {
 				sign = jni.encodeBySHA512(context, source.getBytes());
 				break;
 			case AES:
-				byte[] AES = jni.encodeByAES(context, source.getBytes());
+				byte[] AES = jni.encodeByAESEncrypt(context, source.getBytes());
 				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
 				break;
 			case RSA_PUBKEY:
@@ -321,5 +365,32 @@ public class SafetyUtil {
 	private boolean isBase64(String str) {
 		String base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
 		return Pattern.matches(base64Pattern, str);
+	}
+	/**
+	 *
+	 * @Title: getAesRandomKeyString
+	 * @author：liuyx
+	 * @date：2016年5月10日上午9:30:15
+	 * @Description: 获取AES随机密钥字符串
+	 * @return
+	 */
+	public static String getAESRandomKeyString() {
+		// 随机生成密钥
+		KeyGenerator keygen;
+		try {
+			keygen = KeyGenerator.getInstance("AES");
+			SecureRandom random = new SecureRandom();
+			keygen.init(random);
+			Key key = keygen.generateKey();
+			// 获取秘钥字符串
+			String key64Str = Base64.encodeToString(key.getEncoded(),Base64.NO_WRAP);
+			return key64Str;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+			System.out.println("getAESRandomKeyString="+e);
+			return null;
+		}
+
 	}
 }

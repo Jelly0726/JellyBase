@@ -26,9 +26,9 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.yanzhenjie.recyclerview.SwipeMenuLayout;
 
 import java.util.List;
@@ -77,6 +77,13 @@ public class DefineActivity extends BaseActivity {
 
         @Override
         public void notifyDataSetChanged(List dataList) {
+            //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+            getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    DefineAdapter.super.notifyDataSetChanged();
+                }
+            }, 500);
         }
 
         @Override

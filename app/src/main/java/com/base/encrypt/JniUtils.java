@@ -60,20 +60,65 @@ public class JniUtils {
     public native String encodeBySHA512(Context context,byte[] src);
 
     /**
-     * AES加密
+     * AES的Encrypt加密
      *
      * @param src
      * @return
      */
-    public native byte[] encodeByAES(Context context, byte[] src);
+    public native byte[] encodeByAESEncrypt(Context context, byte[] src);
 
     /**
-     * AES解密
+     * AES的Encrypt解密
      *
      * @param src
      * @return
      */
-    public native byte[] decodeByAES(Context context, byte[] src);
+    public native byte[] decodeByAESEncrypt(Context context, byte[] src);
+    /**
+     * AES的Encrypt加密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] encryptByAESEncrypt(Context context, byte[] src, byte[] key);
+
+    /**
+     * AES的Encrypt解密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] decryptByAESEncrypt(Context context, byte[] src, byte[] key);
+    /**
+     * AES的Cipher加密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] encodeByAESCipher(Context context, byte[] src);
+
+    /**
+     * AES的Cipher解密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] decodeByAESCipher(Context context, byte[] src);
+    /**
+     * AES的Cipher加密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] encryptAESCipher(Context context, byte[] src, byte[] key);
+
+    /**
+     * AES的Cipher解密
+     *
+     * @param src
+     * @return
+     */
+    public native byte[] decryptAESCipher(Context context, byte[] src, byte[] key);
 
     /**
      * RSA公钥加密
@@ -139,7 +184,6 @@ public class JniUtils {
      * @return 默认小写
      */
     public native String md5(Context context,byte[] src);
-
     /**
      * 获取apk-sha1
      *

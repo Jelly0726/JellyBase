@@ -25,9 +25,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.yanzhenjie.recyclerview.SwipeMenu;
 import com.yanzhenjie.recyclerview.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
@@ -127,6 +127,13 @@ public class VerticalActivity extends BaseActivity {
         @Override
         public void notifyDataSetChanged(List dataList) {
             this.mDataList = dataList;
+            //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+            getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    notifyDataSetChanged();
+                }
+            }, 500);
         }
 
         @Override

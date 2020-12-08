@@ -16,11 +16,13 @@
 package com.jelly.jellybase.swipeRefresh.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 
 import java.util.List;
@@ -38,7 +40,13 @@ public class MainAdapter extends BaseAdapter<MainAdapter.ViewHolder> {
 
     public void notifyDataSetChanged(List dataList) {
         this.mDataList = dataList;
-        super.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+        getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MainAdapter.super.notifyDataSetChanged();
+            }
+        }, 500);
     }
 
     @Override

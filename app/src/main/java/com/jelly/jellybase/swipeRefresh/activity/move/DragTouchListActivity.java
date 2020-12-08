@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
+import com.base.BaseAdapter;
 import com.jelly.jellybase.swipeRefresh.adapter.DragTouchAdapter;
 import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 

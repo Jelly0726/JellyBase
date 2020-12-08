@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
@@ -47,7 +48,13 @@ public class DragTouchAdapter extends BaseAdapter<DragTouchAdapter.ViewHolder> {
     @Override
     public void notifyDataSetChanged(List dataList) {
         this.mDataList = dataList;
-        super.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+        getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        }, 500);
     }
 
     @Override

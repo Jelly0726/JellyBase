@@ -30,8 +30,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.base.BaseAdapter;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.swipeRefresh.adapter.BaseAdapter;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;
 import com.yanzhenjie.recyclerview.OnItemClickListener;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;

@@ -34,7 +34,13 @@ public class PayMethodAdapter extends BaseAdapter<PayMethodAdapter.ViewHolder> {
     @Override
     public void notifyDataSetChanged(List dataList) {
         mDataList = dataList;
-        notifyDataSetChanged();
+        //adapter.notifyDataSetChanged没有反应，触摸滑动屏幕才刷新
+        getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        }, 500);
     }
 
     @NonNull
