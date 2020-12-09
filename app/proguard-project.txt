@@ -809,6 +809,14 @@ public void xxxxxx(**);
     public <init>(android.content.Context, android.util.AttributeSet);
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
+#=======================视频播放器jiaozivideoplayer====================
+-keep public class cn.jzvd.JZMediaSystem {*; }
+-keep public class cn.jzvd.CustomMedia {*; }
+-keep public class cn.jzvd.CustomMedia.JZMediaIjk {*; }
+-keep public class cn.jzvd.CustomMedia.JZMediaSystemAssertFolder {*; }
+-keep class tv.danmaku.ijk.media.player.** {*; }
+-dontwarn tv.danmaku.ijk.media.player.*
+-keep interface tv.danmaku.ijk.media.player.** { *; }
 #=======================信鸽推送====================
 #-keep class com.tencent.android.tpush.**  {* ;}
 #-keep class com.tencent.mid.**  {* ;}

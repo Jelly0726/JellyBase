@@ -1,9 +1,8 @@
-//apply plugin: 'com.android.application'
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-//        applicationId "com.yxc.websocketclientdemo"
+        applicationId "com.yxc.websocketclientdemo"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1

@@ -431,7 +431,6 @@ repositories {
         implementation files('libs/commons-logging-1.2.jar')
         implementation 'me.jessyan:autosize:1.1.2'//屏幕适配
         implementation project(path: ':blurkit')
-        implementation project(path: ':WebSocketClient')
         //简单的表格控件
         implementation project(path: ':library:tableLayout')
         //检测当前运行环境
