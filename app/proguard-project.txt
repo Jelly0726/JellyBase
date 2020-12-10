@@ -811,7 +811,7 @@ public void xxxxxx(**);
 }
 #=======================视频播放器jiaozivideoplayer====================
 -keep public class cn.jzvd.JZMediaSystem {*; }
--keep public class cn.jzvd.CustomMedia {*; }
+-keep public class cn.jzvd.CustomMedia.JZMediaExo {*; }
 -keep public class cn.jzvd.CustomMedia.JZMediaIjk {*; }
 -keep public class cn.jzvd.CustomMedia.JZMediaSystemAssertFolder {*; }
 -keep class tv.danmaku.ijk.media.player.** {*; }

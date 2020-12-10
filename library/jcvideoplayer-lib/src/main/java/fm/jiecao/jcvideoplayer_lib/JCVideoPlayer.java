@@ -103,6 +103,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected int mDownPosition;
     protected int mGestureDownVolume;
     protected int mSeekTimePosition;
+    private JCVedioPlayerListener jcVedioPlayerListener;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -210,6 +211,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onEvent(JCUserAction.ON_CLICK_START_AUTO_COMPLETE);
                 prepareVideo();
+            }
+            if (jcVedioPlayerListener!=null){
+                jcVedioPlayerListener.onStart();
             }
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
@@ -430,6 +434,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         dismissVolumeDialog();
         dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onCompletion();
+        }
     }
 
     @Override
@@ -449,7 +456,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
-
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onCompletion();
+        }
     }
 
     @Override
@@ -491,6 +500,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void autoFullscreen(float x) {
+        Log.e(TAG, "autoFullscreen [" + this.hashCode() + "] ");
         if (isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
@@ -511,6 +521,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void autoQuitFullscreen() {
+        Log.e(TAG, "autoQuitFullscreen [" + this.hashCode() + "] ");
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
                 && isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
@@ -538,6 +549,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onSeekComplete() {
+        Log.e(TAG, "onSeekComplete [" + this.hashCode() + "] ");
     }
 
     @Override
@@ -545,6 +557,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
         if (what != 38 && what != -38) {
             setUiWitStateAndScreen(CURRENT_STATE_ERROR);
+        }
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onError();
         }
     }
 
@@ -681,6 +696,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             e.printStackTrace();
         }
 
+    }
+
+    public JCVedioPlayerListener getJcVedioPlayerListener() {
+        return jcVedioPlayerListener;
+    }
+
+    public void setJcVedioPlayerListener(JCVedioPlayerListener jcVedioPlayerListener) {
+        this.jcVedioPlayerListener = jcVedioPlayerListener;
     }
 
     public class ProgressTimerTask extends TimerTask {
