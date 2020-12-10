@@ -104,7 +104,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
-
+private JCVedioPlayerListener jcVedioPlayerListener;
     public Jzvd(Context context) {
         super(context);
         init(context);
@@ -188,6 +188,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     return;
                 }
                 startVideo();
+                if (jcVedioPlayerListener!=null){
+                    jcVedioPlayerListener.onStart();
+                }
             } else if (state == STATE_PLAYING) {
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 mediaInterface.pause();
@@ -392,18 +395,27 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
         state = STATE_PLAYING;
         startProgressTimer();
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onStart();
+        }
     }
 
     public void onStatePause() {
         Log.i(TAG, "onStatePause " + " [" + this.hashCode() + "] ");
         state = STATE_PAUSE;
         startProgressTimer();
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onCompletion();
+        }
     }
 
     public void onStateError() {
         Log.i(TAG, "onStateError " + " [" + this.hashCode() + "] ");
         state = STATE_ERROR;
         cancelProgressTimer();
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onCompletion();
+        }
     }
 
     public void onStateAutoComplete() {
@@ -412,6 +424,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         cancelProgressTimer();
         progressBar.setProgress(100);
         currentTimeTextView.setText(totalTimeTextView.getText());
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onCompletion();
+        }
     }
 
     public void onInfo(int what, int extra) {
@@ -533,6 +548,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         onStatePreparing();
+        if (jcVedioPlayerListener!=null){
+            jcVedioPlayerListener.onStart();
+        }
     }
 
     public void changeUrl(String url, String title, long seekToInAdvance) {
@@ -847,6 +865,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             }
         }
         return context;
+    }
+
+    public JCVedioPlayerListener getJcVedioPlayerListener() {
+        return jcVedioPlayerListener;
+    }
+
+    public void setJcVedioPlayerListener(JCVedioPlayerListener jcVedioPlayerListener) {
+        this.jcVedioPlayerListener = jcVedioPlayerListener;
     }
 
     public static class JZAutoFullscreenListener implements SensorEventListener {

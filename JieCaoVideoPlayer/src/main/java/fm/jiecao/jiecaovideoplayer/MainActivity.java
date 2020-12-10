@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutWebView.setOnClickListener(this);
 
         mJcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
-        mJcVideoPlayerSimple.setUp("http://vfx.mtime.cn/Video/2019/06/29/mp4/190629004821240734.mp4"
+        String url="https://jpfiles.buyunchina.com//JiangPing/video/2020/12/03/20201203160822_4121.mp4";
+        mJcVideoPlayerSimple.setUp(url
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL
                 , "《速度与激情:特别行动》曝全新中文预告");
 
