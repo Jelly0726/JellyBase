@@ -193,7 +193,7 @@ public class AppPrefs {
         if (StringUtil.isEmpty(json)) {
             return null;
         }
-        json = SafetyUtil.getInstance().decode(context, JSON.toJSONString(json), SafetyUtil.AES);
+        json = SafetyUtil.getInstance().decode(context,json,SafetyUtil.AES);
         if (StringUtil.isEmpty(json)) {
             return null;
         }
@@ -217,7 +217,7 @@ public class AppPrefs {
         if (StringUtil.isEmpty(json)) {
             return null;
         }
-        json = SafetyUtil.getInstance().decode(context, JSON.toJSONString(json), SafetyUtil.AES);
+        json = SafetyUtil.getInstance().decode(context,json, SafetyUtil.AES);
         if (StringUtil.isEmpty(json)) {
             return null;
         }
