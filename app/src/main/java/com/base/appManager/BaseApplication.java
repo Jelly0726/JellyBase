@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
+
 import com.base.MapUtil.LocationTask;
 import com.base.album.GlideAlbumLoader;
+import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.ChangeLanguageHelper;
 import com.base.bgabanner.GuideActivity;
 import com.base.cockroach.Cockroach;
 import com.base.cockroach.CrashUtils;
 import com.base.cockroach.ExceptionHandler;
+import com.base.config.ConfigKey;
 import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
@@ -46,6 +49,7 @@ import cn.jpush.android.api.JPushInterface;
 import hugo.weaving.DebugLog;
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
+import systemdb.Login;
 
 
 /**
@@ -58,6 +62,7 @@ public class BaseApplication extends Application {
     private static  boolean mainState=false;//MianAcitivity是否运行
     public static  String areacode="0";//
     private static boolean vampix=false;//是否App黑白化
+    public static Login login = null;//
     public static boolean isMainState() {
         return mainState;
     }
@@ -230,7 +235,14 @@ public class BaseApplication extends Application {
     }
     public boolean isLogin(){
         if (!TextUtils.isEmpty(GlobalToken.getToken().getToken())) {
-            return true;
+            if (login == null)
+                login = (Login) AppPrefs.getObject(BaseApplication.getInstance(),
+                        ConfigKey.LOGIN_INFO, Login.class);
+            if (login != null) {
+                return true;
+            } else {
+                return false;
+            }
         }else{
             return false;
         }

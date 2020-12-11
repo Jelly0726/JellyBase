@@ -6,6 +6,7 @@ package com.base.config;
 public class ConfigKey {
     public static final String NAME="name";                                                         //文件字段
     public static final String PASSWORD="password";                                                 //文件字段
+    public static final String LOGIN_INFO="LOGIN_INFO";                                           //文件字段
     public static final String FIRST="isFirst";                                                     //文件字段
     public static final String WORKING="IsWorking";                                                 //文件字段
     public static final String WORKCONNT="WokeConnt";                                               //文件字段

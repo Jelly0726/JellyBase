@@ -3,6 +3,7 @@ package com.base.applicationUtil;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.base.Utils.JsonUtil;
 import com.base.Utils.StringUtil;
 import com.base.encrypt.SafetyUtil;
 
@@ -35,7 +36,7 @@ public class AppPrefs {
 
         /**
          * 升级
-          * @param oldVersion
+         * @param oldVersion
          * @param newVersion
          */
         @Override
@@ -179,15 +180,16 @@ public class AppPrefs {
      * @param cc
      * @return
      */
-    public static Object getObject(Context context, String key,Class cc){
+    public static Object getObject(Context context, String key, Class cc){
         String json=getString(context,key);
         if (StringUtil.isEmpty(json)){
             return null;
-        }else {
+        }else if (JsonUtil.getInstance().validate(json)){
             json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
             Object object= JSON.parseObject(json, cc);
             return object;
         }
+        return null;
     }
     /**
      * 返回指定对象
@@ -200,11 +202,12 @@ public class AppPrefs {
         String json=getString(context,key);
         if (StringUtil.isEmpty(json)){
             return null;
-        }else {
+        }else if (JsonUtil.getInstance().validate(json)){
             json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
             List<T> object= JSON.parseArray(json, cc);
             return object;
         }
+        return null;
     }
     public static void remove(Context context, String key) {
         TrayEMMPrefs prefs = getPrefs(context);
