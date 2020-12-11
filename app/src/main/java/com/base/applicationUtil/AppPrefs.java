@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AppPrefs {
     private static final int VERSION = 1;
-    private static volatile TrayEMMPrefs  mPrefs;
+    private static volatile TrayEMMPrefs mPrefs;
     //private static final Object PrefsSyncObject = new Object();
 
     /**
@@ -29,6 +29,7 @@ public class AppPrefs {
         public TrayEMMPrefs(Context context) {
             super(context, context.getPackageName(), VERSION);
         }
+
         @Override
         protected void onCreate(final int initialVersion) {
             super.onCreate(initialVersion);
@@ -36,6 +37,7 @@ public class AppPrefs {
 
         /**
          * 升级
+         *
          * @param oldVersion
          * @param newVersion
          */
@@ -43,8 +45,10 @@ public class AppPrefs {
         protected void onUpgrade(final int oldVersion, final int newVersion) {
             super.onUpgrade(oldVersion, newVersion);
         }
+
         /**
          * 降级
+         *
          * @param oldVersion
          * @param newVersion
          */
@@ -59,7 +63,7 @@ public class AppPrefs {
 
     private static TrayEMMPrefs getPrefs(Context context) {
         if (mPrefs == null) {
-            synchronized(AppPrefs.class) {
+            synchronized (AppPrefs.class) {
                 if (mPrefs == null) {
                     mPrefs = new TrayEMMPrefs(context);
                 }
@@ -74,7 +78,7 @@ public class AppPrefs {
      */
     public static void putBoolean(Context context, String key, boolean value) {
         TrayEMMPrefs prefs = getPrefs(context);
-        prefs.put(key,value);
+        prefs.put(key, value);
     }
 
     /**
@@ -82,7 +86,7 @@ public class AppPrefs {
      */
     public static void putInt(Context context, String key, int value) {
         TrayEMMPrefs prefs = getPrefs(context);
-        prefs.put(key,value);
+        prefs.put(key, value);
     }
 
     /**
@@ -90,7 +94,7 @@ public class AppPrefs {
      */
     public static void putLong(Context context, String key, long value) {
         TrayEMMPrefs prefs = getPrefs(context);
-        prefs.put(key,value);
+        prefs.put(key, value);
     }
 
     /**
@@ -98,7 +102,7 @@ public class AppPrefs {
      */
     public static void putString(Context context, String key, String value) {
         TrayEMMPrefs prefs = getPrefs(context);
-        prefs.put(key,value);
+        prefs.put(key, value);
     }
 
     /**
@@ -160,55 +164,70 @@ public class AppPrefs {
         TrayEMMPrefs prefs = getPrefs(context);
         return prefs.getString(key, defaultValue);
     }
+
     /**
      * 将对象保存
+     *
      * @param context
      * @param key
      * @param value
      */
-    public static void putObject(Context context, String key, Object value){
-        if (value!=null){
-            String va= SafetyUtil.getInstance().encode(context,JSON.toJSONString(value), SafetyUtil.AES);
-            putString(context,key , va);
-        }else
-            remove(context,key);
+    public static void putObject(Context context, String key, Object value) {
+        if (value != null) {
+            String va = SafetyUtil.getInstance().encode(context, JSON.toJSONString(value), SafetyUtil.AES);
+            putString(context, key, va);
+        } else
+            remove(context, key);
     }
+
     /**
      * 返回指定对象
+     *
      * @param context
      * @param key
      * @param cc
      * @return
      */
-    public static Object getObject(Context context, String key, Class cc){
-        String json=getString(context,key);
-        if (StringUtil.isEmpty(json)){
+    public static Object getObject(Context context, String key, Class cc) {
+        String json = getString(context, key);
+        if (StringUtil.isEmpty(json)) {
             return null;
-        }else if (JsonUtil.getInstance().validate(json)){
-            json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
-            Object object= JSON.parseObject(json, cc);
+        }
+        json = SafetyUtil.getInstance().decode(context, JSON.toJSONString(json), SafetyUtil.AES);
+        if (StringUtil.isEmpty(json)) {
+            return null;
+        }
+        if (JsonUtil.getInstance().validate(json)) {
+            Object object = JSON.parseObject(json, cc);
             return object;
         }
         return null;
     }
+
     /**
      * 返回指定对象
+     *
      * @param context
      * @param key
      * @param cc
      * @return
      */
-    public static <T> List<T> getArray(Context context, String key, Class<T> cc){
-        String json=getString(context,key);
-        if (StringUtil.isEmpty(json)){
+    public static <T> List<T> getArray(Context context, String key, Class<T> cc) {
+        String json = getString(context, key);
+        if (StringUtil.isEmpty(json)) {
             return null;
-        }else if (JsonUtil.getInstance().validate(json)){
-            json=SafetyUtil.getInstance().decode(context,JSON.toJSONString(json), SafetyUtil.AES);
-            List<T> object= JSON.parseArray(json, cc);
+        }
+        json = SafetyUtil.getInstance().decode(context, JSON.toJSONString(json), SafetyUtil.AES);
+        if (StringUtil.isEmpty(json)) {
+            return null;
+        }
+        if (JsonUtil.getInstance().validate(json)) {
+            List<T> object = JSON.parseArray(json, cc);
             return object;
         }
         return null;
     }
+
     public static void remove(Context context, String key) {
         TrayEMMPrefs prefs = getPrefs(context);
         if (key != null) {
