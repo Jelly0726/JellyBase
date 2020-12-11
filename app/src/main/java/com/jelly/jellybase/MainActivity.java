@@ -727,39 +727,35 @@ public class MainActivity extends BaseActivity {
                     intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
-                case 45:// websocket
-                    intent=new Intent(BaseApplication.getInstance(), com.yxc.websocketclientdemo.MainActivity.class);
-                    startActivity(intent);
-                    break;
-                case 46:// 富文本编辑器
+                case 45:// 富文本编辑器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.richeditor.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 47:// 录小视频
+                case 46:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 48:// PIP模式
+                case 47:// PIP模式
                     intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
-                case 49:// 简单的表格控件
+                case 48:// 简单的表格控件
                     intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
                     startActivity(intent);
                     break;
-                case 50:// 判断是否真机
+                case 49:// 判断是否真机
                     intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
                     startActivity(intent);
                     break;
-                case 51:// 添加角标
+                case 50:// 添加角标
                     intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
                     startActivity(intent);
                     break;
-                case 52:// 选择器
+                case 51:// 选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.androidpicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 53:// 文件选择器
+                case 52:// 文件选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
                     startActivity(intent);
                     break;

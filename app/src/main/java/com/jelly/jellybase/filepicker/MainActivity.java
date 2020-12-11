@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             FilePickerBuilder.getInstance()
                     .setMaxCount(maxCount)
                     .setSelectedFiles(photoPaths) //this is optional
-                    .setActivityTheme(R.style.FilePickerTheme)
+                    .setActivityTheme(R.style.AppTheme)
                     .setActivityTitle("Please select media")
                     .enableVideoPicker(true)
                     .enableCameraSupport(true)
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             FilePickerBuilder.getInstance()
                     .setMaxCount(maxCount)
                     .setSelectedFiles(docPaths)
-                    .setActivityTheme(R.style.FilePickerTheme)
+                    .setActivityTheme(R.style.AppTheme)
                     .setActivityTitle("Please select doc")
                     .addFileSupport("ZIP", zips)
                     .addFileSupport("AAC", pdfs, R.drawable.pdf_blue)
