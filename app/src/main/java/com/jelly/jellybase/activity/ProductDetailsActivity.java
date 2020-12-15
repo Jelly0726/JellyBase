@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.base.Utils.MyDate;
-import com.base.bgabanner.BGABanner;
 import com.base.dialog.AddCartDialog;
 import com.base.eventBus.NetEvent;
 import com.base.middleBar.MiddleBarItem;
@@ -40,6 +39,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bingoogolapple.bgabanner.BGABanner;
 
 /**
  * Created by Administrator on 2017/9/21.

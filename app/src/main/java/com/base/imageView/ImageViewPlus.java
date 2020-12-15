@@ -17,9 +17,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
-import android.util.AttributeSet;
+
 import com.jelly.jellybase.R;
 
 
@@ -103,6 +106,18 @@ public class ImageViewPlus extends AppCompatImageView {
 	/*圆角的半径，依次为左上角xy半径，右上角，右下角，左下角*/
 	//此处可根据自己需要修改大小
 	private float[] mRadiusArray =null;
+	private ScaleType mScaleType =ScaleType.CENTER_CROP;;
+	private static final ScaleType[] SCALE_TYPES = {
+			ImageView.ScaleType.MATRIX,
+			ImageView.ScaleType.FIT_XY,
+			ImageView.ScaleType.FIT_START,
+			ImageView.ScaleType.FIT_CENTER,
+			ImageView.ScaleType.FIT_END,
+			ImageView.ScaleType.CENTER,
+			ImageView.ScaleType.CENTER_CROP,
+			ImageView.ScaleType.CENTER_INSIDE
+	};
+
 	public ImageViewPlus(Context context) {
 		this(context, null);
 		// TODOAuto-generated constructor stub
@@ -122,6 +137,11 @@ public class ImageViewPlus extends AppCompatImageView {
 		mArcHeight = ta.getFloat(R.styleable.ImageViewPlus_ivpArcHeight,1);
 		mArcMode=ta.getInt(R.styleable.ImageViewPlus_ivpArcMode,0);
 		mArcLocation=ta.getInt(R.styleable.ImageViewPlus_ivpArcLocation,0);
+		int index = ta.getInt(R.styleable.ImageViewPlus_android_scaleType, -1);
+		if (index >= 0 && index < SCALE_TYPES.length) {
+			mScaleType = SCALE_TYPES[index];
+		}
+		setScaleType(mScaleType);
 		float mRadius = ta.getDimensionPixelSize(R.styleable.ImageViewPlus_ivpRadius, dip2px(DEFAULT_RECT_ROUND_RADIUS));
 		if (mRadius>0){
 			mRadiusArray = new float[]{

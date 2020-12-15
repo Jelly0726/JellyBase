@@ -15,7 +15,7 @@ import com.base.MapUtil.LocationTask;
 import com.base.album.GlideAlbumLoader;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.ChangeLanguageHelper;
-import com.base.bgabanner.GuideActivity;
+import com.base.GuideActivity;
 import com.base.cockroach.Cockroach;
 import com.base.cockroach.CrashUtils;
 import com.base.cockroach.ExceptionHandler;

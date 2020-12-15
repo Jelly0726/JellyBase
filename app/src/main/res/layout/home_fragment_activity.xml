@@ -99,7 +99,7 @@
                                 android:src="@mipmap/saomiao"/>
                         </LinearLayout>
                     </LinearLayout>
-                    <com.base.bgabanner.BGABanner
+                    <cn.bingoogolapple.bgabanner.BGABanner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="115mm"

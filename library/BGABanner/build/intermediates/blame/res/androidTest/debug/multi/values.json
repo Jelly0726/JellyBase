@@ -1,0 +1,26 @@
+[
+    {
+        "outputFile": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 2141,
+                    "endColumn": 47,
+                    "endOffset": 2184
+                },
+                "from": {
+                    "file": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 2141,
+                        "endColumn": 47,
+                        "endOffset": 2184
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -32,7 +32,7 @@ import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
-import com.base.bgabanner.GuideActivity;
+import com.base.GuideActivity;
 import com.base.checkVersion.BaseDialog;
 import com.base.config.BaseConfig;
 import com.base.daemon.DaemonEnv;

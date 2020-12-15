@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                style="@style/MatchMatch">
-
-    <com.base.bgabanner.BGAGuideLinkageLayout style="@style/MatchMatch">
-
-        <com.base.bgabanner.BGABanner
-            android:id="@+id/banner_guide_background"
-            style="@style/MatchMatch"
-            app:banner_pageChangeDuration="1000"
-            app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-            app:banner_pointTopBottomMargin="15mm"
-            app:banner_transitionEffect="fade"/>
-
-        <com.base.bgabanner.BGABanner
-            android:id="@+id/banner_guide_foreground"
-            style="@style/MatchMatch"
-            app:banner_pageChangeDuration="1000"
-            app:banner_pointAutoPlayAble="false"
-            app:banner_pointContainerBackground="@android:color/transparent"
-            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-            app:banner_pointTopBottomMargin="15mm"
-            app:banner_transitionEffect="alpha"/>
-    </com.base.bgabanner.BGAGuideLinkageLayout>
-
-    <TextView
-        android:id="@+id/tv_guide_skip"
-        style="@style/WrapWrap"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="8mm"
-        android:layout_marginTop="8mm"
-        android:clickable="true"
-        android:padding="4mm"
-        android:text="跳过 >"
-        android:textColor="@android:color/white"
-        android:textSize="16mm"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/btn_guide_enter"
-        style="@style/WrapWrap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="60mm"
         android:background="@drawable/guide_selector_btn_enter"
         android:paddingLeft="10mm"
+        android:paddingTop="0mm"
         android:paddingRight="10mm"
         android:paddingBottom="0mm"
-        android:paddingTop="0mm"
         android:text="进入主界面"
         android:textColor="@android:color/white"
         android:textSize="14mm"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_guide_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8mm"
+        android:layout_marginRight="8mm"
+        android:clickable="true"
+        android:padding="4mm"
+        android:text="跳过 >"
+        android:textColor="@android:color/white"
+        android:textSize="16mm" />
+
+    <cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="false"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+            app:banner_pointTopBottomMargin="15mm"
+            app:banner_transitionEffect="fade" />
+
+        <cn.bingoogolapple.bgabanner.BGABanner
+            android:id="@+id/banner_guide_foreground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:banner_pageChangeDuration="1000"
+            app:banner_pointAutoPlayAble="false"
+            app:banner_pointContainerBackground="@android:color/transparent"
+            app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+            app:banner_pointTopBottomMargin="15mm"
+            app:banner_transitionEffect="alpha" />
+    </cn.bingoogolapple.bgabanner.BGAGuideLinkageLayout>
 </RelativeLayout>
