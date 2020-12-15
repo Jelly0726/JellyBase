@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_banner_selector_point_hollow.xml",
+        "source": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_banner_selector_point_hollow.xml"
+    },
+    {
+        "merged": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_banner_selector_point_solid.xml",
+        "source": "F:\\Android studio\\BGABanner-Android-master\\library\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_banner_selector_point_solid.xml"
+    }
+]

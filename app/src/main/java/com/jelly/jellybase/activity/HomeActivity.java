@@ -20,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.base.MapUtil.DestinationActivity;
 import com.base.appManager.BaseApplication;
-import com.base.bgabanner.BGABanner;
 import com.base.eventBus.NetEvent;
 import com.base.log.DebugLog;
 import com.base.model.ScanResult;
@@ -50,6 +49,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
 import systemdb.PositionEntity;
 
 

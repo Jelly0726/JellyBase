@@ -211,7 +211,7 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden">
         </activity>
         <activity
-            android:name="com.base.bgabanner.GuideActivity"
+            android:name="com.base.GuideActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".activity.AnswerActivity"

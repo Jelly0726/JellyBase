@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+        consumerProguardFiles 'consumer-proguard-rules.pro'
+    }
+}
+
+dependencies {
+    compileOnly 'androidx.legacy:legacy-support-v4:1.0.0'
+}
+
+// ./gradlew :library:clean :library:build :library:bintrayUpload -PpublishAar
+//if (hasProperty("publishAar")) {
+//    apply from: 'https://raw.githubusercontent.com/bingoogolapple/PublishAar/master/jcenter-release.gradle'
+//}
+//
+//// ./gradlew :library:clean :library:build :library:uploadArchives -PpublishAar
+//if (hasProperty("publishAar")) {
+//    apply from: 'https://raw.githubusercontent.com/bingoogolapple/PublishAar/master/local-release.gradle'
+//}

@@ -449,6 +449,8 @@ repositories {
         implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
         //文件选择器
         implementation project(path: ':library:FileChooser')
+        //BGABanner
+        implementation project(path: ':library:BGABanner')
 
     }
 }
