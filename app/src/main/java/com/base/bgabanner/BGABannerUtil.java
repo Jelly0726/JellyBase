@@ -1,11 +1,15 @@
 package com.base.bgabanner;
 
 import android.content.Context;
-import androidx.annotation.DrawableRes;
-import androidx.core.view.ViewCompat;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.view.ViewCompat;
+
+import com.base.applicationUtil.AppUtils;
+import com.base.imageView.ImageViewPlus;
 
 import java.util.List;
 
@@ -27,16 +31,18 @@ public class BGABannerUtil {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, context.getResources().getDisplayMetrics());
     }
 
-    public static ImageView getItemImageView(Context context, @DrawableRes int placeholderResId) {
+    public static <VT extends View> VT getItemImageView(Context context, @DrawableRes int placeholderResId) {
         return getItemImageView(context, placeholderResId, ImageView.ScaleType.CENTER_CROP);
     }
 
-    public static ImageView getItemImageView(Context context, @DrawableRes int placeholderResId, ImageView.ScaleType scaleType) {
-        ImageView imageView = new ImageView(context);
+    public static <VT extends View> VT getItemImageView(Context context, @DrawableRes int placeholderResId, ImageView.ScaleType scaleType) {
+        ImageViewPlus imageView = new ImageViewPlus(context);
         imageView.setImageResource(placeholderResId);
         imageView.setClickable(true);
         imageView.setScaleType(scaleType);
-        return imageView;
+        imageView.setType(ImageViewPlus.TYPE_ROUNDED);
+        imageView.setRectRoundRadius(AppUtils.dipTopx(context,5));
+        return (VT) imageView;
     }
 
     public static void resetPageTransformer(List<? extends View> views) {

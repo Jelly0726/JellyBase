@@ -7,11 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.LayoutRes;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.core.view.ViewCompat;
-import androidx.viewpager.widget.ViewPager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -25,8 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.base.bgabanner.transformer.BGAPageTransformer;
 import com.base.bgabanner.transformer.TransitionEffect;
+import com.base.imageView.ImageViewPlus;
 import com.jelly.jellybase.R;
 
 import java.lang.ref.WeakReference;
@@ -63,7 +65,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private int mPageScrollPosition;
     private float mPageScrollPositionOffset;
     private TransitionEffect mTransitionEffect;
-    private ImageView mPlaceholderIv;
+    private ImageViewPlus mPlaceholderIv;
     private ImageView.ScaleType mPlaceholderScaleType = ImageView.ScaleType.CENTER_CROP;
     private int mPlaceholderDrawableResId = NO_PLACEHOLDER_DRAWABLE;
     private List<? extends Object> mModels;
@@ -78,6 +80,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private Drawable mNumberIndicatorBackground;
     private boolean mIsNeedShowIndicatorOnOnlyOnePage;
     private boolean mAllowUserScrollable = true;
+    private float mAspectRatio;
     private View mSkipView;
     private View mEnterView;
     private GuideDelegate mGuideDelegate;
@@ -138,7 +141,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
 
         mPointLeftRightMargin = BGABannerUtil.dp2px(context, 3);
         mPointTopBottomMargin = BGABannerUtil.dp2px(context, 6);
-        mPointContainerLeftRightMargin = BGABannerUtil.dp2px(context, 6);
+       mPointContainerLeftRightMargin = BGABannerUtil.dp2px(context, 6);
         mPointContainerLeftRightPadding = BGABannerUtil.dp2px(context, 10);
         mTipTextSize = BGABannerUtil.sp2px(context, 10);
         mPointContainerBackgroundDrawable = new ColorDrawable(Color.parseColor("#44aaaaaa"));
@@ -146,6 +149,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
         mNumberIndicatorTextSize = BGABannerUtil.sp2px(context, 10);
 
         mContentBottomMargin = 0;
+        mAspectRatio = 0;
     }
 
     private void initCustomAttrs(Context context, AttributeSet attrs) {
@@ -201,6 +205,8 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             mIsNeedShowIndicatorOnOnlyOnePage = typedArray.getBoolean(attr, mIsNeedShowIndicatorOnOnlyOnePage);
         } else if (attr == R.styleable.BGABanner_banner_contentBottomMargin) {
             mContentBottomMargin = typedArray.getDimensionPixelSize(attr, mContentBottomMargin);
+        }else if (attr == R.styleable.BGABanner_banner_aspectRatio) {
+            mAspectRatio = typedArray.getFloat(attr, mAspectRatio);
         } else if (attr == R.styleable.BGABanner_android_scaleType) {
             final int index = typedArray.getInt(attr, -1);
             if (index >= 0 && index < sScaleTypeArray.length) {
@@ -311,10 +317,10 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     }
 
     /**
-     * 设置是否开启自动轮播，需要在 setData 方法之前调用，并且调了该方法后必须再调用一次 setData 方法
+     * 设置是否开启自动轮播，需要在 notifyDataSetChanged 方法之前调用，并且调了该方法后必须再调用一次 notifyDataSetChanged 方法
      * 例如根据图片当图片数量大于 1 时开启自动轮播，等于 1 时不开启自动轮播
      * mDefaultBanner.setAutoPlayAble(bannerModel.imgs.size() > 1);
-     * mDefaultBanner.setData(bannerModel.imgs, bannerModel.tips);
+     * mDefaultBanner.notifyDataSetChanged(bannerModel.imgs, bannerModel.tips);
      *
      * @param autoPlayAble
      */
@@ -512,7 +518,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
         return mViews == null ? null : (VT) mViews.get(position);
     }
 
-    public ImageView getItemImageView(int position) {
+    public <VT extends View> VT getItemImageView(int position) {
         return getItemView(position);
     }
 
@@ -641,7 +647,24 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
             mPlaceholderIv = null;
         }
     }
+    /**
+     * 设置宽高比例，如果大于 0，则会根据宽度来计算高度，否则使用 android:layout_height 指定的高度
+     */
+    public void setAspectRatio(float aspectRatio) {
+        mAspectRatio = aspectRatio;
+        requestLayout();
+    }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mAspectRatio > 0) {
+            int width = MeasureSpec.getSize(widthMeasureSpec);
+            int height = (int) (width / mAspectRatio);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        }
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (mAutoPlayAble) {
@@ -966,7 +989,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     /**
      * item 点击事件监听器，在 BGABanner 里已经帮开发者处理了防止重复点击事件
      *
-     * @param <V> item 视图类型，如果没有在 setData 方法里指定自定义的 item 布局资源文件的话，这里的 V 就是 ImageView
+     * @param <V> item 视图类型，如果没有在 notifyDataSetChanged 方法里指定自定义的 item 布局资源文件的话，这里的 V 就是 ImageView
      * @param <M> item 数据模型
      */
     public interface Delegate<V extends View, M> {
@@ -976,7 +999,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     /**
      * 适配器，在 fillBannerItem 方法中填充数据，加载网络图片等
      *
-     * @param <V> item 视图类型，如果没有在 setData 方法里指定自定义的 item 布局资源文件的话，这里的 V 就是 ImageView
+     * @param <V> item 视图类型，如果没有在 notifyDataSetChanged 方法里指定自定义的 item 布局资源文件的话，这里的 V 就是 ImageView
      * @param <M> item 数据模型
      */
     public interface Adapter<V extends View, M> {
