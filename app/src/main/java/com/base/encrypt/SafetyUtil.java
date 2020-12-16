@@ -8,22 +8,19 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.ObjectStreamException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
-
-import javax.crypto.KeyGenerator;
 
 /**
  * 加密签名工具类
  */
 public class SafetyUtil {
+	private static final String BASE_RAMDOM_STRING="abcdefghijklmnopqrstuvwxyz0123456789";
 	public static final int MD5=0;//MD5
 	public static final int HMAC_SHA1=1;//HmacSHA1
 	public static final int SHA1=2;//SHA1
@@ -32,9 +29,11 @@ public class SafetyUtil {
 	public static final int SHA384=5;//SHA384
 	public static final int SHA512=6;//SHA512
 	public static final int AES=7;//AES
-	public static final int RSA_PUBKEY=8;//RSAPUBKEY
-	public static final int RSA_PRIVATEKEY=9;//RSAPRIVATEKEY
-	public static final int XOR=10;//XOR
+	public static final int RSA_PUBKEY=8;//公钥加密
+	public static final int RSA_PRIVATEKEY=9;//私钥解密
+	public static final int RSA_SIGN=10;//RSA签名
+	public static final int RSA_VERIFY=11;//RSA验证签名
+	public static final int XOR=12;//XOR
 	private static int count = 0;
 	private JniUtils jni= new JniUtils();
 	/**
@@ -87,8 +86,14 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+source);
-		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY){//使用RSA验签只能是私钥加密，公钥验证
-			type=RSA_PUBKEY;
+		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY||type== RSA_VERIFY){//RSA签名验证只能是私钥加密公钥验证
+			//字符串不是Base64 不需要Base64解码
+			if (isBase64(source)){
+				return jni.verifyByRSAPubKey(context.getApplicationContext(), source.getBytes(),Base64.decode(sign, Base64.NO_WRAP)) ==1;
+			}else {
+				return jni.verifyByRSAPubKey(context.getApplicationContext(),source.getBytes(),sign.getBytes()) ==1;
+			}
+
 		}
 		String signs=sign(context.getApplicationContext(),source,type);
 		Log.i("SafetyUtil", "签名加密后:"+sign);
@@ -129,8 +134,16 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
-		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY){//使用RSA验签只能是私钥加密，公钥验证
-			type=RSA_PUBKEY;
+		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY||type== RSA_VERIFY){//RSA签名验证只能是私钥加密公钥验证
+			//字符串不是Base64 不需要Base64解码
+			if (isBase64(stringBuffer.toString())){
+				return jni.verifyByRSAPubKey(context.getApplicationContext(), stringBuffer.toString().getBytes()
+						,Base64.decode(sign, Base64.NO_WRAP)) ==1;
+			}else {
+				return jni.verifyByRSAPubKey(context.getApplicationContext(),stringBuffer.toString().getBytes()
+						,sign.getBytes()) ==1;
+			}
+
 		}
 		String signs=sign(context.getApplicationContext(),stringBuffer.toString(),type);
 		Log.i("SafetyUtil", "签名加密后:"+signs);
@@ -191,6 +204,228 @@ public class SafetyUtil {
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
+
+
+	/**
+	 * RSA公钥加密
+	 * 加密字符串
+	 * @param publicKey  公钥base64字符串（没换行）
+	 * @param source  待加密的明文
+	 * @return
+	 */
+	public String encryptRSA(Context context,@NonNull String publicKey,@NonNull String source){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+source);
+		String sign=jni.encryptRSA(context.getApplicationContext(),publicKey,source);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * RSA公钥加密
+	 * 加密字符串
+	 * @param publicKey  公钥base64字符串（没换行）
+	 * @param source  	  待加密的明文
+	 * @return
+	 */
+	public String encryptRSA(Context context,@NonNull String publicKey,@NonNull Map<String, String> source){
+		source=sortMapByKey(source);
+		StringBuffer stringBuffer=new StringBuffer("");
+		Iterator iterator=source.entrySet().iterator();
+		while(iterator.hasNext()){
+			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
+			String key= (String) entent.getKey();
+			String value= String.valueOf((Object) entent.getValue());
+			if(!TextUtils.isEmpty(value)) {
+				stringBuffer
+						.append(key)
+						.append("=")
+						.append(value);
+				if (iterator.hasNext()) {
+					stringBuffer.append("&");
+				}
+			}
+		}
+		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
+			stringBuffer.deleteCharAt(stringBuffer.length()-1);
+		}
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		String sign=jni.encryptRSA(context.getApplicationContext(),publicKey,stringBuffer.toString());
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * RSA私钥解密
+	 * @param privateKey  私钥base64字符串（没换行）
+	 * @param source      待解密的base64密文
+	 * @return
+	 */
+	public String decryptRSA(Context context,@NonNull String privateKey,@NonNull String source){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "解密前:"+source);
+		String sign=jni.decryptRSA(context.getApplicationContext(),privateKey,source);
+		Log.i("SafetyUtil", "解密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 *
+	 * AES加密字符串
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String encryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+source);
+//		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
+//		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
+		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * AES加密字符串
+	 * @param keys
+	 * @param source  	  待加密的明文
+	 * @return
+	 */
+	public String encryptByAESEncrypt(Context context,@NonNull Map<String, String> source,@NonNull String keys){
+		source=sortMapByKey(source);
+		StringBuffer stringBuffer=new StringBuffer("");
+		Iterator iterator=source.entrySet().iterator();
+		while(iterator.hasNext()){
+			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
+			String key= (String) entent.getKey();
+			String value= String.valueOf((Object) entent.getValue());
+			if(!TextUtils.isEmpty(value)) {
+				stringBuffer
+						.append(key)
+						.append("=")
+						.append(value);
+				if (iterator.hasNext()) {
+					stringBuffer.append("&");
+				}
+			}
+		}
+		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
+			stringBuffer.deleteCharAt(stringBuffer.length()-1);
+		}
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		String sign=encryptByAESEncrypt(context,stringBuffer.toString(),keys);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 *
+	 * AES解密
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String decryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "解密前:"+source);
+		//AESEncrypt
+//		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		Log.i("SafetyUtil", "解密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 *
+	 * AES加密字符串
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String encryptByAESCipher(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+source);
+//		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
+//		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		byte[] su=jni.encryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
+		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * AES加密字符串
+	 * @param keys
+	 * @param source  	  待加密的明文
+	 * @return
+	 */
+	public String encryptByAESCipher(Context context,@NonNull Map<String, String> source,@NonNull String keys){
+		source=sortMapByKey(source);
+		StringBuffer stringBuffer=new StringBuffer("");
+		Iterator iterator=source.entrySet().iterator();
+		while(iterator.hasNext()){
+			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
+			String key= (String) entent.getKey();
+			String value= String.valueOf((Object) entent.getValue());
+			if(!TextUtils.isEmpty(value)) {
+				stringBuffer
+						.append(key)
+						.append("=")
+						.append(value);
+				if (iterator.hasNext()) {
+					stringBuffer.append("&");
+				}
+			}
+		}
+		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
+			stringBuffer.deleteCharAt(stringBuffer.length()-1);
+		}
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		String sign=encryptByAESCipher(context,stringBuffer.toString(),keys);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 *
+	 * AES解密
+	 * @param source  源字符串
+	 * @param key
+	 * @return
+	 */
+	public String decryptAESCipher(Context context,@NonNull String source,@NonNull String key){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "解密前:"+source);
+		//AESEncrypt
+//		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		String sign=new String(jni.decryptAESCipher(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		Log.i("SafetyUtil", "解密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
 	/**
 	 * 字符串解密
 	 * @param source  源字符串(Base64)
@@ -210,16 +445,7 @@ public class SafetyUtil {
 				}
 				sign = new String(AES);
 				break;
-			case RSA_PUBKEY:
-				byte[] RSA_PUBKEY;
-				//字符串不是Base64 不需要Base64解码
-				if (isBase64(source)){
-					RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
-				}else {
-					RSA_PUBKEY = jni.decodeByRSAPubKey(context.getApplicationContext(),source.getBytes());
-				}
-				sign =  new String(RSA_PUBKEY);
-				break;
+			case RSA_PUBKEY://RSA解密都是使用私钥解密
 			case RSA_PRIVATEKEY:
 				byte[] RSA_PRIVATEKEY;
 				//字符串不是Base64 不需要Base64解码
@@ -245,45 +471,6 @@ public class SafetyUtil {
 				break;
 		}
 		return sign;
-	}
-	/**
-	 *
-	 * AES加密字符串
-	 * @param source  源字符串
-	 * @param key
-	 * @return
-	 */
-	public String encryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
-		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
-//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
-//		return map;
-		Log.i("SafetyUtil", "签名加密前:"+source);
-//		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
-//		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
-		byte[] su=jni.encryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
-		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
-		Log.i("SafetyUtil", "签名加密后:"+sign);
-		return sign;
-		//return MD5(stringBuffer.toString()).toUpperCase();
-	}
-	/**
-	 *
-	 * AES解密
-	 * @param source  源字符串
-	 * @param key
-	 * @return
-	 */
-	public String decryptByAESEncrypt(Context context,@NonNull String source,@NonNull String key){
-		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
-//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
-//		return map;
-		Log.i("SafetyUtil", "解密前:"+source);
-		//AESEncrypt
-//		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
-		String sign=new String(jni.decryptAESCipher(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
-		Log.i("SafetyUtil", "解密后:"+sign);
-		return sign;
-		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
 	/**
 	 * 使用 Map按key进行排序
@@ -330,13 +517,15 @@ public class SafetyUtil {
 				byte[] AES = jni.encodeByAESEncrypt(context, source.getBytes());
 				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
 				break;
+			case RSA_PRIVATEKEY://RSA加密签名都是使用公钥加密
 			case RSA_PUBKEY:
 				byte[] RSA_PUBKEY = jni.encodeByRSAPubKey(context, source.getBytes());
 				sign = Base64.encodeToString(RSA_PUBKEY,Base64.NO_WRAP);
+//				sign=new String(RSA_PUBKEY);
 				break;
-			case RSA_PRIVATEKEY:
-				byte[] RSA_PRIVATEKEY = jni.encodeByRSAPrivateKey(context, source.getBytes());
-				sign = Base64.encodeToString(RSA_PRIVATEKEY,Base64.NO_WRAP);
+			case RSA_SIGN://rsa签名是用私钥签名
+				byte[] RSA_PRIKEY = jni.signByRSAPrivateKey(context, source.getBytes());
+				sign = Base64.encodeToString(RSA_PRIKEY,Base64.NO_WRAP);
 				break;
 			case XOR:
 				byte[] XOR = jni.xOr(context, source.getBytes());
@@ -374,23 +563,13 @@ public class SafetyUtil {
 	 * @Description: 获取AES随机密钥字符串
 	 * @return
 	 */
-	public static String getAESRandomKeyString() {
-		// 随机生成密钥
-		KeyGenerator keygen;
-		try {
-			keygen = KeyGenerator.getInstance("AES");
-			SecureRandom random = new SecureRandom();
-			keygen.init(random);
-			Key key = keygen.generateKey();
-			// 获取秘钥字符串
-			String key64Str = Base64.encodeToString(key.getEncoded(),Base64.NO_WRAP);
-			return key64Str;
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("getAESRandomKeyString="+e);
-			return null;
+	public String getAESRandomKeyString(int length) {
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(BASE_RAMDOM_STRING.length());
+			sb.append(BASE_RAMDOM_STRING.charAt(number));
 		}
-
+		return sb.toString();
 	}
 }

@@ -137,20 +137,22 @@ public class JniUtils {
     public native byte[] decodeByRSAPrivateKey(Context context, byte[] src);
 
     /**
-     * RSA私钥加密
+     * RSA公钥加密
      *
-     * @param src
+     * @param publicKey  公钥base64字符串（没换行）
+     * @param src        待加密的明文
      * @return
      */
-    public native byte[] encodeByRSAPrivateKey(Context context, byte[] src);
+    public native String encryptRSA(Context context,String publicKey,String src);
 
     /**
-     * RSA公钥解密
+     * RSA私钥解密
      *
-     * @param src
+     * @param privateKey  私钥base64字符串（没换行）
+     * @param src         待解密的base64密文
      * @return
      */
-    public native byte[] decodeByRSAPubKey(Context context, byte[] src);
+    public native String decryptRSA(Context context, String privateKey,String src);
 
     /**
      * RSA私钥签名

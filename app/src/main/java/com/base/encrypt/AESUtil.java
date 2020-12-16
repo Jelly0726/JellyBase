@@ -1,21 +1,21 @@
 package com.base.encrypt;
 
-import org.apache.commons.codec.binary.Base64;
+
+import android.util.Base64;
+
 import org.apache.commons.codec.binary.Hex;
 
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.util.Random;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
  * AES加密解密工具  加密结果为base64 、16进制编码格式
  */
-public class AESUtil  extends Base64 {
+public class AESUtil {
+    private static final String BASE_RAMDOM_STRING="abcdefghijklmnopqrstuvwxyz0123456789";
     public static final String KEY_ALGORITHM_AES = "AES";
     public static final String ALGORITHM_AES = "AES/ECB/PKCS5Padding";////"算法/模式/补码方式"
     /*AES相关------start*/
@@ -27,24 +27,14 @@ public class AESUtil  extends Base64 {
      * @Description: 获取AES随机密钥字符串
      * @return
      */
-    public static String getAESRandomKeyString() {
-        // 随机生成密钥
-        KeyGenerator keygen;
-        try {
-            keygen = KeyGenerator.getInstance(KEY_ALGORITHM_AES);
-            SecureRandom random = new SecureRandom();
-            keygen.init(random);
-            Key key = keygen.generateKey();
-            // 获取秘钥字符串
-            String key64Str = encodeBase64String(key.getEncoded());
-            return key64Str;
-        } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
-            // e.printStackTrace();
-            System.out.println("getAESRandomKeyString="+e);
-            return null;
+    public static String getAESRandomKeyString(int length) {
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(BASE_RAMDOM_STRING.length());
+            sb.append(BASE_RAMDOM_STRING.charAt(number));
         }
-
+        return sb.toString();
     }
 
     /**
@@ -68,7 +58,7 @@ public class AESUtil  extends Base64 {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 加密后的数据，首先将字符串转为byte数组，然后加密，为便于保存先转为base64
 
-            String encryptedDataStr = encodeBase64String(cipher.doFinal(dataStr.getBytes()));
+            String encryptedDataStr =  Base64.encodeToString(cipher.doFinal(dataStr.getBytes()),Base64.NO_WRAP);
             return encryptedDataStr;
         } catch (Exception e) {
             // e.printStackTrace();
@@ -94,7 +84,7 @@ public class AESUtil  extends Base64 {
             // 将加密组件的模式改为解密
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             // 和上面的加密相反，先解base64，再解密，最后将byte数组转为字符串
-            String decryptedDataStr = new String(cipher.doFinal(decodeBase64(encryptedDataStr)));
+            String decryptedDataStr = new String(cipher.doFinal(Base64.decode(encryptedDataStr,Base64.NO_WRAP)));
             return decryptedDataStr;
         } catch (Exception e) {
             // TODO: handle exception
@@ -124,7 +114,7 @@ public class AESUtil  extends Base64 {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 加密后的数据，首先将字符串转为byte数组，然后加密，为便于保存先转为base64
 
-            String encryptedDataStr = Hex.encodeHexString(cipher.doFinal(dataStr.getBytes()));
+            String encryptedDataStr =new String(Base64.encode(cipher.doFinal(dataStr.getBytes()),Base64.NO_WRAP));
             return encryptedDataStr;
         } catch (Exception e) {
             // e.printStackTrace();
@@ -172,7 +162,7 @@ public class AESUtil  extends Base64 {
      */
     public static SecretKey restoreAESKey(String base64EncodedAESKey) {
         // 还原秘钥字符串到秘钥byte数组
-        byte[] keyByteArray = decodeBase64(base64EncodedAESKey);
+        byte[] keyByteArray = Base64.decode(base64EncodedAESKey, Base64.NO_WRAP);
         // 重新形成秘钥，SecretKey是Key的子类
         SecretKey secretKey = new SecretKeySpec(keyByteArray, KEY_ALGORITHM_AES);
         return secretKey;
@@ -185,7 +175,7 @@ public class AESUtil  extends Base64 {
         System.out.println("原字符串："+str);
         long star=System.currentTimeMillis();
         /*AES相关------start*/
-        String aesKey = getAESRandomKeyString();
+        String aesKey = getAESRandomKeyString(16);
         System.out.println("生成AES秘钥时间："+(System.currentTimeMillis()-star)+"ms");
 
         star=System.currentTimeMillis();
