@@ -22,29 +22,9 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
     private static final String TEST_KEY = "JA2F8AKJF3D7HF12";
 
-    private static final String TEST_PRIVATE_KEY = "-----BEGIN PRIVATE KEY-----\n"
-            + "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAKLy3gcwWwy+mhcr\n"
-            + "gcXccrRu+UQUHDwvogZbGjbBDGsyt5hY69FtwIy/45tdj42xb4Tr0o1qKjuXHmIt\n"
-            + "zWAlgm+e9Fi4vwj6sIIbgdvYhi2dm/N2abNzEMJ2WsG2kei64qsaZtlawWv9k2GG\n"
-            + "ChP63MR79Z9+ucBzu+SZp+XrEt9DAgMBAAECgYB4Tr51KlOfJj7YqounDWs3ItQx\n"
-            + "WnO6UCTdcnf5QzErGIgLGGQL/W9zu92NgVeS8xV2WzLarC7AToPlUxHWUftpxqCa\n"
-            + "alQ+HtJ2zROnbblMwmEcnwsPXD8SncjJGDg1mSxkhi/jw1riPg36Exw1VGgmww4b\n"
-            + "+iMboCv3ApBDdxn7yQJBAM7rgodIHGf11d9+TO+PUkglc9AfCDMXQraDirU6JjCh\n"
-            + "6AVJXH76k2oLz4DCvd3CCBcM5qGmdAzTK/X1MSToGgUCQQDJmVtKiJkPOe/N2Vi3\n"
-            + "MkIIalnqZ9GFYtDjUV3dgI1QVgLQ8qpN2y98j8PU9nM/BpU0fU4qSX36vPCfYn0e\n"
-            + "mS6nAkABiAKmR6VWK56Skde16iScvhI2VxRzdFedDCopny2LLJeP+nQByI7wuPen\n"
-            + "J0nKa1Yt/X1zcsznD2UC4/aiJEmVAkACL+a8pUS71I4UdqIuwp3Sx4yYLW4pe0v2\n"
-            + "22AgUg+2amh3adqNI66dNFYUjmPrsB+YRS++57M1MC2QHRpsZY8LAkAKFNUtX47a\n"
-            + "4LYofojZrEdcz9O8xisB4bsv04G+WiM4bqTrlQo/6Y3YofvaP5jGSwBW8K/w6KPX\n"
-            + "D0VGzyfqFiL7\n"
-            + "-----END PRIVATE KEY-----\n";
+    private static final String TEST_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJNYzkiQup2Pn3HdVYGuxgiOx8e2avaa5M/xHfz/3hUbLpUwenh1go7kzvhhquh9tkUTmfoLudXpbr56aY4rfAkvzAxHiiStPWYnNeb9irMq9n0G+ykXq5pXu8Y3fyFW2lYGoswZnEFEAw8XTw2zPA4vuSQXz2oBDZsQWzC0VGXAgMBAAECgYAWWHIN0wvhDQI40uSCpTmFGAK2nISqB++ROqcsqGn7+7GZaD/41tkXyiwvmcs0F+dcpcIynvgt8N2FeFJPpHsUTFV8cX9jjzmHKvHMQ+2oile7uUhV8Fj7Of/R4k9ADQuednJ19uzH8yR40skIGGiFhPpf955EqI7tFZdmMf8gYQJBAP6lqmT10Dj4lqCz5d3519cxoRcBkJ9qLtiZ4AFYi7o9hzbVhSwSFZIgtF+A/UvjMGAQ0VFqiFPf+WK+A0hW5hECQQDDVaZNpAvoHgsOkPdA/oQSx9Tm4hIWLa1aHgTuhR9mwlQMhOYtieQ7UZLI3AMWxqGZkz58DWRcNJ8/o2o/BvUnAkB6JmO3LEbmnTA8BC+WrDtCKbdZPtHt9lRkaGOQobXc75jFz+SiwEYCo5eCXHCkj2VsH4UY5d5hRYXuPLF8aNrRAkEAjFaD1fJPb6PuE7gJPFPftdKGXp77mZ2Vl1JL/sX76oshcaEl8n/ITunriI2xVnK89aZ5VQ0WFrzj0QfqNIAeLwJADs9kHrPUKvmG/BL3AF+qe4E2Mg3m22/3RjUQ7Uum3vBO/5RXMGrGnMkJFvtLV/n7YCTSn+Uoq7rQV3J3SHGb5w==";
 
-    private static final String TEST_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----\n"
-            + "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCi8t4HMFsMvpoXK4HF3HK0bvlE\n"
-            + "FBw8L6IGWxo2wQxrMreYWOvRbcCMv+ObXY+NsW+E69KNaio7lx5iLc1gJYJvnvRY\n"
-            + "uL8I+rCCG4Hb2IYtnZvzdmmzcxDCdlrBtpHouuKrGmbZWsFr/ZNhhgoT+tzEe/Wf\n"
-            + "frnAc7vkmafl6xLfQwIDAQAB\n"
-            + "-----END PUBLIC KEY-----\n";
+    private static final String TEST_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCTWM5IkLqdj59x3VWBrsYIjsfHtmr2muTP8R38/94VGy6VMHp4dYKO5M74YarofbZFE5n6C7nV6W6+emmOK3wJL8wMR4okrT1mJzXm/YqzKvZ9BvspF6uaV7vGN38hVtpWBqLMGZxBRAMPF08NszwOL7kkF89qAQ2bEFswtFRlwIDAQAB";
 
     static {
         try{
@@ -73,7 +53,7 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
         jni = new JniUtils();
 
-        mKey=SafetyUtil.getInstance().getAESRandomKeyString();
+        mKey=SafetyUtil.getInstance().getAESRandomKeyString(16);
         DebugLog.i("秘钥="+mKey);
 
         findViewById(R.id.btn_sha1OfApk).setOnClickListener(this);
@@ -172,18 +152,18 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAa_sign:
-                result ="RSA私钥加密编码->" +  SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
+//                result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),TEST_PUBLIC_KEY,ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAd_sign:
-                result = "RSA公钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
+//                result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
                 break;
             case R.id.btn_RSAsa_sign:
-                result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
+                result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_SIGN);
                 break;
             case R.id.btn_RSAsad_sign:
                String signByRSAPrivateKeys = SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
 
-                boolean verifySign = SafetyUtil.getInstance().verify(BaseApplication.getInstance(),ori,signByRSAPrivateKeys,SafetyUtil.RSA_PUBKEY);
+                boolean verifySign = SafetyUtil.getInstance().verify(BaseApplication.getInstance(),ori,signByRSAPrivateKeys,SafetyUtil.RSA_VERIFY);
                 result="RSA公钥验证签名-> " + verifySign + "，true：验证成功";
                 break;
             case R.id.btn_copy_sign:
