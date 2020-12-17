@@ -282,7 +282,8 @@ std::string encryptRSA(const std::string &publicKey, const std::string &from) {
     if ((bio = BIO_new_mem_buf((void *) publicKey.c_str(), -1)) == NULL) {
 //        std::cout << "BIO_new_mem_buf failed!" << std::endl;
         LOGD("BIO_new_mem_buf failed!");
-        return NULL;
+        string err=string("从字符串读取RSA公钥串失败！");
+        return err;
     }
     //读取公钥
     rsa_public_key = PEM_read_bio_RSA_PUBKEY(bio, NULL, NULL, NULL);
@@ -294,7 +295,8 @@ std::string encryptRSA(const std::string &publicKey, const std::string &from) {
         RSA_free(rsa_public_key);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        string err=string("解析RSA公钥串失败！");
+        return err;
     }
 
     //rsa模的位数
@@ -323,7 +325,8 @@ std::string encryptRSA(const std::string &publicKey, const std::string &from) {
         RSA_free(rsa_public_key);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        string err=string("RSA公钥串加密失败！");
+        return err;
     }
 
     //赋值密文
@@ -347,11 +350,12 @@ std::string encryptRSA(const std::string &publicKey, const std::string &from) {
 std::string decryptRSA(const std::string &privetaKey, const std::string &from) {
     BIO *bio = NULL;
     RSA *rsa_private_key = NULL;
-    //从字符串读取RSA公钥串
+    //从字符串读取RSA私钥串
     if ((bio = BIO_new_mem_buf((void *) privetaKey.c_str(), -1)) == NULL) {
 //        std::cout << "BIO_new_mem_buf failed!" << std::endl;
         LOGD("BIO_new_mem_buf failed!");
-        return NULL;
+        string err=string("从字符串读取RSA私钥串失败！");
+        return err;
     }
     //读取私钥
     rsa_private_key = PEM_read_bio_RSAPrivateKey(bio, NULL, NULL, NULL);
@@ -362,7 +366,8 @@ std::string decryptRSA(const std::string &privetaKey, const std::string &from) {
         RSA_free(rsa_private_key);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        string err=string("解析RSA私钥串失败！");
+        return err;
     }
     //rsa模的位数
     int rsa_size = RSA_size(rsa_private_key);
@@ -388,7 +393,8 @@ std::string decryptRSA(const std::string &privetaKey, const std::string &from) {
         RSA_free(rsa_private_key);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        string err=string("RSA私钥串解密失败！");
+        return err;
     }
     //赋值明文，是否需要指定to的长度？
     static std::string result((char *) to);
