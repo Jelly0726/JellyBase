@@ -152,10 +152,10 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAa_sign:
-//                result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),TEST_PUBLIC_KEY,ori,SafetyUtil.RSA_PRIVATEKEY);
+                result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),TEST_PUBLIC_KEY,ori);
                 break;
             case R.id.btn_RSAd_sign:
-//                result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
+                result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),TEST_PRIVATE_KEY,ori);
                 break;
             case R.id.btn_RSAsa_sign:
                 result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_SIGN);

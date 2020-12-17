@@ -411,7 +411,7 @@ std::string decryptRSA(const std::string &privetaKey, const std::string &from) {
  * @return
  */
 jstring
-encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64PublicKey, jstring content) {
+encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64PublicKey, jstring src) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA1加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
@@ -425,13 +425,13 @@ encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64PublicKey
     //释放
     env->ReleaseStringUTFChars(base64PublicKey, base64PublicKeyChars);
     //jstring 转 char*
-    char *contentChars = (char *) env->GetStringUTFChars(content, NULL);
+    char *srcChars = (char *) env->GetStringUTFChars(src, NULL);
     //char* 转 string
-    string contentString = string(contentChars);
+    string srcString = string(srcChars);
     //释放
-    env->ReleaseStringUTFChars(content, contentChars);
+    env->ReleaseStringUTFChars(src, srcChars);
     //调用RSA加密函数加密
-    string rsaResult = encryptRSA(generatedPublicKey, contentString);
+    string rsaResult = encryptRSA(generatedPublicKey, srcString);
     if (rsaResult.empty()) {
         return NULL;
     }
@@ -451,13 +451,13 @@ encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64PublicKey
  * @param thiz
  * @param context
  * @param base64PublicKey
- * @param content
+ * @param src
  * @return
  */
 jstring decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64PrivateKey,
-                     jstring content) {
+                     jstring src) {
     if (!verifySha1OfApk(env, context)) {
-        LOGD("SHA1加密->apk-sha1值验证不通过");
+        LOGD("RSA解密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //jstring 转 char*
@@ -469,20 +469,23 @@ jstring decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring base64P
     //释放
     env->ReleaseStringUTFChars(base64PrivateKey, base64PrivateKeyChars);
     //jstring 转 char*
-    char *contentChars = (char *) env->GetStringUTFChars(content, NULL);
+    char *srcChars = (char *) env->GetStringUTFChars(src, NULL);
     //char* 转 string
-    string contentString = string(contentChars);
+    string srcString = string(srcChars);
     //释放
-    env->ReleaseStringUTFChars(content, contentChars);
+    env->ReleaseStringUTFChars(src, srcChars);
     //decode
-    string decodeBase64RSA = base64Decode(contentString);
+    string decodeBase64RSA = base64Decode(srcString);
     if (decodeBase64RSA.empty()) {
-        return NULL;
+        LOGD("RSA解密->apk-sha1值验证不通过");
+        string err=string("RSA base64解密失败！");
+        return env->NewStringUTF(err.c_str());
     }
     //解密
     string origin = decryptRSA(generatedPrivateKey, decodeBase64RSA);
     if (origin.empty()) {
-        return NULL;
+        string err=string("RSA 解密失败！");
+        return env->NewStringUTF(err.c_str());
     }
     //string -> char* -> jstring 返回
     jstring result = env->NewStringUTF(origin.c_str());
