@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
  * 加密签名工具类
  */
 public class SafetyUtil {
+	public static final String PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJSLLZmJ6F3gznNJiC/ZNXA6Bmn0m1YgnsvaUnZRsGOOso01ydFDwLePI35jnS0/RKAtP7GQJK0DAr/o6KPzCpZAL6zFaviYb5GBthrqox8RikDr+VvzG5KN+Z9UD2pzEtmHU0iFc3PT66oAAu4Ss9qVDoWOoOUAUiiI4k+MMEU1AgMBAAECgYAhKzrRcBPs8ofnAmJgnNXr62kHO9F71+jdiDClrvP+Jx0DnyEjk0dzNYktbbzpH5mJUtFIKvGlmGiCxdU81sZkERmiJ0pGf/MszFjYiFwvzZYwHRW2swOG+cYsJhlZjAnn1xcTX9thB4siZ53/k7tvR9YAOwhyLIC/qD89+exAOQJBAPYGnxMv9dOVmlJK5wiMQnGI7ZT3+xa8ddH62JyHukFvb1LVncOa8SQubUD5eoJoJ32eBxbyt4Y3DFJxI10wS/sCQQCakNaKX2+cD+/8e+BHMG85fk3t+jW1iC/rYe5IUKjtY2QHqBArEtF+/9p9UwIbAGPJ67eVTXPRu3PxU7WphTyPAkEAkrHuBf3R4UBRzQG2ckVXlOTlbK7UO4FR60tb/zF64Gt2gHi44hov8LfyEwzufHVoHqGsboV44oFOSpYFVRpoIwJAXa/lGsJ2ODZA1N2ROBVXlZXFTrYW0A3YXehiMlsRybIw86MfCbzCVyRmHwitgghedAn4oPrtdPcWc/S1bCdiaQJAbjcE5f8fDosRrV8A3KWkaflaJHahxPdqPgVeHNNpziy2ZjJ9N9X23GlPy57XtheVX8EBrxO377xIxz9tYsJQyw==";
+	public static final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoWPzLsJq9/aozb4EJKytHNT07nFjDTUrP/8dlYyzI0KqFqeiYi9f3e96USm0bOjR4TJkzSq8QN92Maej/2VmgrZqu+6e47eXb6/nWIzaDh+Ae06YguUJij+yfIAagLiGAv2kHXz+w10wiht5Jt1H9gIEtS3+jwf5P/a0tQhBgiQIDAQAB";
 	private static final String BASE_RAMDOM_STRING="abcdefghijklmnopqrstuvwxyz0123456789";
 	public static final int MD5=0;//MD5
 	public static final int HMAC_SHA1=1;//HmacSHA1
@@ -74,6 +76,15 @@ public class SafetyUtil {
 		return SingletonHolder.instance;
 	}
 	/**
+	 * 获取RSA秘钥对
+	 * @param context
+	 * @return
+	 */
+	public String[] generateRSAKey(Context context){
+		String[] PublicRSAKey=jni.generateRSAKey(context);
+		return PublicRSAKey;
+	}
+	/**
 	 *
 	 * 签名验证
 	 * @param source  源字符串
@@ -86,15 +97,6 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+source);
-		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY||type== RSA_VERIFY){//RSA签名验证只能是私钥加密公钥验证
-			//字符串不是Base64 不需要Base64解码
-			if (isBase64(source)){
-				return jni.verifyByRSAPubKey(context.getApplicationContext(), source.getBytes(),Base64.decode(sign, Base64.NO_WRAP)) ==1;
-			}else {
-				return jni.verifyByRSAPubKey(context.getApplicationContext(),source.getBytes(),sign.getBytes()) ==1;
-			}
-
-		}
 		String signs=sign(context.getApplicationContext(),source,type);
 		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return signs.equals(sign);
@@ -134,17 +136,6 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
-		if (type== RSA_PUBKEY || type==RSA_PRIVATEKEY||type== RSA_VERIFY){//RSA签名验证只能是私钥加密公钥验证
-			//字符串不是Base64 不需要Base64解码
-			if (isBase64(stringBuffer.toString())){
-				return jni.verifyByRSAPubKey(context.getApplicationContext(), stringBuffer.toString().getBytes()
-						,Base64.decode(sign, Base64.NO_WRAP)) ==1;
-			}else {
-				return jni.verifyByRSAPubKey(context.getApplicationContext(),stringBuffer.toString().getBytes()
-						,sign.getBytes()) ==1;
-			}
-
-		}
 		String signs=sign(context.getApplicationContext(),stringBuffer.toString(),type);
 		Log.i("SafetyUtil", "签名加密后:"+signs);
 		return signs.equals(sign);
@@ -447,14 +438,7 @@ public class SafetyUtil {
 				break;
 			case RSA_PUBKEY://RSA解密都是使用私钥解密
 			case RSA_PRIVATEKEY:
-				byte[] RSA_PRIVATEKEY;
-				//字符串不是Base64 不需要Base64解码
-				if (isBase64(source)){
-					RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
-				}else {
-					RSA_PRIVATEKEY = jni.decodeByRSAPrivateKey(context.getApplicationContext(),source.getBytes());
-				}
-				sign = new String(RSA_PRIVATEKEY);
+				sign = jni.decodeByRSAPrivateKey(context.getApplicationContext(),source);
 				break;
 			case XOR:
 				byte[] XOR;
@@ -519,13 +503,8 @@ public class SafetyUtil {
 				break;
 			case RSA_PRIVATEKEY://RSA加密签名都是使用公钥加密
 			case RSA_PUBKEY:
-				byte[] RSA_PUBKEY = jni.encodeByRSAPubKey(context, source.getBytes());
-				sign = Base64.encodeToString(RSA_PUBKEY,Base64.NO_WRAP);
+				sign = jni.encodeByRSAPubKey(context, source);
 //				sign=new String(RSA_PUBKEY);
-				break;
-			case RSA_SIGN://rsa签名是用私钥签名
-				byte[] RSA_PRIKEY = jni.signByRSAPrivateKey(context, source.getBytes());
-				sign = Base64.encodeToString(RSA_PRIKEY,Base64.NO_WRAP);
 				break;
 			case XOR:
 				byte[] XOR = jni.xOr(context, source.getBytes());

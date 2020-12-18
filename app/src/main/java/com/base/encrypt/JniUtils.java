@@ -126,7 +126,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] encodeByRSAPubKey(Context context, byte[] src);
+    public native String encodeByRSAPubKey(Context context,String src);
 
     /**
      * RSA私钥解密
@@ -134,7 +134,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] decodeByRSAPrivateKey(Context context, byte[] src);
+    public native String decodeByRSAPrivateKey(Context context, String src);
 
     /**
      * RSA公钥加密
@@ -153,23 +153,6 @@ public class JniUtils {
      * @return
      */
     public native String decryptRSA(Context context, String privateKey,String src);
-
-    /**
-     * RSA私钥签名
-     *
-     * @param src
-     * @return
-     */
-    public native byte[] signByRSAPrivateKey(Context context, byte[] src);
-
-    /**
-     * RSA公钥验证签名
-     *
-     * @param src
-     * @param sign
-     * @return 1:验证成功
-     */
-    public native int verifyByRSAPubKey(Context context, byte[] src, byte[] sign);
 
     /**
      * 异或加解密
@@ -201,4 +184,11 @@ public class JniUtils {
      * @return
      */
     public native boolean verifySha1OfApk(Context context);
+
+    /**
+     * 获取RSA秘钥对
+     * @param context
+     * @return
+     */
+    public native String[] generateRSAKey(Context context);
 }
