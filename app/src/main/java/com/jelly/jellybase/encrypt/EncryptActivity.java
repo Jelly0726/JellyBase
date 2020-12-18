@@ -19,13 +19,6 @@ import com.jelly.jellybase.R;
 
 public class EncryptActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "body";
-
-    private static final String TEST_KEY = "JA2F8AKJF3D7HF12";
-
-    private static final String TEST_PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMJNYzkiQup2Pn3HdVYGuxgiOx8e2avaa5M/xHfz/3hUbLpUwenh1go7kzvhhquh9tkUTmfoLudXpbr56aY4rfAkvzAxHiiStPWYnNeb9irMq9n0G+ykXq5pXu8Y3fyFW2lYGoswZnEFEAw8XTw2zPA4vuSQXz2oBDZsQWzC0VGXAgMBAAECgYAWWHIN0wvhDQI40uSCpTmFGAK2nISqB++ROqcsqGn7+7GZaD/41tkXyiwvmcs0F+dcpcIynvgt8N2FeFJPpHsUTFV8cX9jjzmHKvHMQ+2oile7uUhV8Fj7Of/R4k9ADQuednJ19uzH8yR40skIGGiFhPpf955EqI7tFZdmMf8gYQJBAP6lqmT10Dj4lqCz5d3519cxoRcBkJ9qLtiZ4AFYi7o9hzbVhSwSFZIgtF+A/UvjMGAQ0VFqiFPf+WK+A0hW5hECQQDDVaZNpAvoHgsOkPdA/oQSx9Tm4hIWLa1aHgTuhR9mwlQMhOYtieQ7UZLI3AMWxqGZkz58DWRcNJ8/o2o/BvUnAkB6JmO3LEbmnTA8BC+WrDtCKbdZPtHt9lRkaGOQobXc75jFz+SiwEYCo5eCXHCkj2VsH4UY5d5hRYXuPLF8aNrRAkEAjFaD1fJPb6PuE7gJPFPftdKGXp77mZ2Vl1JL/sX76oshcaEl8n/ITunriI2xVnK89aZ5VQ0WFrzj0QfqNIAeLwJADs9kHrPUKvmG/BL3AF+qe4E2Mg3m22/3RjUQ7Uum3vBO/5RXMGrGnMkJFvtLV/n7YCTSn+Uoq7rQV3J3SHGb5w==";
-
-    private static final String TEST_PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCTWM5IkLqdj59x3VWBrsYIjsfHtmr2muTP8R38/94VGy6VMHp4dYKO5M74YarofbZFE5n6C7nV6W6+emmOK3wJL8wMR4okrT1mJzXm/YqzKvZ9BvspF6uaV7vGN38hVtpWBqLMGZxBRAMPF08NszwOL7kkF89qAQ2bEFswtFRlwIDAQAB";
-
     static {
         try{
 //            System.loadLibrary("native-lib");
@@ -152,10 +145,10 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAa_sign:
-                result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),TEST_PUBLIC_KEY,ori);
+                result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),SafetyUtil.PUBLIC_KEY,ori);
                 break;
             case R.id.btn_RSAd_sign:
-                result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),TEST_PRIVATE_KEY,ori);
+                result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),SafetyUtil.PRIVATE_KEY,ori);
                 break;
             case R.id.btn_copy_sign:
                 String ssss=resultText.getText().toString();
