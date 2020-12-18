@@ -229,24 +229,6 @@
                 android:text="RSA私钥解密带key"
                 />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <Button
-                android:id="@+id/btn_RSAsa_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RSA私钥签名"
-                />
-            <Button
-                android:id="@+id/btn_RSAsad_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RSA公钥验证签名"
-                />
-        </LinearLayout>
 
     </LinearLayout>
 

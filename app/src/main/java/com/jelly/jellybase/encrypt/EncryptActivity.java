@@ -55,7 +55,9 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
         mKey=SafetyUtil.getInstance().getAESRandomKeyString(16);
         DebugLog.i("秘钥="+mKey);
-
+        String[] RSAKey=SafetyUtil.getInstance().generateRSAKey(this);
+        DebugLog.i("公钥=\n"+RSAKey[0]);
+        DebugLog.i("私钥=\n"+RSAKey[1]);
         findViewById(R.id.btn_sha1OfApk).setOnClickListener(this);
         findViewById(R.id.btn_apk).setOnClickListener(this);
 
@@ -84,8 +86,6 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.btn_RSAa_sign).setOnClickListener(this);
         findViewById(R.id.btn_RSAd_sign).setOnClickListener(this);
 
-        findViewById(R.id.btn_RSAsa_sign).setOnClickListener(this);
-        findViewById(R.id.btn_RSAsad_sign).setOnClickListener(this);
 
         findViewById(R.id.btn_copy_sign).setOnClickListener(this);
         findViewById(R.id.btn_past_sign).setOnClickListener(this);
@@ -156,15 +156,6 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_RSAd_sign:
                 result = "RSA私钥解密->" + SafetyUtil.getInstance().decryptRSA(BaseApplication.getInstance(),TEST_PRIVATE_KEY,ori);
-                break;
-            case R.id.btn_RSAsa_sign:
-                result="RSA私钥签名编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_SIGN);
-                break;
-            case R.id.btn_RSAsad_sign:
-               String signByRSAPrivateKeys = SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
-
-                boolean verifySign = SafetyUtil.getInstance().verify(BaseApplication.getInstance(),ori,signByRSAPrivateKeys,SafetyUtil.RSA_VERIFY);
-                result="RSA公钥验证签名-> " + verifySign + "，true：验证成功";
                 break;
             case R.id.btn_copy_sign:
                 String ssss=resultText.getText().toString();
