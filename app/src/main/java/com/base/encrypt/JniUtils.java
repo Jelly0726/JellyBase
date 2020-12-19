@@ -191,4 +191,10 @@ public class JniUtils {
      * @return
      */
     public native String[] generateRSAKey(Context context);
+    /**
+     * 从PEM文件获取RSA秘钥对
+     * @param context
+     * @return
+     */
+    public native String[] readRSAToPEM(Context context);
 }

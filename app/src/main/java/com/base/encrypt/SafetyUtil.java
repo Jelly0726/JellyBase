@@ -20,8 +20,10 @@ import java.util.regex.Pattern;
  * 加密签名工具类
  */
 public class SafetyUtil {
-	public static final String PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJSLLZmJ6F3gznNJiC/ZNXA6Bmn0m1YgnsvaUnZRsGOOso01ydFDwLePI35jnS0/RKAtP7GQJK0DAr/o6KPzCpZAL6zFaviYb5GBthrqox8RikDr+VvzG5KN+Z9UD2pzEtmHU0iFc3PT66oAAu4Ss9qVDoWOoOUAUiiI4k+MMEU1AgMBAAECgYAhKzrRcBPs8ofnAmJgnNXr62kHO9F71+jdiDClrvP+Jx0DnyEjk0dzNYktbbzpH5mJUtFIKvGlmGiCxdU81sZkERmiJ0pGf/MszFjYiFwvzZYwHRW2swOG+cYsJhlZjAnn1xcTX9thB4siZ53/k7tvR9YAOwhyLIC/qD89+exAOQJBAPYGnxMv9dOVmlJK5wiMQnGI7ZT3+xa8ddH62JyHukFvb1LVncOa8SQubUD5eoJoJ32eBxbyt4Y3DFJxI10wS/sCQQCakNaKX2+cD+/8e+BHMG85fk3t+jW1iC/rYe5IUKjtY2QHqBArEtF+/9p9UwIbAGPJ67eVTXPRu3PxU7WphTyPAkEAkrHuBf3R4UBRzQG2ckVXlOTlbK7UO4FR60tb/zF64Gt2gHi44hov8LfyEwzufHVoHqGsboV44oFOSpYFVRpoIwJAXa/lGsJ2ODZA1N2ROBVXlZXFTrYW0A3YXehiMlsRybIw86MfCbzCVyRmHwitgghedAn4oPrtdPcWc/S1bCdiaQJAbjcE5f8fDosRrV8A3KWkaflaJHahxPdqPgVeHNNpziy2ZjJ9N9X23GlPy57XtheVX8EBrxO377xIxz9tYsJQyw==";
-	public static final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoWPzLsJq9/aozb4EJKytHNT07nFjDTUrP/8dlYyzI0KqFqeiYi9f3e96USm0bOjR4TJkzSq8QN92Maej/2VmgrZqu+6e47eXb6/nWIzaDh+Ae06YguUJij+yfIAagLiGAv2kHXz+w10wiht5Jt1H9gIEtS3+jwf5P/a0tQhBgiQIDAQAB";
+//	public static final String PRIVATE_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJSLLZmJ6F3gznNJiC/ZNXA6Bmn0m1YgnsvaUnZRsGOOso01ydFDwLePI35jnS0/RKAtP7GQJK0DAr/o6KPzCpZAL6zFaviYb5GBthrqox8RikDr+VvzG5KN+Z9UD2pzEtmHU0iFc3PT66oAAu4Ss9qVDoWOoOUAUiiI4k+MMEU1AgMBAAECgYAhKzrRcBPs8ofnAmJgnNXr62kHO9F71+jdiDClrvP+Jx0DnyEjk0dzNYktbbzpH5mJUtFIKvGlmGiCxdU81sZkERmiJ0pGf/MszFjYiFwvzZYwHRW2swOG+cYsJhlZjAnn1xcTX9thB4siZ53/k7tvR9YAOwhyLIC/qD89+exAOQJBAPYGnxMv9dOVmlJK5wiMQnGI7ZT3+xa8ddH62JyHukFvb1LVncOa8SQubUD5eoJoJ32eBxbyt4Y3DFJxI10wS/sCQQCakNaKX2+cD+/8e+BHMG85fk3t+jW1iC/rYe5IUKjtY2QHqBArEtF+/9p9UwIbAGPJ67eVTXPRu3PxU7WphTyPAkEAkrHuBf3R4UBRzQG2ckVXlOTlbK7UO4FR60tb/zF64Gt2gHi44hov8LfyEwzufHVoHqGsboV44oFOSpYFVRpoIwJAXa/lGsJ2ODZA1N2ROBVXlZXFTrYW0A3YXehiMlsRybIw86MfCbzCVyRmHwitgghedAn4oPrtdPcWc/S1bCdiaQJAbjcE5f8fDosRrV8A3KWkaflaJHahxPdqPgVeHNNpziy2ZjJ9N9X23GlPy57XtheVX8EBrxO377xIxz9tYsJQyw==";
+//	public static final String PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCoWPzLsJq9/aozb4EJKytHNT07nFjDTUrP/8dlYyzI0KqFqeiYi9f3e96USm0bOjR4TJkzSq8QN92Maej/2VmgrZqu+6e47eXb6/nWIzaDh+Ae06YguUJij+yfIAagLiGAv2kHXz+w10wiht5Jt1H9gIEtS3+jwf5P/a0tQhBgiQIDAQAB";
+	public static final String PRIVATE_KEY = "-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQC81XqEKdhAIG5dSeps6tWNuXcPrjpBvzGsls7ljWNPEzwJrmWf\nEO6iRUYxwZXyQ+28e5BNHdlfJpS8L6wB4NV/ISysXH5k0qAJYDEP4jeRShi38SFT\nqMG95CTNJFKYMHejZNMMoyYvVID/p03JRXjoc9EVcQP0k+SeI9zFcqjsJQIDAQAB\nAoGATiISwI7D4LzKjaUg75I3bJ3Z6s4PYtbmieAYmZjoB3cQ93yGpcuOweviAIJ2\nNbjvrHaAHbiFEb7X+gnLpTdPfsR4jWFvAvhUFLu9zQwXRuOS2PSYGNtJzOXyh8p7\nZ74IR8i7I1hb1IhDsENL3aUadvOQC762D34t9IRohGmac0ECQQD4uG5AeZAcVvQg\nvO2/FpQy99lkoThTRhvIH2yvVDcKV7HRRv5/f+rvppqeM4z0nObtjzBGyNVN65VL\nQLLWNDbRAkEAwlxXKjRQLDKfkDjeD/FLiJGc85m0kdSPyaXg4IKv3qZl5L8GL4O+\neBdFnhLQ3RHavghGxflRxzNXpxCxm67dFQJADR6lai8/Y89OZ1+v5tGJFbsvM3ix\noOrk0kSeFg2KLbh8f76P9CfKO8P9CfVMLScNo2BXOpSjc83GfUa3aEcu0QJAJCCx\n+yBaPrzyOAa6EFCT78DRYd6SWAEg8SSqVlE0i7h2fDyd07szbnM095sbw9wLwwMa\n1LXxY4vBoUZTHVM1uQJBALgJq2Cr4KSQMS5QS4uaq6oQIfJiBqDU7abL0HItnonm\nT6EfzsK/Hp2t9ieiMQ4SZQ0xZYlZEc9qxTqny0ryUSw=\n-----END RSA PRIVATE KEY-----\n";
+	public static final String PUBLIC_KEY = "-----BEGIN RSA PUBLIC KEY-----\nMIGJAoGBALzVeoQp2EAgbl1J6mzq1Y25dw+uOkG/MayWzuWNY08TPAmuZZ8Q7qJF\nRjHBlfJD7bx7kE0d2V8mlLwvrAHg1X8hLKxcfmTSoAlgMQ/iN5FKGLfxIVOowb3k\nJM0kUpgwd6Nk0wyjJi9UgP+nTclFeOhz0RVxA/ST5J4j3MVyqOwlAgMBAAE=\n-----END RSA PUBLIC KEY-----\n";
 	private static final String BASE_RAMDOM_STRING="abcdefghijklmnopqrstuvwxyz0123456789";
 	public static final int MD5=0;//MD5
 	public static final int HMAC_SHA1=1;//HmacSHA1
@@ -82,6 +84,15 @@ public class SafetyUtil {
 	 */
 	public String[] generateRSAKey(Context context){
 		String[] PublicRSAKey=jni.generateRSAKey(context);
+		return PublicRSAKey;
+	}
+	/**
+	 * 从PEM文件获取RSA秘钥对
+	 * @param context
+	 * @return
+	 */
+	public String[] readRSAToPEM(Context context){
+		String[] PublicRSAKey=jni.readRSAToPEM(context);
 		return PublicRSAKey;
 	}
 	/**

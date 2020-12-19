@@ -48,9 +48,9 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
         mKey=SafetyUtil.getInstance().getAESRandomKeyString(16);
         DebugLog.i("秘钥="+mKey);
-        String[] RSAKey=SafetyUtil.getInstance().generateRSAKey(this);
-        DebugLog.i("公钥=\n"+RSAKey[0]);
-        DebugLog.i("私钥=\n"+RSAKey[1]);
+//        String[] RSAKey=SafetyUtil.getInstance().generateRSAKey(this);
+//        DebugLog.i("公钥=\n"+RSAKey[0]);
+//        DebugLog.i("私钥=\n"+RSAKey[1]);
         findViewById(R.id.btn_sha1OfApk).setOnClickListener(this);
         findViewById(R.id.btn_apk).setOnClickListener(this);
 
