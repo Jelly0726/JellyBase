@@ -3,7 +3,6 @@
 //
 #include <jni.h>
 #include <string>
-#include <assert.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #include <openssl/hmac.h>
@@ -15,9 +14,6 @@
 #include <openssl/buffer.h>
 #include <openssl/err.h>
 #include "endorse.h"
-#include <time.h>
-#include <iostream>
-#include <cstdio>
 
 using std::string;
 // ---- rsa非对称加解密 ---- //
@@ -149,21 +145,20 @@ std::string base64Decode(const std::string &encoded_bytes) {
     BIO_free_all(bioMem);
     return decoded_bytes;
 }
+
 /**
  * HmacSHA1加密
  */
-extern "C" JNIEXPORT jbyteArray JNICALL
-encodeByHmacSHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeByHmacSHA1(JNIEnv *env, jobject obj, jobject context, jstring src_) {
 //    LOGD("HmacSHA1加密->HMAC: Hash-based Message Authentication Code，即基于Hash的消息鉴别码");
     if (!verifySha1OfApk(env, context)) {
         LOGD("HmacSHA1加密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        return CStr2Jstring(env, sha1_sign_err);
     }
 //    const char *key = "jellyApp@22383243*335457968";
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Len = strlen(srcChars);
 
     unsigned int result_len;
     unsigned char result[EVP_MAX_MD_SIZE];
@@ -171,7 +166,7 @@ encodeByHmacSHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     char hex[EVP_MAX_MD_SIZE];
 
 //    LOGD("HmacSHA1加密->调用函数进行哈希运算");
-    HMAC(EVP_sha1(), key, strlen(key), (unsigned char *) src, src_Len, result, &result_len);
+    HMAC(EVP_sha1(), key, strlen(key), (unsigned char *) srcChars, src_Len, result, &result_len);
 
     strcpy(hex, "");
 //    LOGD("HmacSHA1加密->把哈希值按%%02x格式定向到缓冲区");
@@ -182,34 +177,33 @@ encodeByHmacSHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("HmacSHA1加密->%s", hex);
 
     LOGD("HmacSHA1加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
-
-    jbyteArray signature = env->NewByteArray(strlen(hex));
-//    LOGD("HmacSHA1加密->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
-    env->SetByteArrayRegion(signature, 0, strlen(hex), (jbyte *) hex);
-
-    return signature;
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
+
 /**
  * SHA1加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-encodeBySHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeBySHA1(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA1加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
 //    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("SHA1加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
@@ -217,7 +211,7 @@ encodeBySHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     strcat(src, Skey);
     strcat(src, key);
 //    LOGD("SHA1加密->源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA_DIGEST_LENGTH];
@@ -244,37 +238,41 @@ encodeBySHA1(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("SHA1加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
+
 /**
  * SHA224加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-encodeBySHA224(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeBySHA224(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA224加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-//    LOGD("SHA224加密->源数据->sss %s ", srcs);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
+//    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("SHA224加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
     strcpy(src, chars);
     strcat(src, Skey);
     strcat(src, key);
-//    LOGD("SHA224加密->源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+//    LOGD("SHA1加密->源数据-> %s ", src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA224_DIGEST_LENGTH];
@@ -302,37 +300,41 @@ encodeBySHA224(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("SHA224加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
+
 /**
  * SHA256加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-encodeBySHA256(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeBySHA256(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA256加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-//    LOGD("SHA256加密->源数据->sss %s ", srcs);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
+//    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("SHA256加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
     strcpy(src, chars);
     strcat(src, Skey);
     strcat(src, key);
-//    LOGD("SHA256加密->源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+//    LOGD("SHA1加密->源数据-> %s ", src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA256_DIGEST_LENGTH];
@@ -359,36 +361,41 @@ encodeBySHA256(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("SHA256加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
+
 /**
  * SHA384加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-encodeBySHA384(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeBySHA384(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA384加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-//    LOGD("SHA384加密->源数据->sss %s ", srcs);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
+//    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("SHA384加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
     strcpy(src, chars);
     strcat(src, Skey);
     strcat(src, key);
-//    LOGD("SHA384加密->源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+//    LOGD("SHA1加密->源数据-> %s ", src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA384_DIGEST_LENGTH];
@@ -415,37 +422,41 @@ encodeBySHA384(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("SHA384加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
+
 /**
  * SHA512加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-encodeBySHA512(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeBySHA512(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("SHA512加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-//    LOGD("SHA512加密->源数据->sss %s ", srcs);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
+//    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("SHA512加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
     strcpy(src, chars);
     strcat(src, Skey);
     strcat(src, key);
-//    LOGD("SHA512加密->源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+//    LOGD("SHA1加密->源数据-> %s ", src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 
     char buff[SHA512_DIGEST_LENGTH];
@@ -472,8 +483,13 @@ encodeBySHA512(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("SHA512加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
 
 /**
@@ -1786,25 +1802,25 @@ decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
 //    jstring result =env->NewStringUTF(origin.c_str());
     return result;
 }
+
 /**
- * xOr加解密
+ * xOr加密
  */
-extern "C" JNIEXPORT jbyteArray JNICALL
-xOr(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+encodeXOR(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
-        LOGD("XOr加解密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        LOGD("XOr加密->apk-sha1值验证不通过");
+        return env->NewStringUTF(sha1_sign_err);
     }
 //    LOGD("XOR加解密->异或加解密: 相同为假，不同为真");
     const char keys[] = "jelly20180829";
-    jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    //jstring 转 char*
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Len = strlen(srcChars);
 
     char *chs = (char *) malloc(src_Len);
     memset(chs, 0, src_Len);
-    memcpy(chs, src, src_Len);
+    memcpy(chs, srcChars, src_Len);
 
 //    LOGD("XOR加解密->对数据进行异或运算");
     for (int i = 0; i < src_Len; i++) {
@@ -1813,53 +1829,117 @@ xOr(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     }
     chs = chs - src_Len;
 
-    LOGD("XOR加解密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, src, 0);
+    LOGD("XOR加密->从jni释放数据指针");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
     if (src_Len <= 0) {
-        LOGD("XOR加解密->加解密失败！");
-        LOGD("XOR加解密->释放内存");
+        LOGD("XOR加密->加解密失败！");
+        LOGD("XOR加密->释放内存");
         free(chs);
-        char *err = "XOR加解密->加解密失败！";
-        jbyteArray byteArray = env->NewByteArray(strlen(err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(err), (jbyte *) err);
-        return byteArray;
+        string err = string("XOR加密 加密失败!");
+        return env->NewStringUTF(err.c_str());
     }
-    jbyteArray cipher = env->NewByteArray(src_Len);
-//    LOGD("XOR->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
-    env->SetByteArrayRegion(cipher, 0, src_Len, (const jbyte *) chs);
-    LOGD("XOR加解密->释放内存");
+    LOGD("XOR加密->chs=%s", chs);
+    LOGD("XOR加密->释放内存");
+    string chsString = string(chs);
     free(chs);
-
-    return cipher;
+    //将密文进行base64
+    string base64 = base64Encode(chsString);
+    if (base64.empty()) {
+        LOGD("XOR加密->base64编码失败");
+        string err = string("XOR加密 base64编码失败！");
+        return env->NewStringUTF(err.c_str());
+    }
+//    LOGD("base64RSA=%s",base64RSA.c_str());
+    //string -> char* -> jstring 返回
+    jstring result = CStr2Jstring(env, base64.c_str());
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return result;
 }
+
+/**
+ * xOr解密
+ */
+jstring
+decodeXOR(JNIEnv *env, jobject obj, jobject context, jstring src_) {
+    if (!verifySha1OfApk(env, context)) {
+        LOGD("XOr解密->apk-sha1值验证不通过");
+        return env->NewStringUTF(sha1_sign_err);
+    }
+//    LOGD("XOR加解密->异或加解密: 相同为假，不同为真");
+    const char keys[] = "jelly20180829";
+    //jstring 转 char*
+    char *srcChars = Jstring2CStr(env, src_);
+//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
+//    LOGD("srcChars=%s",srcChars);
+    //char* 转 string
+    string srcString = string(srcChars);
+//    LOGD("srcString=%s",srcString.c_str());
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //decode
+    string decodeBase64 = base64Decode(srcString);
+    if (decodeBase64.empty()) {
+        LOGD("XOR解密->base64解密失败");
+        string err = string("XOR解密 base64解密失败！");
+        return env->NewStringUTF(err.c_str());
+    }
+    LOGD("decodeBase64=%s", decodeBase64.c_str());
+    int src_Len = decodeBase64.length();
+
+    char *chs = (char *) malloc(src_Len);
+    memset(chs, 0, src_Len);
+    memcpy(chs, decodeBase64.c_str(), src_Len);
+
+//    LOGD("XOR加解密->对数据进行异或运算");
+    for (int i = 0; i < src_Len; i++) {
+        *chs = *chs ^ keys[i % strlen(keys)];
+        chs++;
+    }
+    chs = chs - src_Len;
+
+    if (src_Len <= 0) {
+        LOGD("XOR解密->加解密失败！");
+        LOGD("XOR解密->释放内存");
+        free(chs);
+        char *err = "XOR解密 加解密失败！";
+        return CStr2Jstring(env, err);
+    }
+
+    jstring result = CStr2Jstring(env, chs);
+    LOGD("XOR解密->释放内存");
+    free(chs);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return result;
+}
+
 /**
  * MD5加密
  */
-extern "C" JNIEXPORT jstring JNICALL
-md5(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring
+md5(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("MD5加密->apk-sha1值验证不通过");
         return env->NewStringUTF(sha1_sign_err);
     }
     //====================将秘钥拼接到数据源末端=========================
-    jbyte *srcs = env->GetByteArrayElements(src_, NULL);//jbyteArray转jbyte
-    jsize src_Lens = env->GetArrayLength(src_);//获取jbyteArray的长度
-//    LOGD("源数据->sss %s ", srcs);
+    char *srcChars = Jstring2CStr(env, src_);
+    int src_Lens = strlen(srcChars);
+//    LOGD("SHA1加密->源数据->sss %s ", srcs);
     char *chars = NULL;
     chars = new char[src_Lens + 1];
     memset(chars, 0, src_Lens + 1);
-    memcpy(chars, srcs, src_Lens);
+    memcpy(chars, srcChars, src_Lens);
     chars[src_Lens] = 0;
-    LOGD("MD5加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(src_, srcs, 0);
 
     char *Skey = "&key=";
     char *src = (char *) malloc(src_Lens + 1 + strlen(Skey) + strlen(key) + 1);
     strcpy(src, chars);
     strcat(src, Skey);
     strcat(src, key);
-//    LOGD("源数据-> %s ", src);
-    jsize src_Len = strlen(src);
+//    LOGD("SHA1加密->源数据-> %s ", src);
+    int src_Len = strlen(src);
     //====================将秘钥拼接到数据源末端=========================
 //    LOGD("MD5加密->信息摘要算法第五版");
 
@@ -1885,8 +1965,13 @@ md5(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     LOGD("MD5加密->释放内存");
     free(src);//malloc和free要配套使用
     delete[]chars;//new/delete、new[]/delete[] 要配套使用总是没错的
-
-    return env->NewStringUTF(hex);
+    LOGD("释放资源->src_");
+    env->DeleteLocalRef(src_);
+    free(srcChars);
+    //string -> char* -> jstring 返回
+    jstring resultHex = CStr2Jstring(env, hex);
+//    jstring result =env->NewStringUTF(base64RSA.c_str());
+    return resultHex;
 }
 //========================================动态注册==================================================
 /*需要注册的函数列表，放在JNINativeMethod 类型的数组中，
@@ -1926,12 +2011,12 @@ L完整包名加类名;	jobject	    class
 如果有内部类 则用 $ 来分隔 如:Landroid/os/FileUtils$FileStatus;
 */
 static JNINativeMethod getMethods[] = {
-        {"encodeByHmacSHA1",    "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByHmacSHA1},
-        {"encodeBySHA1",        "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA1},
-        {"encodeBySHA224",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA224},
-        {"encodeBySHA256",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA256},
-        {"encodeBySHA384",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA384},
-        {"encodeBySHA512",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA512},
+        {"encodeByHmacSHA1",    "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeByHmacSHA1},
+        {"encodeBySHA1",        "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA1},
+        {"encodeBySHA224",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA224},
+        {"encodeBySHA256",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA256},
+        {"encodeBySHA384",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA384},
+        {"encodeBySHA512",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA512},
         {"encodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByAESEncrypt},
         {"decodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) decodeByAESEncrypt},
         {"encryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",                                                 (void *) encryptByAESEncrypt},
@@ -1948,8 +2033,9 @@ static JNINativeMethod getMethods[] = {
         {"decryptRSA",          "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSA},
         {"encodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) encryptByRSAPriKey},
         {"decodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSAPubKey},
-        {"xOr",                 "(Landroid/content/Context;[B)[B",                                                   (void *) xOr},
-        {"md5",                 "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) md5},
+        {"encodeXOR",           "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeXOR},
+        {"decodeXOR",           "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) decodeXOR},
+        {"md5",                 "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) md5},
         {"sha1OfApk",           "(Landroid/content/Context;)Ljava/lang/String;",                                     (void *) getSha1OfApk},
         {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",                                    (void *) generateRSAKey},
         {"verifySha1OfApk",     "(Landroid/content/Context;)Z",                                                      (void *) validateSha1OfApk},

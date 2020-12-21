@@ -17,7 +17,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] encodeByHmacSHA1(Context context, byte[] src);
+    public native String encodeByHmacSHA1(Context context, String src);
 
     /**
      * SHA1签名
@@ -25,7 +25,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeBySHA1(Context context,byte[] src);
+    public native String encodeBySHA1(Context context,String src);
 
     /**
      * SHA224签名
@@ -33,7 +33,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeBySHA224(Context context,byte[] src);
+    public native String encodeBySHA224(Context context,String src);
 
     /**
      * SHA384签名
@@ -41,7 +41,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeBySHA256(Context context,byte[] src);
+    public native String encodeBySHA256(Context context,String src);
 
     /**
      * SHA256签名
@@ -49,7 +49,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeBySHA384(Context context,byte[] src);
+    public native String encodeBySHA384(Context context,String src);
 
     /**
      * SHA512签名
@@ -57,7 +57,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeBySHA512(Context context,byte[] src);
+    public native String encodeBySHA512(Context context,String src);
 
     /**
      * AES的Encrypt加密
@@ -187,12 +187,19 @@ public class JniUtils {
     public native String decodeByRSAPubKey(Context context, String src,String publicKey);
 
     /**
+     * 异或加密
+     *
+     * @param src
+     * @return
+     */
+    public native String encodeXOR(Context context,String src);
+    /**
      * 异或加解密
      *
      * @param src
      * @return
      */
-    public native byte[] xOr(Context context,byte[] src);
+    public native String decodeXOR(Context context,String src);
 
     /**
      * MD5编码
@@ -200,7 +207,7 @@ public class JniUtils {
      * @param src
      * @return 默认小写
      */
-    public native String md5(Context context,byte[] src);
+    public native String md5(Context context,String src);
     /**
      * 获取apk-sha1
      *

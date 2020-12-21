@@ -515,14 +515,7 @@ public class SafetyUtil {
 				sign = jni.decodeByRSAPriKey(context.getApplicationContext(),source);
 				break;
 			case XOR:
-				byte[] XOR;
-				//字符串不是Base64 不需要Base64解码
-				if (isBase64(source)){
-					XOR = jni.xOr(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
-				}else {
-					XOR = jni.xOr(context.getApplicationContext(),source.getBytes());
-				}
-				sign =  new String(XOR);
+				sign = jni.decodeXOR(context.getApplicationContext(),source);
 				break;
 			default:
 				sign = "";
@@ -550,26 +543,25 @@ public class SafetyUtil {
 		String sign;
 		switch (type) {
 			case MD5:
-				sign = jni.md5(context, source.getBytes());
+				sign = jni.md5(context, source);
 				break;
 			case HMAC_SHA1:
-				byte[] HMAC = jni.encodeByHmacSHA1(context, source.getBytes());
-				sign =  Base64.encodeToString(HMAC,Base64.NO_WRAP);
+				sign= jni.encodeByHmacSHA1(context, source);
 				break;
 			case SHA1:
-				sign = jni.encodeBySHA1(context, source.getBytes());
+				sign = jni.encodeBySHA1(context, source);
 				break;
 			case SHA224:
-				sign = jni.encodeBySHA224(context, source.getBytes());
+				sign = jni.encodeBySHA224(context, source);
 				break;
 			case SHA256:
-				sign = jni.encodeBySHA256(context, source.getBytes());
+				sign = jni.encodeBySHA256(context, source);
 				break;
 			case SHA384:
-				sign = jni.encodeBySHA384(context, source.getBytes());
+				sign = jni.encodeBySHA384(context, source);
 				break;
 			case SHA512:
-				sign = jni.encodeBySHA512(context, source.getBytes());
+				sign = jni.encodeBySHA512(context, source);
 				break;
 			case AES:
 				byte[] AES = jni.encodeByAESEncrypt(context, source.getBytes());
@@ -583,8 +575,7 @@ public class SafetyUtil {
 //				sign=new String(RSA_PUBKEY);
 				break;
 			case XOR:
-				byte[] XOR = jni.xOr(context, source.getBytes());
-				sign = Base64.encodeToString(XOR,Base64.NO_WRAP);
+				sign = jni.encodeXOR(context, source);
 				break;
 			default:
 				sign = "";
