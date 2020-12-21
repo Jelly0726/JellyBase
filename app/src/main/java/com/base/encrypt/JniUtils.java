@@ -134,25 +134,57 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String decodeByRSAPrivateKey(Context context, String src);
+    public native String decodeByRSAPriKey(Context context, String src);
+    /**
+     * RSA私钥加密
+     *
+     * @param src
+     * @return
+     */
+    public native String encodeByRSAPriKey(Context context,String src);
+
+    /**
+     * RSA公钥解密
+     *
+     * @param src
+     * @return
+     */
+    public native String decodeByRSAPubKey(Context context, String src);
 
     /**
      * RSA公钥加密
      *
-     * @param publicKey  公钥base64字符串（没换行）
      * @param src        待加密的明文
+     * @param publicKey  公钥base64字符串（没换行）
      * @return
      */
-    public native String encryptRSA(Context context,String publicKey,String src);
+    public native String encryptRSA(Context context,String src,String publicKey);
 
     /**
      * RSA私钥解密
      *
-     * @param privateKey  私钥base64字符串（没换行）
      * @param src         待解密的base64密文
+     * @param privateKey  私钥base64字符串（没换行）
      * @return
      */
-    public native String decryptRSA(Context context, String privateKey,String src);
+    public native String decryptRSA(Context context, String src,String privateKey);
+    /**
+     * RSA私钥加密
+     *
+     * @param src        待加密的明文
+     * @param privateKey  私钥base64字符串（没换行）
+     * @return
+     */
+    public native String encodeByRSAPriKey(Context context,String src,String privateKey);
+
+    /**
+     * RSA公钥解密
+     *
+     * @param src         待解密的base64密文
+     * @param publicKey  公钥base64字符串（没换行）
+     * @return
+     */
+    public native String decodeByRSAPubKey(Context context, String src,String publicKey);
 
     /**
      * 异或加解密
@@ -191,10 +223,4 @@ public class JniUtils {
      * @return
      */
     public native String[] generateRSAKey(Context context);
-    /**
-     * 从PEM文件获取RSA秘钥对
-     * @param context
-     * @return
-     */
-    public native String[] readRSAToPEM(Context context);
 }

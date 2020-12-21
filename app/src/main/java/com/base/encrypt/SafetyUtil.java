@@ -87,15 +87,6 @@ public class SafetyUtil {
 		return PublicRSAKey;
 	}
 	/**
-	 * 从PEM文件获取RSA秘钥对
-	 * @param context
-	 * @return
-	 */
-	public String[] readRSAToPEM(Context context){
-		String[] PublicRSAKey=jni.readRSAToPEM(context);
-		return PublicRSAKey;
-	}
-	/**
 	 *
 	 * 签名验证
 	 * @param source  源字符串
@@ -211,16 +202,16 @@ public class SafetyUtil {
 	/**
 	 * RSA公钥加密
 	 * 加密字符串
-	 * @param publicKey  公钥base64字符串（没换行）
 	 * @param source  待加密的明文
+	 * @param publicKey  公钥base64字符串（没换行）
 	 * @return
 	 */
-	public String encryptRSA(Context context,@NonNull String publicKey,@NonNull String source){
+	public String encryptRSA(Context context,@NonNull String source,@NonNull String publicKey){
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+source);
-		String sign=jni.encryptRSA(context.getApplicationContext(),publicKey,source);
+		String sign=jni.encryptRSA(context.getApplicationContext(),source,publicKey);
 		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -232,7 +223,7 @@ public class SafetyUtil {
 	 * @param source  	  待加密的明文
 	 * @return
 	 */
-	public String encryptRSA(Context context,@NonNull String publicKey,@NonNull Map<String, String> source){
+	public String encryptRSA(Context context,@NonNull Map<String, String> source,@NonNull String publicKey){
 		source=sortMapByKey(source);
 		StringBuffer stringBuffer=new StringBuffer("");
 		Iterator iterator=source.entrySet().iterator();
@@ -257,23 +248,93 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
-		String sign=jni.encryptRSA(context.getApplicationContext(),publicKey,stringBuffer.toString());
+		String sign=jni.encryptRSA(context.getApplicationContext(),stringBuffer.toString(),publicKey);
 		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
 	}
 	/**
 	 * RSA私钥解密
-	 * @param privateKey  私钥base64字符串（没换行）
 	 * @param source      待解密的base64密文
+	 * @param privateKey  私钥base64字符串（没换行）
 	 * @return
 	 */
-	public String decryptRSA(Context context,@NonNull String privateKey,@NonNull String source){
+	public String decryptRSA(Context context,@NonNull String source,@NonNull String privateKey){
 		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
 		Log.i("SafetyUtil", "解密前:"+source);
-		String sign=jni.decryptRSA(context.getApplicationContext(),privateKey,source);
+		String sign=jni.decodeByRSAPubKey(context.getApplicationContext(),source,privateKey);
+		Log.i("SafetyUtil", "解密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * RSA私钥加密
+	 * 加密字符串
+	 * @param source  待加密的明文
+	 * @param privateKey  私钥base64字符串（没换行）
+	 * @return
+	 */
+	public String encodeByRSAPriKey(Context context,@NonNull String source,@NonNull String privateKey){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+source);
+		String sign=jni.encodeByRSAPriKey(context.getApplicationContext(),source,privateKey);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * RSA私钥加密
+	 * 加密字符串
+	 * @param privateKey  私钥base64字符串（没换行）
+	 * @param source  	  待加密的明文
+	 * @return
+	 */
+	public String encodeByRSAPriKey(Context context,@NonNull Map<String, String> source,@NonNull String privateKey){
+		source=sortMapByKey(source);
+		StringBuffer stringBuffer=new StringBuffer("");
+		Iterator iterator=source.entrySet().iterator();
+		while(iterator.hasNext()){
+			LinkedHashMap.Entry entent= (LinkedHashMap.Entry) iterator.next();
+			String key= (String) entent.getKey();
+			String value= String.valueOf((Object) entent.getValue());
+			if(!TextUtils.isEmpty(value)) {
+				stringBuffer
+						.append(key)
+						.append("=")
+						.append(value);
+				if (iterator.hasNext()) {
+					stringBuffer.append("&");
+				}
+			}
+		}
+		if(stringBuffer.substring(stringBuffer.length()-1).equals("&")){
+			stringBuffer.deleteCharAt(stringBuffer.length()-1);
+		}
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "签名加密前:"+stringBuffer.toString());
+		String sign=jni.encodeByRSAPriKey(context.getApplicationContext(),stringBuffer.toString(),privateKey);
+		Log.i("SafetyUtil", "签名加密后:"+sign);
+		return sign;
+		//return MD5(stringBuffer.toString()).toUpperCase();
+	}
+	/**
+	 * RSA公钥解密
+	 * @param source      待解密的base64密文
+	 * @param publicKey  公钥base64字符串（没换行）
+	 * @return
+	 */
+	public String decodeByRSAPubKey(Context context,@NonNull String source,@NonNull String publicKey){
+		//Log.i("msg","签名前="+stringBuffer.toString().toLowerCase());
+//		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
+//		return map;
+		Log.i("SafetyUtil", "解密前:"+source);
+		String sign=jni.decodeByRSAPubKey(context.getApplicationContext(),source,publicKey);
 		Log.i("SafetyUtil", "解密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -447,9 +508,11 @@ public class SafetyUtil {
 				}
 				sign = new String(AES);
 				break;
-			case RSA_PUBKEY://RSA解密都是使用私钥解密
-			case RSA_PRIVATEKEY:
-				sign = jni.decodeByRSAPrivateKey(context.getApplicationContext(),source);
+			case RSA_PUBKEY://RSA公钥解密
+				sign = jni.decodeByRSAPubKey(context.getApplicationContext(),source);
+				break;
+			case RSA_PRIVATEKEY://RSA私钥解密
+				sign = jni.decodeByRSAPriKey(context.getApplicationContext(),source);
 				break;
 			case XOR:
 				byte[] XOR;
@@ -512,8 +575,10 @@ public class SafetyUtil {
 				byte[] AES = jni.encodeByAESEncrypt(context, source.getBytes());
 				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
 				break;
-			case RSA_PRIVATEKEY://RSA加密签名都是使用公钥加密
-			case RSA_PUBKEY:
+			case RSA_PRIVATEKEY://RSA私钥加密
+				sign = jni.encodeByRSAPriKey(context, source);
+				break;
+			case RSA_PUBKEY://RSA公钥加密
 				sign = jni.encodeByRSAPubKey(context, source);
 //				sign=new String(RSA_PUBKEY);
 				break;
