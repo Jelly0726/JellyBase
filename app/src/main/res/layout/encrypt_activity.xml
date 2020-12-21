@@ -145,24 +145,6 @@
             android:orientation="horizontal"
             >
             <Button
-                android:id="@+id/btn_XOR_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XOR异或加密"
-                />
-            <Button
-                android:id="@+id/btn_XORs_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="XOR异或解密"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <Button
                 android:id="@+id/btn_AES_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -65,9 +65,6 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
 
         findViewById(R.id.btn_md5_sign).setOnClickListener(this);
 
-        findViewById(R.id.btn_XOR_sign).setOnClickListener(this);
-        findViewById(R.id.btn_XORs_sign).setOnClickListener(this);
-
         findViewById(R.id.btn_AES_sign).setOnClickListener(this);
         findViewById(R.id.btn_AESs_sign).setOnClickListener(this);
         findViewById(R.id.btn_AES_key).setOnClickListener(this);
@@ -119,12 +116,6 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_md5_sign:
                 result="MD5信息摘要->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.MD5).toUpperCase();
-                break;
-            case R.id.btn_XOR_sign:
-                result= "XOR异或加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.XOR);
-                break;
-            case R.id.btn_XORs_sign:
-                result = "XOR异或解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.XOR);
                 break;
             case R.id.btn_AES_sign:
                 result ="AES加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.AES);

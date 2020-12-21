@@ -1804,117 +1804,6 @@ decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
 }
 
 /**
- * xOr加密
- */
-jstring
-encodeXOR(JNIEnv *env, jobject obj, jobject context, jstring src_) {
-    if (!verifySha1OfApk(env, context)) {
-        LOGD("XOr加密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
-    }
-//    LOGD("XOR加解密->异或加解密: 相同为假，不同为真");
-    const char keys[] = "jelly20180829";
-    //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-    int src_Len = strlen(srcChars);
-
-    char *chs = (char *) malloc(src_Len);
-    memset(chs, 0, src_Len);
-    memcpy(chs, srcChars, src_Len);
-
-//    LOGD("XOR加解密->对数据进行异或运算");
-    for (int i = 0; i < src_Len; i++) {
-        *chs = *chs ^ keys[i % strlen(keys)];
-        chs++;
-    }
-    chs = chs - src_Len;
-
-    LOGD("XOR加密->从jni释放数据指针");
-    env->DeleteLocalRef(src_);
-    free(srcChars);
-    if (src_Len <= 0) {
-        LOGD("XOR加密->加解密失败！");
-        LOGD("XOR加密->释放内存");
-        free(chs);
-        string err = string("XOR加密 加密失败!");
-        return env->NewStringUTF(err.c_str());
-    }
-    LOGD("XOR加密->chs=%s", chs);
-    LOGD("XOR加密->释放内存");
-    string chsString = string(chs);
-    free(chs);
-    //将密文进行base64
-    string base64 = base64Encode(chsString);
-    if (base64.empty()) {
-        LOGD("XOR加密->base64编码失败");
-        string err = string("XOR加密 base64编码失败！");
-        return env->NewStringUTF(err.c_str());
-    }
-//    LOGD("base64RSA=%s",base64RSA.c_str());
-    //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, base64.c_str());
-//    jstring result =env->NewStringUTF(base64RSA.c_str());
-    return result;
-}
-
-/**
- * xOr解密
- */
-jstring
-decodeXOR(JNIEnv *env, jobject obj, jobject context, jstring src_) {
-    if (!verifySha1OfApk(env, context)) {
-        LOGD("XOr解密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
-    }
-//    LOGD("XOR加解密->异或加解密: 相同为假，不同为真");
-    const char keys[] = "jelly20180829";
-    //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
-//    LOGD("srcChars=%s",srcChars);
-    //char* 转 string
-    string srcString = string(srcChars);
-//    LOGD("srcString=%s",srcString.c_str());
-    LOGD("释放资源->src_");
-    env->DeleteLocalRef(src_);
-    free(srcChars);
-    //decode
-    string decodeBase64 = base64Decode(srcString);
-    if (decodeBase64.empty()) {
-        LOGD("XOR解密->base64解密失败");
-        string err = string("XOR解密 base64解密失败！");
-        return env->NewStringUTF(err.c_str());
-    }
-    LOGD("decodeBase64=%s", decodeBase64.c_str());
-    int src_Len = decodeBase64.length();
-
-    char *chs = (char *) malloc(src_Len);
-    memset(chs, 0, src_Len);
-    memcpy(chs, decodeBase64.c_str(), src_Len);
-
-//    LOGD("XOR加解密->对数据进行异或运算");
-    for (int i = 0; i < src_Len; i++) {
-        *chs = *chs ^ keys[i % strlen(keys)];
-        chs++;
-    }
-    chs = chs - src_Len;
-
-    if (src_Len <= 0) {
-        LOGD("XOR解密->加解密失败！");
-        LOGD("XOR解密->释放内存");
-        free(chs);
-        char *err = "XOR解密 加解密失败！";
-        return CStr2Jstring(env, err);
-    }
-
-    jstring result = CStr2Jstring(env, chs);
-    LOGD("XOR解密->释放内存");
-    free(chs);
-//    jstring result =env->NewStringUTF(base64RSA.c_str());
-    return result;
-}
-
-/**
  * MD5加密
  */
 jstring
@@ -2033,8 +1922,6 @@ static JNINativeMethod getMethods[] = {
         {"decryptRSA",          "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSA},
         {"encodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) encryptByRSAPriKey},
         {"decodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSAPubKey},
-        {"encodeXOR",           "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeXOR},
-        {"decodeXOR",           "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) decodeXOR},
         {"md5",                 "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) md5},
         {"sha1OfApk",           "(Landroid/content/Context;)Ljava/lang/String;",                                     (void *) getSha1OfApk},
         {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",                                    (void *) generateRSAKey},

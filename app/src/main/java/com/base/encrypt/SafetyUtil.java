@@ -37,7 +37,6 @@ public class SafetyUtil {
 	public static final int RSA_PRIVATEKEY=9;//私钥解密
 	public static final int RSA_SIGN=10;//RSA签名
 	public static final int RSA_VERIFY=11;//RSA验证签名
-	public static final int XOR=12;//XOR
 	private static int count = 0;
 	private JniUtils jni= new JniUtils();
 	/**
@@ -514,9 +513,6 @@ public class SafetyUtil {
 			case RSA_PRIVATEKEY://RSA私钥解密
 				sign = jni.decodeByRSAPriKey(context.getApplicationContext(),source);
 				break;
-			case XOR:
-				sign = jni.decodeXOR(context.getApplicationContext(),source);
-				break;
 			default:
 				sign = "";
 				break;
@@ -573,9 +569,6 @@ public class SafetyUtil {
 			case RSA_PUBKEY://RSA公钥加密
 				sign = jni.encodeByRSAPubKey(context, source);
 //				sign=new String(RSA_PUBKEY);
-				break;
-			case XOR:
-				sign = jni.encodeXOR(context, source);
 				break;
 			default:
 				sign = "";

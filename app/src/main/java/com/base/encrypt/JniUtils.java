@@ -187,21 +187,6 @@ public class JniUtils {
     public native String decodeByRSAPubKey(Context context, String src,String publicKey);
 
     /**
-     * 异或加密
-     *
-     * @param src
-     * @return
-     */
-    public native String encodeXOR(Context context,String src);
-    /**
-     * 异或加解密
-     *
-     * @param src
-     * @return
-     */
-    public native String decodeXOR(Context context,String src);
-
-    /**
      * MD5编码
      *
      * @param src
