@@ -2,7 +2,6 @@ package com.base.encrypt;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -352,8 +351,7 @@ public class SafetyUtil {
 		Log.i("SafetyUtil", "签名加密前:"+source);
 //		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
 //		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
-		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
-		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		String sign=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
 		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -408,7 +406,7 @@ public class SafetyUtil {
 		Log.i("SafetyUtil", "解密前:"+source);
 		//AESEncrypt
 //		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
-		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		String sign=jni.decryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
 		Log.i("SafetyUtil", "解密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -427,8 +425,7 @@ public class SafetyUtil {
 		Log.i("SafetyUtil", "签名加密前:"+source);
 //		byte[] su=jni.encryptByAESEncrypt(context.getApplicationContext(),source.getBytes(), key.getBytes());
 //		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
-		byte[] su=jni.encryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
-		String sign=Base64.encodeToString(su,Base64.NO_WRAP);
+		String sign=jni.encryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
 		Log.i("SafetyUtil", "签名加密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -483,7 +480,7 @@ public class SafetyUtil {
 		Log.i("SafetyUtil", "解密前:"+source);
 		//AESEncrypt
 //		String sign=new String(jni.decryptByAESEncrypt(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
-		String sign=new String(jni.decryptAESCipher(context.getApplicationContext(),Base64.decode(source,Base64.NO_WRAP), key.getBytes()));
+		String sign=jni.decryptAESCipher(context.getApplicationContext(),source.getBytes(), key.getBytes());
 		Log.i("SafetyUtil", "解密后:"+sign);
 		return sign;
 		//return MD5(stringBuffer.toString()).toUpperCase();
@@ -498,14 +495,7 @@ public class SafetyUtil {
 		String sign;
 		switch (type) {
 			case AES:
-				byte[] AES;
-//				字符串不是Base64 不需要Base64解码
-				if (isBase64(source)){
-					AES = jni.decodeByAESEncrypt(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
-				}else {
-					AES = jni.decodeByAESEncrypt(context.getApplicationContext(),source.getBytes());
-				}
-				sign = new String(AES);
+				sign = jni.decodeByAESEncrypt(context.getApplicationContext(),source.getBytes());
 				break;
 			case RSA_PUBKEY://RSA公钥解密
 				sign = jni.decodeByRSAPubKey(context.getApplicationContext(),source);
@@ -560,8 +550,7 @@ public class SafetyUtil {
 				sign = jni.encodeBySHA512(context, source);
 				break;
 			case AES:
-				byte[] AES = jni.encodeByAESEncrypt(context, source.getBytes());
-				sign = Base64.encodeToString(AES,Base64.NO_WRAP);
+				sign = jni.encodeByAESEncrypt(context, source.getBytes());
 				break;
 			case RSA_PRIVATEKEY://RSA私钥加密
 				sign = jni.encodeByRSAPriKey(context, source);

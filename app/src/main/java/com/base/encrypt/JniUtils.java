@@ -65,7 +65,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] encodeByAESEncrypt(Context context, byte[] src);
+    public native String encodeByAESEncrypt(Context context, byte[] src);
 
     /**
      * AES的Encrypt解密
@@ -73,14 +73,14 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] decodeByAESEncrypt(Context context, byte[] src);
+    public native String decodeByAESEncrypt(Context context, byte[] src);
     /**
      * AES的Encrypt加密
      *
      * @param src
      * @return
      */
-    public native byte[] encryptByAESEncrypt(Context context, byte[] src, byte[] key);
+    public native String encryptByAESEncrypt(Context context, byte[] src, byte[] key);
 
     /**
      * AES的Encrypt解密
@@ -88,14 +88,14 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] decryptByAESEncrypt(Context context, byte[] src, byte[] key);
+    public native String decryptByAESEncrypt(Context context, byte[] src, byte[] key);
     /**
      * AES的Cipher加密
      *
      * @param src
      * @return
      */
-    public native byte[] encodeByAESCipher(Context context, byte[] src);
+    public native String encodeByAESCipher(Context context, byte[] src);
 
     /**
      * AES的Cipher解密
@@ -103,14 +103,14 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] decodeByAESCipher(Context context, byte[] src);
+    public native String decodeByAESCipher(Context context, byte[] src);
     /**
      * AES的Cipher加密
      *
      * @param src
      * @return
      */
-    public native byte[] encryptAESCipher(Context context, byte[] src, byte[] key);
+    public native String encryptAESCipher(Context context, byte[] src, byte[] key);
 
     /**
      * AES的Cipher解密
@@ -118,7 +118,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native byte[] decryptAESCipher(Context context, byte[] src, byte[] key);
+    public native String decryptAESCipher(Context context, byte[] src, byte[] key);
 
     /**
      * RSA公钥加密

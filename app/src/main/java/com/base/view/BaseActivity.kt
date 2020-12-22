@@ -8,17 +8,20 @@ import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.Rect
 import android.hardware.input.InputManager
 import android.os.*
-import androidx.appcompat.app.AppCompatActivity
 import android.util.AttributeSet
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import cn.jpush.android.api.JPushInterface
-import com.base.SystemBar.StatusBarUtil
 import com.base.appManager.AppSubject
 import com.base.appManager.BaseApplication
 import com.base.appManager.Observable
@@ -27,14 +30,8 @@ import com.base.applicationUtil.AppPrefs
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken
-import com.base.permission.PermissionUtils
-import com.base.toast.ToastUtils
-import com.jelly.jellybase.R
+import com.base.sofia.StatusBarUtil
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigText
-import com.mylhyl.circledialog.params.DialogParams
-import com.mylhyl.circledialog.params.TextParams
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -42,10 +39,13 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 /**
- * Created by Jelly on 2017/12/5.
+ * Created by Administrator on 2017/12/5.
  */
 @DebugLog
-abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope() {
+abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope()
+        ,SoftKeyboardManager.SoftKeyboardStateListener {
+    private var softKeyboardManager: SoftKeyboardManager?=null
+    private var frameLayout:FrameLayout?=null//最外层布局
     private lateinit var mUnbinder: Unbinder
     private var mRecevier: InnerRecevier? = null
     private var mFilter: IntentFilter? = null
@@ -63,11 +63,15 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
      */
     abstract fun getLayoutId(): Int
     override fun onCreate(savedInstanceState: Bundle?) {
-        //无title
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        // 全屏
-//        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
+            val result = fixOrientation()
+            com.base.log.DebugLog.i("onCreate fixOrientation when Oreo, result = $result")
+        }
+        //        //无title
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        // 全屏
+//        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
+//                WindowManager.LayoutParams. FLAG_FULLSCREEN);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
             val result = fixOrientation()
             com.base.log.DebugLog.i("onCreate fixOrientation when Oreo, result = $result")
@@ -76,13 +80,19 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         super.onCreate(savedInstanceState)
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
         if (Build.VERSION.SDK_INT > 9) {
-            val policy = StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build()
+            val policy =
+                    StrictMode.ThreadPolicy.Builder()
+                            .permitAll().build()
             StrictMode.setThreadPolicy(policy)
         }
         //====
         if (getLayoutId() > 0)
             setContentView(getLayoutId())
+        frameLayout?.let {
+            //监听SoftKeyboard的弹出与隐藏状态
+            softKeyboardManager = SoftKeyboardManager(it);
+            softKeyboardManager!!.addSoftKeyboardStateListener(this);
+        }
         mUnbinder = ButterKnife.bind(this)
         getExtra()
         mRecevier = InnerRecevier()
@@ -112,10 +122,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             for (inputDeviceId in inputDeviceIds) {
                 val inputDevice =
                         inputManager.getInputDevice(inputDeviceId) ?: continue
-                com.base.log.DebugLog.i("name=" + inputDevice.name)
-                com.base.log.DebugLog.i("getSources=" + (inputDevice.sources and InputDevice.SOURCE_KEYBOARD))
-                com.base.log.DebugLog.i("getKeyboardType=" + inputDevice.keyboardType)
-                com.base.log.DebugLog.i("isVirtual=" + inputDevice.isVirtual)
                 val sources = inputDevice.sources
                 if (!inputDevice.isVirtual
                         && sources and InputDevice.SOURCE_KEYBOARD == InputDevice.SOURCE_KEYBOARD
@@ -147,6 +153,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         }
     }
 
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent) //must store the new intent unless getIntent() will return the old one
@@ -160,16 +167,23 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
 
     }
 
+
     override fun setContentView(view: View) {
-        val frameLayout = FrameLayout(this)
-        frameLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT)
-        frameLayout.addView(view)
+        frameLayout = FrameLayout(this)
+        frameLayout!!.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        frameLayout!!.addView(view)
         super.setContentView(frameLayout)
         iniBar()
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
+    override fun onCreateView(
+            name: String,
+            context: Context,
+            attrs: AttributeSet
+    ): View? {
         if (!BaseApplication.isVampix()) { //不进行黑白化
             return super.onCreateView(name, context, attrs)
         }
@@ -208,7 +222,8 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         this.setContentView(views)
     }
 
-    private fun iniBar() { //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
+    private fun iniBar() {
+        //// ↓↓↓↓↓内容入侵状态栏。↓↓↓↓↓
 //这里注意下 因为在评论区发现有网友调用setRootViewFitsSystemWindows 里面 winContent.getChildCount()=0 导致代码无法继续
 //是因为你需要在setContentView之后才可以调用 setRootViewFitsSystemWindows
 //当FitsSystemWindows设置 true 时，会在屏幕最上方预留出状态栏高度的 padding
@@ -217,7 +232,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         StatusBarUtil.setTranslucentStatus(this)
         //一般的手机的状态栏文字和图标都是白色的, 可如果你的应用也是纯白色的, 或导致状态栏文字看不清
 //所以如果你是这种情况,请使用以下代码, 设置状态使用深色文字图标风格, 否则你可以选择性注释掉这个if内容
-        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) { //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+        if (!StatusBarUtil.setStatusBarDarkTheme(
+                        this,
+                        true
+                )
+        ) { //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
 //这样半透明+白=灰, 状态栏的文字能看得清
             StatusBarUtil.setStatusBarColor(this, 0x55000000)
         }
@@ -228,9 +247,14 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         private get() {
             var isTranslucentOrFloating = false
             try {
-                val styleableRes = Class.forName("com.android.internal.R\$styleable").getField("Window")[null] as IntArray
+                val styleableRes =
+                        Class.forName("com.android.internal.R\$styleable")
+                                .getField("Window")[null] as IntArray
                 val ta = obtainStyledAttributes(styleableRes)
-                val m = ActivityInfo::class.java.getMethod("isTranslucentOrFloating", TypedArray::class.java)
+                val m = ActivityInfo::class.java.getMethod(
+                        "isTranslucentOrFloating",
+                        TypedArray::class.java
+                )
                 m.isAccessible = true
                 isTranslucentOrFloating = m.invoke(null, ta) as Boolean
                 m.isAccessible = false
@@ -242,9 +266,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
 
     private fun fixOrientation(): Boolean {
         try {
-            val field = Activity::class.java.getDeclaredField("mActivityInfo")
+            val field =
+                    Activity::class.java.getDeclaredField("mActivityInfo")
             field.isAccessible = true
-            val o = field[this] as ActivityInfo
+            val o =
+                    field[this] as ActivityInfo
             o.screenOrientation = -1
             field.isAccessible = false
             return true
@@ -286,17 +312,22 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             circleDialog!!.dismiss()
             circleDialog = null
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            PermissionUtils.REQUEST_CODE_SETTING -> {
-                ToastUtils.showShort(this, R.string.message_setting_comeback)
-            }
+        softKeyboardManager?.let {
+            it.removeSoftKeyboardStateListener(this);
+            it.dispose();
         }
     }
 
+    //    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode,resultCode,data);
+//        switch (requestCode) {
+//            case REQUEST_CODE_SETTING: {
+//                ToastUtils.showShort(this, R.string.message_setting_comeback);
+//                break;
+//            }
+//        }
+//    }
     override fun onResume() {
         super.onResume()
         JPushInterface.onResume(this)
@@ -316,16 +347,69 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     override fun onStop() {
         super.onStop()
     }
+    override fun onSoftKeyboardOpened(keyboardHeightInPx: Int) {
+//        if (SoftKeyboardManager.DEBUG) {
+//            Log.d(
+//                    "BaseActivity",
+//                    "keyboardOpened, keyboardHeightInPx = $keyboardHeightInPx"
+//            )
+//        }
+        val rect = Rect()
+        //获取root在窗体的可视区域
+        frameLayout!!.getWindowVisibleDisplayFrame(rect)
+        //获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
+        val rootInvisibleHeight: Int = frameLayout!!.getRootView().getHeight() - rect.bottom
+        //若不可视区域高度大于100，则键盘显示
+        if (rootInvisibleHeight > 100) {
+            val location = IntArray(2)
+            //获取focusedView在窗体的坐标
+            val focusedView = currentFocus
+            if (focusedView is EditText) {
+                focusedView!!.getLocationInWindow(location)
+                val focusedViewPosY = location[1] + focusedView.height
+//                if (SoftKeyboardManager.DEBUG) {
+//                    Log.d(
+//                            "BaseActivity",
+//                            "rect.bottom= " + rect.bottom + ", focusedViewPosY = " + focusedViewPosY
+//                    )
+//                    Log.i(
+//                            "BaseActivity",
+//                            "focused view need scroll up or down"
+//                    )
+//                }
+                val srollHeight = focusedViewPosY - rect.bottom
+//                if (SoftKeyboardManager.DEBUG) {
+//                    Log.i(
+//                            "BaseActivity",
+//                            "srollHeight = $srollHeight"
+//                    )
+//                }
+                if (srollHeight > 0) { //焦点被输入法遮挡,View向上滚动
+                    frameLayout!!.scrollTo(0, srollHeight)
+                }
+            }
+        }
+    }
 
+    override fun onSoftKeyboardClosed() {
+//        if (SoftKeyboardManager.DEBUG) {
+//            Log.d("BaseActivity", "keyboardClosed ")
+//        }
+        //输入法退出，root滚动到初始位置
+        frameLayout!!.scrollTo(0, 0)
+    }
     /**
      * 广播接收者
      */
     internal inner class InnerRecevier : BroadcastReceiver() {
-        private val SYSTEM_DIALOG_REASON_KEY = "reason"
+        val SYSTEM_DIALOG_REASON_KEY = "reason"
         val SYSTEM_DIALOG_REASON_GLOBAL_ACTIONS = "globalactions"
         val SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps"
         val SYSTEM_DIALOG_REASON_HOME_KEY = "homekey"
-        override fun onReceive(context: Context, intent: Intent) {
+        override fun onReceive(
+                context: Context,
+                intent: Intent
+        ) {
             val action = intent.action
             if (action == Intent.ACTION_CLOSE_SYSTEM_DIALOGS) {
                 val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
@@ -333,7 +417,8 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                     if (reason == SYSTEM_DIALOG_REASON_HOME_KEY) { // 短按home键
                         AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISHOME, true)
                     } else if (reason
-                            == SYSTEM_DIALOG_REASON_RECENT_APPS) { // 长按home键
+                            == SYSTEM_DIALOG_REASON_RECENT_APPS
+                    ) { // 长按home键
                     }
                 }
             } else if (action == IntentAction.TOKEN_NOT_EXIST) { //token不存在
@@ -361,7 +446,8 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                                     .setTitle("登录过期！")
                                     .configText { params ->
                                         params.gravity = Gravity.LEFT
-                                        params.textColor = Color.parseColor("#FF1F50F1")
+                                        params.textColor =
+                                                Color.parseColor("#FF1F50F1")
                                         params.padding = intArrayOf(20, 0, 20, 0)
                                     }
                                     .setText("登录过期或异地登录，请重新登录!")
@@ -369,11 +455,14 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                                         circleDialog = null
                                         GlobalToken.removeToken()
                                         AppSubject.getInstance().detachAll()
-                                        val intent1 = Intent()
+                                        val intent1 =
+                                                Intent()
                                         //intent.setClass(this, LoginActivity.class);
                                         intent1.action = IntentAction.ACTION_LOGIN
-                                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        intent1.addFlags(
+                                                Intent.FLAG_ACTIVITY_NEW_TASK
+                                                        or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                        )
                                         BaseApplication.getInstance().startActivity(intent1)
                                     }
                             circleDialog!!.show(supportFragmentManager)
@@ -389,18 +478,20 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         super.finish()
     }
 
-    override fun onUpdate(observable: Observable<Any>, data: Any) { // TODO Auto-generated method stub
-        this.finish()
-    }
-
     override fun dispatchKeyEvent(event: KeyEvent): Boolean { //设置接收到回车事件时隐藏软键盘
         if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
-            val manager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            val manager =
+                    getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             val focus = currentFocus
             manager.hideSoftInputFromWindow(
                     focus?.windowToken,  //                            editText == null ? null : editText.getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS)
+                    InputMethodManager.HIDE_NOT_ALWAYS
+            )
         }
         return super.dispatchKeyEvent(event)
+    }
+
+    override fun onUpdate(observable: Observable<Any>, data: Any) {
+        this.finish()
     }
 }

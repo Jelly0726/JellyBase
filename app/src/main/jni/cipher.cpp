@@ -501,18 +501,16 @@ encodeBySHA512(JNIEnv *env, jobject obj, jobject context, jstring src_) {
  * @param _key
  * @return
  */
-jbyteArray
+jstring
 encryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jbyteArray _key) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("AES加密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        return CStr2Jstring(env, sha1_sign_err);
     }
 
 //    LOGD("AES加密->对称密钥，也就是说加密和解密用的是同一个密钥");
 //    const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
-    jbyte *keys = env->GetByteArrayElements(_key, NULL);
+    jbyte *keyCars = env->GetByteArrayElements(_key, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
     jsize src_Len = env->GetArrayLength(src_);
 
@@ -529,9 +527,10 @@ encryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
 //  参数type通常通过函数类型来提供参数，如EVP_des_cbc函数的形式 如果参数impl为NULL，那么就会使用缺省的实现算法
 //    参数key是用来加密的对称密钥，iv参数是初始化向量（如果需要的话）
 //    EVP_EncryptInit_ex(&ctx, EVP_aes_128_cbc(), NULL, (const unsigned char *) keys, iv);
-    EVP_EncryptInit_ex(&ctx, EVP_aes_128_ecb(), NULL, (const unsigned char *) keys, NULL);
+    EVP_EncryptInit_ex(&ctx, EVP_aes_128_ecb(), NULL,
+                       reinterpret_cast<const unsigned char *>(keyCars), NULL);
 //    LOGD("AES加密->对数据进行加密运算");
-    EVP_EncryptUpdate(&ctx, out, &outlen, (const unsigned char *) src, src_Len);
+    EVP_EncryptUpdate(&ctx, out, &outlen, reinterpret_cast<const unsigned char *>(src), src_Len);
     cipherText_len = outlen;
 
 //    LOGD("AES加密->结束加密运算");
@@ -542,16 +541,15 @@ encryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
     EVP_CIPHER_CTX_cleanup(&ctx);
 
     LOGD("AES加密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(_key, keys, 0);
+    env->ReleaseByteArrayElements(_key, keyCars, 0);
     env->ReleaseByteArrayElements(src_, src, 0);
-//    LOGD("out->%s",out);
-    jbyteArray cipher = env->NewByteArray(cipherText_len);
-//    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
-    env->SetByteArrayRegion(cipher, 0, cipherText_len, (jbyte *) out);
+    LOGD("AES加密->out=%s", out);
+    string base64 = base64Encode(reinterpret_cast<const char *>(out));
+    jstring result = CStr2Jstring(env, base64.c_str());
     LOGD("AES加密->释放内存");
     free(out);
 
-    return cipher;
+    return result;
 }
 
 /**
@@ -563,19 +561,18 @@ encryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
  * @param _key
  * @return
  */
-jbyteArray
+jstring
 decryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jbyteArray _key) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("AES解密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        return CStr2Jstring(env, sha1_sign_err);
     }
 //    LOGD("AES解密->对称密钥，也就是说加密和解密用的是同一个密钥");
 //    const unsigned char *iv = (const unsigned char *) "gjdljgaj748564df";
-    jbyte *keys = env->GetByteArrayElements(_key, NULL);
+    jbyte *keyCars = env->GetByteArrayElements(_key, NULL);
     jbyte *src = env->GetByteArrayElements(src_, NULL);
-    jsize src_Len = env->GetArrayLength(src_);
+    string srcString = base64Decode(reinterpret_cast<const char *>(src));
+    int src_Len = srcString.length();
 
     int outlen = 0, plaintext_len = 0;
 
@@ -586,9 +583,11 @@ decryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
     EVP_CIPHER_CTX_init(&ctx);
 //    LOGD("AES解密->指定解密算法，初始化解密key/iv");
 //    EVP_DecryptInit_ex(&ctx, EVP_aes_128_cbc(), NULL, (const unsigned char *) keys, iv);
-    EVP_DecryptInit_ex(&ctx, EVP_aes_128_ecb(), NULL, (const unsigned char *) keys, NULL);
+    EVP_DecryptInit_ex(&ctx, EVP_aes_128_ecb(), NULL,
+                       reinterpret_cast<const unsigned char *>(keyCars), NULL);
 //    LOGD("AES解密->对数据进行解密运算");
-    EVP_DecryptUpdate(&ctx, out, &outlen, (const unsigned char *) src, src_Len);
+    EVP_DecryptUpdate(&ctx, out, &outlen,
+                      reinterpret_cast<const unsigned char *>(srcString.c_str()), src_Len);
     plaintext_len = outlen;
 
 //    LOGD("AES解密->结束解密运算");
@@ -599,24 +598,20 @@ decryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
     EVP_CIPHER_CTX_cleanup(&ctx);
 
     LOGD("AES解密->从jni释放数据指针");
-    env->ReleaseByteArrayElements(_key, keys, 0);
+    env->ReleaseByteArrayElements(_key, keyCars, 0);
     env->ReleaseByteArrayElements(src_, src, 0);
-
     if (plaintext_len <= 0) {
         LOGD("AES解密->解密失败！");
         LOGD("AES解密->释放内存");
         free(out);
         char *decode_err = "AES解密->解密失败！";
-        jbyteArray byteArray = env->NewByteArray(strlen(decode_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(decode_err), (jbyte *) decode_err);
-        return byteArray;
+        return CStr2Jstring(env, decode_err);
     }
-    jbyteArray cipher = env->NewByteArray(plaintext_len);
-//    LOGD("AES->在堆中分配ByteArray数组对象成功，将拷贝数据到数组中");
-    env->SetByteArrayRegion(cipher, 0, plaintext_len, (jbyte *) out);
+    LOGD("AES解密->out=%s", out);
+    jstring result = CStr2Jstring(env, reinterpret_cast<const char *>(out));
     LOGD("AES解密->释放内存");
     free(out);
-    return cipher;
+    return result;
 }
 
 /**
@@ -628,15 +623,13 @@ decryptByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, 
  * @param _key
  * @return
  */
-jbyteArray
+jstring
 encryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jbyteArray _key) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("AES加密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        return CStr2Jstring(env, sha1_sign_err);
     }
-    jbyte *keys = env->GetByteArrayElements(_key, 0);
+    jbyte *keyCars = env->GetByteArrayElements(_key, 0);
     jbyte *vItem = env->GetByteArrayElements(src_, 0);
     jsize inLen = env->GetArrayLength(src_);
     // 待加密的数据
@@ -656,7 +649,8 @@ encryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jby
     // 创建加密上下文
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     // 初始化加密上下文
-    EVP_CipherInit_ex(ctx, EVP_aes_128_ecb(), NULL, reinterpret_cast<const unsigned char *>(keys),
+    EVP_CipherInit_ex(ctx, EVP_aes_128_ecb(), NULL,
+                      reinterpret_cast<const unsigned char *>(keyCars),
                       NULL, 1);
     // 加密数据
     EVP_CipherUpdate(ctx, encData, &outlen, reinterpret_cast<const unsigned char *>(vItem), inLen);
@@ -672,9 +666,11 @@ encryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jby
     // base64编码 使用openssl base64编码后 在java成不再编码，调用openssl base64解码会失败 具体原因不明
 //    char *baseEnc = base64Encode(reinterpret_cast<const char *>(encData), encLen);
 //    LOGW("encrypted : %s\n", baseEnc);
-    jbyteArray result = NULL;//下面一系列操作把char *转成jbyteArray
-    result = env->NewByteArray(encLen);
-    env->SetByteArrayRegion(result, 0, encLen, (jbyte *) encData);
+    string base64 = base64Encode(reinterpret_cast<const char *>(encData));
+    LOGW("AES加密->释放内存");
+    env->ReleaseByteArrayElements(_key, keyCars, 0);
+    env->ReleaseByteArrayElements(src_, vItem, 0);
+    jstring result = CStr2Jstring(env, base64.c_str());
     return result;
 }
 
@@ -687,17 +683,16 @@ encryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jby
  * @param _key
  * @return
  */
-jbyteArray
+jstring
 decryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jbyteArray _key) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("AES解密->apk-sha1值验证不通过");
-        jbyteArray byteArray = env->NewByteArray(strlen(sha1_sign_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(sha1_sign_err), (jbyte *) sha1_sign_err);
-        return byteArray;
+        return CStr2Jstring(env, sha1_sign_err);
     }
-    jbyte *keys = env->GetByteArrayElements(_key, 0);
+    jbyte *keyCars = env->GetByteArrayElements(_key, 0);
     jbyte *src = env->GetByteArrayElements(src_, 0);
-    jsize src_Len = env->GetArrayLength(src_);
+    string srcString = base64Decode(reinterpret_cast<const char *>(src));
+    int src_Len = srcString.length();
     LOGW("src %s", src);
     // base64解码
 //    char *encData1 = base64Decode(reinterpret_cast<char *>(src), src_Len);
@@ -713,10 +708,11 @@ decryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jby
     // 创建解密上下文
     EVP_CIPHER_CTX *ctx2 = EVP_CIPHER_CTX_new();
     // 初始化解密
-    EVP_CipherInit_ex(ctx2, EVP_aes_128_ecb(), NULL, reinterpret_cast<const unsigned char *>(keys),
+    EVP_CipherInit_ex(ctx2, EVP_aes_128_ecb(), NULL,
+                      reinterpret_cast<const unsigned char *>(keyCars),
                       NULL, 0);
     // 执行解密
-    EVP_CipherUpdate(ctx2, decData, &outlen, (const unsigned char *) src, src_Len);
+    EVP_CipherUpdate(ctx2, decData, &outlen, (const unsigned char *) srcString.c_str(), src_Len);
     // 设置长度
     decLen = outlen;
     // 结束解密
@@ -728,23 +724,24 @@ decryptAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_, jby
     // 设置字符串结尾标识
     decData[decLen] = '\0';
     LOGW("decrypt %s", decData);
+    LOGW("AES解密->释放内存");
+    env->ReleaseByteArrayElements(_key, keyCars, 0);
+    env->ReleaseByteArrayElements(src_, src, 0);
     if (decLen <= 0) {
         LOGD("AES解密->解密失败！");
         char *decode_err = "AES解密->解密失败！";
-        jbyteArray byteArray = env->NewByteArray(strlen(decode_err));
-        env->SetByteArrayRegion(byteArray, 0, strlen(decode_err), (jbyte *) decode_err);
-        return byteArray;
+        return CStr2Jstring(env, decode_err);
     }
-    jbyteArray result = NULL;//下面一系列操作把char *转成jbyteArray
-    result = env->NewByteArray(decLen);
-    env->SetByteArrayRegion(result, 0, decLen, (jbyte *) decData);
+    jstring result = CStr2Jstring(env, reinterpret_cast<const char *>(decData));
+    LOGW("AES解密->释放decData");
+    free(decData);
     return result;
 }
 
 /**
  * 使用AES的Cipher加密
  */
-jbyteArray encodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring encodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ = env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte *) key);
@@ -754,7 +751,7 @@ jbyteArray encodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArr
 /**
  * 使用AES的Cipher解密
  */
-jbyteArray decodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring decodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ = env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte *) key);
@@ -764,7 +761,7 @@ jbyteArray decodeByAESCipher(JNIEnv *env, jobject obj, jobject context, jbyteArr
 /**
  * 使用AES的Encrypt加密
  */
-jbyteArray encodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring encodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ = env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte *) key);
@@ -774,7 +771,7 @@ jbyteArray encodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteAr
 /**
  * 使用AES的Encrypt解密
  */
-jbyteArray decodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
+jstring decodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     jbyteArray keys_ = NULL;//下面一系列操作把char *转成jbyteArray
     keys_ = env->NewByteArray(strlen(key));
     env->SetByteArrayRegion(keys_, 0, strlen(key), (jbyte *) key);
@@ -1405,7 +1402,7 @@ encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src, jstring ba
     env->DeleteLocalRef(src);
 //    LOGD("rsaResult=%s",rsaResult.c_str());
     //将密文进行base64
-    string base64RSA = base64Encode(rsaResult);
+    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
         return NULL;
     }
@@ -1449,12 +1446,10 @@ decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src,
 //    char *srcChars = (char *)env->GetStringUTFChars(src,0);
     LOGD("srcChars=%s", srcChars);
     //char* 转 string
-    string srcString = string(srcChars);
-    LOGD("srcString=%s", srcString.c_str());
+    //decode
+    string decodeBase64RSA = base64Decode(srcChars);
     //释放
     env->ReleaseStringUTFChars(src, srcChars);
-    //decode
-    string decodeBase64RSA = base64Decode(srcString);
     if (decodeBase64RSA.empty()) {
         LOGD("RSA解密->apk-sha1值验证不通过");
         string err = string("RSA base64解密失败！");
@@ -1516,7 +1511,7 @@ encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     }
 //    LOGD("rsaResult=%s",rsaResult.c_str());
     //将密文进行base64
-    string base64RSA = base64Encode(rsaResult);
+    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
         LOGD("RSA公钥加密->base64编码失败");
         string err = string("RSA base64编码失败！");
@@ -1553,15 +1548,12 @@ decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     char *srcChars = Jstring2CStr(env, src_);
 //    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
 //    LOGD("srcChars=%s",srcChars);
-    //char* 转 string
-    string srcString = string(srcChars);
-//    LOGD("srcString=%s",srcString.c_str());
+    //decode
+    string decodeBase64RSA = base64Decode(srcChars);
     //释放
     env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("释放资源->src_");
     env->DeleteLocalRef(src_);
-    //decode
-    string decodeBase64RSA = base64Decode(srcString);
     if (decodeBase64RSA.empty()) {
         LOGD("RSA解密->base64解密失败");
         string err = string("RSA base64解密失败！");
@@ -1621,7 +1613,7 @@ encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     }
 //    LOGD("rsaResult=%s",rsaResult.c_str());
     //将密文进行base64
-    string base64RSA = base64Encode(rsaResult);
+    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
         LOGD("RSA 私钥加密->base64编码失败");
         string err = string("RSA base64编码失败！");
@@ -1658,15 +1650,12 @@ decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     char *srcChars = Jstring2CStr(env, src_);
 //    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
 //    LOGD("srcChars=%s",srcChars);
-    //char* 转 string
-    string srcString = string(srcChars);
-//    LOGD("srcString=%s",srcString.c_str());
+    //decode
+    string decodeBase64RSA = base64Decode(srcChars);
     //释放
     env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("释放资源->src_");
     env->DeleteLocalRef(src_);
-    //decode
-    string decodeBase64RSA = base64Decode(srcString);
     if (decodeBase64RSA.empty()) {
         LOGD("RSA 公钥解密->base64解密失败");
         string err = string("RSA base64解密失败！");
@@ -1732,7 +1721,7 @@ encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
     }
 //    LOGD("rsaResult=%s",rsaResult.c_str());
     //将密文进行base64
-    string base64RSA = base64Encode(rsaResult);
+    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
         LOGD("RSA 私钥加密->base64编码失败");
         string err = string("RSA base64编码失败！");
@@ -1775,15 +1764,12 @@ decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
     char *srcChars = Jstring2CStr(env, src_);
 //    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
 //    LOGD("srcChars=%s",srcChars);
-    //char* 转 string
-    string srcString = string(srcChars);
-//    LOGD("srcString=%s",srcString.c_str());
+    //decode
+    string decodeBase64RSA = base64Decode(srcChars);
     //释放
     env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("释放资源->src_");
     env->DeleteLocalRef(src_);
-    //decode
-    string decodeBase64RSA = base64Decode(srcString);
     if (decodeBase64RSA.empty()) {
         LOGD("RSA 公钥解密->base64解密失败");
         string err = string("RSA base64解密失败！");
@@ -1906,14 +1892,14 @@ static JNINativeMethod getMethods[] = {
         {"encodeBySHA256",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA256},
         {"encodeBySHA384",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA384},
         {"encodeBySHA512",      "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeBySHA512},
-        {"encodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByAESEncrypt},
-        {"decodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) decodeByAESEncrypt},
-        {"encryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",                                                 (void *) encryptByAESEncrypt},
-        {"decryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",                                                 (void *) decryptByAESEncrypt},
-        {"encodeByAESCipher",   "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByAESCipher},
-        {"decodeByAESCipher",   "(Landroid/content/Context;[B)[B",                                                   (void *) decodeByAESCipher},
-        {"encryptAESCipher",    "(Landroid/content/Context;[B[B)[B",                                                 (void *) encryptAESCipher},
-        {"decryptAESCipher",    "(Landroid/content/Context;[B[B)[B",                                                 (void *) decryptAESCipher},
+        {"encodeByAESEncrypt",  "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeByAESEncrypt},
+        {"decodeByAESEncrypt",  "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) decodeByAESEncrypt},
+        {"encryptByAESEncrypt", "(Landroid/content/Context;[B[B)Ljava/lang/String;",                                 (void *) encryptByAESEncrypt},
+        {"decryptByAESEncrypt", "(Landroid/content/Context;[B[B)Ljava/lang/String;",                                 (void *) decryptByAESEncrypt},
+        {"encodeByAESCipher",   "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeByAESCipher},
+        {"decodeByAESCipher",   "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) decodeByAESCipher},
+        {"encryptAESCipher",    "(Landroid/content/Context;[B[B)Ljava/lang/String;",                                 (void *) encryptAESCipher},
+        {"decryptAESCipher",    "(Landroid/content/Context;[B[B)Ljava/lang/String;",                                 (void *) decryptAESCipher},
         {"encodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeByRSAPubKey},
         {"decodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) decodeByRSAPriKey},
         {"encodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeByRSAPriKey},

@@ -17,17 +17,17 @@ include_directories(${openssl_dir}/alley/include)
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-             cipher
+        cipher
 
-             # Sets the library as a shared library.
-             SHARED
+        # Sets the library as a shared library.
+        SHARED
 
-             # Provides a relative path to your source file(s).
-             src/main/jni/cipher.cpp src/main/jni/endorse.cpp)
+        # Provides a relative path to your source file(s).
+        src/main/jni/cipher.cpp src/main/jni/endorse.cpp)
 
 #动态方式加载
-add_library(openssl SHARED IMPORTED )
-add_library(ssl SHARED IMPORTED )
+add_library(openssl SHARED IMPORTED)
+add_library(ssl SHARED IMPORTED)
 #引入第三方.so库
 set_target_properties(openssl PROPERTIES IMPORTED_LOCATION ${openssl_dir}/alley/lib/${ANDROID_ABI}/libcrypto.so)
 set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${openssl_dir}/alley/lib/${ANDROID_ABI}/libssl.so)
@@ -39,22 +39,22 @@ set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${openssl_dir}/alley/lib/
 # completing its build.
 
 find_library( # Sets the name of the path variable.
-              log-lib
+        log-lib
 
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
-              log )
+        # Specifies the name of the NDK library that
+        # you want CMake to locate.
+        log)
 
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       cipher
-                       openssl
-                       ssl
-                       android
+        cipher
+        openssl
+        ssl
+        android
 
-                       # Links the target library to the log library
-                       # included in the NDK.
-                       ${log-lib} )
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib})
