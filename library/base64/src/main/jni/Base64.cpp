@@ -1,6 +1,7 @@
 //
 // Created by trs on 16-10-24.
 //
+#include <jni.h>
 #include "Base64.h"
 
 /**
@@ -89,7 +90,7 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
         tempLength = length;
 
     sprintf(log, "tempLength:%d", tempLength);
-    LOGV(log);
+    LOGD(log);
 
     //当数据应该有'='存在时，数据长度少于4，则无法被解码
     //反之，不应该存在'='时，数据长度少于2，则同上
@@ -110,7 +111,7 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
     }
 
     sprintf(log, "endSpace:%d", endSpace);
-    LOGV(log);
+    LOGD(log);
 
     //计算换行符个数
     int enters = 0;
@@ -119,7 +120,7 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
     }
 
     sprintf(log, "enters:%d", enters);
-    LOGV(log);
+    LOGD(log);
 
     tempLength -= endSpace;
     decodeLength = tempLength;
@@ -131,7 +132,7 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
     int remainder = 0;//记录余数（若存在）
 
     sprintf(log, "tempLength--:%d", tempLength);
-    LOGV(log);
+    LOGD(log);
 
     /*
      * 多判断一层，存在padding时，解码数据不足4位且不能被4整除的throw exception，
@@ -172,7 +173,7 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
         decodeLength = decodeLength * DECODE_CONST;
     }
     sprintf(log, "decodeLength--:%d", decodeLength);
-    LOGV(log);
+    LOGD(log);
     return decodeLength;
 }
 
@@ -199,9 +200,9 @@ Flags *getFlags(int flag) {
 
 //    char log[256];
 //    sprintf(log, "flag:%d", flag);
-//    LOGV(log);
+//    LOGD(log);
 //    sprintf(log, "padding:%d , wrap:%d , crlf:%d , safe:%d", flags->isPadding, flags->isWrap, flags->isCRLF, flags->isUrlSafe);
-//    LOGV(log);
+//    LOGD(log);
 
     return flags;
 }

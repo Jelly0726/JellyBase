@@ -1,6 +1,5 @@
 package vite.base64;
 
-import android.support.annotation.IntDef;
 
 /**
  * Created by trs on 16-10-24.

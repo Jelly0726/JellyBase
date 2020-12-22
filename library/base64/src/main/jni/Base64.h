@@ -25,10 +25,20 @@ extern "C" {
 #undef LEN_DEFAULT
 #define LEN_DEFAULT -2147483648L
 
-#define LOG_TAG "vite.Base64"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO ,LOG_TAG,__VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR ,LOG_TAG,__VA_ARGS__)
-#define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE ,LOG_TAG,__VA_ARGS__)
+#if 1
+#define TAG "Base64"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+#define LOGF(...) __android_log_print(ANDROID_LOG_FATAL, TAG ,__VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG ,__VA_ARGS__)
+#else
+#define LOGI(...)
+#define LOGD(...)
+#define LOGE(...)
+#define LOGF(...)
+#define LOGW(...)
+#endif
 
 /* 每76个字符换行，每次解码生成4个字符，生成19组数组后即可换行 */
 #define LINE_GROUPS 19
