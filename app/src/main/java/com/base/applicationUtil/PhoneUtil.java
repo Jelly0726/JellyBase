@@ -16,11 +16,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.base.Utils.StringUtil;
 import com.base.toast.ToastUtils;
@@ -161,7 +162,7 @@ public class PhoneUtil {
      * permissions 权限数组
      * return true-表示没有改权限  false-表示权限已开启
      */
-    public static boolean lacksPermissions(Context mContexts,List<String> permissions) {
+    public static boolean lacksPermissions(Context mContexts, List<String> permissions) {
         for (String permission : permissions) {
             if (lacksPermission(mContexts,permission)) {
                 return true;
@@ -183,7 +184,7 @@ public class PhoneUtil {
      * @param isDirect 是否直接拨打（直接拨打需要权限）
      */
     @SuppressLint("MissingPermission")
-    public static void callPhone(Context context,String phoneNum,boolean isDirect){
+    public static void callPhone(Context context, String phoneNum, boolean isDirect){
         TelephonyManager manager = (TelephonyManager) context.
                 getSystemService(Context.TELEPHONY_SERVICE);
         switch (manager.getSimState()) {
@@ -199,6 +200,15 @@ public class PhoneUtil {
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for Activity#requestPermissions for more details.
+                    /**
+                     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+                     * 不需要权限
+                     */
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    Uri data = Uri.parse("tel:" + phoneNum);
+                    intent.setData(data);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                     return;
                 }
                 if (isDirect) {
@@ -326,7 +336,7 @@ public class PhoneUtil {
                 m_szUniqueID+="0";
             }
             //将10进制转化为较短的16进制
-            m_szUniqueID+=Integer.toHexString(b);
+            m_szUniqueID+= Integer.toHexString(b);
         }
         //将结果全部小写
         m_szUniqueID = m_szUniqueID.toLowerCase();
@@ -465,7 +475,7 @@ public class PhoneUtil {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 serial =getSerial();
             }else {
-                serial =Build.SERIAL;
+                serial = Build.SERIAL;
             }
         }
         if (StringUtil.isEmpty(serial)){
@@ -482,7 +492,7 @@ public class PhoneUtil {
     private static String getSerialNumber(){
         String serial = null;
         try {
-            Class<?> c =Class.forName("android.os.SystemProperties");
+            Class<?> c = Class.forName("android.os.SystemProperties");
             Method get =c.getMethod("get", String.class);
             serial = (String)get.invoke(c, "ro.serialno");
         } catch (Exception e) {

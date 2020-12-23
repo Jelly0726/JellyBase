@@ -26,3 +26,9 @@
 char *sha1OfApk(JNIEnv *env, jobject context);
 
 jboolean verifySha1OfApk(JNIEnv *env, jobject context);
+
+const char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+char* base64_encode(const char* data);
+char *base64_decode(const char* data);
+int is_base64(const char* data);
+static char find_pos(char ch);

@@ -18,15 +18,17 @@
 //LuoLiFen.jks "90DCB0B56B86301F483BDB5B415331BBD804BA2B";
 //JiangPing.jks "E9E786734009012999D9E3D883E50D7923BEA06D"
 //BuYun.jks "CB60B06EEB5668C481CA05CBFA84BF8F2D2E4B0A"
-const char *signatureOfApk ="758DA6688786C0D2C10CA074C29351FB02686237";
+const char *signatureOfApk = "758DA6688786C0D2C10CA074C29351FB02686237";
 
-const char digest[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+const char digest[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+                       'F'};
 
 char *sha1OfApk(JNIEnv *env, jobject context) {
     //上下文对象
     jclass clazz = env->GetObjectClass(context);
     //反射获取PackageManager
-    jmethodID methodID = env->GetMethodID(clazz, "getPackageManager", "()Landroid/content/pm/PackageManager;");
+    jmethodID methodID = env->GetMethodID(clazz, "getPackageManager",
+                                          "()Landroid/content/pm/PackageManager;");
     jobject package_manager = env->CallObjectMethod(context, methodID);
     if (package_manager == NULL) {
         LOGD("sha1OfApk->package_manager is NULL!!!");
@@ -44,7 +46,8 @@ char *sha1OfApk(JNIEnv *env, jobject context) {
 
     //获取PackageInfo对象
     jclass pack_manager_class = env->GetObjectClass(package_manager);
-    methodID = env->GetMethodID(pack_manager_class, "getPackageInfo", "(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;");
+    methodID = env->GetMethodID(pack_manager_class, "getPackageInfo",
+                                "(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;");
     env->DeleteLocalRef(pack_manager_class);
     jobject package_info = env->CallObjectMethod(package_manager, methodID, package_name, 0x40);
     if (package_info == NULL) {
@@ -55,7 +58,8 @@ char *sha1OfApk(JNIEnv *env, jobject context) {
 
     //获取签名信息
     jclass package_info_class = env->GetObjectClass(package_info);
-    jfieldID fieldId = env->GetFieldID(package_info_class, "signatures", "[Landroid/content/pm/Signature;");
+    jfieldID fieldId = env->GetFieldID(package_info_class, "signatures",
+                                       "[Landroid/content/pm/Signature;");
     env->DeleteLocalRef(package_info_class);
     jobjectArray signature_object_array = (jobjectArray) env->GetObjectField(package_info, fieldId);
     if (signature_object_array == NULL) {
@@ -75,10 +79,13 @@ char *sha1OfApk(JNIEnv *env, jobject context) {
     methodID = env->GetMethodID(byte_array_input_class, "<init>", "([B)V");
     jobject byte_array_input = env->NewObject(byte_array_input_class, methodID, signature_byte);
     jclass certificate_factory_class = env->FindClass("java/security/cert/CertificateFactory");
-    methodID = env->GetStaticMethodID(certificate_factory_class, "getInstance", "(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;");
+    methodID = env->GetStaticMethodID(certificate_factory_class, "getInstance",
+                                      "(Ljava/lang/String;)Ljava/security/cert/CertificateFactory;");
     jstring x_509_jstring = env->NewStringUTF("X.509");
-    jobject cert_factory = env->CallStaticObjectMethod(certificate_factory_class, methodID, x_509_jstring);
-    methodID = env->GetMethodID(certificate_factory_class, "generateCertificate", ("(Ljava/io/InputStream;)Ljava/security/cert/Certificate;"));
+    jobject cert_factory = env->CallStaticObjectMethod(certificate_factory_class, methodID,
+                                                       x_509_jstring);
+    methodID = env->GetMethodID(certificate_factory_class, "generateCertificate",
+                                ("(Ljava/io/InputStream;)Ljava/security/cert/Certificate;"));
     jobject x509_cert = env->CallObjectMethod(cert_factory, methodID, byte_array_input);
     env->DeleteLocalRef(certificate_factory_class);
 
@@ -88,7 +95,8 @@ char *sha1OfApk(JNIEnv *env, jobject context) {
     env->DeleteLocalRef(x509_cert_class);
 
     jclass message_digest_class = env->FindClass("java/security/MessageDigest");
-    methodID = env->GetStaticMethodID(message_digest_class, "getInstance", "(Ljava/lang/String;)Ljava/security/MessageDigest;");
+    methodID = env->GetStaticMethodID(message_digest_class, "getInstance",
+                                      "(Ljava/lang/String;)Ljava/security/MessageDigest;");
     jstring sha1_jstring = env->NewStringUTF("SHA1");
     jobject sha1_digest = env->CallStaticObjectMethod(message_digest_class, methodID, sha1_jstring);
     methodID = env->GetMethodID(message_digest_class, "digest", "([B)[B");
@@ -118,4 +126,174 @@ jboolean verifySha1OfApk(JNIEnv *env, jobject context) {
     }
     LOGD("sha1OfApk->签名验证失败");
     return static_cast<jboolean>(false);
+}
+
+/**base64 编码 */
+char *base64_encode(const char *data) {
+    LOGD("cipher data= %s", data);
+    int data_len = strlen(data);
+    int prepare = 0;
+    int ret_len;
+    int temp = 0;
+    char *ret = NULL;
+    char *f = NULL;
+    int tmp = 0;
+    char changed[4];
+    int i = 0;
+    ret_len = data_len / 3;
+    temp = data_len % 3;
+    if (temp > 0) {
+        ret_len += 1;
+    }
+    ret_len = ret_len * 4 + 1;
+    ret = (char *) malloc(ret_len);
+
+    if (ret == NULL) {
+        LOGD("No enough memory.\n");
+        exit(0);
+    }
+    memset(ret, 0, ret_len);
+    f = ret;
+    while (tmp < data_len) {
+        temp = 0;
+        prepare = 0;
+        memset(changed, '\0', 4);
+        while (temp < 3) {
+            //printf("tmp = %d\n", tmp);
+            if (tmp >= data_len) {
+                break;
+            }
+            prepare = ((prepare << 8) | (data[tmp] & 0xFF));
+            tmp++;
+            temp++;
+        }
+        prepare = (prepare << ((3 - temp) * 8));
+//        LOGD("cipher before for : temp = %d, prepare = %d\n", temp, prepare);
+        for (i = 0; i < 4; i++) {
+            if (temp < i) {
+                changed[i] = 0x40;
+            } else {
+                changed[i] = (prepare >> ((3 - i) * 6)) & 0x3F;
+            }
+            *f = base[changed[i]];
+//            LOGD("cipher %.2X", changed[i]);
+            f++;
+        }
+    }
+    *f = '\0';
+    LOGD("cipher ret= %s", ret);
+    return ret;
+
+}
+
+/* */
+static char find_pos(char ch) {
+    char *ptr = (char *) strrchr(base, ch);//the last position (the only) in base[]
+    return (ptr - base);
+}
+
+/** base64 解码 */
+char *base64_decode(const char *data) {
+    int data_len = strlen(data);
+    int ret_len = (data_len / 4) * 3;
+    int equal_count = 0;
+    char *ret = NULL;
+    char *f = NULL;
+    int tmp = 0;
+    int temp = 0;
+    char need[4];
+    int prepare = 0;
+    int i = 0;
+    if (*(data + data_len - 1) == '=') {
+        equal_count += 1;
+    }
+    if (*(data + data_len - 2) == '=') {
+        equal_count += 1;
+    }
+    if (*(data + data_len - 3) == '=') {//seems impossible
+        equal_count += 1;
+    }
+    switch (equal_count) {
+        case 0:
+            ret_len += 4;//3 + 1 [1 for NULL]
+            break;
+        case 1:
+            ret_len += 4;//Ceil((6*3)/8)+1
+            break;
+        case 2:
+            ret_len += 3;//Ceil((6*2)/8)+1
+            break;
+        case 3:
+            ret_len += 2;//Ceil((6*1)/8)+1
+            break;
+    }
+    ret = (char *) malloc(ret_len);
+    if (ret == NULL) {
+        LOGD("No enough memory.\n");
+        exit(0);
+    }
+    memset(ret, 0, ret_len);
+    f = ret;
+    while (tmp < (data_len - equal_count)) {
+        temp = 0;
+        prepare = 0;
+        memset(need, 0, 4);
+        while (temp < 4) {
+            if (tmp >= (data_len - equal_count)) {
+                break;
+            }
+            prepare = (prepare << 6) | (find_pos(data[tmp]));
+            temp++;
+            tmp++;
+        }
+        prepare = prepare << ((4 - temp) * 6);
+        for (i = 0; i < 3; i++) {
+            if (i == temp) {
+                break;
+            }
+            *f = (char) ((prepare >> ((2 - i) * 8)) & 0xFF);
+            f++;
+        }
+    }
+    *f = '\0';
+    return ret;
+}
+
+int is_base64(const char* str) {
+    int len = strlen(str);
+    for (int i = 0; i < len; i++) {
+        int c = str[i];
+        int bytes=0;
+        if (c > 128) {
+            if ((c > 247)) {
+                return 0;
+            }
+            else if(c > 239)
+            {
+                bytes = 4;
+            }
+            else if(c > 223)
+            {
+                bytes = 3;
+            }
+            else if(c > 191)
+            {
+                bytes = 2;
+            } else {
+                return 0;
+            }
+            if ((i + bytes) > len) {
+                return 0;
+            }
+            while (bytes > 1) {
+                i++;
+               int b = str[i];
+                if (b < 128 || b > 191) {
+                    return 0;
+                }
+                bytes--;
+            }
+        }
+    }
+    return 1;
 }
