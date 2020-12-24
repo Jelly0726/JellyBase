@@ -297,3 +297,176 @@ int is_base64(const char* str) {
     }
     return 1;
 }
+/**
+ * char 转 jbyteArray
+ * @param env
+ * @param buf
+ * @param len
+ * @return
+ */
+jbyteArray charToJByteArray(JNIEnv *env, unsigned char *buf) {
+    size_t len = strlen(reinterpret_cast<const char *>(buf));
+    jbyteArray array = env->NewByteArray(len);
+    env->SetByteArrayRegion(array, 0, len, reinterpret_cast<jbyte *>(buf));
+    return array;
+}
+/**
+ * jbyteArray 转 Char
+ * @param env
+ * @param buf
+ * @return
+ */
+char *jByteArrayToChar(JNIEnv *env, jbyteArray buf) {
+    char *chars = NULL;
+    jbyte *bytes;
+    bytes = env->GetByteArrayElements(buf, 0);
+    int chars_len = env->GetArrayLength(buf);
+    chars = new char[chars_len + 1];
+    memset(chars, 0, chars_len + 1);
+    memcpy(chars, bytes, chars_len);
+    chars[chars_len] = 0;
+    env->ReleaseByteArrayElements(buf, bytes, 0);
+    return chars;
+}
+/**
+ * unsigned char 转成 jstring 类型
+ * @param e
+ * @param pJobject
+ * @param pChar
+ * @return
+ */
+jstring unsigchar2jstring(JNIEnv *e, unsigned char *pChar) {
+    unsigned char *newresult = pChar;
+    //定义java String类 clsstring
+    jclass clsstring = e->FindClass("java/lang/String");
+    //获取String(byte[],String)的构造器,用于将本地byte[]数组转换为一个新String
+    jmethodID mid = e->GetMethodID(clsstring, "<init>", "([BLjava/lang/String;)V");
+    // 设置String, 保存语言类型,用于byte数组转换至String时的参数 GB2312
+    jstring encoding = e->NewStringUTF("utf-8");
+    //建立byte数组
+    jbyteArray bytes = e->NewByteArray(strlen((char *) newresult));
+    //将char* 转换为byte数组
+    e->SetByteArrayRegion(bytes, 0, strlen((char *) newresult), (jbyte *) newresult);
+    //将byte数组转换为java String,并输出
+    return (jstring) e->NewObject(clsstring, mid, bytes, encoding);
+}
+
+/**
+ * jstring转成 unsigned char * 类型
+ * @param e
+ * @param pJobject
+ * @param pJstring
+ * @return
+ */
+unsigned char *jstring_2unsigchar(JNIEnv *e, jstring pJstring) {
+    char *rtn = NULL;
+    jclass clsstring = e->FindClass("java/lang/String");
+    jstring strencode = e->NewStringUTF("utf-8");
+    jmethodID mid = e->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
+    jbyteArray barr = (jbyteArray) e->CallObjectMethod(pJstring, mid, strencode);
+    jsize alen = e->GetArrayLength(barr);
+    jbyte *ba = e->GetByteArrayElements(barr, JNI_FALSE);
+    if (alen > 0) {
+        rtn = (char *) malloc(alen + 1);
+        memcpy(rtn, ba, alen);
+        rtn[alen] = 0;
+    }
+    e->ReleaseByteArrayElements(barr, ba, 0);
+    return reinterpret_cast<unsigned char *>(rtn);
+}
+
+/**
+ * 将char类型转换成jstring类型
+ * @param env
+ * @param pat
+ * @return
+ */
+jstring CStr2Jstring(JNIEnv *env, const char *pat) {
+    jsize len = strlen(pat);
+    LOGD("将char类型转换成jstring类型->len= %d", len);
+    // 定义java String类 strClass
+    jclass strClass = (env)->FindClass("java/lang/String");
+    // 获取java String类方法String(byte[],String)的构造器,用于将本地byte[]数组转换为一个新String
+    jmethodID ctorID = (env)->GetMethodID(strClass, "<init>", "([BLjava/lang/String;)V");
+    // 建立byte数组
+    jbyteArray bytes = (env)->NewByteArray(len);
+    // 将char* 转换为byte数组
+    (env)->SetByteArrayRegion(bytes, 0, len, (jbyte *) pat);
+    //设置String, 保存语言类型,用于byte数组转换至String时的参数 GB2312
+    jstring encoding = (env)->NewStringUTF("utf-8");
+    //将byte数组转换为java String,并输出
+    jstring result = (jstring) (env)->NewObject(strClass, ctorID, bytes, encoding);
+    env->DeleteLocalRef(strClass);
+    env->DeleteLocalRef(encoding);
+    env->DeleteLocalRef(bytes);
+//    jstring result =(env)->NewStringUTF(pat);
+    return result;
+
+}
+
+/**
+ * 将jstring类型转换成char类型
+ * @param env
+ * @param jstr
+ * @return
+ */
+char *Jstring2CStr(JNIEnv *env, jstring jstr) {
+    char *rtn = NULL;
+    jclass clsstring = env->FindClass("java/lang/String");
+    //设置String, 保存语言类型,用于byte数组转换至String时的参数 GB2312
+    jstring strencode = env->NewStringUTF("utf-8");
+    jmethodID mid = env->GetMethodID(clsstring, "getBytes", "(Ljava/lang/String;)[B");
+    jbyteArray barr = (jbyteArray) env->CallObjectMethod(jstr, mid, strencode);
+    jsize alen = env->GetArrayLength(barr);
+    jbyte *ba = env->GetByteArrayElements(barr, JNI_FALSE);
+    if (alen > 0) {
+        rtn = (char *) malloc(alen + 1); //new char[alen+1];
+        memcpy(rtn, ba, alen);
+        rtn[alen] = 0;
+    }
+    env->ReleaseByteArrayElements(barr, ba, 0);
+    env->DeleteLocalRef(clsstring);
+    env->DeleteLocalRef(strencode);
+    return rtn;
+}
+
+
+/**   Byte值转换为bytes字符串
+*   @param src：Byte指针 srcLen:src长度 des:转换得到的bytes字符串
+**/
+unsigned char *Bytes2HexStr( unsigned char *src)
+{
+    unsigned char *res;
+    unsigned char *des;
+    int i=0;
+    int srcLen=strlen((char *)res);
+
+    res = des;
+    while(srcLen>0)
+    {
+        sprintf((char*)(res+i*2),"%02x",*(src+i));
+        i++;
+        srcLen--;
+    }
+}
+
+/**
+ * bytes字符串转换为Byte值
+* @param String src Byte字符串，每个Byte之间没有分隔符
+* @return byte[]
+*/
+unsigned char * hexStr2Bytes(string src)
+{
+    char *strEnd;
+    int m=0;
+    int len = src.length()/2;
+    unsigned char* ret = new unsigned char[len];
+
+    for(int i =0;i<len;i++)
+    {
+        m = i*2;
+        string subs = src.substr(m,2);
+        ret[i] = strtol(subs.c_str(),&strEnd,16);
+    }
+    return ret;
+}
