@@ -972,207 +972,14 @@ std::string generatePrivateKey(std::string base64EncodedKey) {
 }
 
 /**
-@brief : 私钥加密
-@para  : clear_text  -[i] 需要进行加密的明文
-         pri_key     -[i] 私钥
-@return: 加密后的数据
-**/
-std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
-    std::string encrypt_text;
-    BIO *keybio = BIO_new_mem_buf((unsigned char *) pri_key.c_str(), -1);
-    RSA *rsa = RSA_new();
-    rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa, NULL, NULL);
-    if (!rsa) {
-        unsigned long err = ERR_get_error(); //获取错误号
-        char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-        LOGD("RSA 私钥加密->解析RSA私钥串失败！err:%ld, msg:%s", err, err_msg);
-        LOGD("RSA 私钥加密->释放内存");
-        BIO_free_all(keybio);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return NULL;
-    }
-    // 获取RSA单次可以处理的数据块的最大长度
-    int key_len = RSA_size(rsa);
-    //RSA_PKCS1_PADDING 最大加密长度 为 128 -11
-    //RSA_NO_PADDING 最大加密长度为  128
-    // 因为填充方式为RSA_PKCS1_PADDING, 所以要在key_len基础上减去11
-    int block_len = key_len - 11;
-
-    // 申请内存：存贮加密后的密文数据
-    char *sub_text = new char[key_len + 1];
-    memset(sub_text, 0, key_len + 1);
-    int ret = 0;
-    //数据长度小于RSA单次处理的最大长度
-//    if (clear_text.length() <= block_len) {
-
-        ret = RSA_private_encrypt(clear_text.length(), (const unsigned char *) clear_text.c_str(),
-                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-        if (ret >= 0) {
-            encrypt_text.append(std::string(sub_text, ret));
-//            printf("pos:%d, sub: %s\n", pos, sub_text);
-        } else {
-            unsigned long err = ERR_get_error(); //获取错误号
-            char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-            LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
-            LOGD("RSA 私钥加密->释放内存");
-            delete[] sub_text;
-            BIO_free_all(keybio);
-            RSA_free(rsa);
-            //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-            CRYPTO_cleanup_all_ex_data();
-            return NULL;
-        }
-        LOGD("RSA 私钥加密->释放内存");
-        delete[] sub_text;
-        BIO_free_all(keybio);
-        RSA_free(rsa);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return encrypt_text;
-//    }
-//
-//    int pos = 0;
-//    std::string sub_str;
-//    // 对数据进行分段加密（返回值是加密后数据的长度）
-//    while (pos < clear_text.length()) {
-//        sub_str = clear_text.substr(pos, block_len);
-//        memset(sub_text, 0, key_len + 1);
-//        ret = RSA_private_encrypt(sub_str.length(), (const unsigned char *) sub_str.c_str(),
-//                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-//        if (ret >= 0) {
-//            encrypt_text.append(std::string(sub_text, ret));
-//            LOGD("RSA 私钥加密->私钥分段加密 pos:%d, sub: %s\n", pos, sub_text);
-//            pos+=block_len;
-//        } else {
-//            unsigned long err = ERR_get_error(); //获取错误号
-//            char err_msg[1024] = {0};
-//            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-////        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-//            LOGD("RSA 私钥加密->私钥分段加密失败！err:%ld, msg:%s", err, err_msg);
-//            break;
-//        }
-//        pos += block_len;
-//    }
-//    LOGD("RSA 私钥加密->释放内存");
-//    // 释放内存
-//    delete sub_text;
-//    BIO_free_all(keybio);
-//    RSA_free(rsa);
-//    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-//    CRYPTO_cleanup_all_ex_data();
-//    return encrypt_text;
-}
-
-/**
-@brief : 公钥解密
-@para  : cipher_text -[i] 加密的密文
-         pub_key     -[i] 公钥
-@return: 解密后的数据
-**/
-std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_text) {
-    std::string decrypt_text;
-    BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
-    RSA *rsa = RSA_new();
-
-    string pkcs1_header = "-----BEGIN RSA PUBLIC KEY-----";
-    string pkcs8_header = "-----BEGIN PUBLIC KEY-----";//
-    //读取公钥
-    if (0 == strncmp(pub_key.c_str(), pkcs8_header.c_str(), pkcs8_header.size())) {
-        rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa, NULL, NULL);
-    } else if (0 == strncmp(pub_key.c_str(), pkcs1_header.c_str(), pkcs1_header.size())) {
-        rsa = PEM_read_bio_RSAPublicKey(keybio, &rsa, NULL, NULL);
-    }
-    if (!rsa) {
-        unsigned long err = ERR_get_error(); //获取错误号
-        char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-        LOGD("RSA 公钥解密->解析公钥失败！->err:%ld, msg:%s", err, err_msg);
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-        LOGD("RSA 公钥解密->释放内存");
-        BIO_free_all(keybio);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return NULL;
-    }
-    //数据长度小于RSA单次处理的最大长度
-    // 获取RSA单次处理的最大长度
-    int len = RSA_size(rsa);
-    char *sub_text = new char[len + 1];
-    memset(sub_text, 0, len + 1);
-    int ret = 0;
-    //数据长度小于RSA单次处理的最大长度
-//    if (cipher_text.length() <= len) {
-
-        ret = RSA_public_decrypt(cipher_text.length(), (const unsigned char *) cipher_text.c_str(),
-                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-        if (ret >= 0) {
-            decrypt_text.append(std::string(sub_text, ret));
-//            printf("pos:%d, sub: %s\n", pos, sub_text);
-        } else {
-            unsigned long err = ERR_get_error(); //获取错误号
-            char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-            LOGD("RSA 公钥解密->公钥解密失败！err:%ld, msg:%s", err, err_msg);
-            LOGD("RSA 公钥解密->释放内存");
-            delete[] sub_text;
-            BIO_free_all(keybio);
-            RSA_free(rsa);
-            //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-            CRYPTO_cleanup_all_ex_data();
-            return NULL;
-        }
-        LOGD("RSA 公钥解密->释放内存");
-        delete[] sub_text;
-        BIO_free_all(keybio);
-        RSA_free(rsa);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return decrypt_text;
-//    }
-//    std::string sub_str;
-//    int pos = 0;
-//    // 对密文进行分段解密
-//    while (pos < cipher_text.length()) {
-//        sub_str = cipher_text.substr(pos, len);
-//        memset(sub_text, 0, len + 1);
-//        ret = RSA_public_decrypt(sub_str.length(), (const unsigned char *) sub_str.c_str(),
-//                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-//        if (ret >= 0) {
-//            decrypt_text.append(std::string(sub_text, ret));
-////            printf("pos:%d, sub: %s\n", pos, sub_text);
-//            LOGD("RSA 公钥解密->公钥分段解密 pos:%d, sub: %s\n", pos, sub_text);
-//            pos += len;
-//        } else {
-//            unsigned long err = ERR_get_error(); //获取错误号
-//            char err_msg[1024] = {0};
-//            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-////        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-//            LOGD("RSA 公钥解密->公钥分段解密失败！err:%ld, msg:%s", err, err_msg);
-//        }
-//    }
-//
-//    LOGD("RSA 公钥解密->释放内存");
-//    delete sub_text;
-//    BIO_free_all(keybio);
-//    RSA_free(rsa);
-//    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-//    CRYPTO_cleanup_all_ex_data();
-//    return decrypt_text;
-}
-
-/**
 @brief : 公钥加密
 @para  : clear_text  -[i] 需要进行加密的明文
          pub_key     -[i] 公钥
 @return: 加密后的数据
 **/
 std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_text) {
+    char *output;
+    int length = clear_text.length();
     std::string encrypt_text;
     BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
     RSA *rsa = RSA_new();
@@ -1196,79 +1003,67 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
         CRYPTO_cleanup_all_ex_data();
         return NULL;
     }
+
     // 获取RSA单次可以处理的数据块的最大长度
     int key_len = RSA_size(rsa);
-    //RSA_PKCS1_PADDING 最大加密长度 为 128 -11
-    //RSA_NO_PADDING 最大加密长度为  128
     // 因为填充方式为RSA_PKCS1_PADDING, 所以要在key_len基础上减去11
     int block_len = key_len - 11;
 
     // 申请内存：存贮加密后的密文数据
-    char *sub_text = new char[key_len + 1];
-    memset(sub_text, 0, key_len + 1);
+    int len = key_len + 1;
+    char *sub_text = new char[len];
+    memset(sub_text, 0, len);
+    char *textCs = new char[block_len + 1];
     int ret = 0;
-
-    //数据长度小于RSA单次处理的最大长度
-//    if (clear_text.length() <= block_len) {
-
-        ret = RSA_public_encrypt(clear_text.length(), (const unsigned char *) clear_text.c_str(),
+    int pos = 0;
+    int left = length;
+    int flagLength = 0;
+    bool error = false;
+    int lenText = 0;
+    while (pos < length) {
+        if (left >= block_len) {
+            flagLength = block_len;
+        } else {
+            flagLength = left;
+        }
+        left -= flagLength;
+        memset(textCs, 0, block_len + 1);
+        memcpy(textCs, clear_text.c_str() + pos, flagLength);
+        memset(sub_text, 0, len);
+        ret = RSA_public_encrypt(flagLength, (const unsigned char *) textCs,
                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
         if (ret >= 0) {
             encrypt_text.append(std::string(sub_text, ret));
-//            printf("pos:%d, sub: %s\n", pos, sub_text);
+            lenText += ret;
         } else {
+            error = true;
             unsigned long err = ERR_get_error(); //获取错误号
             char err_msg[1024] = {0};
             ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
             LOGD("RSA 公钥加密->公钥加密失败！err:%ld, msg:%s", err, err_msg);
-            LOGD("RSA 公钥加密->释放内存");
-            delete[] sub_text;
-            BIO_free_all(keybio);
-            RSA_free(rsa);
-            //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-            CRYPTO_cleanup_all_ex_data();
-            return NULL;
+            break;
         }
-        LOGD("RSA 公钥加密->释放内存");
-        delete[] sub_text;
-        BIO_free_all(keybio);
-        RSA_free(rsa);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return encrypt_text;
-//    }
-//    int pos = 0;
-//    std::string sub_str;
-//    // 对数据进行分段加密（返回值是加密后数据的长度）
-//    while (pos < clear_text.length()) {
-//        sub_str = clear_text.substr(pos, block_len);
-//        memset(sub_text, 0, key_len + 1);
-//        ret = RSA_public_encrypt(sub_str.length(), (const unsigned char *) sub_str.c_str(),
-//                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-//        if (ret >= 0) {
-//            encrypt_text.append(std::string(sub_text, ret));
-//            pos += block_len;
-//            LOGD("RSA 公钥加密->公钥分段加密 pos:%d, sub: %s\n", pos, sub_text);
-//        } else {
-//            unsigned long err = ERR_get_error(); //获取错误号
-//            char err_msg[1024] = {0};
-//            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-////        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-//            LOGD("RSA 公钥加密->公钥分段加密失败！err:%ld, msg:%s", err, err_msg);
-//            break;
-//        }
-//        pos += block_len;
-//    }
-//    LOGD("RSA 公钥加密->length:%d", encrypt_text.length());
-//    LOGD("RSA 公钥加密->encrypt_text:%s", encrypt_text.c_str());
-//    LOGD("RSA 公钥加密->释放内存");
-//    BIO_free_all(keybio);
-//    RSA_free(rsa);
-//    delete[] sub_text;
-//    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-//    CRYPTO_cleanup_all_ex_data();
-//    return encrypt_text;
+        pos += block_len;
+    }
+    LOGD("RSA 公钥加密->释放内存");
+    BIO_free_all(keybio);
+    RSA_free(rsa);
+    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+    CRYPTO_cleanup_all_ex_data();
+    delete[] sub_text;
+    delete[] textCs;
+    if (error) {
+//        output = new char[1];
+//        output[0] = 0;
+        return NULL;
+    }
+//    const char* chars = encrypt_text.c_str();
+//    int len = lenText + 1;
+//    output = new char[len];
+//    memset(output, 0, len);
+//    memcpy(output, chars, len - 1);
+    return encrypt_text;
 }
 
 /**
@@ -1278,92 +1073,259 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
 @return: 解密后的数据
 **/
 std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_text) {
+    char *output;
+    int length = cipher_text.length();
     std::string decrypt_text;
     RSA *rsa = RSA_new();
     BIO *keybio;
     keybio = BIO_new_mem_buf((unsigned char *) pri_key.c_str(), -1);
-
     rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa, NULL, NULL);
     if (rsa == nullptr) {
         unsigned long err = ERR_get_error(); //获取错误号
         char err_msg[1024] = {0};
         ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
         LOGD("RSA 私钥解密->解析私钥失败！err:%ld, msg:%s", err, err_msg);
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
         LOGD("RSA 私钥解密->释放内存");
         BIO_free_all(keybio);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
         return NULL;
     }
-
-    // 获取RSA单次处理的最大长度
     int key_len = RSA_size(rsa);
-    char *sub_text = new char[key_len + 1];//每次处理的数据集
-    memset(sub_text, 0, key_len + 1);
-    int ret = 0;
-    //数据长度小于RSA单次处理的最大长度
-//    if (cipher_text.length() <= key_len) {
+    int len = key_len + 1;
+    char *sub_text = new char[len];
+    memset(sub_text, 0, len);
+    char *eTextCs = new char[key_len];
 
-        ret = RSA_private_decrypt(cipher_text.length(), (const unsigned char *) cipher_text.c_str(),
+    int ret = 0;
+    int pos = 0;
+    bool error = false;
+    int left = length;
+    int flagLength = 0;
+    int textLength = 0;
+    // 对密文进行分段解密
+    while (pos < length) {
+        if (left >= key_len) {
+            flagLength = key_len;
+        } else {
+            flagLength = left;
+        }
+        left -= flagLength;
+        memset(eTextCs, 0, key_len);
+        memcpy(eTextCs, (cipher_text.c_str() + pos), flagLength);
+        //sub_str = input.substr(pos, key_len);
+        memset(sub_text, 0, len);
+        ret = RSA_private_decrypt(flagLength, (const unsigned char *) eTextCs,
                                   (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
         if (ret >= 0) {
             decrypt_text.append(std::string(sub_text, ret));
-//            printf("pos:%d, sub: %s\n", pos, sub_text);
+            textLength += ret;
+            pos += key_len;
         } else {
+            error = true;
             unsigned long err = ERR_get_error(); //获取错误号
             char err_msg[1024] = {0};
             ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
             LOGD("RSA 私钥解密->私钥解密失败！err:%ld, msg:%s", err, err_msg);
-            LOGD("RSA 私钥解密->释放内存");
-            delete[] sub_text;
-            BIO_free_all(keybio);
-            RSA_free(rsa);
-            //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-            CRYPTO_cleanup_all_ex_data();
-            return NULL;
+            break;
         }
-
-        LOGD("RSA 私钥解密->释放内存");
-        delete[] sub_text;
-        BIO_free_all(keybio);
-        RSA_free(rsa);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return decrypt_text;
-//    }
-//    std::string sub_str;
-//    int pos = 0;
-//    // 对密文进行分段解密
-//    while (pos < cipher_text.length()) {
-//        sub_str = cipher_text.substr(pos, key_len);
-//        memset(sub_text, 0, key_len + 1);
-//        ret = RSA_private_decrypt(sub_str.length(), (const unsigned char *) sub_str.c_str(),
-//                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-//        if (ret >= 0) {
-//            decrypt_text.append(std::string(sub_text, ret));
-////            printf("pos:%d, sub: %s\n", pos, sub_text);
-//            LOGD("RSA 私钥解密->私钥分段解密pos:%d, sub: %s\n", pos, sub_text);
-//            pos += key_len;
-//        } else {
-//            unsigned long err = ERR_get_error(); //获取错误号
-//            char err_msg[1024] = {0};
-//            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-////        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-//            LOGD("RSA 私钥解密->私钥分段解密失败！err:%ld, msg:%s", err, err_msg);
-//            break;
-//        }
-//    }
-//    LOGD("RSA 私钥解密->释放内存");
-//    delete[] sub_text;
-//    BIO_free_all(keybio);
-//    RSA_free(rsa);
-//    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-//    CRYPTO_cleanup_all_ex_data();
-//    return decrypt_text;
+    }
+    LOGD("RSA 私钥解密->释放内存");
+    delete[] sub_text;
+    delete[] eTextCs;
+    BIO_free_all(keybio);
+    RSA_free(rsa);
+    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+    CRYPTO_cleanup_all_ex_data();
+    if (error) {
+        return NULL;
+    }
+    textLength++;
+//    output = new char[textLength];
+//    memset(output, 0, textLength);
+//    memcpy(output, decrypt_text.c_str(), textLength - 1);
+    return decrypt_text;
 }
 
+/**
+@brief : 私钥加密
+@para  : clear_text  -[i] 需要进行加密的明文
+         pri_key     -[i] 私钥
+@return: 加密后的数据
+**/
+std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
+    char *output;
+    int length = clear_text.length();
+    std::string decrypt_text;
+    RSA *rsa = RSA_new();
+    BIO *keybio;
+    keybio = BIO_new_mem_buf((unsigned char *) pri_key.c_str(), -1);
+    rsa = PEM_read_bio_RSAPrivateKey(keybio, &rsa, NULL, NULL);
+    if (rsa == nullptr) {
+        unsigned long err = ERR_get_error(); //获取错误号
+        char err_msg[1024] = {0};
+        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+        LOGD("RSA 私钥加密->解析私钥失败！err:%ld, msg:%s", err, err_msg);
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+        LOGD("RSA 私钥加密->释放内存");
+        BIO_free_all(keybio);
+        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+        CRYPTO_cleanup_all_ex_data();
+        return NULL;
+    }
+    int key_len = RSA_size(rsa);
+    int len = key_len + 1;
+    char *sub_text = new char[len];
+    memset(sub_text, 0, len);
+    char *eTextCs = new char[key_len];
+
+    int ret = 0;
+    int pos = 0;
+    bool error = false;
+    int left = length;
+    int flagLength = 0;
+    int textLength = 0;
+    // 对密文进行分段解密
+    while (pos < length) {
+        if (left >= key_len) {
+            flagLength = key_len;
+        } else {
+            flagLength = left;
+        }
+        left -= flagLength;
+        memset(eTextCs, 0, key_len);
+        memcpy(eTextCs, (clear_text.c_str() + pos), flagLength);
+        //sub_str = input.substr(pos, key_len);
+        memset(sub_text, 0, len);
+        ret = RSA_private_encrypt(flagLength, (const unsigned char *) eTextCs,
+                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
+        if (ret >= 0) {
+            decrypt_text.append(std::string(sub_text, ret));
+            textLength += ret;
+            pos += key_len;
+        } else {
+            error = true;
+            unsigned long err = ERR_get_error(); //获取错误号
+            char err_msg[1024] = {0};
+            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+            LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
+            break;
+        }
+    }
+    LOGD("RSA 私钥加密->释放内存！");
+    delete[] sub_text;
+    delete[] eTextCs;
+    BIO_free_all(keybio);
+    RSA_free(rsa);
+    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+    CRYPTO_cleanup_all_ex_data();
+    if (error) {
+        return NULL;
+    }
+    textLength++;
+//    output = new char[textLength];
+//    memset(output, 0, textLength);
+//    memcpy(output, decrypt_text.c_str(), textLength - 1);
+    return decrypt_text;
+}
+
+/**
+@brief : 公钥解密
+@para  : cipher_text -[i] 加密的密文
+         pub_key     -[i] 公钥
+@return: 解密后的数据
+**/
+std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_text) {
+    char *output;
+    int length = cipher_text.length();
+    std::string encrypt_text;
+    BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
+    RSA *rsa = RSA_new();
+    string pkcs1_header = "-----BEGIN RSA PUBLIC KEY-----";
+    string pkcs8_header = "-----BEGIN PUBLIC KEY-----";//
+    //读取公钥
+    if (0 == strncmp(pub_key.c_str(), pkcs8_header.c_str(), pkcs8_header.size())) {
+        rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa, NULL, NULL);
+    } else if (0 == strncmp(pub_key.c_str(), pkcs1_header.c_str(), pkcs1_header.size())) {
+        rsa = PEM_read_bio_RSAPublicKey(keybio, &rsa, NULL, NULL);
+    }
+    if (!rsa) {
+        unsigned long err = ERR_get_error(); //获取错误号
+        char err_msg[1024] = {0};
+        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+        LOGD("RSA 公钥解密->解析公钥失败！err:%ld, msg:%s", err, err_msg);
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+        LOGD("RSA 公钥解密->释放内存");
+        BIO_free_all(keybio);
+        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+        CRYPTO_cleanup_all_ex_data();
+        return NULL;
+    }
+
+    // 获取RSA单次可以处理的数据块的最大长度
+    int key_len = RSA_size(rsa);
+    // 因为填充方式为RSA_PKCS1_PADDING, 所以要在key_len基础上减去11
+    int block_len = key_len - 11;
+
+    // 申请内存：存贮加密后的密文数据
+    int len = key_len + 1;
+    char *sub_text = new char[len];
+    memset(sub_text, 0, len);
+    char *textCs = new char[block_len + 1];
+    int ret = 0;
+    int pos = 0;
+    int left = length;
+    int flagLength = 0;
+    bool error = false;
+    int lenText = 0;
+    while (pos < length) {
+        if (left >= block_len) {
+            flagLength = block_len;
+        } else {
+            flagLength = left;
+        }
+        left -= flagLength;
+        memset(textCs, 0, block_len + 1);
+        memcpy(textCs, cipher_text.c_str() + pos, flagLength);
+        memset(sub_text, 0, len);
+        ret = RSA_public_decrypt(flagLength, (const unsigned char *) textCs,
+                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
+        if (ret >= 0) {
+            encrypt_text.append(std::string(sub_text, ret));
+            lenText += ret;
+        } else {
+            error = true;
+            unsigned long err = ERR_get_error(); //获取错误号
+            char err_msg[1024] = {0};
+            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+            LOGD("RSA 公钥解密->公钥解密失败！err:%ld, msg:%s", err, err_msg);
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+            break;
+        }
+        pos += block_len;
+    }
+    LOGD("RSA 公钥解密->释放内存");
+    BIO_free_all(keybio);
+    RSA_free(rsa);
+    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+    CRYPTO_cleanup_all_ex_data();
+    delete[] sub_text;
+    delete[] textCs;
+    if (error) {
+//        output = new char[1];
+//        output[0] = 0;
+        return NULL;
+    }
+//    const char* chars = encrypt_text.c_str();
+//    int len = lenText + 1;
+//    output = new char[len];
+//    memset(output, 0, len);
+//    memcpy(output, chars, len - 1);
+    return encrypt_text;
+}
 
 /**
  * 使用公钥对明文加密
@@ -1523,8 +1485,8 @@ encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
         string err = string("RSA公钥加密失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA公钥加密->rsaResult=%s",rsaResult.c_str());
-    LOGD("RSA公钥加密->length=%d",rsaResult.length());
+    LOGD("RSA公钥加密->rsaResult=%s", rsaResult.c_str());
+    LOGD("RSA公钥加密->length=%d", rsaResult.length());
     //将密文进行base64
     string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
@@ -1532,8 +1494,8 @@ encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
         string err = string("RSA base64编码失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA公钥加密->base64RSA=%s",base64RSA.c_str());
-    LOGD("RSA公钥加密->length=%d",base64RSA.length());
+    LOGD("RSA公钥加密->base64RSA=%s", base64RSA.c_str());
+    LOGD("RSA公钥加密->length=%d", base64RSA.length());
     //string -> char* -> jstring 返回
     jstring result = CStr2Jstring(env, base64RSA.c_str());
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
@@ -1583,8 +1545,8 @@ decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
         string err = string("RSA 私钥解密失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA 私钥解密->origin=%s",origin.c_str());
-    LOGD("RSA 私钥解密->length=%d",origin.length());
+    LOGD("RSA 私钥解密->origin=%s", origin.c_str());
+    LOGD("RSA 私钥解密->length=%d", origin.length());
     //string -> char* -> jstring 返回
     jstring result = CStr2Jstring(env, origin.c_str());
 //    jstring result =env->NewStringUTF(origin.c_str());
@@ -1624,8 +1586,8 @@ encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     env->DeleteLocalRef(src_);
     //调用RSA加密函数加密
     string rsaResult = RsaPriEncrypt(generatedPrivateKey, srcString);
-    LOGD("RSA 私钥加密->rsaResult=%s",rsaResult.c_str());
-    LOGD("RSA 私钥加密->length=%d",rsaResult.length());
+    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult.c_str());
+    LOGD("RSA 私钥加密->length=%d", rsaResult.length());
     if (rsaResult.empty()) {
         LOGD("RSA 私钥加密->RSA 私钥加密失败");
         string err = string("RSA 私钥加密失败！");
@@ -1639,8 +1601,8 @@ encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
         string err = string("RSA base64编码失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA 私钥加密->base64RSA=%s",base64RSA.c_str());
-    LOGD("RSA 私钥加密->length=%d",base64RSA.length());
+    LOGD("RSA 私钥加密->base64RSA=%s", base64RSA.c_str());
+    LOGD("RSA 私钥加密->length=%d", base64RSA.length());
     //string -> char* -> jstring 返回
     jstring result = CStr2Jstring(env, base64RSA.c_str());
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
@@ -1690,8 +1652,8 @@ decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
         string err = string("RSA 公钥解密失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA 公钥解密->origin=%s",origin.c_str());
-    LOGD("RSA 公钥解密->length=%d",origin.length());
+    LOGD("RSA 公钥解密->origin=%s", origin.c_str());
+    LOGD("RSA 公钥解密->length=%d", origin.length());
     //string -> char* -> jstring 返回
     jstring result = CStr2Jstring(env, origin.c_str());
 //    jstring result =env->NewStringUTF(origin.c_str());
@@ -1742,8 +1704,8 @@ encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
         string err = string("RSA 私钥加密失败！");
         return CStr2Jstring(env, err.c_str());
     }
-    LOGD("RSA 私钥加密->rsaResult=%s",rsaResult.c_str());
-    LOGD("RSA 私钥加密->length=%d",rsaResult.length());
+    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult.c_str());
+    LOGD("RSA 私钥加密->length=%d", rsaResult.length());
     //将密文进行base64
     string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
     if (base64RSA.empty()) {
@@ -1807,8 +1769,8 @@ decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
         string err = string("RSA 公钥解密失败！");
         return CStr2Jstring(env, err.c_str());
     }
-        LOGD("RSA 公钥解密->origin=%s",origin.c_str());
-        LOGD("RSA 公钥解密->length=%d",origin.length());
+    LOGD("RSA 公钥解密->origin=%s", origin.c_str());
+    LOGD("RSA 公钥解密->length=%d", origin.length());
     //string -> char* -> jstring 返回
     jstring result = CStr2Jstring(env, origin.c_str());
 //    jstring result =env->NewStringUTF(origin.c_str());
