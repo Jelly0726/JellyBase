@@ -1046,6 +1046,7 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
         }
         pos += block_len;
     }
+    LOGD("RSA 公钥加密->密文长度=%d",encrypt_text.length());
     LOGD("RSA 公钥加密->释放内存");
     BIO_free_all(keybio);
     RSA_free(rsa);
@@ -1063,6 +1064,7 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
 //    output = new char[len];
 //    memset(output, 0, len);
 //    memcpy(output, chars, len - 1);
+    LOGD("RSA 公钥加密->密文长度=%d",encrypt_text.length());
     return encrypt_text;
 }
 
@@ -1132,6 +1134,7 @@ std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_
             break;
         }
     }
+    LOGD("RSA 私钥解密->明文文长度=%d",decrypt_text.length());
     LOGD("RSA 私钥解密->释放内存");
     delete[] sub_text;
     delete[] eTextCs;
@@ -1146,6 +1149,7 @@ std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_
 //    output = new char[textLength];
 //    memset(output, 0, textLength);
 //    memcpy(output, decrypt_text.c_str(), textLength - 1);
+    LOGD("RSA 私钥解密->明文文长度=%d",decrypt_text.length());
     return decrypt_text;
 }
 
@@ -1215,6 +1219,7 @@ std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
             break;
         }
     }
+    LOGD("RSA 私钥加密->密文文长度=%d",decrypt_text.length());
     LOGD("RSA 私钥加密->释放内存！");
     delete[] sub_text;
     delete[] eTextCs;
@@ -1229,6 +1234,7 @@ std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
 //    output = new char[textLength];
 //    memset(output, 0, textLength);
 //    memcpy(output, decrypt_text.c_str(), textLength - 1);
+    LOGD("RSA 私钥加密->密文文长度=%d",decrypt_text.length());
     return decrypt_text;
 }
 
@@ -1307,6 +1313,7 @@ std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_
         }
         pos += block_len;
     }
+    LOGD("RSA 公钥解密->明文文长度=%d",encrypt_text.length());
     LOGD("RSA 公钥解密->释放内存");
     BIO_free_all(keybio);
     RSA_free(rsa);
@@ -1324,6 +1331,7 @@ std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_
 //    output = new char[len];
 //    memset(output, 0, len);
 //    memcpy(output, chars, len - 1);
+    LOGD("RSA 公钥解密->明文文长度=%d",encrypt_text.length());
     return encrypt_text;
 }
 
