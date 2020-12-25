@@ -2,7 +2,7 @@
 // Created by Phoenix on 2017/6/25.
 //
 #include <jni.h>
-#include <string>
+#include <string.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
 #include <openssl/hmac.h>
@@ -15,7 +15,7 @@
 #include <openssl/err.h>
 #include "endorse.h"
 
-using std::string;
+using namespace std;
 // ---- rsa非对称加解密 ---- //
 #define KEY_LENGTH  1024               // 密钥长度
 #define PUB_KEY_FILE "pubkey.pem"    // 公钥路径
@@ -52,7 +52,9 @@ validateSha1OfApk(JNIEnv *env, jobject obj, jobject context) {
  * @param decoded_bytes
  * @return
  */
-std::string base64Encode(const std::string &decoded_bytes) {
+int base64Encode(char *&decoded_bytes, char *&out) {
+//    out=decoded_bytes;
+//    return strlen(out);
     /*使用openssl的base64api*/
     BIO *bio, *b64;
     BUF_MEM *bufferPtr;
@@ -62,20 +64,23 @@ std::string base64Encode(const std::string &decoded_bytes) {
     bio = BIO_new(BIO_s_mem());
     bio = BIO_push(b64, bio);
     //encode
-    BIO_write(bio, decoded_bytes.c_str(), (int) decoded_bytes.length());
+    BIO_write(bio, decoded_bytes, (int) strlen(decoded_bytes));
     BIO_flush(bio);
     BIO_get_mem_ptr(bio, &bufferPtr);
     //这里的第二个参数很重要，必须赋值 第二个参数表示长度，不能少，
     // 否则base64后的字符串长度会出现异常，导致decode的时候末尾会出现一大堆的乱码，而网上大多数的代码，是缺失这一个参数的。
-    std::string result(bufferPtr->data, bufferPtr->length);
+//    std::string result(bufferPtr->data, bufferPtr->length);
+    int outlen = bufferPtr->length;
+    out = new char[outlen + 1];
+    memset(out, 0, outlen + 1);
+    memcpy(out, bufferPtr->data, outlen);
     BIO_free_all(bio);
-    return result;
+    return outlen;
     /*自己组装改造的算法*/
-//    char *decode = base64_encode(decoded_bytes.c_str());
-//    std::string result(decode);
-//    free(decode);
-//    return result;
-//    return decoded_bytes;
+//    int len = base64_encode(decoded_bytes.c_str(),out);
+////    std::string result(out);
+////    free(decode);
+//    return len;
 }
 
 /**
@@ -83,36 +88,42 @@ std::string base64Encode(const std::string &decoded_bytes) {
  * @param encoded_bytes
  * @return
  */
-std::string base64Decode(const std::string &encoded_bytes) {
-    if (is_base64(encoded_bytes.c_str()) == 0) {//不是base64
-        LOGD("base64 解码->原数据不是合法的base64字符串 = %s", encoded_bytes.c_str());
-        return encoded_bytes;
+int base64Decode(char *&encoded_bytes, char *&decode) {
+//    decode=encoded_bytes;
+//    return strlen(decode);
+    if (is_base64(encoded_bytes) == 0) {//不是base64
+        LOGD("base64 解码->原数据不是合法的base64字符串 = %s", encoded_bytes);
+        int textLength = strlen(encoded_bytes);
+        decode = new char[textLength];
+        memset(decode, 0, textLength);
+        memcpy(decode, encoded_bytes, textLength);
+        return textLength;
     }
-    /*使用openssl的base64api*/
-//    BIO *bioMem, *b64;
-//    bioMem = BIO_new_mem_buf((void *) encoded_bytes.c_str(), -1);
-//    b64 = BIO_new(BIO_f_base64());
-//    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
-//    bioMem = BIO_push(b64, bioMem);
-//    //获得解码长度
-//    size_t buffer_length = BIO_get_mem_data(bioMem, NULL);
-//    LOGD("base64 解码->buffer_length= %d",buffer_length);
+//    /*使用openssl的base64api*/
+    BIO *bioMem, *b64;
+    bioMem = BIO_new_mem_buf((void *) encoded_bytes, -1);
+    b64 = BIO_new(BIO_f_base64());
+    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);
+    bioMem = BIO_push(b64, bioMem);
+    //获得解码长度
+    size_t buffer_length = BIO_get_mem_data(bioMem, NULL);
+    LOGD("base64 解码->buffer_length= %d", buffer_length);
 //    char *decode = (char *) malloc(buffer_length + 1);
-//    //填充0
-//    memset(decode, 0, buffer_length + 1);
-//    LOGD("base64 解码->decode= %s",decode);
-//    BIO_read(bioMem, (void *) decode, (int) buffer_length);
-//    LOGD("base64 解码->decode= %s",decode);
-//    LOGD("base64 解码->decode_length= %d",strlen(decode));
-//    std::string decoded_bytes(decode);
-//    BIO_free_all(bioMem);
-//    return decoded_bytes;
-    /*自己组装改造的算法*/
-    char *decode = base64_decode(encoded_bytes.c_str());
+    decode = (char *) malloc(buffer_length + 1);
+    //填充0
+    memset(decode, 0, buffer_length + 1);
+    BIO_read(bioMem, (void *) decode, (int) buffer_length);
     LOGD("base64 解码->decode= %s", decode);
-    std::string decoded_bytes(decode);
-    free(decode);
-    return decoded_bytes;
+    LOGD("base64 解码->decode_length= %d", strlen(decode));
+//    std::string decoded_bytes(decode);
+    BIO_free_all(bioMem);
+    return strlen(decode);
+    /*自己组装改造的算法*/
+//    int len = base64_decode(encoded_bytes,decode);
+//    LOGD("base64 解码->decode= %s", decode);
+////    std::string decoded_bytes(decode);
+////    free(decode);
+//    return len;
 }
 
 /**
@@ -975,12 +986,13 @@ std::string generatePrivateKey(std::string base64EncodedKey) {
 @brief : 公钥加密
 @para  : clear_text  -[i] 需要进行加密的明文
          pub_key     -[i] 公钥
-@return: 加密后的数据
+         output     -[i] 加密后的数据
+@return: 加密后的数据长度
 **/
-std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_text) {
-    char *output;
+int RsaPubEncrypt(const std::string &pub_key, const std::string &clear_text, char *&output) {
     int length = clear_text.length();
-    std::string encrypt_text;
+    char *encrypt_text = new char[MAX_SIZE];
+    memset(encrypt_text, 0, MAX_SIZE);
     BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
     RSA *rsa = RSA_new();
     string pkcs1_header = "-----BEGIN RSA PUBLIC KEY-----";
@@ -994,14 +1006,18 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
     if (!rsa) {
         unsigned long err = ERR_get_error(); //获取错误号
         char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+        ERR_load_crypto_strings();
+        ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
         LOGD("RSA 公钥加密->解析公钥失败！err:%ld, msg:%s", err, err_msg);
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
         LOGD("RSA 公钥加密->释放内存");
         BIO_free_all(keybio);
+        delete[]encrypt_text;
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        return 0;
     }
 
     // 获取RSA单次可以处理的数据块的最大长度
@@ -1020,33 +1036,61 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
     int flagLength = 0;
     bool error = false;
     int lenText = 0;
+    int sussce = 1;//标记是否加密成功
+    int count = 0;//记录一段明文的加密次数
     while (pos < length) {
-        if (left >= block_len) {
-            flagLength = block_len;
-        } else {
-            flagLength = left;
+        if (sussce == 1) {//加密成功才继续下一段加密
+            if (left >= block_len) {
+                flagLength = block_len;
+            } else {
+                flagLength = left;
+            }
+            left -= flagLength;
+            count=0;//加密成功重置加密次数
+        } else if (count > 10) {//当同一段明文加密次数超过10次，表示这段明文有问题，尝试缩短一个字符
+            flagLength--;
+            if (flagLength<=0){//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
+                error = true;
+                unsigned long err = ERR_get_error(); //获取错误号
+                char err_msg[1024] = {0};
+                ERR_load_crypto_strings();
+                ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+                LOGD("RSA 公钥加密->公钥加密失败！err:%ld, msg:%s", err, err_msg);
+                break;
+            }
+        }else{
+            count++;
         }
-        left -= flagLength;
         memset(textCs, 0, block_len + 1);
         memcpy(textCs, clear_text.c_str() + pos, flagLength);
         memset(sub_text, 0, len);
         ret = RSA_public_encrypt(flagLength, (const unsigned char *) textCs,
                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
         if (ret >= 0) {
-            encrypt_text.append(std::string(sub_text, ret));
-            lenText += ret;
+            sussce = 0;//先置为加密失败状态
+            //RSA加密成功后密文一般都是128，如果密文不是128就当做当前加密失败，重新加密
+            if (strlen(sub_text) == 128) {
+                if (pos == 0)
+                    strncpy(encrypt_text, sub_text, strlen(sub_text));
+                else
+                    strncat(encrypt_text, sub_text, strlen(sub_text));
+                lenText += ret;
+                pos += block_len;
+                sussce = 1;//加密成功
+            }
         } else {
             error = true;
             unsigned long err = ERR_get_error(); //获取错误号
             char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+            ERR_load_crypto_strings();
+            ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
             LOGD("RSA 公钥加密->公钥加密失败！err:%ld, msg:%s", err, err_msg);
             break;
         }
-        pos += block_len;
     }
-    LOGD("RSA 公钥加密->密文长度=%d",encrypt_text.length());
+    LOGD("RSA 公钥加密->密文长度=%d", strlen(encrypt_text));
     LOGD("RSA 公钥加密->释放内存");
     BIO_free_all(keybio);
     RSA_free(rsa);
@@ -1055,29 +1099,31 @@ std::string RsaPubEncrypt(const std::string &pub_key, const std::string &clear_t
     delete[] sub_text;
     delete[] textCs;
     if (error) {
-//        output = new char[1];
-//        output[0] = 0;
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        delete[]encrypt_text;
+        return 0;
     }
-//    const char* chars = encrypt_text.c_str();
-//    int len = lenText + 1;
-//    output = new char[len];
-//    memset(output, 0, len);
-//    memcpy(output, chars, len - 1);
-    LOGD("RSA 公钥加密->密文长度=%d",encrypt_text.length());
-    return encrypt_text;
+//    const char *chars = encrypt_text.c_str();
+    int outlen = lenText + 1;
+    output = new char[outlen];
+    memset(output, 0, outlen);
+    memcpy(output, encrypt_text, outlen - 1);
+    delete[] encrypt_text;
+    return outlen - 1;
 }
 
 /**
 @brief : 私钥解密
 @para  : cipher_text -[i] 加密的密文
          pub_key     -[i] 公钥
-@return: 解密后的数据
+         output     -[i] 解密后的数据
+@return: 解密后的数据长度
 **/
-std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_text) {
-    char *output;
+int RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_text, char *&output) {
     int length = cipher_text.length();
-    std::string decrypt_text;
+    char *decrypt_text = new char[MAX_SIZE];
+    memset(decrypt_text, 0, MAX_SIZE);
     RSA *rsa = RSA_new();
     BIO *keybio;
     keybio = BIO_new_mem_buf((unsigned char *) pri_key.c_str(), -1);
@@ -1085,14 +1131,18 @@ std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_
     if (rsa == nullptr) {
         unsigned long err = ERR_get_error(); //获取错误号
         char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+        ERR_load_crypto_strings();
+        ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
         LOGD("RSA 私钥解密->解析私钥失败！err:%ld, msg:%s", err, err_msg);
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
         LOGD("RSA 私钥解密->释放内存");
         BIO_free_all(keybio);
+        delete[]decrypt_text;
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        return 0;
     }
     int key_len = RSA_size(rsa);
     int len = key_len + 1;
@@ -1116,25 +1166,28 @@ std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_
         left -= flagLength;
         memset(eTextCs, 0, key_len);
         memcpy(eTextCs, (cipher_text.c_str() + pos), flagLength);
-        //sub_str = input.substr(pos, key_len);
         memset(sub_text, 0, len);
         ret = RSA_private_decrypt(flagLength, (const unsigned char *) eTextCs,
                                   (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
         if (ret >= 0) {
-            decrypt_text.append(std::string(sub_text, ret));
+            if (pos == 0)
+                strncpy(decrypt_text, sub_text, strlen(sub_text));
+            else
+                strncat(decrypt_text, sub_text, strlen(sub_text));
             textLength += ret;
             pos += key_len;
         } else {
             error = true;
             unsigned long err = ERR_get_error(); //获取错误号
             char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+            ERR_load_crypto_strings();
+            ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
             LOGD("RSA 私钥解密->私钥解密失败！err:%ld, msg:%s", err, err_msg);
             break;
         }
     }
-    LOGD("RSA 私钥解密->明文文长度=%d",decrypt_text.length());
+    LOGD("RSA 私钥解密->明文文长度=%d", strlen(decrypt_text));
     LOGD("RSA 私钥解密->释放内存");
     delete[] sub_text;
     delete[] eTextCs;
@@ -1143,26 +1196,30 @@ std::string RsaPriDecrypt(const std::string &pri_key, const std::string &cipher_
     //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
     CRYPTO_cleanup_all_ex_data();
     if (error) {
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        delete[]decrypt_text;
+        return 0;
     }
     textLength++;
-//    output = new char[textLength];
-//    memset(output, 0, textLength);
-//    memcpy(output, decrypt_text.c_str(), textLength - 1);
-    LOGD("RSA 私钥解密->明文文长度=%d",decrypt_text.length());
-    return decrypt_text;
+    output = new char[textLength];
+    memset(output, 0, textLength);
+    memcpy(output, decrypt_text, textLength - 1);
+    delete[]decrypt_text;
+    return textLength - 1;
 }
 
 /**
 @brief : 私钥加密
 @para  : clear_text  -[i] 需要进行加密的明文
          pri_key     -[i] 私钥
-@return: 加密后的数据
+         output     -[i] 加密后的数据
+@return: 加密后的数据长度
 **/
-std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
-    char *output;
+int RsaPriEncrypt(const std::string &pri_key, std::string &clear_text, char *&output) {
     int length = clear_text.length();
-    std::string decrypt_text;
+    char *encrypt_text = new char[MAX_SIZE];
+    memset(encrypt_text, 0, MAX_SIZE);
     RSA *rsa = RSA_new();
     BIO *keybio;
     keybio = BIO_new_mem_buf((unsigned char *) pri_key.c_str(), -1);
@@ -1170,14 +1227,148 @@ std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
     if (rsa == nullptr) {
         unsigned long err = ERR_get_error(); //获取错误号
         char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+        ERR_load_crypto_strings();
+        ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
         LOGD("RSA 私钥加密->解析私钥失败！err:%ld, msg:%s", err, err_msg);
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
         LOGD("RSA 私钥加密->释放内存");
         BIO_free_all(keybio);
         //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
         CRYPTO_cleanup_all_ex_data();
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        return 0;
+    }
+    // 获取RSA单次可以处理的数据块的最大长度
+    int key_len = RSA_size(rsa);
+    // 因为填充方式为RSA_PKCS1_PADDING, 所以要在key_len基础上减去11
+    int block_len = key_len - 11;
+
+    // 申请内存：存贮加密后的密文数据
+    int len = key_len + 1;
+    char *sub_text = new char[len];
+    memset(sub_text, 0, len);
+    char *textCs = new char[block_len + 1];
+    int ret = 0;
+    int pos = 0;
+    int left = length;
+    int flagLength = 0;
+    bool error = false;
+    int lenText = 0;
+    int sussce = 1;//标记是否加密成功
+    int count=0;//记录加密次数
+    while (pos < length) {
+        if (sussce == 1) {//加密成功才继续下一段加密
+            if (left >= block_len) {
+                flagLength = block_len;
+            } else {
+                flagLength = left;
+            }
+            left -= flagLength;
+            count=0;//加密成功重置加密次数
+        } else if (count > 10) {//当同一段明文加密次数超过10次，表示这段明文有问题，尝试缩短一个字符
+            flagLength--;
+            if (flagLength<=0){//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
+                error = true;
+                unsigned long err = ERR_get_error(); //获取错误号
+                char err_msg[1024] = {0};
+                ERR_load_crypto_strings();
+                ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+                LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
+                break;
+            }
+        } else{
+            count++;
+        }
+        memset(textCs, 0, block_len + 1);
+        memcpy(textCs, clear_text.c_str() + pos, flagLength);
+        memset(sub_text, 0, len);
+        LOGD("RSA 私钥加密->分段加密 pos=%d", pos);
+        LOGD("RSA 私钥加密->分段加密 textCs=%d", strlen(textCs));
+        LOGD("RSA 私钥加密->分段加密 textCs=%s", textCs);
+        ret = RSA_private_encrypt(flagLength, (const unsigned char *) textCs,
+                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
+        if (ret >= 0) {
+            LOGD("RSA 私钥加密->分段加密 sub_text=%d", strlen(sub_text));
+            LOGD("RSA 私钥加密->分段加密 sub_text=%s", sub_text);
+            sussce = 0;//先置为加密失败状态
+            //RSA加密成功后密文一般都是128，如果密文不是128就当做当前加密失败，重新加密
+            if (strlen(sub_text) == 128) {
+                if (pos == 0)
+                    strncpy(encrypt_text, sub_text, strlen(sub_text));
+                else
+                    strncat(encrypt_text, sub_text, strlen(sub_text));
+                lenText += ret;
+                pos += block_len;
+                sussce = 1;//加密成功
+            }
+        } else {
+            error = true;
+            unsigned long err = ERR_get_error(); //获取错误号
+            char err_msg[1024] = {0};
+            ERR_load_crypto_strings();
+            ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+            LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
+            break;
+        }
+    }
+    LOGD("RSA 私钥加密->密文长度=%d", strlen(encrypt_text));
+    LOGD("RSA 私钥加密->释放内存");
+    BIO_free_all(keybio);
+    RSA_free(rsa);
+    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+    CRYPTO_cleanup_all_ex_data();
+    delete[] sub_text;
+    delete[] textCs;
+    if (error) {
+        output = new char[1];
+        output[0] = 0;
+        return 0;
+    }
+    int outlen = lenText + 1;
+    output = new char[outlen];
+    memset(output, 0, outlen);
+    memcpy(output, encrypt_text, outlen - 1);
+    delete[] encrypt_text;
+    return outlen - 1;
+}
+
+/**
+@brief : 公钥解密
+@para  : cipher_text -[i] 加密的密文
+         pub_key     -[i] 公钥
+@return: 解密后的数据
+**/
+int RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_text, char *&output) {
+    int length = cipher_text.length();
+    char *decrypt_text = new char[MAX_SIZE];
+    memset(decrypt_text, 0, MAX_SIZE);
+    BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
+    RSA *rsa = RSA_new();
+    string pkcs1_header = "-----BEGIN RSA PUBLIC KEY-----";
+    string pkcs8_header = "-----BEGIN PUBLIC KEY-----";//
+    //读取公钥
+    if (0 == strncmp(pub_key.c_str(), pkcs8_header.c_str(), pkcs8_header.size())) {
+        rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa, NULL, NULL);
+    } else if (0 == strncmp(pub_key.c_str(), pkcs1_header.c_str(), pkcs1_header.size())) {
+        rsa = PEM_read_bio_RSAPublicKey(keybio, &rsa, NULL, NULL);
+    }
+    if (!rsa) {
+        unsigned long err = ERR_get_error(); //获取错误号
+        char err_msg[1024] = {0};
+        ERR_load_crypto_strings();
+        ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
+        LOGD("RSA 公钥解密->解析公钥失败！err:%ld, msg:%s", err, err_msg);
+//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
+        LOGD("RSA 公钥解密->释放内存");
+        BIO_free_all(keybio);
+        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
+        CRYPTO_cleanup_all_ex_data();
+        output = new char[1];
+        output[0] = 0;
+        return 0;
     }
     int key_len = RSA_size(rsa);
     int len = key_len + 1;
@@ -1200,27 +1391,35 @@ std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
         }
         left -= flagLength;
         memset(eTextCs, 0, key_len);
-        memcpy(eTextCs, (clear_text.c_str() + pos), flagLength);
-        //sub_str = input.substr(pos, key_len);
+        memcpy(eTextCs, (cipher_text.c_str() + pos), flagLength);
         memset(sub_text, 0, len);
-        ret = RSA_private_encrypt(flagLength, (const unsigned char *) eTextCs,
-                                  (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
+        LOGD("RSA 公钥解密->分段解密 pos=%d", pos);
+        LOGD("RSA 公钥解密->分段解密 eTextCs=%d", strlen(eTextCs));
+        LOGD("RSA 公钥解密->分段解密 eTextCs=%s", eTextCs);
+        ret = RSA_public_decrypt(flagLength, (const unsigned char *) eTextCs,
+                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
         if (ret >= 0) {
-            decrypt_text.append(std::string(sub_text, ret));
+            if (pos == 0)
+                strncpy(decrypt_text, sub_text, strlen(sub_text));
+            else
+                strncat(decrypt_text, sub_text, strlen(sub_text));
+            LOGD("RSA 公钥解密->分段解密 sub_text=%d", strlen(sub_text));
+            LOGD("RSA 公钥解密->分段解密 sub_text=%s", sub_text);
             textLength += ret;
             pos += key_len;
         } else {
             error = true;
             unsigned long err = ERR_get_error(); //获取错误号
             char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
+            ERR_load_crypto_strings();
+            ERR_error_string(err, err_msg);// 格式：error:errId:库:函数:原因
 //        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-            LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
+            LOGD("RSA 公钥解密->公钥解密失败！err:%ld, msg:%s", err, err_msg);
             break;
         }
     }
-    LOGD("RSA 私钥加密->密文文长度=%d",decrypt_text.length());
-    LOGD("RSA 私钥加密->释放内存！");
+    LOGD("RSA 公钥解密->明文文长度=%d", strlen(decrypt_text));
+    LOGD("RSA 公钥解密->释放内存");
     delete[] sub_text;
     delete[] eTextCs;
     BIO_free_all(keybio);
@@ -1228,111 +1427,17 @@ std::string RsaPriEncrypt(const std::string &pri_key, std::string &clear_text) {
     //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
     CRYPTO_cleanup_all_ex_data();
     if (error) {
-        return NULL;
+        output = new char[1];
+        output[0] = 0;
+        delete[]decrypt_text;
+        return 0;
     }
     textLength++;
-//    output = new char[textLength];
-//    memset(output, 0, textLength);
-//    memcpy(output, decrypt_text.c_str(), textLength - 1);
-    LOGD("RSA 私钥加密->密文文长度=%d",decrypt_text.length());
-    return decrypt_text;
-}
-
-/**
-@brief : 公钥解密
-@para  : cipher_text -[i] 加密的密文
-         pub_key     -[i] 公钥
-@return: 解密后的数据
-**/
-std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_text) {
-    char *output;
-    int length = cipher_text.length();
-    std::string encrypt_text;
-    BIO *keybio = BIO_new_mem_buf((unsigned char *) pub_key.c_str(), -1);
-    RSA *rsa = RSA_new();
-    string pkcs1_header = "-----BEGIN RSA PUBLIC KEY-----";
-    string pkcs8_header = "-----BEGIN PUBLIC KEY-----";//
-    //读取公钥
-    if (0 == strncmp(pub_key.c_str(), pkcs8_header.c_str(), pkcs8_header.size())) {
-        rsa = PEM_read_bio_RSA_PUBKEY(keybio, &rsa, NULL, NULL);
-    } else if (0 == strncmp(pub_key.c_str(), pkcs1_header.c_str(), pkcs1_header.size())) {
-        rsa = PEM_read_bio_RSAPublicKey(keybio, &rsa, NULL, NULL);
-    }
-    if (!rsa) {
-        unsigned long err = ERR_get_error(); //获取错误号
-        char err_msg[1024] = {0};
-        ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-        LOGD("RSA 公钥解密->解析公钥失败！err:%ld, msg:%s", err, err_msg);
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-        LOGD("RSA 公钥解密->释放内存");
-        BIO_free_all(keybio);
-        //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-        CRYPTO_cleanup_all_ex_data();
-        return NULL;
-    }
-
-    // 获取RSA单次可以处理的数据块的最大长度
-    int key_len = RSA_size(rsa);
-    // 因为填充方式为RSA_PKCS1_PADDING, 所以要在key_len基础上减去11
-    int block_len = key_len - 11;
-
-    // 申请内存：存贮加密后的密文数据
-    int len = key_len + 1;
-    char *sub_text = new char[len];
-    memset(sub_text, 0, len);
-    char *textCs = new char[block_len + 1];
-    int ret = 0;
-    int pos = 0;
-    int left = length;
-    int flagLength = 0;
-    bool error = false;
-    int lenText = 0;
-    while (pos < length) {
-        if (left >= block_len) {
-            flagLength = block_len;
-        } else {
-            flagLength = left;
-        }
-        left -= flagLength;
-        memset(textCs, 0, block_len + 1);
-        memcpy(textCs, cipher_text.c_str() + pos, flagLength);
-        memset(sub_text, 0, len);
-        ret = RSA_public_decrypt(flagLength, (const unsigned char *) textCs,
-                                 (unsigned char *) sub_text, rsa, RSA_PKCS1_PADDING);
-        if (ret >= 0) {
-            encrypt_text.append(std::string(sub_text, ret));
-            lenText += ret;
-        } else {
-            error = true;
-            unsigned long err = ERR_get_error(); //获取错误号
-            char err_msg[1024] = {0};
-            ERR_error_string(err, err_msg); // 格式：error:errId:库:函数:原因
-            LOGD("RSA 公钥解密->公钥解密失败！err:%ld, msg:%s", err, err_msg);
-//        printf("err msg: err:%ld, msg:%s\n", err, err_msg);
-            break;
-        }
-        pos += block_len;
-    }
-    LOGD("RSA 公钥解密->明文文长度=%d",encrypt_text.length());
-    LOGD("RSA 公钥解密->释放内存");
-    BIO_free_all(keybio);
-    RSA_free(rsa);
-    //清除管理CRYPTO_EX_DATA的全局hash表中的数据，避免内存泄漏
-    CRYPTO_cleanup_all_ex_data();
-    delete[] sub_text;
-    delete[] textCs;
-    if (error) {
-//        output = new char[1];
-//        output[0] = 0;
-        return NULL;
-    }
-//    const char* chars = encrypt_text.c_str();
-//    int len = lenText + 1;
-//    output = new char[len];
-//    memset(output, 0, len);
-//    memcpy(output, chars, len - 1);
-    LOGD("RSA 公钥解密->明文文长度=%d",encrypt_text.length());
-    return encrypt_text;
+    output = new char[textLength];
+    memset(output, 0, textLength);
+    memcpy(output, decrypt_text, textLength - 1);
+    delete[]decrypt_text;
+    return textLength - 1;
 }
 
 /**
@@ -1344,14 +1449,15 @@ std::string RsaPubDecrypt(const std::string &pub_key, const std::string &cipher_
  * @param base64PublicKey
  * @return
  */
-jstring
-encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src, jstring base64PublicKey) {
+jbyteArray
+encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jbyteArray src,
+             jbyteArray base64PublicKey) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 公钥加密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //jstring 转 char*
-    char *base64PublicKeyChars = Jstring2CStr(env, base64PublicKey);
+    char *base64PublicKeyChars = jByteArrayToChar(env, base64PublicKey);
 //    char *base64PublicKeyChars = (char *)env->GetStringUTFChars(base64PublicKey,0);
 //    LOGD("base64PublicKeyChars=%s",base64PublicKeyChars);
     //char* 转 string
@@ -1360,36 +1466,37 @@ encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src, jstring ba
     //生成公钥字符串
     string generatedPublicKey = generatePublicKey(base64PublicKeyString);
 //    LOGD("generatedPublicKey=\n%s",generatedPublicKey.c_str());
-    //释放
-    env->ReleaseStringUTFChars(base64PublicKey, base64PublicKeyChars);
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src);
-//    char *srcChars = (char *)env->GetStringUTFChars(src,0);
+    char *srcChars = jByteArrayToChar(env, src);
 //    LOGD("srcChars=%s",srcChars);
     //char* 转 string
     string srcString = string(srcChars);
 //    LOGD("srcString=%s",srcString.c_str());
-    //释放
-    env->ReleaseStringUTFChars(src, srcChars);
-    //调用RSA加密函数加密
-    string rsaResult = RsaPubEncrypt(generatedPublicKey, srcString);
-    if (rsaResult.empty()) {
-        return CStr2Jstring(env, "RSA 公钥加密失败！");
-    }
-    LOGD("RSA 公钥加密->rsaResult=%s", rsaResult.c_str());
-    LOGD("RSA 公钥加密->length=%d", rsaResult.length());
     LOGD("RSA 公钥加密->释放资源");
     env->DeleteLocalRef(base64PublicKey);
     env->DeleteLocalRef(src);
-//    LOGD("rsaResult=%s",rsaResult.c_str());
+    free(srcChars);
+    free(base64PublicKeyChars);
+    //调用RSA加密函数加密
+    char *rsaResult;
+    int len = RsaPubEncrypt(generatedPublicKey, srcString, rsaResult);
+    if (len == 0) {
+        delete[] rsaResult;
+        return charToJByteArray(env, (unsigned char *) "RSA 公钥加密失败！");
+    }
+    LOGD("RSA 公钥加密->rsaResult=%s", rsaResult);
+    LOGD("RSA 公钥加密->length=%d", strlen(rsaResult));
     //将密文进行base64
-    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
-    if (base64RSA.empty()) {
-        return CStr2Jstring(env, "RSA 公钥加密base64编码失败！");
+    char *base64RSA;
+    int base64len = base64Encode(rsaResult, base64RSA);
+    delete[] rsaResult;
+    if (base64len == 0) {
+        delete[] base64RSA;
+        return charToJByteArray(env, (unsigned char *) "RSA 公钥加密base64编码失败！");
     }
 //    LOGD("base64RSA=%s",base64RSA.c_str());
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, base64RSA.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(base64RSA));
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
     return result;
 }
@@ -1403,15 +1510,15 @@ encryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src, jstring ba
  * @param base64PublicKey
  * @return
  */
-jstring
-decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src,
-             jstring base64PrivateKey) {
+jbyteArray
+decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jbyteArray src,
+             jbyteArray base64PrivateKey) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 私钥解密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //jstring 转 char*
-    char *base64PrivateKeyChars = Jstring2CStr(env, base64PrivateKey);
+    char *base64PrivateKeyChars = jByteArrayToChar(env, base64PrivateKey);
 //    char *base64PrivateKeyChars = (char *)env->GetStringUTFChars(base64PrivateKey,0);
 //    LOGD("base64PrivateKeyChars=%s",base64PrivateKeyChars);
     //char* 转 string
@@ -1420,37 +1527,40 @@ decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src,
     //生成公钥字符串
     string generatedPrivateKey = generatePrivateKey(base64PrivateKeyString);
 //    LOGD("generatedPrivateKey=%s",generatedPrivateKey.c_str());
-    //释放
-    env->ReleaseStringUTFChars(base64PrivateKey, base64PrivateKeyChars);
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src);
+    char *srcChars = jByteArrayToChar(env, src);
 //    char *srcChars = (char *)env->GetStringUTFChars(src,0);
 //    LOGD("srcChars=%s", srcChars);
     //char* 转 string
     //decode
-    string decodeBase64RSA = base64Decode(srcChars);
-    //释放
-    env->ReleaseStringUTFChars(src, srcChars);
-    if (decodeBase64RSA.empty()) {
+    char *decodeBase64RSA;
+    int decode_len = base64Decode(srcChars, decodeBase64RSA);
+    LOGD("RSA 私钥解密->释放资源");
+    env->DeleteLocalRef(src);
+    env->DeleteLocalRef(base64PrivateKey);
+    free(base64PrivateKeyChars);
+    free(srcChars);
+    if (decode_len == 0) {
         LOGD("RSA 私钥解密->RSA base64解密失败！");
+        delete[]decodeBase64RSA;
         string err = string("RSA base64解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("decodeBase64RSA=%s", decodeBase64RSA.c_str());
     //解密
-    string origin = RsaPriDecrypt(generatedPrivateKey, decodeBase64RSA);
-    LOGD("RSA 私钥解密->释放资源");
-    env->DeleteLocalRef(base64PrivateKey);
-    env->DeleteLocalRef(src);
-    if (origin.empty()) {
+    char *origin;
+    int len = RsaPriDecrypt(generatedPrivateKey, decodeBase64RSA, origin);
+    if (len == 0) {
         LOGD("RSA 私钥解密->解密失败！");
+        delete[] origin;
         string err = string("RSA 私钥解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 私钥解密->origin=%s", origin.c_str());
-    LOGD("RSA 私钥解密->length=%d", origin.length());
+    LOGD("RSA 私钥解密->origin=%s", origin);
+    LOGD("RSA 私钥解密->length=%d", strlen(origin));
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, origin.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(origin));
+    delete[] origin;
 //    jstring result =env->NewStringUTF(origin.c_str());
     return result;
 }
@@ -1463,11 +1573,11 @@ decryptByRSA(JNIEnv *env, jobject thiz, jobject context, jstring src,
  * @param src_
  * @return
  */
-jstring
-encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
+jbyteArray
+encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 公钥加密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //char* 转 string
     string base64PublicKeyString = string(RSAPublicKey);
@@ -1476,36 +1586,41 @@ encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     string generatedPublicKey = generatePublicKey(base64PublicKeyString);
 //    LOGD("generatedPublicKey=%s",generatedPublicKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
+    char *srcChars = jByteArrayToChar(env, src_);
 //    LOGD("srcChars=%s",srcChars);
     //char* 转 string
     string srcString = string(srcChars);
 //    LOGD("srcString=%s",srcString.c_str());
     //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("RSA 公钥加密->释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
     //调用RSA加密函数加密
-    string rsaResult = RsaPubEncrypt(generatedPublicKey, srcString);
-    if (rsaResult.empty()) {
+    char *rsaResult;
+    int len = RsaPubEncrypt(generatedPublicKey, srcString, rsaResult);
+    if (len == 0) {
         LOGD("RSA 公钥加密->RSA公钥加密失败");
+        delete[] rsaResult;
         string err = string("RSA公钥加密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA公钥加密->rsaResult=%s", rsaResult.c_str());
-    LOGD("RSA公钥加密->length=%d", rsaResult.length());
+    LOGD("RSA公钥加密->rsaResult=%s", rsaResult);
+    LOGD("RSA公钥加密->length=%d", strlen(rsaResult));
     //将密文进行base64
-    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
-    if (base64RSA.empty()) {
+    char *base64RSA;
+    int base64_len = base64Encode(rsaResult, base64RSA);
+    delete[] rsaResult;
+    if (base64_len == 0) {
         LOGD("RSA公钥加密->base64编码失败");
+        delete[] base64RSA;
         string err = string("RSA base64编码失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA公钥加密->base64RSA=%s", base64RSA.c_str());
-    LOGD("RSA公钥加密->length=%d", base64RSA.length());
+    LOGD("RSA公钥加密->base64RSA=%s", base64RSA);
+    LOGD("RSA公钥加密->length=%d", base64_len);
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, base64RSA.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(base64RSA));
+    delete[] base64RSA;
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
     return result;
 }
@@ -1518,11 +1633,11 @@ encodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
  * @param src_
  * @return
  */
-jstring
-decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
+jbyteArray
+decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 私钥解密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //char* 转 string
     string base64PrivateKeyString = string(RSAPrivateKey);
@@ -1531,32 +1646,37 @@ decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     string generatedPrivateKey = generatePrivateKey(base64PrivateKeyString);
 //    LOGD("generatedPrivateKey=%s",generatedPrivateKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
-//    LOGD("srcChars=%s",srcChars);
+    char *srcChars = jByteArrayToChar(env, src_);
+    LOGD("srcChars=%s", srcChars);
     //decode
-    string decodeBase64RSA = base64Decode(srcChars);
+    char *decodeBase64RSA;
+    int decode_len = base64Decode(srcChars, decodeBase64RSA);
     //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("RSA 私钥解密->释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
-    if (decodeBase64RSA.empty()) {
+    if (decode_len == 0) {
         LOGD("RSA 私钥解密->base64解密失败");
+        delete[]decodeBase64RSA;
         string err = string("RSA base64解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("decodeBase64RSA=%s",decodeBase64RSA.c_str());
     //解密
-    string origin = RsaPriDecrypt(generatedPrivateKey, decodeBase64RSA);
-    if (origin.empty()) {
+    char *origin;
+    int len = RsaPriDecrypt(generatedPrivateKey, decodeBase64RSA, origin);
+    delete[]decodeBase64RSA;
+    if (len == 0) {
         LOGD("RSA 私钥解密->解密失败!");
+        delete[] origin;
         string err = string("RSA 私钥解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 私钥解密->origin=%s", origin.c_str());
-    LOGD("RSA 私钥解密->length=%d", origin.length());
+    LOGD("RSA 私钥解密->origin=%s", origin);
+    LOGD("RSA 私钥解密->length=%d", strlen(origin));
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, origin.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(origin));
+    delete[] origin;
 //    jstring result =env->NewStringUTF(origin.c_str());
     return result;
 }
@@ -1569,11 +1689,11 @@ decodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
  * @param src_
  * @return
  */
-jstring
-encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
+jbyteArray
+encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 私钥加密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //char* 转 string
     string base64PrivateKeyString = string(RSAPrivateKey);
@@ -1582,37 +1702,42 @@ encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     string generatedPrivateKey = generatePrivateKey(base64PrivateKeyString);
 //    LOGD("generatedPrivateKey=%s",generatedPrivateKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
+    char *srcChars = jByteArrayToChar(env, src_);
 //    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
 //    LOGD("srcChars=%s",srcChars);
     //char* 转 string
     string srcString = string(srcChars);
 //    LOGD("srcString=%s",srcString.c_str());
-    //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("RSA 私钥加密->释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
     //调用RSA加密函数加密
-    string rsaResult = RsaPriEncrypt(generatedPrivateKey, srcString);
-    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult.c_str());
-    LOGD("RSA 私钥加密->length=%d", rsaResult.length());
-    if (rsaResult.empty()) {
+    char *rsaResult;
+    int len = RsaPriEncrypt(generatedPrivateKey, srcString, rsaResult);
+    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult);
+    LOGD("RSA 私钥加密->length=%d", strlen(rsaResult));
+    if (len == 0) {
         LOGD("RSA 私钥加密->RSA 私钥加密失败");
+        delete[] rsaResult;
         string err = string("RSA 私钥加密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("rsaResult=%s",rsaResult.c_str());
     //将密文进行base64
-    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
-    if (base64RSA.empty()) {
+    char *base64RSA;
+    int base64_len = base64Encode(rsaResult, base64RSA);
+    delete[] rsaResult;
+    if (base64_len == 0) {
         LOGD("RSA 私钥加密->base64编码失败");
+        delete[]base64RSA;
         string err = string("RSA base64编码失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 私钥加密->base64RSA=%s", base64RSA.c_str());
-    LOGD("RSA 私钥加密->length=%d", base64RSA.length());
+    LOGD("RSA 私钥加密->base64RSA=%s", base64RSA);
+    LOGD("RSA 私钥加密->length=%d", base64_len);
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, base64RSA.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(base64RSA));
+    delete[]base64RSA;
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
     return result;
 }
@@ -1625,11 +1750,11 @@ encodeByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
  * @param src_
  * @return
  */
-jstring
-decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
+jbyteArray
+decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 公钥解密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //char* 转 string
     string base64PublicKeyString = string(RSAPublicKey);
@@ -1638,32 +1763,37 @@ decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
     string generatedPublicKey = generatePublicKey(base64PublicKeyString);
 //    LOGD("generatedPublicKey=%s",generatedPublicKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
-//    LOGD("srcChars=%s",srcChars);
+    char *srcChars = jByteArrayToChar(env, src_);
+    LOGD("srcChars=%s", srcChars);
     //decode
-    string decodeBase64RSA = base64Decode(srcChars);
+    char *decodeBase64RSA;
+    int decode_len = base64Decode(srcChars, decodeBase64RSA);
     //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("RSA 公钥解密->释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
-    if (decodeBase64RSA.empty()) {
+    if (decode_len == 0) {
         LOGD("RSA 公钥解密->base64解密失败");
+        delete[]decodeBase64RSA;
         string err = string("RSA base64解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("decodeBase64RSA=%s",decodeBase64RSA.c_str());
     //解密
-    string origin = RsaPubDecrypt(generatedPublicKey, decodeBase64RSA);
-    if (origin.empty()) {
+    char *origin;
+    int len = RsaPubDecrypt(generatedPublicKey, decodeBase64RSA, origin);
+    delete[]decodeBase64RSA;
+    if (len == 0) {
         LOGD("RSA 公钥解密->解密失败!");
+        delete[] origin;
         string err = string("RSA 公钥解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 公钥解密->origin=%s", origin.c_str());
-    LOGD("RSA 公钥解密->length=%d", origin.length());
+    LOGD("RSA 公钥解密->origin=%s", origin);
+    LOGD("RSA 公钥解密->length=%d", strlen(origin));
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, origin.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(origin));
+    delete[] origin;
 //    jstring result =env->NewStringUTF(origin.c_str());
     return result;
 }
@@ -1677,16 +1807,15 @@ decodeByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_) {
  * @param base64PrivateKey
  * @return
  */
-jstring
-encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
-                   jstring base64PrivateKey) {
+jbyteArray
+encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_,
+                   jbyteArray base64PrivateKey) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 私钥加密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //jstring 转 char*
-    char *base64PrivateKeyChars = Jstring2CStr(env, base64PrivateKey);
-    //    char *base64PrivateKeyChars = (char *)env->GetStringUTFChars(base64PrivateKey,0);
+    char *base64PrivateKeyChars = jByteArrayToChar(env, base64PrivateKey);
 //    LOGD("base64PrivateKeyChars=%s",base64PrivateKeyChars);
     //char* 转 string
     string base64PrivateKeyString = string(base64PrivateKeyChars);
@@ -1695,35 +1824,40 @@ encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
     string generatedPrivateKey = generatePrivateKey(base64PrivateKeyString);
 //    LOGD("generatedPrivateKey=%s",generatedPrivateKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
+    char *srcChars = jByteArrayToChar(env, src_);
 //    LOGD("srcChars=%s",srcChars);
     //char* 转 string
     string srcString = string(srcChars);
 //    LOGD("srcString=%s",srcString.c_str());
     //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
     LOGD("释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
     //调用RSA加密函数加密
-    string rsaResult = RsaPriEncrypt(generatedPrivateKey, srcString);
-    if (rsaResult.empty()) {
+    char *rsaResult;
+    int len = RsaPriEncrypt(generatedPrivateKey, srcString, rsaResult);
+    if (len == 0) {
         LOGD("RSA 私钥加密->RSA 私钥加密失败");
+        delete[] rsaResult;
         string err = string("RSA 私钥加密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult.c_str());
-    LOGD("RSA 私钥加密->length=%d", rsaResult.length());
+    LOGD("RSA 私钥加密->rsaResult=%s", rsaResult);
+    LOGD("RSA 私钥加密->length=%d", strlen(rsaResult));
     //将密文进行base64
-    string base64RSA = base64Encode(reinterpret_cast<const char *>(rsaResult.c_str()));
-    if (base64RSA.empty()) {
+    char *base64RSA;
+    int base64_len = base64Encode(rsaResult, base64RSA);
+    delete[] rsaResult;
+    if (base64_len == 0) {
         LOGD("RSA 私钥加密->base64编码失败");
+        delete[]base64RSA;
         string err = string("RSA base64编码失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("base64RSA=%s",base64RSA.c_str());
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, base64RSA.c_str());
+    jbyteArray result = charToJByteArray(env, reinterpret_cast<unsigned char *>(base64RSA));
+    delete[]base64RSA;
 //    jstring result =env->NewStringUTF(base64RSA.c_str());
     return result;
 }
@@ -1737,16 +1871,15 @@ encryptByRSAPriKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
  * @param base64PublicKey
  * @return
  */
-jstring
-decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
-                   jstring base64PublicKey) {
+jbyteArray
+decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jbyteArray src_,
+                   jbyteArray base64PublicKey) {
     if (!verifySha1OfApk(env, context)) {
         LOGD("RSA 公钥解密->apk-sha1值验证不通过");
-        return env->NewStringUTF(sha1_sign_err);
+        return charToJByteArray(env, (unsigned char *) sha1_sign_err);
     }
     //jstring 转 char*
-    char *base64PublicKeyChars = Jstring2CStr(env, base64PublicKey);
-//    char *base64PublicKeyChars = (char *)env->GetStringUTFChars(base64PublicKey,0);
+    char *base64PublicKeyChars = jByteArrayToChar(env, base64PublicKey);
 //    LOGD("base64PublicKeyChars=%s",base64PublicKeyChars);
     //char* 转 string
     string base64PublicKeyString = string(base64PublicKeyChars);
@@ -1755,32 +1888,36 @@ decryptByRSAPubKey(JNIEnv *env, jobject obj, jobject context, jstring src_,
     string generatedPublicKey = generatePublicKey(base64PublicKeyString);
 //    LOGD("generatedPublicKey=%s",generatedPublicKey.c_str());
     //jstring 转 char*
-    char *srcChars = Jstring2CStr(env, src_);
-//    char *srcChars = (char *)env->GetStringUTFChars(src_,0);
+    char *srcChars = jByteArrayToChar(env, src_);
 //    LOGD("srcChars=%s",srcChars);
     //decode
-    string decodeBase64RSA = base64Decode(srcChars);
-    //释放
-    env->ReleaseStringUTFChars(src_, srcChars);
+    char *decodeBase64RSA;
+    int decode_len = base64Decode(srcChars, decodeBase64RSA);
     LOGD("释放资源->src_");
+    free(srcChars);
     env->DeleteLocalRef(src_);
-    if (decodeBase64RSA.empty()) {
+    if (decode_len == 0) {
         LOGD("RSA 公钥解密->base64解密失败");
+        delete[]decodeBase64RSA;
         string err = string("RSA base64解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
 //    LOGD("decodeBase64RSA=%s",decodeBase64RSA.c_str());
     //解密
-    string origin = RsaPubDecrypt(generatedPublicKey, decodeBase64RSA);
-    if (origin.empty()) {
+    char *origin;
+    int len = RsaPubDecrypt(generatedPublicKey, decodeBase64RSA, origin);
+    delete[]decodeBase64RSA;
+    if (len == 0) {
         LOGD("RSA 公钥解密->解密失败!");
+        delete[] origin;
         string err = string("RSA 公钥解密失败！");
-        return CStr2Jstring(env, err.c_str());
+        return charToJByteArray(env, (unsigned char *) err.c_str());
     }
-    LOGD("RSA 公钥解密->origin=%s", origin.c_str());
-    LOGD("RSA 公钥解密->length=%d", origin.length());
+    LOGD("RSA 公钥解密->origin=%s", origin);
+    LOGD("RSA 公钥解密->length=%d", strlen(origin));
     //string -> char* -> jstring 返回
-    jstring result = CStr2Jstring(env, origin.c_str());
+    jbyteArray result = charToJByteArray(env, (unsigned char *) origin);
+    delete[] origin;
 //    jstring result =env->NewStringUTF(origin.c_str());
     return result;
 }
@@ -1882,32 +2019,32 @@ L完整包名加类名;	jobject	    class
 如果有内部类 则用 $ 来分隔 如:Landroid/os/FileUtils$FileStatus;
 */
 static JNINativeMethod getMethods[] = {
-        {"encodeByHmacSHA1",    "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeByHmacSHA1},
-        {"encodeBySHA1",        "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA1},
-        {"encodeBySHA224",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA224},
-        {"encodeBySHA256",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA256},
-        {"encodeBySHA384",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA384},
-        {"encodeBySHA512",      "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) encodeBySHA512},
-        {"encodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByAESEncrypt},
-        {"decodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                                                   (void *) decodeByAESEncrypt},
-        {"encryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",                                                 (void *) encryptByAESEncrypt},
-        {"decryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",                                                 (void *) decryptByAESEncrypt},
-        {"encodeByAESCipher",   "(Landroid/content/Context;[B)[B",                                                   (void *) encodeByAESCipher},
-        {"decodeByAESCipher",   "(Landroid/content/Context;[B)[B",                                                   (void *) decodeByAESCipher},
-        {"encryptAESCipher",    "(Landroid/content/Context;[B[B)[B",                                                 (void *) encryptAESCipher},
-        {"decryptAESCipher",    "(Landroid/content/Context;[B[B)[B",                                                 (void *) decryptAESCipher},
-        {"encodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeByRSAPubKey},
-        {"decodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) decodeByRSAPriKey},
-        {"encodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) encodeByRSAPriKey},
-        {"decodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;",                   (void *) decodeByRSAPubKey},
-        {"encryptRSA",          "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) encryptByRSA},
-        {"decryptRSA",          "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSA},
-        {"encodeByRSAPriKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) encryptByRSAPriKey},
-        {"decodeByRSAPubKey",   "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;", (void *) decryptByRSAPubKey},
-        {"md5",                 "(Landroid/content/Context;[B)Ljava/lang/String;",                                   (void *) md5},
-        {"sha1OfApk",           "(Landroid/content/Context;)Ljava/lang/String;",                                     (void *) getSha1OfApk},
-        {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",                                    (void *) generateRSAKey},
-        {"verifySha1OfApk",     "(Landroid/content/Context;)Z",                                                      (void *) validateSha1OfApk},
+        {"encodeByHmacSHA1",    "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeByHmacSHA1},
+        {"encodeBySHA1",        "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeBySHA1},
+        {"encodeBySHA224",      "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeBySHA224},
+        {"encodeBySHA256",      "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeBySHA256},
+        {"encodeBySHA384",      "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeBySHA384},
+        {"encodeBySHA512",      "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) encodeBySHA512},
+        {"encodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                 (void *) encodeByAESEncrypt},
+        {"decodeByAESEncrypt",  "(Landroid/content/Context;[B)[B",                 (void *) decodeByAESEncrypt},
+        {"encryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",               (void *) encryptByAESEncrypt},
+        {"decryptByAESEncrypt", "(Landroid/content/Context;[B[B)[B",               (void *) decryptByAESEncrypt},
+        {"encodeByAESCipher",   "(Landroid/content/Context;[B)[B",                 (void *) encodeByAESCipher},
+        {"decodeByAESCipher",   "(Landroid/content/Context;[B)[B",                 (void *) decodeByAESCipher},
+        {"encryptAESCipher",    "(Landroid/content/Context;[B[B)[B",               (void *) encryptAESCipher},
+        {"decryptAESCipher",    "(Landroid/content/Context;[B[B)[B",               (void *) decryptAESCipher},
+        {"encodeByRSAPubKey",   "(Landroid/content/Context;[B)[B",                 (void *) encodeByRSAPubKey},
+        {"decodeByRSAPriKey",   "(Landroid/content/Context;[B)[B",                 (void *) decodeByRSAPriKey},
+        {"encodeByRSAPriKey",   "(Landroid/content/Context;[B)[B",                 (void *) encodeByRSAPriKey},
+        {"decodeByRSAPubKey",   "(Landroid/content/Context;[B)[B",                 (void *) decodeByRSAPubKey},
+        {"encryptRSA",          "(Landroid/content/Context;[B[B)[B",               (void *) encryptByRSA},
+        {"decryptRSA",          "(Landroid/content/Context;[B[B)[B",               (void *) decryptByRSA},
+        {"encodeByRSAPriKey",   "(Landroid/content/Context;[B[B)[B",               (void *) encryptByRSAPriKey},
+        {"decodeByRSAPubKey",   "(Landroid/content/Context;[B[B)[B",               (void *) decryptByRSAPubKey},
+        {"md5",                 "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) md5},
+        {"sha1OfApk",           "(Landroid/content/Context;)Ljava/lang/String;",   (void *) getSha1OfApk},
+        {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",  (void *) generateRSAKey},
+        {"verifySha1OfApk",     "(Landroid/content/Context;)Z",                    (void *) validateSha1OfApk},
 };
 
 //此函数通过调用RegisterNatives方法来注册我们的函数

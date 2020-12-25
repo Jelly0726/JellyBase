@@ -185,7 +185,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String encodeByRSAPubKey(Context context,String src);
+    public native byte[] encodeByRSAPubKey(Context context,byte[] src);
 
     /**
      * RSA私钥解密
@@ -193,14 +193,14 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String decodeByRSAPriKey(Context context, String src);
+    public native byte[] decodeByRSAPriKey(Context context, byte[] src);
     /**
      * RSA私钥加密
      *
      * @param src
      * @return
      */
-    public native String encodeByRSAPriKey(Context context,String src);
+    public native byte[] encodeByRSAPriKey(Context context,byte[] src);
 
     /**
      * RSA公钥解密
@@ -208,7 +208,7 @@ public class JniUtils {
      * @param src
      * @return
      */
-    public native String decodeByRSAPubKey(Context context, String src);
+    public native byte[] decodeByRSAPubKey(Context context, byte[] src);
 
     /**
      * RSA公钥加密
@@ -217,7 +217,7 @@ public class JniUtils {
      * @param publicKey  公钥base64字符串（没换行）
      * @return
      */
-    public native String encryptRSA(Context context,String src,String publicKey);
+    public native byte[] encryptRSA(Context context,byte[] src,byte[] publicKey);
 
     /**
      * RSA私钥解密
@@ -226,7 +226,7 @@ public class JniUtils {
      * @param privateKey  私钥base64字符串（没换行）
      * @return
      */
-    public native String decryptRSA(Context context, String src,String privateKey);
+    public native byte[] decryptRSA(Context context, byte[] src,byte[] privateKey);
     /**
      * RSA私钥加密
      *
@@ -234,7 +234,7 @@ public class JniUtils {
      * @param privateKey  私钥base64字符串（没换行）
      * @return
      */
-    public native String encodeByRSAPriKey(Context context,String src,String privateKey);
+    public native byte[] encodeByRSAPriKey(Context context,byte[] src,byte[] privateKey);
 
     /**
      * RSA公钥解密
@@ -243,7 +243,7 @@ public class JniUtils {
      * @param publicKey  公钥base64字符串（没换行）
      * @return
      */
-    public native String decodeByRSAPubKey(Context context, String src,String publicKey);
+    public native byte[] decodeByRSAPubKey(Context context, byte[] src,byte[] publicKey);
 
     /**
      * MD5编码

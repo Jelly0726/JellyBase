@@ -222,9 +222,10 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
         Log.i("SafetyUtil", "签名加密前:" + source);
-        String sign = jni.encryptRSA(context.getApplicationContext(), source, publicKey);
-        if (!isBase64(sign))
-            sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
+        byte[] result=jni.encryptRSA(context.getApplicationContext(), source.getBytes(), publicKey.getBytes());
+        String sign = new String(result);
+//        if (!isBase64(sign))
+//            sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
         Log.i("SafetyUtil", "签名加密后:" + sign);
         return sign;
         //return MD5(stringBuffer.toString()).toUpperCase();
@@ -281,13 +282,13 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
         Log.i("SafetyUtil", "解密前:" + source);
-        String sign;
-//        if (isBase64(source)) {
-//            source=new String(Base64.decode(source, Base64.NO_WRAP));
-//            sign = jni.decryptRSA(context.getApplicationContext(),
-//                    source, privateKey);
-//        }else
-            sign = jni.decryptRSA(context.getApplicationContext(), source, privateKey);
+       byte[] result;
+        if (isBase64(source)) {
+            result = jni.decryptRSA(context.getApplicationContext(),
+                    Base64.decode(source, Base64.NO_WRAP), privateKey.getBytes());
+        }else
+            result = jni.decryptRSA(context.getApplicationContext(), source.getBytes(), privateKey.getBytes());
+        String sign=new String(result);
         Log.i("SafetyUtil", "解密后:" + sign);
         return sign;
         //return MD5(stringBuffer.toString()).toUpperCase();
@@ -306,9 +307,10 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
         Log.i("SafetyUtil", "签名加密前:" + source);
-        String sign = jni.encodeByRSAPriKey(context.getApplicationContext(), source, privateKey);
-        if (!isBase64(sign))
-            sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
+        byte[] result=jni.encodeByRSAPriKey(context.getApplicationContext(), source.getBytes(), privateKey.getBytes());
+        String sign = new String(result);
+//        if (!isBase64(sign))
+//            sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
         Log.i("SafetyUtil", "签名加密后:" + sign);
         return sign;
         //return MD5(stringBuffer.toString()).toUpperCase();
@@ -365,14 +367,14 @@ public class SafetyUtil {
 //		map.put("sign", MD5.MD5Encode(stringBuffer.toString().toLowerCase()).toUpperCase());
 //		return map;
         Log.i("SafetyUtil", "解密前:" + source);
-        String sign;
-//        if (isBase64(source)) {
-//            source=new String(Base64.decode(source, Base64.NO_WRAP));
-//            sign = jni.decodeByRSAPubKey(context.getApplicationContext(),
-//                    source , publicKey);
-//        }else
-            sign = jni.decodeByRSAPubKey(context.getApplicationContext(),
-                    source, publicKey);
+        byte[] result;
+        if (isBase64(source)) {
+            result = jni.decodeByRSAPubKey(context.getApplicationContext(),
+                    Base64.decode(source, Base64.NO_WRAP) , publicKey.getBytes());
+        }else
+            result = jni.decodeByRSAPubKey(context.getApplicationContext(),
+                    source.getBytes(), publicKey.getBytes());
+        String sign=new String(result);
         Log.i("SafetyUtil", "解密后:" + sign);
         return sign;
         //return MD5(stringBuffer.toString()).toUpperCase();
@@ -561,18 +563,20 @@ public class SafetyUtil {
                 sign = new String(AES);
                 break;
             case RSA_PUBKEY://RSA公钥解密
+                byte[] result;
 //                if (isBase64(source)) {
-//                    source=new String(Base64.decode(source, Base64.NO_WRAP));
-//                    sign = jni.decodeByRSAPubKey(context.getApplicationContext(),source);
+//                    result = jni.decodeByRSAPubKey(context.getApplicationContext(),Base64.decode(source, Base64.NO_WRAP));
 //                }else
-                    sign = jni.decodeByRSAPubKey(context.getApplicationContext(), source);
+                    result = jni.decodeByRSAPubKey(context.getApplicationContext(), source.getBytes());
+                sign=new String(result);
                 break;
             case RSA_PRIVATEKEY://RSA私钥解密
+                byte[] result1;
 //                if (isBase64(source)) {
-//                    source=new String(Base64.decode(source, Base64.NO_WRAP));
-//                    sign = jni.decodeByRSAPriKey(context.getApplicationContext(), source);
+//                    result1 = jni.decodeByRSAPriKey(context.getApplicationContext(), Base64.decode(source, Base64.NO_WRAP));
 //                }else
-                    sign = jni.decodeByRSAPriKey(context.getApplicationContext(), source);
+                    result1 = jni.decodeByRSAPriKey(context.getApplicationContext(), source.getBytes());
+                sign = new String(result1);
                 break;
             default:
                 sign = "";
@@ -631,15 +635,20 @@ public class SafetyUtil {
                 sign = Base64.encodeToString(AES,Base64.NO_WRAP);
                 break;
             case RSA_PRIVATEKEY://RSA私钥加密
-                sign = jni.encodeByRSAPriKey(context, source);
-                if (!isBase64(sign))
-                    sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
+                byte[] result;
+                result = jni.encodeByRSAPriKey(context, source.getBytes());
+//                sign = Base64.encodeToString(result,Base64.NO_WRAP);
+                sign=new String(result);
+//                if (!isBase64(sign))
+//                    sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
                 break;
             case RSA_PUBKEY://RSA公钥加密
-                sign = jni.encodeByRSAPubKey(context, source);
-                if (!isBase64(sign))
-                    sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
-//				sign=new String(RSA_PUBKEY);
+                byte[] result1;
+                result1 = jni.encodeByRSAPubKey(context, source.getBytes());
+//                sign = Base64.encodeToString(result1,Base64.NO_WRAP);
+//                if (!isBase64(sign))
+//                    sign = Base64.encodeToString(sign.getBytes(), Base64.NO_WRAP);
+				sign=new String(result1);
                 break;
             default:
                 sign = "";

@@ -9,6 +9,7 @@
 
 #endif //OPENSSL_ENDORSE_H
 #define BLOCK_SIZE 16
+#define MAX_SIZE 65536
 #if 1
 #define TAG "cipher"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
@@ -23,14 +24,14 @@
 #define LOGF(...)
 #define LOGW(...)
 #endif
-using std::string;
+using namespace std;
 char *sha1OfApk(JNIEnv *env, jobject context);
 
 jboolean verifySha1OfApk(JNIEnv *env, jobject context);
 
 const char base[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-char* base64_encode(const char* data);
-char *base64_decode(const char* data);
+int base64_encode(const char* data,char *&out);
+int base64_decode(const char* data,char *&out);
 int is_base64(const char* data);
 static char find_pos(char ch);
 char *Jstring2CStr(JNIEnv *env, jstring jstr);

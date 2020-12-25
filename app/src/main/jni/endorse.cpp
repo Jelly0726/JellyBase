@@ -129,13 +129,13 @@ jboolean verifySha1OfApk(JNIEnv *env, jobject context) {
 }
 
 /**base64 编码 */
-char *base64_encode(const char *data) {
+int base64_encode(const char *data,char *&ret) {
     LOGD("cipher data= %s", data);
     int data_len = strlen(data);
     int prepare = 0;
     int ret_len;
     int temp = 0;
-    char *ret = NULL;
+//    char *ret = NULL;
     char *f = NULL;
     int tmp = 0;
     char changed[4];
@@ -182,7 +182,7 @@ char *base64_encode(const char *data) {
     }
     *f = '\0';
     LOGD("cipher ret= %s", ret);
-    return ret;
+    return ret_len;
 
 }
 
@@ -193,11 +193,11 @@ static char find_pos(char ch) {
 }
 
 /** base64 解码 */
-char *base64_decode(const char *data) {
+int base64_decode(const char *data,char *&ret) {
     int data_len = strlen(data);
     int ret_len = (data_len / 4) * 3;
     int equal_count = 0;
-    char *ret = NULL;
+//    char *ret = NULL;
     char *f = NULL;
     int tmp = 0;
     int temp = 0;
@@ -256,7 +256,7 @@ char *base64_decode(const char *data) {
         }
     }
     *f = '\0';
-    return ret;
+    return ret_len;
 }
 
 int is_base64(const char* str) {

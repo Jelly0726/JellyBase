@@ -184,13 +184,13 @@
                 android:id="@+id/btn_RSA_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RSA公钥加密"
+                android:text="RSA加密"
                 />
             <Button
                 android:id="@+id/btn_RSAs_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RSA私钥解密"
+                android:text="RSA解密"
                 />
         </LinearLayout>
         <LinearLayout
@@ -202,13 +202,13 @@
                 android:id="@+id/btn_RSAa_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RSA公钥加密带key"
+                android:text="RSA加密带key"
                 />
             <Button
                 android:id="@+id/btn_RSAd_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RSA私钥解密带key"
+                android:text="RSA解密带key"
                 />
         </LinearLayout>
 
