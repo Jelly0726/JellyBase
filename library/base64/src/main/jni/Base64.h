@@ -1,10 +1,12 @@
 //
 // Created by trs on 16-10-24.
 //
-#include <stdio.h>
-#include <string.h>
 #include <jni.h>
 #include <android/log.h>
+#include <stdio.h>
+#include <string.h>
+#include <cstdlib>
+using namespace std;
 /* Header for class vite_base64_Base64 */
 
 #ifndef BASE64_BASE64_H

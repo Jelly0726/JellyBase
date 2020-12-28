@@ -3,7 +3,6 @@
 //
 #include <jni.h>
 #include "Base64.h"
-
 /**
  * 判断是否为空
  */
@@ -81,16 +80,10 @@ int getEncodeLength(int realLength, int length, Flags *flags) {
  * 计算解码后的数据长度
  */
 int getDecodeLength(const char *data, int realLength, int offset, int length, Flags *flags) {
-
-    char log[256];
-
     int decodeLength = 0;
     int tempLength = realLength;
     if (length != LEN_DEFAULT)
         tempLength = length;
-
-    sprintf(log, "tempLength:%d", tempLength);
-    LOGD(log);
 
     //当数据应该有'='存在时，数据长度少于4，则无法被解码
     //反之，不应该存在'='时，数据长度少于2，则同上
@@ -109,18 +102,11 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
         } else if (data[realLength - 1] == '\n')
             endSpace = 1;
     }
-
-    sprintf(log, "endSpace:%d", endSpace);
-    LOGD(log);
-
     //计算换行符个数
     int enters = 0;
     if (flags->isWrap) {
         enters = tempLength / (flags->isCRLF ? 78 : 77);
     }
-
-    sprintf(log, "enters:%d", enters);
-    LOGD(log);
 
     tempLength -= endSpace;
     decodeLength = tempLength;
@@ -130,9 +116,6 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
     bool isRemainder = false;
     int equals = 0;//记录'='号个数（若存在）
     int remainder = 0;//记录余数（若存在）
-
-    sprintf(log, "tempLength--:%d", tempLength);
-    LOGD(log);
 
     /*
      * 多判断一层，存在padding时，解码数据不足4位且不能被4整除的throw exception，
@@ -172,8 +155,6 @@ int getDecodeLength(const char *data, int realLength, int offset, int length, Fl
         decodeLength -= enters;
         decodeLength = decodeLength * DECODE_CONST;
     }
-    sprintf(log, "decodeLength--:%d", decodeLength);
-    LOGD(log);
     return decodeLength;
 }
 
@@ -435,7 +416,7 @@ DecodeData *decodeLikeAndroid(const char *data, int realLength, int offset, int 
     return decodeData;
 }
 
-JNIEXPORT jbyteArray JNICALL Java_vite_base64_Base64_nativeEncode
+extern "C" JNIEXPORT jbyteArray JNICALL Java_vite_base64_Base64_nativeEncode
         (JNIEnv *env, jclass clazz, jbyteArray byteArray, jint offset, jint length, jint flag) {
     if (isByteArrayNull(env, byteArray))
         return NULL;
@@ -458,7 +439,7 @@ JNIEXPORT jbyteArray JNICALL Java_vite_base64_Base64_nativeEncode
     return result;
 }
 
-JNIEXPORT jstring JNICALL Java_vite_base64_Base64_nativeEncode2String
+extern "C" JNIEXPORT jstring JNICALL Java_vite_base64_Base64_nativeEncode2String
         (JNIEnv *env, jclass clazz, jbyteArray byteArray, jint offset, jint length, jint flag) {
     if (isByteArrayNull(env, byteArray))
         return NULL;
@@ -486,7 +467,7 @@ JNIEXPORT jstring JNICALL Java_vite_base64_Base64_nativeEncode2String
     return (jstring) env->NewObject(strClass, strInitId, result, str);
 }
 
-JNIEXPORT jbyteArray JNICALL Java_vite_base64_Base64_nativeDecode
+extern "C" JNIEXPORT jbyteArray JNICALL Java_vite_base64_Base64_nativeDecode
         (JNIEnv *env, jclass clazz, jbyteArray byteArray, jint offset, jint length, jint flag) {
     if (isByteArrayNull(env, byteArray))
         return NULL;
