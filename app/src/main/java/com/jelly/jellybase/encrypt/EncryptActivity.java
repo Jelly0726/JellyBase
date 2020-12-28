@@ -169,12 +169,12 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 result="AES解密->" +SafetyUtil.getInstance().decryptByAESEncrypt(BaseApplication.getInstance(),ori,mKey);
                 break;
             case R.id.btn_RSA_sign:
-//                result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
-                result ="RSA私钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
+                result ="RSA公钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
+//                result ="RSA私钥加密编码->" + SafetyUtil.getInstance().encode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
                 break;
             case R.id.btn_RSAs_sign:
-//                result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
-                result ="RSA公钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
+                result ="RSA私钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PRIVATEKEY);
+//                result ="RSA公钥解密->" + SafetyUtil.getInstance().decode(BaseApplication.getInstance(),ori,SafetyUtil.RSA_PUBKEY);
                 break;
             case R.id.btn_RSAa_sign:
                 result ="RSA公钥加密编码->" +  SafetyUtil.getInstance().encryptRSA(BaseApplication.getInstance(),ori,SafetyUtil.PUBLIC_KEY);
