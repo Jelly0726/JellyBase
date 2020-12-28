@@ -15,10 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -31,8 +27,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.base.toast.ToastUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.base.gson.GsonUtils;
+import com.base.toast.ToastUtils;
 import com.base.zxing.camera.CameraManager;
 import com.base.zxing.decoding.CaptureActivityHandler;
 import com.base.zxing.decoding.InactivityTimer;
@@ -177,6 +178,7 @@ public class ScanerCodeActivity extends Activity implements Callback, OnClickLis
 			innerIntent.setAction(Intent.ACTION_GET_CONTENT);
 		} else {
 			innerIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+			innerIntent.addCategory(Intent.CATEGORY_OPENABLE);
 		}
 		innerIntent.setType("image/*");
 		Intent wrapperIntent = Intent.createChooser(innerIntent, "选择二维码图片");
