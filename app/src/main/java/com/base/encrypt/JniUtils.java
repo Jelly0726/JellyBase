@@ -197,7 +197,8 @@ public class JniUtils {
     /**
      * RSA私钥加密
      *
-     * @param src
+     * @param src  待加密的明文（RSA私钥加密中文时明文长度小于5个字，解密末尾乱码
+     *             ，加密非中文字符长度大于1，否则加密失败）
      * @return
      */
     public native byte[] encodeByRSAPriKey(Context context,byte[] src);
@@ -205,7 +206,8 @@ public class JniUtils {
     /**
      * RSA公钥解密
      *
-     * @param src
+     * @param src  待解密的base64密文（RSA私钥加密中文时明文长度小于5个字，解密末尾乱码
+     *             ，加密非中文字符长度大于1，否则加密失败）
      * @return
      */
     public native byte[] decodeByRSAPubKey(Context context, byte[] src);
@@ -230,7 +232,8 @@ public class JniUtils {
     /**
      * RSA私钥加密
      *
-     * @param src        待加密的明文
+     * @param src        待加密的明文 （RSA私钥加密中文时明文长度小于5个字，解密末尾乱码
+     *                   ，加密非中文字符长度大于1，否则加密失败）
      * @param privateKey  私钥base64字符串（没换行）
      * @return
      */
@@ -239,7 +242,8 @@ public class JniUtils {
     /**
      * RSA公钥解密
      *
-     * @param src         待解密的base64密文
+     * @param src         待解密的base64密文 （RSA私钥加密中文时明文长度小于5个字，解密末尾乱码
+     *                    ，加密非中文字符长度大于1，否则加密失败）
      * @param publicKey  公钥base64字符串（没换行）
      * @return
      */
