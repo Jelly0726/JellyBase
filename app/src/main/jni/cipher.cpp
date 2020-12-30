@@ -785,7 +785,7 @@ std::string readFromAssets(JNIEnv *env, jobject context, char *mfile) {
     /*获取文件名并打开*/
 //    char *mfile = (char *) env->GetStringUTFChars(filename, 0);
     AAsset *asset = AAssetManager_open(mgr, mfile, AASSET_MODE_UNKNOWN);
-    free(mfile);
+
     if (asset == NULL) {
         LOGI("读取Assets下文件->%s", "asset==NULL");
         return NULL;
@@ -826,6 +826,8 @@ jbyteArray readAssets(JNIEnv *env, jclass tis, jobject context, jstring filename
     }
     char *mfile = (char *) env->GetStringUTFChars(filename, 0);
     string buffer = readFromAssets(env, context, mfile);
+    LOGD("读取Assets下文件->释放资源");
+   env->ReleaseStringUTFChars(filename,mfile);
     //把char *转成jbyteArray
     jbyteArray result = charToJByteArray(env, (unsigned char *) buffer.c_str());
     return result;
