@@ -10,6 +10,12 @@ android {
         versionCode 3
         versionName "1.0.3"
     }
+    buildTypes {
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
 }
 
 //apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

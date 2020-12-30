@@ -9,7 +9,12 @@ android {
         versionCode 93
         versionName "7.0.5"
     }
-
+    buildTypes {
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8

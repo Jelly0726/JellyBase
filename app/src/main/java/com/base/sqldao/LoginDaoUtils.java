@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.base.Utils.BeanUtil;
 import com.base.Utils.StringUtil;
-import com.base.applicationUtil.AppUtils;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -98,7 +98,7 @@ public class LoginDaoUtils {
             if (item == null) {
                 item = items;
             } else {
-                item = (Login) AppUtils.setValue(item, items);
+                BeanUtil.copyProperties(item, items);
             }
             return item;
         }catch (Exception e){

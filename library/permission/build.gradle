@@ -9,7 +9,12 @@ android {
         targetSdkVersion 29
         versionName "2.0.3"
     }
-
+    buildTypes {
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
     resourcePrefix 'permission'
 }
 

@@ -8,6 +8,12 @@ ext {
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
+    buildTypes {
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
 }
 dependencies {
     implementation project(":library:Common")

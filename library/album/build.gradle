@@ -10,6 +10,12 @@ android {
         versionCode 27
         versionName "2.1.3"
     }
+    buildTypes {
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
 //    compileOptions {
 //        sourceCompatibility JavaVersion.VERSION_1_8
 //        targetCompatibility JavaVersion.VERSION_1_8

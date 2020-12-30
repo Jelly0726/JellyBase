@@ -804,6 +804,56 @@ std::string readFromAssets(JNIEnv *env, jclass tis, jobject assetManager, jstrin
 }
 
 /**
+ * 获取当前程序的私有路径
+ * @param env
+ * @param obj
+ * @param context
+ * @return
+ */
+std::string getAbsolutePath(_JNIEnv *env, jobject obj, jobject context) {
+    //上下文对象
+    jclass clazz = env->GetObjectClass(context);
+    jmethodID getFilesDir = env->GetMethodID(clazz, "getFilesDir",
+                                             "()Ljava/io/File;");
+    jobject jobject1 = env->CallObjectMethod(context, getFilesDir);
+
+    jmethodID getAbsolutePath = env->GetMethodID(env->FindClass("java/io/File"),
+                                                 "getAbsolutePath",
+                                                 "()Ljava/lang/String;");
+    jstring jstring1 = static_cast<jstring>(env->CallObjectMethod(jobject1, getAbsolutePath));
+    const char *path_utf = env->GetStringUTFChars(jstring1, NULL);
+//    LOGD("获取当前程序的私有路径->%s", path_utf);
+    LOGD("获取当前程序的私有路径->释放内存");
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(jobject1);
+    env->DeleteLocalRef(jstring1);
+    return path_utf;
+}
+/**
+ * 根据路径读取文件
+ * @param path  文件路径
+ * @return
+ */
+char* readFile(const char* path) {
+    FILE *pFile;
+    pFile = fopen(path, "rw");
+    if (pFile == NULL) {
+        LOGD("根据路径读取文件->读取文件失败！");
+        return NULL;
+    }
+    char *pBuf;  //定义文件指针
+    fseek(pFile, 0, SEEK_END); //把指针移动到文件的结尾 ，获取文件长度
+    int size = (int) ftell(pFile); //获取文件长度
+    pBuf = new char[size + 1]; //定义数组长度
+    rewind(pFile); //把指针移动到文件开头 因为我们一开始把指针移动到结尾，如果不移动回来 会出错
+    fread(pBuf, 1, (size_t) size, pFile); //读文件
+    pBuf[size] = 0; //把读到的文件最后一位 写为0 要不然系统会一直寻找到0后才结束
+    LOGD("根据路径读取文件->关闭文件");
+    fclose(pFile); // 关闭文件
+    return pBuf;
+}
+
+/**
  * 函数方法生成密钥对
  * @param env
  * @param obj
@@ -823,6 +873,25 @@ jobjectArray generateRSAKey(JNIEnv *env, jobject obj, jobject context) {
     size_t pub_len;
     char *pri_key = NULL;
     char *pub_key = NULL;
+    string pub_path = getAbsolutePath(env, obj, context).append("/").append(PUB_KEY_FILE);
+    string pri_path = getAbsolutePath(env, obj, context).append("/").append(PRI_KEY_FILE);
+    //从文件读取RSA秘钥对
+    pri_key=readFile(pri_path.c_str());
+    pub_key=readFile(pub_path.c_str());
+//    LOGD("公钥路径->%s",pub_path.c_str());
+//    LOGD("私钥路径->%s",pri_path.c_str());
+    if (pri_key !=NULL && pub_key !=NULL){
+        // 存储密钥对
+        env->SetObjectArrayElement(result, 0, env->NewStringUTF(pub_key));
+        env->SetObjectArrayElement(result, 1, env->NewStringUTF(pri_key));
+//        LOGD("从文件读取公钥->\n%s",pub_key);
+//        LOGD("从文件读取私钥->\n%s",pri_key);
+        LOGD("资源释放->pri_key");
+        free(pri_key);
+        LOGD("资源释放->pub_key");
+        free(pub_key);
+        return result;
+    }
     // 生成密钥对
     RSA *keypair = RSA_new();
     int ret = 0;
@@ -861,7 +930,7 @@ jobjectArray generateRSAKey(JNIEnv *env, jobject obj, jobject context) {
     env->SetObjectArrayElement(result, 1, env->NewStringUTF(pri_key));
 
     // 存储到磁盘（这种方式存储的是begin rsa public key/ begin rsa private key开头的）
-    FILE *pubFile = fopen(PUB_KEY_FILE, "w");
+    FILE *pubFile = fopen(pub_path.c_str(), "w");
     if (pubFile == NULL) {
         LOGD("资源释放->keypair");
         RSA_free(keypair);
@@ -875,11 +944,12 @@ jobjectArray generateRSAKey(JNIEnv *env, jobject obj, jobject context) {
         free(pub_key);
         return result;
     }
+    LOGD("写入数据->pub_key");
     fputs(pub_key, pubFile);
-
+    LOGD("关闭文件->pubFile");
     fclose(pubFile);
 
-    FILE *priFile = fopen(PRI_KEY_FILE, "w");
+    FILE *priFile = fopen(pri_path.c_str(), "w");
     if (priFile == NULL) {
         LOGD("资源释放->keypair");
         RSA_free(keypair);
@@ -893,7 +963,9 @@ jobjectArray generateRSAKey(JNIEnv *env, jobject obj, jobject context) {
         free(pub_key);
         return result;
     }
+    LOGD("写入数据->pri_key");
     fputs(pri_key, priFile);
+    LOGD("关闭文件->priFile");
     fclose(priFile);
 
     LOGD("资源释放->keypair");
@@ -1045,10 +1117,10 @@ int RsaPubEncrypt(const std::string &pub_key, const std::string &clear_text, cha
                 flagLength = left;
             }
             left -= flagLength;
-            count=0;//加密成功重置加密次数
+            count = 0;//加密成功重置加密次数
         } else if (count > 10) {//当同一段明文加密次数超过10次，表示这段明文有问题，尝试缩短一个字符
             flagLength--;
-            if (flagLength<=0){//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
+            if (flagLength <= 0) {//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
                 error = true;
                 unsigned long err = ERR_get_error(); //获取错误号
                 char err_msg[1024] = {0};
@@ -1058,7 +1130,7 @@ int RsaPubEncrypt(const std::string &pub_key, const std::string &clear_text, cha
                 LOGD("RSA 公钥加密->公钥加密失败！err:%ld, msg:%s", err, err_msg);
                 break;
             }
-        }else{
+        } else {
             count++;
         }
         memset(textCs, 0, block_len + 1);
@@ -1255,7 +1327,7 @@ int RsaPriEncrypt(const std::string &pri_key, std::string &clear_text, char *&ou
     bool error = false;
     int lenText = 0;
     int sussce = 1;//标记是否加密成功
-    int count=0;//记录加密次数
+    int count = 0;//记录加密次数
     while (pos < length) {
         if (sussce == 1) {//加密成功才继续下一段加密
             if (left >= block_len) {
@@ -1264,10 +1336,10 @@ int RsaPriEncrypt(const std::string &pri_key, std::string &clear_text, char *&ou
                 flagLength = left;
             }
             left -= flagLength;
-            count=0;//加密成功重置加密次数
+            count = 0;//加密成功重置加密次数
         } else if (count > 10) {//当同一段明文加密次数超过10次，表示这段明文有问题，尝试缩短一个字符
             flagLength--;
-            if (flagLength<=0){//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
+            if (flagLength <= 0) {//一直失败到加密的字符长度为0表示这段明文异常 整个加密失败
                 error = true;
                 unsigned long err = ERR_get_error(); //获取错误号
                 char err_msg[1024] = {0};
@@ -1277,7 +1349,7 @@ int RsaPriEncrypt(const std::string &pri_key, std::string &clear_text, char *&ou
                 LOGD("RSA 私钥加密->私钥加密失败！err:%ld, msg:%s", err, err_msg);
                 break;
             }
-        } else{
+        } else {
             count++;
         }
         memset(textCs, 0, block_len + 1);

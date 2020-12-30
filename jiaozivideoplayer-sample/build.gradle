@@ -29,6 +29,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //signingConfig signingConfigs.releaseConfig
         }
+//        customDebugType {
+//            //可调试 也适用于包含 C/C++ 代码的模块
+//            debuggable true
+//        }
     }
     compileOptions {
         sourceCompatibility 1.8
