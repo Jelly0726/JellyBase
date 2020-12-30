@@ -392,6 +392,10 @@ repositories {
 
         //检查版本
 //        implementation 'com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx'
+//        implementation ('com.github.AlexLiuSheng:CheckVersionLib:2.4.1_appcompat')
+//        {
+//            exclude group: 'com.android.support'
+//        }
         implementation project(path: ':library:CheckVersionLib')
 
         //Android平台下的富文本解析器，支持Html和Markdown
