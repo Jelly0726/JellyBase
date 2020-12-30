@@ -50,6 +50,12 @@
                 android:layout_height="wrap_content"
                 android:text="生成RSA"
                 />
+            <Button
+                android:id="@+id/btn_read"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="读取文件"
+                />
         </LinearLayout>
 
         <TextView

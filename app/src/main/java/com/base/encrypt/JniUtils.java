@@ -257,6 +257,13 @@ public class JniUtils {
      */
     public native String md5(Context context,byte[] src);
     /**
+     * 根据文件名读取Assets目录下的文件
+     * 注：耗时io操作
+     * @param fileName 文件名（含后缀）
+     * @return
+     */
+    public native byte[] readAssets(Context context,String fileName);
+    /**
      * 获取apk-sha1
      *
      * @param context

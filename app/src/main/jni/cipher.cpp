@@ -761,45 +761,73 @@ jbyteArray decodeByAESEncrypt(JNIEnv *env, jobject obj, jobject context, jbyteAr
 }
 
 /**************************************
-* Function Name  : java_com_fontlose_ReadAssets_readFromAssets
+* Function Name  : readFromAssets
 * Description    : void  readFromAssets(AssetManager ass,String filename);
-* Input          : AssetManager对象 filename资源名
+* Input          : context上下文 filename资源名
 * Output         : None
 * Return         : None
 ***************************************/
-std::string readFromAssets(JNIEnv *env, jclass tis, jobject assetManager, jstring filename) {
-    LOGI("ReadAssets");
+std::string readFromAssets(JNIEnv *env, jobject context, char *mfile) {
+    //上下文对象
+    jclass clazz = env->GetObjectClass(context);
+    jmethodID getAssets = env->GetMethodID(clazz, "getAssets",
+                                           "()Landroid/content/res/AssetManager;");
+    jobject assetManager = env->CallObjectMethod(context, getAssets);
+    LOGI("读取Assets下文件->ReadAssets");
     AAssetManager *mgr = AAssetManager_fromJava(env, assetManager);
+    LOGI("读取Assets下文件->释放内存");
+    env->DeleteLocalRef(clazz);
+    env->DeleteLocalRef(assetManager);
     if (mgr == NULL) {
-        LOGI(" %s", "AAssetManager==NULL");
-        string err = string("获取 AAssetManager 失败！");
-        return err;
+        LOGI("读取Assets下文件-> %s", "AAssetManager==NULL");
+        return NULL;
     }
     /*获取文件名并打开*/
-    char *mfile = (char *) env->GetStringUTFChars(filename, 0);
+//    char *mfile = (char *) env->GetStringUTFChars(filename, 0);
     AAsset *asset = AAssetManager_open(mgr, mfile, AASSET_MODE_UNKNOWN);
-    env->ReleaseStringUTFChars(filename, mfile);
+    free(mfile);
     if (asset == NULL) {
-        LOGI(" %s", "asset==NULL");
-        string err = string("获取 AAsset 失败！");
-        return err;
+        LOGI("读取Assets下文件->%s", "asset==NULL");
+        return NULL;
     }
     /*获取文件大小*/
     off_t bufferSize = AAsset_getLength(asset);
-    LOGI("file size         : %d\n", bufferSize);
+    LOGI("读取Assets下文件->file size         : %d\n", bufferSize);
     char *buffer = (char *) malloc(bufferSize + 1);
     buffer[bufferSize] = 0;
 //    int numBytesRead = AAsset_read(asset, buffer, bufferSize);
     int numBytesRead = AAsset_read(asset, buffer, bufferSize);
     if (numBytesRead < 0) {
-        string err = string("获取文件失败！");
-        return err;
+        string err = string("读取文件失败！");
+        LOGI("读取Assets下文件->%s", "读取文件失败！");
+        return NULL;
     }
-    LOGI(": %s", buffer);
+    LOGI("读取Assets下文件->: %s", buffer);
     string result = string(buffer);
+    LOGI("读取Assets下文件->释放内存");
     free(buffer);
-    /*关闭文件*/
+    LOGI("读取Assets下文件->关闭文件");
     AAsset_close(asset);
+    return result;
+}
+
+/**
+ * 根据文件名读取Assets目录下的文件 注耗时的io操作
+ * @param env
+ * @param tis
+ * @param context
+ * @param filename  文件名（含后缀）
+ * @return
+ */
+jbyteArray readAssets(JNIEnv *env, jclass tis, jobject context, jstring filename) {
+    if (!verifySha1OfApk(env, context)) {
+        LOGD("读取Assets下文件->apk-sha1值验证不通过");
+        return NULL;
+    }
+    char *mfile = (char *) env->GetStringUTFChars(filename, 0);
+    string buffer = readFromAssets(env, context, mfile);
+    //把char *转成jbyteArray
+    jbyteArray result = charToJByteArray(env, (unsigned char *) buffer.c_str());
     return result;
 }
 
@@ -829,12 +857,13 @@ std::string getAbsolutePath(_JNIEnv *env, jobject obj, jobject context) {
     env->DeleteLocalRef(jstring1);
     return path_utf;
 }
+
 /**
  * 根据路径读取文件
  * @param path  文件路径
  * @return
  */
-char* readFile(const char* path) {
+char *readFile(const char *path) {
     FILE *pFile;
     pFile = fopen(path, "rw");
     if (pFile == NULL) {
@@ -876,11 +905,11 @@ jobjectArray generateRSAKey(JNIEnv *env, jobject obj, jobject context) {
     string pub_path = getAbsolutePath(env, obj, context).append("/").append(PUB_KEY_FILE);
     string pri_path = getAbsolutePath(env, obj, context).append("/").append(PRI_KEY_FILE);
     //从文件读取RSA秘钥对
-    pri_key=readFile(pri_path.c_str());
-    pub_key=readFile(pub_path.c_str());
+    pri_key = readFile(pri_path.c_str());
+    pub_key = readFile(pub_path.c_str());
 //    LOGD("公钥路径->%s",pub_path.c_str());
 //    LOGD("私钥路径->%s",pri_path.c_str());
-    if (pri_key !=NULL && pub_key !=NULL){
+    if (pri_key != NULL && pub_key != NULL) {
         // 存储密钥对
         env->SetObjectArrayElement(result, 0, env->NewStringUTF(pub_key));
         env->SetObjectArrayElement(result, 1, env->NewStringUTF(pri_key));
@@ -2104,6 +2133,8 @@ static JNINativeMethod getMethods[] = {
         {"decodeByAESCipher",   "(Landroid/content/Context;[B)[B",                 (void *) decodeByAESCipher},
         {"encryptAESCipher",    "(Landroid/content/Context;[B[B)[B",               (void *) encryptAESCipher},
         {"decryptAESCipher",    "(Landroid/content/Context;[B[B)[B",               (void *) decryptAESCipher},
+        {"readAssets",          "(Landroid/content/Context;Ljava/lang/String;)[B", (void *) readAssets},
+        {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",  (void *) generateRSAKey},
         {"encodeByRSAPubKey",   "(Landroid/content/Context;[B)[B",                 (void *) encodeByRSAPubKey},
         {"decodeByRSAPriKey",   "(Landroid/content/Context;[B)[B",                 (void *) decodeByRSAPriKey},
         {"encodeByRSAPriKey",   "(Landroid/content/Context;[B)[B",                 (void *) encodeByRSAPriKey},
@@ -2114,7 +2145,6 @@ static JNINativeMethod getMethods[] = {
         {"decodeByRSAPubKey",   "(Landroid/content/Context;[B[B)[B",               (void *) decryptByRSAPubKey},
         {"md5",                 "(Landroid/content/Context;[B)Ljava/lang/String;", (void *) md5},
         {"sha1OfApk",           "(Landroid/content/Context;)Ljava/lang/String;",   (void *) getSha1OfApk},
-        {"generateRSAKey",      "(Landroid/content/Context;)[Ljava/lang/String;",  (void *) generateRSAKey},
         {"verifySha1OfApk",     "(Landroid/content/Context;)Z",                    (void *) validateSha1OfApk},
 };
 

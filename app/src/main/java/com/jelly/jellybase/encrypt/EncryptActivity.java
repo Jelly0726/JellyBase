@@ -88,6 +88,7 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
         findViewById(R.id.btn_copy_sign).setOnClickListener(this);
         findViewById(R.id.btn_past_sign).setOnClickListener(this);
         findViewById(R.id.btn_createRSA).setOnClickListener(this);
+        findViewById(R.id.btn_read).setOnClickListener(this);
         //Edittext通知父控件自己处理自己的滑动事件
         input.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -214,9 +215,11 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 DebugLog.i("公钥=\n" + RSAKey[0]);
                 DebugLog.i("私钥=\n" + RSAKey[1]);
                 break;
+            case R.id.btn_read:
+                result = SafetyUtil.getInstance().readAssets(this,ori);
+                break;
         }
         resultText.setText(result);
-      getFilesDir();
     }
 
 }

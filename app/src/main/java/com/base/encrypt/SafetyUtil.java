@@ -92,6 +92,16 @@ public class SafetyUtil {
         String[] PublicRSAKey = jni.generateRSAKey(context);
         return PublicRSAKey;
     }
+    /**
+     * 根据文件名读取Assets目录下的文件 注：耗时io操作
+     * @param context
+     * @param fileName 文件名（含后缀）
+     * @return
+     */
+    public String readAssets(Context context,String fileName) {
+        byte[] file = jni.readAssets(context,fileName);
+        return new String(file);
+    }
 
     /**
      * 签名验证
