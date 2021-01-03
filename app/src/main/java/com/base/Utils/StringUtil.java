@@ -746,11 +746,27 @@ public class StringUtil {
 //            System.out.println("金额："+i);
 //        }
 //        System.out.println(isMobileNO("14600087240"));
-        System.out.print("请输入值：");
-        java.util.Scanner sc = new Scanner(System.in);
-        while (!sc.hasNext("0")){
-            int age = sc.nextInt();    //读取整型输入
-            System.out.println( getInt(age,6));
-        }
+//        System.out.print("请输入值：");
+//        java.util.Scanner sc = new Scanner(System.in);
+//        while (!sc.hasNext("0")){
+//            int age = sc.nextInt();    //读取整型输入
+//            System.out.println( getInt(age,6));
+//        }
+//       int[] array={25,47,36,21,90,84,62,78,15,32};
+//       for(int i=0;i<array.length-1;i++){
+//           for (int j=0;j<array.length-1-i;j++){
+//               if (array[j]<array[j+1]){
+//                   int tmp=array[j];
+//                   array[j]=array[j+1];
+//                   array[j+1]=tmp;
+//               }
+//           }
+//           for (int f=0;f<10;f++){
+//               System.out.print( array[f]);
+//               if (f==9){
+//                   System.out.println( "\n");
+//               }
+//           }
+//       }
     }
 }
