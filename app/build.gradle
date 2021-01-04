@@ -440,7 +440,8 @@ repositories {
         implementation project(path: ':form')
         implementation project(path: ':LiveDataBus')
         //弹窗对话框
-        implementation project(path: ':library:circleDialog')
+        implementation project(path: ':library:circleDialog-androidx')
+        implementation project(path: ':library:circleDialog-appcompat')
         //应用宝自动升级
         implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')
