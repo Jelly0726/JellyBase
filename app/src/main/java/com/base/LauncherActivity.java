@@ -1,5 +1,6 @@
 package com.base;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +13,11 @@ import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
 import com.base.dialog.PrivacyDialog;
-import com.base.permission.CallBack;
-import com.base.permission.PermissionUtils;
 import com.base.view.BaseActivity;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
-import com.yanzhenjie.permission.runtime.Permission;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.RequestCallback;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -107,9 +107,45 @@ public class LauncherActivity extends BaseActivity {
     }
 
     private void requestPermission() {
-        PermissionUtils.getInstance().requestPermission(LauncherActivity.this, new CallBack() {
+        PermissionX.init(LauncherActivity.this)
+                .permissions(
+                        Manifest.permission.CAMERA
+                        ,Manifest.permission.READ_EXTERNAL_STORAGE
+                        ,Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ,Manifest.permission.READ_CONTACTS
+                        ,Manifest.permission.WRITE_CONTACTS
+                        ,Manifest.permission.READ_CALENDAR
+                        ,Manifest.permission.WRITE_CALENDAR
+                        ,Manifest.permission.ACCESS_COARSE_LOCATION
+                        ,Manifest.permission.ACCESS_FINE_LOCATION
+                        ,Manifest.permission.SEND_SMS
+                        ,Manifest.permission.READ_SMS
+                        ,Manifest.permission.CALL_PHONE
+                        ,Manifest.permission.READ_PHONE_STATE
+                        ,Manifest.permission.ACCESS_NOTIFICATION_POLICY
+                        ,Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
+                )
+//                .explainReasonBeforeRequest()
+//                .onExplainRequestReason(new ExplainReasonCallbackWithBeforeParam() {
+//                    @Override
+//                    public void onExplainReason(ExplainScope scope, List<String> deniedList, boolean beforeRequest) {
+////                                CustomDialog customDialog = new CustomDialog(MainJavaActivity.this, "PermissionX needs following permissions to continue", deniedList);
+////                                scope.showRequestReasonDialog(customDialog);
+//                        scope.showRequestReasonDialog(deniedList, "此功能需要以下权限权限才可运行", "知道了","取消");
+//                    }
+//                })
+//                .onForwardToSettings(new ForwardToSettingsCallback() {
+//                    @Override
+//                    public void onForwardToSettings(ForwardScope scope, List<String> deniedList) {
+//                        scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "知道了","取消");
+//                    }
+//                })
+                .request(new RequestCallback() {
                     @Override
-                    public void onSucess() {
+                    public void onResult(boolean allGranted, List<String> grantedList, List<String> deniedList) {
+                        if (allGranted) {//允许
+                        } else {//拒绝
+                        }
                         new Handler().postDelayed(new Runnable() {
                             public void run() {
                                 if (BaseApplication.getInstance().isLogin()) {
@@ -129,49 +165,6 @@ public class LauncherActivity extends BaseActivity {
                             }
                         }, 1000);
                     }
-
-                    @Override
-                    public void onFailure(List<String> permissions) {
-                        StringBuffer msg = new StringBuffer();
-                        for (String permission : permissions) {
-                            msg.append(permission);
-                            msg.append("\n");
-                        }
-//                        if (msg.length() > 0) {
-//                            ToastUtils.showShort(LauncherActivity.this, msg.toString());
-//                            return;
-//                        }
-						new Handler().postDelayed(new Runnable() {
-							public void run() {
-								if (BaseApplication.getInstance().isLogin()) {
-									//BaseApplication.getInstance().goLoginActivity();
-									BaseApplication.getInstance().goMainActivity();//进入主界面
-									//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-									finish();
-								} else {
-									if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-										BaseApplication.getInstance().goLoginActivity();
-									} else {
-										BaseApplication.getInstance().goMainActivity();//进入主界面
-									}
-									//BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-									finish();
-								}
-							}
-						}, 1000);
-                    }
-                },
-                Permission.Group.MICROPHONE,//扩音器，麦克风
-                Permission.Group.STORAGE,//存储
-                Permission.Group.CALENDAR,//日历
-                Permission.Group.CAMERA,//照相机
-//					Permission.Group.CONTACTS,//联系人
-//				Permission.Group.LOCATION,//定位 部分手机设置为仅使用时返回授权失败所以在开启定位前再请求授权
-                Permission.Group.SMS,//短信
-                new String[]{
-                        Permission.READ_PHONE_STATE,//读取手机状态
-                        Permission.CALL_PHONE,//拨打电话
-                        android.Manifest.permission.SYSTEM_ALERT_WINDOW//<!-- 显示系统窗口权限 -->
                 });
     }
 

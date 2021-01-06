@@ -17,8 +17,6 @@ import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppPrefs;
 import com.base.config.ConfigKey;
 import com.base.multiClick.AntiShake;
-import com.base.permission.CallBack;
-import com.base.permission.PermissionUtils;
 import com.base.social.SocialUtil;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
@@ -27,7 +25,6 @@ import com.base.view.NoPreloadViewPager;
 import com.google.gson.Gson;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,31 +60,6 @@ public class LoginActivity extends BaseActivity implements
         AppPrefs.remove(getApplicationContext(),
                 ConfigKey.DEFAULT_BANK);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                // 申请权限。
-                PermissionUtils.getInstance().requestPermission(LoginActivity.this, new CallBack() {
-                            @Override
-                            public void onSucess() {
-
-                            }
-
-                            @Override
-                            public void onFailure(List<String> permissions) {
-
-                            }
-                        },
-                        Permission.Group.STORAGE,
-                        Permission.Group.CALENDAR,
-                        Permission.Group.CAMERA,
-                        //Permission.Group.LOCATION, //部分手机设置为仅使用时返回授权失败所以在开启定位前再请求授权
-                        new String[]{
-                                Permission.READ_PHONE_STATE,
-                                Permission.CALL_PHONE
-                        });
-            }
-        });
     }
     @Override
     public int getLayoutId(){

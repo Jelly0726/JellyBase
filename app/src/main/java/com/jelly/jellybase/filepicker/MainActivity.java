@@ -1,5 +1,6 @@
 package com.jelly.jellybase.filepicker;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,11 +15,13 @@ import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.base.permission.CallBack;
-import com.base.permission.PermissionUtils;
-import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
-import com.yanzhenjie.permission.runtime.Permission;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallbackWithBeforeParam;
+import com.permissionx.guolindev.callback.ForwardToSettingsCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
+import com.permissionx.guolindev.request.ForwardScope;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -57,53 +60,70 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pickPhotoClicked() {
-        PermissionUtils.getInstance().requestPermission(MainActivity.this, new CallBack() {
+        PermissionX.init(MainActivity.this)
+                .permissions(
+                        Manifest.permission.CAMERA
+                        ,Manifest.permission.READ_EXTERNAL_STORAGE
+                        ,Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .explainReasonBeforeRequest()
+                .onExplainRequestReason(new ExplainReasonCallbackWithBeforeParam() {
                     @Override
-                    public void onSucess() {
-                        onPickPhoto();
+                    public void onExplainReason(ExplainScope scope, List<String> deniedList, boolean beforeRequest) {
+//                                CustomDialog customDialog = new CustomDialog(MainJavaActivity.this, "PermissionX needs following permissions to continue", deniedList);
+//                                scope.showRequestReasonDialog(customDialog);
+                        scope.showRequestReasonDialog(deniedList, "此功能需要以下权限权限才可运行", "知道了","取消");
                     }
-
+                })
+                .onForwardToSettings(new ForwardToSettingsCallback() {
                     @Override
-                    public void onFailure(List<String> permissions) {
-                        StringBuffer msg = new StringBuffer();
-                        for (String permission : permissions) {
-                            msg.append(permission);
-                            msg.append("\n");
-                        }
-                        if (msg.length() > 0) {
-                            ToastUtils.showShort(MainActivity.this, msg.toString());
-                            return;
+                    public void onForwardToSettings(ForwardScope scope, List<String> deniedList) {
+                        scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "知道了","取消");
+                    }
+                })
+                .request(new RequestCallback() {
+                    @Override
+                    public void onResult(boolean allGranted, List<String> grantedList, List<String> deniedList) {
+                        if (allGranted) {//允许
+                            onPickPhoto();
+                        } else {//拒绝
                         }
                     }
-                },
-                Permission.Group.STORAGE,//存储
-                Permission.Group.CAMERA//照相机
-               );
+                });
 
     }
 
     public void pickDocClicked() {
-        PermissionUtils.getInstance().requestPermission(MainActivity.this, new CallBack() {
+        PermissionX.init(MainActivity.this)
+                .permissions(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .explainReasonBeforeRequest()
+                .onExplainRequestReason(new ExplainReasonCallbackWithBeforeParam() {
                     @Override
-                    public void onSucess() {
-                        onPickDoc();
+                    public void onExplainReason(ExplainScope scope, List<String> deniedList, boolean beforeRequest) {
+//                                CustomDialog customDialog = new CustomDialog(MainJavaActivity.this, "PermissionX needs following permissions to continue", deniedList);
+//                                scope.showRequestReasonDialog(customDialog);
+                        scope.showRequestReasonDialog(deniedList, "此功能需要以下权限权限才可运行", "知道了","取消");
                     }
+                })
+                .onForwardToSettings(new ForwardToSettingsCallback() {
+                    @Override
+                    public void onForwardToSettings(ForwardScope scope, List<String> deniedList) {
+                        scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "知道了","取消");
+                    }
+                })
+                .request(new RequestCallback() {
+                    @Override
+                    public void onResult(boolean allGranted, List<String> grantedList, List<String> deniedList) {
+                        if (allGranted) {//允许
+                            onPickDoc();
+                        } else {//拒绝
+                        }
+                    }
+                });
 
-                    @Override
-                    public void onFailure(List<String> permissions) {
-                        StringBuffer msg = new StringBuffer();
-                        for (String permission : permissions) {
-                            msg.append(permission);
-                            msg.append("\n");
-                        }
-                        if (msg.length() > 0) {
-                            ToastUtils.showShort(MainActivity.this, msg.toString());
-                            return;
-                        }
-                    }
-                },
-                Permission.Group.STORAGE//存储
-        );
     }
 
     @Override
