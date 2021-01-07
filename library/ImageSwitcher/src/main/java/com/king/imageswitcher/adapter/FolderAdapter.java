@@ -14,11 +14,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.imageSwitcher.activity.AlbumActivity;
-import com.base.imageSwitcher.activity.ShowAllPhoto;
-import com.base.imageSwitcher.util.BitmapCache;
-import com.base.imageSwitcher.util.ImageItem;
-import com.ssr.wholesaleseller.R;
+import com.king.imageswitcher.R;
+import com.king.imageswitcher.activity.AlbumActivity;
+import com.king.imageswitcher.activity.ShowAllPhoto;
+import com.king.imageswitcher.util.BitmapCache;
+import com.king.imageswitcher.util.ImageItem;
 
 import java.util.ArrayList;
 

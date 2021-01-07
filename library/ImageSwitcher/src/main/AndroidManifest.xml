@@ -1,34 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.king.imageswitcher">
-<application android:requestLegacyExternalStorage="">
-    <!--↓↓↓↓↓↓↓图片选择↓↓↓↓↓-->
-    <activity
-        android:name=".activity.AlbumActivity"
-        android:screenOrientation="portrait">
-    </activity>
-    <activity
-        android:name=".activity.ImageFile" >
-    </activity>
-    <activity
-        android:name=".activity.ShowAllPhoto" >
-    </activity>
-    <activity
-        android:name=".activity.GalleryActivity">
-    </activity>
-    <activity
-        android:name=".util.BitmapCache">
-    </activity>
-    <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
-    <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="${applicationId}.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_paths" />
-    </provider>
-    <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
-    <!--↑↑↑↑↑↑↑↑图片选择↑↑↑↑↑↑↑↑-->
-</application>
+
+    <application>
+        <!--↓↓↓↓↓↓↓图片选择↓↓↓↓↓-->
+        <activity
+            android:name=".activity.AlbumActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.ImageFile"></activity>
+        <activity android:name=".activity.ShowAllPhoto"></activity>
+        <activity android:name=".activity.GalleryActivity"></activity>
+        <activity android:name=".util.BitmapCache"></activity>
+        <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
+        <!--↑↑↑↑↑↑↑↑图片选择↑↑↑↑↑↑↑↑-->
+    </application>
 </manifest>

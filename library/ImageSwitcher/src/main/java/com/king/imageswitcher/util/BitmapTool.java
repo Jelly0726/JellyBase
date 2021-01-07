@@ -14,14 +14,13 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
-import com.base.applicationUtil.AppUtils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -171,7 +170,7 @@ public class BitmapTool {
      */
     public static void saveBitmap(Context context, Bitmap bitmap, String picName) {
         // Log.e(TAG, "保存图片");
-        String filePath = AppUtils.getFileRoot(context) + File.separator
+        String filePath = getFileRoot(context) + File.separator
                 ;
         File f = new File(filePath, picName);
         if (f.exists()) {
@@ -191,6 +190,17 @@ public class BitmapTool {
             e.printStackTrace();
         }
 
+    }
+    //文件存储根目录
+    public static String getFileRoot(Context context) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File external = context.getExternalFilesDir(null);
+            if (external != null) {
+                return external.getAbsolutePath();
+            }
+        }
+
+        return context.getFilesDir().getAbsolutePath();
     }
     /**
      * 清空图片的内存

@@ -131,13 +131,13 @@ public class LauncherActivity extends BaseActivity {
 //                    public void onExplainReason(ExplainScope scope, List<String> deniedList, boolean beforeRequest) {
 ////                                CustomDialog customDialog = new CustomDialog(MainJavaActivity.this, "PermissionX needs following permissions to continue", deniedList);
 ////                                scope.showRequestReasonDialog(customDialog);
-//                        scope.showRequestReasonDialog(deniedList, "此功能需要以下权限权限才可运行", "知道了","取消");
+//                        scope.showRequestReasonDialog(deniedList, "此功能需要以下权限权限才可运行", "知道了");
 //                    }
 //                })
 //                .onForwardToSettings(new ForwardToSettingsCallback() {
 //                    @Override
 //                    public void onForwardToSettings(ForwardScope scope, List<String> deniedList) {
-//                        scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "知道了","取消");
+//                        scope.showForwardToSettingsDialog(deniedList, "您需要去应用程序设置当中手动开启权限", "知道了");
 //                    }
 //                })
                 .request(new RequestCallback() {
