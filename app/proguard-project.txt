@@ -498,6 +498,13 @@ public static java.lang.String TABLENAME;
 #=======================permission====================
 -dontwarn com.yanzhenjie.permission.**
 -keep class com.yanzhenjie.permission.FileProvide{*;}
+#=======================permissionx====================
+-dontwarn com.permissionx.guolindev.**
+-keep class com.permissionx.guolindev.** {*;}
+#======================= imageswitcher =======================
+-dontwarn com.king.imageswitcher.**
+ -keep class com.king.imageswitcher.** { *; }
+ -keep interface com.king.imageswitcher.** { *; }
 #=======================butterknife====================
  -keep class butterknife.** { *; }
  -dontwarn butterknife.internal.**
@@ -558,6 +565,7 @@ public void xxxxxx(**);
  -keep class me.jessyan.autosize.** { *; }
  -keep interface me.jessyan.autosize.** { *; }
 #======================= imageswitcher =======================
+ -dontwarn com.king.imageswitcher.**
  -keep class com.king.imageswitcher.** { *; }
  -keep interface com.king.imageswitcher.** { *; }
 #=======================blurkit====================

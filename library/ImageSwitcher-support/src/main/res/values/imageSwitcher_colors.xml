@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--图片选择-->
+    <color name="imageswitcher_top_0c66ac">#ffffff</color>
+    <color name="imageswitcher_text">#313131</color><!--白色 -->
+    <color name="imageswitcher_text_hint">#E1E0DE</color>
+    <color name="imageswitcher_img_bg">#ff000000</color>
+    <color name="imageswitcher_color">#80000000</color>
+    <color name="imageswitcher_none_color">#00000000</color>
+    <color name="imageswitcher_plugin_camera_black">#000000</color>
+    <color name="imageswitcher_albumback">#ffffff</color>
+    <color name="imageswitcher_blue">#ffffff</color><!--蓝色 -->
+    <!--图片选择-->
+</resources>

@@ -383,6 +383,7 @@ repositories {
 
         //图片选择
         implementation project(path: ':library:ImageSwitcher')
+        implementation project(path: ':library:ImageSwitcher-support')
 //        implementation 'com.yanzhenjie:album:2.0.2'
         implementation project(path: ':library:album')
 //        compile ('com.yanzhenjie:album:2.1.0'){
