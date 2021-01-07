@@ -1,3 +1,4 @@
+include ':library:ImageSwitcher'
 include ':app'
 include ':JieCaoVideoPlayer'
 include ':jiaozivideoplayer-sample'

@@ -557,6 +557,9 @@ public void xxxxxx(**);
 #======================= 屏幕适配 =======================
  -keep class me.jessyan.autosize.** { *; }
  -keep interface me.jessyan.autosize.** { *; }
+#======================= imageswitcher =======================
+ -keep class com.king.imageswitcher.** { *; }
+ -keep interface com.king.imageswitcher.** { *; }
 #=======================blurkit====================
   -keep class io.alterac.blurkit.** { *; }
   -dontwarn butterknife.internal.**
