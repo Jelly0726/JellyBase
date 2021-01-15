@@ -11,11 +11,11 @@ import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
+import com.base.GuideActivity;
 import com.base.MapUtil.LocationTask;
 import com.base.album.GlideAlbumLoader;
 import com.base.applicationUtil.AppPrefs;
 import com.base.applicationUtil.ChangeLanguageHelper;
-import com.base.GuideActivity;
 import com.base.cockroach.Cockroach;
 import com.base.cockroach.CrashUtils;
 import com.base.cockroach.ExceptionHandler;
@@ -47,6 +47,8 @@ import java.io.IOException;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import hugo.weaving.DebugLog;
+import io.reactivex.functions.Consumer;
+import io.reactivex.plugins.RxJavaPlugins;
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
 import systemdb.Login;
@@ -83,6 +85,13 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         myApp=this;
+        //RxJava2 取消订阅后，抛出的异常无法捕获，导致程序崩溃
+        RxJavaPlugins.setErrorHandler(new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+
+            }
+        });
         //初始化一下就行了，别忘记了  --奔溃日志
         installCockroach();//崩溃后自动重启并发送崩溃信息
 //        initCrashReport();//崩溃后不重启保存崩溃信息，下次启动压缩崩溃信息并发送
