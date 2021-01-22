@@ -5,9 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -19,6 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
@@ -34,8 +35,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +71,18 @@ public class StringUtil {
             , 3212, 3472, 3635, 3722, 3730, 3858, 4027, 4086, 4390, 4558, 4684, 4925, 5249, 5600 };
     static final char[] firstLetter = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
             'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'w', 'x',  'y', 'z' };
+    private static String[] units = {"B", "KB", "MB", "GB", "TB"};
+    /**
+     * 单位转换
+     */
+    public static String getUnit(float size) {
+        int index = 0;
+        while (size > 1024 && index < 4) {
+            size = size / 1024;
+            index++;
+        }
+        return String.format(Locale.getDefault(), " %.2f %s", size, units[index]);
+    }
     /***
      * 获取url 指定name的value;
      * @param url

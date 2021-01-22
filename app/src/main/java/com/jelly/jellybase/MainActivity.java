@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.allenliu.versionchecklib.callback.APKDownloadListener;
 import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
@@ -31,6 +32,7 @@ import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
 import com.base.Contacts.ContactsActivity;
 import com.base.GuideActivity;
+import com.base.Utils.StorageQueryUtil;
 import com.base.appManager.BaseApplication;
 import com.base.applicationUtil.AppUtils;
 import com.base.checkVersion.BaseDialog;
@@ -139,6 +141,8 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+      long[] longs = StorageQueryUtil.queryWithStorageManager(this);
+        com.base.log.DebugLog.i("longs="+ JSON.toJSONString(longs));
     }
     @Override
     public int getLayoutId(){
