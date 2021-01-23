@@ -23,9 +23,9 @@
         android:layout_height="@dimen/mv_simple_text_height"
         android:layout_marginTop="10dp"
         android:background="@mipmap/bg"
-        app:mvAnimDuration="500"
+        app:mvAnimDuration="3000"
         app:mvDirection="right_to_left"
-        app:mvInterval="3000">
+        app:mvInterval="0">
 
     </com.xj.marqueeview.MarqueeView>
 
