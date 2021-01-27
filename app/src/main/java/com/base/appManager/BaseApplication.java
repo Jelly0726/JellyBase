@@ -24,13 +24,13 @@ import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.eventBus.HermesManager;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.liveDataBus.LiveDataBus;
 import com.base.sqldao.DBManager;
 import com.base.toast.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.TraceServiceImpl;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
 import com.wenming.library.LogReport;
@@ -99,9 +99,8 @@ public class BaseApplication extends Application {
         ChangeLanguageHelper.init(this);
         //屏幕自动适配 对单位的自定义配置, 请在 App 启动时完成
         configUnits();
-        LiveDataBus
+        LiveEventBus
                 .config()
-                .supportBroadcast(this)//配置支持跨进程、跨APP通信，传入Context
                 .lifecycleObserverAlwaysActive(true);//  配置LifecycleObserver（如Activity）接收消息的模式（默认值true）：
         //true：整个生命周期（从onCreate到onDestroy）都可以实时收到消息
         // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，

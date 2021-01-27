@@ -260,25 +260,25 @@ public class CustomToast implements IToast {
 
     @Override
     public void showSuccess() {
-        setLeftIconRes(mType == EMPHASIZE ? R.drawable.toast_check_circle_white_24dp : R.drawable.toast_done_white_24dp);
+        setLeftIconRes(mType == EMPHASIZE ? R.drawable.ic_toast_check_circle_white : R.drawable.ic_toast_done_white);
         show();
     }
 
     @Override
     public void showError() {
-        setLeftIconRes(R.drawable.toast_clear_white_24dp);
+        setLeftIconRes(R.drawable.ic_toast_clear_white);
         show();
     }
 
     @Override
     public void showWarning() {
-        setLeftIconRes(R.drawable.toast_error_outline_white_24dp);
+        setLeftIconRes(R.drawable.ic_toast_error_outline_white);
         show();
     }
 
     @Override
     public IToast setClickCallback(@NonNull String text, @NonNull View.OnClickListener listener) {
-        return setClickCallback(text, R.drawable.toast_play_arrow_white_24dp, listener);
+        return setClickCallback(text, R.drawable.ic_toast_play_arrow_white, listener);
     }
 
     @Override

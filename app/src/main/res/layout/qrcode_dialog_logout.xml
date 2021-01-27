@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
-            android:src="@mipmap/close_w" />
+            android:src="@drawable/ic_close_w" />
     </RelativeLayout>
 
     <RelativeLayout

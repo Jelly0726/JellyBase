@@ -16,11 +16,11 @@ import com.base.Utils.RMBUtils
 import com.base.appManager.BaseApplication.getInstance
 import com.base.applicationUtil.AppUtils
 import com.base.eventBus.NetEvent
-import com.base.liveDataBus.LiveDataBus
 import com.base.toast.ToastUtils
 import com.base.view.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.yanzhenjie.recyclerview.*
 import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration
 import kotlinx.android.synthetic.main.shopcart_activity.*
@@ -189,7 +189,7 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
         super.onDestroy()
         val netEvent= NetEvent<Any>()
         netEvent.eventType="RefreshShopcart"
-        LiveDataBus.get("MainActivity").postDelay(netEvent,50)
+        LiveEventBus.get("MainActivity").postDelay(netEvent,50)
     }
 //    override fun initPresenter(): ShoppingCartContact.Presenter {
 //        return ShoppingCartPresenter(this)
@@ -221,7 +221,7 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
 //                startActivity(intent);
             }
             R.id.goShop -> {
-                LiveDataBus.get("MainActivity")
+                LiveEventBus.get("MainActivity")
                     .post(NetEvent<Any>().setEventType("CurrentItem").setArg(1))
                 finish()
             }

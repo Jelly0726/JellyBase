@@ -10,11 +10,11 @@ import butterknife.OnClick
 import butterknife.Unbinder
 import com.base.daemon.DaemonEnv
 import com.base.eventBus.NetEvent
-import com.base.liveDataBus.LiveDataBus
 import com.base.log.DebugLog
 import com.base.view.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.server.TraceServiceImpl
+import com.jeremyliao.liveeventbus.LiveEventBus
 import kotlinx.android.synthetic.main.pip_mode_activity.*
 
 /**
@@ -31,7 +31,7 @@ class PIPActivity :BaseActivity(){
     }
     override fun onDestroy() {
         super.onDestroy()
-        LiveDataBus.get("PIPActivity").removeObserver(mObserver)
+        LiveEventBus.get("PIPActivity").removeObserver(mObserver)
     }
     private fun iniView(){
         mObserver=object :Observer<Any>{
@@ -42,7 +42,7 @@ class PIPActivity :BaseActivity(){
                 }
             }
         }
-        LiveDataBus.get("PIPActivity")
+        LiveEventBus.get("PIPActivity")
                 .observeForever(mObserver)
     }
     @OnClick(R.id.back_layout,R.id.btn)

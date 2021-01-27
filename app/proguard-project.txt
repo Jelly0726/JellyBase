@@ -552,18 +552,18 @@ public void xxxxxx(**);
 #=======================GalleryRecyclerView====================
 -dontwarn com.ryan.baselib.util.**
 #======================= liveeventbus:=======================
- -dontwarn com.base.liveDataBus.**
- -keep class com.base.liveDataBus.** { ; }
- -keep class android.arch.lifecycle.* { ; }
- -keep class android.arch.core.* { *; }
+-dontwarn com.jeremyliao.liveeventbus.**
+-keep class com.jeremyliao.liveeventbus.** { *; }
+-keep class android.arch.lifecycle.** { *; }
+-keep class android.arch.core.** { *; }
 #======================= 自定义toast:=======================
  -dontwarn com.base.toast.**
  -keep class com.base.toast.** { ; }
 #======================= for androidx:=======================
- -dontwarn com.base.liveDataBus.**
- -keep class com.base.liveDataBus.** { ; }
- -keep class androidx.lifecycle.* { ; }
- -keep class androidx.arch.core.* { *; }
+-dontwarn com.jeremyliao.liveeventbus.**
+-keep class com.jeremyliao.liveeventbus.** { *; }
+-keep class androidx.lifecycle.** { *; }
+-keep class androidx.arch.core.** { *; }
 #======================= 屏幕适配 =======================
  -keep class me.jessyan.autosize.** { *; }
  -keep interface me.jessyan.autosize.** { *; }

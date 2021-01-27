@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.jelly.jellybase.adpater;
+package com.base.androidPicker;
 
 import android.content.Context;
 import android.graphics.Color;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.addressmodel.Area;
 import com.base.applicationUtil.AppUtils;

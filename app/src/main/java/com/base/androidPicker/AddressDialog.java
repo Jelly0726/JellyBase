@@ -20,7 +20,6 @@ import com.base.addressmodel.Province;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.adpater.AddressAdapter;
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.ArrayList;

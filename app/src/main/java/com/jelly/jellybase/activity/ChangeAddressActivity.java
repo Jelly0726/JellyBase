@@ -21,7 +21,7 @@ import com.base.view.BaseActivity;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.adpater.AddressAdapter;
+import com.base.androidPicker.AddressAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

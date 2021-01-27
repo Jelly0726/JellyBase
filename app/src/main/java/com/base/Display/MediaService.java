@@ -1,16 +1,17 @@
 package com.base.Display;
 
 import android.app.Service;
-import androidx.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
+
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
 import com.base.appManager.BaseApplication;
 import com.base.eventBus.NetEvent;
-import com.base.liveDataBus.LiveDataBus;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 public class MediaService extends Service {
     private Observer observer;
@@ -52,7 +53,7 @@ public class MediaService extends Service {
                 }
             }
         };
-        LiveDataBus.get("MediaService", NetEvent.class)
+        LiveEventBus.get("MediaService", NetEvent.class)
                 .observeForever(observer);
     }
 
@@ -66,6 +67,6 @@ public class MediaService extends Service {
         super.onDestroy();
         DisplayUtils.getInstance().dismiss();
         if (observer!=null)
-            LiveDataBus.get("MediaService").removeObserver(observer);
+            LiveEventBus.get("MediaService").removeObserver(observer);
     }
 }

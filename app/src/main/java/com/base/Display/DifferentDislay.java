@@ -1,7 +1,6 @@
 package com.base.Display;
 
 import android.app.Presentation;
-import androidx.lifecycle.Observer;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
@@ -9,22 +8,24 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.appManager.BaseApplication;
 import com.base.appManager.ExecutorManager;
 import com.base.applicationUtil.AppUtils;
 import com.base.eventBus.NetEvent;
-import com.base.liveDataBus.LiveDataBus;
 import com.base.recyclerViewUtil.ItemDecoration;
 import com.jelly.jellybase.R;
+import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.lang.reflect.Member;
 
@@ -180,7 +181,7 @@ public class DifferentDislay extends Presentation{
         if (unbinder!=null)
             unbinder.unbind();
         if (observer!=null)
-            LiveDataBus.get("CashierDeskActivity").removeObserver(observer);
+            LiveEventBus.get("CashierDeskActivity").removeObserver(observer);
         if (mediaPlayer!=null) {
             mediaPlayer.setOnPreparedListener(null);
             mediaPlayer.setOnCompletionListener(null);
@@ -241,7 +242,7 @@ public class DifferentDislay extends Presentation{
 
             }
         };
-        LiveDataBus.get("CashierDeskActivity", NetEvent.class)
+        LiveEventBus.get("CashierDeskActivity", NetEvent.class)
                 .observeForever(observer);
     }
 }
