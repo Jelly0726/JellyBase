@@ -440,7 +440,7 @@ repositories {
         implementation project(path: ':ocr_ui')
         implementation project(path: ':logreport')
         implementation project(path: ':form')
-        implementation project(path: ':LiveDataBus')
+        implementation project(path: ':library:LiveDataBus')
         //弹窗对话框
         implementation project(path: ':library:circleDialog-androidx')
 //        implementation project(path: ':library:circleDialog-appcompat')
@@ -449,7 +449,6 @@ repositories {
         implementation files('libs/commons-codec-1.11.jar')
         implementation files('libs/commons-io-2.6.jar')
         implementation files('libs/commons-logging-1.2.jar')
-        implementation 'me.jessyan:autosize:1.1.2'//屏幕适配
         implementation project(path: ':blurkit')
         //简单的表格控件
         implementation project(path: ':library:tableLayout')

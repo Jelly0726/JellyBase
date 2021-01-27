@@ -12,7 +12,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/JieCaoVideoPlayer" />
-            <option value="$PROJECT_DIR$/MarqueeView-master" />
             <option value="$PROJECT_DIR$/WebSocketClient" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base64demo" />
@@ -41,9 +40,8 @@
             <option value="$PROJECT_DIR$/library/htmlEditor" />
             <option value="$PROJECT_DIR$/library/jcvideoplayer-lib" />
             <option value="$PROJECT_DIR$/library/jiaozivideoplayer-library" />
-            <option value="$PROJECT_DIR$/library/marqueeviewlibrary" />
+            <option value="$PROJECT_DIR$/library/liveDataBus" />
             <option value="$PROJECT_DIR$/library/tableLayout" />
-            <option value="$PROJECT_DIR$/liveDataBus" />
             <option value="$PROJECT_DIR$/logreport" />
             <option value="$PROJECT_DIR$/ocr_ui" />
             <option value="$PROJECT_DIR$/viewpagerlayoutmanager" />
