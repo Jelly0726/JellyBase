@@ -3,7 +3,6 @@ package com.base.bottomBar;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -12,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.base.middleBar.UIUtils;
 import com.jelly.jellybase.R;
@@ -41,6 +42,17 @@ public class BottomBarItem extends LinearLayout {
     private boolean mIsSkip = false;// 是否跳过项,默认关闭
     private int mIconWidth;//图标的宽度
     private int mIconHeight;//图标的高度
+    private ImageView.ScaleType mIconScaleType = ImageView.ScaleType.CENTER_CROP;;//图标的caleType
+    private static final ImageView.ScaleType[] SCALE_TYPES = {
+            ImageView.ScaleType.MATRIX,
+            ImageView.ScaleType.FIT_XY,
+            ImageView.ScaleType.FIT_START,
+            ImageView.ScaleType.FIT_CENTER,
+            ImageView.ScaleType.FIT_END,
+            ImageView.ScaleType.CENTER,
+            ImageView.ScaleType.CENTER_CROP,
+            ImageView.ScaleType.CENTER_INSIDE
+    };
     private int mItemPadding;//BottomBarItem的padding
 
     private LinearLayout mLinearLayout;
@@ -94,6 +106,10 @@ public class BottomBarItem extends LinearLayout {
 
         mIconWidth = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconWidth, 0);
         mIconHeight = ta.getDimensionPixelSize(R.styleable.BottomBarItem_iconHeight, 0);
+        int index = ta.getInt(R.styleable.BottomBarItem_iconScaleType, -1);
+        if (index >= 0 && index < SCALE_TYPES.length) {
+            mIconScaleType = SCALE_TYPES[index];
+        }
         mItemPadding = ta.getDimensionPixelSize(R.styleable.BottomBarItem_itemPadding, 0);
 
         mUnreadTextSize = ta.getDimensionPixelSize(R.styleable.BottomBarItem_unreadTextSize, UIUtils.sp2px(mContext,mUnreadTextSize));
@@ -143,7 +159,7 @@ public class BottomBarItem extends LinearLayout {
         mTextView = (TextView) view.findViewById(R.id.tv_text);
 
         mImageView.setImageResource(mIconNormalResourceId);
-
+        mImageView.setScaleType(mIconScaleType);
         if (mIconWidth != 0 && mIconHeight != 0){
             //如果有设置图标的宽度和高度，则设置ImageView的宽高
             FrameLayout.LayoutParams imageLayoutParams = (FrameLayout.LayoutParams) mImageView.getLayoutParams();

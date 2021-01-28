@@ -472,6 +472,7 @@ repositories {
         implementation project(path: ':library:FileChooser')
         //BGABanner
         implementation project(path: ':library:BGABanner')
-
+        //投影
+        implementation 'com.github.lihangleo2:ShadowLayout:3.1.9'
     }
 }
