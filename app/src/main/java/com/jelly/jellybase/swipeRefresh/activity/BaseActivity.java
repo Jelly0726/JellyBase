@@ -91,10 +91,12 @@ public class BaseActivity extends AppCompatActivity implements OnItemClickListen
         mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener);
 
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
+        if (mRefreshLayout != null)
+            mRefreshLayout.setOnRefreshListener(mRefreshListener); // 刷新监听。
 
 
     }
+
     /**
      * 刷新。
      */
@@ -194,7 +196,7 @@ public class BaseActivity extends AppCompatActivity implements OnItemClickListen
      */
     private OnItemMenuClickListener mMenuItemClickListener = new OnItemMenuClickListener() {
         @Override
-        public void onItemClick(SwipeMenuBridge menuBridge,int adapterPosition) {
+        public void onItemClick(SwipeMenuBridge menuBridge, int adapterPosition) {
             menuBridge.closeMenu();
 
             int direction = menuBridge.getDirection(); // 左侧还是右侧菜单。
@@ -207,6 +209,7 @@ public class BaseActivity extends AppCompatActivity implements OnItemClickListen
             }
         }
     };
+
     protected int getContentView() {
         return R.layout.xswipe_scroll_activity;
     }
