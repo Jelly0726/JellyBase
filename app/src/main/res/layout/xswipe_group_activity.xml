@@ -23,7 +23,7 @@
 
     <include layout="@layout/xswipe_toolbar_scroll"/>
 
-    <com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView
+    <com.yanzhenjie.recyclerview.widget.StickyNestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -260,6 +260,6 @@
 
         </LinearLayout>
 
-    </com.yanzhenjie.recyclerview.swipe.widget.StickyNestedScrollView>
+    </com.yanzhenjie.recyclerview.widget.StickyNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
