@@ -16,7 +16,6 @@ import com.base.eventBus.NetEvent;
 import com.base.middleBar.MiddleBarItem;
 import com.base.middleBar.MiddleBarLayout;
 import com.base.multiClick.AntiShake;
-import com.base.sofia.Sofia;
 import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
@@ -83,9 +82,6 @@ public class ProductDetailsActivity extends BaseActivity implements BackInterfac
         initViewPagerView();
         initViewPagerData();
         initViewPagerListener();
-        Sofia.with(this)
-        // 状态栏浅色字体。
-        .statusBarLightFont();
     }
     @Override
     public int getLayoutId(){
