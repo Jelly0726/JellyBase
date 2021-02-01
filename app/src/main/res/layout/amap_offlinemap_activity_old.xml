@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
     <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
-    <com.base.sofia.StatusView
+    <com.base.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
