@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import cn.jpush.android.api.JPushInterface
+import com.base.SystemBar.StatusBarUtil
 import com.base.appManager.AppSubject
 import com.base.appManager.BaseApplication
 import com.base.appManager.Observable
@@ -30,7 +31,6 @@ import com.base.applicationUtil.AppPrefs
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken
-import com.base.sofia.StatusBarUtil
 import com.mylhyl.circledialog.CircleDialog
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope

@@ -9,7 +9,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import butterknife.Unbinder
-import com.base.sofia.StatusBarUtil
+import com.base.SystemBar.StatusBarUtil
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
