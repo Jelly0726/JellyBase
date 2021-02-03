@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import com.base.addressmodel.Address;
 import com.base.appManager.BaseApplication;
-import com.base.bottomBar.BottomBarItem;
-import com.base.bottomBar.BottomBarLayout;
 import com.base.config.IntentAction;
 import com.base.eventBus.HermesManager;
 import com.base.eventBus.NetEvent;
@@ -19,9 +17,10 @@ import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
 import com.base.view.FragmentAdapter;
-import com.base.view.NoPreloadViewPager;
-import com.base.zxing.ScanerCodeActivity;
 import com.base.zxing.decoding.ZXingUtils;
+import com.chaychan.library.BottomBarItem;
+import com.chaychan.library.BottomBarLayout;
+import com.chaychan.library.NoPreloadViewPager;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.fragment.HomeFragment;
@@ -139,12 +138,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         mBottomBarLayout.setViewPager(mVpContent);
         mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(final BottomBarItem bottomBarItem, int position) {
-                if (bottomBarItem.getIsHeave()){
-                    Intent intent=new Intent(BottomBarActivity.this, ScanerCodeActivity.class);
-                    //overridePendingTransition(R.anim.bottom_in, R.anim.bottom_out);
-                    startActivityForResult(intent,zxingRequestCode);
-                }
+            public void onItemSelected(final BottomBarItem bottomBarItem, int position, int currentPosition) {
             }
         });
 

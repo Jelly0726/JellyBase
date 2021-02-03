@@ -68,7 +68,7 @@
             android:layout_marginLeft="40mm"
             android:layout_marginRight="40mm"
             android:orientation="horizontal"
-            android:background="@drawable/bottom_stroke_w">
+            >
             <ImageView
                 android:layout_width="20mm"
                 android:layout_height="20mm"
@@ -107,7 +107,7 @@
             android:layout_marginRight="40mm"
             android:orientation="horizontal"
             android:layout_marginTop="15mm"
-            android:background="@drawable/bottom_stroke_w">
+            >
             <ImageView
                 android:layout_width="20mm"
                 android:layout_height="20mm"

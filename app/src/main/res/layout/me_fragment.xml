@@ -162,7 +162,6 @@
                     android:layout_height="5mm"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10mm"
-                    android:background="@drawable/bottombar_shape_notify_point"
                     android:gravity="center"
                     android:textSize="6mm"
                     android:visibility="gone" />
