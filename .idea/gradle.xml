@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/JieCaoVideoPlayer" />
+            <option value="$PROJECT_DIR$/MarqueeView-master" />
             <option value="$PROJECT_DIR$/WebSocketClient" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base64demo" />
