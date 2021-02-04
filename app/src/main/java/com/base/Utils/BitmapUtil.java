@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
@@ -46,6 +47,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
@@ -63,6 +65,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1779,7 +1784,102 @@ public class BitmapUtil {
     private boolean isEmptyBitmap(Bitmap src) {
         return src == null || src.getWidth() == 0 || src.getHeight() == 0;
     }
+    /**
+     * 获取图片宽高
+     *
+     * @param urlStr
+     * @param callBack
+     */
+    public void getImageSize(@NonNull String urlStr, GetImageSizeCallBack callBack) {
+        if (urlStr.toUpperCase().startsWith("HTTP")
+                ||urlStr.toUpperCase().startsWith("HTTPS")){
+            new GetImageSizeTask(urlStr, callBack);
+            return;
+        }
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        //bitmap.options类为bitmap的裁剪类，通过他可以实现bitmap的裁剪；
+        // 如果不设置裁剪后的宽高和裁剪比例，返回的bitmap对象将为空，但是这个对象存储了原bitmap的宽高信息，bitmap对象为空不会引发OOM。
+        Bitmap bitmap = BitmapFactory.decodeFile(urlStr, options);
+        int width = options.outWidth;
+        int height = options.outHeight;
+        if (callBack != null)
+            callBack.GetSize(width, height);
 
+
+    }
+
+    /**
+     * 获取图片宽高
+     *
+     * @param urlStr
+     * @param callBack
+     */
+    public void getImageSize(@NonNull Context context, int urlStr, GetImageSizeCallBack callBack) {
+        Resources res = context.getResources();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bitmap = BitmapFactory.decodeResource(res, urlStr, options);
+        //bitmap.options类为bitmap的裁剪类，通过他可以实现bitmap的裁剪；
+        // 如果不设置裁剪后的宽高和裁剪比例，返回的bitmap对象将为空，但是这个对象存储了原bitmap的宽高信息，bitmap对象为空不会引发OOM。
+//        Bitmap bitmap = BitmapFactory.decodeFile(src, options);
+        int width = options.outWidth;
+        int height = options.outHeight;
+        if (callBack != null)
+            callBack.GetSize(width, height);
+    }
+
+    private class GetImageSizeTask extends AsyncTask<Void, Void, Boolean> {
+        private GetImageSizeCallBack callBack;
+        private String urlStr;
+        private int width, height;
+
+        public GetImageSizeTask(String urlStr, GetImageSizeCallBack callBack) {
+            this.callBack = callBack;
+            this.urlStr = urlStr;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            if (urlStr == null || urlStr.length() <= 0) return false;
+            boolean result = false;
+            try {
+                URL mUrl = new URL(urlStr);
+                HttpURLConnection connection = (HttpURLConnection) mUrl.openConnection();
+                InputStream is = connection.getInputStream();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeStream(is, null, options);
+                width = options.outWidth;
+                height = options.outHeight;
+                result = true;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean) {
+                if (callBack != null)
+                    callBack.GetSize(width, height);
+            } else {
+                if (callBack != null)
+                    callBack.GetSize(0, 0);
+            }
+        }
+
+    }
+
+    /**
+     * 获取图片宽高回调
+     */
+    public interface GetImageSizeCallBack {
+        public void GetSize(float width, float height);
+    }
     public void main(String[] arg) {
 
     }
