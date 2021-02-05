@@ -11,6 +11,7 @@
        windowIsFloating
        为 true -->
         <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
         <item name="android:windowAnimationStyle">@style/left_animstyle</item>
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
