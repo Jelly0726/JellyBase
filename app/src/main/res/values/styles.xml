@@ -29,9 +29,9 @@
     </style>
     <style name="bottom" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/bottom_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/bottom_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/bottom_out</item>
         <item name="android:activityCloseEnterAnimation">@anim/bottom_in</item>
-        <item name="android:activityCloseExitAnimation">@anim/bottom_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/bottom_out</item>
     </style>
     <!--↑↑↑↑↑↑↑进出动画从下方出进↑↑↑↑↑↑↑-->
     <!--↓↓↓↓↓↓进出动画从右出进↓↓↓↓↓↓-->
