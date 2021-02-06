@@ -48,8 +48,7 @@ public class RecyclerScrollView extends ScrollView {
         //获取View的高度和 竖直屏幕上竖直移动的距离
         int b = getHeight() + getScrollY();
         a = a - b;
-
-        if (a == 0) {
+        if (a <= 0) {
             //触底事件
             //上一次达到边界的时间间隔大于500毫秒算一次达到边界
             if (System.currentTimeMillis() - lastEdgesTime > 500) {
@@ -66,8 +65,11 @@ public class RecyclerScrollView extends ScrollView {
                     onScrollListenter.onTop();
             }
             lastEdgesTime = System.currentTimeMillis();
-        } else
+        } else {
+            if (onScrollListenter != null)
+                onScrollListenter.onSwiping(l, t, oldl, oldt);
             super.onScrollChanged(l, t, oldl, oldt);
+        }
     }
 
     /**
@@ -117,6 +119,10 @@ public class RecyclerScrollView extends ScrollView {
          * 触顶了
          */
         void onTop();
+        /**
+         * 滑动中
+         */
+        void onSwiping(int x, int y, int oldx, int oldy);
 
         /**
          * 触底了
