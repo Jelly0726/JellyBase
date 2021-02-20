@@ -1,12 +1,14 @@
 package com.base.recyclerViewUtil;
 
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -24,7 +26,7 @@ public class RVUtils {
      * 单一实例
      */
     public static RVUtils getInstance() {
-        return RVUtils.SingletonHolder.instance;
+        return SingletonHolder.instance;
     }
     /**
      * 要杜绝单例对象在反序列化时重新生成对象，那么必须加入如下方法：
@@ -32,7 +34,7 @@ public class RVUtils {
      * @throws ObjectStreamException
      */
     private Object readResolve() throws ObjectStreamException {
-        return RVUtils.SingletonHolder.instance;
+        return SingletonHolder.instance;
     }
     /**
      * LinearLayoutManager 获取屏幕内可见条目的起始位置
@@ -147,7 +149,57 @@ public class RVUtils {
             recyclerView.smoothScrollToPosition(position);
         }
     }
+    /**
+     * 通过滚动的类型来进行相应的滚动
+     * 滚动到指定位置并且置顶(有滚动效果)
+     * @param mContext
+     * @param recyclerView
+     * @param position
+     */
+    public void smoothMoveToPosition(@NonNull Context mContext, @NonNull RecyclerView recyclerView, int position) {
+        if (recyclerView == null) return;
+        if (position<0)return;
+        LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
+        if (mLayoutManager==null)return;
+        TopSmoothScroller  smoothScroller = new TopSmoothScroller(mContext);
+        smoothScroller.setTargetPosition(position);
+        mLayoutManager.startSmoothScroll(smoothScroller);
+    }
+    /**
+     * 通过滚动的类型来进行相应的滚动
+     * 滚动到指定位置并且置顶(没有滚动效果)
+     * @param recyclerView
+     * @param position
+     */
+    public void smoothMoveToPosition(@NonNull RecyclerView recyclerView, int position) {
+        if (recyclerView == null) return;
+        if (position<0)return;
+        LinearLayoutManager mLayoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
+        if (mLayoutManager==null)return;
+        recyclerView.scrollToPosition(position);
+        mLayoutManager.scrollToPositionWithOffset(position, 0);
+    }
 
+    /**
+     * RecycleView 滑动到指定的条目并置顶显示 有滑到效果
+     */
+    public class TopSmoothScroller extends LinearSmoothScroller {
+
+        public TopSmoothScroller(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected int getHorizontalSnapPreference() {
+            return SNAP_TO_START;// 具体见源码注释
+        }
+
+        @Override
+        protected int getVerticalSnapPreference() {
+            return SNAP_TO_START;// 具体见源码注释
+        }
+
+    }
     /**
      *  Reyclerview移动到中间位置的方法
      * @param recyclerView
