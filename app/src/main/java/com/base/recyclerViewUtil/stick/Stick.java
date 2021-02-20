@@ -6,6 +6,6 @@ package com.base.recyclerViewUtil.stick;
 
 public interface Stick {
 
-    boolean isPinnedViewType(int viewType);
+    public boolean isPinnedViewType(int viewType);
 
 }

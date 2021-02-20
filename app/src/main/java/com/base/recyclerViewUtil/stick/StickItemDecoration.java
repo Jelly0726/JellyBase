@@ -38,17 +38,17 @@ public class StickItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * 当前绘制的pinnedheaderview
      */
-    View mPinnedHeaderView = null;
+    private View mPinnedHeaderView = null;
 
     /**
      * pinnedheaderview的位置
      */
-    int mHeaderPosition = -1;
+    private int mHeaderPosition = -1;
 
     /**
      * 装载所有的viewtype
      */
-    Map<Integer, Boolean> mPinnedViewTypes = new HashMap<Integer, Boolean>();
+    private Map<Integer, Boolean> mPinnedViewTypes = new HashMap<Integer, Boolean>();
 
     /**
      * pinnedheaderview的上边距
