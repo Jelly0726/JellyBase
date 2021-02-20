@@ -28,7 +28,12 @@ public class SideBar extends View {
 	//背景色
 	private final String mBackgroundColor="#80000000";
 	private GradientDrawable gradientDrawable;
-
+	//字体颜色
+	private final String mTextColor="#FF111111";
+	//字体选中颜色
+	private final String mTextClickColor="#FFFF2530";
+	//字体大小
+	private float mTextSize=14f;
 	public void setTextView(TextView mTextDialog) {
 		this.mTextDialog = mTextDialog;
 	}
@@ -66,14 +71,14 @@ public class SideBar extends View {
 		float singleHeight = (height * 1f) / b.length;// 获取每一个字母的高度
 		singleHeight = (height * 1f - singleHeight/2) / b.length;
 		for (int i = 0; i < b.length; i++) {
-			paint.setColor(Color.rgb(23, 122, 216));
+			paint.setColor(Color.parseColor(mTextColor));
 			// paint.setColor(Color.WHITE);
 			paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);
-			paint.setTextSize(AppUtils.spTopx(getContext(),14f));
+			paint.setTextSize(AppUtils.spTopx(getContext(),mTextSize));
 			// 选中的状态
 			if (i == choose) {
-				paint.setColor(Color.parseColor("#c60000"));
+				paint.setColor(Color.parseColor(mTextClickColor));
 				paint.setFakeBoldText(true);
 			}
 			// x坐标等于中间-字符串宽度的一半.
@@ -95,7 +100,7 @@ public class SideBar extends View {
 
 		switch (action) {
 		case MotionEvent.ACTION_UP:
-			setBackgroundDrawable(new ColorDrawable(0x00000000));
+			setBackground(new ColorDrawable(0x00000000));
 			choose = -1;//
 			invalidate();
 			if (mTextDialog != null) {
