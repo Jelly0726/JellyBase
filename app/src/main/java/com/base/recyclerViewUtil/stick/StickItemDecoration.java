@@ -1,4 +1,4 @@
-package com.base.SwipeRefresh.stick;
+package com.base.recyclerViewUtil.stick;
 
 
 import android.graphics.Canvas;

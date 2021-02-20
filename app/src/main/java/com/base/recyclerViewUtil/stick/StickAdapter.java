@@ -1,4 +1,4 @@
-package com.base.SwipeRefresh.stick;
+package com.base.recyclerViewUtil.stick;
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;

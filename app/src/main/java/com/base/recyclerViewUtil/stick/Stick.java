@@ -1,4 +1,4 @@
-package com.base.SwipeRefresh.stick;
+package com.base.recyclerViewUtil.stick;
 
 /**
  * Created by wubo on 2017/8/22.

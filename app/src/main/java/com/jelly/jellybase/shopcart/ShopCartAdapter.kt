@@ -12,7 +12,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.base.SwipeRefresh.stick.StickAdapter
+import com.base.recyclerViewUtil.stick.StickAdapter
 import com.base.Utils.StringUtil
 import com.base.appManager.BaseApplication
 import com.base.applicationUtil.AppUtils
@@ -21,14 +21,7 @@ import com.bumptech.glide.Glide
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
 import com.mylhyl.circledialog.CircleDialog
-import com.mylhyl.circledialog.callback.ConfigButton
-import com.mylhyl.circledialog.callback.ConfigDialog
-import com.mylhyl.circledialog.callback.ConfigInput
-import com.mylhyl.circledialog.callback.ConfigTitle
-import com.mylhyl.circledialog.params.ButtonParams
-import com.mylhyl.circledialog.params.DialogParams
 import com.mylhyl.circledialog.params.InputParams
-import com.mylhyl.circledialog.params.TitleParams
 
 class ShopCartAdapter(context: Context) :
     RecyclerView.Adapter<ShopCartAdapter.GroupViewHolder>(),
