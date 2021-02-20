@@ -6,13 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
-import com.jelly.jellybase.R;
 
 
 public class SideBar extends View {
@@ -25,6 +25,9 @@ public class SideBar extends View {
 	private Paint paint = new Paint();
 
 	private TextView mTextDialog;
+	//背景色
+	private final String mBackgroundColor="#80000000";
+	private GradientDrawable gradientDrawable;
 
 	public void setTextView(TextView mTextDialog) {
 		this.mTextDialog = mTextDialog;
@@ -32,15 +35,23 @@ public class SideBar extends View {
 
 	public SideBar(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		gradientDrawable = new GradientDrawable();
+		// 形状-圆角矩形
+		gradientDrawable.setShape(GradientDrawable.RECTANGLE);
+		// 圆角
+		gradientDrawable.setCornerRadii(new float[]{8,8,0,0,0,0,8,8});
+		// 随机颜色
+		gradientDrawable.setColor(Color.parseColor(mBackgroundColor));
 	}
 
 	public SideBar(Context context, AttributeSet attrs) {
-		super(context, attrs);
+		this(context, attrs,0);
 	}
 
 	public SideBar(Context context) {
-		super(context);
+		this(context,null,0);
 	}
+
 
 	/**
 	 * 重写这个方法
@@ -93,7 +104,7 @@ public class SideBar extends View {
 			break;
 
 		default:
-			setBackgroundResource(R.drawable.contacts_sidebar_background);
+			setBackground(gradientDrawable);
 			if (oldChoose != c) {
 				if (c >= 0 && c < b.length) {
 					if (listener != null) {
