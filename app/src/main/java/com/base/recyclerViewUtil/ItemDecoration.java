@@ -110,11 +110,12 @@ public class ItemDecoration extends RecyclerView.ItemDecoration{
             StaggeredGridLayoutManager.LayoutParams lp = (StaggeredGridLayoutManager
                     .LayoutParams)view.getLayoutParams();
             int spanIndex = lp.getSpanIndex();
-            //判断当前的位置，如果是最后设置右边距
-            if (spanIndex == span-1) {
-                outRect.set(this.outRect.left,0, this.outRect.right,0);
-            } else {//其余的位置右边距为0
-                outRect.set(this.outRect.left, 0, 0,0);
+            if (spanIndex==0){//最左边
+                outRect.set(this.outRect.left, 0, this.outRect.right/2,0);
+            }else if (spanIndex == span-1) {//最右边
+                outRect.set(this.outRect.left/2,0, this.outRect.right,0);
+            } else {//其余
+                outRect.set(this.outRect.left/2, 0, this.outRect.right/2,0);
             }
         } else if (parent.getLayoutManager() instanceof GridLayoutManager){
             /**
