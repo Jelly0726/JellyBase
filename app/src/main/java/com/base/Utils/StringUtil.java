@@ -290,6 +290,30 @@ public class StringUtil {
         return spannable;
     }
     /**
+     * 关键字高亮显示
+     *
+     * @param targets  需要高亮的关键字数组
+     * @param text	     需要显示的文字
+     * @param color      颜色
+     * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
+     */
+    public static SpannableStringBuilder highlight(String text, int color, String... targets) {
+        if (targets.length==0)return null;
+        SpannableStringBuilder spannable = new SpannableStringBuilder(text);
+        CharacterStyle span = null;
+        for (String target :targets){
+            if (TextUtils.isEmpty(text)||TextUtils.isEmpty(target))return null;
+            Pattern p = Pattern.compile(target);
+            Matcher m = p.matcher(text);
+            while (m.find()) {
+                span = new ForegroundColorSpan(BaseApplication.getInstance().getResources().getColor(color));// 需要重复！
+                spannable.setSpan(span, m.start(), m.end(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+        return spannable;
+    }
+    /**
      * 根据值, 设置spinner默认选中:
      * @param spinner
      * @param value
