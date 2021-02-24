@@ -1,4 +1,5 @@
 package com.base.imageView;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,8 +8,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -61,7 +64,54 @@ public class RoundRect {
         Bitmap photo = BitmapFactory.decodeResource(context.getResources(), imageID);
         return Transformation(photo);
     }
-
+    /**
+     * 用于把普通图片转换为圆角矩形图像
+     *
+     * @param bitmap 图片bitmap
+     * @return output 转换后的圆角矩形图像
+     */
+    Bitmap toRoundRect(Bitmap bitmap) {
+        //创建位图对象
+        return Transformation(bitmap);
+    }
+    /**
+     * 用于把普通图片转换为圆角矩形图像
+     *
+     * @param drawable 图片bitmap
+     * @return output 转换后的圆角矩形图像
+     */
+    Bitmap toRoundRect(Drawable drawable) {
+        //创建位图对象
+        Bitmap photo =getBitmap(drawable);
+        return Transformation(photo);
+    }
+    /**
+     * Drawable 转bitmap
+     * @param drawable
+     * @return 生成的Bitmap对象
+     */
+    public final static Bitmap getBitmap(Drawable drawable) {
+        if (drawable instanceof ColorDrawable) {
+            Rect rect = drawable.getBounds();
+            int width = rect.right - rect.left;
+            int height = rect.bottom - rect.top;
+            int color = ((ColorDrawable) drawable).getColor();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawARGB(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color));
+            return bitmap;
+        } else if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else {
+            int w = drawable.getIntrinsicWidth();
+            int h = drawable.getIntrinsicHeight();
+            Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, w, h);
+            drawable.draw(canvas);
+            return bitmap;
+        }
+    }
     /**
      * 用于把Uri图片转换为Bitmap对象
      *
@@ -82,7 +132,6 @@ public class RoundRect {
         System.out.println(w + " " + h); //after zoom
         return bitmap;
     }
-
     /**
      * 用于把Bitmap图像转换为圆角图像
      *
