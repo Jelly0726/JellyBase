@@ -54,6 +54,5 @@
         <attr name="ivpArcHeight" />
         <attr name="ivpArcMode" />
         <attr name="ivpArcLocation" />
-        <attr name="android:scaleType"/>
     </declare-styleable>
 </resources>
