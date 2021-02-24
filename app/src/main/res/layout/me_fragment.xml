@@ -120,16 +120,14 @@
                         </LinearLayout>
                     </LinearLayout>
                 </com.base.cardView.CardView>
-                <com.base.imageView.CircleImageView
+                <com.base.imageView.ImageViewPlus
                     android:id="@+id/photo"
                     android:layout_width="150mm"
                     android:layout_height="150mm"
                     android:scaleType="centerCrop"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="60mm"
-                    app:border_widthf="0mm"
                     android:elevation="5mm"
-                    app:border_colorf="@android:color/transparent"
                     android:src="@mipmap/ic_launcher"
                     />
             </RelativeLayout>

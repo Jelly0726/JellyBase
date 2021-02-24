@@ -25,16 +25,15 @@
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <com.base.imageView.RoundImageView
+        <com.base.imageView.ImageViewPlus
             android:layout_marginBottom="5mm"
             android:id="@+id/goods_image"
             android:layout_marginTop="5mm"
-            android:scaleType="centerCrop"
             android:src="@drawable/shopcar_cmaz"
             android:layout_width="92mm"
             android:layout_height="92mm"
-            app:roundType="round"
-            app:roundRadius="2mm"/>
+            app:ivpType="round"
+            app:ivpRadius="2mm"/>
 
         <RelativeLayout
             android:padding="2mm"

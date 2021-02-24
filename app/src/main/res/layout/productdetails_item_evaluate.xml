@@ -15,10 +15,11 @@
         android:layout_marginRight="30mm"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.base.imageView.CircleImageView
+        <com.base.imageView.ImageViewPlus
             android:layout_width="52mm"
             android:layout_height="52mm"
-            android:src="@mipmap/wode_tx"/>
+            android:src="@mipmap/wode_tx"
+            app:ivpType="circle"/>
         <TextView
             android:id="@+id/member_name"
             android:layout_width="wrap_content"
