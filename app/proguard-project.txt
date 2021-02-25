@@ -558,7 +558,7 @@ public void xxxxxx(**);
 -keep class android.arch.core.** { *; }
 #======================= 自定义toast:=======================
  -dontwarn com.base.toast.**
- -keep class com.base.toast.** { ; }
+ -keep class com.base.toast.** { *; }
 #======================= for androidx:=======================
 -dontwarn com.jeremyliao.liveeventbus.**
 -keep class com.jeremyliao.liveeventbus.** { *; }
