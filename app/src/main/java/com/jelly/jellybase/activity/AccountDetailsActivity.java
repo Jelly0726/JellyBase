@@ -30,13 +30,14 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContact.Presenter>
+public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContact.View,AccountDetailContact.Presenter>
         implements AccountDetailContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -94,7 +95,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.accountDetail(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.accountDetail(true);
     }
     protected RecyclerView.ItemDecoration createItemDecoration() {
         Rect rect=new Rect();
@@ -106,7 +107,17 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     }
     @Override
     public AccountDetailContact.Presenter initPresenter() {
-        return new AccountDetailPresenter(this);
+        return new AccountDetailPresenter();
+    }
+
+    @Override
+    public AccountDetailContact.View initIBView() {
+        return this;
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     /**
      * 刷新。
@@ -115,7 +126,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         @Override
         public void onRefresh() {
             page=1;
-            presenter.accountDetail(true,lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+            presenter.accountDetail(true);
 
         }
     };
@@ -127,7 +138,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         public void onLoadMore() {
             if (mMaxToal>(page*size)){
                 page++;
-                presenter.accountDetail(false,lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+                presenter.accountDetail(false);
             }
         }
     };

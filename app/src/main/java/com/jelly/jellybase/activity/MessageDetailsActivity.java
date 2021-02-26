@@ -13,6 +13,7 @@ import com.base.model.Message;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.ig.DefaultImageDownloader;
@@ -22,11 +23,12 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * 消息通知详情
  */
-public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsContact.Presenter>
+public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsContact.View,MessageDetailsContact.Presenter>
         implements MessageDetailsContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -49,9 +51,17 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     }
     @Override
     public MessageDetailsContact.Presenter initPresenter() {
-        return new MessageDetailsPresenter(this) ;
+        return new MessageDetailsPresenter() ;
+    }
+    @Override
+    public MessageDetailsContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private void iniView(){
          MProgressUtil.getInstance().initialize(this);
 

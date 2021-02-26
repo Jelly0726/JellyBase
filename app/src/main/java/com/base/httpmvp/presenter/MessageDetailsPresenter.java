@@ -2,13 +2,12 @@ package com.base.httpmvp.presenter;
 
 
 import com.base.httpmvp.contact.MessageDetailsContact;
-import com.base.model.Message;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
+import com.base.model.Message;
 import com.google.gson.Gson;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -17,22 +16,17 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：消息详情View(activityview)对应的Presenter
  */
-public class MessageDetailsPresenter extends BasePresenterImpl<MessageDetailsContact.View> implements MessageDetailsContact.Presenter {
+public class MessageDetailsPresenter extends MessageDetailsContact.Presenter {
 
-
-    public MessageDetailsPresenter(MessageDetailsContact.View view) {
-        super(view);
-    }
-
-    public void getMessageDetails(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().getMessageDetails(new Gson().toJson(view.getMessageDetailsParam())
-                ,composer,new Observer<HttpResultData<Message>>() {
+    public void getMessageDetails() {
+        mView.showProgress();
+        HttpMethods.getInstance().getMessageDetails(new Gson().toJson(mView.getMessageDetailsParam())
+                , mView.bindLifecycle(),new Observer<HttpResultData<Message>>() {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.closeProgress();
-                        view.getMessageDetailsFailed(e.getMessage());
+                        mView.closeProgress();
+                        mView.getMessageDetailsFailed(e.getMessage());
                     }
 
                     @Override
@@ -47,11 +41,11 @@ public class MessageDetailsPresenter extends BasePresenterImpl<MessageDetailsCon
 
                     @Override
                     public void onNext(HttpResultData<Message> model) {
-                        view.closeProgress();
+                        mView.closeProgress();
                         if (model.getStatus()== HttpCode.SUCCEED){
-                            view.getMessageDetailsSuccess(model.getData());
+                            mView.getMessageDetailsSuccess(model.getData());
                         }else {
-                            view.getMessageDetailsFailed(model.getMsg());
+                            mView.getMessageDetailsFailed(model.getMsg());
                         }
                     }
                 });

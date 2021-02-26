@@ -27,12 +27,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/28.
  */
 
-public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter>
+public class RegisterActivity extends BaseActivityImpl<RegisterContact.View,RegisterContact.Presenter>
         implements RegisterContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -74,21 +75,31 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
                     ToastUtils.showToast(RegisterActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode();
             }
         });
     }
     @Override
     protected void onDestroy() {
+        if (get_ver_btn!=null) {
+            get_ver_btn.onDestroy();
+        }
         super.onDestroy();
-        get_ver_btn.onDestroy();
     }
 
     @Override
     public RegisterContact.Presenter initPresenter() {
-        return new RegisterActivityPresenter(this);
+        return new RegisterActivityPresenter();
+    }
+    @Override
+    public RegisterContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({ R.id.next_tv, R.id.left_back,R.id.login_tv,R.id.clause})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -112,7 +123,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.Presenter
                 }
                 if (agree.isChecked())
                 {
-                    presenter.userRegister(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.userRegister();
                 }else {
                     ToastUtils.showToast(RegisterActivity.this,"请先阅读服务协议，并同意！");
                 }

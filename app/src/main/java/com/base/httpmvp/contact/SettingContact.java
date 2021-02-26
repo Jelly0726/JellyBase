@@ -1,9 +1,7 @@
 package com.base.httpmvp.contact;
 
-import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.presenter.BasePresenter;
 import com.base.httpmvp.view.IBaseView;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/12/14.
@@ -23,7 +21,7 @@ public interface SettingContact {
 
 
     }
-    public interface Presenter extends IBasePresenter {
-        public void getAppversion(ObservableTransformer composer);
+    public abstract class Presenter extends BasePresenter<View> {
+        public abstract void getAppversion();
     }
 }

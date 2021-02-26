@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,22 +13,17 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：添加银行卡View(activityview)对应的Presenter
  */
-public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View> implements AddBankCartContact.Presenter {
-
-
-    public AddBankPresenter(AddBankCartContact.View interfaceView) {
-        super(interfaceView);
-    }
+public class AddBankPresenter extends AddBankCartContact.Presenter {
 
     @Override
-    public void addBank(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().addbank(gson.toJson(view.addBankParam()),composer,new Observer<HttpResult>() {
+    public void addBank() {
+       mView.showProgress();
+        HttpMethods.getInstance().addbank(mGson.toJson(mView.addBankParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.addBankFailed(e.getMessage());
+               mView.closeProgress();
+               mView.addBankFailed(e.getMessage());
             }
 
             @Override
@@ -44,11 +38,11 @@ public class AddBankPresenter extends BasePresenterImpl<AddBankCartContact.View>
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+               mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.addBankSuccess(model.getMsg());
+                   mView.addBankSuccess(model.getMsg());
                 }else {
-                    view.addBankFailed(model.getMsg());
+                   mView.addBankFailed(model.getMsg());
                 }
             }
         });

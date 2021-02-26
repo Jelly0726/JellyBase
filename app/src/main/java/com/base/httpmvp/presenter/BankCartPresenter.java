@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,22 +13,17 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：删除银行卡View(activityview)对应的Presenter
  */
-public class BankCartPresenter extends BasePresenterImpl<BankCartContact.View> implements BankCartContact.Presenter {
-
-
-    public BankCartPresenter(BankCartContact.View interfaceView) {
-        super(interfaceView);
-    }
+public class BankCartPresenter extends BankCartContact.Presenter {
 
     @Override
-    public void deletebank( ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().deletebank(gson.toJson(view.deletebankParam()),composer,new Observer<HttpResult>() {
+    public void deletebank() {
+        mView.showProgress();
+        HttpMethods.getInstance().deletebank(mGson.toJson(mView.deletebankParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.deletebankFailed(e.getMessage());
+                mView.closeProgress();
+                mView.deletebankFailed(e.getMessage());
             }
 
             @Override
@@ -44,11 +38,11 @@ public class BankCartPresenter extends BasePresenterImpl<BankCartContact.View> i
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.deletebankSuccess(model.getMsg());
+                    mView.deletebankSuccess(model.getMsg());
                 }else {
-                    view.deletebankFailed(model.getMsg());
+                    mView.deletebankFailed(model.getMsg());
                 }
             }
         });

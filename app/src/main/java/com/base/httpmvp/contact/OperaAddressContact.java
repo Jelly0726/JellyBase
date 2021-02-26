@@ -1,9 +1,7 @@
 package com.base.httpmvp.contact;
 
-import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.presenter.BasePresenter;
 import com.base.httpmvp.view.IBaseView;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -30,7 +28,7 @@ public interface OperaAddressContact {
 
 
     }
-    public interface Presenter extends IBasePresenter {
-        public void operaAddress(ObservableTransformer composer);
+    public abstract class Presenter extends BasePresenter<View> {
+        public abstract void operaAddress();
     }
 }

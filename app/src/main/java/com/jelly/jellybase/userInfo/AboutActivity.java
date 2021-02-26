@@ -17,12 +17,13 @@ import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/19.
  */
 
-public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> implements AboutContact.View {
+public class AboutActivity extends BaseActivityImpl<AboutContact.View,AboutContact.Presenter> implements AboutContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
     @BindView(R.id.versions_tv)
@@ -39,7 +40,7 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
-        presenter.aboutUs(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.aboutUs(true);
     }
     @Override
     public int getLayoutId(){
@@ -67,9 +68,17 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.Presenter> impl
 
     @Override
     public AboutContact.Presenter initPresenter() {
-        return new AboutUsPresenter(this);
+        return new AboutUsPresenter();
+    }
+    @Override
+    public AboutContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

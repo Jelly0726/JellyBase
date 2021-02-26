@@ -1,9 +1,7 @@
 package com.base.httpmvp.contact;
 
-import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.presenter.BasePresenter;
 import com.base.httpmvp.view.IBaseView;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -55,9 +53,9 @@ public interface PersonalInfoContact {
         public void uploadFailed(String message);
 
     }
-    public interface Presenter extends IBasePresenter {
-        public void getInfo(ObservableTransformer composer);
-        public void upload(ObservableTransformer composer);
-        public void upPersonalInfo(ObservableTransformer composer);
+    public abstract class Presenter extends BasePresenter<View> {
+        public abstract void getInfo();
+        public abstract void upload();
+        public abstract void upPersonalInfo();
     }
 }

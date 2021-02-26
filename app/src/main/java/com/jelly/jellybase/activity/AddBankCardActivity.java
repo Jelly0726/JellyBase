@@ -22,14 +22,14 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
+import io.reactivex.ObservableTransformer;
 
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Presenter>
+public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.View,AddBankCartContact.Presenter>
         implements AddBankCartContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -87,9 +87,18 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
 
     @Override
     public AddBankCartContact.Presenter initPresenter() {
-        return new AddBankPresenter(this);
+        return new AddBankPresenter();
     }
 
+    @Override
+    public AddBankCartContact.View initIBView() {
+        return this;
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -108,7 +117,7 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Pre
                     ToastUtils.showToast(this,"手机号、持卡人、卡号不能为空！");
                     return;
                 }
-                presenter.addBank(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.addBank();
                 break;
         }
     }

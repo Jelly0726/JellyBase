@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,22 +13,16 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：提现View(activityview)对应的Presenter
  */
-public class WithdrawalsPresenter extends BasePresenterImpl<WithdrawalsContact.View>
-        implements WithdrawalsContact.Presenter{
+public class WithdrawalsPresenter extends WithdrawalsContact.Presenter{
 
-
-    public WithdrawalsPresenter(WithdrawalsContact.View interfaceView) {
-        super(interfaceView);
-    }
-
-    public void withdrawals(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().withdrawals(gson.toJson(view.withdrawalsParam()),composer,new Observer<HttpResult>() {
+    public void withdrawals() {
+        mView.showProgress();
+        HttpMethods.getInstance().withdrawals(mGson.toJson(mView.withdrawalsParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.withdrawalsFailed(e.getMessage());
+                mView.closeProgress();
+                mView.withdrawalsFailed(e.getMessage());
             }
 
             @Override
@@ -44,11 +37,11 @@ public class WithdrawalsPresenter extends BasePresenterImpl<WithdrawalsContact.V
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.withdrawalsSuccess(model.getMsg());
+                    mView.withdrawalsSuccess(model.getMsg());
                 }else {
-                    view.withdrawalsFailed(model.getMsg());
+                    mView.withdrawalsFailed(model.getMsg());
                 }
             }
         });

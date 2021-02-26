@@ -24,12 +24,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Presenter>
+public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.View,UpdatePhoneContact.Presenter>
         implements UpdatePhoneContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -72,7 +73,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                     ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode();
             }
         });
     }
@@ -84,9 +85,17 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
 
     @Override
     public UpdatePhoneContact.Presenter initPresenter() {
-        return new UpdatePhonePresenter(this);
+        return new UpdatePhonePresenter();
+    }
+    @Override
+    public UpdatePhoneContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({R.id.left_back,R.id.ok_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -106,7 +115,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Pre
                     ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
                     return;
                 }
-                presenter.updatePhone(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePhone();
                 break;
         }
     }

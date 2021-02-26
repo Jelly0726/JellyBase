@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,29 +13,23 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：设置密码View(activityview)对应的Presenter
  */
-public class SetPassWordActivityPresenter extends BasePresenterImpl<SetPwdContact.View>
-implements SetPwdContact.Presenter{
-
-
-    public SetPassWordActivityPresenter(SetPwdContact.View interfaceView) {
-        super(interfaceView);
-    }
+public class SetPassWordActivityPresenter extends SetPwdContact.Presenter{
 
     @Override
-    public void setPassword( ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().setPassWord(gson.toJson(view.getSetPassWordParam()),
-                composer,new Observer<HttpResult>() {
+    public void setPassword() {
+        mView.showProgress();
+        HttpMethods.getInstance().setPassWord(mGson.toJson(mView.getSetPassWordParam()),
+                mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.excuteFailed(e.getMessage());
+                mView.closeProgress();
+                mView.excuteFailed(e.getMessage());
             }
 
             @Override
             public void onComplete() {
-                view.closeProgress();
+                mView.closeProgress();
             }
 
             @Override
@@ -46,11 +39,11 @@ implements SetPwdContact.Presenter{
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(model.getMsg());
+                    mView.excuteSuccess(model.getMsg());
                 }else {
-                    view.excuteFailed( model.getMsg());
+                    mView.excuteFailed( model.getMsg());
                 }
             }
         });

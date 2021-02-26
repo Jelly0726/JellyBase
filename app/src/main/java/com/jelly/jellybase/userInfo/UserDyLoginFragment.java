@@ -41,13 +41,14 @@ import java.util.TreeMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import io.reactivex.ObservableTransformer;
 import systemdb.Login;
 
 /**
  * Created by Administrator on 2018/1/6.
  */
 
-public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter>
+public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View,LoginContact.Presenter>
         implements LoginContact.View{
     @BindView(R.id.login_tv)
     TextView login_tv;
@@ -112,8 +113,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
             phone_edit.setSelection(phone.length());
             password_edit.setText(password);
             password_edit.setSelection(password.length());
-            presenter.userLogin(lifecycleProvider
-                    .<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+            presenter.userLogin();
         }
     }
     private void initCountDownBtn() {
@@ -126,7 +126,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     ToastUtils.showToast(getContext(),"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+                presenter.getVerifiCode();
             }
         });
     }
@@ -145,7 +145,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
                     ToastUtils.showToast(getContext(),"请输入您的手机号和动态密码!");
                     return;
                 }
-                presenter.userLogin(lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+                presenter.userLogin();
                 break;
             case R.id.forget_pwd:
                 intent=new Intent(BaseApplication.getInstance(), ForgetActivity.class);
@@ -181,7 +181,16 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.Presenter
     }
     @Override
     public LoginContact.Presenter initPresenter() {
-        return new LoginActivityPresenter(this);
+        return new LoginActivityPresenter();
+    }
+    @Override
+    public LoginContact.View initIBView() {
+        return this;
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW);
     }
     @Override
     public Object getLoginParam() {

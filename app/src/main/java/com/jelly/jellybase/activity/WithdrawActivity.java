@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppPrefs;
 import com.base.appManager.BaseApplication;
-import com.base.toast.ToastUtils;
+import com.base.applicationUtil.AppPrefs;
 import com.base.bankcard.BankCardInfo;
 import com.base.config.ConfigKey;
 import com.base.httpmvp.contact.WithdrawalsContact;
@@ -21,6 +20,7 @@ import com.base.httpmvp.presenter.WithdrawalsPresenter;
 import com.base.httpmvp.view.BaseActivityImpl;
 import com.base.moneyedittext.MoneyTextWatcher;
 import com.base.multiClick.AntiShake;
+import com.base.toast.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
@@ -29,12 +29,14 @@ import com.trello.rxlifecycle3.android.ActivityEvent;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.reactivex.ObservableTransformer;
+
 
 /**
  * Created by JELLY on 2017/9/26.
  */
 
-public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presenter> implements WithdrawalsContact.View{
+public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,WithdrawalsContact.Presenter> implements WithdrawalsContact.View{
     private static final int requestCode=0;
     private LinearLayout left_back;
     private LinearLayout change_bank;
@@ -121,9 +123,17 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
 
     @Override
     public WithdrawalsContact.Presenter initPresenter() {
-        return new WithdrawalsPresenter(this);
+        return new WithdrawalsPresenter();
+    }
+    @Override
+    public WithdrawalsContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -151,7 +161,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.Presen
                         ToastUtils.showToast(WithdrawActivity.this,"请输入提现金额!");
                         return;
                     }
-                    presenter.withdrawals(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.withdrawals();
                     break;
             }
         }

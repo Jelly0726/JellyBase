@@ -1,6 +1,7 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.view.IBaseView;
+import com.google.gson.Gson;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -8,31 +9,18 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by Administrator on 2017/12/5.
  */
-public abstract class BasePresenterImpl<V extends IBaseView> implements IBasePresenter {
-    public BasePresenterImpl(V view) {
-        this.view = view;
-        start();
+public abstract class BasePresenter<V extends IBaseView>{
+    public Gson mGson = new Gson();
+    public V mView;//给子类使用view
+    public void attachView(V v){
+        mView = v;
     }
-
-    protected V view;//给子类使用view
-
-
-    @Override
-    public void detach() {
-        view.closeProgress();
-        this.view = null;
+    public void detachView(){
+        mView.closeProgress();
+        mView = null;
         unDisposable();
     }
-
-    @Override
-    public void start() {
-
-    }
-
-/////////////////////////////////////////////////////////////////////////////////
-
     //以下下为配合RxJava2+retrofit2使用的
-
     //将所有正在处理的Subscription都添加到CompositeSubscription中。统一退出的时候注销观察
     private CompositeDisposable mCompositeDisposable;
 
@@ -41,7 +29,6 @@ public abstract class BasePresenterImpl<V extends IBaseView> implements IBasePre
      *
      * @param subscription
      */
-    @Override
     public void addDisposable(Disposable subscription) {
         //csb 如果解绑了的话添加 sb 需要新的实例否则绑定时无效的
         if (mCompositeDisposable == null || mCompositeDisposable.isDisposed()) {
@@ -53,7 +40,6 @@ public abstract class BasePresenterImpl<V extends IBaseView> implements IBasePre
     /**
      * 在界面退出等需要解绑观察者的情况下调用此方法统一解绑，防止Rx造成的内存泄漏
      */
-    @Override
     public void unDisposable() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.dispose();

@@ -22,11 +22,13 @@ import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
+import io.reactivex.ObservableTransformer;
+
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter> implements SettingContact.View {
+public class SettingsActivity extends BaseActivityImpl<SettingContact.View,SettingContact.Presenter> implements SettingContact.View {
     private LinearLayout left_back;
     private LinearLayout change_pwd;
     private LinearLayout change_phone;
@@ -50,9 +52,17 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
 
     @Override
     public SettingContact.Presenter initPresenter() {
-        return new SettingPresenter(this);
+        return new SettingPresenter();
+    }
+    @Override
+    public SettingContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private void iniView(){
         left_back= (LinearLayout) findViewById(R.id.left_back);
         left_back.setOnClickListener(listener);
@@ -87,7 +97,7 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.Presenter>
 //                    startActivity(intent);
                     break;
                 case R.id.check_updata:
-                    presenter.getAppversion(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                    presenter.getAppversion();
                     //百度智能更新 SDK 的 AAR 文件
                     //BDAutoUpdateSDK.uiUpdateAction(SettingsActivity.this, new MyUICheckUpdateCallback());
 //                    AllenChecker.init(true);

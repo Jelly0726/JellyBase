@@ -38,11 +38,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.reactivex.ObservableTransformer;
+
 /**
  * Created by Administrator on 2017/10/13.
  */
 
-public class AddressListActivity extends BaseActivityImpl<AddressContact.Presenter>
+public class AddressListActivity extends BaseActivityImpl<AddressContact.View,AddressContact.Presenter>
         implements AddressContact.View,View.OnClickListener{
     private LinearLayout left_back;
     private TextView add_address;
@@ -72,16 +74,23 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
     }
     @Override
     public AddressContact.Presenter initPresenter() {
-        return new AddressPresenter(this);
+        return new AddressPresenter();
+    }
+    @Override
+    public AddressContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @Override
     protected void onResume() {
         super.onResume();
         Log.i("sss","onResume");
         startRownumber=0;
-        presenter.getAddressList(true
-                ,lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.getAddressList(true);
     }
 
     private void iniView (){
@@ -154,7 +163,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
                                 addressid=id;
                                 operatype=2;
                                 postion=position;
-                                presenter.operaAddress(lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY));
+                                presenter.operaAddress();
                             }
                         })
                         .setNegative("取消", new View.OnClickListener() {
@@ -177,15 +186,13 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.Present
         @Override
         public void onRefresh(boolean isPullDown) {
             startRownumber=0;
-            presenter.getAddressList(true
-                    ,lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.getAddressList(true);
         }
 
         @Override
         public void onLoadMore(boolean isSilence) {
             startRownumber++;
-            presenter.getAddressList(false
-                    ,lifecycleProvider.bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.getAddressList(false);
         }
     };
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){

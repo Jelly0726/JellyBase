@@ -27,12 +27,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/28.
  */
 
-public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
+public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View,SetPwdContact.Presenter>
         implements SetPwdContact.View {
 
     @BindView(R.id.left_back)
@@ -80,7 +81,7 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
                     ToastUtils.showToast(this,"两次密码输入不一致,请重新输入!");
                     return;
                 }
-                presenter.setPassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.setPassword();
                 break;
         }
     }
@@ -92,9 +93,17 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.Presenter>
 
     @Override
     public SetPwdContact.Presenter initPresenter() {
-        return new SetPassWordActivityPresenter(this);
+        return new SetPassWordActivityPresenter();
+    }
+    @Override
+    public SetPwdContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @Override
     public Object getSetPassWordParam() {
         String password=password_edit.getText().toString().trim();

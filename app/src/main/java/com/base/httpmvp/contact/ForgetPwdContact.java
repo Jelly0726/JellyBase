@@ -1,9 +1,7 @@
 package com.base.httpmvp.contact;
 
-import com.base.httpmvp.presenter.IBasePresenter;
+import com.base.httpmvp.presenter.BasePresenter;
 import com.base.httpmvp.view.IBaseView;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -47,8 +45,8 @@ public interface ForgetPwdContact {
 
 
     }
-    public interface Presenter extends IBasePresenter {
-        public void forgetPwd(ObservableTransformer composer);
-        public void getVerifiCode(ObservableTransformer composer);
+    public abstract class Presenter extends BasePresenter<View> {
+        public abstract void forgetPwd();
+        public abstract void getVerifiCode();
     }
 }

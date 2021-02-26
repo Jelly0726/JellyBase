@@ -15,6 +15,8 @@ import com.base.httpmvp.view.IGetBankView;
 import java.util.Map;
 import java.util.TreeMap;
 
+import io.reactivex.ObservableTransformer;
+
 /**
  * 欢迎关注微信公众号：aikaifa
  */
@@ -36,7 +38,7 @@ public class BandCardEditText extends EditText implements IGetBankView{
 
     public BandCardEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        getBankPresenter=new GetBankPresenter(this);
+        getBankPresenter=new GetBankPresenter();
         init();
     }
 
@@ -77,6 +79,11 @@ public class BandCardEditText extends EditText implements IGetBankView{
     @Override
     public void closeProgress() {
 
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return null;
     }
 
     @Override
@@ -156,7 +163,7 @@ public class BandCardEditText extends EditText implements IGetBankView{
         setText(builder.toString());
         setSelection(courPos);
         if(courPos==19||courPos==22||courPos==23){
-            getBankPresenter.getBank(null);
+            getBankPresenter.getBank();
         }else {
             if (listener != null) {
                 listener.failure();

@@ -23,12 +23,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/28.
  */
 
-public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
+public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View,ForgetPwdContact.Presenter>
         implements ForgetPwdContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -64,7 +65,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号");
                     return;
                 }
-                presenter.getVerifiCode(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.getVerifiCode();
             }
         });
     }
@@ -76,9 +77,17 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
 
     @Override
     public ForgetPwdContact.Presenter initPresenter() {
-        return new ForgetPasswordPresenter(this);
+        return new ForgetPasswordPresenter();
+    }
+    @Override
+    public ForgetPwdContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({ R.id.next_tv, R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -96,7 +105,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.Presenter>
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号和验证码");
                     return;
                 }
-                presenter.forgetPwd(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.forgetPwd();
                 break;
         }
     }

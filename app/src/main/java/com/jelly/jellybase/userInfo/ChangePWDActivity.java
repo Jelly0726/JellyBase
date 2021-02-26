@@ -22,12 +22,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Presenter>
+public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View,UpdataPwdContact.Presenter>
         implements UpdataPwdContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -63,9 +64,17 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
 
     @Override
     public UpdataPwdContact.Presenter initPresenter() {
-        return new UpdatePasswordPresenter(this);
+        return new UpdatePasswordPresenter();
+    }
+    @Override
+    public UpdataPwdContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -87,7 +96,7 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.Present
                     ToastUtils.showToast(this,"两次密码不一致，请重新输入!");
                     return;
                 }
-                presenter.updatePassword(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.updatePassword();
                 break;
         }
     }

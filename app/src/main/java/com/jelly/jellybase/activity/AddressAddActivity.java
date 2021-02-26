@@ -26,12 +26,13 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/13.
  */
 
-public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Presenter>
+public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.View,OperaAddressContact.Presenter>
         implements OperaAddressContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -62,9 +63,17 @@ public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Pre
     }
     @Override
     public OperaAddressContact.Presenter initPresenter() {
-        return new OperaAddressPresenter(this);
+        return new OperaAddressPresenter();
+    }
+    @Override
+    public OperaAddressContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private void iniView(){
         address_tvs.addTextChangedListener(new TextWatcher() {
             @Override
@@ -111,7 +120,7 @@ public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Pre
                     ToastUtils.showToast(this,"姓名、电话、收货地址不能为空!");
                     return;
                 }
-                presenter.operaAddress(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.operaAddress();
                 break;
         }
     }

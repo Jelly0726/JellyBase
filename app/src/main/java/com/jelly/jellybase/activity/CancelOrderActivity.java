@@ -19,12 +19,14 @@ import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.params.DialogParams;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.SinglePicker;
+import io.reactivex.ObservableTransformer;
 
-public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Presenter>
+public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.View,CancelOrderContact.Presenter>
         implements CancelOrderContact.View{
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -67,9 +69,17 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Pre
     }
     @Override
     public CancelOrderContact.Presenter initPresenter() {
-        return new CancelOrderPresenter(this);
+        return new CancelOrderPresenter();
+    }
+    @Override
+    public CancelOrderContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private void iniView(){
         cause_layout.setVisibility(View.GONE);
         cancelCause_edit.addTextChangedListener(new TextWatcher() {

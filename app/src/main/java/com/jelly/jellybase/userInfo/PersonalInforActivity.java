@@ -52,13 +52,14 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
+import io.reactivex.ObservableTransformer;
 
 
 /**
  * Created by Administrator on 2017/9/26.
  */
 
-public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.Presenter>
+public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.View,PersonalInfoContact.Presenter>
         implements PersonalInfoContact.View{
     private View parentView;
     private static final int REQUEST_CODE = 234;
@@ -119,7 +120,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         }
         iniView();
         initXRefreshView();
-        presenter.getInfo(lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.getInfo();
 
     }
     @Override
@@ -248,8 +249,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                             mAlbumFiles=new ArrayList<AlbumFile>();
                             mAlbumFiles.add(albumFile);
                         }
-                        presenter.upload(lifecycleProvider
-                                .<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                        presenter.upload();
                     }
                 })
                 .onCancel(new Action<String>() {
@@ -276,8 +276,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         }else {
                             mAlbumFiles = result;
                         }
-                        presenter.upload(lifecycleProvider
-                                .<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                        presenter.upload();
                     }
                 })
                 .onCancel(new Action<String>() {
@@ -309,7 +308,16 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     }
     @Override
     public PersonalInfoContact.Presenter initPresenter() {
-        return new PersonalInfoPresenter(this);
+        return new PersonalInfoPresenter();
+    }
+    @Override
+    public PersonalInfoContact.View initIBView() {
+        return this;
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     @OnClick({R.id.left_back,R.id.change_pwd,R.id.avatar_layout,R.id.birthday_tv
             ,R.id.commit_tv,R.id.edit_tv,R.id.sex_tv})
@@ -342,8 +350,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                     ToastUtils.showToast(this,"昵称，姓名，生日，身份证不能为空!");
                     return;
                 }
-                presenter.upPersonalInfo(lifecycleProvider
-                        .<Long>bindUntilEvent(ActivityEvent.DESTROY));
+                presenter.upPersonalInfo();
                 break;
             case R.id.edit_tv:
                 iniEditable(true);

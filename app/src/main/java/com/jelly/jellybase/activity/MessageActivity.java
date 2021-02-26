@@ -27,11 +27,12 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * 消息通知
  */
-public class MessageActivity extends BaseActivityImpl<MessageContact.Presenter>
+public class MessageActivity extends BaseActivityImpl<MessageContact.View,MessageContact.Presenter>
         implements MessageContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -61,11 +62,20 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.Presenter>
         super.onResume();
         startRownumber=0;
         xRefreshView.setLoadComplete(false);
-        presenter.getMessage(true,lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+        presenter.getMessage(true);
     }
     @Override
     public MessageContact.Presenter initPresenter() {
-        return new MessagePresenter(this) ;
+        return new MessagePresenter() ;
+    }
+    @Override
+    public MessageContact.View initIBView() {
+        return this;
+    }
+
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView (){
     }
@@ -100,13 +110,13 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.Presenter>
         public void onRefresh(boolean isPullDown) {
             startRownumber=0;
             xRefreshView.setLoadComplete(false);
-            presenter.getMessage(true,lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+            presenter.getMessage(true);
         }
 
         @Override
         public void onLoadMore(boolean isSilence) {
             startRownumber++;
-            presenter.getMessage(false,lifecycleProvider.bindUntilEvent(ActivityEvent.STOP));
+            presenter.getMessage(false);
         }
     };
     @Override

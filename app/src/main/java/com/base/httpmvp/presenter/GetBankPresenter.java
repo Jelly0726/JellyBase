@@ -6,7 +6,6 @@ import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.view.IGetBankView;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -15,22 +14,16 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：获取所属银行View(activityview)对应的Presenter
  */
-public class GetBankPresenter implements IBasePresenter {
+public class GetBankPresenter extends BasePresenter<IGetBankView> {
 
-    private IGetBankView interfaceView;
-
-    public GetBankPresenter(IGetBankView interfaceView) {
-        this.interfaceView = interfaceView;
-    }
-
-    public void getBank(ObservableTransformer composer) {
-        interfaceView.showProgress();
-        HttpMethods.getInstance().getBank(gson.toJson(interfaceView.getBankParam()),composer,new Observer<HttpResultData<BankCardInfo>>() {
+    public void getBank() {
+        mView.showProgress();
+        HttpMethods.getInstance().getBank(mGson.toJson(mView.getBankParam()), mView.bindLifecycle(),new Observer<HttpResultData<BankCardInfo>>() {
 
             @Override
             public void onError(Throwable e) {
-                interfaceView.closeProgress();
-                interfaceView.getBankFailed(e.getMessage());
+                mView.closeProgress();
+                mView.getBankFailed(e.getMessage());
             }
 
             @Override
@@ -45,33 +38,13 @@ public class GetBankPresenter implements IBasePresenter {
 
             @Override
             public void onNext(HttpResultData<BankCardInfo> model) {
-                interfaceView.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    interfaceView.getBankSuccess(model.getData());
+                    mView.getBankSuccess(model.getData());
                 }else {
-                    interfaceView.getBankFailed(model.getMsg());
+                    mView.getBankFailed(model.getMsg());
                 }
             }
         });
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void detach() {
-
-    }
-
-    @Override
-    public void addDisposable(Disposable subscription) {
-
-    }
-
-    @Override
-    public void unDisposable() {
-
     }
 }

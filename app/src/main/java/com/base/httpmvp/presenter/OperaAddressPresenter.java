@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,22 +13,16 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：配置收货地址View(activityview)对应的Presenter
  */
-public class OperaAddressPresenter extends BasePresenterImpl<OperaAddressContact.View> implements OperaAddressContact.Presenter {
-
-
-    public OperaAddressPresenter(OperaAddressContact.View interfaceView) {
-        super(interfaceView);
-    }
-
+public class OperaAddressPresenter extends OperaAddressContact.Presenter {
     @Override
-    public void operaAddress(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().operaAddress(gson.toJson(view.operaAddressParam()),composer,new Observer<HttpResult>() {
+    public void operaAddress() {
+        mView.showProgress();
+        HttpMethods.getInstance().operaAddress(mGson.toJson(mView.operaAddressParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.operaAddressFailed(e.getMessage());
+                mView.closeProgress();
+                mView.operaAddressFailed(e.getMessage());
             }
 
             @Override
@@ -44,11 +37,11 @@ public class OperaAddressPresenter extends BasePresenterImpl<OperaAddressContact
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.operaAddressSuccess(model.getMsg());
+                    mView.operaAddressSuccess(model.getMsg());
                 }else {
-                    view.operaAddressFailed(model.getMsg());
+                    mView.operaAddressFailed(model.getMsg());
                 }
             }
         });

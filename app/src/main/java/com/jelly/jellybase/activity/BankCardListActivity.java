@@ -35,12 +35,13 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.Presenter>
+public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.View,BankCartListContact.Presenter>
         implements BankCartListContact.View {
     @BindView(R.id.left_back)
     LinearLayout left_back;
@@ -81,14 +82,22 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
     protected void onResume() {
         super.onResume();
         startRownumber=0;
-        presenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+        presenter.bankList(true);
     }
 
     @Override
     public BankCartListContact.Presenter initPresenter() {
-        return new BankListPresenter(this);
+        return new BankListPresenter();
+    }
+    @Override
+    public BankCartListContact.View initIBView() {
+        return this;
     }
 
+    @Override
+    public <T> ObservableTransformer<T, T> bindLifecycle() {
+        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    }
     private void iniXRefreshView(){
         adapter=new BankCardListAdapter(this,mList);
         //xRefreshView = (XRefreshView) findViewById(R.id.xrefreshview);
@@ -136,13 +145,13 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.P
         @Override
         public void onRefresh(boolean isPullDown) {
             startRownumber=0;
-            presenter.bankList(true,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.bankList(true);
         }
 
         @Override
         public void onLoadMore(boolean isSilence) {
             startRownumber++;
-            presenter.bankList(false,lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY));
+            presenter.bankList(false);
         }
     };
     private OnItemClickListener onItemClickListener=new OnItemClickListener(){

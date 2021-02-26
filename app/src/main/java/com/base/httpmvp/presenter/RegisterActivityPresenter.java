@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,28 +13,21 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：注册View(activityview)对应的Presenter
  */
-public class RegisterActivityPresenter extends BasePresenterImpl<RegisterContact.View>
-implements RegisterContact.Presenter{
-
-
-    public RegisterActivityPresenter(RegisterContact.View interfaceView) {
-        super(interfaceView);
-    }
-
-    public void userRegister( ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().userRegistration(gson.toJson(view.getRegParam()),composer
+public class RegisterActivityPresenter extends RegisterContact.Presenter{
+    public void userRegister() {
+        mView.showProgress();
+        HttpMethods.getInstance().userRegistration(mGson.toJson(mView.getRegParam()), mView.bindLifecycle()
                 ,new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.excuteFailed(e.getMessage());
+                mView.closeProgress();
+                mView.excuteFailed(e.getMessage());
             }
 
             @Override
             public void onComplete() {
-                view.closeProgress();
+                mView.closeProgress();
             }
 
             @Override
@@ -45,25 +37,25 @@ implements RegisterContact.Presenter{
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.excuteSuccess(model);
+                    mView.excuteSuccess(model);
                 }else {
-                    view.excuteFailed(model.getMsg());
+                    mView.excuteFailed(model.getMsg());
                 }
 
             }
         });
     }
-    public void getVerifiCode(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
-                ,composer,new Observer<HttpResult>() {
+    public void getVerifiCode() {
+        mView.showProgress();
+        HttpMethods.getInstance().getVerifiCode(mGson.toJson(mView.getVerifiCodeParam())
+                , mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.verifiCodeFailed(e.getMessage());
+                mView.closeProgress();
+                mView.verifiCodeFailed(e.getMessage());
             }
 
             @Override
@@ -78,11 +70,11 @@ implements RegisterContact.Presenter{
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.verifiCodeSuccess(model);
+                    mView.verifiCodeSuccess(model);
                 }else {
-                    view.verifiCodeFailed(model.getMsg());
+                    mView.verifiCodeFailed(model.getMsg());
                 }
             }
         });

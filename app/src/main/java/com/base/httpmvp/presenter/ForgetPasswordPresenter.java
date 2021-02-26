@@ -5,7 +5,6 @@ import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 
-import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -14,22 +13,16 @@ import io.reactivex.disposables.Disposable;
  * Created by Administrator on 2017/11/8.
  * 说明：忘记密码View(activityview)对应的Presenter
  */
-public class ForgetPasswordPresenter extends BasePresenterImpl<ForgetPwdContact.View>
-implements ForgetPwdContact.Presenter{
+public class ForgetPasswordPresenter extends ForgetPwdContact.Presenter{
 
-
-    public ForgetPasswordPresenter(ForgetPwdContact.View interfaceView) {
-        super(interfaceView);
-    }
-
-    public void forgetPwd(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().forgetPassword(gson.toJson(view.forgetPasswordParam()),composer,new Observer<HttpResult>() {
+    public void forgetPwd() {
+        mView.showProgress();
+        HttpMethods.getInstance().forgetPassword(mGson.toJson(mView.forgetPasswordParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
-                view.closeProgress();
-                view.forgetPasswordFailed(e.getMessage());
+                mView.closeProgress();
+                mView.forgetPasswordFailed(e.getMessage());
             }
 
             @Override
@@ -44,24 +37,24 @@ implements ForgetPwdContact.Presenter{
 
             @Override
             public void onNext(HttpResult model) {
-                view.closeProgress();
+                mView.closeProgress();
                 if (model.getStatus()== HttpCode.SUCCEED){
-                    view.forgetPasswordSuccess(model.getMsg());
+                    mView.forgetPasswordSuccess(model.getMsg());
                 }else {
-                    view.forgetPasswordFailed(model.getMsg());
+                    mView.forgetPasswordFailed(model.getMsg());
                 }
             }
         });
     }
-    public void getVerifiCode(ObservableTransformer composer) {
-        view.showProgress();
-        HttpMethods.getInstance().getVerifiCode(gson.toJson(view.getVerifiCodeParam())
-                ,composer,new Observer<HttpResult>() {
+    public void getVerifiCode() {
+        mView.showProgress();
+        HttpMethods.getInstance().getVerifiCode(mGson.toJson(mView.getVerifiCodeParam())
+                , mView.bindLifecycle(),new Observer<HttpResult>() {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.closeProgress();
-                        view.verifiCodeFailed(e.getMessage());
+                        mView.closeProgress();
+                        mView.verifiCodeFailed(e.getMessage());
                     }
 
                     @Override
@@ -76,11 +69,11 @@ implements ForgetPwdContact.Presenter{
 
                     @Override
                     public void onNext(HttpResult model) {
-                        view.closeProgress();
+                        mView.closeProgress();
                         if (model.getStatus()== HttpCode.SUCCEED){
-                            view.verifiCodeSuccess(model);
+                            mView.verifiCodeSuccess(model);
                         }else {
-                            view.verifiCodeFailed(model.getMsg());
+                            mView.verifiCodeFailed(model.getMsg());
                         }
                     }
                 });
