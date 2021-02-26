@@ -1,5 +1,7 @@
 package com.base.httpmvp.view;
 
+import com.base.httpmvp.mvpbase.IBaseView;
+
 /**
  * Created by Administrator on 2017/11/8.
  */

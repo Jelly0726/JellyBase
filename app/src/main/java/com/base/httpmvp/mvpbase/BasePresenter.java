@@ -1,6 +1,5 @@
-package com.base.httpmvp.presenter;
+package com.base.httpmvp.mvpbase;
 
-import com.base.httpmvp.view.IBaseView;
 import com.google.gson.Gson;
 
 import io.reactivex.disposables.CompositeDisposable;

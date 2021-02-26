@@ -1,6 +1,7 @@
 package com.base.httpmvp.presenter;
 
 import com.base.bankcard.BankCardInfo;
+import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;

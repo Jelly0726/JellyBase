@@ -5,7 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.CheckResult;
 
 import com.base.appManager.BaseApplication;
-import com.base.httpmvp.presenter.BasePresenter;
+import com.base.httpmvp.mvpbase.BasePresenter;
+import com.base.httpmvp.mvpbase.IBaseView;
 import com.base.mprogressdialog.MProgressUtil;
 import com.base.view.BaseActivity;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;

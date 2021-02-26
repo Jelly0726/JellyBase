@@ -1,4 +1,4 @@
-package com.base.httpmvp.view;
+package com.base.httpmvp.mvpbase;
 
 import io.reactivex.ObservableTransformer;
 

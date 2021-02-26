@@ -1,10 +1,14 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.BankCartContact;
+import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
+import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -18,7 +22,7 @@ public class BankCartPresenter extends BankCartContact.Presenter {
     @Override
     public void deletebank() {
         mView.showProgress();
-        HttpMethods.getInstance().deletebank(mGson.toJson(mView.deletebankParam()), mView.bindLifecycle(),new Observer<HttpResult>() {
+        Observer<HttpResult> observer= new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
@@ -45,6 +49,11 @@ public class BankCartPresenter extends BankCartContact.Presenter {
                     mView.deletebankFailed(model.getMsg());
                 }
             }
-        });
+        };
+        Observable observable = HttpMethods.getInstance()
+                .getProxy(IApiService.class)
+                .deletebank(GlobalToken.getToken().getToken(),mGson.toJson(mView.deletebankParam()))
+                .flatMap(new HttpFunctions<HttpResult>());
+        HttpMethods.getInstance().toSubscribe(observable,observer, mView.bindLifecycle());
     }
 }

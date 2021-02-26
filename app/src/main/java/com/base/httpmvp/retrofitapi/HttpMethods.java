@@ -299,15 +299,6 @@ public class HttpMethods implements IGlobalManager {
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
-	 * 删除银行卡
-	 * @param subscriber
-	 */
-	public void deletebank(String param,ObservableTransformer composer,Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).deletebank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
 	 * 提现
 	 * @param subscriber
 	 */
