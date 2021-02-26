@@ -1,12 +1,16 @@
 package com.base.httpmvp.presenter;
 
 import com.base.httpmvp.contact.AddressContact;
+import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
+import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
+import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
@@ -21,8 +25,8 @@ public class AddressPresenter extends AddressContact.Presenter {
     @Override
     public void operaAddress() {
         mView.showProgress();
-        HttpMethods.getInstance().operaAddress(mGson.toJson(mView.operaAddressParam()), mView.bindLifecycle()
-                ,new Observer<HttpResult>() {
+
+        Observer<HttpResult> observer= new Observer<HttpResult>() {
 
             @Override
             public void onError(Throwable e) {
@@ -49,13 +53,21 @@ public class AddressPresenter extends AddressContact.Presenter {
                     mView.operaAddressFailed(model.getMsg());
                 }
             }
-        });
+        };
+        Observable observable =  HttpMethods
+                .getInstance()
+                .getProxy(IApiService.class)
+                .operaAddress(GlobalToken.getToken().getToken(),mGson.toJson(mView.operaAddressParam()))
+                .flatMap(new HttpFunctions<HttpResult>());
+        HttpMethods
+                .getInstance()
+                .toSubscribe(observable,observer,mView.bindLifecycle());
     }
     @Override
     public void getAddressList(final boolean isRefresh) {
         mView.showProgress();
-        HttpMethods.getInstance().getAddressList(mGson.toJson(mView.getAddressListParam()), mView.bindLifecycle()
-                ,new Observer<HttpResultList<RecevierAddress>>() {
+
+        Observer<HttpResultList<RecevierAddress>> observer=new Observer<HttpResultList<RecevierAddress>>() {
 
             @Override
             public void onError(Throwable e) {
@@ -82,6 +94,12 @@ public class AddressPresenter extends AddressContact.Presenter {
                     mView.getAddressListFailed(isRefresh,model.getMsg());
                 }
             }
-        });
+        };
+        Observable observable =  HttpMethods
+                .getInstance()
+                .getProxy(IApiService.class)
+                .getAddressList(GlobalToken.getToken().getToken(),mGson.toJson(mView.getAddressListParam()))
+                .flatMap(new HttpFunctions<HttpResultList<RecevierAddress>>());
+        HttpMethods.getInstance().toSubscribe(observable,observer, mView.bindLifecycle());
     }
 }

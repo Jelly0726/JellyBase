@@ -18,15 +18,12 @@ import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
 import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
-import com.base.model.AboutUs;
-import com.base.model.AccountDetail;
 import com.base.model.AppVersion;
 import com.base.model.Message;
 import com.base.model.PersonalInfo;
 import com.base.model.UploadBean;
 import com.base.model.UploadData;
 import com.jelly.jellybase.BuildConfig;
-import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import java.io.File;
 import java.lang.reflect.Proxy;
@@ -249,15 +246,6 @@ public class HttpMethods implements IGlobalManager {
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
-	 * 关于我们
-	 * @param subscriber
-	 */
-	public void aboutUs(ObservableTransformer composer,Observer<HttpResultData<AboutUs>> subscriber){
-		Observable observable =  getProxy(IApiService.class).aboutUs(GlobalToken.getToken().getToken())
-				.flatMap(new HttpFunctions<HttpResultData<AboutUs>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
 	 * 检查版本
 	 * @param subscriber
 	 */
@@ -300,15 +288,6 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpFunctions<HttpResultData<BankCardInfo>>());
 		toSubscribe(observable, subscriber,composer);
 	}
-	/***
-	 * 添加银行卡
-	 * @param subscriber
-	 */
-	public void addbank(String param,ObservableTransformer composer,Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).addbank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
 
 	/***
 	 * 获取银行卡列表
@@ -335,31 +314,6 @@ public class HttpMethods implements IGlobalManager {
 	public void withdrawals(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
 		Observable observable =  getProxy(IApiService.class).withdrawals(GlobalToken.getToken().getToken(),paramMap)
 				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 账户明细
-	 * @param subscriber
-	 */
-	public void accountDetails(String paramMap,ObservableTransformer composer, Observer<HttpResultList<AccountDetail>> subscriber){
-		Observable observable =  getProxy(IApiService.class).accountDetails(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResultList<AccountDetail>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/**
-	 * 配置地址
-	 */
-	public void operaAddress(String paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).operaAddress(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/**
-	 * 获取地址列表
-	 */
-	public void getAddressList(String paramMap,ObservableTransformer composer,Observer<HttpResultList<RecevierAddress>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getAddressList(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResultList<RecevierAddress>>());
 		toSubscribe(observable, subscriber,composer);
 	}
 	/***
@@ -395,22 +349,22 @@ public class HttpMethods implements IGlobalManager {
 	/***
 	 * 统一异步,同步处理
 	 * @param
-	 * @param s
+	 * @param observer
 	 * @param <T>
 	 */
-	private <T> void toSubscribe(Observable<T> o, Observer<T> s
+	public <T> void toSubscribe(Observable<T> observable, Observer<T> observer
 			,ObservableTransformer composer){
 		if (composer!=null) {
-			o.subscribeOn(Schedulers.io())
+			observable.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
 					.compose(composer)
-					.subscribe(s);
+					.subscribe(observer);
 		}else {
-			o.subscribeOn(Schedulers.io())
+			observable.subscribeOn(Schedulers.io())
 					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(s);
+					.subscribe(observer);
 		}
 	}
 }
