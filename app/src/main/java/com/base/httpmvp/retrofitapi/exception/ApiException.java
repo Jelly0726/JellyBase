@@ -2,6 +2,7 @@ package com.base.httpmvp.retrofitapi.exception;
 
 
 import android.net.ParseException;
+import android.util.MalformedJsonException;
 
 import com.base.log.DebugLog;
 import com.google.gson.JsonParseException;
@@ -67,9 +68,11 @@ public class ApiException extends RuntimeException {
             return message;
         } else if (throwable instanceof JsonParseException
                 || throwable instanceof JSONException
-                || throwable instanceof ParseException) {
+                || throwable instanceof ParseException
+                || throwable instanceof MalformedJsonException) {
             message = "解析错误("+ ERROR.PARSE_ERROR+")";     //均视为解析错误
             return message;
+
         } else if (throwable instanceof ConnectException
                 ||throwable instanceof SocketException
                 ||throwable instanceof IOException) {
