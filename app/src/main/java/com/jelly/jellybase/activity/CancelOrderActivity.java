@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.httpmvp.contact.CancelOrderContact;
-import com.base.httpmvp.presenter.CancelOrderPresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.httpmvp.mvpContact.CancelOrderContact;
+import com.base.httpmvp.mvpPresenter.CancelOrderPresenter;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.CircleDialog;

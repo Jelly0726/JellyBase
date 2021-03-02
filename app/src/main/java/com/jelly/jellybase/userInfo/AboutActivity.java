@@ -6,9 +6,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.applicationUtil.AppUtils;
-import com.base.httpmvp.contact.AboutContact;
-import com.base.httpmvp.presenter.AboutUsPresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.httpmvp.mvpContact.AboutContact;
+import com.base.httpmvp.mvpPresenter.AboutUsPresenter;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.model.AboutUs;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;

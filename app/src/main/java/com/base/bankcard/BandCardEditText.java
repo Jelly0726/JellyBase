@@ -9,8 +9,8 @@ import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.base.httpmvp.presenter.GetBankPresenter;
-import com.base.httpmvp.view.IGetBankView;
+import com.base.httpmvp.mvpPresenter.GetBankPresenter;
+import com.base.httpmvp.mvpView.IGetBankView;
 
 import java.util.Map;
 import java.util.TreeMap;

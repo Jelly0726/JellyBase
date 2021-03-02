@@ -3,7 +3,7 @@ package com.base.httpmvp.mvpbase;
 import io.reactivex.ObservableTransformer;
 
 /**
- * Created by Administrator on 2017/11/8.
+ * mvp中的view
  */
 
 public interface IBaseView {

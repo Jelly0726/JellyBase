@@ -8,9 +8,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.httpmvp.contact.MessageContact;
-import com.base.httpmvp.presenter.MessagePresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.httpmvp.mvpContact.MessageContact;
+import com.base.httpmvp.mvpPresenter.MessagePresenter;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.model.Message;
 import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;

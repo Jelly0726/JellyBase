@@ -10,9 +10,9 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.base.bankcard.BankCardInfo;
-import com.base.httpmvp.contact.BankCartListContact;
-import com.base.httpmvp.presenter.BankListPresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.httpmvp.mvpContact.BankCartListContact;
+import com.base.httpmvp.mvpPresenter.BankListPresenter;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;
 import com.base.xrefreshview.XRefreshView;

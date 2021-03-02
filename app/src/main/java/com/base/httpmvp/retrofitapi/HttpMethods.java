@@ -4,23 +4,17 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.base.appManager.BaseApplication;
-import com.base.bankcard.BankCardInfo;
 import com.base.config.IntentAction;
 import com.base.httpmvp.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
-import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
-import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
 import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
-import com.base.model.AppVersion;
-import com.base.model.Message;
-import com.base.model.PersonalInfo;
 import com.base.model.UploadBean;
 import com.base.model.UploadData;
 import com.jelly.jellybase.BuildConfig;
@@ -44,7 +38,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import systemdb.Login;
 
 /**
  * Created by BYPC006 on 2017/3/6.
@@ -161,99 +154,6 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpFunctions<HttpResultData<TokenModel>>());
 		toSubscribe(observable,subscriber,composer);
 	}
-	/***
-	 * 登录
-	 * @param subscriber
-	 */
-	public void userLogin(String paramMap,ObservableTransformer composer, Observer<HttpResultData<Login>> subscriber){
-		Observable observable =  getProxy(IApiService.class).userLogin(paramMap)
-				.flatMap(new HttpFunctions<HttpResultData<Login>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 获取验证码
-	 * @param subscriber
-	 */
-	public void getVerifiCode(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).getVerifiCode(paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 注册
-	 * @param subscriber
-	 */
-	public void userRegistration(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).userRegistration(paramMap)
-				//.map(new HttpResultFunc<List<HttpResult>>());
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 忘记密码
-	 * @param subscriber
-	 */
-	public void forgetPassword(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).forgetPassword(paramMap)
-				//.map(new HttpResultFunc<List<HttpResult>>());
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 设置密码
-	 * @param subscriber
-	 */
-	public void setPassWord(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).setPassWord(paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 修改密码
-	 * @param subscriber
-	 */
-	public void updatePassword(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).updatePassword(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 修改手机号
-	 * @param subscriber
-	 */
-	public void updatePhone(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).updatePhone(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 获取个人资料
-	 * @param subscriber
-	 */
-	public void findBuyerInfo(ObservableTransformer composer,Observer<HttpResultData<PersonalInfo>> subscriber){
-		Observable observable =  getProxy(IApiService.class).findBuyerInfo(GlobalToken.getToken().getToken())
-				.flatMap(new HttpFunctions<HttpResultData<PersonalInfo>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 完善个人资料
-	 * @param subscriber
-	 */
-	public void updateBuyerInfo(String paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).updateBuyerInfo(GlobalToken.getToken().getToken(),
-				paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 检查版本
-	 * @param subscriber
-	 */
-	public void getAppversionList(ObservableTransformer composer,Observer<HttpResultData<AppVersion>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getAppversionList(GlobalToken.getToken().getToken())
-				.flatMap(new HttpFunctions<HttpResultData<AppVersion>>());
-		toSubscribe(observable, subscriber,composer);
-	}
 	/**
 	 * 上传文件(图片)
 	 */
@@ -277,61 +177,6 @@ public class HttpMethods implements IGlobalManager {
 		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken(),
 				description, body)
 				.flatMap(new HttpFunctions<HttpResultData<UploadData>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 获取所属银行
-	 * @param subscriber
-	 */
-	public void getBank(String param,ObservableTransformer composer,Observer<HttpResultData<BankCardInfo>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getBank(GlobalToken.getToken().getToken(),param)
-				.flatMap(new HttpFunctions<HttpResultData<BankCardInfo>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-
-	/***
-	 * 获取银行卡列表
-	 * @param subscriber
-	 */
-	public void bankList(String paramMap,ObservableTransformer composer,Observer<HttpResultList<BankCardInfo>> subscriber){
-		Observable observable =  getProxy(IApiService.class).bankList(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResultList<BankCardInfo>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 提现
-	 * @param subscriber
-	 */
-	public void withdrawals(String paramMap,ObservableTransformer composer, Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).withdrawals(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 消息通知列表
-	 * @param subscriber
-	 */
-	public void getMessage(String paramMap,ObservableTransformer composer,Observer<HttpResultList<Message>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getMessage(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResultList<Message>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 消息通知详情
-	 * @param subscriber
-	 */
-	public void getMessageDetails(String paramMap,ObservableTransformer composer,Observer<HttpResultData<Message>> subscriber){
-		Observable observable =  getProxy(IApiService.class).getMessageDetails(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResultData<Message>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-	/***
-	 * 取消订单
-	 * @param subscriber
-	 */
-	public void cancelOrder(String paramMap,ObservableTransformer composer,Observer<HttpResult> subscriber){
-		Observable observable =  getProxy(IApiService.class).cancelOrder(GlobalToken.getToken().getToken(),paramMap)
-				.flatMap(new HttpFunctions<HttpResult>());
 		toSubscribe(observable, subscriber,composer);
 	}
 

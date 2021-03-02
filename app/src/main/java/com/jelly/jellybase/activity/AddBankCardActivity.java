@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.bankcard.BandCardEditText;
-import com.base.httpmvp.contact.AddBankCartContact;
-import com.base.httpmvp.presenter.AddBankPresenter;
-import com.base.httpmvp.view.BaseActivityImpl;
+import com.base.httpmvp.mvpContact.AddBankCartContact;
+import com.base.httpmvp.mvpPresenter.AddBankPresenter;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;
