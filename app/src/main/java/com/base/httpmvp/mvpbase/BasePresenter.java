@@ -62,6 +62,7 @@ public abstract class BasePresenter<V extends IBaseView,E extends BaseModel>{
     public void unDisposable() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.dispose();
+            mCompositeDisposable.clear();
         }
         if (mDisposable!=null){
             mDisposable.clear();
