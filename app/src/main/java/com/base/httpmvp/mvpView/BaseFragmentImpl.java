@@ -84,9 +84,10 @@ public abstract class BaseFragmentImpl<V extends IBaseView,P extends BasePresent
         MProgressUtil.getInstance().setDismissListener(new OnDialogDismissListener() {
             @Override
             public void onDismiss() {
-                if (presenter != null) {
-                    presenter.unDisposable();
-                }
+                //此处是统一的加载动画弹窗 在这边取消会导致本页面所有请求都取消
+//                if (presenter!=null) {
+//                    presenter.unDisposable();
+//                }
             }
         });
     }
