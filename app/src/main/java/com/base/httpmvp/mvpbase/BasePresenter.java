@@ -2,9 +2,6 @@ package com.base.httpmvp.mvpbase;
 
 import com.google.gson.Gson;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -15,8 +12,6 @@ public abstract class BasePresenter<V extends IBaseView,E extends BaseModel>{
     public Gson mGson = new Gson();
     public V mView;//给子类使用view
     public E mModel;
-    //记录每个Disposable方便移除
-    private Map<Integer,Disposable> mDisposable;
     public void attachView(V v){
         mView = v;
         start();
@@ -50,10 +45,8 @@ public abstract class BasePresenter<V extends IBaseView,E extends BaseModel>{
         //csb 如果解绑了的话添加 sb 需要新的实例否则绑定时无效的
         if (mCompositeDisposable == null || mCompositeDisposable.isDisposed()) {
             mCompositeDisposable = new CompositeDisposable();
-            mDisposable=new TreeMap<>();
         }
         mCompositeDisposable.add(subscription);
-        mDisposable.put(key,subscription);
     }
 
     /**
@@ -63,9 +56,6 @@ public abstract class BasePresenter<V extends IBaseView,E extends BaseModel>{
         if (mCompositeDisposable != null) {
             mCompositeDisposable.dispose();
             mCompositeDisposable.clear();
-        }
-        if (mDisposable!=null){
-            mDisposable.clear();
         }
     }
     /**
@@ -80,12 +70,6 @@ public abstract class BasePresenter<V extends IBaseView,E extends BaseModel>{
      * 完成后移除订阅
      */
     public void removeDisposable(int key) {
-        if (mCompositeDisposable != null&&mDisposable!=null) {
-            Disposable subscription= mDisposable.get(key);
-            subscription.dispose();
-            mCompositeDisposable.remove(subscription);
-            mDisposable.remove(key);
-        }
     }
 
 }
