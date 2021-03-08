@@ -788,12 +788,6 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <!--↑↑↑↑↑↑↑↑地图搜索↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓物流节点↓↓↓↓↓↓↓-->
-        <activity
-            android:name="com.base.nodeprogress.NodeProgressDemo"
-            android:screenOrientation="portrait">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑物流节点↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
         <provider
             android:name="com.base.provider.JellyProvider"

@@ -2,14 +2,14 @@ package com.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.base.bankcard.BandCardEditText;
-import com.base.nodeprogress.NodeProgressDemo;
 import com.base.zxing.ScanerCodeActivity;
 import com.jelly.jellybase.R;
 
@@ -45,15 +45,6 @@ public class BaseActivity extends AppCompatActivity {
                 Intent intent=new Intent();
                 intent.setClass(BaseActivity.this, ScanerCodeActivity.class);
                 startActivityForResult(intent,1);
-            }
-        });
-        kuaidi= (Button) findViewById(R.id.kuaidi);
-        kuaidi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setClass(BaseActivity.this, NodeProgressDemo.class);
-                startActivity(intent);
             }
         });
     }

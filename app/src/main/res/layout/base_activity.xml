@@ -36,12 +36,5 @@
             android:textSize="12mm"
             android:textColor="@color/black"
             android:text="扫描"/>
-        <Button
-            android:id="@+id/kuaidi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12mm"
-            android:textColor="@color/black"
-            android:text="快递"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
