@@ -1,4 +1,4 @@
-package com.jelly.mvp.model;
+package com.base.bankcard;
 
 import com.base.httpmvp.mvpbase.BaseModel;
 
