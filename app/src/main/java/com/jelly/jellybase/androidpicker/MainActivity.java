@@ -314,7 +314,7 @@ public class MainActivity extends BaseActivity {
                 for (int i = 1; i <= (firstIndex == 0 ? 12 : 24); i++) {
                     String str = DateUtils.fillZero(i);
                     if (firstIndex == 0) {
-                        str += "￥";
+                        str += "¥";
                     } else {
                         str += "$";
                     }

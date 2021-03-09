@@ -139,7 +139,7 @@ public class RMBUtils {
     /**
      * 格式化出人民币符号+数字
      * @param amount
-     * @return  例：￥10,000.57
+     * @return  例：¥10,000.57
      */
     public static final String toRMBStr(double amount){
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
@@ -309,7 +309,7 @@ public class RMBUtils {
      * @return: String
      */
     public static String changeY2F(String amount) {
-        String currency = amount.replaceAll("\\$|\\￥|\\,", ""); // 处理包含, ￥ 或者$的金额
+        String currency = amount.replaceAll("\\$|\\¥|\\￥|\\,", ""); // 处理包含, ¥ 或者$的金额
         int index = currency.indexOf(".");
         int length = currency.length();
         Long amLong = 0l;
