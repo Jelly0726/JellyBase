@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.httpmvp.mvpContact.AccountDetailContact;
-import com.base.httpmvp.mvpPresenter.AccountDetailPresenter;
+import com.jelly.mvp.contact.AccountDetailContact;
+import com.jelly.mvp.presenter.AccountDetailPresenter;
 import com.base.httpmvp.retrofitapi.methods.ResultData;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.model.AccountDetail;

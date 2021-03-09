@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.androidPicker.AddressPickTask;
-import com.base.httpmvp.mvpContact.OperaAddressContact;
-import com.base.httpmvp.mvpPresenter.OperaAddressPresenter;
+import com.jelly.mvp.contact.OperaAddressContact;
+import com.jelly.mvp.presenter.OperaAddressPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.toast.ToastUtils;
 import com.jelly.jellybase.R;

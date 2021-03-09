@@ -9,8 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.countdowntimerbtn.CountDownTimerButton;
-import com.base.httpmvp.mvpContact.ForgetPwdContact;
-import com.base.httpmvp.mvpPresenter.ForgetPasswordPresenter;
+import com.jelly.mvp.contact.ForgetPwdContact;
+import com.jelly.mvp.presenter.ForgetPasswordPresenter;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;

@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.encrypt.MD5;
-import com.base.httpmvp.mvpContact.UpdataPwdContact;
-import com.base.httpmvp.mvpPresenter.UpdatePasswordPresenter;
+import com.jelly.mvp.contact.UpdataPwdContact;
+import com.jelly.mvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.password.PwdCheckUtil;

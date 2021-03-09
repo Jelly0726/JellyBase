@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.httpmvp.mvpContact.AddressContact;
-import com.base.httpmvp.mvpPresenter.AddressPresenter;
+import com.jelly.mvp.contact.AddressContact;
+import com.jelly.mvp.presenter.AddressPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;

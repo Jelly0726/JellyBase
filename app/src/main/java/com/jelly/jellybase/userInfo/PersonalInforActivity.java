@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.base.httpmvp.mvpContact.PersonalInfoContact;
-import com.base.httpmvp.mvpPresenter.PersonalInfoPresenter;
+import com.jelly.mvp.contact.PersonalInfoContact;
+import com.jelly.mvp.presenter.PersonalInfoPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.model.PersonalInfo;
 import com.base.model.Sex;

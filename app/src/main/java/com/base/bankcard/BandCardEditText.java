@@ -9,7 +9,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.base.httpmvp.mvpPresenter.GetBankPresenter;
+import com.jelly.mvp.presenter.GetBankPresenter;
 import com.base.httpmvp.mvpView.IGetBankView;
 
 import java.util.Map;

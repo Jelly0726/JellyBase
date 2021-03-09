@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.bankcard.BankCardInfo;
-import com.base.httpmvp.mvpContact.BankCartContact;
-import com.base.httpmvp.mvpPresenter.BankCartPresenter;
+import com.jelly.mvp.contact.BankCartContact;
+import com.jelly.mvp.presenter.BankCartPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.multiClick.AntiShake;
 import com.base.toast.ToastUtils;

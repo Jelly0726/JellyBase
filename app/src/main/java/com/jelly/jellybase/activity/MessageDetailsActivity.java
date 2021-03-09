@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.base.appManager.BaseApplication;
-import com.base.httpmvp.mvpContact.MessageDetailsContact;
-import com.base.httpmvp.mvpPresenter.MessageDetailsPresenter;
+import com.jelly.mvp.contact.MessageDetailsContact;
+import com.jelly.mvp.presenter.MessageDetailsPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.model.Message;
 import com.base.mprogressdialog.MProgressUtil;

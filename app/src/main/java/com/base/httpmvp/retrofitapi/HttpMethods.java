@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.base.appManager.BaseApplication;
 import com.base.config.IntentAction;
-import com.base.httpmvp.function.HttpFunctions;
+import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
