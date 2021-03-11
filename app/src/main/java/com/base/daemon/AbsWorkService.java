@@ -8,9 +8,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.base.config.BaseConfig;
 import com.jelly.jellybase.R;
@@ -73,7 +76,12 @@ public abstract class AbsWorkService extends Service {
                     NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     manager.createNotificationChannel(channel);
 
-                    Notification notification = new Notification.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID).build();
+                    Notification notification = new NotificationCompat.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID)
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText("通知服务正在运行")
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                            .build();
                     startForeground(HASH_CODE, notification);
 
                     //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
@@ -166,7 +174,12 @@ public abstract class AbsWorkService extends Service {
                         NotificationManager.IMPORTANCE_HIGH);
                 NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.createNotificationChannel(channel);
-                Notification notification = new Notification.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID).build();
+                Notification notification = new NotificationCompat.Builder(getApplicationContext(), BaseConfig.CHANNEL_ID)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText("通知服务正在运行")
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
+                        .build();
                 startForeground(HASH_CODE, notification);
             }else {
                 startForeground(HASH_CODE, new Notification());
