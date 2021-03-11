@@ -8,13 +8,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
 
 public abstract class AbsWorkService extends Service {
@@ -22,7 +22,7 @@ public abstract class AbsWorkService extends Service {
     protected static final int HASH_CODE = 1;
 
     protected boolean mFirstStarted = true;
-    private static final String CHANNEL_ID = System.currentTimeMillis() + "";// NotificationChannel 的Id.
+    private static final String CHANNEL_ID = BuildConfig.APPLICATION_ID;// NotificationChannel 的Id.
 
     /**
      * 用于在不需要服务运行的时候取消 Job / Alarm / Subscription.
@@ -91,7 +91,6 @@ public abstract class AbsWorkService extends Service {
                             .setContentTitle(getString(R.string.app_name))
                             .setContentText("通知服务正在运行")
                             .setSmallIcon(R.mipmap.ic_launcher)
-                            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                             .build();
                     startForeground(HASH_CODE, notification);
 
@@ -191,7 +190,6 @@ public abstract class AbsWorkService extends Service {
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText("通知服务正在运行")
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                         .build();
                 startForeground(HASH_CODE, notification);
             } else {
