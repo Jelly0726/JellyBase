@@ -104,6 +104,12 @@ android {
             //v1SigningEnabled false
             // v2SigningEnabled false
         }
+        config {
+            storeFile file('D:/Jelly/JellyBase/app/Jelly.jks')
+            storePassword '1207qw'
+            keyPassword '1207qw'
+            keyAlias 'jelly'
+        }
     }
     sourceSets {
         main {
@@ -124,11 +130,11 @@ android {
     }
     buildTypes {
         debug {
+            signingConfig signingConfigs.config
             buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
             buildConfigField "boolean", "LOG_DEBUG", "true"//是否输出LOG信息
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_DEBUG_HOST}"//开发环境域名地址
-            signingConfig signingConfigs.debug
             // 移除无用的resource文件
             shrinkResources false
             minifyEnabled false
@@ -146,12 +152,12 @@ android {
             }
         }
         release {
+            signingConfig signingConfigs.config
             buildConfigField "boolean", "IS_MUST_LOGIN", "false"//是否必须登录
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_DEV_HOST}"//生产环境域名地址
-            signingConfig signingConfigs.release
             // 移除无用的resource文件
             shrinkResources true
             minifyEnabled true
@@ -478,5 +484,12 @@ repositories {
         implementation 'com.github.lihangleo2:ShadowLayout:3.1.9'
         //底部导航
         implementation project(':library:BottomBar')
+        //华为推送
+        implementation 'com.huawei.hms:push:5.1.1.301'
     }
+}
+apply plugin: 'com.huawei.agconnect'
+
+dependencies {
+    implementation 'com.huawei.hms:push:5.0.4.302'
 }

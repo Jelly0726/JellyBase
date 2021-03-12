@@ -158,6 +158,11 @@
             android:name="com.base.glide.GlideConfiguration"
             android:value="GlideModule"/>
         <!--↑↑↑↑↑↑↑↑解决Glide由于过度压缩导致了图片变绿↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓华为推送token自动↓↓↓↓↓-->
+        <meta-data
+            android:name="push_kit_auto_init_enabled"
+            android:value="true"/>
+        <!--↑↑↑↑↑↑↑↑华为推送token自动↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓circle_dialog↓↓↓↓↓-->
         <meta-data
             android:name="circle_dialog_design_width" android:value="1200"/>
@@ -885,6 +890,15 @@
         </receiver>
         <service android:name="com.base.Display.MediaService" />
         <!--↑↑↑极光推送↑↑↑-->
+        <!--↓↓↓华为推送↓↓↓-->
+        <service
+            android:name=".server.DemoHmsMessageService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.huawei.push.action.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!--↑↑↑华为推送↑↑↑-->
         <!--USB事件监听-->
         <receiver
             android:name="com.base.Receiver.UsbDeviceReceiver"
