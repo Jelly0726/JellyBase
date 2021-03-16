@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -81,7 +82,7 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
                 , dp2px(context, 0f));
         textView.setTextColor(Color.parseColor("#FF000000"));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
-        textView.setText(Html.fromHtml("<p style=\"text-align:center;a:link {font-size: 12px;color: #000000;text-decoration: none;} a:visited {font-size: 12px; color: #000000; text-decoration: none;}\" class=\"p\"><span style=\"font-size:14px\">亲，感谢您信任并使用江平生物订货管理系统！我们依据最新的监督要求更新了<a href=\"/\">《隐私权政策》</a>，特向您说明如下:<br/><br/>1.为向您提供交易相关基本功能，我们会收集、使用必要的信息;<br/><br/>2.为向您提供订单动态，优惠活动等信息服务，您需要授权我们获取通知权限，您有权拒绝或取消授权，取消后将不影响您使用我们提供的其他服务;<br/><br/>3.我们会采取业界先进的安全措施保护您的信息安全;<br/><br/>4.未经您的同意，我们不会从第三方处获取、共享或向其提供您的信息</span></p>\n"));
+        textView.setText(Html.fromHtml("<p style=\"text-align:center;a:link {font-size: 12px;color: #000000;text-decoration: none;} a:visited {font-size: 12px; color: #000000; text-decoration: none;}\" class=\"p\"><span style=\"font-size:14px\">亲，感谢您信任并使用江平生物订货管理系统！我们依据最新的监督要求更新了<a href=\"/1\">《隐私权政策》</a>和<a href=\"/2\">《用户协议》</a>，特向您说明如下:<br/><br/>1.为向您提供交易相关基本功能，我们会收集、使用必要的信息;<br/><br/>2.为向您提供订单动态，优惠活动等信息服务，您需要授权我们获取通知权限，您有权拒绝或取消授权，取消后将不影响您使用我们提供的其他服务;<br/><br/>3.我们会采取业界先进的安全措施保护您的信息安全;<br/><br/>4.未经您的同意，我们不会从第三方处获取、共享或向其提供您的信息</span></p>\n"));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         CharSequence str = textView.getText();
         if (str instanceof Spannable) {
@@ -217,6 +218,10 @@ public class PrivacyDialog extends AbsBaseCircleDialog implements View.OnClickLi
         }
         @Override
         public void onClick(View widget) {
+            if (url.equals("/2")){
+                return;
+            }
+            if (TextUtils.isEmpty(details))return;
             PrivacyReadDialog privacyDialog = PrivacyReadDialog.getInstance();
             privacyDialog.show(getChildFragmentManager(), "PrivacyDialog");
         }
