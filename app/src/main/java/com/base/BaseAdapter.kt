@@ -16,7 +16,7 @@ import kotlinx.coroutines.MainScope
 abstract class BaseAdapter<VH : RecyclerView.ViewHolder?>(val context: Context)
     : RecyclerView.Adapter<VH>(), CoroutineScope by MainScope() {
     val inflater: LayoutInflater
-    abstract fun notifyDataSetChanged(dataList: List<*>?)
+    abstract fun notifyDataSetChanged(dataList: List<*>)
 
     init {
         inflater = LayoutInflater.from(context)
