@@ -6,6 +6,7 @@ plugins{
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.huawei.agconnect'
 }
 android {
     //生产环境域名地址
@@ -425,7 +426,6 @@ repositories {
 
         //Android图表视图/图形视图库
         implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-        implementation files('libs/tbs_sdk_thirdapp_v3.5.0.1004_43500.jar')
 
         //RecyclerView侧滑菜单
 //        implementation 'com.yanzhenjie.recyclerview:support:1.3.2'
@@ -445,8 +445,6 @@ repositories {
         }
         //广告轮播
 //        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
-        //腾讯tbs
-//        api 'com.tencent.tbs.tbssdk:sdk:43697'
         implementation files('libs/zxing-core-3.3.1.jar')
         implementation 'com.haibin:calendarview:3.6.4'//日历选择
         //百度文字识别(身份证、银行卡等)
@@ -485,11 +483,9 @@ repositories {
         //底部导航
         implementation project(':library:BottomBar')
         //华为推送
-        implementation 'com.huawei.hms:push:5.1.1.301'
+        implementation 'com.huawei.hms:push:5.0.4.302'
+        //腾讯tbs
+//        api 'com.tencent.tbs.tbssdk:sdk:43993'
+        implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
     }
-}
-apply plugin: 'com.huawei.agconnect'
-
-dependencies {
-    implementation 'com.huawei.hms:push:5.0.4.302'
 }
