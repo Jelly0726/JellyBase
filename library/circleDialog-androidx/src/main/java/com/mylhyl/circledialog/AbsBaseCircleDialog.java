@@ -101,6 +101,16 @@ public abstract class AbsBaseCircleDialog extends DialogFragment {
         ft.add(this, tag);
         ft.commitAllowingStateLoss();
     }
+    public int show(FragmentTransaction transaction, String tag) {
+        transaction.add(this, tag);
+        return transaction.commitAllowingStateLoss();
+    }
+
+    public void showNow(FragmentManager manager, String tag) {
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.add(this, tag);
+        ft.commitNowAllowingStateLoss();
+    }
     @Override
     public void onStart() {
         if (getView() != null && mMaxHeight > 0) {
