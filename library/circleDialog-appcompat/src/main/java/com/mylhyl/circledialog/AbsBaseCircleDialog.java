@@ -95,7 +95,11 @@ public abstract class AbsBaseCircleDialog extends DialogFragment {
         super.onDismiss(dialog);
         remove();
     }
-
+    public void show(FragmentManager manager, String tag) {
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.add(this, tag);
+        ft.commitAllowingStateLoss();
+    }
     @Override
     public void onStart() {
         if (getView() != null && mMaxHeight > 0) {
