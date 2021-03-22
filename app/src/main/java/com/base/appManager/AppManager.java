@@ -127,7 +127,8 @@ public class AppManager {
         }
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
-                activityStack.get(i).get().finish();
+                if (null != activityStack.get(i).get())
+                    activityStack.get(i).get().finish();
                 break;
             }
         }
