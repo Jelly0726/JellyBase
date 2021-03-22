@@ -74,7 +74,7 @@ class ShopCartAdapter(context: Context) :
                             .setTitle("编辑数量")
                             .configTitle { params ->
                                 params.textSize =
-                                        AppUtils.spTopx(BaseApplication.getInstance(), 15f)
+                                        AppUtils.spTopx(BaseApplication.instance, 15f)
                                 params.textColor =
                                         ContextCompat.getColor(context, R.color.mainText)
                             }
@@ -83,14 +83,14 @@ class ShopCartAdapter(context: Context) :
                                     params.digits = 0
                                     params.text = holder.num_edit.text.toString()
                                     params.textSize =
-                                            AppUtils.spTopx(BaseApplication.getInstance(), 15f)
+                                            AppUtils.spTopx(BaseApplication.instance, 15f)
                                     params.textColor =
                                             ContextCompat.getColor(context, R.color.mainText)
                                 }
-                                .setInputHeight(AppUtils.dipTopx(BaseApplication.getInstance(), 40f))
+                                .setInputHeight(AppUtils.dipTopx(BaseApplication.instance, 40f))
                             .configPositive { params ->
                                 params.textSize =
-                                        AppUtils.spTopx(BaseApplication.getInstance(), 15f)
+                                        AppUtils.spTopx(BaseApplication.instance, 15f)
                                 params.textColor =
                                         ContextCompat.getColor(context, R.color.mainText)
                             }
@@ -120,7 +120,7 @@ class ShopCartAdapter(context: Context) :
                 0,
                 mListItems!![position].name,
                 R.mipmap.ic_combo,
-                AppUtils.dipTopx(BaseApplication.getInstance(), 15f)
+                AppUtils.dipTopx(BaseApplication.instance, 15f)
             )
         } else {
             holder.name_tv.text = mListItems!![position].name

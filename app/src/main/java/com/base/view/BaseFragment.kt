@@ -1,6 +1,5 @@
 package com.base.view
 
-import android.R
 import android.app.Activity
 import android.content.Context
 import android.hardware.input.InputManager
@@ -10,6 +9,8 @@ import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.base.SystemBar.StatusBarUtil
+import com.base.appManager.BaseApplication
+import com.jelly.jellybase.BuildConfig
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope

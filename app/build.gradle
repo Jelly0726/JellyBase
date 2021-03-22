@@ -212,6 +212,7 @@ android {
     // For Kotlin compilers:
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
+
     }
     lintOptions {
         checkReleaseBuilds false
@@ -383,7 +384,11 @@ repositories {
         annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
         //微信支付
         implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-
+        //腾讯tbs
+//        api 'com.tencent.tbs.tbssdk:sdk:43993'
+        implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
+        //应用宝自动升级
+        implementation files('libs/tmassistantsdk_selfupdate-jce-external_3.0.5_78_20181115214920.jar')
         //QQ、微信、微博登陆和分享
         implementation('com.github.arvinljw:SocialHelper:v1.2.2') {
             exclude group: 'com.android.support'
@@ -458,8 +463,6 @@ repositories {
         //弹窗对话框
         implementation project(path: ':library:circleDialog-androidx')
 //        implementation project(path: ':library:circleDialog-appcompat')
-        //应用宝自动升级
-        implementation files('libs/tmassistantsdk_selfupdate-jce_3.0.1_33_20180123101008.jar')
         implementation files('libs/commons-codec-1.11.jar')
         implementation files('libs/commons-io-2.6.jar')
         implementation files('libs/commons-logging-1.2.jar')
@@ -484,8 +487,7 @@ repositories {
         implementation project(':library:BottomBar')
         //华为推送
         implementation 'com.huawei.hms:push:5.0.4.302'
-        //腾讯tbs
-//        api 'com.tencent.tbs.tbssdk:sdk:43993'
-        implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
+        //内存溢出检测
+        debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     }
 }

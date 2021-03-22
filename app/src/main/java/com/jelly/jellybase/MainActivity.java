@@ -94,9 +94,9 @@ import com.jelly.jellybase.tablelayout.TableLayoutActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
 import com.jelly.jellybase.userInfo.SettingsActivity;
-import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
-import com.tencent.tmselfupdatesdk.TMSelfUpdateManager;
-import com.tencent.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
+import com.tencent.external.tmselfupdatesdk.ITMSelfUpdateListener;
+import com.tencent.external.tmselfupdatesdk.TMSelfUpdateManager;
+import com.tencent.external.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
 
 import java.io.File;
 

@@ -13,7 +13,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import butterknife.Unbinder
 import com.base.Utils.RMBUtils
-import com.base.appManager.BaseApplication.getInstance
+import com.base.appManager.BaseApplication.Companion.instance
 import com.base.applicationUtil.AppUtils
 import com.base.eventBus.NetEvent
 import com.base.toast.ToastUtils
@@ -259,9 +259,9 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
         //                .build(ContextCompat.getColor(this, R.color.transparent),
         //                AppUtils.dipTopx(this,10), AppUtils.dipTopx(this,10),-1);
         return DefaultItemDecoration(
-            ContextCompat.getColor(getInstance(), R.color.transparent),
-            AppUtils.dipTopx(getInstance(), 10f),
-            AppUtils.dipTopx(getInstance(), 10f)
+            ContextCompat.getColor(instance, R.color.transparent),
+            AppUtils.dipTopx(instance, 10f),
+            AppUtils.dipTopx(instance, 10f)
         )
     }
 

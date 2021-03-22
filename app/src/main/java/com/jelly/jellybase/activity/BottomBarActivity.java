@@ -76,6 +76,9 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             EventBus.getDefault().unregister(this);
         }
         HermesManager.getHermesManager().removeEvent(this);
+        if (mFragmentList != null)
+            mFragmentList.clear();
+        mFragmentList = null;
         super.onDestroy();
     }
 
@@ -151,6 +154,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     protected void onResume() {
         super.onResume();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

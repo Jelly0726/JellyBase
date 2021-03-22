@@ -12,31 +12,28 @@ import android.graphics.Rect
 import android.hardware.input.InputManager
 import android.os.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import cn.jpush.android.api.JPushInterface
 import com.base.SystemBar.StatusBarUtil
-import com.base.appManager.AppSubject
-import com.base.appManager.BaseApplication
-import com.base.appManager.Observable
-import com.base.appManager.Observer
+import com.base.appManager.*
 import com.base.applicationUtil.AppPrefs
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken
+import com.jelly.jellybase.BuildConfig
 import com.mylhyl.circledialog.CircleDialog
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.lang.ref.WeakReference
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -52,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     private var isResume = false
     private var isKeyboard = false //是否有外接键盘
     private var isDisable = true //是否屏蔽软键盘
-
+    private var handler: Handler? = null
     companion object {
         //    public DisplayManager mDisplayManager;//双屏客显
 //    public Presentation mPresentation;//双屏客显
@@ -93,6 +90,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             softKeyboardManager = SoftKeyboardManager(it);
             softKeyboardManager!!.addSoftKeyboardStateListener(this);
         }
+        handler = MyHandler(this)
         mUnbinder = ButterKnife.bind(this)
         getExtra()
         mRecevier = InnerRecevier()
@@ -184,7 +182,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             context: Context,
             attrs: AttributeSet
     ): View? {
-        if (!BaseApplication.isVampix()) { //不进行黑白化
+        if (!BaseApplication.isVampix) { //不进行黑白化
             return super.onCreateView(name, context, attrs)
         }
         if ("FrameLayout" == name) {
@@ -415,7 +413,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                 val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
                 if (reason != null) { //Log.i("msg", "action:" + action + ",reason:" + reason);
                     if (reason == SYSTEM_DIALOG_REASON_HOME_KEY) { // 短按home键
-                        AppPrefs.putBoolean(BaseApplication.getInstance(), ConfigKey.ISHOME, true)
+                        AppPrefs.putBoolean(BaseApplication.instance, ConfigKey.ISHOME, true)
                     } else if (reason
                             == SYSTEM_DIALOG_REASON_RECENT_APPS
                     ) { // 长按home键
@@ -425,54 +423,56 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                 if (isResume) {
                     val message = Message.obtain()
                     message.arg1 = 0
-                    handler.sendMessage(message)
+                    handler!!.sendMessage(message)
                 }
             }
         }
     }
-
     private var circleDialog: CircleDialog.Builder? = null
-    private val handler: Handler = object : Handler() {
+    private class MyHandler(activity: BaseActivity) : Handler() {
+        private val activityWeakReference = WeakReference(activity)
         override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.arg1) {
-                0 -> if (circleDialog == null) {
-                    synchronized(BaseApplication.getInstance()) {
-                        if (circleDialog == null) {
-                            circleDialog = CircleDialog.Builder()
-                                    .configDialog { params -> params.width = 0.6f }
-                                    .setCanceledOnTouchOutside(false)
-                                    .setCancelable(false)
-                                    .setTitle("登录过期！")
-                                    .configText { params ->
-                                        params.gravity = Gravity.LEFT
-                                        params.textColor =
-                                                Color.parseColor("#FF1F50F1")
-                                        params.padding = intArrayOf(20, 0, 20, 0)
-                                    }
-                                    .setText("登录过期或异地登录，请重新登录!")
-                                    .setPositive("确定") {
-                                        circleDialog = null
-                                        GlobalToken.removeToken()
-                                        AppSubject.getInstance().detachAll()
-                                        val intent1 =
-                                                Intent()
-                                        //intent.setClass(this, LoginActivity.class);
-                                        intent1.action = IntentAction.ACTION_LOGIN
-                                        intent1.addFlags(
-                                                Intent.FLAG_ACTIVITY_NEW_TASK
-                                                        or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                        )
-                                        BaseApplication.getInstance().startActivity(intent1)
-                                    }
-                            circleDialog!!.show(supportFragmentManager)
+            val activity = activityWeakReference.get()
+            if (activity != null) {
+                when (msg.arg1) {
+                    0 -> if (activity.circleDialog == null) {
+                        synchronized(BaseApplication.instance) {
+                            if (activity.circleDialog == null) {
+                                activity.circleDialog = CircleDialog.Builder()
+                                        .configDialog { params -> params.width = 0.6f }
+                                        .setCanceledOnTouchOutside(false)
+                                        .setCancelable(false)
+                                        .setTitle("登录过期！")
+                                        .configText { params ->
+                                            params.gravity = Gravity.LEFT
+                                            params.textColor =
+                                                    Color.parseColor("#FF1F50F1")
+                                            params.padding = intArrayOf(20, 0, 20, 0)
+                                        }
+                                        .setText("登录过期或异地登录，请重新登录!")
+                                        .setPositive("确定") {
+                                            activity.circleDialog = null
+                                            GlobalToken.removeToken()
+                                            AppSubject.getInstance().detachAll()
+                                            val intent1 =
+                                                    Intent()
+                                            //intent.setClass(this, LoginActivity.class);
+                                            intent1.action = IntentAction.ACTION_LOGIN
+                                            intent1.addFlags(
+                                                    Intent.FLAG_ACTIVITY_NEW_TASK
+                                                            or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                            )
+                                            BaseApplication.instance.startActivity(intent1)
+                                        }
+                                activity.circleDialog!!.show(activity.supportFragmentManager)
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
+    }
     override fun finish() { // TODO Auto-generated method stub
         AppSubject.getInstance().detach(this)
         super.finish()
