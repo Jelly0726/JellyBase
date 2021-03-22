@@ -9,6 +9,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
+import com.base.appManager.FixMemLeak;
 import com.base.httpmvp.mvpView.IGetBankView;
 
 import java.util.Map;
@@ -52,7 +53,14 @@ public class BandCardEditText extends EditText implements IGetBankView{
         setFocusableInTouchMode(true);
         addTextChangedListener(new BandCardWatcher());
     }
-
+    @Override
+    protected void onDetachedFromWindow() {
+        getBankPresenter.detachView();
+        getBankPresenter=null;
+        listener=null;
+        FixMemLeak.fixLeak(getContext());
+        super.onDetachedFromWindow();
+    }
     /**
      * 获取未格式化的卡号
      * @return

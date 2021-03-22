@@ -338,27 +338,18 @@ repositories {
 
         //高德地图so及jar
 
-        //3D地图
-
+        //因为导航里已经有地图所以3D地图和导航不能同时导入
         //implementation 'com.amap.api:3dmap:latest.integration'
-
         //    implementation 'com.amap.api:3dmap:6.5.0'
-
         //定位功能
-
-        //    implementation 'com.amap.api:location:latest.integration'
+            implementation 'com.amap.api:location:latest.integration'
 //        implementation 'com.amap.api:location:5.0.0'
-        implementation files('libs/AMap_Location_V5.0.0_20200609.jar')
-
         //搜索功能
-        //    implementation 'com.amap.api:search:latest.integration'
+            implementation 'com.amap.api:search:latest.integration'
 //        implementation 'com.amap.api:search:7.3.0'
-        implementation files('libs/AMap_Search_V7.3.0_20200331.jar')
-
         //导航
-//        implementation 'com.amap.api:navi-3dmap:latest.integration'
+        implementation 'com.amap.api:navi-3dmap:latest.integration'
 //        implementation 'com.amap.api:navi-3dmap:7.5.0'
-        implementation files('libs/AMap3DMap_7.5.0_AMapNavi_7.5.0_20200610.jar')
 
         //极光推送
         implementation 'cn.jiguang.sdk:jpush:3.1.8'

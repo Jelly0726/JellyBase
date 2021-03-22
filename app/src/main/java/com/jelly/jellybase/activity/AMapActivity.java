@@ -28,7 +28,6 @@ import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.navi.model.AMapNaviPath;
 import com.amap.api.navi.model.AMapNaviRouteNotifyData;
@@ -39,7 +38,6 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.view.RouteOverLay;
-import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.mscUtil.TTSController;
 import com.base.appManager.BaseApplication;
@@ -462,15 +460,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     }
 
     /**
-     * 导航引导信息回调 naviinfo 是导航信息类。(过时)
-     * @param aMapNaviInfo
-     */
-    @Override
-    public void onNaviInfoUpdated(AMapNaviInfo aMapNaviInfo) {
-
-    }
-
-    /**
      * 导航过程中的摄像头信息回调函数
      * @param aMapCameraInfos
      */
@@ -499,15 +488,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
      */
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
-
-    }
-
-    /**
-     * 巡航模式（无路线规划）下，道路设施信息更新回调(过时)
-     * @param trafficFacilityInfo
-     */
-    @Override
-    public void OnUpdateTrafficFacility(TrafficFacilityInfo trafficFacilityInfo) {
 
     }
     /**

@@ -19,7 +19,6 @@ import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapModelCross;
 import com.amap.api.navi.model.AMapNaviCameraInfo;
 import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.navi.model.AMapNaviRouteNotifyData;
 import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
@@ -28,7 +27,6 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
-import com.autonavi.tbt.TrafficFacilityInfo;
 import com.base.MapUtil.mscUtil.TTSController;
 import com.base.appManager.BaseApplication;
 
@@ -439,31 +437,9 @@ public class AMapNaviTask implements AMapNaviListener {
     public void onGpsOpenStatus(boolean b) {
     }
 
-    /**
-     * 已过时。
-     请使用 AMapNaviListener.onNaviInfoUpdate(NaviInfo)
-     * @param aMapNaviInfo
-     */
-    @Override
-    public void onNaviInfoUpdated(AMapNaviInfo aMapNaviInfo) {
-    }
-
-    /**
-     * 导航引导信息回调 naviinfo 是导航信息类。
-     * @param naviInfo
-     */
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
-        naviInfo.getCoord().getLatitude();
-    }
 
-    /**
-     * 已过时。
-     1.8.0开始，不再回调该方法
-     * @param trafficFacilityInfo
-     */
-    @Override
-    public void OnUpdateTrafficFacility(TrafficFacilityInfo trafficFacilityInfo) {
     }
 
     /**

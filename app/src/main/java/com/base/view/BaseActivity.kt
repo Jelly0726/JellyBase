@@ -26,7 +26,6 @@ import com.base.applicationUtil.AppPrefs
 import com.base.config.ConfigKey
 import com.base.config.IntentAction
 import com.base.httpmvp.retrofitapi.token.GlobalToken
-import com.jelly.jellybase.BuildConfig
 import com.mylhyl.circledialog.CircleDialog
 import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
@@ -293,7 +292,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     fun finish(time: Int) {
         Handler().postDelayed({ finish() }, time.toLong())
     }
-
     override fun onDestroy() {
         //结束协程
         cancel()
@@ -475,6 +473,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     }
     override fun finish() { // TODO Auto-generated method stub
         AppSubject.getInstance().detach(this)
+        FixMemLeak.fixLeak(this)
         super.finish()
     }
 
