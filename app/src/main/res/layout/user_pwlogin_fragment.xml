@@ -16,8 +16,8 @@
         android:src="@mipmap/ic_launcher"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44mm"
-        android:layout_marginTop="30mm"
+        android:layout_height="40mm"
+        android:layout_marginTop="20mm"
         android:layout_marginLeft="40mm"
         android:layout_marginRight="40mm"
         android:orientation="horizontal"
@@ -44,7 +44,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44mm"
+        android:layout_height="40mm"
         android:layout_marginLeft="40mm"
         android:layout_marginRight="40mm"
         android:orientation="horizontal"
@@ -72,8 +72,8 @@
             android:textColorHint="#727272"/>
         <CheckBox
             android:id="@+id/pwd_visible"
-            android:layout_width="15mm"
-            android:layout_height="15mm"
+            android:layout_width="20mm"
+            android:layout_height="20mm"
             android:layout_marginRight="5mm"
             android:button="@drawable/checkbox_style"
             android:checked="false"/>
@@ -81,7 +81,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40mm"
-        android:layout_marginTop="30mm"
+        android:layout_marginTop="15mm"
         android:layout_marginLeft="40mm"
         android:layout_marginRight="40mm"
         android:orientation="horizontal">
@@ -109,8 +109,8 @@
     <TextView
         android:id="@+id/login_tv"
         android:layout_width="match_parent"
-        android:layout_height="44mm"
-        android:layout_marginTop="30mm"
+        android:layout_height="40mm"
+        android:layout_marginTop="15mm"
         android:layout_marginLeft="40mm"
         android:layout_marginRight="40mm"
         android:textColor="#ffffff"
@@ -120,7 +120,7 @@
         android:background="@drawable/green_btn_bg"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40mm"
+        android:layout_height="30mm"
         android:layout_marginLeft="80mm"
         android:layout_marginRight="80mm"
         android:orientation="horizontal"
@@ -147,11 +147,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50mm"
+        android:layout_height="30mm"
         android:layout_marginLeft="80mm"
         android:layout_marginRight="80mm"
         android:orientation="horizontal"
-        android:layout_marginTop="40mm">
+        android:layout_marginTop="20mm">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1mm"
