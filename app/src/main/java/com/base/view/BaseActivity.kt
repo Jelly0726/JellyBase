@@ -1,6 +1,7 @@
 package com.base.view
 
 import android.app.Activity
+import android.app.LauncherActivity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -38,10 +39,9 @@ import java.lang.ref.WeakReference
  * Created by Administrator on 2017/12/5.
  */
 @DebugLog
-abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope()
-        ,SoftKeyboardManager.SoftKeyboardStateListener {
-    private var softKeyboardManager: SoftKeyboardManager?=null
-    private var frameLayout:FrameLayout?=null//最外层布局
+abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
+    private var softKeyboardManager: SoftKeyboardManager? = null
+    private var frameLayout: FrameLayout? = null//最外层布局
     private lateinit var mUnbinder: Unbinder
     private var mRecevier: InnerRecevier? = null
     private var mFilter: IntentFilter? = null
@@ -49,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     private var isKeyboard = false //是否有外接键盘
     private var isDisable = true //是否屏蔽软键盘
     private var handler: Handler? = null
+
     companion object {
         //    public DisplayManager mDisplayManager;//双屏客显
 //    public Presentation mPresentation;//双屏客显
@@ -292,6 +293,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     fun finish(time: Int) {
         Handler().postDelayed({ finish() }, time.toLong())
     }
+
     override fun onDestroy() {
         //结束协程
         cancel()
@@ -304,10 +306,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         AppSubject.getInstance().detach(this)
         super.onDestroy()
         mUnbinder?.let { it.unbind() }
-        if (circleDialog != null) {
-            circleDialog!!.dismiss()
-            circleDialog = null
-        }
+        if (this !is LauncherActivity)
+            circleDialog?.let {
+                it.dismiss()
+                circleDialog = null
+            }
         softKeyboardManager?.let {
             it.removeSoftKeyboardStateListener(this);
             it.dispose();
@@ -343,6 +346,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     override fun onStop() {
         super.onStop()
     }
+
     override fun onSoftKeyboardOpened(keyboardHeightInPx: Int) {
 //        if (SoftKeyboardManager.DEBUG) {
 //            Log.d(
@@ -394,6 +398,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         //输入法退出，root滚动到初始位置
         frameLayout!!.scrollTo(0, 0)
     }
+
     /**
      * 广播接收者
      */
@@ -426,7 +431,9 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             }
         }
     }
+
     private var circleDialog: CircleDialog.Builder? = null
+
     private class MyHandler(activity: BaseActivity) : Handler() {
         private val activityWeakReference = WeakReference(activity)
         override fun handleMessage(msg: Message) {
@@ -471,6 +478,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         }
 
     }
+
     override fun finish() { // TODO Auto-generated method stub
         AppSubject.getInstance().detach(this)
         FixMemLeak.fixLeak(this)
