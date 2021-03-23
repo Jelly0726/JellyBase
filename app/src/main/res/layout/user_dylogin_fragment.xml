@@ -9,22 +9,22 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40mm"
         android:src="@mipmap/ic_launcher"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88mm"
+        android:layout_height="44mm"
         android:layout_marginTop="60mm"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:orientation="horizontal"
         >
         <ImageView
-            android:layout_width="40mm"
-            android:layout_height="40mm"
+            android:layout_width="20mm"
+            android:layout_height="20mm"
             android:src="@mipmap/shouji"
             android:layout_gravity="center_vertical"/>
         <EditText
@@ -34,7 +34,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="40mm"
             android:textColor="#727272"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:background="@null"
             android:inputType="phone"
             android:lines="1"
@@ -44,15 +44,15 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88mm"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_height="44mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:orientation="horizontal"
         android:layout_marginTop="30mm"
         >
         <ImageView
-            android:layout_width="40mm"
-            android:layout_height="40mm"
+            android:layout_width="20mm"
+            android:layout_height="20mm"
             android:src="@mipmap/mima"
             android:layout_gravity="center_vertical"/>
         <EditText
@@ -63,7 +63,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="40mm"
             android:textColor="#727272"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:background="@null"
             android:inputType="textPassword"
             android:lines="1"
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="#26b842"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:text="发送验证码"
             android:background="#00000000"
             android:gravity="center"
@@ -84,20 +84,20 @@
     <TextView
         android:id="@+id/login_tv"
         android:layout_width="match_parent"
-        android:layout_height="88mm"
+        android:layout_height="44mm"
         android:layout_marginTop="60mm"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:textColor="#ffffff"
-        android:textSize="28mm"
+        android:textSize="14mm"
         android:text="登录"
         android:gravity="center"
         android:background="@drawable/green_btn_bg"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80mm"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_height="40mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:orientation="horizontal"
         android:layout_marginTop="20mm">
         <TextView
@@ -106,7 +106,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical|right"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:textColor="#727272"
             android:text="忘记密码"/>
         <TextView
@@ -116,15 +116,15 @@
             android:visibility="gone"
             android:layout_weight="1"
             android:gravity="center_vertical|right"
-            android:textSize="24mm"
+            android:textSize="12mm"
             android:textColor="#727272"
             android:text="注册账号"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50mm"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:orientation="horizontal"
         android:layout_marginTop="40mm">
         <TextView
@@ -141,7 +141,7 @@
             android:layout_marginRight="20mm"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:textColor="#727272"
             android:text="其他方式登录"/>
         <TextView
@@ -155,8 +155,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="80mm"
-        android:layout_marginRight="80mm"
+        android:layout_marginLeft="40mm"
+        android:layout_marginRight="40mm"
         android:orientation="horizontal"
         android:layout_gravity="center"
         android:gravity="center"
