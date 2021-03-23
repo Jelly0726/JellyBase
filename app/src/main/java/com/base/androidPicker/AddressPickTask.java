@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.alibaba.fastjson.JSON;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cn.qqtheme.framework.entity.Province;
@@ -19,7 +20,7 @@ import cn.qqtheme.framework.util.ConvertUtils;
  * @since 2015/12/15
  */
 public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>> {
-    private Activity activity;
+    private WeakReference<Activity> activity;
     private ProgressDialog dialog;
     private Callback callback;
     private String selectedProvince = "", selectedCity = "", selectedCounty = "";
@@ -27,7 +28,7 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
     private boolean hideCounty = false;
 
     public AddressPickTask(Activity activity) {
-        this.activity = activity;
+        this.activity = new WeakReference<>(activity);
     }
 
     public void setHideProvince(boolean hideProvince) {
@@ -44,7 +45,8 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
 
     @Override
     protected void onPreExecute() {
-        dialog = ProgressDialog.show(activity, null, "正在初始化数据...", true, true);
+        if (activity.get()==null)return;
+        dialog = ProgressDialog.show(activity.get(), null, "正在初始化数据...", true, true);
     }
 
     @Override
@@ -69,7 +71,8 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
         }
         ArrayList<Province> data = new ArrayList<>();
         try {
-            String json = ConvertUtils.toString(activity.getAssets().open("city.json"));
+            if (activity.get()==null)return data;
+            String json = ConvertUtils.toString(activity.get().getAssets().open("city.json"));
             data.addAll(JSON.parseArray(json, Province.class));
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +84,8 @@ public class AddressPickTask extends AsyncTask<String, Void, ArrayList<Province>
     protected void onPostExecute(ArrayList<Province> result) {
         dialog.dismiss();
         if (result.size() > 0) {
-            AddressPicker picker = new AddressPicker(activity, result);
+            if (activity.get()==null){callback.onAddressInitFailed();return;}
+            AddressPicker picker = new AddressPicker(activity.get(), result);
             picker.setHideProvince(hideProvince);
             picker.setHideCounty(hideCounty);
             if (hideCounty) {
