@@ -35,7 +35,6 @@ public class BandCardEditText extends EditText {
     private final String space = " ";
 
     private BankCardListener listener;
-    private AsyncTask<String, Integer, String> task;
     private final String bankName = "{\n" +
             "    \"SRCB\":\"深圳农村商业银行\",\n" +
             "    \"BGB\":\"广西北部湾银行\",\n" +
@@ -233,10 +232,6 @@ public class BandCardEditText extends EditText {
     protected void onDetachedFromWindow() {
         listener = null;
         FixMemLeak.fixLeak(getContext());
-        if (task!=null) {
-            task.cancel(true);
-            task = null;
-        }
         super.onDetachedFromWindow();
     }
 
@@ -391,11 +386,10 @@ public class BandCardEditText extends EditText {
      * 获取所属银行
      */
     private void getBank(String kaNo) {
-        if (task == null) {
-            task = new AsyncTask<String, Integer, String>() {
+            new AsyncTask<String, Integer, String>() {
+                private ExecutorService exec= Executors.newFixedThreadPool(2);
                 @Override
                 protected String doInBackground(final String... params) {
-                    final ExecutorService exec = Executors.newFixedThreadPool(2);
                     Callable<String> callable = new Callable<String>() {
                         @Override
                         public String call() throws Exception {
@@ -493,8 +487,6 @@ public class BandCardEditText extends EditText {
                         }
                     }
                 }
-            };
-        }
-        task.execute(kaNo);
+            }.execute(kaNo);
     }
 }
