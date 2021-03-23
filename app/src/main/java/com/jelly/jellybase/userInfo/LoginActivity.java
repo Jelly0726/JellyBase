@@ -143,6 +143,9 @@ public class LoginActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         SocialUtil.getInstance().socialHelper().clear();
+        if(mFragmentList!=null)
+            mFragmentList.clear();
+        mFragmentList=null;
         super.onDestroy();
     }
     @Override
