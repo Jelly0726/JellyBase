@@ -492,8 +492,6 @@ public class BandCardEditText extends EditText {
                             listener.failure();
                         }
                     }
-                    task.cancel(true);
-                    task=null;
                 }
             };
         }
