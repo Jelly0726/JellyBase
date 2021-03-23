@@ -2,6 +2,7 @@ package com.jelly.mvp.contact;
 
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
+import com.jelly.mvp.model.BankCartModel;
 
 /**
  * Created by Administrator on 2017/12/5.
