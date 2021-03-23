@@ -99,6 +99,7 @@ import com.tencent.external.tmselfupdatesdk.TMSelfUpdateManager;
 import com.tencent.external.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import hugo.weaving.DebugLog;
 
@@ -410,6 +411,22 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         //释放
         TMSelfUpdateManager.getInstance().destroy();
+        TMSelfUpdateManager v=  TMSelfUpdateManager.getInstance();
+        String[] strings = new String[]{"c","d","e","f","g"};
+        for (String s:strings){
+            try {
+                Field field = v.getClass().getDeclaredField(s);
+                field.setAccessible(true);
+                try {
+                    field.set(v,null);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+        mSelfUpdateListener=null;
         if (cpUpdateDownloadCallback!=null)
             cpUpdateDownloadCallback.onStop();
         super.onDestroy();
