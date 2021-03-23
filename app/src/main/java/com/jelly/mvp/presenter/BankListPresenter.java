@@ -3,7 +3,6 @@ package com.jelly.mvp.presenter;
 import com.base.bankcard.BankCardInfo;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.jelly.mvp.contact.BankCartListContact;
-import com.base.bankcard.BankCartModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;

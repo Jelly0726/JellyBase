@@ -1,4 +1,4 @@
-package com.base;
+package com.jelly.jellybase.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.base.bankcard.BandCardEditText;
 import com.base.zxing.ScanerCodeActivity;
 import com.jelly.jellybase.R;
 
-public class BaseActivity extends AppCompatActivity {
+public class BankActivity extends AppCompatActivity {
     private EditText bankNo;
     private Button saomiao;
     private Button kuaidi;
@@ -22,7 +22,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_activity);
+        setContentView(R.layout.bank_activity);
         bankNo=(EditText)findViewById(R.id.bankNo);
 
         tv_desc = (TextView) findViewById(R.id.tv_desc);
@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.setClass(BaseActivity.this, ScanerCodeActivity.class);
+                intent.setClass(BankActivity.this, ScanerCodeActivity.class);
                 startActivityForResult(intent,1);
             }
         });

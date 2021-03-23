@@ -1,6 +1,5 @@
 package com.jelly.mvp.contact;
 
-import com.base.bankcard.BankCartModel;
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
 

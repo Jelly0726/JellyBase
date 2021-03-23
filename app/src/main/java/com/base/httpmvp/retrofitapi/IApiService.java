@@ -114,12 +114,6 @@ public interface IApiService {
 	@POST("zhongbo/user/operateMeuser.doAdminJJ")
 	Observable<HttpResult> updateBuyerInfo(@Header("Authorization") String token,
 										   @Field("data") String jsonString);
-
-	//获取所属银行
-	@FormUrlEncoded
-	@POST("SLD/buyersInfo/getBankLogo.doAdminJJ")
-	Observable<HttpResultData<BankCardInfo>> getBank(@Header("token") String token,
-                                                                    @Field("data") String jsonString);
 	//上传文件
 	@Multipart
 	@POST("SLD/buyersInfo/uploadAttachment.doAdminJJ")

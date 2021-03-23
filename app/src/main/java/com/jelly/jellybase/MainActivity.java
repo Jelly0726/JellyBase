@@ -58,6 +58,7 @@ import com.jelly.jellybase.activity.AlipayPassWordActivity;
 import com.jelly.jellybase.activity.AnswerActivity;
 import com.jelly.jellybase.activity.AutoTextAvtivity;
 import com.jelly.jellybase.activity.BadgeMainActivity;
+import com.jelly.jellybase.activity.BankActivity;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.CancelOrderActivity;
 import com.jelly.jellybase.activity.CopyActivity;
@@ -735,6 +736,10 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 51:// 文件选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 52:// 所属银行
+                    intent=new Intent(BaseApplication.getInstance(), BankActivity.class);
                     startActivity(intent);
                     break;
             }
