@@ -9,7 +9,8 @@ import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.ArrayMap;
 import android.util.AttributeSet;
-import android.widget.EditText;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +31,7 @@ import java.util.concurrent.Future;
 /**
  * 欢迎关注微信公众号：aikaifa
  */
-public class BandCardEditText extends EditText {
+public class BandCardEditText extends AppCompatEditText {
     private boolean shouldStopChange = false;
     private final String space = " ";
 
@@ -387,7 +388,7 @@ public class BandCardEditText extends EditText {
      */
     private void getBank(String kaNo) {
             new AsyncTask<String, Integer, String>() {
-                private ExecutorService exec= Executors.newFixedThreadPool(2);
+                private ExecutorService exec= Executors.newCachedThreadPool();
                 @Override
                 protected String doInBackground(final String... params) {
                     Callable<String> callable = new Callable<String>() {
