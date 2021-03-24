@@ -352,8 +352,8 @@ repositories {
 //        implementation 'com.amap.api:navi-3dmap:7.5.0'
 
         //极光推送
-        implementation 'cn.jiguang.sdk:jpush:3.1.8'
-        implementation 'cn.jiguang.sdk:jcore:1.2.6'
+        implementation 'cn.jiguang.sdk:jpush:4.0.0'
+        implementation 'cn.jiguang.sdk:jcore:2.7.0'
 
         //sqlite框架greendao
         implementation 'org.greenrobot:greendao:3.3.0'
