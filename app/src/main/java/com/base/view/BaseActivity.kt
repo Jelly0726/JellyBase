@@ -304,7 +304,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             unregisterReceiver(mRecevier)
         }
         AppSubject.getInstance().detach(this)
-        super.onDestroy()
         mUnbinder?.let { it.unbind() }
         if (this !is LauncherActivity)
             circleDialog?.let {
@@ -315,6 +314,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             it.removeSoftKeyboardStateListener(this);
             it.dispose();
         }
+        super.onDestroy()
     }
 
     //    @Override

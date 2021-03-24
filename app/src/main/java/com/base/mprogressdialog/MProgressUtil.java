@@ -76,30 +76,30 @@ public class MProgressUtil {
                     //物理返回键可以取消
                     .isCancelable(false)
                     //全屏背景窗体的颜色
-                    .setBackgroundWindowColor(ContextCompat.getColor(context, R.color.BackgroundWindowColor))
+                    .setBackgroundWindowColor(ContextCompat.getColor(context.getApplicationContext(), R.color.BackgroundWindowColor))
                     //View背景的颜色
-                    .setBackgroundViewColor(ContextCompat.getColor(context,R.color.BackgroundViewColor))
+                    .setBackgroundViewColor(ContextCompat.getColor(context.getApplicationContext(),R.color.BackgroundViewColor))
                     //View背景的圆角
                     .setCornerRadius(context.getResources().getDimension(R.dimen.CornerRadius))
                     //View 边框的颜色
-                    .setStrokeColor(ContextCompat.getColor(context,R.color.StrokeColor))
+                    .setStrokeColor(ContextCompat.getColor(context.getApplicationContext(),R.color.StrokeColor))
                     //View 边框的宽度
                     //View 边框的宽度
                     .setStrokeWidth(context.getResources().getDimension(R.dimen.StrokeWidth))
                     //Progress 颜色
-                    .setProgressColor(ContextCompat.getColor(context,R.color.ProgressColor))
+                    .setProgressColor(ContextCompat.getColor(context.getApplicationContext(),R.color.ProgressColor))
                     //Progress 宽度
                     .setProgressWidth(context.getResources().getDimension(R.dimen.ProgressWidth))
                     //Progress 内圈颜色
-                    .setProgressRimColor(ContextCompat.getColor(context,R.color.transparent))
+                    .setProgressRimColor(ContextCompat.getColor(context.getApplicationContext(),R.color.transparent))
                     //Progress 内圈宽度
                     .setProgressRimWidth((int) context.getResources().getDimension(R.dimen.ProgressRimWidth))
                     //文字的颜色
-                    .setTextColor(ContextCompat.getColor(context,R.color.TextColor))
+                    .setTextColor(ContextCompat.getColor(context.getApplicationContext(),R.color.TextColor))
                     //文字的大小
                     .setTextSize(15)
                     //ProgressBar 颜色
-                    .setProgressColor(ContextCompat.getColor(context,R.color.ProgressColor))
+                    .setProgressColor(ContextCompat.getColor(context.getApplicationContext(),R.color.ProgressColor))
                     //dialog动画
 //                .setAnimationID(R.style.animate_dialog_custom)
                     //padding
