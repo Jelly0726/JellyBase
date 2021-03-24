@@ -124,7 +124,7 @@ public class TopMiddlePopup<T extends BaseItem> extends PopupWindow {
             this.setAnimationStyle(R.style.AnimTopMiddle);
         }
         // 实例化一个ColorDrawable颜色为半透明
-        ColorDrawable dw = new ColorDrawable(0x33000000);
+        ColorDrawable dw = new ColorDrawable(0x00000000);
         // 设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(dw);
 
