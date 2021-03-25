@@ -72,38 +72,13 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
 			switch (baseResp.errCode) {
 				case BaseResp.ErrCode.ERR_OK:
-					result = R.string.errcode_success;
-					new CircleDialog.Builder()
-							.configDialog(new ConfigDialog() {
-								@Override
-								public void onConfig(DialogParams params) {
-									params.width = 0.6f;
-								}
-							})
-							.setCanceledOnTouchOutside(false)
-							.setCancelable(false)
-							.setTitle(getString(R.string.wx_pay_notify))
-							.configText(new ConfigText() {
-								@Override
-								public void onConfig(TextParams params) {
-									params.gravity = Gravity.CENTER;
-									params.textColor = Color.parseColor("#FF1F50F1");
-									params.padding = new int[]{20, 0, 20, 0};
-								}
-							})
-							.setText(getString(result))
-							.setPositive(getString(R.string.wx_pay_ok), new View.OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									if (baseResp.errCode == BaseResp.ErrCode.ERR_OK){
-										// 支付成功,发送广播给下单页面,通知支付成功
-										Intent intent=new Intent();
-										intent.setAction(PayUtil.WX_RECHARGE_SUCCESS);
-										sendBroadcast(intent);
-									}
-									finish();
-								}
-							}).show(getSupportFragmentManager());
+					if (baseResp.errCode == BaseResp.ErrCode.ERR_OK){
+						// 支付成功,发送广播给下单页面,通知支付成功
+						Intent intent=new Intent();
+						intent.setAction(PayUtil.WX_RECHARGE_SUCCESS);
+						sendBroadcast(intent);
+					}
+					finish();
 					break;
 				case BaseResp.ErrCode.ERR_USER_CANCEL:
 					result = R.string.errcode_cancel;
