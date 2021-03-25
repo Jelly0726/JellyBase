@@ -83,17 +83,17 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 				case BaseResp.ErrCode.ERR_USER_CANCEL:
 					result = R.string.errcode_cancel;
 					ToastUtils.showToast(this,result);
-					finish(2000);
+					finish();
 					break;
 				case BaseResp.ErrCode.ERR_AUTH_DENIED:
 					result = R.string.errcode_deny;
 					ToastUtils.showToast(this,result);
-					finish(2000);
+					finish();
 					break;
 				default:
 					result = R.string.errcode_unknown;
 					ToastUtils.showToast(this,result);
-					finish(2000);
+					finish();
 					break;
 			}
 
