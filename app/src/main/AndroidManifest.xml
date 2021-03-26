@@ -689,7 +689,7 @@
             android:theme="@style/XSwipe_AppTheme"/>
         <activity
             android:name=".swipeRefresh.activity.move.DragSwipeListActivity"
-            android:label="ListItem拖拽/侧滑"
+            android:label="ListItem拖拽和侧滑"
             android:theme="@style/XSwipe_AppTheme"/>
         <activity
             android:name=".swipeRefresh.activity.move.DragGridActivity"
@@ -701,7 +701,7 @@
             android:theme="@style/XSwipe_AppTheme"/>
         <activity
             android:name=".swipeRefresh.activity.move.DefineActivity"
-            android:label="自定义拖拽/侧滑"
+            android:label="自定义拖拽和侧滑"
             android:theme="@style/XSwipe_AppTheme"/>
         <!-- -->
         <activity
