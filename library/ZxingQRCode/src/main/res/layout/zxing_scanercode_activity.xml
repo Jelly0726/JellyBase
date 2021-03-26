@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#00000000"
+    >
+
+    <ImageView
+        android:id="@+id/mo_scanner_back"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/zxing_circle_trans_selector"
+        android:padding="8dp"
+        android:src="@drawable/zxing_scanner_back_img" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/mo_scanner_histroy"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/zxing_circle_trans_selector"
+            android:padding="8dp"
+            android:src="@drawable/zxing_scanner_history_show"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/mo_scanner_photo"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/zxing_circle_trans_selector"
+            android:padding="10dp"
+            android:src="@drawable/zxing_scanner_local_photos" />
+
+        <ImageView
+            android:id="@+id/mo_scanner_light"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/zxing_circle_trans_selector"
+            android:padding="8dp"
+            android:src="@drawable/zxing_scanner_light" />
+    </LinearLayout>
+</RelativeLayout>

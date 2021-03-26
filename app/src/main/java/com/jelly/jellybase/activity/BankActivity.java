@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.base.bankcard.BandCardEditText;
-import com.base.zxing.ScanerCodeActivity;
 import com.jelly.jellybase.R;
+import com.zxingx.library.ScanQRcodeActivity;
 
 public class BankActivity extends AppCompatActivity {
     private EditText bankNo;
@@ -43,7 +43,7 @@ public class BankActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.setClass(BankActivity.this, ScanerCodeActivity.class);
+                intent.setClass(BankActivity.this, ScanQRcodeActivity.class);
                 startActivityForResult(intent,1);
             }
         });

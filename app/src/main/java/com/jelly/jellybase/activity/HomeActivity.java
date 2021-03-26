@@ -32,8 +32,6 @@ import com.base.xrefreshview.XRefreshView;
 import com.base.xrefreshview.XScrollView;
 import com.base.xrefreshview.listener.OnItemClickListener;
 import com.base.xrefreshview.view.SimpleItemDecoration;
-import com.base.zxing.ScanerCodeActivity;
-import com.base.zxing.decoding.ZXingUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
@@ -41,6 +39,8 @@ import com.jelly.jellybase.adpater.HomeAdapter;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.datamodel.Product;
 import com.jelly.jellybase.seach.SearchActivity;
+import com.zxingx.library.ScanQRcodeActivity;
+import com.zxingx.library.activity.CodeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -337,8 +337,8 @@ public class HomeActivity extends BaseActivity {
             return;
         }
         //扫描
-        if(requestCode==zxingRequestCode && resultCode== ZXingUtils.resultCode){
-            String result=data.getStringExtra(ZXingUtils.ScanResult);
+        if(requestCode==zxingRequestCode && resultCode== CodeUtils.RESULT_SUCCESS){
+            String result=data.getStringExtra(CodeUtils.RESULT_STRING);
             Log.i("ss","result="+result);
             scanResult=new Gson().fromJson(result,ScanResult.class);
             if (!BaseApplication.getInstance().isLogin()){
@@ -360,7 +360,7 @@ public class HomeActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.saomiao_img:
-                    intent=new Intent(BaseApplication.getInstance(), ScanerCodeActivity.class);
+                    intent=new Intent(BaseApplication.getInstance(), ScanQRcodeActivity.class);
                     startActivityForResult(intent,zxingRequestCode);
                     break;
                 case R.id.left_address:

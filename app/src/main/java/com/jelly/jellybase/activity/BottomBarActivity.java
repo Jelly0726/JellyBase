@@ -17,7 +17,6 @@ import com.base.view.BackInterface;
 import com.base.view.BaseActivity;
 import com.base.view.BaseFragment;
 import com.base.view.FragmentAdapter;
-import com.base.zxing.decoding.ZXingUtils;
 import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;
 import com.chaychan.library.NoPreloadViewPager;
@@ -29,6 +28,7 @@ import com.jelly.jellybase.fragment.MiddleFragment;
 import com.jelly.jellybase.fragment.OrderFragment;
 import com.jelly.jellybase.fragment.WalletFragment;
 import com.jelly.jellybase.server.LocationService;
+import com.zxingx.library.activity.CodeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -162,7 +162,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             return;
         }
         //扫描
-        if(requestCode==zxingRequestCode && resultCode== ZXingUtils.resultCode){
+        if(requestCode==zxingRequestCode && resultCode== CodeUtils.RESULT_SUCCESS){
             //Log.i("ss","data="+data.getStringExtra("result"));
         }
         if(requestCode==areaRresultCode && resultCode== areaRresultCode){

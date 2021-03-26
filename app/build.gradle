@@ -441,7 +441,6 @@ repositories {
         }
         //广告轮播
 //        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
-        implementation files('libs/zxing-core-3.3.1.jar')
         implementation 'com.haibin:calendarview:3.6.4'//日历选择
         //百度文字识别(身份证、银行卡等)
         implementation files('libs/ocr-sdk.jar')
@@ -480,5 +479,7 @@ repositories {
         implementation 'com.huawei.hms:push:5.0.4.302'
         //内存溢出检测
         debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+        //zxing扫码
+        implementation project(path: ':library:ZxingQRCodeX')
     }
 }
