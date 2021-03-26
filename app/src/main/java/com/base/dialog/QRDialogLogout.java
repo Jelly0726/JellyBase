@@ -10,9 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.base.screenCapture.ScreenUtils;
-import com.base.zxing.CreateQRImage;
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
+import com.zxingx.library.utils.CreateQRImage;
 
 /**
  * 二维码框-自定义

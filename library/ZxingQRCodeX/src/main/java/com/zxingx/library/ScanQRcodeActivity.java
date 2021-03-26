@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.zxingx.library.activity.BaseScanActivity;
 import com.zxingx.library.activity.CodeUtils;
@@ -25,38 +26,26 @@ public class ScanQRcodeActivity extends BaseScanActivity {
         setTitleLay(R.layout.zxing_scanercode_activity);
 //        // 设备扫码框底部布局
 //        setBottomLay(R.layout.qr_bottom_lay);
-        findViewById(R.id.mo_scanner_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.mo_scanner_back).setOnClickListener(v -> finish());
         ivFlight = findViewById(R.id.mo_scanner_light);
-        ivFlight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (flightIsOpen) {
-                    flightIsOpen = false;
-                    openFlashlight(false);
-                } else {
-                    flightIsOpen = true;
-                    openFlashlight(true);
-                }
+        ivFlight.setOnClickListener(v -> {
+            if (flightIsOpen) {
+                flightIsOpen = false;
+                openFlashlight(false);
+            } else {
+                flightIsOpen = true;
+                openFlashlight(true);
             }
         });
 
-        findViewById(R.id.mo_scanner_photo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanPictures();
-            }
-        });
+        findViewById(R.id.mo_scanner_photo).setOnClickListener(v -> scanPictures());
     }
 
 
     @Override
     public void onQrAnalyzeFailed() {
         Log.i(TAG, "== 无法识别的二维码或条形码 ==");
+        Toast.makeText(this,"无法识别的二维码或条形码",Toast.LENGTH_LONG).show();
     }
 
     @Override

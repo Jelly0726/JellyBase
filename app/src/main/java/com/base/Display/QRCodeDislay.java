@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.Display;
 
 import com.base.imageView.ImageViewPlus;
-import com.base.zxing.CreateQRImage;
 import com.jelly.jellybase.R;
+import com.zxingx.library.utils.CreateQRImage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
