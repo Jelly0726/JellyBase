@@ -14,5 +14,12 @@
         <activity
             android:name=".activity.BaseScanActivity"
             android:screenOrientation="portrait" />
+        <!--二维码-->
+        <activity
+            android:name=".ScanQRcodeActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            />
+        <!--二维码-->
     </application>
 </manifest>

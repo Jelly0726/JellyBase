@@ -1035,13 +1035,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
-        <!--二维码-->
-        <activity
-            android:name="com.zxingx.library.ScanQRcodeActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:screenOrientation="portrait"
-            />
-        <!--二维码-->
         <!-- 注册监听手机状态 -->
         <receiver android:name=".receiver.PhoneStatReceiver" >
             <intent-filter android:priority="2147483647" >
