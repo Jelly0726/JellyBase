@@ -30,7 +30,6 @@ import com.zxingx.library.linstener.ScanResultLinstener;
 import com.zxingx.library.view.ViewfinderResultPointCallback;
 import com.zxingx.library.view.ViewfinderView;
 
-
 import java.util.Vector;
 
 /**
