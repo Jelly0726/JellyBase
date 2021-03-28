@@ -476,5 +476,5 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     //zxing扫码
     implementation project(path: ':library:ZxingQRCodeX')
-    implementation files('libs\\zxing-3.3.3.jar')
+
 }

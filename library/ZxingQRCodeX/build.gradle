@@ -31,10 +31,10 @@ android {
 }
 
 dependencies {
-//    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     //compileOnly jar包在当前使用 解决引用冲突
-    compileOnly files("libs/zxing-3.3.3.jar")
+    api files("libs/zxing-3.3.3.jar")
     testImplementation 'junit:junit:4.12'
 
 }
