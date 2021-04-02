@@ -4,13 +4,17 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
-import androidx.annotation.IntDef;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -78,7 +82,7 @@ public class StatusBarUtil {
 
 
     /**
-     *  代码实现android:fitsSystemWindows
+     * 代码实现android:fitsSystemWindows
      *
      * @param activity
      */
@@ -119,7 +123,7 @@ public class StatusBarUtil {
     /**
      * 设置 状态栏深色浅色切换
      */
-    public static boolean setStatusBarFontIconDark(Activity activity, @ViewType int type,boolean dark) {
+    public static boolean setStatusBarFontIconDark(Activity activity, @ViewType int type, boolean dark) {
         switch (type) {
             case TYPE_MIUI:
                 return setMiuiUI(activity, dark);
@@ -127,7 +131,7 @@ public class StatusBarUtil {
                 return setFlymeUI(activity, dark);
             case TYPE_M:
             default:
-                return setCommonUI(activity,dark);
+                return setCommonUI(activity, dark);
         }
     }
 
@@ -198,14 +202,38 @@ public class StatusBarUtil {
             return false;
         }
     }
+
     //获取状态栏高度
-    public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier(
-                "status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+    public static int getBarHeight(Context context) {
+        int mBarSize = 0;
+        try {
+            //方法一
+            Resources resources = context.getApplicationContext().getResources();
+            int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                mBarSize = resources.getDimensionPixelSize(resourceId);
+            } else {
+                //方法二 通过反射
+                Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+                Object object = clazz.newInstance();
+                int height = Integer.parseInt(clazz.getField("status_bar_height")
+                        .get(object).toString());
+                mBarSize = context.getApplicationContext().getResources().getDimensionPixelSize(height);
+            }
+            //方法三  状态栏高度 = 屏幕高度 - 应用区高度
+            //屏幕
+            DisplayMetrics dm = new DisplayMetrics();
+            ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+            //应用区域
+            Rect outRect1 = new Rect();
+            ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect1);
+            //状态栏高度=屏幕高度-应用区域高度
+            mBarSize = Math.max(mBarSize, dm.heightPixels - outRect1.height());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            context=null;
+            return mBarSize;
         }
-        return result;
     }
 }

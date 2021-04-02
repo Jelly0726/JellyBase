@@ -1,7 +1,6 @@
 package com.base.SystemBar;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,9 +22,7 @@ public class StatusView extends View {
 
     public StatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Resources resources = getResources();
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-        mBarSize = resources.getDimensionPixelSize(resourceId);
+        mBarSize = StatusBarUtil.getBarHeight(getContext());
     }
 
     @Override
