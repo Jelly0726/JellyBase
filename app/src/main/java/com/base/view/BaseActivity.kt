@@ -305,11 +305,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         }
         AppSubject.getInstance().detach(this)
         mUnbinder?.let { it.unbind() }
-        if (this !is LauncherActivity)
-            circleDialog?.let {
-                it.dismiss()
-                circleDialog = null
-            }
         softKeyboardManager?.let {
             it.removeSoftKeyboardStateListener(this);
             it.dispose();
@@ -480,6 +475,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     }
 
     override fun finish() { // TODO Auto-generated method stub
+        if (this !is LauncherActivity)
+            circleDialog?.let {
+                it.dismiss()
+                circleDialog = null
+            }
         AppSubject.getInstance().detach(this)
         FixMemLeak.fixLeak(this)
         super.finish()
