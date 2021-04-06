@@ -22,7 +22,7 @@ public class StatusView extends View {
 
     public StatusView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mBarSize = StatusBarUtil.getBarHeight(getContext());
+        mBarSize = StatusBarUtil.getStatusBarHeight(getContext());
     }
 
     @Override

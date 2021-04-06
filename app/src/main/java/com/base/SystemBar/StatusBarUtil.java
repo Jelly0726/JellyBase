@@ -8,20 +8,29 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
-import android.util.DisplayMetrics;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.DisplayCutout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 
 import androidx.annotation.IntDef;
+
+import com.base.log.DebugLog;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.List;
 
 public class StatusBarUtil {
+    private static boolean hasExecuteNotch = false;//
+    private static boolean isNotch = false;//是否刘海屏
+    private static int mBarSize = 0;//状态栏高度
     public final static int TYPE_MIUI = 0;
     public final static int TYPE_FLYME = 1;
     public final static int TYPE_M = 3;//6.0
@@ -203,7 +212,11 @@ public class StatusBarUtil {
         }
     }
 
-    //获取状态栏高度
+    /**
+     * 获取系统状态栏高度
+     * @param context
+     * @return
+     */
     public static int getBarHeight(Context context) {
         int mBarSize = 0;
         try {
@@ -220,20 +233,261 @@ public class StatusBarUtil {
                         .get(object).toString());
                 mBarSize = context.getApplicationContext().getResources().getDimensionPixelSize(height);
             }
-            //方法三  状态栏高度 = 屏幕高度 - 应用区高度
+            //方法三  状态栏高度 = 屏幕高度 - 应用区高度 此方法需要在view加载进activity后有效
             //屏幕
-            DisplayMetrics dm = new DisplayMetrics();
-            ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-            //应用区域
-            Rect outRect1 = new Rect();
-            ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect1);
-            //状态栏高度=屏幕高度-应用区域高度
-            mBarSize = Math.max(mBarSize, dm.heightPixels - outRect1.height());
+//            DisplayMetrics dm = new DisplayMetrics();
+//            ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+//            //应用区域
+//            Rect outRect1 = new Rect();
+//            ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect1);
+//            if (!outRect1.isEmpty()) {
+//                //状态栏高度=屏幕高度-应用区域高度
+//                mBarSize = Math.max(mBarSize, dm.heightPixels - outRect1.height());
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            context=null;
+            context = null;
             return mBarSize;
         }
+    }
+
+    /**
+     * 获取状态栏高度（刘海屏则获取刘海高度）
+     * @param context
+     * @return
+     */
+    public static int getStatusBarHeight(Context context) {
+        if (mBarSize == 0) {
+            int height = getBarHeight(context);
+            int notchHeight = getNotchHeight((Activity) context);
+            mBarSize = Math.max(height, notchHeight);
+        }
+        return mBarSize;
+    }
+
+    /**
+     * 获取刘海高度
+     */
+    public static int getNotchHeight(Activity activity) {
+        String manufacturer = android.os.Build.MANUFACTURER.toLowerCase();
+        int mBarSize = 0;
+        if (hasNotch(activity)) {
+            //有刘海才获取高度 否则默认刘海高度是0
+            if (manufacturer.equalsIgnoreCase("xiaomi")) {
+                mBarSize = getBarHeight(activity);//小米刘海会比状态栏小 直接获取状态栏高度
+            } else if (manufacturer.equalsIgnoreCase("huawei")
+                    || manufacturer.equalsIgnoreCase("honour")) {
+                mBarSize = getNotchSizeAtHuaWei(activity);
+            } else if (manufacturer.equalsIgnoreCase("vivo")) {
+                //VIVO是32dp
+                mBarSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        32, activity.getApplication().getResources().getDisplayMetrics());
+            } else if (manufacturer.equalsIgnoreCase("oppo")) {
+                mBarSize = 80;//oppo当时是固定数值
+            } else if (manufacturer.equalsIgnoreCase("smartisan")) {
+                mBarSize = 82;//当时锤子PDF文档上是固定数值
+            } else {
+                //其他品牌手机
+                if (activity != null && activity.getWindow() != null) {
+                    View decorView = activity.getWindow().getDecorView();
+                    if ((Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)) {
+                        WindowInsets windowInsets = decorView.getRootWindowInsets();
+                        if (windowInsets != null) {
+                            if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)) {
+                                DisplayCutout displayCutout = windowInsets.getDisplayCutout();
+                                if (displayCutout != null) {
+                                    List<Rect> rects = displayCutout.getBoundingRects();
+                                    if (rects != null && rects.size() > 1) {
+                                        if (rects.get(0) != null) {
+                                            mBarSize = rects.get(0).bottom;
+                                            return mBarSize;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            mBarSize = getBarHeight(activity);
+        }
+        return mBarSize;
+    }
+
+    /**
+     * 华为获取刘海高度
+     * 获取刘海尺寸：width、height
+     * int[0]值为刘海宽度 int[1]值为刘海高度
+     */
+    public static int getNotchSizeAtHuaWei(Activity activity) {
+        int height = 0;
+        try {
+            ClassLoader cl = activity.getApplication().getClassLoader();
+            Class HwNotchSizeUtil = cl.loadClass("com.huawei.android.util.HwNotchSizeUtil");
+            Method get = HwNotchSizeUtil.getMethod("getNotchSize");
+            int[] ret = (int[]) get.invoke(HwNotchSizeUtil);
+            height = ret[1];
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return height;
+    }
+
+    /**
+     * 是否是刘海或是钻孔屏幕 全局只取一次
+     *
+     * @return
+     */
+    public static boolean hasNotch(Activity activity) {
+        if (!hasExecuteNotch) {
+            hasExecuteNotch = true;
+            String manufacturer = android.os.Build.MANUFACTURER.toLowerCase();
+            if (manufacturer.equalsIgnoreCase("xiaomi")) {
+                isNotch= hasNotchAtXiaoMi(activity);
+            } else if (manufacturer.equalsIgnoreCase("huawei")
+                    || manufacturer.equalsIgnoreCase("honour")) {
+                isNotch= hasNotchAtHuawei(activity);
+            } else if (manufacturer.equalsIgnoreCase("vivo")) {
+                isNotch= hasNotchAtVivo(activity);
+            } else if (manufacturer.equalsIgnoreCase("oppo")) {
+                isNotch= hasNotchAtOPPO(activity);
+            } else if (manufacturer.equalsIgnoreCase("samsung")) {
+                isNotch= hasNotchSamsung(activity);
+            } else {
+                isNotch= isOtherBrandHasNotch(activity);
+            }
+        }
+        return isNotch;
+    }
+
+    /**
+     * 小米刘海屏判断
+     *
+     * @return 0 if it is not notch ; return 1 means notch
+     * @throws IllegalArgumentException if the key exceeds 32 characters
+     */
+    public static boolean hasNotchAtXiaoMi(Activity activity) {
+        return getInt("ro.miui.notch", activity) == 1;
+    }
+
+    public static int getInt(String key, Activity activity) {
+        int result = 0;
+        if (android.os.Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
+            try {
+                ClassLoader classLoader = activity.getApplication().getClassLoader();
+                @SuppressWarnings("rawtypes")
+                Class SystemProperties = classLoader.loadClass("android.os.SystemProperties");
+                //参数类型
+                @SuppressWarnings("rawtypes")
+                Class[] paramTypes = new Class[2];
+                paramTypes[0] = String.class;
+                paramTypes[1] = int.class;
+                Method getInt = SystemProperties.getMethod("getInt", paramTypes);
+                //参数
+                Object[] params = new Object[2];
+                params[0] = new String(key);
+                params[1] = new Integer(0);
+                result = (Integer) getInt.invoke(SystemProperties, params);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 华为刘海屏判断
+     *
+     * @return
+     */
+    public static boolean hasNotchAtHuawei(Activity activity) {
+        boolean ret = false;
+        try {
+            ClassLoader classLoader = activity.getApplication().getClassLoader();
+            Class HwNotchSizeUtil = classLoader.loadClass("com.huawei.android.util.HwNotchSizeUtil");
+            Method get = HwNotchSizeUtil.getMethod("hasNotchInScreen");
+            ret = (boolean) get.invoke(HwNotchSizeUtil);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    /**
+     * OPPO刘海屏判断
+     *
+     * @return
+     */
+    public static boolean hasNotchAtOPPO(Activity activity) {
+        return activity.getApplication().getPackageManager()
+                .hasSystemFeature("com.oppo.feature.screen.heteromorphism");
+    }
+
+    /**
+     * VIVO刘海屏判断
+     *
+     * @return
+     */
+    public static boolean hasNotchAtVivo(Activity activity) {
+        boolean ret = false;
+        try {
+            ClassLoader classLoader = activity.getApplication().getClassLoader();
+            Class FtFeature = classLoader.loadClass("android.util.FtFeature");
+            Method method = FtFeature.getMethod("isFeatureSupport", int.class);
+            ret = (boolean) method.invoke(FtFeature, 0x20);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+    /**
+     * 判断三星手机是否有刘海屏
+     *
+     * @return
+     */
+    private static boolean hasNotchSamsung(Activity activity) {
+        if (android.os.Build.MANUFACTURER.equalsIgnoreCase("samsung")) {
+            try {
+                final Resources res = activity.getApplication().getResources();
+                final int resId = res.getIdentifier("config_mainBuiltInDisplayCutout", "string", "android");
+                final String spec = resId > 0 ? res.getString(resId) : null;
+                return spec != null && !TextUtils.isEmpty(spec);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param activity
+     * @return
+     */
+    private static boolean isOtherBrandHasNotch(Activity activity) {
+        if (activity != null && activity.getWindow() != null) {
+            View decorView = activity.getWindow().getDecorView();
+            if ((Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)) {
+                WindowInsets windowInsets = decorView.getRootWindowInsets();
+                if (windowInsets != null) {
+                    if ((Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P)) {
+                        DisplayCutout displayCutout = windowInsets.getDisplayCutout();
+                        if (displayCutout != null) {
+                            List<Rect> rects = displayCutout.getBoundingRects();
+                            if (rects != null && rects.size() > 0) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
