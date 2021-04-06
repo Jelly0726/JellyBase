@@ -466,7 +466,7 @@ public class StatusBarUtil {
         return false;
     }
 
-    /**
+    /**其他品牌判断是否刘海屏
      * @param activity
      * @return
      */
