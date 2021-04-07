@@ -293,7 +293,16 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     fun finish(time: Int) {
         Handler().postDelayed({ finish() }, time.toLong())
     }
-
+    override fun finish() { // TODO Auto-generated method stub
+        if (this !is LauncherActivity)
+            circleDialog?.let {
+                it.dismiss()
+                circleDialog = null
+            }
+        AppSubject.getInstance().detach(this)
+        FixMemLeak.fixLeak(this)
+        super.finish()
+    }
     override fun onDestroy() {
         //结束协程
         cancel()
@@ -472,17 +481,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             }
         }
 
-    }
-
-    override fun finish() { // TODO Auto-generated method stub
-        if (this !is LauncherActivity)
-            circleDialog?.let {
-                it.dismiss()
-                circleDialog = null
-            }
-        AppSubject.getInstance().detach(this)
-        FixMemLeak.fixLeak(this)
-        super.finish()
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean { //设置接收到回车事件时隐藏软键盘
