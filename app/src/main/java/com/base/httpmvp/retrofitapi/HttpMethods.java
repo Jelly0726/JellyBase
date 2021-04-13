@@ -161,11 +161,11 @@ public class HttpMethods implements IGlobalManager {
 		// 创建 RequestBody，用于封装构建RequestBody
 		RequestBody requestFile =
 				RequestBody.create(MediaType.parse("multipart/form-data"), file);
-		// MultipartBody.Part  和后端约定好Key，这里的partName是用image
 		String type="image";
 		if(!TextUtils.isEmpty(uploadBean.getFileType())){
 			type=uploadBean.getFileType();
 		}
+		// MultipartBody.Part  和后端约定好Key
 		MultipartBody.Part body =
 				MultipartBody.Part.createFormData(type, file.getName(), requestFile);
 		// 添加描述
