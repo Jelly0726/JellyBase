@@ -1,6 +1,6 @@
 package com.jelly.mvp.presenter;
 
-import com.base.bankcard.BankCardInfo;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;

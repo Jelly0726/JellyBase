@@ -13,15 +13,15 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.appManager.BaseApplication;
-import com.base.mypopupmenu.BaseItem;
-import com.base.mypopupmenu.TopMiddlePopup;
-import com.base.mypopupmenu.Util;
-import com.base.view.BaseActivity;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.view.ItemDecoration;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.mypopupmenu.BaseItem;
+import com.jelly.baselibrary.mypopupmenu.TopMiddlePopup;
+import com.jelly.baselibrary.mypopupmenu.Util;
+import com.base.BaseActivity;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
 

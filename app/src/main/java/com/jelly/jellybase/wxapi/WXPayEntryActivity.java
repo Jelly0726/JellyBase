@@ -1,24 +1,17 @@
 package com.jelly.jellybase.wxapi;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import com.base.config.BaseConfig;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.config.BaseConfig;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.weixinpay.PayUtil;
-import com.mylhyl.circledialog.CircleDialog;
-import com.mylhyl.circledialog.callback.ConfigDialog;
-import com.mylhyl.circledialog.callback.ConfigText;
-import com.mylhyl.circledialog.params.DialogParams;
-import com.mylhyl.circledialog.params.TextParams;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;

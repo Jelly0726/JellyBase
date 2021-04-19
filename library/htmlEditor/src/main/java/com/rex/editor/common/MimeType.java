@@ -3,7 +3,7 @@
  * Copyright 2017 Zhihu Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this html_edit_file except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
@@ -17,10 +17,9 @@
 package com.rex.editor.common;
 
 
-import androidx.collection.ArraySet;
-
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -52,48 +51,48 @@ public enum MimeType {
     )),
 
     // ============== videos ==============
-    MPEG("html_edit_video/mpeg", arraySetOf(
+    MPEG("video/mpeg", arraySetOf(
             "mpeg",
             "mpg"
     )),
 
-    MP3("html_edit_audio/mp3", arraySetOf(
+    MP3("audio/mp3", arraySetOf(
             "mpeg",
             "mpg"
     )),
 
-    WAV("html_edit_audio/wav", arraySetOf(
+    WAV("audio/wav", arraySetOf(
             "wav",
             "x-wav"
     )),
-    X_WAV("html_edit_audio/x-wav", arraySetOf(
+    X_WAV("audio/x-wav", arraySetOf(
             "wav","x-wav"
     )),
-    MP4("html_edit_video/mp4", arraySetOf(
+    MP4("video/mp4", arraySetOf(
             "mp4",
             "m4v"
     )),
-    QUICKTIME("html_edit_video/quicktime", arraySetOf(
+    QUICKTIME("video/quicktime", arraySetOf(
             "mov"
     )),
-    THREEGPP("html_edit_video/3gpp", arraySetOf(
+    THREEGPP("video/3gpp", arraySetOf(
             "3gp",
             "3gpp"
     )),
-    THREEGPP2("html_edit_video/3gpp2", arraySetOf(
+    THREEGPP2("video/3gpp2", arraySetOf(
             "3g2",
             "3gpp2"
     )),
-    MKV("html_edit_video/x-matroska", arraySetOf(
+    MKV("video/x-matroska", arraySetOf(
             "mkv"
     )),
-    WEBM("html_edit_video/webm", arraySetOf(
+    WEBM("video/webm", arraySetOf(
             "webm"
     )),
-    TS("html_edit_video/mp2ts", arraySetOf(
+    TS("video/mp2ts", arraySetOf(
             "ts"
     )),
-    AVI("html_edit_video/avi", arraySetOf(
+    AVI("video/avi", arraySetOf(
             "avi"
     ));
 
@@ -122,7 +121,7 @@ public enum MimeType {
     }
 
     private static Set<String> arraySetOf(String... suffixes) {
-        return new ArraySet<>(Arrays.asList(suffixes));
+        return new HashSet<>(Arrays.asList(suffixes));
     }
 
     @Override

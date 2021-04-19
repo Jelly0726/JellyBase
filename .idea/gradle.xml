@@ -13,12 +13,14 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/JieCaoVideoPlayer" />
             <option value="$PROJECT_DIR$/MarqueeView-master" />
+            <option value="$PROJECT_DIR$/RichEditorSample" />
             <option value="$PROJECT_DIR$/WebSocketClient" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base64demo" />
             <option value="$PROJECT_DIR$/blurkit" />
             <option value="$PROJECT_DIR$/form" />
             <option value="$PROJECT_DIR$/jiaozivideoplayer-sample" />
+            <option value="$PROJECT_DIR$/jnisample" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/library/BGABanner" />
             <option value="$PROJECT_DIR$/library/BottomBar" />
@@ -38,6 +40,7 @@
             <option value="$PROJECT_DIR$/library/album" />
             <option value="$PROJECT_DIR$/library/anti_emulator" />
             <option value="$PROJECT_DIR$/library/base64" />
+            <option value="$PROJECT_DIR$/library/baselibrary" />
             <option value="$PROJECT_DIR$/library/circleDialog-androidx" />
             <option value="$PROJECT_DIR$/library/htmlEditor" />
             <option value="$PROJECT_DIR$/library/jcvideoplayer-lib" />

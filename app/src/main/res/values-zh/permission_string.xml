@@ -1,41 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_settings">设置</string>
-    <string name="permission_resume">继续</string>
-    <string name="permission_cancel">取消</string>
 
-    <string name="permission_successfully">成功</string>
-    <string name="permission_failure">失败</string>
-
-    <string name="permission_camera">相机</string>
-    <string name="permission_contact">联系人</string>
-    <string name="permission_location">定位</string>
-
-    <string name="permission_calendar">日历</string>
-    <string name="permission_microphone">麦克风</string>
-    <string name="permission_storage">存储卡</string>
-
-    <string name="permission_phone">手机状态</string>
-    <string name="permission_sensors">传感器</string>
-    <string name="permission_sms">短信</string>
-
-    <string name="permission_setting">权限设置</string>
-    <string name="permission_install">安装Apk</string>
-    <string name="permission_overlay">提示窗口</string>
-
-    <string name="permission_title_dialog">温馨提示</string>
-    <string name="message_permission_rationale">授予该程序以下权限:\n\n%1$s</string>
-    <string name="message_permission_always_failed">请在设置中给我们许可:\n\n%1$s</string>
-    <string name="message_setting_comeback">用户从设置页面返回.</string>
-
-    <string name="message_install_failed">你的手机不允许我们安装应用程序.</string>
-
-    <string name="message_overlay_failed">你的手机不允许我们使用其他的应用程序.</string>
-
-    <string name="message_error_storage">请检查外部存储设备.</string>
-
-    <string name="alert_for_doze_mode_title">关于后台运行</string>
-    <string name="alert_for_doze_mode_content">为了让%1$s不会频繁被系统杀死，请允许把%1$s加入电池优化白名单；同时，%1$s会尽量保证不滥用此权限。请在接下来的系统弹窗中选择"允许" :)</string>
-    <string name="alert_for_doze_mode_yes">朕同意了</string>
-    <string name="alert_for_doze_mode_no">我拒绝</string>
 </resources>

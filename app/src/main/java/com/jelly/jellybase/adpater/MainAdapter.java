@@ -23,9 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.multiClick.OnMultiClickListener;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 
 public class MainAdapter extends BaseRecyclerAdapter<MainAdapter.ViewHolder> {

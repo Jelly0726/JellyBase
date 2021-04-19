@@ -17,13 +17,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.core.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.base.appManager.BaseApplication;
-import com.jelly.jellybase.R;
+import androidx.core.app.NotificationCompat;
+
+import com.base.BaseApplication;
+import com.jelly.baselibrary.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

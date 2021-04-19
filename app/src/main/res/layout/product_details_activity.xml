@@ -80,7 +80,7 @@
                     android:textSize="13mm"
                     android:textColor="#ffcc00"
                     android:text="距离结束：23:33:34"/>
-                <com.base.progressBar.CustomHorizontalProgress
+                <com.jelly.baselibrary.progressBar.CustomHorizontalProgress
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_marginTop="2mm"
                     android:paddingLeft="0mm"
@@ -111,7 +111,7 @@
             android:visibility="visible"
             android:src="@mipmap/sg"/>
     </RelativeLayout>
-    <com.base.middleBar.MiddleBarLayout
+    <com.jelly.baselibrary.middleBar.MiddleBarLayout
         android:id="@+id/bbl"
         android:layout_width="match_parent"
         android:layout_height="45mm"
@@ -120,7 +120,7 @@
         android:layout_gravity="center"
         android:clipChildren="false"
         >
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -132,7 +132,7 @@
             app:mItemTextSize="12mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -144,7 +144,7 @@
             app:mItemTextSize="12mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -156,7 +156,7 @@
             app:mItemTextSize="12mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-    </com.base.middleBar.MiddleBarLayout>
+    </com.jelly.baselibrary.middleBar.MiddleBarLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"

@@ -23,8 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
 

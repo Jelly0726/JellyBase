@@ -9,7 +9,7 @@ import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.model.Message;
+import com.jelly.baselibrary.model.Message;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;

@@ -25,12 +25,8 @@
     <color name="main_bg">#eeeeee</color>
 
     <color name="transparent">#00000000</color>
-    <color name="green">#008000</color>
     <color name="gray">#ffc0c0c0</color>
-    <color name="offline_down_title">#909090</color>
-    <color name="offline_head_font">#FFFFFF</color>
     <color name="gary">#898989</color>
-    <color name="offline_down_size">#777777</color>
     <color name="gray_lite">#c5c5c5</color>
     <color name="black">#000</color>
 
@@ -42,21 +38,5 @@
     <color name="order_menberID">#727272</color>
     <color name="order_price">#313131</color>
 
-    <color name="not_doing">#f04523</color>
-    <color name="doing">#4abc38</color>
-    <color name="done">#727272</color>
-
-    <color name="order_state_on">#f58612</color>
-    <color name="order_state_un">#313131</color>
-    <color name="order_state_line">#f58612</color>
-
-    <color name="coupon_new">#dd3e3e</color>
-    <color name="coupon_overdue">#959592</color>
-
     <color name="disburse">#27a02d</color>
-    <color name="income">#ff0101</color>
-    <color name="mainText">#084051</color>
-    <color name="mainText3">#C8D4D5</color>
-    <color name="mainText5">#f57fdc</color>
-    <color name="mainText15">#98caec</color>
 </resources>

@@ -7,8 +7,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.base.valicode.GraphValiCode;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.valicode.GraphValiCode;
+import com.base.BaseActivity;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
 

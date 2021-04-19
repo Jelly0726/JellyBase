@@ -22,7 +22,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.base.BaseAdapter;
+import com.jelly.baselibrary.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
 import com.jelly.jellybase.swipeRefresh.adapter.MainAdapter;

@@ -24,8 +24,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.BaseAdapter;
-import com.base.model.AccountDetail;
+import com.jelly.baselibrary.BaseAdapter;
+import com.jelly.baselibrary.model.AccountDetail;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

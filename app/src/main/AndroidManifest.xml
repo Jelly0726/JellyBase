@@ -351,7 +351,7 @@
     <!--  同时在清单文件中配置 android:usesCleartextTraffic="true" 和 android:networkSecurityConfig="@xml/network_config" 文件时，
   对Android9.0明文请求也是不支持的，它们是互斥的  -->
     <application
-        android:name="com.base.appManager.BaseApplication"
+        android:name="com.base.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -380,11 +380,6 @@
             android:name="design_height_in_dp"
             android:value="640"/>
         <!--↑↑↑↑↑↑↑ 屏幕适配 设计稿的尺寸。↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓解决Glide由于过度压缩导致了图片变绿↓↓↓↓↓-->
-        <meta-data
-            android:name="com.base.glide.GlideConfiguration"
-            android:value="GlideModule"/>
-        <!--↑↑↑↑↑↑↑↑解决Glide由于过度压缩导致了图片变绿↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓华为推送token自动↓↓↓↓↓-->
         <meta-data
             android:name="push_kit_auto_init_enabled"
@@ -595,10 +590,6 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.base.Contacts.ContactsActivity"
-            android:windowSoftInputMode="stateUnchanged|stateHidden"
-            android:screenOrientation="portrait">
-        </activity>
         <activity android:name=".activity.CrashActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
@@ -638,22 +629,6 @@
             android:screenOrientation="portrait">
         </activity>
         <!--↑↑↑↑↑高德地图↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓图片裁剪↓↓↓↓↓↓↓↓-->
-        <activity
-            android:name="com.base.cropper.CropperActivity"
-            android:configChanges="orientation|keyboardHidden|fontScale"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑图片裁剪↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓虚拟显示器↓↓↓↓↓↓↓↓-->
-        <activity
-            android:name="com.base.screenColor.ScreenColorActivity"
-            android:configChanges="orientation|keyboardHidden|fontScale"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑虚拟显示器↑↑↑↑↑↑↑↑-->
         <activity
             android:name=".swipeRefresh.activity.XSwipeMainActivity"
             android:label="Item中的菜单"
@@ -811,53 +786,6 @@
             android:theme="@style/AppTheme"/>
         <activity android:name=".videorecord.VideoPlayActivity"
             android:theme="@style/AppTheme"></activity>
-        <!--↓↓↓↓↓↓↓通过广播监听短信↓↓↓↓↓↓↓-->
-        <receiver android:name="com.base.sms.SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter android:priority="2147483647">
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-        <!--注册监听短信数据库变化-->
-        <service android:name="com.base.sms.SmsService"/>
-        <!--↑↑↑↑↑↑↑↑通过广播监听短信↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓设置默认短信应用↓↓↓↓↓↓↓-->
-        <!-- BroadcastReceiver that listens for incoming MMS messages -->
-        <receiver android:name="com.base.sms.MmsReceiver"
-            android:permission="android.permission.BROADCAST_WAP_PUSH">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
-                <data android:mimeType="application/vnd.wap.mms-message" />
-            </intent-filter>
-        </receiver>
-        <!-- Activity that allows the user to send new SMS/MMS messages -->
-        <activity android:name="com.base.sms.ComposeSmsActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <action android:name="android.intent.action.SENDTO" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </activity>
-        <!-- Service that delivers messages from the phone "quick response" -->
-        <service android:name="com.base.sms.HeadlessSmsSendService"
-            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="sms" />
-                <data android:scheme="smsto" />
-                <data android:scheme="mms" />
-                <data android:scheme="mmsto" />
-            </intent-filter>
-        </service>
-        <!--↑↑↑↑↑↑↑↑设置默认短信应用↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓蓝牙配对↓↓↓↓↓↓↓-->
         <activity android:name=".blebluetooth.BluetoothBLEActivity"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
@@ -961,62 +889,12 @@
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信支付回调↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓微信自动抢红包↓↓↓↓↓↓↓-->
-        <activity android:name="com.base.redpacket.GuideActivity">
-        </activity>
-        <service
-            android:name="com.base.redpacket.service.RedPacketService"
-            android:enabled="true"
-            android:exported="true"
-            android:label="@string/service_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/red_packet_service_config" />
-        </service>
-        <service
-            android:name="com.base.redpacket.service.NotificationService"
-            android:label="@string/service_name"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-        <activity android:name="com.base.redpacket.StartActivity">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑微信自动抢红包↑↑↑↑↑↑↑↑-->
         <!--↓↓↓↓↓↓↓微信登录回调↓↓↓↓↓↓↓-->
         <activity android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"/>
         <!--↑↑↑↑↑↑↑↑微信登录回调↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓通知栏监听↓↓↓↓↓↓↓-->
-        <service
-            android:enabled="true"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:name="com.base.NotifyService.NotificationService"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-            <!--<intent-filter>-->
-            <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
-            <!--</intent-filter>-->
-            <!--<uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>-->
-        </service>
-        <!--↑↑↑↑↑↑↑↑通知栏监听↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
-        <activity
-            android:name="com.base.screenCapture.ScreenShotActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑屏幕截图↑↑↑↑↑↑↑↑-->
+
         <!--↓↓↓↓↓↓↓地图搜索↓↓↓↓↓↓↓-->
         <activity
             android:name="com.base.MapUtil.DestinationActivity"
@@ -1024,17 +902,6 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <!--↑↑↑↑↑↑↑↑地图搜索↑↑↑↑↑↑↑↑-->
-        <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
-        <provider
-            android:name="com.base.provider.JellyProvider"
-            android:authorities="${applicationId}.jellybase.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-        <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
         <!-- 注册监听手机状态 -->
         <receiver android:name=".receiver.PhoneStatReceiver" >
             <intent-filter android:priority="2147483647" >
@@ -1097,7 +964,6 @@
         <service
             android:name=".server.BadgeIntentService"
             android:exported="false"></service>
-        <service android:name="com.base.mic.MicService"/>
         <!--↓↓↓极光推送↓↓↓-->
         <receiver
             android:name="com.base.jiguang.PushReceiver"
@@ -1123,13 +989,16 @@
             </intent-filter>
         </service>
         <!--↑↑↑华为推送↑↑↑-->
-        <!--USB事件监听-->
-        <receiver
-            android:name="com.base.Receiver.UsbDeviceReceiver"
-            android:process=":watch">
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
-            </intent-filter>
-        </receiver>
+        <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
+        <provider
+            android:name="com.jelly.baselibrary.provider.JellyProvider"
+            android:authorities="${applicationId}.jellybase.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
     </application>
 </manifest>

@@ -6,8 +6,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 
-import com.base.multiClick.AntiShake;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AutoTextAdapter;
 

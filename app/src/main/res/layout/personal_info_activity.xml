@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,14 +50,14 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.base.xrefreshview.XRefreshView
+    <com.jelly.baselibrary.xrefreshview.XRefreshView
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         xrefreshview:autoRefresh="false"
         >
-        <com.base.xrefreshview.XScrollView
+        <com.jelly.baselibrary.xrefreshview.XScrollView
             android:id="@+id/xscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -383,8 +383,8 @@
                         android:src="@mipmap/right_next"/>
                 </LinearLayout>
             </LinearLayout>
-        </com.base.xrefreshview.XScrollView>
-    </com.base.xrefreshview.XRefreshView>
+        </com.jelly.baselibrary.xrefreshview.XScrollView>
+    </com.jelly.baselibrary.xrefreshview.XRefreshView>
     <TextView
         android:id="@+id/commit_tv"
         android:layout_width="match_parent"

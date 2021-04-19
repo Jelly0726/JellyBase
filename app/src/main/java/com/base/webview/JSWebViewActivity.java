@@ -23,12 +23,15 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.base.BaseActivity;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.log.DebugLog;
-import com.base.view.BaseActivity;
-import com.base.webview.tbs.TBSClientCallBack;
-import com.base.webview.tbs.WebViewJavaScriptFunction;
-import com.base.webview.tbs.X5WebView;
+import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.webview.DownloadCompleteReceiver;
+import com.jelly.baselibrary.webview.WebConfig;
+import com.jelly.baselibrary.webview.WebTools;
+import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
+import com.jelly.baselibrary.webview.tbs.WebViewJavaScriptFunction;
+import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.ValueCallback;
@@ -103,7 +106,7 @@ public class JSWebViewActivity extends BaseActivity {
         mRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override//返回true 就是子布局手势，false 就是自己使用
             public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
-                DebugLog.i("getScrollY()="+child.getScrollY());
+                LogUtils.i("getScrollY()="+child.getScrollY());
                 if (child.getScrollY() > 0)
                     return true;
                 return false;
@@ -137,7 +140,7 @@ public class JSWebViewActivity extends BaseActivity {
             }
             @JavascriptInterface
             public void onSkipPage(String data){
-                DebugLog.i("data="+data);
+                LogUtils.i("data="+data);
             }
             /**
              * js调用java的返回事件
@@ -181,12 +184,12 @@ public class JSWebViewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 topNav_layout.setVisibility(View.VISIBLE);
-                DebugLog.i("onPageStarted  url="+url);
+                LogUtils.i("onPageStarted  url="+url);
             }
 
             @Override
             public void onReceivedTitle(WebView arg0, String arg1) {
-                DebugLog.i("onReceivedTitle  arg1="+arg1);
+                LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
                     topNav_layout.setVisibility(View.GONE);
@@ -297,7 +300,7 @@ public class JSWebViewActivity extends BaseActivity {
         if (requestCode == X5WebView.FILE_CHOOSER) {
             if (null == uploadFile && null == arg1) return;
             if (data!=null){
-                DebugLog.i("文件路径"+data.getData());
+                LogUtils.i("文件路径"+data.getData());
             }
             Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
             if (arg1 != null) {

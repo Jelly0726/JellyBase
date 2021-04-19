@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.base.xrefreshview.XRefreshView
+<com.jelly.baselibrary.xrefreshview.XRefreshView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="#eeeeee"
     xrefreshview:autoRefresh="false" >
-    <com.base.xrefreshview.XScrollView
+    <com.jelly.baselibrary.xrefreshview.XScrollView
         android:id="@+id/xscrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -199,5 +199,5 @@
                     android:background="#727272"/>
             </LinearLayout>
         </LinearLayout>
-    </com.base.xrefreshview.XScrollView>
-</com.base.xrefreshview.XRefreshView>
+    </com.jelly.baselibrary.xrefreshview.XScrollView>
+</com.jelly.baselibrary.xrefreshview.XRefreshView>

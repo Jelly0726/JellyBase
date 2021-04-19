@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.base.multiClick.OnMultiClickListener;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.entity.GoodsInfo;
@@ -271,7 +271,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
      */
     private void showDialog(final int groupPosition, final int childPosition, final View showCountView,final  boolean isChecked, final  GoodsInfo child) {
         final AlertDialog.Builder alertDialog_Builder=new AlertDialog.Builder(mcontext);
-        View view= LayoutInflater.from(mcontext).inflate(R.layout.shopcar_dialog_change_num,null);
+        View view= LayoutInflater.from(mcontext).inflate(R.layout.addcart_dialog_change_num,null);
         final AlertDialog dialog=alertDialog_Builder.create();
         dialog.setView(view);//errored,这里是dialog，不是alertDialog_Buidler
         count=child.getCount();

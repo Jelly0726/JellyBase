@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/navi_color"/>
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
-    <com.base.xrefreshview.XRefreshView
+    <com.jelly.baselibrary.xrefreshview.XRefreshView
         xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
@@ -20,13 +20,13 @@
         android:orientation="vertical"
         xrefreshview:isHeightMatchParent="true"
         xrefreshview:isWidthMatchParent="true" >
-    <com.base.webview.tbs.X5WebView
+    <com.jelly.baselibrary.webview.tbs.X5WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layerType="hardware"
         android:scrollbars="none">
 
-    </com.base.webview.tbs.X5WebView>
-    </com.base.xrefreshview.XRefreshView>
+    </com.jelly.baselibrary.webview.tbs.X5WebView>
+    </com.jelly.baselibrary.xrefreshview.XRefreshView>
 </LinearLayout>

@@ -13,7 +13,7 @@
         android:orientation="vertical"
         >
         <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-        <com.base.SystemBar.StatusView
+        <com.jelly.baselibrary.SystemBar.StatusView
             android:id="@+id/status_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="200mm"
             android:background="#cacaca"
-            android:layout_margin="10mm"
+            android:layout_margin="5mm"
+            android:padding="5mm"
             android:hint="请输入有加密的字符串或者要解密的Base64字符串"
             />
         <LinearLayout
@@ -36,24 +37,28 @@
                 android:id="@+id/btn_copy_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="复制"
                 />
             <Button
                 android:id="@+id/btn_past_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="粘贴"
                 />
             <Button
                 android:id="@+id/btn_createRSA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="生成RSA"
                 />
             <Button
                 android:id="@+id/btn_read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="读取文件"
                 />
         </LinearLayout>
@@ -74,12 +79,14 @@
                 android:id="@+id/btn_sha1OfApk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="获取sha1"
                 />
             <Button
                 android:id="@+id/btn_apk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="验证apk签名"
                 />
         </LinearLayout>
@@ -92,12 +99,14 @@
                 android:id="@+id/btn_java_encode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="HmacSHA1 加密"
                 />
             <Button
                 android:id="@+id/btn_native_encode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="SHA1 加密"
                 />
         </LinearLayout>
@@ -111,12 +120,14 @@
                 android:id="@+id/btn_java_decode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="SHA224 加密"
                 />
             <Button
                 android:id="@+id/btn_native_decode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="SHA256 加密"
                 />
         </LinearLayout>
@@ -130,12 +141,14 @@
                 android:id="@+id/btn_java_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="SHA384 加密"
                 />
             <Button
                 android:id="@+id/btn_native_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="SHA512 加密"
                 />
         </LinearLayout>
@@ -148,6 +161,7 @@
                 android:id="@+id/btn_md5_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="md5 加密"
                 />
         </LinearLayout>
@@ -160,12 +174,14 @@
                 android:id="@+id/btn_AES_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="AES加密"
                 />
             <Button
                 android:id="@+id/btn_AESs_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="AES解密"
                 />
         </LinearLayout>
@@ -178,12 +194,14 @@
                 android:id="@+id/btn_AES_key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="动态KEY AES加密"
                 />
             <Button
                 android:id="@+id/btn_AESs_key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="动态KEY AES解密"
                 />
         </LinearLayout>
@@ -196,12 +214,14 @@
                 android:id="@+id/btn_RSA_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="RSA加密"
                 />
             <Button
                 android:id="@+id/btn_RSAs_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="RSA解密"
                 />
         </LinearLayout>
@@ -214,12 +234,14 @@
                 android:id="@+id/btn_RSAa_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="RSA加密带key"
                 />
             <Button
                 android:id="@+id/btn_RSAd_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="12mm"
                 android:text="RSA解密带key"
                 />
         </LinearLayout>

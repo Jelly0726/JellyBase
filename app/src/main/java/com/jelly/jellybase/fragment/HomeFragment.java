@@ -5,11 +5,11 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.base.view.BaseFragment;
-import com.base.webview.tbs.TBSClientCallBack;
-import com.base.webview.tbs.X5WebView;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.listener.OnTopRefreshTime;
+import com.base.BaseFragment;
+import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
+import com.jelly.baselibrary.webview.tbs.X5WebView;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.WebView;
 

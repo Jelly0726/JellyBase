@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/contacts_bg_color"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50mm"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="1mm"
+        android:background="@color/navi_color">
+        <LinearLayout
+            android:id="@+id/left_back"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
+            android:gravity="center_vertical"
+            android:paddingLeft="10mm">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/left_back"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16mm"
+            android:text="通讯录"
+            android:textColor="#313131"/>
+        <LinearLayout
+            android:id="@+id/right_text"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
+            android:gravity="center_vertical"
+            android:paddingLeft="10mm">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14mm"
+                android:textColor="#313131"
+                android:text="确定"/>
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/layoutContainer"
+        android:layout_width="match_parent"
+        android:layout_height="55mm"
+        android:padding="8mm" >
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/contacts_search_edit_bg"
+            android:drawableLeft="@drawable/contacts_search"
+            android:drawablePadding="5mm"
+            android:hint="搜索"
+            android:paddingLeft="7mm"
+            android:paddingRight="40mm"
+            android:singleLine="true"
+            android:textSize="14mm" />
+
+        <ImageView
+            android:id="@+id/ivClearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:padding="0mm"
+            android:layout_marginRight="5mm"
+            android:src="@drawable/contacts_clear_button"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/lv_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="80.0mm"
+            android:layout_height="80.0mm"
+            android:layout_gravity="center"
+            android:background="@drawable/contacts_show_toast_bg"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="30.0mm"
+            android:visibility="invisible" />
+
+        <com.jelly.baselibrary.Contacts.view.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="30.0mm"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center" />
+    </FrameLayout>
+
+</LinearLayout>

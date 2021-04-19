@@ -17,10 +17,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.log.DebugLog;
-import com.base.view.BaseActivity;
-import com.base.webview.tbs.TBSClientCallBack;
-import com.base.webview.tbs.X5WebView;
+import com.base.BaseActivity;
+import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.webview.WebConfig;
+import com.jelly.baselibrary.webview.WebTools;
+import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
+import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -91,12 +93,12 @@ public class BaseWebViewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 topNav_layout.setVisibility(View.VISIBLE);
-                DebugLog.i("onPageStarted  url="+url);
+                LogUtils.i("onPageStarted  url="+url);
             }
 
             @Override
             public void onReceivedTitle(WebView arg0, String arg1) {
-                DebugLog.i("onReceivedTitle  arg1="+arg1);
+                LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
                     topNav_layout.setVisibility(View.GONE);
@@ -194,7 +196,7 @@ public class BaseWebViewActivity extends BaseActivity {
         if (requestCode == X5WebView.FILE_CHOOSER) {
             if (null == uploadFile && null == arg1) return;
             if (data!=null){
-                DebugLog.i("文件路径"+data.getData());
+                LogUtils.i("文件路径"+data.getData());
             }
             Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
             if (arg1 != null) {

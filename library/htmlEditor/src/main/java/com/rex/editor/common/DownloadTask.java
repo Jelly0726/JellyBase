@@ -49,8 +49,8 @@ public class DownloadTask extends AsyncTask<String, Void, Boolean> {
         };
     }
 
-    public static DownloadTask.DownloadTaskCallBack getDefaultDownloadTaskCallBack(final Context context) {
-        return new DownloadTask.DownloadTaskCallBack() {
+    public static DownloadTaskCallBack getDefaultDownloadTaskCallBack(final Context context) {
+        return new DownloadTaskCallBack() {
 
             @Override
             public void onPreExecute() {

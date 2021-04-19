@@ -3,9 +3,9 @@ package com.base.crashlog;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import com.base.Utils.FilesUtil;
-import com.base.config.BaseConfig;
-import com.base.log.DebugLog;
+import com.jelly.baselibrary.Utils.FilesUtil;
+import com.jelly.baselibrary.config.BaseConfig;
+import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.jellybase.BuildConfig;
 
 import org.json.JSONException;
@@ -52,7 +52,7 @@ public class CrashApphandler extends CrashAppLog{
     @Override
     public void sendCrashLogToServer(File folder,final File file) {
         //发送服务端
-        DebugLog.e("*********", "文件夹:"+folder.getAbsolutePath()+" - "+file.getAbsolutePath()+"");
+        LogUtils.e("*********", "文件夹:"+folder.getAbsolutePath()+" - "+file.getAbsolutePath()+"");
         if (isSendErr()) {
             String data = FilesUtil.getInstance().read(file).toString();
             if (!TextUtils.isEmpty(data)) {
@@ -73,18 +73,18 @@ public class CrashApphandler extends CrashAppLog{
                         Response response = httpClient.newCall(request).execute();
                         if (response.isSuccessful()){
                             String ss=response.body().string();
-                            DebugLog.i("response="+ss);
+                            LogUtils.i("response="+ss);
                             JSONObject object=new JSONObject(ss);
                             if (object.getInt("errcode")==0){
                                 boolean is= FilesUtil.getInstance().deleteDirectory(file);
-                                DebugLog.i("is="+is);
+                                LogUtils.i("is="+is);
                             }
                         }
                     } catch (IOException e) {
-                        DebugLog.e("e="+e.getMessage());
+                        LogUtils.e("e="+e.getMessage());
                     }
                 } catch (JSONException e) {
-                    DebugLog.e("e="+e.getMessage());
+                    LogUtils.e("e="+e.getMessage());
                 }
             }
 

@@ -10,11 +10,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.androidPicker.AddressPickTask;
+import com.jelly.baselibrary.androidPicker.AddressPickTask;
 import com.jelly.mvp.contact.OperaAddressContact;
 import com.jelly.mvp.presenter.OperaAddressPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 

@@ -7,13 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 
-import com.base.appManager.AppSubject;
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppPrefs;
-import com.base.config.ConfigKey;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.jelly.baselibrary.config.ConfigKey;
 import com.base.daemon.DaemonEnv;
-import com.base.dialog.PrivacyDialog;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.dialog.PrivacyDialog;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.permissionx.guolindev.PermissionX;

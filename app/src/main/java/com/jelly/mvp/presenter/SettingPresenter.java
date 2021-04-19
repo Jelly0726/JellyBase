@@ -8,7 +8,7 @@ import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.model.AppVersion;
+import com.jelly.baselibrary.model.AppVersion;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;

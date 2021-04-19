@@ -28,7 +28,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.base.MapUtil.mscUtil.TTSController;
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 
 import java.io.ObjectStreamException;
 import java.util.List;

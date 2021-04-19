@@ -2,7 +2,7 @@ package com.base.sqldao;
 
 import android.content.Context;
 
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 import com.jelly.jellybase.BuildConfig;
 
 import org.greenrobot.greendao.query.QueryBuilder;

@@ -17,12 +17,12 @@ import com.base.MapUtil.LocationTask;
 import com.base.MapUtil.OnLocationGetListener;
 import com.base.MapUtil.RegeocodeTask;
 import com.base.MapUtil.RouteTask;
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppPrefs;
-import com.base.config.ConfigKey;
-import com.base.eventBus.HermesManager;
-import com.base.eventBus.LocationTypeEvent;
-import com.base.eventBus.NetEvent;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.jelly.baselibrary.config.ConfigKey;
+import com.base.HermesManager;
+import com.jelly.baselibrary.eventBus.LocationTypeEvent;
+import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.jellybase.R;
 
 import org.greenrobot.eventbus.EventBus;

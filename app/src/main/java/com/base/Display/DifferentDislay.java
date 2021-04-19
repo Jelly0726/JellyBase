@@ -19,11 +19,11 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.appManager.BaseApplication;
-import com.base.appManager.ExecutorManager;
-import com.base.applicationUtil.AppUtils;
-import com.base.eventBus.NetEvent;
-import com.base.recyclerViewUtil.ItemDecoration;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.appManager.ExecutorManager;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.jelly.baselibrary.eventBus.NetEvent;
+import com.jelly.baselibrary.recyclerViewUtil.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 

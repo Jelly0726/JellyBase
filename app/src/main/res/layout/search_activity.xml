@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/navi_color">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,12 +65,12 @@
             android:src="@mipmap/search_delete"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <com.base.view.FlowLayout
+    <com.jelly.baselibrary.view.FlowLayout
         android:id="@+id/search_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="30mm"
         android:paddingRight="30mm">
 
-    </com.base.view.FlowLayout>
+    </com.jelly.baselibrary.view.FlowLayout>
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg">
-    <com.base.imageView.ImageViewPlus
+    <com.jelly.baselibrary.imageView.ImageViewPlus
         android:id="@+id/qrCode"
         android:layout_width="400mm"
         android:layout_height="400mm"

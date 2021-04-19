@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.album.AlbumAdapter;
-import com.base.applicationUtil.AppUtils;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.album.AlbumAdapter;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigButton;

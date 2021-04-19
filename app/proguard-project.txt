@@ -148,7 +148,7 @@
    public *;
 }
 -keep class com.buyun.zbphone.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
--keep class com.base.webview.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
+-keep class com.jelly.baselibrary.webview.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
 #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
 #-assumenosideeffects class android.util.Log {
 #    public static boolean isLoggable(java.lang.String, int);
@@ -548,16 +548,16 @@ public static java.lang.String TABLENAME;
 -keepclasseswithmembers class * {
     public <init>(android.content.Context);
 }
--keep class com.base.datePicker.CustomMonthView {
+-keep class com.jelly.baselibrary.datePicker.CustomMonthView {
     public <init>(android.content.Context);
 }
--keep class com.base.datePicker.CustomWeekBar {
+-keep class com.jelly.baselibrary.datePicker.CustomWeekBar {
     public <init>(android.content.Context);
 }
--keep class com.base.datePicker.CustomWeekView {
+-keep class com.jelly.baselibrary.datePicker.CustomWeekView {
     public <init>(android.content.Context);
 }
--keep class com.base.datePicker.CustomYearView {
+-keep class com.jelly.baselibrary.datePicker.CustomYearView {
     public <init>(android.content.Context);
 }
 #=======================eventbus 3.0=======================
@@ -584,7 +584,7 @@ public void xxxxxx(**);
 -keep class android.arch.core.** { *; }
 #======================= 自定义toast:=======================
  -dontwarn com.base.toast.**
- -keep class com.base.toast.** { *; }
+ -keep class com.jelly.baselibrary.toast.** { *; }
 #======================= for androidx:=======================
 -dontwarn com.jeremyliao.liveeventbus.**
 -keep class com.jeremyliao.liveeventbus.** { *; }
@@ -899,12 +899,12 @@ public void xxxxxx(**);
 -keep class com.tencent.mm.sdk.openapi.** implements com.tencent.mm.sdk.openapi.WXMediaMessage$IMediaObject {*;}
 
 -keep class com.base.sqldao.**{*;}
--keep class com.base.encrypt.**{*;}
+-keep class com.jelly.baselibrary.encrypt.**{*;}
 -keep class android.content.pm.**{*;}
 -keep class com.android.internal.telephony.**{*;}
 -keep class systemdb.**{*;}
--keep class com.base.eventBus.**{*;}
--keep class com.base.model.**{*;}
+-keep class com.jelly.baselibrary.eventBus.**{*;}
+-keep class com.jelly.baselibrary.model.**{*;}
 -keep class com.base.httpmvp.retrofitapi.methods.**{*;}
 -keep class com.base.httpmvp.databean.**{*;}
 #-keep public class java.**

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="contacts_white">#FFFFFF</color>
+    <color name="contacts_blue">#0066FF</color>
+    <color name="contacts_no_color">#00000000</color>
+    <color name="contacts_bg_color">#F4F3F3</color>
+    <color name="contacts_bg_color_deep">#E5E5E5</color>
+    <color name="contacts_black">#000000</color>
+    <color name="contacts_text_color">#434343</color>
+    <color name="contacts_black_half">#50000000</color>
+
+
+</resources>

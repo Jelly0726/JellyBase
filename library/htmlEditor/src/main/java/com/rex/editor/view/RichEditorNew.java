@@ -58,7 +58,7 @@ public class RichEditorNew extends RichEditor {
     }
 
     public void loadRichEditorCode(String html) {
-        loadDataWithBaseURL("html_edit_file:///android_asset/",
+        loadDataWithBaseURL("file:///android_asset/",
                 html + CommonJs.IMG_CLICK_JS, "text/html", "utf-8", null);
     }
 
@@ -125,7 +125,6 @@ public class RichEditorNew extends RichEditor {
     }
 
     public void insertHtml(String html) {
-        focusEditor();
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertHTML('" + html + "');");
     }

@@ -7,11 +7,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.model.AccountDetail;
-import com.base.view.BaseFragment;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
-import com.base.xrefreshview.view.SimpleItemDecoration;
+import com.jelly.baselibrary.model.AccountDetail;
+import com.base.BaseFragment;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
+import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.LocaFragmentAdapter;

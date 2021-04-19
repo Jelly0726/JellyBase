@@ -2,8 +2,8 @@ package com.jelly.jellybase.alipay;
 
 import android.content.Context;
 
-import com.base.appManager.BaseApplication;
-import com.base.encrypt.SafetyUtil;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.encrypt.SafetyUtil;
 
 import java.util.HashMap;
 import java.util.Map;

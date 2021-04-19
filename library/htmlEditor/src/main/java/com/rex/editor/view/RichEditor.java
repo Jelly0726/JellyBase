@@ -28,7 +28,7 @@ import java.util.Locale;
  * Copyright (C) 2017 Wasabeef
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this html_edit_file except in compliance with the License.
+ * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
@@ -78,7 +78,7 @@ public class RichEditor extends WebView {
         void onAfterInitialLoad(boolean isReady);
     }
 
-    private static final String HTML = "html_edit_file:///android_asset/editor.html";
+    private static final String HTML = "file:///android_asset/editor.html";
     private static final String CALLBACK_SCHEME = "re-callback://";
     private static final String STATE_SCHEME = "re-state://";
     private boolean isReady = false;
@@ -202,7 +202,6 @@ public class RichEditor extends WebView {
         }
         try {
             exec("javascript:RE.setHtml('" + URLEncoder.encode(contents, "UTF-8") + "');");
-            focusEditor();
         } catch (UnsupportedEncodingException e) {
             // No handling
         }
@@ -297,11 +296,11 @@ public class RichEditor extends WebView {
     }
 
     public void undo() {
-        exec("javascript:RE.html_edit_undo();");
+        exec("javascript:RE.undo();");
     }
 
     public void redo() {
-        exec("javascript:RE.html_edit_redo();");
+        exec("javascript:RE.redo();");
     }
 
     public void setBold() {
@@ -376,13 +375,13 @@ public class RichEditor extends WebView {
     public void setAlignRight() {
         exec("javascript:RE.setJustifyRight();");
     }
-
     /**
      * 两端对齐
      */
     public void setAlignJustify() {
         exec("javascript:RE.setJustifyFull();");
     }
+
     public void setBlockquote() {
         exec("javascript:RE.setBlockquote();");
     }
@@ -396,7 +395,6 @@ public class RichEditor extends WebView {
     }
 
     public void insertImage(String url, String alt, String style) {
-        focusEditor();
         exec("javascript:RE.prepareInsert();");
         exec("javascript:RE.insertImage('" + url + "', '" + alt + "', '" + style + "');");
     }

@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.bankcard.BandCardEditText;
+import com.jelly.baselibrary.bankcard.BandCardEditText;
 import com.jelly.mvp.contact.AddBankCartContact;
 import com.jelly.mvp.presenter.AddBankPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.multiClick.AntiShake;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 

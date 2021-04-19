@@ -31,8 +31,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.recyclerViewUtil.stick.StickAdapter;
-import com.base.recyclerViewUtil.stick.StickItemDecoration;
+import com.jelly.baselibrary.recyclerViewUtil.stick.StickAdapter;
+import com.jelly.baselibrary.recyclerViewUtil.stick.StickItemDecoration;
 import com.jelly.jellybase.R;
 import com.yanzhenjie.recyclerview.SwipeMenu;
 import com.yanzhenjie.recyclerview.SwipeMenuCreator;

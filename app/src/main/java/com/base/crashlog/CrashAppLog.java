@@ -14,7 +14,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.base.appManager.ExecutorManager;
+import com.jelly.baselibrary.appManager.ExecutorManager;
 
 import java.io.BufferedWriter;
 import java.io.File;

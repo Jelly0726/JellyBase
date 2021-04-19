@@ -1,12 +1,12 @@
 plugins{
     id 'com.android.application'
-    id 'org.greenrobot.greendao'
     //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间
     id 'com.jakewharton.hugo'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'com.huawei.agconnect'
+    id 'com.jakewharton.butterknife'
 }
 android {
     //生产环境域名地址
@@ -15,7 +15,7 @@ android {
     def API_DEBUG_HOST = "\"http://driver.4000000144.com/\""
 
     compileSdkVersion 29
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.jelly.jellybase"
         minSdkVersion 19
@@ -27,19 +27,10 @@ android {
         multiDexEnabled true
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
-        externalNativeBuild {
-            cmake {
-//                cppFlags ""
-//                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
-                cppFlags "-std=c++11 -frtti -fexceptions"
-                //设置支持的SO库架构
-                abiFilters "armeabi-v7a", "x86", "arm64-v8a"  //输出指定三种abi体系结构下的so库。
-            }
-        }
         //ndk编译生成.so文件
         ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
 //            moduleName "testjni"         //生成的so名字
-            abiFilters "armeabi-v7a", "x86", "arm64-v8a"//输出指定三种abi体系结构下的so库。
+            abiFilters "armeabi-v7a", "x86", "arm64-v8a", 'x86_64'//输出指定三种abi体系结构下的so库。
 //            //极光推送选择要添加的对应cpu类型的.so库。
 //            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','arm64-v8a','x86', 'x86_64', 'mips', 'mips64'
 //            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
@@ -104,23 +95,6 @@ android {
             keyPassword "1207qw"
             //v1SigningEnabled false
             // v2SigningEnabled false
-        }
-    }
-    sourceSets {
-        main {
-//            jniLibs.srcDirs = ['alley\\lib']
-            //接入高德地图语音时so文件放在jniLibs 无法识别
-            //liblbs.so 为腾讯TBS需要的so文件
-            //libocr-sdk.so 为百度文字识别需要的so文件
-            //libAMapSDK_NAVI_v7_5_0.so libmsc.so libneonuijni.so 为高德需要的so文件
-            // libcrypto.so libssl.so 为加密需要的so文件
-            jniLibs.srcDirs = ['libs']
-//            manifest.srcFile 'src/main/AndroidManifest.xml'
-//            java.srcDirs = ['src/main/java', 'src/main/aidl']
-//            resources.srcDirs = ['src/main/java', 'src/main/aidl']
-//            aidl.srcDirs = ['src/main/aidl']
-//            res.srcDirs = ['src/main/res']
-//            assets.srcDirs = ['src/main/assets']
         }
     }
     buildTypes {
@@ -219,262 +193,19 @@ android {
         //采用低版本构建生成PNG图片的兼容方式；
         //additionalParameters "--no-version-vectors"
     }
-    //cmake，全新定义cmake脚本
-    externalNativeBuild {
-        cmake {
-            path 'CMakeLists.txt'
-        }
-    }
-//ndk-build,已有Android.mk
-//    externalNativeBuild {
-//        ndkBuild {
-//            path 'src/main/jni/Android.mk'
-//        }
-//    }
-//ndk-build,有多个项目多个Android.mk,指向总脚本Android-config.mk
-//        externalNativeBuild {
-//            ndkBuild {
-//                path 'Android-config.mk'
-//            }
-//        }
     //kotlin Parcelize传值
     androidExtensions {
         experimental = true
     }
 }
-//greendao配置
-greendao {
-    schemaVersion 1//版本号，升级时可配置
-    daoPackage 'systemdb' //包名
-    targetGenDir 'src/main/java' //生成目录
-}
-
-//导入智能更新 SDK 的 AAR 文件
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //百度智能更新 SDK 的 AAR 文件
-    implementation(name: 'autoupdatesdk-release', ext: 'aar')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //屏幕适配
-    implementation 'me.jessyan:autosize:1.2.1'
-//      kotlin协程
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
-    implementation "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
-    //recyclerview
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    //AndroidX包下找不到SwipeRefreshLayout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    //butterknife注解式绑定id  androidx 10.0.0
+    //基础
+    implementation project(path: ':library:baselibrary')
     //butterknife注解式绑定id
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
-    //butterknife注解式绑定id kotlin
-//        kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    //多进程数据共享SharedPreferences
-    implementation 'net.grandcentrix.tray:tray:0.12.0'
-
-    //
-//        compile 'xiaofei.library:hermes-eventbus:0.3.0'
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    //okhttp CheckVersionLib 使用的是okhttp:4.3.1
-//        implementation 'com.squareup.okhttp3:okhttp:3.12.1'
-
-    //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
-
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-
-    //Retrofit2所需要的包
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-
-    //ConverterFactory的Gson依赖包
-    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
-
-    //ConverterFactory的String依赖包
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-
-    //添加Retrofit对Rxjava的支持
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
-
-    //RxJava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
-
-    //JSON解析
-    implementation 'com.alibaba:fastjson:1.1.55.android'
-
-    //时间和地址选择器
-//        implementation('cn.qqtheme.framework:WheelPicker:1.5.5') {
-//            exclude group: 'com.android.support'
-//        }
-    //时间和地址选择器 示例 AndroidPicker-master
-    implementation project(path: ':library:Common')
-    implementation project(path: ':library:WheelPicker')
-    //文件选择器 示例 AndroidPicker-master
-    implementation project(path: ':library:FilePicker')
-    //颜色选择器 示例 AndroidPicker-master
-    implementation project(path: ':library:ColorPicker')
-    //多级选择器 示例 AndroidPicker-master
-    implementation project(path: ':library:MultiplePicker')
-
-    //高德地图so及jar
-
-    //因为导航里已经有地图所以3D地图和导航不能同时导入
-    //implementation 'com.amap.api:3dmap:latest.integration'
-    //    implementation 'com.amap.api:3dmap:6.5.0'
-    //定位功能
-    implementation 'com.amap.api:location:latest.integration'
-//        implementation 'com.amap.api:location:5.0.0'
-    //搜索功能
-    implementation 'com.amap.api:search:latest.integration'
-//        implementation 'com.amap.api:search:7.3.0'
-    //导航
-    implementation 'com.amap.api:navi-3dmap:latest.integration'
-//        implementation 'com.amap.api:navi-3dmap:7.5.0'
-
-    //极光推送
-    implementation 'cn.jiguang.sdk:jpush:4.0.0'
-    implementation 'cn.jiguang.sdk:jcore:2.7.0'
-
-    //sqlite框架greendao
-    implementation 'org.greenrobot:greendao:3.3.0'
-
-    // 数据库加密时添加
-
-    //compile 'net.zetetic:android-database-sqlcipher:3.5.1'
-
-    // 使用数据库升级辅助GreenDaoUpgradeHelper时添加
-
-    //compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.2.0'
-
-    //multidex
-    implementation 'com.android.support:multidex:1.0.3'
-
-    //glide图片加载库
-//        implementation 'com.github.bumptech.glide:glide:3.7.0'
-    api 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    //微信支付
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    //腾讯tbs
-//        api 'com.tencent.tbs.tbssdk:sdk:43993'
-    implementation files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
-    //应用宝自动升级
-    implementation files('libs/tmassistantsdk_selfupdate-jce-external_3.0.5_78_20181115214920.jar')
-    //QQ、微信、微博登陆和分享
-    implementation('com.github.arvinljw:SocialHelper:v1.2.2') {
-        exclude group: 'com.android.support'
-    }
-
-    //微博
-
-    //compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
-
-    //星级评价
-    implementation 'com.github.ome450901:SimpleRatingBar:1.3.4'
-
-    //图片选择
-    implementation project(path: ':library:ImageSwitcher')
-//        implementation project(path: ':library:ImageSwitcher-support')
-//        implementation 'com.yanzhenjie:album:2.0.2'
-    implementation project(path: ':library:album')
-//        compile ('com.yanzhenjie:album:2.1.0'){
-////        exclude group: 'com.github.bumptech.glide'
-////        exclude group:'com.android.support'
-//        }
-    //图片预览
-    implementation project(path: ':library:ImagePreview')
-    //ProgressDialog
-    implementation 'com.github.maning0303:MNProgressHUD:V1.1.8'
-
-    //检查版本
-//        implementation 'com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx'
-//        implementation ('com.github.AlexLiuSheng:CheckVersionLib:2.4.1_appcompat')
-//        {
-//            exclude group: 'com.android.support'
-//        }
-    implementation project(path: ':library:CheckVersionLib')
-
-    //Android平台下的富文本解析器，支持Html和Markdown
-    implementation 'com.zzhoujay.richtext:richtext:3.0.7'// latest-version  3.0.4
-    implementation 'com.zzhoujay:html:1.0.2'//latest-version
-    //Android平台下的富文本编辑器
-    implementation project(path: ':library:htmlEditor')
-
-    //Android图表视图/图形视图库
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    //RecyclerView侧滑菜单
-//        implementation 'com.yanzhenjie.recyclerview:support:1.3.2'
-    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
-    //权限申请
-    implementation 'com.permissionx.guolindev:permissionx:1.4.0'
-//        implementation 'com.permissionx.guolindev:permission-support:1.4.0'
-    //Java加密解密所需工具
-    implementation 'org.bouncycastle:bcprov-jdk15on:1.59'
-
-    //视频播放器gsyVideoPlayer
-    implementation('com.shuyu:gsyVideoPlayer-java:5.0.0-beta') {
-        exclude group: 'com.android.support'
-    }
-    implementation('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta') {
-        exclude group: 'com.android.support'
-    }
-    //广告轮播
-//        implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
-    implementation 'com.haibin:calendarview:3.6.4'//日历选择
-    //百度文字识别(身份证、银行卡等)
-    implementation files('libs/ocr-sdk.jar')
-    implementation project(path: ':ocr_ui')
-    implementation project(path: ':logreport')
-    implementation project(path: ':form')
-    implementation 'com.jeremyliao:live-event-bus-x:1.7.3'
-//        implementation 'com.jeremyliao:live-event-bus:1.7.3'
-
-    //弹窗对话框
-    implementation project(path: ':library:circleDialog-androidx')
-//        implementation project(path: ':library:circleDialog-appcompat')
-    implementation files('libs/commons-codec-1.11.jar')
-    implementation files('libs/commons-io-2.6.jar')
-    implementation files('libs/commons-logging-1.2.jar')
-    implementation project(path: ':blurkit')
-    //简单的表格控件
-    implementation project(path: ':library:tableLayout')
-    //检测当前运行环境
-    implementation project(path: ':library:anti_emulator')
-    //设置角标
-    implementation project(path: ':library:ShortcutBadger')
-//        implementation files('libs/libss/email-activation.jar')//logreport里已包含，备份到libss里
-//        implementation files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
-//        implementation files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里
-    implementation files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
-    //文件选择器
-    implementation project(path: ':library:FileChooser')
-    //BGABanner
-    implementation project(path: ':library:BGABanner')
-    //投影
-    implementation 'com.github.lihangleo2:ShadowLayout:3.1.9'
-    //底部导航
-    implementation project(':library:BottomBar')
-    //华为推送
-    implementation 'com.huawei.hms:push:5.0.4.302'
-    //内存溢出检测
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
-    //zxing扫码
-    implementation project(path: ':library:ZxingQRCodeX')
-
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 }

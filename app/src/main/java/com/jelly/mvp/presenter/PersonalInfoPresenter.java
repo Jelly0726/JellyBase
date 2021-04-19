@@ -10,9 +10,9 @@ import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.model.PersonalInfo;
-import com.base.model.UploadBean;
-import com.base.model.UploadData;
+import com.jelly.baselibrary.model.PersonalInfo;
+import com.jelly.baselibrary.model.UploadBean;
+import com.jelly.baselibrary.model.UploadData;
 
 import java.io.File;
 

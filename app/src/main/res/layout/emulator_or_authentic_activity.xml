@@ -13,7 +13,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -8,18 +8,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.appManager.AppSubject;
-import com.base.appManager.BaseApplication;
+import com.base.AppSubject;
+import com.base.BaseApplication;
 import com.base.config.IntentAction;
-import com.base.encrypt.MD5;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.base.sqldao.LoginDaoUtils;
+import com.jelly.baselibrary.encrypt.MD5;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.password.PwdCheckUtil;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.jelly.jellybase.R;
 import com.jelly.mvp.contact.SetPwdContact;
 import com.jelly.mvp.presenter.SetPassWordActivityPresenter;
-import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.multiClick.AntiShake;
-import com.base.password.PwdCheckUtil;
-import com.base.sqldao.LoginDaoUtils;
-import com.base.toast.ToastUtils;
-import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;

@@ -15,8 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.base.bluetooth.BleManager;
-import com.base.bluetooth.data.BleDevice;
+import com.jelly.baselibrary.bluetooth.BleManager;
+import com.jelly.baselibrary.bluetooth.data.BleDevice;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package com.base.sqldao;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.base.Utils.StringUtil;
+import com.jelly.baselibrary.Utils.StringUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 

@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.base.view.BaseFragment;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.listener.OnBottomLoadMoreTime;
-import com.base.xrefreshview.listener.OnTopRefreshTime;
+import com.base.BaseFragment;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.listener.OnBottomLoadMoreTime;
+import com.jelly.baselibrary.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.adapter.ShopcatAdapter;

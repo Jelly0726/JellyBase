@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.BaseAdapter;
+import com.jelly.baselibrary.BaseAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.swipeRefresh.activity.BaseActivity;
 import com.yanzhenjie.recyclerview.SwipeMenuLayout;

@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
-import com.base.addressmodel.Address;
-import com.base.addressmodel.Area;
-import com.base.addressmodel.City;
-import com.base.addressmodel.Province;
-import com.base.multiClick.AntiShake;
-import com.base.view.BaseActivity;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.view.SimpleItemDecoration;
+import com.jelly.baselibrary.addressmodel.Address;
+import com.jelly.baselibrary.addressmodel.Area;
+import com.jelly.baselibrary.addressmodel.City;
+import com.jelly.baselibrary.addressmodel.Province;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.base.BaseActivity;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
-import com.base.androidPicker.AddressAdapter;
+import com.jelly.baselibrary.androidPicker.AddressAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/main_bg">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_gravity="center_vertical"
             android:src="@mipmap/right_next"/>
     </LinearLayout>
-    <com.base.middleBar.MiddleBarLayout
+    <com.jelly.baselibrary.middleBar.MiddleBarLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/bbl"
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         android:layout_gravity="center"
         android:clipChildren="false"
         android:layout_marginTop="1mm">
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -72,7 +72,7 @@
             app:mItemTextSize="14mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -85,7 +85,7 @@
             app:mItemTextSize="14mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-        <com.base.middleBar.MiddleBarItem
+        <com.jelly.baselibrary.middleBar.MiddleBarItem
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
@@ -98,7 +98,7 @@
             app:mItemTextSize="14mm"
             app:mOpenTouchBg="false"
             android:background="@drawable/topbar_white_bg"/>
-    </com.base.middleBar.MiddleBarLayout>
+    </com.jelly.baselibrary.middleBar.MiddleBarLayout>
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"

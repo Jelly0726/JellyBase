@@ -4,7 +4,7 @@ package com.base.httpmvp.retrofitapi.exception;
 import android.net.ParseException;
 import android.util.MalformedJsonException;
 
-import com.base.log.DebugLog;
+import com.jelly.baselibrary.log.LogUtils;
 import com.google.gson.JsonParseException;
 
 import org.json.JSONException;
@@ -91,7 +91,7 @@ public class ApiException extends RuntimeException {
             message = "未知错误("+ERROR.UNKNOWN+"):"+throwable;          //未知错误
             StringWriter sw = new StringWriter();
             throwable.printStackTrace(new PrintWriter(sw, true));
-            DebugLog.i(sw.toString());
+            LogUtils.i(sw.toString());
             return message;
         }
     }

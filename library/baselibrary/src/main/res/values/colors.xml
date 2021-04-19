@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="navi_color">#ffffff</color>
+    <color name="main_bg">#eeeeee</color>
+    <color name="transparent">#00000000</color>
+    <color name="mainText">#084051</color>
+    <color name="mainText3">#C8D4D5</color>
+    <color name="mainText5">#f57fdc</color>
+    <color name="mainText15">#98caec</color>
+</resources>

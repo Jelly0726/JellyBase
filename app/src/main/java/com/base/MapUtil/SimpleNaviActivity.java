@@ -20,7 +20,7 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.base.MapUtil.mscUtil.TTSController;
-import com.base.view.BaseActivity;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener,AMapNaviViewListener {

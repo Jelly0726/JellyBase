@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.base.multiClick.AntiShake;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.willy.ratingbar.BaseRatingBar;
 

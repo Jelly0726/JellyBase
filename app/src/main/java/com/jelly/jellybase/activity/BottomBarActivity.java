@@ -7,19 +7,19 @@ import android.view.KeyEvent;
 
 import androidx.fragment.app.Fragment;
 
-import com.base.addressmodel.Address;
-import com.base.appManager.BaseApplication;
+import com.base.BackInterface;
+import com.base.BaseActivity;
+import com.base.BaseApplication;
+import com.base.BaseFragment;
+import com.base.FragmentAdapter;
+import com.base.HermesManager;
 import com.base.config.IntentAction;
-import com.base.eventBus.HermesManager;
-import com.base.eventBus.NetEvent;
 import com.base.sqldao.LoginDaoUtils;
-import com.base.view.BackInterface;
-import com.base.view.BaseActivity;
-import com.base.view.BaseFragment;
-import com.base.view.FragmentAdapter;
 import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;
 import com.chaychan.library.NoPreloadViewPager;
+import com.jelly.baselibrary.addressmodel.Address;
+import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.fragment.HomeFragment;

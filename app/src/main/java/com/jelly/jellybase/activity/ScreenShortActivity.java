@@ -5,8 +5,8 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.base.dialog.QRDialogLogout;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.dialog.QRDialogLogout;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**

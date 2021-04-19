@@ -30,28 +30,29 @@ import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
-import com.base.Contacts.ContactsActivity;
+import com.jelly.baselibrary.Contacts.ContactsActivity;
 import com.base.GuideActivity;
-import com.base.Utils.StorageQueryUtil;
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppUtils;
-import com.base.checkVersion.BaseDialog;
-import com.base.config.BaseConfig;
+import com.jelly.baselibrary.Utils.StorageQueryUtil;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.jelly.baselibrary.checkVersion.BaseDialog;
+import com.jelly.baselibrary.config.BaseConfig;
 import com.base.daemon.DaemonEnv;
-import com.base.mic.MicService;
-import com.base.multiClick.AntiShake;
-import com.base.redpacket.StartActivity;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
-import com.base.view.FloatingDraftButton;
+import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.mic.MicService;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.redpacket.StartActivity;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
+import com.jelly.baselibrary.view.FloatingDraftButton;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;
-import com.base.webview.WebConfig;
-import com.base.webview.WebTools;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.view.ItemDecoration;
+import com.jelly.baselibrary.webview.WebConfig;
+import com.jelly.baselibrary.webview.WebTools;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.activity.AMapActivity;
 import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
@@ -143,7 +144,7 @@ public class MainActivity extends BaseActivity {
             }
         });
       long[] longs = StorageQueryUtil.queryWithStorageManager(this);
-        com.base.log.DebugLog.i("longs="+ JSON.toJSONString(longs));
+        LogUtils.i("longs="+ JSON.toJSONString(longs));
     }
     @Override
     public int getLayoutId(){
@@ -706,39 +707,35 @@ public class MainActivity extends BaseActivity {
                     intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
-                case 44:// 富文本编辑器
-                    intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.richeditor.MainActivity.class);
-                    startActivity(intent);
-                    break;
-                case 45:// 录小视频
+                case 44:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 46:// PIP模式
+                case 45:// PIP模式
                     intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
-                case 47:// 简单的表格控件
+                case 46:// 简单的表格控件
                     intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
                     startActivity(intent);
                     break;
-                case 48:// 判断是否真机
+                case 47:// 判断是否真机
                     intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
                     startActivity(intent);
                     break;
-                case 49:// 添加角标
+                case 48:// 添加角标
                     intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
                     startActivity(intent);
                     break;
-                case 50:// 选择器
+                case 49:// 选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.androidpicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 51:// 文件选择器
+                case 50:// 文件选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 52:// 所属银行
+                case 51:// 所属银行
                     intent=new Intent(BaseApplication.getInstance(), BankActivity.class);
                     startActivity(intent);
                     break;

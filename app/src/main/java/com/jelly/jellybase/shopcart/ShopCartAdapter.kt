@@ -12,11 +12,11 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.base.recyclerViewUtil.stick.StickAdapter
-import com.base.Utils.StringUtil
-import com.base.appManager.BaseApplication
-import com.base.applicationUtil.AppUtils
-import com.base.imageView.ImageViewPlus
+import com.jelly.baselibrary.recyclerViewUtil.stick.StickAdapter
+import com.jelly.baselibrary.Utils.StringUtil
+import com.base.BaseApplication
+import com.jelly.baselibrary.applicationUtil.AppUtils
+import com.jelly.baselibrary.imageView.ImageViewPlus
 import com.bumptech.glide.Glide
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
@@ -117,6 +117,7 @@ class ShopCartAdapter(context: Context) :
         }
         if (mListItems!![position].goodsType == "beautyPackage") {
             holder.name_tv.text = StringUtil.setIconToText(
+                    context,
                 0,
                 mListItems!![position].name,
                 R.mipmap.ic_combo,

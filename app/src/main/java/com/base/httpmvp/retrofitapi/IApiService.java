@@ -1,13 +1,13 @@
 package com.base.httpmvp.retrofitapi;
 
 
-import com.base.bankcard.BankCardInfo;
-import com.base.model.AboutUs;
-import com.base.model.AccountDetail;
-import com.base.model.AppVersion;
-import com.base.model.Message;
-import com.base.model.PersonalInfo;
-import com.base.model.UploadData;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
+import com.jelly.baselibrary.model.AboutUs;
+import com.jelly.baselibrary.model.AccountDetail;
+import com.jelly.baselibrary.model.AppVersion;
+import com.jelly.baselibrary.model.Message;
+import com.jelly.baselibrary.model.PersonalInfo;
+import com.jelly.baselibrary.model.UploadData;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;

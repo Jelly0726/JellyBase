@@ -1,4 +1,7 @@
+include ':jnisample'
+include ':library:baselibrary'
 include ':app'
+include ':RichEditorSample'
 include ':JieCaoVideoPlayer'
 include ':jiaozivideoplayer-sample'
 include ':base64demo'

@@ -7,8 +7,8 @@ import androidx.annotation.CheckResult;
 
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
-import com.base.mprogressdialog.MProgressUtil;
-import com.base.view.BaseFragment;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
+import com.base.BaseFragment;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;

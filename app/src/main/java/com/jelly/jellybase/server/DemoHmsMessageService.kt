@@ -1,7 +1,6 @@
 package com.jelly.jellybase.server
 
-import android.os.Bundle
-import com.base.log.DebugLog
+import com.jelly.baselibrary.log.LogUtils
 import com.huawei.hms.push.HmsMessageService
 import com.huawei.hms.push.RemoteMessage
 
@@ -16,10 +15,10 @@ public class DemoHmsMessageService: HmsMessageService() {
         super.onMessageReceived(message)
         // 判断消息是否为空
         if (message == null) {
-            DebugLog.i("Received message entity is null!")
+            LogUtils.i("Received message entity is null!")
             return;
         }
-        DebugLog.i("RemoteMessage=${message}")
+        LogUtils.i("RemoteMessage=${message}")
     }
 
     /**
@@ -27,6 +26,6 @@ public class DemoHmsMessageService: HmsMessageService() {
      */
     override fun onNewToken(p0: String?) {
         super.onNewToken(p0)
-        DebugLog.i("onNewToken=${p0}")
+        LogUtils.i("onNewToken=${p0}")
     }
 }

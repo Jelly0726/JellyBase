@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.base.bankcard.BandCardEditText;
+import com.jelly.baselibrary.bankcard.BandCardEditText;
 import com.jelly.jellybase.R;
 import com.zxingx.library.ScanQRcodeActivity;
 

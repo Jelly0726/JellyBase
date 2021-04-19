@@ -10,12 +10,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.base.appManager.BaseApplication;
-import com.base.encrypt.JniUtils;
-import com.base.encrypt.SafetyUtil;
-import com.base.log.DebugLog;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.encrypt.JniUtils;
+import com.jelly.baselibrary.encrypt.SafetyUtil;
+import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 public class EncryptActivity extends BaseActivity implements View.OnClickListener {
@@ -24,8 +24,8 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
     static {
         try {
 //            System.loadLibrary("native-lib");
-            System.loadLibrary("crypto");
-            System.loadLibrary("cipher");
+//            System.loadLibrary("crypto");
+//            System.loadLibrary("cipher");
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
@@ -55,7 +55,7 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
         jni = new JniUtils();
 
         mKey = SafetyUtil.getInstance().getAESRandomKeyString(16);
-        DebugLog.i("秘钥=" + mKey);
+        LogUtils.i("秘钥=" + mKey);
 //        String[] RSAKey=SafetyUtil.getInstance().generateRSAKey(this);
 //        DebugLog.i("公钥=\n"+RSAKey[0]);
 //        DebugLog.i("私钥=\n"+RSAKey[1]);
@@ -212,8 +212,8 @@ public class EncryptActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_createRSA:
                 String[] RSAKey = SafetyUtil.getInstance().generateRSAKey(this);
-                DebugLog.i("公钥=\n" + RSAKey[0]);
-                DebugLog.i("私钥=\n" + RSAKey[1]);
+                LogUtils.i("公钥=\n" + RSAKey[0]);
+                LogUtils.i("私钥=\n" + RSAKey[1]);
                 break;
             case R.id.btn_read:
                 result = SafetyUtil.getInstance().readAssets(this,ori);

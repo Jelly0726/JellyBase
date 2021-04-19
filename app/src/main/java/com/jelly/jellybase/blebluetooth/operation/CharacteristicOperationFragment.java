@@ -15,14 +15,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.bluetooth.BleManager;
-import com.base.bluetooth.callback.BleIndicateCallback;
-import com.base.bluetooth.callback.BleNotifyCallback;
-import com.base.bluetooth.callback.BleReadCallback;
-import com.base.bluetooth.callback.BleWriteCallback;
-import com.base.bluetooth.data.BleDevice;
-import com.base.bluetooth.exception.BleException;
-import com.base.bluetooth.utils.HexUtil;
+import com.jelly.baselibrary.bluetooth.BleManager;
+import com.jelly.baselibrary.bluetooth.callback.BleIndicateCallback;
+import com.jelly.baselibrary.bluetooth.callback.BleNotifyCallback;
+import com.jelly.baselibrary.bluetooth.callback.BleReadCallback;
+import com.jelly.baselibrary.bluetooth.callback.BleWriteCallback;
+import com.jelly.baselibrary.bluetooth.data.BleDevice;
+import com.jelly.baselibrary.bluetooth.exception.BleException;
+import com.jelly.baselibrary.bluetooth.utils.HexUtil;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

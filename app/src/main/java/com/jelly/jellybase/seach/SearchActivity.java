@@ -10,12 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.appManager.BaseApplication;
-import com.base.multiClick.OnMultiClickListener;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
 import com.base.sqldao.HistoryDaoUtils;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
-import com.base.view.FlowLayout;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
+import com.jelly.baselibrary.view.FlowLayout;
 import com.jelly.jellybase.R;
 
 import java.util.List;

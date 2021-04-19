@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppUtils;
-import com.base.nativeUtil.NativeUtils;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.jelly.baselibrary.nativeUtil.NativeUtils;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

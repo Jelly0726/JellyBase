@@ -7,13 +7,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.encrypt.MD5;
+import com.jelly.baselibrary.encrypt.MD5;
 import com.jelly.mvp.contact.UpdataPwdContact;
 import com.jelly.mvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.multiClick.AntiShake;
-import com.base.password.PwdCheckUtil;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.password.PwdCheckUtil;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 

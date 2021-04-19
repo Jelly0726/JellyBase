@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--微信支付-->
-    <string name="errcode_success">微信支付成功</string>
     <string name="errcode_cancel">微信支付取消</string>
     <string name="errcode_deny">发送被拒绝</string>
     <string name="errcode_unknown">微信支付请求发送返回</string>
-    <string name="wx_pay_notify">微信支付提示</string>
-    <string name="wx_pay_ok">确定</string>
 </resources>

@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppPrefs;
-import com.base.config.ConfigKey;
+import com.base.BaseApplication;
 import com.base.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.WatchDogService;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.jelly.baselibrary.config.ConfigKey;
 
 import org.json.JSONObject;
 

@@ -52,9 +52,9 @@ public class FilesUtils {
                 Uri contentUri = null;
                 if ("image".equals(type)) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("html_edit_video".equals(type)) {
+                } else if ("video".equals(type)) {
                     contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("html_edit_audio".equals(type)) {
+                } else if ("audio".equals(type)) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
 
@@ -67,7 +67,7 @@ public class FilesUtils {
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) { // MediaStore (and general)
             return getDataColumn(context, uri, null, null);
-        } else if ("html_edit_file".equalsIgnoreCase(uri.getScheme())) { // File
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) { // File
             return uri.getPath();
         }
 
@@ -76,13 +76,13 @@ public class FilesUtils {
 
     /**
      * Get the value of the data column for this Uri. This is useful for
-     * MediaStore Uris, and other html_edit_file-based ContentProviders.
+     * MediaStore Uris, and other file-based ContentProviders.
      *
      * @param context       The context.
      * @param uri           The Uri to query.
      * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
-     * @return The value of the _data column, which is typically a html_edit_file path.
+     * @return The value of the _data column, which is typically a file path.
      */
     public static String getDataColumn(Context context, Uri uri, String selection,
                                        String[] selectionArgs) {

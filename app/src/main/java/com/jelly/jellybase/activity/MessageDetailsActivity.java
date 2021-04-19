@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 import com.jelly.mvp.contact.MessageDetailsContact;
 import com.jelly.mvp.presenter.MessageDetailsPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.model.Message;
-import com.base.mprogressdialog.MProgressUtil;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.model.Message;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zzhoujay.richtext.CacheType;

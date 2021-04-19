@@ -9,8 +9,8 @@ import android.provider.Settings;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
-import com.base.appManager.BaseApplication;
-import com.base.eventBus.NetEvent;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 public class MediaService extends Service {

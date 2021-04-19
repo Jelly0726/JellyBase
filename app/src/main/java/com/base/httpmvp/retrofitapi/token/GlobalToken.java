@@ -2,8 +2,8 @@ package com.base.httpmvp.retrofitapi.token;
 
 import android.text.TextUtils;
 
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppPrefs;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
 
 /**
  * Created by Administrator on 2017/11/7.

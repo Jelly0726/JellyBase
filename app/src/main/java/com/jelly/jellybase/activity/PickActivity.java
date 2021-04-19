@@ -6,10 +6,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.base.Utils.MyDate;
-import com.base.androidPicker.AddressPickTask;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.Utils.MyDate;
+import com.jelly.baselibrary.androidPicker.AddressPickTask;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import cn.qqtheme.framework.entity.City;

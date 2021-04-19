@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.base.xrefreshview.XRefreshView
+<com.jelly.baselibrary.xrefreshview.XRefreshView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/xrefreshview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee">
-    <com.base.xrefreshview.XNestedScrollView
+    <com.jelly.baselibrary.xrefreshview.XNestedScrollView
         android:id="@+id/nestedScroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="410mm"
                 android:background="@mipmap/wode_db">
-                <com.base.cardView.CardView
+                <com.jelly.baselibrary.cardView.CardView
                     android:layout_width="620mm"
                     android:layout_height="260mm"
                     android:layout_centerHorizontal="true"
@@ -119,8 +119,8 @@
                                 android:text="0"/>
                         </LinearLayout>
                     </LinearLayout>
-                </com.base.cardView.CardView>
-                <com.base.imageView.ImageViewPlus
+                </com.jelly.baselibrary.cardView.CardView>
+                <com.jelly.baselibrary.imageView.ImageViewPlus
                     android:id="@+id/photo"
                     android:layout_width="150mm"
                     android:layout_height="150mm"
@@ -169,5 +169,5 @@
                     android:src="@mipmap/right_next"/>
             </LinearLayout>
         </LinearLayout>
-    </com.base.xrefreshview.XNestedScrollView>
-</com.base.xrefreshview.XRefreshView>
+    </com.jelly.baselibrary.xrefreshview.XNestedScrollView>
+</com.jelly.baselibrary.xrefreshview.XRefreshView>

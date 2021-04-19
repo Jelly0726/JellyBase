@@ -3,7 +3,7 @@ package com.jelly.jellybase.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.base.view.BaseFragment;
+import com.base.BaseFragment;
 import com.jelly.jellybase.R;
 
 /**

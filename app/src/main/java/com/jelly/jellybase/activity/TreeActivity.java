@@ -7,14 +7,14 @@ import android.widget.CheckBox;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.tree.adapter.IMultipleItem;
-import com.base.tree.adapter.SectionExpandHelper;
-import com.base.tree.adapter.ViewHolder;
-import com.base.tree.bean.BaseItem;
-import com.base.tree.bean.GrandSon;
-import com.base.tree.bean.Item;
-import com.base.tree.bean.Section;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.tree.adapter.IMultipleItem;
+import com.jelly.baselibrary.tree.adapter.SectionExpandHelper;
+import com.jelly.baselibrary.tree.adapter.ViewHolder;
+import com.jelly.baselibrary.tree.bean.BaseItem;
+import com.jelly.baselibrary.tree.bean.GrandSon;
+import com.jelly.baselibrary.tree.bean.Item;
+import com.jelly.baselibrary.tree.bean.Section;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

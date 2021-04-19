@@ -4,8 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.base.Utils.BeanUtil;
-import com.base.Utils.StringUtil;
+import com.jelly.baselibrary.Utils.BeanUtil;
+import com.jelly.baselibrary.Utils.StringUtil;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 

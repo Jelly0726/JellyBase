@@ -9,16 +9,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.countdowntimerbtn.CountDownTimerButton;
+import com.jelly.baselibrary.countdowntimerbtn.CountDownTimerButton;
 import com.jelly.mvp.contact.RegisterContact;
 import com.jelly.mvp.presenter.RegisterActivityPresenter;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.multiClick.AntiShake;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.base.webview.BaseWebViewActivity;
-import com.base.webview.WebConfig;
-import com.base.webview.WebTools;
+import com.jelly.baselibrary.webview.WebConfig;
+import com.jelly.baselibrary.webview.WebTools;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 

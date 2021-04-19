@@ -40,12 +40,12 @@ import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.view.RouteOverLay;
 import com.base.MapUtil.SimpleNaviActivity;
 import com.base.MapUtil.mscUtil.TTSController;
-import com.base.appManager.BaseApplication;
-import com.base.eventBus.HermesManager;
-import com.base.eventBus.NetEvent;
-import com.base.mprogressdialog.MProgressUtil;
-import com.base.toast.ToastUtils;
-import com.base.view.BaseActivity;
+import com.base.BaseApplication;
+import com.base.HermesManager;
+import com.jelly.baselibrary.eventBus.NetEvent;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
+import com.jelly.baselibrary.toast.ToastUtils;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.LocationService;
 

@@ -7,10 +7,10 @@ import android.os.Handler;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.view.BaseFragment;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XRefreshViewFooter;
-import com.base.xrefreshview.view.ItemDecoration;
+import com.base.BaseFragment;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
+import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.ProductParameterAdapter;
 import com.jelly.jellybase.datamodel.Product;

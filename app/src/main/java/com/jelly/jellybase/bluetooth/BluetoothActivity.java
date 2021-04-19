@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.base.view.BaseActivity;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.bluetooth.adapter.DeviceAdapter;
 import com.jelly.jellybase.bluetooth.bean.BlueDevice;

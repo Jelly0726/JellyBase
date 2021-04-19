@@ -12,10 +12,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.base.bluetooth.BleManager;
-import com.base.bluetooth.data.BleDevice;
-import com.base.multiClick.AntiShake;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.bluetooth.BleManager;
+import com.jelly.baselibrary.bluetooth.data.BleDevice;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.comm.Observer;
 import com.jelly.jellybase.blebluetooth.comm.ObserverManager;

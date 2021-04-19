@@ -1,6 +1,7 @@
 package com.base.config;
 
-import com.jelly.jellybase.BuildConfig;
+
+import com.jelly.baselibrary.BuildConfig;
 
 /**
  * Created by Administrator on 2017/9/7.

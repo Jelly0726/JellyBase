@@ -6,8 +6,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.PhoneUtil;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.applicationUtil.PhoneUtil;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

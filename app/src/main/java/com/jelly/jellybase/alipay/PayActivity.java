@@ -15,9 +15,9 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.PayTask;
-import com.base.alipay.AuthResult;
-import com.base.alipay.OrderInfoUtil2_0;
-import com.base.alipay.PayResult;
+import com.jelly.baselibrary.alipay.AuthResult;
+import com.jelly.baselibrary.alipay.OrderInfoUtil2_0;
+import com.jelly.baselibrary.alipay.PayResult;
 import com.jelly.jellybase.R;
 
 import java.util.Map;

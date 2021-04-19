@@ -9,7 +9,7 @@ import android.app.ProgressDialog;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
-import com.base.alipay.PayResult;
+import com.jelly.baselibrary.alipay.PayResult;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

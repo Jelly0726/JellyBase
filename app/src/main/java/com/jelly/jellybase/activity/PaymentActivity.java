@@ -7,11 +7,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.base.dialog.PaymentDialog;
-import com.base.model.PayMothod;
-import com.base.passwordView.Callback;
-import com.base.passwordView.PasswordKeypad;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.dialog.PaymentDialog;
+import com.jelly.baselibrary.model.PayMothod;
+import com.jelly.baselibrary.passwordView.Callback;
+import com.jelly.baselibrary.passwordView.PasswordKeypad;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

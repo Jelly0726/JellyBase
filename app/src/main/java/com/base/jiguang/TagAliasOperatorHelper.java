@@ -6,9 +6,9 @@ import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.base.applicationUtil.AppPrefs;
-import com.base.appManager.BaseApplication;
-import com.base.config.ConfigKey;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.config.ConfigKey;
 
 import java.util.Locale;
 import java.util.Set;

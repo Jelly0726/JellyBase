@@ -1,0 +1,310 @@
+plugins {
+    id 'com.android.library'
+    id 'org.greenrobot.greendao'
+    //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间
+    id 'com.jakewharton.hugo'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+    id 'com.huawei.agconnect'
+    id 'com.jakewharton.butterknife'
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+//解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
+        doNotStrip "*/arm64-v8a/*.so"
+        doNotStrip "*/armeabi/*.so"
+        doNotStrip "*/armeabi-v7a/*.so"
+        doNotStrip "*/x86/*.so"
+        doNotStrip "*/mips/*.so"
+//        doNotStrip "*/mips64/*.so"
+//        doNotStrip "*/x86_64/*.so"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // For Kotlin compilers:
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+    aaptOptions {
+        //采用低版本构建生成PNG图片的兼容方式；
+        //additionalParameters "--no-version-vectors"
+    }
+}
+//greendao配置
+greendao {
+    schemaVersion 1//版本号，升级时可配置
+    daoPackage 'systemdb' //包名
+    targetGenDir 'src/main/java' //生成目录
+}
+//导入智能更新 SDK 的 AAR 文件
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+dependencies {
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'com.google.android.material:material:1.2.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //百度智能更新 SDK 的 AAR 文件
+    api(name: 'autoupdatesdk-release', ext: 'aar')
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.core:core-ktx:1.2.0'
+    //屏幕适配
+    api 'me.jessyan:autosize:1.2.1'
+//      kotlin协程
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
+    api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
+    //recyclerview
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'com.google.android.material:material:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //AndroidX包下找不到SwipeRefreshLayout
+    api "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    //butterknife注解式绑定id  androidx 10.0.0
+    //butterknife注解式绑定id
+    compileOnly 'com.jakewharton:butterknife:10.2.3'
+    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
+    //butterknife注解式绑定id kotlin
+//        kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //多进程数据共享SharedPreferences
+    api 'net.grandcentrix.tray:tray:0.12.0'
+
+    //
+//        compile 'xiaofei.library:hermes-eventbus:0.3.0'
+    api 'org.greenrobot:eventbus:3.1.1'
+    //okhttp CheckVersionLib 使用的是okhttp:4.3.1
+//        api 'com.squareup.okhttp3:okhttp:3.12.1'
+
+    //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
+    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
+
+    //Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+
+    //Retrofit2所需要的包
+    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    //ConverterFactory的Gson依赖包
+    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
+
+    //ConverterFactory的String依赖包
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+    //添加Retrofit对Rxjava的支持
+    api 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+
+    //RxJava
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+
+    //JSON解析
+    api 'com.alibaba:fastjson:1.1.55.android'
+
+    //时间和地址选择器
+//        api('cn.qqtheme.framework:WheelPicker:1.5.5') {
+//            exclude group: 'com.android.support'
+//        }
+    //时间和地址选择器 示例 AndroidPicker-master
+    api project(path: ':library:Common')
+    api project(path: ':library:WheelPicker')
+    //文件选择器 示例 AndroidPicker-master
+    api project(path: ':library:FilePicker')
+    //颜色选择器 示例 AndroidPicker-master
+    api project(path: ':library:ColorPicker')
+    //多级选择器 示例 AndroidPicker-master
+    api project(path: ':library:MultiplePicker')
+
+    //高德地图so及jar
+
+    //因为导航里已经有地图所以3D地图和导航不能同时导入
+    //api 'com.amap.api:3dmap:latest.integration'
+    //    api 'com.amap.api:3dmap:6.5.0'
+    //定位功能
+    api 'com.amap.api:location:latest.integration'
+//        api 'com.amap.api:location:5.0.0'
+    //搜索功能
+    api 'com.amap.api:search:latest.integration'
+//        api 'com.amap.api:search:7.3.0'
+    //导航
+    api 'com.amap.api:navi-3dmap:latest.integration'
+//        api 'com.amap.api:navi-3dmap:7.5.0'
+
+    //极光推送
+    api 'cn.jiguang.sdk:jpush:4.0.0'
+    api 'cn.jiguang.sdk:jcore:2.7.0'
+
+    //sqlite框架greendao
+    api 'org.greenrobot:greendao:3.3.0'
+
+    // 数据库加密时添加
+
+    //compile 'net.zetetic:android-database-sqlcipher:3.5.1'
+
+    // 使用数据库升级辅助GreenDaoUpgradeHelper时添加
+
+    //compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v1.2.0'
+
+    //multidex
+    api 'com.android.support:multidex:1.0.3'
+
+    //glide图片加载库
+//        api 'com.github.bumptech.glide:glide:3.7.0'
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //微信支付
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //腾讯tbs
+//        api 'com.tencent.tbs.tbssdk:sdk:43993'
+    api files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
+    //应用宝自动升级
+    api files('libs/tmassistantsdk_selfupdate-jce-external_3.0.5_78_20181115214920.jar')
+    //QQ、微信、微博登陆和分享
+    api('com.github.arvinljw:SocialHelper:v1.2.2') {
+        exclude group: 'com.android.support'
+    }
+
+    //微博
+
+    //compile 'com.sina.weibo.sdk:core:4.1.0:openDefaultRelease@aar'
+
+    //星级评价
+    api 'com.github.ome450901:SimpleRatingBar:1.3.4'
+
+    //图片选择
+    api project(path: ':library:ImageSwitcher')
+//        api project(path: ':library:ImageSwitcher-support')
+//        api 'com.yanzhenjie:album:2.0.2'
+    api project(path: ':library:album')
+//        compile ('com.yanzhenjie:album:2.1.0'){
+////        exclude group: 'com.github.bumptech.glide'
+////        exclude group:'com.android.support'
+//        }
+    //图片预览
+    api project(path: ':library:ImagePreview')
+    //ProgressDialog
+    api 'com.github.maning0303:MNProgressHUD:V1.1.8'
+
+    //检查版本
+//        api 'com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx'
+//        api ('com.github.AlexLiuSheng:CheckVersionLib:2.4.1_appcompat')
+//        {
+//            exclude group: 'com.android.support'
+//        }
+    api project(path: ':library:CheckVersionLib')
+
+    //Android平台下的富文本解析器，支持Html和Markdown
+    api 'com.zzhoujay.richtext:richtext:3.0.7'// latest-version  3.0.4
+    api 'com.zzhoujay:html:1.0.2'//latest-version
+
+    //Android图表视图/图形视图库
+    api 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //RecyclerView侧滑菜单
+//        api 'com.yanzhenjie.recyclerview:support:1.3.2'
+    api 'com.yanzhenjie.recyclerview:x:1.3.2'
+    //权限申请
+    api 'com.permissionx.guolindev:permissionx:1.4.0'
+//        api 'com.permissionx.guolindev:permission-support:1.4.0'
+    //Java加密解密所需工具
+    api 'org.bouncycastle:bcprov-jdk15on:1.59'
+
+    //视频播放器gsyVideoPlayer
+    api('com.shuyu:gsyVideoPlayer-java:5.0.0-beta') {
+        exclude group: 'com.android.support'
+    }
+    api('com.shuyu:gsyVideoPlayer-ex_so:5.0.0-beta') {
+        exclude group: 'com.android.support'
+    }
+    //广告轮播
+//        api 'cn.bingoogolapple:bga-banner:2.2.5@aar'
+    api 'com.haibin:calendarview:3.6.4'//日历选择
+    //百度文字识别(身份证、银行卡等)
+    api files('libs/ocr-sdk.jar')
+    api project(path: ':ocr_ui')
+    api project(path: ':logreport')
+    api project(path: ':form')
+    api 'com.jeremyliao:live-event-bus-x:1.7.3'
+//        api 'com.jeremyliao:live-event-bus:1.7.3'
+
+    //弹窗对话框
+    api project(path: ':library:circleDialog-androidx')
+//        api project(path: ':library:circleDialog-appcompat')
+    api files('libs/commons-codec-1.11.jar')
+    api files('libs/commons-io-2.6.jar')
+    api files('libs/commons-logging-1.2.jar')
+    api files('libs\\Msc.jar')
+    api files('libs\\commons-beanutils-1.9.2.jar')
+    api files('libs\\commons-lang3-3.4.jar')
+    api files('libs\\alipaySdk-20170922.jar')
+
+    api project(path: ':blurkit')
+    //简单的表格控件
+    api project(path: ':library:tableLayout')
+    //检测当前运行环境
+    api project(path: ':library:anti_emulator')
+    //设置角标
+    api project(path: ':library:ShortcutBadger')
+//        api files('libs/libss/email-activation.jar')//logreport里已包含，备份到libss里
+//        api files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
+//        api files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里
+    api files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
+    //文件选择器
+    api project(path: ':library:FileChooser')
+    //BGABanner
+    api project(path: ':library:BGABanner')
+    //投影
+    api 'com.github.lihangleo2:ShadowLayout:3.1.9'
+    //底部导航
+    api project(':library:BottomBar')
+    //华为推送
+    api 'com.huawei.hms:push:5.0.4.302'
+    //内存溢出检测
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
+    //zxing扫码
+    api project(path: ':library:ZxingQRCodeX')
+}

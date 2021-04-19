@@ -7,9 +7,9 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.base.passwordView.Callback;
-import com.base.passwordView.PasswordKeypad;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.passwordView.Callback;
+import com.jelly.baselibrary.passwordView.PasswordKeypad;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**

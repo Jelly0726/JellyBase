@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.jelly.mvp.contact.CancelOrderContact;
 import com.jelly.mvp.presenter.CancelOrderPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.multiClick.AntiShake;
+import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.jellybase.R;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigDialog;

@@ -24,9 +24,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amap.api.maps.offlinemap.OfflineMapCity;
-import com.base.config.BaseBroadcast;
+import com.jelly.baselibrary.config.BaseBroadcast;
 import com.base.sqldao.PositionDaoUtils;
-import com.base.view.BaseActivity;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.io.Serializable;

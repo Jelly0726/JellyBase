@@ -25,12 +25,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppPrefs;
-import com.base.bankcard.BankCardInfo;
-import com.base.bankcard.BankUtil;
-import com.base.config.ConfigKey;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
+import com.jelly.baselibrary.bankcard.BankUtil;
+import com.jelly.baselibrary.config.ConfigKey;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;

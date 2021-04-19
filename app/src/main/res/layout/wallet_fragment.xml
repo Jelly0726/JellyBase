@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#efefef">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <com.base.cardView.CardView
+            <com.jelly.baselibrary.cardView.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10mm"
@@ -195,9 +195,9 @@
                     </LinearLayout>
                 </LinearLayout>
 
-            </com.base.cardView.CardView>
+            </com.jelly.baselibrary.cardView.CardView>
 
-            <com.base.cardView.CardView
+            <com.jelly.baselibrary.cardView.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10mm"
@@ -418,7 +418,7 @@
                         android:textColor="#666666"
                         android:textSize="10mm"/>
                 </LinearLayout>
-            </com.base.cardView.CardView>
+            </com.jelly.baselibrary.cardView.CardView>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

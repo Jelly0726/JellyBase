@@ -4,11 +4,11 @@ import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
 
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
-import com.base.mprogressdialog.MProgressUtil;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
+import com.base.BaseActivity;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;

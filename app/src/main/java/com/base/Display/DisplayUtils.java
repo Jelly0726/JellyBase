@@ -6,7 +6,7 @@ import android.hardware.display.DisplayManager;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 
 import java.io.ObjectStreamException;
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg">
     <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
     <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
-    <com.base.xrefreshview.XRefreshView
+    <com.jelly.baselibrary.xrefreshview.XRefreshView
         android:id="@+id/xrefreshview"
         android:layout_width="match_parent"
         android:layout_height="0mm"
@@ -28,8 +28,8 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             android:layout_marginTop="0mm"/>
-    </com.base.xrefreshview.XRefreshView>
-    <com.base.view.FloatingDraftButton
+    </com.jelly.baselibrary.xrefreshview.XRefreshView>
+    <com.jelly.baselibrary.view.FloatingDraftButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

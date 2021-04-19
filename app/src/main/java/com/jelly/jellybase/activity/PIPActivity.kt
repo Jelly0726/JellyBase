@@ -5,13 +5,11 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import butterknife.ButterKnife
 import butterknife.OnClick
-import butterknife.Unbinder
 import com.base.daemon.DaemonEnv
-import com.base.eventBus.NetEvent
-import com.base.log.DebugLog
-import com.base.view.BaseActivity
+import com.jelly.baselibrary.eventBus.NetEvent
+import com.jelly.baselibrary.log.LogUtils
+import com.base.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.server.TraceServiceImpl
 import com.jeremyliao.liveeventbus.LiveEventBus
@@ -20,7 +18,7 @@ import kotlinx.android.synthetic.main.pip_mode_activity.*
 /**
  * PIP模式
  */
-class PIPActivity :BaseActivity(){
+class PIPActivity : BaseActivity(){
     private lateinit var mObserver: Observer<Any>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +69,6 @@ class PIPActivity :BaseActivity(){
      */
     override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration?) {
         super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
-        DebugLog.i("是否PIP=${isInPictureInPictureMode}}")
+        LogUtils.i("是否PIP=${isInPictureInPictureMode}}")
     }
 }

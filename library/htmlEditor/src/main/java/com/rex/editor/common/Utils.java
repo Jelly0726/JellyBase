@@ -42,10 +42,10 @@ public final class Utils {
 
         Elements elementsSrc = new Elements();
         Elements elementsImg = doc.select("img[src]");
-        Elements elementsAudio = doc.select("html_edit_audio[src]");
-        Elements elementsVideo = doc.select("html_edit_video[src]");
+        Elements elementsAudio = doc.select("audio[src]");
+        Elements elementsVideo = doc.select("video[src]");
         Elements elementsFiles = doc.select("a[href]");
-        Elements elementsPosters = doc.select("html_edit_video[poster]");
+        Elements elementsPosters = doc.select("video[poster]");
 
         elementsSrc.addAll(elementsImg);
         elementsSrc.addAll(elementsAudio);

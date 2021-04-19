@@ -12,8 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.RelativeLayout;
 
-import com.base.appManager.BaseApplication;
-import com.base.appManager.ExecutorManager;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.appManager.ExecutorManager;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

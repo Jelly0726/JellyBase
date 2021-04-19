@@ -1,0 +1,161 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.jelly.jnisample"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //ndk编译生成.so文件
+        ndk {
+//            moduleName "testjni"         //生成的so名字
+//            abiFilters "armeabi-v7a", "x86", "arm64-v8a"//输出指定三种abi体系结构下的so库。
+//            //极光推送选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+        externalNativeBuild {
+            cmake {
+//                cppFlags ""
+//                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                //设置支持的SO库架构
+                abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+            }
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file("Jelly.jks")
+            storePassword "1207qw"
+            keyAlias "jelly"
+            keyPassword "1207qw"
+            //v1SigningEnabled false
+            // v2SigningEnabled false
+        }
+        debug {
+            storeFile file("Jelly.jks")
+            storePassword "1207qw"
+            keyAlias "jelly"
+            keyPassword "1207qw"
+            //v1SigningEnabled false
+            // v2SigningEnabled false
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            // 移除无用的resource文件
+            shrinkResources false
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFiles 'proguard-project.txt'
+            //自定义导出apk文件名
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->  // each 改为 all
+                    def fileName = "V${variant.versionName}_debug.apk"
+                    def outFile = output.outputFile
+                    if (outFile != null && outFile.name.endsWith('.apk')) {
+                        outputFileName = fileName  //  output.outputFile 改为 outputFileName
+                    }
+                }
+            }
+        }
+        release {
+            signingConfig signingConfigs.release
+            // 移除无用的resource文件
+            shrinkResources true
+            minifyEnabled true
+            zipAlignEnabled true
+            proguardFiles 'proguard-project.txt'
+            //自定义导出apk文件名
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->  // each 改为 all
+                    def fileName = "V${variant.versionName}_release.apk"
+                    def outFile = output.outputFile
+                    if (outFile != null && outFile.name.endsWith('.apk')) {
+                        outputFileName = fileName  //  output.outputFile 改为 outputFileName
+                    }
+                }
+            }
+        }
+        customDebugType {
+            //可调试 也适用于包含 C/C++ 代码的模块
+            debuggable true
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+//解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
+        doNotStrip "*/arm64-v8a/*.so"
+        doNotStrip "*/armeabi/*.so"
+        doNotStrip "*/armeabi-v7a/*.so"
+        doNotStrip "*/x86/*.so"
+        doNotStrip "*/mips/*.so"
+//        doNotStrip "*/mips64/*.so"
+//        doNotStrip "*/x86_64/*.so"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    ndkVersion "21.0.6352462"
+    sourceSets {
+        main {
+//            jniLibs.srcDirs = ['alley\\lib']
+            //接入高德地图语音时so文件放在jniLibs 无法识别
+            //liblbs.so 为腾讯TBS需要的so文件
+            //libocr-sdk.so 为百度文字识别需要的so文件
+            //libAMapSDK_NAVI_v7_5_0.so libmsc.so libneonuijni.so 为高德需要的so文件
+            // libcrypto.so libssl.so 为加密需要的so文件
+            jniLibs.srcDirs = ['libs']
+//            manifest.srcFile 'src/main/AndroidManifest.xml'
+//            java.srcDirs = ['src/main/java', 'src/main/aidl']
+//            resources.srcDirs = ['src/main/java', 'src/main/aidl']
+//            aidl.srcDirs = ['src/main/aidl']
+//            res.srcDirs = ['src/main/res']
+//            assets.srcDirs = ['src/main/assets']
+        }
+    }
+    //cmake，全新定义cmake脚本
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
+        }
+    }
+//ndk-build,已有Android.mk
+//    externalNativeBuild {
+//        ndkBuild {
+//            path 'src/main/jni/Android.mk'
+//        }
+//    }
+//ndk-build,有多个项目多个Android.mk,指向总脚本Android-config.mk
+//        externalNativeBuild {
+//            ndkBuild {
+//                path 'Android-config.mk'
+//            }
+//        }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+//    implementation project(path: ':library:baselibrary')
+}

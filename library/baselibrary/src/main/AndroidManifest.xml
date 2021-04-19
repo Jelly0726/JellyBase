@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jelly.baselibrary">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
+        <!--↓↓↓↓↓解决Glide由于过度压缩导致了图片变绿↓↓↓↓↓-->
+        <meta-data
+            android:name="com.jelly.baselibrary.glide.GlideConfiguration"
+            android:value="GlideModule" />
+        <!--↑↑↑↑↑↑↑↑解决Glide由于过度压缩导致了图片变绿↑↑↑↑↑↑↑↑-->
+        <activity android:name="com.jelly.baselibrary.Contacts.ContactsActivity"
+            android:windowSoftInputMode="stateUnchanged|stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--↓↓↓↓↓↓↓图片裁剪↓↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.jelly.baselibrary.cropper.CropperActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑图片裁剪↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓虚拟显示器↓↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.jelly.baselibrary.screenColor.ScreenColorActivity"
+            android:configChanges="orientation|keyboardHidden|fontScale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑虚拟显示器↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓通过广播监听短信↓↓↓↓↓↓↓-->
+        <receiver android:name="com.jelly.baselibrary.sms.SmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        <!--注册监听短信数据库变化-->
+        <service android:name="com.jelly.baselibrary.sms.SmsService"/>
+        <!--↑↑↑↑↑↑↑↑通过广播监听短信↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓设置默认短信应用↓↓↓↓↓↓↓-->
+        <!-- BroadcastReceiver that listens for incoming MMS messages -->
+        <receiver android:name="com.jelly.baselibrary.sms.MmsReceiver"
+            android:permission="android.permission.BROADCAST_WAP_PUSH">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
+                <data android:mimeType="application/vnd.wap.mms-message" />
+            </intent-filter>
+        </receiver>
+        <!-- Activity that allows the user to send new SMS/MMS messages -->
+        <activity android:name="com.jelly.baselibrary.sms.ComposeSmsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </activity>
+        <!-- Service that delivers messages from the phone "quick response" -->
+        <service android:name="com.jelly.baselibrary.sms.HeadlessSmsSendService"
+            android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sms" />
+                <data android:scheme="smsto" />
+                <data android:scheme="mms" />
+                <data android:scheme="mmsto" />
+            </intent-filter>
+        </service>
+        <!--↑↑↑↑↑↑↑↑设置默认短信应用↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓微信自动抢红包↓↓↓↓↓↓↓-->
+        <activity android:name="com.jelly.baselibrary.redpacket.GuideActivity">
+        </activity>
+        <service
+            android:name="com.jelly.baselibrary.redpacket.service.RedPacketService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/service_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/red_packet_service_config" />
+        </service>
+        <service
+            android:name="com.jelly.baselibrary.redpacket.service.NotificationService"
+            android:label="@string/service_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+        <activity android:name="com.jelly.baselibrary.redpacket.StartActivity">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑微信自动抢红包↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓通知栏监听↓↓↓↓↓↓↓-->
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:name="com.jelly.baselibrary.NotifyService.NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="com.bunyun.memorandum.clock.ALARM_ALERT" />-->
+            <!--</intent-filter>-->
+            <!--<uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>-->
+        </service>
+        <!--↑↑↑↑↑↑↑↑通知栏监听↑↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓↓↓屏幕截图↓↓↓↓↓↓↓-->
+        <activity
+            android:name="com.jelly.baselibrary.screenCapture.ScreenShotActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!--↑↑↑↑↑↑↑↑屏幕截图↑↑↑↑↑↑↑↑-->
+
+        <service android:name="com.jelly.baselibrary.mic.MicService"/>
+        <!--USB事件监听-->
+        <receiver
+            android:name="com.jelly.baselibrary.Receiver.UsbDeviceReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

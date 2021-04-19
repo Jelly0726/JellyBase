@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
     <!--↓↓↓↓↓自定义状态栏底色。↓↓↓↓↓-->
-    <com.base.SystemBar.StatusView
+    <com.jelly.baselibrary.SystemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,11 +57,11 @@
             android:layout_marginRight="20mm">
         </TextView>
     </RelativeLayout>
-    <com.base.view.NoPreloadViewPager
+    <com.jelly.baselibrary.view.NoPreloadViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="0mm"
         android:layout_weight="1">
 
-    </com.base.view.NoPreloadViewPager>
+    </com.jelly.baselibrary.view.NoPreloadViewPager>
 </LinearLayout>

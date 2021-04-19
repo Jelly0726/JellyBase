@@ -24,7 +24,7 @@
         android:layout_marginRight="17mm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
-        <com.base.imageView.ImageViewPlus
+        <com.jelly.baselibrary.imageView.ImageViewPlus
             android:id="@+id/photo_img"
             android:layout_width="73mm"
             android:layout_height="73mm"

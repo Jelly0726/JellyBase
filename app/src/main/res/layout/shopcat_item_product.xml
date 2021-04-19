@@ -25,7 +25,7 @@
             android:drawableLeft="@drawable/shopcar_checkbox_bg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <com.base.imageView.ImageViewPlus
+        <com.jelly.baselibrary.imageView.ImageViewPlus
             android:layout_marginBottom="5mm"
             android:id="@+id/goods_image"
             android:layout_marginTop="5mm"

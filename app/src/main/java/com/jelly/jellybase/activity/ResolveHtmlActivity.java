@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.base.appManager.BaseApplication;
-import com.base.richtext.OkHttpImageDownloader;
-import com.base.view.BaseActivity;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.richtext.OkHttpImageDownloader;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Display;
 
-import com.base.imageView.ImageViewPlus;
+import com.jelly.baselibrary.imageView.ImageViewPlus;
 import com.jelly.jellybase.R;
 import com.zxingx.library.utils.CreateQRImage;
 

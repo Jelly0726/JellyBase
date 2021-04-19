@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.base.appManager.BaseApplication;
-import com.base.config.BaseConfig;
+import com.base.BaseApplication;
+import com.jelly.baselibrary.config.BaseConfig;
 import com.tencent.mm.opensdk.constants.Build;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;

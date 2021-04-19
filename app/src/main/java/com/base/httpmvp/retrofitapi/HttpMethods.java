@@ -3,7 +3,7 @@ package com.base.httpmvp.retrofitapi;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.base.appManager.BaseApplication;
+import com.base.BaseApplication;
 import com.base.config.IntentAction;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
@@ -15,8 +15,8 @@ import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
 import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
-import com.base.model.UploadBean;
-import com.base.model.UploadData;
+import com.jelly.baselibrary.model.UploadBean;
+import com.jelly.baselibrary.model.UploadData;
 import com.jelly.jellybase.BuildConfig;
 
 import java.io.File;

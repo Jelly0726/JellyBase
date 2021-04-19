@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.base.daemon.AbsWorkService;
-import com.base.eventBus.NetEvent;
+import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.util.concurrent.TimeUnit;

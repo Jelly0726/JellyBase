@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.multiClick.OnMultiClickListener;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.PayTypePicker;
 import com.jelly.jellybase.weixinpay.PayUtil;

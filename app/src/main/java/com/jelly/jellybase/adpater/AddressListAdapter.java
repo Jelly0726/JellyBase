@@ -25,10 +25,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.base.multiClick.AntiShake;
-import com.base.multiClick.OnMultiClickListener;
-import com.base.xrefreshview.listener.OnItemClickListener;
-import com.base.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
+import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
+import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.AddressEditActivity;
 import com.jelly.jellybase.datamodel.RecevierAddress;

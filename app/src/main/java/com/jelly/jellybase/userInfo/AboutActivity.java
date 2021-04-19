@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.applicationUtil.AppUtils;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.mvp.contact.AboutContact;
 import com.jelly.mvp.presenter.AboutUsPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.model.AboutUs;
-import com.base.multiClick.AntiShake;
-import com.base.toast.ToastUtils;
+import com.jelly.baselibrary.model.AboutUs;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 

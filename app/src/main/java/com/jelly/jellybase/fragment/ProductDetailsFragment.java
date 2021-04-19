@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.base.eventBus.NetEvent;
-import com.base.view.BaseFragment;
-import com.base.xrefreshview.XRefreshView;
-import com.base.xrefreshview.XScrollView;
+import com.jelly.baselibrary.eventBus.NetEvent;
+import com.base.BaseFragment;
+import com.jelly.baselibrary.xrefreshview.XRefreshView;
+import com.jelly.baselibrary.xrefreshview.XScrollView;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;
 

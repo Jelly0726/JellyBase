@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.base.appbadge.BadgeUtils;
-import com.base.view.BaseActivity;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.BadgeIntentService;
 

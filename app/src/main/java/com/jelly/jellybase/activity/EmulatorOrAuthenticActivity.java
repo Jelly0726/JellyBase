@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.base.Utils.AntiEmulator;
-import com.base.view.BaseActivity;
+import com.jelly.baselibrary.Utils.AntiEmulator;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import org.jetbrains.annotations.Nullable;

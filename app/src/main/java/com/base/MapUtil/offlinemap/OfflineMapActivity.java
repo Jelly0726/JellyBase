@@ -27,7 +27,7 @@ import com.amap.api.maps.offlinemap.OfflineMapManager;
 import com.amap.api.maps.offlinemap.OfflineMapManager.OfflineMapDownloadListener;
 import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
-import com.base.view.BaseActivity;
+import com.base.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

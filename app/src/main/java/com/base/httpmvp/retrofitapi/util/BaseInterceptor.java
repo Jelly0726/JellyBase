@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import com.base.applicationUtil.AppUtils;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.base.httpmvp.retrofitapi.HttpUtils;
 import com.base.httpmvp.retrofitapi.NetworkUtils;
 

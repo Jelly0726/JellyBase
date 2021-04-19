@@ -1,7 +1,7 @@
 package com.jelly.jellybase.blebluetooth.comm;
 
 
-import com.base.bluetooth.data.BleDevice;
+import com.jelly.baselibrary.bluetooth.data.BleDevice;
 
 public interface Observable {
 

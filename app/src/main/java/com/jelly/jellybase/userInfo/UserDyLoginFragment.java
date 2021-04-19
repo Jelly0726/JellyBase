@@ -10,24 +10,24 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.base.appManager.BaseApplication;
-import com.base.applicationUtil.AppPrefs;
-import com.base.config.ConfigKey;
+import com.base.BaseApplication;
 import com.base.config.IntentAction;
-import com.base.countdowntimerbtn.CountDownTimerButton;
-import com.base.encrypt.MD5;
-import com.jelly.mvp.contact.LoginContact;
-import com.jelly.mvp.presenter.LoginActivityPresenter;
+import com.base.httpmvp.mvpView.BaseFragmentImpl;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
-import com.base.httpmvp.mvpView.BaseFragmentImpl;
 import com.base.jiguang.TagAliasOperatorHelper;
-import com.base.multiClick.AntiShake;
-import com.base.social.SocialUtil;
-import com.base.toast.ToastUtils;
 import com.google.gson.Gson;
+import com.jelly.baselibrary.applicationUtil.AppPrefs;
+import com.jelly.baselibrary.config.ConfigKey;
+import com.jelly.baselibrary.countdowntimerbtn.CountDownTimerButton;
+import com.jelly.baselibrary.encrypt.MD5;
+import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.social.SocialUtil;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.mvp.contact.LoginContact;
+import com.jelly.mvp.presenter.LoginActivityPresenter;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
