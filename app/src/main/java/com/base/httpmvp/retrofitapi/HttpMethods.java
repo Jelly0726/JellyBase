@@ -188,18 +188,18 @@ public class HttpMethods implements IGlobalManager {
 	 * @param observer
 	 * @param <T>
 	 */
-	public <T> void toSubscribe(Observable<T> observable, Observer<T> observer
+	public   <T> void toSubscribe(Observable<T> observable, Observer<T> observer
 			,ObservableTransformer composer){
 		if (composer!=null) {
 			observable.subscribeOn(Schedulers.io())
-					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
+					.unsubscribeOn(Schedulers.io())
 					.compose(composer)
 					.subscribe(observer);
 		}else {
 			observable.subscribeOn(Schedulers.io())
-					.unsubscribeOn(Schedulers.io())
 					.observeOn(AndroidSchedulers.mainThread())
+					.unsubscribeOn(Schedulers.io())
 					.subscribe(observer);
 		}
 	}
