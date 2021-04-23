@@ -1,25 +1,20 @@
 package com.jelly.mvp.presenter;
 
-import com.base.httpmvp.retrofitapi.function.HttpFunctions;
-import com.jelly.mvp.contact.PersonalInfoContact;
-import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
-import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
+import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.jelly.baselibrary.model.PersonalInfo;
 import com.jelly.baselibrary.model.UploadBean;
-import com.jelly.baselibrary.model.UploadData;
+import com.jelly.mvp.contact.PersonalInfoContact;
+import com.jelly.mvp.model.PersonalInfoModel;
 
 import java.io.File;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/12/6.
@@ -38,19 +33,12 @@ public class PersonalInfoPresenter extends PersonalInfoContact.Presenter {
             public void onSuccess(HttpResultData<PersonalInfo> model) {
                 mView.findPersonalInfoSuccess(model.getData());
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.findPersonalInfoFailed(msg);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(), disposable);
             }
         });
     }
@@ -61,33 +49,17 @@ public class PersonalInfoPresenter extends PersonalInfoContact.Presenter {
         UploadBean uploadParm = (UploadBean) mView.getUpParam();
         File file = new File(uploadParm.getFilePath());
         if (file.exists()) {
-            HttpMethods.getInstance().upload(file, uploadParm, mView.bindLifecycle(), new Observer<HttpResultData<UploadData>>() {
-
+            mModel.upload(file, uploadParm, mView.bindLifecycle(), new ObserverResponseListener<HttpResult>() {
                 @Override
-                public void onError(Throwable e) {
-                    mView.uploadFailed(e.getMessage());
+                public void onSuccess(HttpResult model) {
+                    mView.uploadSuccess(model.getMsg());
                     mView.closeProgress();
-                    removeDisposable(this.hashCode());
                 }
 
                 @Override
-                public void onComplete() {
-                }
-
-                @Override
-                public void onSubscribe(@NonNull Disposable d) {
-                    addDisposable(this.hashCode(),d);
-                }
-
-                @Override
-                public void onNext(HttpResultData<UploadData> model) {
-                    if (model.getStatus() == HttpCode.SUCCEED) {
-                        mView.uploadSuccess(model.getData());
-                    } else {
-                        mView.uploadFailed(model.getMsg());
-                    }
+                public void onFailure(String msg) {
+                    mView.uploadFailed(msg);
                     mView.closeProgress();
-                    removeDisposable(this.hashCode());
                 }
             });
         } else {
@@ -107,25 +79,18 @@ public class PersonalInfoPresenter extends PersonalInfoContact.Presenter {
             public void onSuccess(HttpResult model) {
                 mView.personalInfoSuccess(model.getMsg());
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.personalInfoFailed(msg);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(), disposable);
             }
         });
     }
 
     @Override
     public void start() {
-        mModel = new BaseModel();
+        mModel = new PersonalInfoModel();
     }
 }

@@ -1,7 +1,6 @@
 package com.base.httpmvp.retrofitapi;
 
 import android.content.Intent;
-import android.text.TextUtils;
 
 import com.base.BaseApplication;
 import com.base.config.IntentAction;
@@ -10,13 +9,10 @@ import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.base.httpmvp.retrofitapi.token.IGlobalManager;
 import com.base.httpmvp.retrofitapi.token.TokenModel;
 import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
 import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
-import com.jelly.baselibrary.model.UploadBean;
-import com.jelly.baselibrary.model.UploadData;
 import com.jelly.jellybase.BuildConfig;
 
 import java.io.File;
@@ -30,10 +26,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -154,33 +147,6 @@ public class HttpMethods implements IGlobalManager {
 				.flatMap(new HttpFunctions<HttpResultData<TokenModel>>());
 		toSubscribe(observable,subscriber,composer);
 	}
-	/**
-	 * 上传文件(图片)
-	 */
-	public void upload(File file, UploadBean uploadBean, ObservableTransformer composer, Observer<HttpResultData<UploadData>> subscriber){
-		// 创建 RequestBody，用于封装构建RequestBody
-		RequestBody requestFile =
-				RequestBody.create(MediaType.parse("multipart/form-data"), file);
-		String type="image";
-		if(!TextUtils.isEmpty(uploadBean.getFileType())){
-			type=uploadBean.getFileType();
-		}
-		// MultipartBody.Part  和后端约定好Key
-		MultipartBody.Part body =
-				MultipartBody.Part.createFormData(type, file.getName(), requestFile);
-		// 添加描述
-		String descriptionString =uploadBean.getFileDesc();
-		RequestBody description =
-				RequestBody.create(
-						MediaType.parse("multipart/form-data"), descriptionString);
-		// 执行请求
-		Observable observable = getProxy(IApiService.class).upload(GlobalToken.getToken().getToken(),
-				description, body)
-				.flatMap(new HttpFunctions<HttpResultData<UploadData>>());
-		toSubscribe(observable, subscriber,composer);
-	}
-
-
 
 	/***
 	 * 统一异步,同步处理
@@ -188,7 +154,7 @@ public class HttpMethods implements IGlobalManager {
 	 * @param observer
 	 * @param <T>
 	 */
-	public   <T> void toSubscribe(Observable<T> observable, Observer<T> observer
+	public <T> void toSubscribe(Observable<T> observable, Observer<T> observer
 			,ObservableTransformer composer){
 		if (composer!=null) {
 			observable.subscribeOn(Schedulers.io())

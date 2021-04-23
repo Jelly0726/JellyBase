@@ -10,7 +10,6 @@ import com.jelly.mvp.contact.AddBankCartContact;
 import com.jelly.mvp.model.BankCartModel;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -30,20 +29,13 @@ public class AddBankPresenter extends AddBankCartContact.Presenter {
             @Override
             public void onSuccess(HttpResult model) {
                 mView.addBankSuccess(model.getMsg());
-                removeDisposable(this.hashCode());
                 mView.closeProgress();
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.addBankFailed(msg);
-                removeDisposable(this.hashCode());
                 mView.closeProgress();
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(),disposable);
             }
         });
     }

@@ -10,7 +10,6 @@ import com.jelly.mvp.contact.BankCartContact;
 import com.jelly.mvp.model.BankCartModel;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -37,10 +36,6 @@ public class BankCartPresenter extends BankCartContact.Presenter {
                 mView.deletebankFailed(msg);
             }
 
-            @Override
-            public void onDisposable(Disposable subscription) {
-                BankCartPresenter.this.addDisposable(this.hashCode(),subscription);
-            }
         });
     }
 

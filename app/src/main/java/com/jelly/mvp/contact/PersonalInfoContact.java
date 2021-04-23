@@ -1,8 +1,8 @@
 package com.jelly.mvp.contact;
 
-import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
+import com.jelly.mvp.model.PersonalInfoModel;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -54,7 +54,7 @@ public interface PersonalInfoContact {
         public void uploadFailed(String message);
 
     }
-    public abstract class Presenter extends BasePresenter<View, BaseModel> {
+    public abstract class Presenter extends BasePresenter<View, PersonalInfoModel> {
         public abstract void getInfo();
         public abstract void upload();
         public abstract void upPersonalInfo();

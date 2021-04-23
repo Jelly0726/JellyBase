@@ -1,17 +1,16 @@
 package com.jelly.mvp.presenter;
 
-import com.base.httpmvp.retrofitapi.function.HttpFunctions;
-import com.jelly.mvp.contact.AccountDetailContact;
 import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
+import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
 import com.jelly.baselibrary.model.AccountDetail;
+import com.jelly.mvp.contact.AccountDetailContact;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -27,18 +26,10 @@ public class AccountDetailPresenter extends AccountDetailContact.Presenter{
             @Override
             public void onSuccess(HttpResultList<AccountDetail> model) {
                 mView.accountDetailSuccess(isRefresh,model.getData());
-                removeDisposable(this.hashCode());
             }
-
             @Override
             public void onFailure(String msg) {
                 mView.accountDetailFailed(isRefresh,msg);
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(),disposable);
             }
         });
     }

@@ -1,17 +1,16 @@
 package com.jelly.mvp.presenter;
 
-import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.mvp.contact.BankCartListContact;
 import com.jelly.mvp.model.BankCartModel;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -31,19 +30,12 @@ public class BankListPresenter extends BankCartListContact.Presenter {
             public void onSuccess(HttpResultList<BankCardInfo> model) {
                 mView.bankListSuccess(isRefresh, model.getData());
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.bankListFailed(isRefresh, msg);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(), disposable);
             }
         });
     }

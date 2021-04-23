@@ -1,16 +1,15 @@
 package com.jelly.mvp.presenter;
 
-import com.base.httpmvp.retrofitapi.function.HttpFunctions;
-import com.jelly.mvp.contact.UpdatePhoneContact;
 import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
+import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.mvp.contact.UpdatePhoneContact;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Administrator on 2017/11/8.
@@ -28,19 +27,12 @@ public class UpdatePhonePresenter extends UpdatePhoneContact.Presenter {
             public void onSuccess(HttpResult model) {
                 mView.updatePhoneSuccess(model);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.updatePhoneFailed(msg);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(), disposable);
             }
         });
     }
@@ -55,19 +47,12 @@ public class UpdatePhonePresenter extends UpdatePhoneContact.Presenter {
             public void onSuccess(HttpResult model) {
                 mView.verifiCodeSuccess(model);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
             }
 
             @Override
             public void onFailure(String msg) {
                 mView.verifiCodeFailed(msg);
                 mView.closeProgress();
-                removeDisposable(this.hashCode());
-            }
-
-            @Override
-            public void onDisposable(Disposable disposable) {
-                addDisposable(this.hashCode(), disposable);
             }
         });
     }
