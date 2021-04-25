@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 
+import com.base.daemon.DaemonEnv;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
-import com.base.daemon.DaemonEnv;
 import com.jelly.baselibrary.dialog.PrivacyDialog;
 import com.jelly.jellybase.BuildConfig;
+import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.permissionx.guolindev.PermissionX;
 import com.permissionx.guolindev.callback.RequestCallback;
@@ -93,8 +94,8 @@ public class LauncherActivity extends BaseActivity {
     @Override
     public int getLayoutId(){
         //下面为纯色背景启动图标  若使用背景图片(styles)注释下面即可
-//        return  R.layout.base_activity_launcher;
-        return -1;
+        return  R.layout.base_activity_launcher;
+//        return -1;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
