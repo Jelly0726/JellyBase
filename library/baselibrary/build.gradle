@@ -91,7 +91,10 @@ dependencies {
     //百度智能更新 SDK 的 AAR 文件
     api(name: 'autoupdatesdk-release', ext: 'aar')
     api 'androidx.appcompat:appcompat:1.1.0'
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.core:core-ktx:1.2.0'
+    // 存储访问框架（SAF）
+    api 'androidx.documentfile:documentfile:1.0.1'
     //屏幕适配
     api 'me.jessyan:autosize:1.2.1'
 //      kotlin协程
@@ -265,9 +268,10 @@ dependencies {
     api 'com.haibin:calendarview:3.6.4'//日历选择
     //百度文字识别(身份证、银行卡等)
     api files('libs/ocr-sdk.jar')
-    api project(path: ':ocr_ui')
-    api project(path: ':logreport')
-    api project(path: ':form')
+    api project(path: ':library:ocr_ui')
+    //日志崩溃管理框架
+    api project(path: ':library:logreport')
+    api project(path: ':library:form')
     api 'com.jeremyliao:live-event-bus-x:1.7.3'
 //        api 'com.jeremyliao:live-event-bus:1.7.3'
 
@@ -282,7 +286,7 @@ dependencies {
     api files('libs\\commons-lang3-3.4.jar')
     api files('libs\\alipaySdk-20170922.jar')
 
-    api project(path: ':blurkit')
+    api project(path: ':library:blurkit')
     //简单的表格控件
     api project(path: ':library:tableLayout')
     //检测当前运行环境
@@ -307,4 +311,6 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     //zxing扫码
     api project(path: ':library:ZxingQRCodeX')
+    //走马灯
+//    implementation project(':library:marqueeviewlibrary')
 }

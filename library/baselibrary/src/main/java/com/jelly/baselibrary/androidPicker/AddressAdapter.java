@@ -20,64 +20,32 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jelly.baselibrary.BaseAdapter;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
+import com.yanzhenjie.album.impl.OnItemClickListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class AddressAdapter extends BaseRecyclerAdapter<AddressAdapter.ViewHolder> {
-
-    private LayoutInflater mInflater;
-    private Context context;
+public class AddressAdapter extends BaseAdapter<AddressAdapter.ViewHolder> {
     private List<? extends Area> mList;
 
     public AddressAdapter(Context context, List<? extends Area> mList) {
-        this.context=context;
-        mInflater = LayoutInflater.from(context);
+        super(context);
         this.mList=mList;
     }
     public void setData(List<? extends Area> mList){
         this.mList=mList;
         notifyDataSetChanged();
-    }
-    @Override
-    public int getAdapterItemViewType(int position) {
-        return 0;
-    }
-
-    @Override
-    public int getAdapterItemCount() {
-        return mList.size();
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View view) {
-        return new ViewHolder(view);
-    }
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        TextView textView=new TextView(context);
-        textView.setOnClickListener(listener);
-        textView.setHeight(AppUtils.dipTopx(context,50));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(Color.parseColor("#313131"));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-        return new ViewHolder(textView);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position, boolean isItem) {
-        holder.textView.setTag(position);
-        holder.textView.setText(mList.get(position).getAreaName());
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override
@@ -85,6 +53,36 @@ public class AddressAdapter extends BaseRecyclerAdapter<AddressAdapter.ViewHolde
             mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     };
+
+    @Override
+    public void notifyDataSetChanged(@NotNull List<?> dataList) {
+        this.mList.clear();
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        TextView textView=new TextView(getContext());
+        textView.setOnClickListener(listener);
+        textView.setHeight(AppUtils.dipTopx(getContext(),50));
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(Color.parseColor("#313131"));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+        return new ViewHolder(textView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.textView.setTag(position);
+        holder.textView.setText(mList.get(position).getAreaName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
     /**
      * item的ViewHolder
      */

@@ -19,9 +19,9 @@ import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.addressmodel.City;
 import com.jelly.baselibrary.addressmodel.Province;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
 import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class AddressDialog extends AbsBaseCircleDialog {
     @Override
     public View createView(Context context, LayoutInflater inflater, ViewGroup container) {
         if (rootView == null)
-            rootView =inflater.inflate(R.layout.address_dialog, container, false);
+            rootView =inflater.inflate(R2.layout.address_dialog, container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
