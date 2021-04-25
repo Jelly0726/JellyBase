@@ -762,24 +762,6 @@
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
-        <!--↓↓↓↓↓↓↓富文本编辑器↓↓↓↓↓↓↓-->
-        <activity android:name=".richeditor.MainActivity"
-            android:windowSoftInputMode="stateUnchanged|stateHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".richeditor.SimpleCallsActivity"
-            android:windowSoftInputMode="stateUnchanged|stateHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".richeditor.ActualDemoActivity"
-            android:windowSoftInputMode="stateUnchanged|stateHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".richeditor.ShowHtmlActivity"
-            android:windowSoftInputMode="stateUnchanged|stateHidden"
-            android:screenOrientation="portrait">
-        </activity>
-        <!--↑↑↑↑↑↑↑↑富文本编辑器↑↑↑↑↑↑↑↑-->
         <activity android:name=".videorecord.MainActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".videorecord.VedioRecordActivity"
