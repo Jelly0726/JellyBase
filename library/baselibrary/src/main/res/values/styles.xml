@@ -38,7 +38,7 @@
         <!--指的是进入B时，A的动画，与B的动画是一起显示的。-->
         <item name="android:activityOpenExitAnimation">@anim/left_in</item>
         <!--通过B跳转到C后，后退到B时，B的进入动画-->
-        <item name="android:activityCloseEnterAnimation">@anim/left_in</item>
+        <item name="android:activityCloseEnterAnimation">@anim/left_out</item>
         <!--通过B跳转到C后，后退到B时，C的退出动画-->
         <item name="android:activityCloseExitAnimation">@anim/left_out</item>
     </style>
