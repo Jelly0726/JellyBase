@@ -195,7 +195,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                     @Override
                     public void onConfig(DialogParams params) {
                         //增加弹出动画
-                        params.animStyle = R.style.Anim_bottom;
+                        params.animStyle = R.style.lib_Anim_bottom;
                     }
                 })
                 .setTitle("标题")
