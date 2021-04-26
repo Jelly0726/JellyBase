@@ -76,7 +76,7 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
             run {
                 val deleteItem = SwipeMenuItem(this@ShopCartActivity)
                     .setBackground(R.drawable.xswipe_selector_red)
-                    .setImage(R.drawable.xswipe_action_delete)
+                    .setImage(R.drawable.ic_delete_red)
                     .setText("删除")
                     .setTextColor(Color.WHITE)
                     .setWidth(width)

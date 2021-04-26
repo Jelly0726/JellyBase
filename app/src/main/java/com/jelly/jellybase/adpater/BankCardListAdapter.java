@@ -17,60 +17,61 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.jelly.baselibrary.BaseAdapter;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.baselibrary.bankcard.BankUtil;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 import java.util.List;
 
-public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter.ViewHolder> {
+public class BankCardListAdapter extends BaseAdapter<BankCardListAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
-    private Context context;
     private List<BankCardInfo> mList;
 
     public BankCardListAdapter(Context context, List<BankCardInfo> mList) {
-        this.context=context;
-        mInflater = LayoutInflater.from(context);
+        super(context);
         this.mList=mList;
     }
-    @Override
-    public int getAdapterItemViewType(int position) {
-        return 0;
-    }
+    private View.OnClickListener listener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
+        }
+    };
 
     @Override
-    public int getAdapterItemCount() {
-        return mList.size();
+    public void notifyDataSetChanged(@NotNull List<?> dataList) {
+        this.mList.clear();
+        this.mList.addAll((Collection<? extends BankCardInfo>) dataList);
     }
 
+    @NonNull
     @Override
-    public ViewHolder getViewHolder(View view) {
-        return new ViewHolder(view);
-    }
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        final View view = mInflater.inflate(R.layout.bankcardlist_item, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View view = getInflater().inflate(R.layout.bankcardlist_item, parent, false);
         view.setOnClickListener(listener);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position, boolean isItem) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemView.setTag(position);
         holder.bank_name.setText(mList.get(position).getBankName());
         holder.bank_no.setText(BankUtil.getBankCardID(mList.get(position).getBankNo()));
@@ -79,7 +80,7 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
             holder.tag_tv.setVisibility(View.VISIBLE);
             Gson gson=new Gson();
             String json=gson.toJson(mList.get(position));
-            AppPrefs.putString(context.getApplicationContext(),
+            AppPrefs.putString(getContext().getApplicationContext(),
                     ConfigKey.DEFAULT_BANK,json);
         }else {
             holder.tag_tv.setVisibility(View.GONE);
@@ -87,7 +88,7 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
 
         if(mList.get(position).getBankLogo()!=null){
             if (mList.get(position).getBankLogo().trim().length()>6){
-                Glide.with(context)
+                Glide.with(getContext())
                         .load(mList.get(position).getBankLogo().trim())
                         .placeholder(R.drawable.yinlian)
                         .error(R.drawable.yinlian)
@@ -96,20 +97,19 @@ public class BankCardListAdapter extends BaseRecyclerAdapter<BankCardListAdapter
                         .into(holder.bank_logo);
                 return;
             }else {
-                holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.yinlian));
+                holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.yinlian));
             }
         }else {
-            holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.yinlian));
+            holder.bank_logo.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.yinlian));
         }
         holder.bank_logo.setImageResource(mList.get(position).getBankDraw());
-
     }
-    private View.OnClickListener listener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mOnItemClickListener.onItemClick(v, (int) v.getTag());
-        }
-    };
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
     /**
      * item的ViewHolder
      */
