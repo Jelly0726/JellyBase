@@ -11,7 +11,7 @@ import com.jelly.baselibrary.BackInterface;
 import com.jelly.baselibrary.BaseActivity;
 import com.base.BaseApplication;
 import com.jelly.baselibrary.BaseFragment;
-import com.base.FragmentAdapter;
+import com.jelly.baselibrary.FragmentAdapter;
 import com.base.HermesManager;
 import com.jelly.baselibrary.config.IntentAction;
 import com.base.sqldao.LoginDaoUtils;

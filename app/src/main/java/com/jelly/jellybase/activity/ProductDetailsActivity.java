@@ -19,7 +19,7 @@ import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.BackInterface;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.BaseFragment;
-import com.base.FragmentAdapter;
+import com.jelly.baselibrary.FragmentAdapter;
 import com.bumptech.glide.Glide;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.CurrentItem;

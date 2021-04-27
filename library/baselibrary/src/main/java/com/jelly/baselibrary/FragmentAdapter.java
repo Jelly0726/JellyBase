@@ -1,10 +1,10 @@
-package com.base;
+package com.jelly.baselibrary;
 
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jelly.baselibrary.BaseFragment;
@@ -17,24 +17,26 @@ import java.util.List;
  * 当Fragment包含ViewPage+Fragment时FragmentAdapter不要继承FragmentStatePagerAdapter
  */
 
-public class FragmentStateAdapter extends FragmentStatePagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
-    private FragmentManager fm;
-    public FragmentStateAdapter(FragmentManager fm, List<Fragment> mFragmentList) {
+    private FragmentManager fragmentManager;
+    private List<String> tags;
+    public FragmentAdapter(FragmentManager fm, List<Fragment> mFragmentList) {
         super(fm);
+        this.tags = new ArrayList<>();
+        this.fragmentManager = fm;
         this.mFragmentList=mFragmentList;
-        this.fm=fm;
     }
 
     public void setFragmentData(List<Fragment> mFragmentList){
-        if(this.mFragmentList != null && fm != null){
-            FragmentTransaction ft = fm.beginTransaction();
-            for(Fragment f:this.mFragmentList){
-                ft.remove(f);
+        if (this.tags != null) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            for (int i = 0; i < tags.size(); i++) {
+                fragmentTransaction.remove(fragmentManager.findFragmentByTag(tags.get(i)));
             }
-            ft.commit();
-            ft=null;
-            fm.executePendingTransactions();
+            fragmentTransaction.commit();
+            fragmentManager.executePendingTransactions();
+            tags.clear();
         }
         this.mFragmentList=mFragmentList;
         notifyDataSetChanged();
@@ -42,6 +44,11 @@ public class FragmentStateAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return mFragmentList.size();
     }
     /**
      * @return 是否fragment被系统给detach或者销毁了
@@ -96,16 +103,23 @@ public class FragmentStateAdapter extends FragmentStatePagerAdapter {
         return false;
     }
     @Override
-    public int getCount() {
-        return mFragmentList.size();
+    public Object instantiateItem(ViewGroup container, int position) {
+        tags.add(makeFragmentName(container.getId(), getItemId(position)));
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        this.fragmentManager.beginTransaction().show(fragment).commit();
+        return fragment;
     }
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         Fragment fragment =mFragmentList.get(position);
+        fragmentManager.beginTransaction().hide(fragment).commit();
         if (fragment instanceof BaseFragment){
             BaseFragment baseFragment= (BaseFragment) mFragmentList.get(position);
             if (!baseFragment.isReuseView())
                 super.destroyItem(container, position, object);
         }else super.destroyItem(container, position, object);
+    }
+    private static String makeFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
     }
 }
