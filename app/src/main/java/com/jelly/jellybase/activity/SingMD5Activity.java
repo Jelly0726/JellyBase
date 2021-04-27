@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.nativeUtil.NativeUtils;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

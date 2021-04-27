@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.baselibrary.xrefreshview.listener.OnBottomLoadMoreTime;
 import com.jelly.baselibrary.xrefreshview.listener.OnTopRefreshTime;

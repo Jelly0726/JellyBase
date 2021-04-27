@@ -1,4 +1,4 @@
-package com.base
+package com.jelly.baselibrary
 
 import android.app.Activity
 import android.app.LauncherActivity
@@ -21,9 +21,10 @@ import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import cn.jpush.android.api.JPushInterface
-import com.base.config.IntentAction
-import com.base.httpmvp.retrofitapi.token.GlobalToken
+import com.jelly.baselibrary.config.IntentAction
+import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.SystemBar.StatusBarUtil
+import com.jelly.baselibrary.appManager.AppSubject
 import com.jelly.baselibrary.appManager.FixMemLeak
 import com.jelly.baselibrary.appManager.Observable
 import com.jelly.baselibrary.appManager.Observer
@@ -187,7 +188,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             context: Context,
             attrs: AttributeSet
     ): View? {
-        if (!com.base.BaseApplication.isVampix) { //不进行黑白化
+        if (!AppInit.isVampix) { //不进行黑白化
             return super.onCreateView(name, context, attrs)
         }
         if ("FrameLayout" == name) {
@@ -425,7 +426,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                 val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
                 if (reason != null) { //Log.i("msg", "action:" + action + ",reason:" + reason);
                     if (reason == SYSTEM_DIALOG_REASON_HOME_KEY) { // 短按home键
-                        AppPrefs.putBoolean(com.base.BaseApplication.instance, ConfigKey.ISHOME, true)
+                        AppPrefs.putBoolean(applicationContext, ConfigKey.ISHOME, true)
                     } else if (reason
                             == SYSTEM_DIALOG_REASON_RECENT_APPS
                     ) { // 长按home键
@@ -450,7 +451,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             if (activity != null) {
                 when (msg.arg1) {
                     0 -> if (activity.circleDialog == null) {
-                        synchronized(com.base.BaseApplication.instance) {
+                        synchronized(activity) {
                             if (activity.circleDialog == null) {
                                 activity.circleDialog = CircleDialog.Builder()
                                         .configDialog { params -> params.width = 0.6f }
@@ -476,7 +477,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                                                     Intent.FLAG_ACTIVITY_NEW_TASK
                                                             or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                             )
-                                            com.base.BaseApplication.instance.startActivity(intent1)
+                                            activity.startActivity(intent1)
                                         }
                                 activity.circleDialog!!.show(activity.supportFragmentManager)
                             }

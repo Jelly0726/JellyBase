@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.snackbar.Snackbar;
 
 import com.jelly.baselibrary.materialspinner.MaterialSpinner;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**

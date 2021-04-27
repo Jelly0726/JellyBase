@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jelly.baselibrary.Utils.AntiEmulator;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 import org.jetbrains.annotations.Nullable;

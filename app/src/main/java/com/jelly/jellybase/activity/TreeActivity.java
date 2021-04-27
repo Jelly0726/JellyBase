@@ -14,7 +14,7 @@ import com.jelly.baselibrary.tree.bean.BaseItem;
 import com.jelly.baselibrary.tree.bean.GrandSon;
 import com.jelly.baselibrary.tree.bean.Item;
 import com.jelly.baselibrary.tree.bean.Section;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

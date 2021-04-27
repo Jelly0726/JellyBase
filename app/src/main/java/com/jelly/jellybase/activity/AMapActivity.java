@@ -45,7 +45,7 @@ import com.base.HermesManager;
 import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.server.LocationService;
 

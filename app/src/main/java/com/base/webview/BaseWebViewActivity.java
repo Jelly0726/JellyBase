@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.webview.WebConfig;
 import com.jelly.baselibrary.webview.WebTools;

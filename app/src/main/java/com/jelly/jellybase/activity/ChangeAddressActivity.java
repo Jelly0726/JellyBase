@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.addressmodel.City;

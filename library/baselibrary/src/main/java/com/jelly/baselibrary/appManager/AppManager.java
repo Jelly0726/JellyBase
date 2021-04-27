@@ -1,7 +1,8 @@
-package com.base;
+package com.jelly.baselibrary.appManager;
 
 import android.app.Activity;
 
+import com.jelly.baselibrary.AppCallBack;
 
 import java.io.ObjectStreamException;
 import java.lang.ref.WeakReference;
@@ -15,6 +16,7 @@ import java.util.Stack;
  */
 public class AppManager {
     private static Stack<WeakReference<Activity>> activityStack;
+    private static AppCallBack appCallBack;
 
     private AppManager() {
     }
@@ -41,6 +43,10 @@ public class AppManager {
      */
     private Object readResolve() throws ObjectStreamException {
         return SingletonHolder.instance;
+    }
+
+    public void setAppCallBack(AppCallBack appCallBack) {
+        this.appCallBack = appCallBack;
     }
 
     /**
@@ -158,7 +164,8 @@ public class AppManager {
     public void AppExit() {
         try {
             finishAllActivity();
-            BaseApplication.getInstance().exit();
+            if (appCallBack != null)
+                appCallBack.appExit();
         } catch (Exception e) {
         }
     }

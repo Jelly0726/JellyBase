@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
 

@@ -1,4 +1,4 @@
-package com.base;
+package com.jelly.baselibrary;
 
 /**
  * Created by Administrator on 2018/1/6.

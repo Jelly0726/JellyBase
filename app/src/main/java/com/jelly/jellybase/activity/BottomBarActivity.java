@@ -7,13 +7,13 @@ import android.view.KeyEvent;
 
 import androidx.fragment.app.Fragment;
 
-import com.base.BackInterface;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BackInterface;
+import com.jelly.baselibrary.BaseActivity;
 import com.base.BaseApplication;
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.base.FragmentAdapter;
 import com.base.HermesManager;
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.config.IntentAction;
 import com.base.sqldao.LoginDaoUtils;
 import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;

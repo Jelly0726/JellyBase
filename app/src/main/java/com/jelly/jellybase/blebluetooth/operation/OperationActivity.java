@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.jelly.baselibrary.bluetooth.BleManager;
 import com.jelly.baselibrary.bluetooth.data.BleDevice;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.comm.Observer;
 import com.jelly.jellybase.blebluetooth.comm.ObserverManager;

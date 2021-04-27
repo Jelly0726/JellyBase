@@ -17,7 +17,7 @@ import com.base.BaseApplication;
 import com.jelly.baselibrary.mypopupmenu.BaseItem;
 import com.jelly.baselibrary.mypopupmenu.TopMiddlePopup;
 import com.jelly.baselibrary.mypopupmenu.Util;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
 import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;

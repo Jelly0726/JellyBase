@@ -5,7 +5,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
 import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;

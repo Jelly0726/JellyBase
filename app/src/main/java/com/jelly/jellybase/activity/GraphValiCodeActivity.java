@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.jelly.baselibrary.valicode.GraphValiCode;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
 

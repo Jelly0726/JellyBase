@@ -15,7 +15,7 @@ import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.model.MyInfo;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.xrefreshview.XNestedScrollView;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.jellybase.R;

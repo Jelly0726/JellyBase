@@ -43,7 +43,7 @@ import com.jelly.baselibrary.mic.MicService;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.redpacket.StartActivity;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.view.FloatingDraftButton;
 import com.base.webview.BaseWebViewActivity;
 import com.base.webview.JSWebViewActivity;

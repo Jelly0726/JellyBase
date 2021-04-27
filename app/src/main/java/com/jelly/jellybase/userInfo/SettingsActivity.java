@@ -7,10 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
-import com.base.AppSubject;
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.appManager.AppSubject;
+import com.jelly.baselibrary.config.IntentAction;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.model.AppVersion;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;

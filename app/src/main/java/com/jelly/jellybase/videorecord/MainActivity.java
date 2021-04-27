@@ -8,7 +8,7 @@ import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 import java.io.File;

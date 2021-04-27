@@ -2,7 +2,7 @@ package com.jelly.jellybase.shopcar;
 
 import android.os.Bundle;
 
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**

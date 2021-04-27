@@ -13,20 +13,23 @@ import androidx.multidex.MultiDex
 import butterknife.ButterKnife
 import cn.jpush.android.api.JPushInterface
 import com.base.MapUtil.LocationTask
-import com.base.httpmvp.retrofitapi.token.GlobalToken
-import com.bumptech.glide.Glide
-import com.jelly.baselibrary.album.GlideAlbumLoader
-import com.jelly.baselibrary.applicationUtil.AppPrefs
-import com.jelly.baselibrary.applicationUtil.ChangeLanguageHelper
 import com.base.cockroach.Cockroach
 import com.base.cockroach.CrashUtils
 import com.base.cockroach.ExceptionHandler
-import com.base.config.IntentAction
-import com.jelly.baselibrary.config.ConfigKey
 import com.base.daemon.DaemonEnv
 import com.base.sqldao.DBManager
+import com.bumptech.glide.Glide
+import com.jelly.baselibrary.AppCallBack
+import com.jelly.baselibrary.AppInit
+import com.jelly.baselibrary.album.GlideAlbumLoader
+import com.jelly.baselibrary.appManager.AppSubject
+import com.jelly.baselibrary.applicationUtil.AppPrefs
+import com.jelly.baselibrary.applicationUtil.ChangeLanguageHelper
+import com.jelly.baselibrary.config.ConfigKey
+import com.jelly.baselibrary.config.IntentAction
 import com.jelly.baselibrary.log.LogUtils
 import com.jelly.baselibrary.toast.ToastUtils
+import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.jellybase.BuildConfig
 import com.jelly.jellybase.R
 import com.jelly.jellybase.server.TraceServiceImpl
@@ -53,13 +56,12 @@ import java.io.IOException
  * Created by Administrator on 2015/10/8.
  */
 @DebugLog
-class BaseApplication : Application() {
+class BaseApplication : Application(), AppCallBack {
     companion object {
         private lateinit var myApp: BaseApplication
         private var backStage = true //后台运行
         var isMainState = false //MianAcitivity是否运行
         var areacode = "0" //
-        var isVampix = false //是否App黑白化
         var login: Login? = null //
         /**
          * 获取本app可用的Context
@@ -88,6 +90,8 @@ class BaseApplication : Application() {
         super.onCreate()
         myApp = this
         LogUtils.init(BuildConfig.LOG_DEBUG)
+        //初始化
+        AppInit.init(this)
         //RxJava2 取消订阅后，抛出的异常无法捕获，导致程序崩溃
         RxJavaPlugins.setErrorHandler(Consumer<Throwable?> { })
         //初始化一下就行了，别忘记了  --奔溃日志
@@ -330,7 +334,9 @@ class BaseApplication : Application() {
         http.setBodyParam("message") //内容
         LogReport.getInstance().setUploadType(http)
     }
-
+    override fun appExit() {
+        exit()
+    }
     /**
      * 退出
      */
@@ -378,4 +384,6 @@ class BaseApplication : Application() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
     }
+
+
 }

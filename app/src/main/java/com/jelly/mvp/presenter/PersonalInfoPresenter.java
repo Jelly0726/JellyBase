@@ -6,7 +6,7 @@ import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.model.PersonalInfo;
 import com.jelly.baselibrary.model.UploadBean;
 import com.jelly.mvp.contact.PersonalInfoContact;

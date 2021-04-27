@@ -7,7 +7,7 @@ import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 import com.jelly.mvp.contact.AddressContact;
 

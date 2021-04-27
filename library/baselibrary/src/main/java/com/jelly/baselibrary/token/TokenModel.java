@@ -1,4 +1,4 @@
-package com.base.httpmvp.retrofitapi.token;
+package com.jelly.baselibrary.token;
 
 /**
  * Created by Administrator on 2017/11/7.

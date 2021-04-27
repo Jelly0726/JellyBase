@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.willy.ratingbar.BaseRatingBar;
 

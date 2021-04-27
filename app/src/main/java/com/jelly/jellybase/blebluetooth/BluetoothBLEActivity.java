@@ -41,7 +41,7 @@ import com.jelly.baselibrary.bluetooth.exception.BleException;
 import com.jelly.baselibrary.bluetooth.scan.BleScanRuleConfig;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.adapter.DeviceAdapter;
 import com.jelly.jellybase.blebluetooth.comm.ObserverManager;

@@ -8,7 +8,7 @@ import com.base.BaseApplication;
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;

@@ -10,9 +10,9 @@ import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
-import com.base.httpmvp.retrofitapi.token.IGlobalManager;
-import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.jelly.baselibrary.token.GlobalToken;
+import com.jelly.baselibrary.token.IGlobalManager;
+import com.jelly.baselibrary.token.TokenModel;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;

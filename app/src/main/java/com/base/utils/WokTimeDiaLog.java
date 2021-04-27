@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.config.IntentAction;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 

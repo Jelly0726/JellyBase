@@ -15,7 +15,7 @@ import com.base.BaseApplication.Companion.instance
 import com.jelly.baselibrary.applicationUtil.AppUtils
 import com.jelly.baselibrary.eventBus.NetEvent
 import com.jelly.baselibrary.toast.ToastUtils
-import com.base.BaseActivity
+import com.jelly.baselibrary.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.shopcart.CartInfo
 import com.jeremyliao.liveeventbus.LiveEventBus

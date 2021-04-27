@@ -14,7 +14,7 @@ import com.base.BaseApplication;
 import com.jelly.baselibrary.middleBar.MiddleBarItem;
 import com.jelly.baselibrary.middleBar.MiddleBarLayout;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.base.FragmentAdapter;
 import com.google.gson.Gson;
 import com.jelly.jellybase.R;

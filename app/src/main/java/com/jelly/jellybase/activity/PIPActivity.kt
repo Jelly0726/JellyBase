@@ -9,7 +9,7 @@ import butterknife.OnClick
 import com.base.daemon.DaemonEnv
 import com.jelly.baselibrary.eventBus.NetEvent
 import com.jelly.baselibrary.log.LogUtils
-import com.base.BaseActivity
+import com.jelly.baselibrary.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.server.TraceServiceImpl
 import com.jeremyliao.liveeventbus.LiveEventBus

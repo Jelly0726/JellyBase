@@ -7,7 +7,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.jelly.baselibrary.eventBus.NetEvent;
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.baselibrary.xrefreshview.XScrollView;
 import com.jelly.jellybase.R;

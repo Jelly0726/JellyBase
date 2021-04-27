@@ -5,7 +5,7 @@ import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;

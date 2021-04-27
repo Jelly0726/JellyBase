@@ -14,7 +14,7 @@ import com.base.BaseApplication;
 import com.jelly.baselibrary.multiClick.OnMultiClickListener;
 import com.base.sqldao.HistoryDaoUtils;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.view.FlowLayout;
 import com.jelly.jellybase.R;
 

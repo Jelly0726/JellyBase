@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.jelly.baselibrary.BaseFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 

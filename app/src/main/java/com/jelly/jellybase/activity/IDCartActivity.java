@@ -10,7 +10,7 @@ import com.jelly.baselibrary.idcart.IDCard;
 import com.jelly.baselibrary.idcart.IDCardUtils;
 import com.jelly.baselibrary.idcart.IDEntity;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 import butterknife.BindView;

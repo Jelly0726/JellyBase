@@ -15,7 +15,7 @@ import com.jelly.baselibrary.encrypt.JniUtils;
 import com.jelly.baselibrary.encrypt.SafetyUtil;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 public class EncryptActivity extends BaseActivity implements View.OnClickListener {

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.jelly.baselibrary.passwordView.Callback;
 import com.jelly.baselibrary.passwordView.PasswordKeypad;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 
 /**

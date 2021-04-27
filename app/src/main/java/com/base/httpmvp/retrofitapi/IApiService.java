@@ -12,7 +12,7 @@ import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
 import com.base.httpmvp.retrofitapi.methods.HttpResultList;
-import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.jelly.baselibrary.token.TokenModel;
 import com.jelly.jellybase.datamodel.RecevierAddress;
 
 import java.util.Map;

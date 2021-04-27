@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.base.AppSubject;
+import com.jelly.baselibrary.appManager.AppSubject;
 import com.base.BaseApplication;
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.config.IntentAction;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.sqldao.LoginDaoUtils;
 import com.jelly.baselibrary.encrypt.MD5;

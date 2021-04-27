@@ -3,14 +3,14 @@ package com.base.httpmvp.retrofitapi;
 import android.content.Intent;
 
 import com.base.BaseApplication;
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.config.IntentAction;
 import com.base.httpmvp.retrofitapi.converter.MGsonConverterFactory;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.methods.HttpResultJson;
 import com.base.httpmvp.retrofitapi.proxy.ProxyHandler;
-import com.base.httpmvp.retrofitapi.token.IGlobalManager;
-import com.base.httpmvp.retrofitapi.token.TokenModel;
+import com.jelly.baselibrary.token.IGlobalManager;
+import com.jelly.baselibrary.token.TokenModel;
 import com.base.httpmvp.retrofitapi.util.BaseInterceptor;
 import com.base.httpmvp.retrofitapi.util.HttpCacheInterceptor;
 import com.jelly.jellybase.BuildConfig;

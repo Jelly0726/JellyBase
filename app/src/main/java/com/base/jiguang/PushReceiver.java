@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.base.BaseApplication;
-import com.base.config.IntentAction;
+import com.jelly.baselibrary.config.IntentAction;
 import com.base.daemon.DaemonEnv;
 import com.base.daemon.WatchDogService;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;

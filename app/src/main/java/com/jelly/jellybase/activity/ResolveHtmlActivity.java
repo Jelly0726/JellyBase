@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat;
 
 import com.base.BaseApplication;
 import com.jelly.baselibrary.richtext.OkHttpImageDownloader;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;

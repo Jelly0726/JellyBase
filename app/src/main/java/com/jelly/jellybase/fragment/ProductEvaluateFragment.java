@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.BaseFragment;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.baselibrary.xrefreshview.view.CustomerFooter;
 import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;

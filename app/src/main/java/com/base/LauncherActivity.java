@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.Menu;
 
 import com.base.daemon.DaemonEnv;
+import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.appManager.AppSubject;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.dialog.PrivacyDialog;

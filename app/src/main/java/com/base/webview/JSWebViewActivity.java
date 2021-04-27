@@ -23,8 +23,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.BaseActivity;
-import com.base.httpmvp.retrofitapi.token.GlobalToken;
+import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.webview.DownloadCompleteReceiver;
 import com.jelly.baselibrary.webview.WebConfig;

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.jelly.baselibrary.config.BaseConfig;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.base.BaseActivity;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.weixinpay.PayUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
