@@ -2,15 +2,15 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.Utils.MyDate;
 import com.jelly.baselibrary.androidPicker.AddressPickTask;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AddressTimeActivityBinding;
 
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
@@ -22,9 +22,7 @@ import cn.qqtheme.framework.util.ConvertUtils;
  * Created by JELLY on 2017/11/3.
  */
 
-public class PickActivity extends BaseActivity implements View.OnClickListener{
-    private TextView select_address;
-    private TextView begin_date;
+public class PickActivity extends BaseActivity<AddressTimeActivityBinding> implements View.OnClickListener{
     private DatePicker picker;//时间选择器
     private String year;
     private String month;
@@ -34,16 +32,10 @@ public class PickActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         iniView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.address_time_activity;
-    }
     private void iniView(){
-        select_address=(TextView) findViewById(R.id.select_address);
-        select_address.setOnClickListener(this);
+        getViewBinding().selectAddress.setOnClickListener(this);
 
-        begin_date= (TextView) findViewById(R.id.begin_date);
-        begin_date.setOnClickListener(this);
+        getViewBinding().beginDate.setOnClickListener(this);
     }
     /**
      * 弹出选择框
@@ -67,7 +59,7 @@ public class PickActivity extends BaseActivity implements View.OnClickListener{
                     PickActivity.this.year=year;
                     PickActivity.this.month=month;
                     PickActivity.this.day=day;
-                        begin_date.setText(year + "-" + month + "-" + day);
+                    getViewBinding().beginDate.setText(year + "-" + month + "-" + day);
                 }
             });
             picker.setOnWheelListener(new DatePicker.OnWheelListener() {
@@ -106,10 +98,10 @@ public class PickActivity extends BaseActivity implements View.OnClickListener{
             public void onAddressPicked(Province province, City city, County county) {
                 if (county == null) {
                     //showToast(province.getAreaName() + city.getAreaName());
-                    select_address.setText(province.getAreaName() + city.getAreaName());
+                    getViewBinding().selectAddress.setText(province.getAreaName() + city.getAreaName());
                 } else {
                     //showToast(province.getAreaName() + city.getAreaName() + county.getAreaName());
-                    select_address.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    getViewBinding().selectAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
                 }
             }
         });

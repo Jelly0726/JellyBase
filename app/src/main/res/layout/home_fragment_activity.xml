@@ -16,12 +16,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.jelly.baselibrary.xrefreshview.XRefreshView
+        <com.andview.refreshview.XRefreshView
             android:id="@+id/custom_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             xrefreshview:autoRefresh="false" >
-            <com.jelly.baselibrary.xrefreshview.XScrollView
+            <com.andview.refreshview.XScrollView
                 android:id="@+id/xscrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -117,9 +117,10 @@
                         android:layout_marginBottom="6mm"
                         android:layout_marginLeft="0mm"
                         android:layout_marginRight="0mm">
-                        <include layout="@layout/home_gride_layout"/>
+                        <include android:id="@+id/homeGride" layout="@layout/home_gride_layout"/>
                     </LinearLayout>
                     <include
+                        android:id="@+id/homeSticky"
                         layout="@layout/home_stickyview"/>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -133,8 +134,8 @@
                             android:layout_marginTop="11mm"/>
                     </RelativeLayout>
                 </LinearLayout>
-            </com.jelly.baselibrary.xrefreshview.XScrollView>
-        </com.jelly.baselibrary.xrefreshview.XRefreshView>
+            </com.andview.refreshview.XScrollView>
+        </com.andview.refreshview.XRefreshView>
         <include
             android:id="@+id/stickyview"
             android:visibility="gone"

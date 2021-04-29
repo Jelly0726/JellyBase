@@ -3,18 +3,17 @@ package com.jelly.jellybase.userInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.appManager.AppSubject;
 import com.jelly.baselibrary.config.IntentAction;
-import com.base.httpmvp.mvpView.BaseActivityImpl;
-import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.model.AppVersion;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.UserSettingsActivityBinding;
 import com.jelly.mvp.contact.SettingContact;
 import com.jelly.mvp.presenter.SettingPresenter;
 import com.mylhyl.circledialog.CircleDialog;
@@ -28,22 +27,13 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/9/27.
  */
 
-public class SettingsActivity extends BaseActivityImpl<SettingContact.View,SettingContact.Presenter> implements SettingContact.View {
-    private LinearLayout left_back;
-    private LinearLayout change_pwd;
-    private LinearLayout change_phone;
-    private LinearLayout check_updata;
-    private LinearLayout about;
-    private TextView exit_tv;
+public class SettingsActivity extends BaseActivityImpl<SettingContact.View
+        ,SettingContact.Presenter, UserSettingsActivityBinding> implements SettingContact.View {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.user_settings_activity;
     }
     @Override
     protected void onDestroy() {
@@ -64,18 +54,12 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.View,Setti
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView(){
-        left_back= (LinearLayout) findViewById(R.id.left_back);
-        left_back.setOnClickListener(listener);
-        change_pwd= (LinearLayout) findViewById(R.id.change_pwd);
-        change_pwd.setOnClickListener(listener);
-        change_phone= (LinearLayout) findViewById(R.id.change_phone);
-        change_phone.setOnClickListener(listener);
-        check_updata= (LinearLayout) findViewById(R.id.check_updata);
-        check_updata.setOnClickListener(listener);
-        about= (LinearLayout) findViewById(R.id.about);
-        about.setOnClickListener(listener);
-        exit_tv= (TextView) findViewById(R.id.exit_tv);
-        exit_tv.setOnClickListener(listener);
+        getViewBinding().leftBack.setOnClickListener(listener);
+        getViewBinding().changePwd.setOnClickListener(listener);
+        getViewBinding().changePhone.setOnClickListener(listener);
+        getViewBinding().checkUpdata.setOnClickListener(listener);
+        getViewBinding().about.setOnClickListener(listener);
+        getViewBinding().exitTv.setOnClickListener(listener);
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override

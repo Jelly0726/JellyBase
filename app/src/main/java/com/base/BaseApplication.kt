@@ -10,7 +10,6 @@ import android.os.Process
 import android.text.TextUtils
 import android.util.Log
 import androidx.multidex.MultiDex
-import butterknife.ButterKnife
 import cn.jpush.android.api.JPushInterface
 import com.base.MapUtil.LocationTask
 import com.base.cockroach.Cockroach
@@ -90,8 +89,6 @@ class BaseApplication : Application(), AppCallBack {
         super.onCreate()
         myApp = this
         LogUtils.init(BuildConfig.LOG_DEBUG)
-        //初始化
-        AppInit.init(this)
         //RxJava2 取消订阅后，抛出的异常无法捕获，导致程序崩溃
         RxJavaPlugins.setErrorHandler(Consumer<Throwable?> { })
         //初始化一下就行了，别忘记了  --奔溃日志
@@ -107,14 +104,13 @@ class BaseApplication : Application(), AppCallBack {
         // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，
         // 需等到Activity重新变成激活状态，方可收到消息
         if (packageName == curProcessName) {
+            //初始化
+            AppInit.init(this)
             //初始化数据库
             DBManager.getDBManager().init(this)
             //            HermesEventBus.getDefault().init(this);
             //需要在 Application 的 onCreate() 中调用一次 DaemonEnv.initialize()
             DaemonEnv.initialize(this, TraceServiceImpl::class.java, DaemonEnv.DEFAULT_WAKE_UP_INTERVAL)
-
-            //butterknife注解式绑定id
-            ButterKnife.setDebug(BuildConfig.DEBUG)
             //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
             //TbsDownloader.needDownload(getApplicationContext(), false);
             val cb: QbSdk.PreInitCallback = object : QbSdk.PreInitCallback {

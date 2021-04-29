@@ -8,20 +8,18 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.Utils.StringUtil;
 import com.jelly.baselibrary.androidPicker.AddressPickTask;
-import com.jelly.mvp.contact.OperaAddressContact;
-import com.jelly.mvp.presenter.OperaAddressPresenter;
-import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.password.PwdCheckUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AddaddressEditActivityBinding;
 import com.jelly.jellybase.datamodel.RecevierAddress;
+import com.jelly.mvp.contact.OperaAddressContact;
+import com.jelly.mvp.presenter.OperaAddressPresenter;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.callback.ConfigText;
@@ -32,8 +30,6 @@ import com.trello.rxlifecycle3.android.ActivityEvent;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
@@ -43,24 +39,9 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/10/13.
  */
 
-public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.View,OperaAddressContact.Presenter>
-        implements OperaAddressContact.View{
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.address_tv)
-    TextView address_tv;
-    @BindView(R.id.name_edit)
-    EditText name_edit;
-    @BindView(R.id.phone_edit)
-    EditText phone_edit;
-    @BindView(R.id.address_tvs)
-    EditText address_tvs;
-    @BindView(R.id.default_checkBox)
-    CheckBox default_checkBox;
-    @BindView(R.id.commit_layout)
-    LinearLayout commit_layout;
-    @BindView(R.id.delete_address)
-    TextView delete_address;
+public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.View
+        ,OperaAddressContact.Presenter, AddaddressEditActivityBinding>
+        implements OperaAddressContact.View, View.OnClickListener {
     private String mProvince="";
     private String mCity="";
     private String mCounty="";
@@ -71,10 +52,6 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
         super.onCreate(savedInstanceState);
         recevierAddress= (RecevierAddress) getIntent().getSerializableExtra("recevierAddress");
         iniView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.addaddress_edit_activity;
     }
     @Override
     public OperaAddressContact.Presenter initPresenter() {
@@ -90,7 +67,11 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView(){
-        address_tvs.addTextChangedListener(new TextWatcher() {
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().addressTv.setOnClickListener(this);
+        getViewBinding().commitLayout.setOnClickListener(this);
+        getViewBinding().deleteAddress.setOnClickListener(this);
+        getViewBinding().addressTvs.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -105,8 +86,8 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             public void afterTextChanged(Editable s) {
                 String address=mProvince+mCity+mCounty;
                 if (s.toString().trim().length()<address.length()){
-                    address_tvs.setText(address);
-                    address_tvs.setSelection(address.length());
+                    getViewBinding().addressTvs.setText(address);
+                    getViewBinding().addressTvs.setSelection(address.length());
                 }
 
             }
@@ -115,33 +96,33 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             mProvince=recevierAddress.getProvince();
             mCity=recevierAddress.getCity();
             mCounty=recevierAddress.getArea();
-            address_tv.setText(recevierAddress.getProvince()+recevierAddress.getCity()+recevierAddress.getArea());
+            getViewBinding().addressTv.setText(recevierAddress.getProvince()+recevierAddress.getCity()+recevierAddress.getArea());
             String address=mProvince+mCity+mCounty+"";
-            address_tvs.setText(address+recevierAddress.getAddress());
+            getViewBinding().addressTvs.setText(address+recevierAddress.getAddress());
             if (!TextUtils.isEmpty(recevierAddress.getAddress()))
-                address_tvs.setSelection(address.length()+recevierAddress.getAddress().length());
-            name_edit.setText(recevierAddress.getName());
+                getViewBinding().addressTvs.setSelection(address.length()+recevierAddress.getAddress().length());
+            getViewBinding().nameEdit.setText(recevierAddress.getName());
             if (!TextUtils.isEmpty(recevierAddress.getName()))
-                name_edit.setSelection(recevierAddress.getName().length());
-            phone_edit.setText(StringUtil.getReplace(recevierAddress.getPhone(),4,8));
+                getViewBinding().nameEdit.setSelection(recevierAddress.getName().length());
+            getViewBinding().phoneEdit.setText(StringUtil.getReplace(recevierAddress.getPhone(),4,8));
             if (!TextUtils.isEmpty(recevierAddress.getPhone()))
-                phone_edit.setSelection(recevierAddress.getPhone().length());
-            default_checkBox.setChecked(recevierAddress.isDefault());
+                getViewBinding().phoneEdit.setSelection(recevierAddress.getPhone().length());
+            getViewBinding().defaultCheckBox.setChecked(recevierAddress.isDefault());
         }
-        phone_edit.setOnKeyListener(new View.OnKeyListener() {
+        getViewBinding().phoneEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
                 if(keyCode == KeyEvent.KEYCODE_DEL) {
                     //this is for backspace
-                    phone_edit.getText().clear();
+                    getViewBinding().phoneEdit.getText().clear();
                 }
                 return false;
             }
         });
     }
-    @OnClick({R.id.left_back,R.id.address_tv,R.id.commit_layout,R.id.delete_address})
     public void onClick(View v) {
+        if (AntiShake.check(v))return;
         switch (v.getId()){
             case R.id.left_back:
                 finish();
@@ -151,9 +132,9 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                 break;
             case R.id.commit_layout:
                 operatype=1;
-                String phone=phone_edit.getText().toString().trim();
-                String name=name_edit.getText().toString();
-                String address=address_tvs.getText().toString();
+                String phone=getViewBinding().phoneEdit.getText().toString().trim();
+                String name=getViewBinding().nameEdit.getText().toString();
+                String address=getViewBinding().addressTvs.getText().toString();
                 if (TextUtils.isEmpty(name)){
                     ToastUtils.showToast(this,"姓名不能为空!");
                     return;
@@ -219,23 +200,23 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                 if (county == null) {
                     //showToast(province.getAreaName() + city.getAreaName());
                     String addre=province.getAreaName() + city.getAreaName();
-                    address_tv.setText(addre);
-                    String str=address_tvs.getText().toString().trim();
+                    getViewBinding().addressTv.setText(addre);
+                    String str=getViewBinding().addressTvs.getText().toString().trim();
                     if(str.length()>0){
                         str=str.replace(mProvince,province.getAreaName());
                         str=str.replace(mCity,city.getAreaName());
                     }else {
                         str=addre;
                     }
-                    address_tvs.setText(str);
-                    address_tvs.setSelection(str.length());
+                    getViewBinding().addressTvs.setText(str);
+                    getViewBinding().addressTvs.setSelection(str.length());
                     mProvince=province.getAreaName();
                     mCity=city.getAreaName();
                 } else {
                     //showToast(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     String addre=province.getAreaName() + city.getAreaName()+county.getAreaName();
-                    address_tv.setText(addre);
-                    String str=address_tvs.getText().toString().trim();
+                    getViewBinding().addressTv.setText(addre);
+                    String str=getViewBinding().addressTvs.getText().toString().trim();
                     if(str.length()>0){
                         str=str.replace(mProvince,province.getAreaName());
                         str=str.replace(mCity,city.getAreaName());
@@ -243,8 +224,8 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                     }else {
                         str=addre;
                     }
-                    address_tvs.setText(str);
-                    address_tvs.setSelection(str.length());
+                    getViewBinding().addressTvs.setText(str);
+                    getViewBinding().addressTvs.setSelection(str.length());
                     mProvince=province.getAreaName();
                     mCity=city.getAreaName();
                     mCounty=county.getAreaName();
@@ -259,12 +240,12 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
     }
     @Override
     public Object operaAddressParam() {
-        String phone = phone_edit.getText().toString().trim();
+        String phone = getViewBinding().phoneEdit.getText().toString().trim();
         if (!PwdCheckUtil.isDigit2(phone)){
             phone=recevierAddress.getPhone();
         }
-        String name = name_edit.getText().toString();
-        String address = address_tvs.getText().toString();
+        String name = getViewBinding().nameEdit.getText().toString();
+        String address = getViewBinding().addressTvs.getText().toString();
         Map map = new TreeMap();
         map.put("addressid", recevierAddress.getAddressid());
         if (operatype == 1){
@@ -274,7 +255,7 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             map.put("city", mCity);
             map.put("area", mCounty);
             map.put("address", address.replace(mProvince + mCity + mCounty, ""));
-            map.put("isdefault", default_checkBox.isChecked());
+            map.put("isdefault", getViewBinding().defaultCheckBox.isChecked());
         }
         map.put("operatype",operatype);
         return map;

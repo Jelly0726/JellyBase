@@ -6,29 +6,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.jelly.mvp.contact.PersonalInfoContact;
-import com.jelly.mvp.presenter.PersonalInfoPresenter;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XScrollView;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.baselibrary.model.PersonalInfo;
 import com.jelly.baselibrary.model.Sex;
 import com.jelly.baselibrary.model.UploadBean;
 import com.jelly.baselibrary.model.UploadData;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XScrollView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.PersonalInfoActivityBinding;
+import com.jelly.mvp.contact.PersonalInfoContact;
+import com.jelly.mvp.presenter.PersonalInfoPresenter;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigButton;
 import com.mylhyl.circledialog.callback.ConfigDialog;
@@ -47,8 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
@@ -59,48 +54,14 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/9/26.
  */
 
-public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.View,PersonalInfoContact.Presenter>
-        implements PersonalInfoContact.View{
-    private View parentView;
+public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.View
+        ,PersonalInfoContact.Presenter, PersonalInfoActivityBinding>
+        implements PersonalInfoContact.View, View.OnClickListener {
     private static final int REQUEST_CODE = 234;
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.birthday_tv)
-    TextView birthday_tv;
     private String mYear;
     private String mMonth;
     private String mDay;
-    @BindView(R.id.avatar_layout)
-    LinearLayout avatar_layout;
-    @BindView(R.id.store_img)
-    ImageView store_img;
-    @BindView(R.id.nikname_tv)
-    EditText nikname_tv;
-    @BindView(R.id.name_tv)
-    EditText name_tv;
-    @BindView(R.id.idcart_tv)
-    EditText idcart_tv;
-    @BindView(R.id.commit_tv)
-    TextView commit_tv;
-    @BindView(R.id.edit_tv)
-    TextView edit_tv;
     private ArrayList<AlbumFile> mAlbumFiles=new ArrayList<>();
-
-    @BindView(R.id.custom_view)
-    XRefreshView xRefreshView;
-    @BindView(R.id.xscrollview)
-    XScrollView scrollView;
-    @BindView(R.id.change_pwd)
-    LinearLayout change_pwd;
-    @BindView(R.id.change_phone)
-    LinearLayout change_phone;
-    @BindView(R.id.phone_tv)
-    TextView phone_tv;
-    @BindView(R.id.sex_tv)
-    TextView sex_tv;
-
-    @BindView(R.id.email_tv)
-    EditText email_tv;
     private UploadData uploadData;
     private PersonalInfo userInfo;
     private Sex sex;
@@ -108,50 +69,51 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        parentView = getLayoutInflater().inflate(R.layout.personal_info_activity, null);
-        setContentView(parentView);
         userInfo= (PersonalInfo) getIntent().getSerializableExtra("userInfo");
         if (sexList==null){
             sexList = new ArrayList<>();
             sexList.add(new Sex(1, "男"));
             sexList.add(new Sex(2, "女"));
             sex=sexList.get(0);
-            sex_tv.setText(sex.getName());
+            getViewBinding().sexTv.setText(sex.getName());
         }
         iniView();
         initXRefreshView();
         presenter.getInfo();
 
     }
-    @Override
-    public int getLayoutId(){
-        return -1;
-    }
     private void iniView(){
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().commitTv.setOnClickListener(this);
+        getViewBinding().changePwd.setOnClickListener(this);
+        getViewBinding().avatarLayout.setOnClickListener(this);
+        getViewBinding().birthdayTv.setOnClickListener(this);
+        getViewBinding().editTv.setOnClickListener(this);
+        getViewBinding().sexTv.setOnClickListener(this);
         if (userInfo!=null) {
             //iniEditable(false);
-            nikname_tv.setText(userInfo.getNickname());
+            getViewBinding().niknameTv.setText(userInfo.getNickname());
             if (!TextUtils.isEmpty(userInfo.getNickname()))
-                nikname_tv.setSelection(userInfo.getNickname().length());
-            name_tv.setText(userInfo.getName());
+                getViewBinding().niknameTv.setSelection(userInfo.getNickname().length());
+            getViewBinding().nameTv.setText(userInfo.getName());
             if (!TextUtils.isEmpty(userInfo.getName()))
-                name_tv.setSelection(userInfo.getName().length());
-            email_tv.setText(userInfo.getEmail());
+                getViewBinding().nameTv.setSelection(userInfo.getName().length());
+            getViewBinding().emailTv.setText(userInfo.getEmail());
             if (!TextUtils.isEmpty(userInfo.getEmail()))
-                email_tv.setSelection(userInfo.getEmail().length());
+                getViewBinding().emailTv.setSelection(userInfo.getEmail().length());
             if (userInfo.getSex()) {
                 sex=sexList.get(0);
             }else {
                 sex=sexList.get(1);
             }
-            sex_tv.setText(sex.getName());
-            birthday_tv.setText(userInfo.getBirthday());
-            idcart_tv.setText(userInfo.getIdcard());
+            getViewBinding().sexTv.setText(sex.getName());
+            getViewBinding().birthdayTv.setText(userInfo.getBirthday());
+            getViewBinding().idcartTv.setText(userInfo.getIdcard());
             if (!TextUtils.isEmpty(userInfo.getIdcard()))
-                idcart_tv.setSelection(userInfo.getIdcard().length());
-            phone_tv.setText("未绑定");
+                getViewBinding().idcartTv.setSelection(userInfo.getIdcard().length());
+            getViewBinding().phoneTv.setText("未绑定");
             if (!TextUtils.isEmpty(userInfo.getMobile())){
-                phone_tv.setText(userInfo.getMobile());
+                getViewBinding().phoneTv.setText(userInfo.getMobile());
             }
             if (!TextUtils.isEmpty(userInfo.getPhoto())&&!TextUtils.isEmpty(userInfo.getIP())){
                 String phto=userInfo.getIP()+userInfo.getPhoto();
@@ -163,7 +125,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         .load(phto)
                         .skipMemoryCache(true)//不使用内存缓存
                         .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
-                        .into(store_img);
+                        .into(getViewBinding().storeImg);
             }
         }
     }
@@ -175,18 +137,18 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     // iniEditable(false);是否编辑
     private void iniEditable(boolean editable){
         if (editable){
-            edit_tv.setVisibility(View.GONE);
-            commit_tv.setVisibility(View.VISIBLE);
+            getViewBinding().editTv.setVisibility(View.GONE);
+            getViewBinding().commitTv.setVisibility(View.VISIBLE);
         }else {
-            edit_tv.setVisibility(View.VISIBLE);
-            commit_tv.setVisibility(View.GONE);
+            getViewBinding().editTv.setVisibility(View.VISIBLE);
+            getViewBinding().commitTv.setVisibility(View.GONE);
         }
-        nikname_tv.setEnabled(editable);
-        avatar_layout.setEnabled(editable);
-        nikname_tv.setEnabled(editable);
-        name_tv.setEnabled(editable);
-        birthday_tv.setEnabled(editable);
-        idcart_tv.setEnabled(editable);
+        getViewBinding().niknameTv.setEnabled(editable);
+        getViewBinding().avatarLayout.setEnabled(editable);
+        getViewBinding().niknameTv.setEnabled(editable);
+        getViewBinding().nameTv.setEnabled(editable);
+        getViewBinding().birthdayTv.setEnabled(editable);
+        getViewBinding().idcartTv.setEnabled(editable);
     }
     private void showDialog(){
         final String[] items = {"拍照", "从相册选择"};
@@ -288,7 +250,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 .start();
     }
     private void initXRefreshView(){
-        scrollView.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
             }
@@ -297,14 +259,14 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             public void onScroll(int l, int t, int oldl, int oldt) {
             }
         });
-        xRefreshView.setAutoRefresh(false);
-        xRefreshView.setPullLoadEnable(false);
-        xRefreshView.setPullRefreshEnable(false);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setAutoLoadMore(false);
+        getViewBinding().customView.setAutoRefresh(false);
+        getViewBinding().customView.setPullLoadEnable(false);
+        getViewBinding().customView.setPullRefreshEnable(false);
+        getViewBinding().customView.setPinnedTime(1000);
+        getViewBinding().customView.setAutoLoadMore(false);
 //		outView.setSilenceLoadMore();
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
-        //xRefreshView.setCustomFooterView(new CustomerFooter(this.getActivity()));
+        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
+        //getViewBinding().customView.setCustomFooterView(new CustomerFooter(this.getActivity()));
     }
     @Override
     public PersonalInfoContact.Presenter initPresenter() {
@@ -319,8 +281,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     public <T> ObservableTransformer<T, T> bindLifecycle() {
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
-    @OnClick({R.id.left_back,R.id.change_pwd,R.id.avatar_layout,R.id.birthday_tv
-            ,R.id.commit_tv,R.id.edit_tv,R.id.sex_tv})
+   
     public void onClick(View v) {
         if (AntiShake.check(v.getId())){
             return;
@@ -341,10 +302,10 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 onYearMonthDayPicker();
                 break;
             case R.id.commit_tv:
-                String nikname=nikname_tv.getText().toString();
-                String name=name_tv.getText().toString();
-                String birthday=birthday_tv.getText().toString().trim();
-                String idcart=idcart_tv.getText().toString().trim();
+                String nikname=getViewBinding().niknameTv.getText().toString();
+                String name=getViewBinding().nameTv.getText().toString();
+                String birthday=getViewBinding().birthdayTv.getText().toString().trim();
+                String idcart=getViewBinding().idcartTv.getText().toString().trim();
                 if (TextUtils.isEmpty(nikname)||TextUtils.isEmpty(name)||
                         TextUtils.isEmpty(birthday)||TextUtils.isEmpty(idcart)){
                     ToastUtils.showToast(this,"昵称，姓名，生日，身份证不能为空!");
@@ -370,7 +331,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -379,9 +340,9 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         public void onLoadMore(boolean isSilence) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    //xRefreshView.setLoadComplete(true);
+                    //getViewBinding().customView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }
@@ -399,7 +360,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             public void onItemPicked(int index, Sex item) {
 //                showToast("index=" + index + ", id=" + item.getId() + ", name=" + item.getName());
                 sex=item;
-                sex_tv.setText(sex.getName());
+                getViewBinding().sexTv.setText(sex.getName());
             }
         });
         picker.show();
@@ -426,7 +387,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 mYear=year;
                 mMonth=month;
                 mDay=day;
-                birthday_tv.setText(year + "-" + month + "-" + day);
+                getViewBinding().birthdayTv.setText(year + "-" + month + "-" + day);
             }
         });
         picker.setOnWheelListener(new DatePicker.OnWheelListener() {
@@ -460,12 +421,12 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     }
     @Override
     public Object getPersonalInfoParam() {
-        String nikname=nikname_tv.getText().toString();
-        String name=name_tv.getText().toString();
-        String birthday=birthday_tv.getText().toString().trim();
-        String idcart=idcart_tv.getText().toString().trim();
-        String phone=phone_tv.getText().toString().trim();
-        String email=email_tv.getText().toString().trim();
+        String nikname=getViewBinding().niknameTv.getText().toString();
+        String name=getViewBinding().nameTv.getText().toString();
+        String birthday=getViewBinding().birthdayTv.getText().toString().trim();
+        String idcart=getViewBinding().idcartTv.getText().toString().trim();
+        String phone=getViewBinding().phoneTv.getText().toString().trim();
+        String email=getViewBinding().emailTv.getText().toString().trim();
         boolean sexs=false;
         if (sex.getId()==1){
             sexs=true;
@@ -513,7 +474,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         uploadData=(UploadData)mCallBackVo;
         Album.getAlbumConfig().
                 getAlbumLoader()
-                .load( store_img, mAlbumFiles.get(0));
+                .load( getViewBinding().storeImg, mAlbumFiles.get(0));
     }
 
     @Override

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/navi_color"/>
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
-    <com.jelly.baselibrary.xrefreshview.XRefreshView
+    <com.andview.refreshview.XRefreshView
         xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
@@ -28,5 +28,5 @@
         android:scrollbars="none">
 
     </com.jelly.baselibrary.webview.tbs.X5WebView>
-    </com.jelly.baselibrary.xrefreshview.XRefreshView>
+    </com.andview.refreshview.XRefreshView>
 </LinearLayout>

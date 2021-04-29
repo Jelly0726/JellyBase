@@ -10,8 +10,8 @@
         android:background="@color/transparent"
         />
     <!--↑↑↑↑↑↑↑↑自定义状态栏底色↑↑↑↑↑↑↑↑-->
-    <include layout="@layout/shopcar_acitonbar"/>
-    <com.jelly.baselibrary.xrefreshview.XRefreshView
+    <include android:id="@+id/shopcarAcitonBar" layout="@layout/shopcar_acitonbar"/>
+    <com.andview.refreshview.XRefreshView
         android:id="@+id/xrefreshview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +38,7 @@
                 android:layout_height="match_parent"
                 layout="@layout/shopcart_empty" />
         </FrameLayout>
-    </com.jelly.baselibrary.xrefreshview.XRefreshView>
+    </com.andview.refreshview.XRefreshView>
     <!--分割线-->
     <View
         android:layout_width="match_parent"

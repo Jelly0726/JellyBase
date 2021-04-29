@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.jelly.baselibrary.BaseActivity;
@@ -19,15 +15,14 @@ import com.jelly.baselibrary.addressmodel.City;
 import com.jelly.baselibrary.addressmodel.Province;
 import com.jelly.baselibrary.androidPicker.AddressAdapter;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.ChangeAddressActivityBinding;
 import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.qqtheme.framework.util.ConvertUtils;
 import systemdb.PositionEntity;
 
@@ -36,20 +31,8 @@ import systemdb.PositionEntity;
  * 地址选择
  */
 
-public class ChangeAddressActivity extends BaseActivity {
+public class ChangeAddressActivity extends BaseActivity<ChangeAddressActivityBinding> implements View.OnClickListener {
     private PositionEntity entity;
-    @BindView(R.id.address_tv)
-    TextView address_tv;
-    @BindView(R.id.address_gp)
-    RadioGroup address_gp;
-    @BindView(R.id.province_rb)
-    RadioButton province_rb;
-    @BindView(R.id.city_rb)
-    RadioButton city_rb;
-    @BindView(R.id.district_rb)
-    RadioButton district_rb;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private AddressAdapter adapter;
     private List<Province> mList=new ArrayList<Province>();
@@ -65,39 +48,37 @@ public class ChangeAddressActivity extends BaseActivity {
         iniData();
         iniXRefreshView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.change_address_activity;
-    }
     private void iniData(){
+        getViewBinding().provinceRb.setOnClickListener(this);
+        getViewBinding().cityRb.setOnClickListener(this);
+        getViewBinding().addressTv.setOnClickListener(this);
         if (entity!=null){
-            address_tv.setText(entity.district);
+            getViewBinding().addressTv.setText(entity.district);
         }
     }
-    @OnClick({R.id.province_rb,R.id.city_rb,R.id.address_tv})
     public void onClick(View v){
         if (AntiShake.check(v.getId()))return;
         Intent intent;
         switch (v.getId()){
             case R.id.province_rb:
-                province_rb.setChecked(true);
-                province_rb.setText("请选择");
+                getViewBinding().provinceRb.setChecked(true);
+                getViewBinding().provinceRb.setText("请选择");
                 province=null;
                 city=null;
                 district =null;
-                city_rb.setText("");
-                city_rb.setVisibility(View.GONE);
-                district_rb.setText("");
-                district_rb.setVisibility(View.GONE);
+                getViewBinding().cityRb.setText("");
+                getViewBinding().cityRb.setVisibility(View.GONE);
+                getViewBinding().districtRb.setText("");
+                getViewBinding().districtRb.setVisibility(View.GONE);
                 adapter.setData(mList);
                 break;
             case R.id.city_rb:
-                city_rb.setChecked(true);
-                city_rb.setText("请选择");
+                getViewBinding().cityRb.setChecked(true);
+                getViewBinding().cityRb.setText("请选择");
                 city=null;
                 district =null;
-                district_rb.setText("");
-                district_rb.setVisibility(View.GONE);
+                getViewBinding().districtRb.setText("");
+                getViewBinding().districtRb.setVisibility(View.GONE);
                 adapter.setData(province.getCities());
                 break;
             case R.id.address_tv:
@@ -121,17 +102,17 @@ public class ChangeAddressActivity extends BaseActivity {
                 if (province==null){
                     province=mList.get(position);
                     adapter.setData(province.getCities());
-                    province_rb.setText(province.getAreaName());
-                    city_rb.setChecked(true);
-                    city_rb.setVisibility(View.VISIBLE);
-                    city_rb.setText("请选择");
+                    getViewBinding().provinceRb.setText(province.getAreaName());
+                    getViewBinding().cityRb.setChecked(true);
+                    getViewBinding().cityRb.setVisibility(View.VISIBLE);
+                    getViewBinding().cityRb.setText("请选择");
                 }else  if (city==null){
                     city=province.getCities().get(position);
                     adapter.setData(city.getCounties());
-                    city_rb.setText(city.getAreaName());
-                    district_rb.setChecked(true);
-                    district_rb.setVisibility(View.VISIBLE);
-                    district_rb.setText("请选择");
+                    getViewBinding().cityRb.setText(city.getAreaName());
+                    getViewBinding().districtRb.setChecked(true);
+                    getViewBinding().districtRb.setVisibility(View.VISIBLE);
+                    getViewBinding().districtRb.setText("请选择");
                 }else {
                     district =city.getCounties().get(position);
                     Address address=new Address();
@@ -146,10 +127,10 @@ public class ChangeAddressActivity extends BaseActivity {
         });
         if (address!=null){
             if (!TextUtils.isEmpty(address.getProvince().getAreaName())) {
-                province_rb.setText(address.getProvince().getAreaName());
-                city_rb.setChecked(true);
-                city_rb.setVisibility(View.VISIBLE);
-                city_rb.setText("请选择");
+                getViewBinding().provinceRb.setText(address.getProvince().getAreaName());
+                getViewBinding().cityRb.setChecked(true);
+                getViewBinding().cityRb.setVisibility(View.VISIBLE);
+                getViewBinding().cityRb.setText("请选择");
                 for (Province pro : mList) {
                     if (pro.getAreaName().contains(address.getProvince().getAreaName())) {
                         province = pro;
@@ -158,10 +139,10 @@ public class ChangeAddressActivity extends BaseActivity {
                     }
                 }
                 if (!TextUtils.isEmpty(address.getCity().getAreaName())) {
-                    city_rb.setText(address.getCity().getAreaName());
-                    district_rb.setChecked(true);
-                    district_rb.setVisibility(View.VISIBLE);
-                    district_rb.setText("请选择");
+                    getViewBinding().cityRb.setText(address.getCity().getAreaName());
+                    getViewBinding().districtRb.setChecked(true);
+                    getViewBinding().districtRb.setVisibility(View.VISIBLE);
+                    getViewBinding().districtRb.setText("请选择");
                     for (City pro : province.getCities()) {
                         if (pro.getAreaName().contains(address.getCity().getAreaName())) {
                             city = pro;
@@ -170,7 +151,7 @@ public class ChangeAddressActivity extends BaseActivity {
                         }
                     }
                     if (!TextUtils.isEmpty(address.getDistrict().getAreaName())) {
-                        district_rb.setText(address.getDistrict().getAreaName());
+                        getViewBinding().districtRb.setText(address.getDistrict().getAreaName());
                         for (Area pro : city.getCounties()) {
                             if (pro.getAreaName().contains(address.getDistrict().getAreaName())) {
                                 district = pro;
@@ -182,10 +163,10 @@ public class ChangeAddressActivity extends BaseActivity {
             }
         }else if (entity!=null) {
             if (!TextUtils.isEmpty(entity.province)) {
-                province_rb.setText(entity.province);
-                city_rb.setChecked(true);
-                city_rb.setVisibility(View.VISIBLE);
-                city_rb.setText("请选择");
+                getViewBinding().provinceRb.setText(entity.province);
+                getViewBinding().cityRb.setChecked(true);
+                getViewBinding().cityRb.setVisibility(View.VISIBLE);
+                getViewBinding().cityRb.setText("请选择");
                 for (Province pro : mList) {
                     if (pro.getAreaName().contains(entity.province)) {
                         province = pro;
@@ -194,10 +175,10 @@ public class ChangeAddressActivity extends BaseActivity {
                     }
                 }
                 if (!TextUtils.isEmpty(entity.city)) {
-                    city_rb.setText(entity.city);
-                    district_rb.setChecked(true);
-                    district_rb.setVisibility(View.VISIBLE);
-                    district_rb.setText("请选择");
+                    getViewBinding().cityRb.setText(entity.city);
+                    getViewBinding().districtRb.setChecked(true);
+                    getViewBinding().districtRb.setVisibility(View.VISIBLE);
+                    getViewBinding().districtRb.setText("请选择");
                     for (City pro : province.getCities()) {
                         if (pro.getAreaName().contains(entity.city)) {
                             city = pro;
@@ -206,7 +187,7 @@ public class ChangeAddressActivity extends BaseActivity {
                         }
                     }
                     if (!TextUtils.isEmpty(entity.district)) {
-                        district_rb.setText(entity.district);
+                        getViewBinding().districtRb.setText(entity.district);
                         for (Area pro : city.getCounties()) {
                             if (pro.getAreaName().contains(entity.district)) {
                                 district = pro;
@@ -217,12 +198,12 @@ public class ChangeAddressActivity extends BaseActivity {
                 }
             }
         }
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
+        getViewBinding().recyclerView.setHasFixedSize(true);
+        getViewBinding().recyclerView.setNestedScrollingEnabled(false);
         layoutManager = new GridLayoutManager(this,3);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(0,3, SimpleItemDecoration.NONE));
-        recyclerView.setAdapter(adapter);
+        getViewBinding().recyclerView.setLayoutManager(layoutManager);
+        getViewBinding().recyclerView.addItemDecoration(new SimpleItemDecoration(0,3, SimpleItemDecoration.NONE));
+        getViewBinding().recyclerView.setAdapter(adapter);
     }
 
     @Override

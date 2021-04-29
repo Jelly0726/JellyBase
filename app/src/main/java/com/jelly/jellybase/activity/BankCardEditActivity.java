@@ -2,24 +2,20 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.jelly.baselibrary.bankcard.BankCardInfo;
-import com.jelly.mvp.contact.BankCartContact;
-import com.jelly.mvp.presenter.BankCartPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.BankcardEditActivityBinding;
+import com.jelly.mvp.contact.BankCartContact;
+import com.jelly.mvp.presenter.BankCartPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 
@@ -27,17 +23,9 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/9/27.
  */
 
-public class BankCardEditActivity extends BaseActivityImpl<BankCartContact.View,BankCartContact.Presenter>
-        implements BankCartContact.View {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.bankCard_id)
-    EditText bankCard_id;
-    @BindView(R.id.bankCard_name)
-    TextView bankCard_name;
-    @BindView(R.id.commit_tv)
-    TextView commit_tv;
-
+public class BankCardEditActivity extends BaseActivityImpl<BankCartContact.View
+        ,BankCartContact.Presenter, BankcardEditActivityBinding>
+        implements BankCartContact.View , View.OnClickListener {
     private BankCardInfo bankCardInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +37,11 @@ public class BankCardEditActivity extends BaseActivityImpl<BankCartContact.View,
         }
         iniView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.bankcard_edit_activity;
-    }
     private void iniView(){
-        bankCard_name.setText(bankCardInfo.getBankName()+"·"+bankCardInfo.getType());
-        bankCard_id.setText(bankCardInfo.getBankNo());
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().commitTv.setOnClickListener(this);
+        getViewBinding().bankCardName.setText(bankCardInfo.getBankName()+"·"+bankCardInfo.getType());
+        getViewBinding().bankCardId.setText(bankCardInfo.getBankNo());
     }
     @Override
     public void onBackPressed() {
@@ -80,7 +66,6 @@ public class BankCardEditActivity extends BaseActivityImpl<BankCartContact.View,
     public <T> ObservableTransformer<T, T> bindLifecycle() {
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
-    @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;

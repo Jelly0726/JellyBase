@@ -5,43 +5,34 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.jelly.baselibrary.model.AccountDetail;
-import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XRefreshViewFooter;
 import com.google.gson.Gson;
-import com.jelly.jellybase.R;
+import com.jelly.baselibrary.BaseFragment;
+import com.jelly.baselibrary.model.AccountDetail;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.jellybase.adpater.LocaFragmentAdapter;
+import com.jelly.jellybase.databinding.LocaFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import systemdb.PositionEntity;
+
 
 /**
  * Created by Administrator on 2018/1/11.
  */
 
-public class LocaFragment extends BaseFragment {
+public class LocaFragment extends BaseFragment<LocaFragmentBinding> {
     private PositionEntity entity;
 
-    @BindView(R.id.recycler_view_test_rv)
-    RecyclerView recyclerView;
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
     private LocaFragmentAdapter adapter;
     private List<AccountDetail> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
-    @Override
-    public int getLayoutId() {
-        return R.layout.loca_fragment;
-    }
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -78,18 +69,18 @@ public class LocaFragment extends BaseFragment {
 
     private void iniXRefreshView(){
         adapter=new LocaFragmentAdapter(getActivity(),mList);
-        xRefreshView.setPullLoadEnable(true);
-        recyclerView.setHasFixedSize(true);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
-        recyclerView.setAdapter(adapter);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
 
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(getActivity()));
 
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     /**
      * 滑动刷新
@@ -101,7 +92,7 @@ public class LocaFragment extends BaseFragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -110,9 +101,9 @@ public class LocaFragment extends BaseFragment {
         public void onLoadMore(boolean isSilence) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    //xRefreshView.setLoadComplete(true);
+                    //getViewBinding().xrefreshview.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }

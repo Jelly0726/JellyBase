@@ -7,19 +7,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.listener.OnBottomLoadMoreTime;
+import com.andview.refreshview.listener.OnTopRefreshTime;
 import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.listener.OnBottomLoadMoreTime;
-import com.jelly.baselibrary.xrefreshview.listener.OnTopRefreshTime;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.ShopcarFragmentBinding;
 import com.jelly.jellybase.shopcar.Utils.UtilTool;
 import com.jelly.jellybase.shopcar.adapter.ShopcatAdapter;
 import com.jelly.jellybase.shopcar.entity.GoodsInfo;
@@ -36,48 +33,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class ShopCarFragment extends BaseFragment implements
+public class ShopCarFragment extends BaseFragment<ShopcarFragmentBinding> implements
         ShopcatAdapter.CheckInterface, ShopcatAdapter.ModifyCountInterface,
-        ShopcatAdapter.GroupEditorListener {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.listView)
-    ExpandableListView listView;
-    @BindView(R.id.all_checkBox)
-    CheckBox allCheckBox;
-    @BindView(R.id.total_price)
-    TextView totalPrice;
-    @BindView(R.id.go_pay)
-    TextView goPay;
-    @BindView(R.id.order_info)
-    LinearLayout orderInfo;
-    @BindView(R.id.share_goods)
-    TextView shareGoods;
-    @BindView(R.id.collect_goods)
-    TextView collectGoods;
-    @BindView(R.id.del_goods)
-    TextView delGoods;
-    @BindView(R.id.share_info)
-    LinearLayout shareInfo;
-    @BindView(R.id.ll_cart)
-    LinearLayout llCart;
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
+        ShopcatAdapter.GroupEditorListener, View.OnClickListener {
     private int mTotalItemCount;
-    @BindView(R.id.shoppingcat_num)
-    TextView shoppingcatNum;
-    @BindView(R.id.actionBar_edit)
-    Button actionBarEdit;
-    @BindView(R.id.layout_empty_shopcart)
-    LinearLayout empty_shopcart;
     private Context mcontext;
     private double mtotalPrice = 0.00;
     private int mtotalCount = 0;
@@ -92,10 +57,6 @@ public class ShopCarFragment extends BaseFragment implements
      * Fragment 的构造函数。
      */
     public ShopCarFragment() {
-    }
-    @Override
-    public int getLayoutId() {
-        return R.layout.shopcar_fragment;
     }
     public static ShopCarFragment newInstance() {
         return new ShopCarFragment();
@@ -135,36 +96,43 @@ public class ShopCarFragment extends BaseFragment implements
     }
 
     private void iniView(){
+        getViewBinding().shopcarAcitonBar.leftBack.setOnClickListener(this);
+        getViewBinding().allCheckBox.setOnClickListener(this);
+        getViewBinding().goPay.setOnClickListener(this);
+        getViewBinding().shareGoods.setOnClickListener(this);
+        getViewBinding().collectGoods.setOnClickListener(this);
+        getViewBinding().delGoods.setOnClickListener(this);
+        getViewBinding().shopcarAcitonBar.actionBarEdit.setOnClickListener(this);
     }
     private void initEvents() {
-        xRefreshView.setPullLoadEnable(false);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(false);
-        xRefreshView.setOnTopRefreshTime(new OnTopRefreshTime() {
+        getViewBinding().xrefreshview.setPullLoadEnable(false);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(false);
+        getViewBinding().xrefreshview.setOnTopRefreshTime(new OnTopRefreshTime() {
 
             @Override
             public boolean isTop() {
-                if (listView.getFirstVisiblePosition() == 0) {
-                    View firstVisibleChild = listView.getChildAt(0);
+                if (getViewBinding().listView.getFirstVisiblePosition() == 0) {
+                    View firstVisibleChild = getViewBinding().listView.getChildAt(0);
                     return firstVisibleChild.getTop() >= 0;
                 }
                 //没有到达顶部则返回false
                 return false;
             }
         });
-        xRefreshView.setOnBottomLoadMoreTime(new OnBottomLoadMoreTime() {
+        getViewBinding().xrefreshview.setOnBottomLoadMoreTime(new OnBottomLoadMoreTime() {
 
             @Override
             public boolean isBottom() {
-                if (listView.getLastVisiblePosition() == mTotalItemCount - 1) {
-                    View lastChild = listView.getChildAt(listView.getChildCount() - 1);
-                    return (lastChild.getBottom() + listView.getPaddingBottom()) <= listView.getMeasuredHeight();
+                if (getViewBinding().listView.getLastVisiblePosition() == mTotalItemCount - 1) {
+                    View lastChild = getViewBinding().listView.getChildAt(getViewBinding().listView.getChildCount() - 1);
+                    return (lastChild.getBottom() + getViewBinding().listView.getPaddingBottom()) <= getViewBinding().listView.getMeasuredHeight();
                 }
                 //没有到达底部则返回false
                 return false;
             }
         });
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
 
         adapter = new ShopcatAdapter(groups, childs, mcontext);
         adapter.setCheckInterface(this);//关键步骤1：设置复选框的接口
@@ -172,12 +140,12 @@ public class ShopCarFragment extends BaseFragment implements
         adapter.setGroupEditorListener(this);//关键步骤3:监听组列表的编辑状态
         adapter.setOnGroupClickListener(onGroupClickListener);//设置组点击接口
         adapter.setOnChildClickListener(onChildClickListener);//设置组员点击接口
-        listView.setGroupIndicator(null); //设置属性 GroupIndicator 去掉向下箭头
-        listView.setAdapter(adapter);
+        getViewBinding().listView.setGroupIndicator(null); //设置属性 GroupIndicator 去掉向下箭头
+        getViewBinding().listView.setAdapter(adapter);
         for (int i = 0; i < adapter.getGroupCount(); i++) {
-            listView.expandGroup(i); //关键步骤4:初始化，将ExpandableListView以展开的方式显示
+            getViewBinding().listView.expandGroup(i); //关键步骤4:初始化，将ExpandableListView以展开的方式显示
         }
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        getViewBinding().listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -196,7 +164,7 @@ public class ShopCarFragment extends BaseFragment implements
         int count = 0;
         for (int i = 0; i < groups.size(); i++) {
             StoreInfo group = groups.get(i);
-            group.setChoosed(allCheckBox.isChecked());
+            group.setChoosed(getViewBinding().allCheckBox.isChecked());
             List<GoodsInfo> Childs = childs.get(group.getId());
             for (GoodsInfo childs : Childs) {
                 count++;
@@ -207,16 +175,16 @@ public class ShopCarFragment extends BaseFragment implements
         if (count == 0) {
             clearCart();
         } else {
-            shoppingcatNum.setText("购物车(" + count + ")");
+            getViewBinding().shopcarAcitonBar.shoppingcatNum.setText("购物车(" + count + ")");
         }
 
     }
 
     private void clearCart() {
-        shoppingcatNum.setText("购物车(0)");
-        actionBarEdit.setVisibility(View.GONE);
-        llCart.setVisibility(View.GONE);
-        empty_shopcart.setVisibility(View.VISIBLE);//这里发生过错误
+        getViewBinding().shopcarAcitonBar.shoppingcatNum.setText("购物车(0)");
+        getViewBinding().shopcarAcitonBar.actionBarEdit.setVisibility(View.GONE);
+        getViewBinding().llCart.setVisibility(View.GONE);
+        getViewBinding().layoutEmptyShopcart.getRoot().setVisibility(View.VISIBLE);//这里发生过错误
     }
 
     /**
@@ -285,9 +253,9 @@ public class ShopCarFragment extends BaseFragment implements
             child.get(i).setChoosed(isChecked);
         }
         if (isCheckAll()) {
-            allCheckBox.setChecked(true);//全选
+            getViewBinding().allCheckBox.setChecked(true);//全选
         } else {
-            allCheckBox.setChecked(false);//反选
+            getViewBinding().allCheckBox.setChecked(false);//反选
         }
         adapter.notifyDataSetChanged();
         calulate();
@@ -330,9 +298,9 @@ public class ShopCarFragment extends BaseFragment implements
         }
 
         if (isCheckAll()) {
-            allCheckBox.setChecked(true);//全选
+            getViewBinding().allCheckBox.setChecked(true);//全选
         } else {
-            allCheckBox.setChecked(false);//反选
+            getViewBinding().allCheckBox.setChecked(false);//反选
         }
 
         adapter.notifyDataSetChanged();
@@ -404,8 +372,6 @@ public class ShopCarFragment extends BaseFragment implements
     public void groupEditor(int groupPosition) {
 
     }
-    @OnClick({R.id.left_back,R.id.all_checkBox,R.id.go_pay,R.id.share_goods,R.id.collect_goods,
-            R.id.del_goods,R.id.actionBar_edit})
     public void onClick(View view) {
         AlertDialog dialog;
         switch (view.getId()) {
@@ -524,10 +490,10 @@ public class ShopCarFragment extends BaseFragment implements
     private void doCheckAll() {
         for (int i = 0; i < groups.size(); i++) {
             StoreInfo group = groups.get(i);
-            group.setChoosed(allCheckBox.isChecked());
+            group.setChoosed(getViewBinding().allCheckBox.isChecked());
             List<GoodsInfo> child = childs.get(group.getId());
             for (int j = 0; j < child.size(); j++) {
-                child.get(j).setChoosed(allCheckBox.isChecked());//这里出现过错误
+                child.get(j).setChoosed(getViewBinding().allCheckBox.isChecked());//这里出现过错误
             }
         }
         adapter.notifyDataSetChanged();
@@ -558,12 +524,12 @@ public class ShopCarFragment extends BaseFragment implements
                 }
             }
         }
-        totalPrice.setText("¥" + mtotalPrice + "");
-        goPay.setText("去支付(" + mtotalCount + ")");
+        getViewBinding().totalPrice.setText("¥" + mtotalPrice + "");
+        getViewBinding().goPay.setText("去支付(" + mtotalCount + ")");
         if (mtotalCount == 0) {
             setCartNum();
         } else {
-            shoppingcatNum.setText("购物车(" + mtotalCount + ")");
+            getViewBinding().shopcarAcitonBar.shoppingcatNum.setText("购物车(" + mtotalCount + ")");
         }
 
 
@@ -571,15 +537,15 @@ public class ShopCarFragment extends BaseFragment implements
 
     private void setVisiable() {
         if (flag) {
-            //orderInfo.setVisibility(View.GONE);
-            goPay.setVisibility(View.GONE);
-            shareInfo.setVisibility(View.VISIBLE);
-            actionBarEdit.setText("完成");
+            //getViewBinding().orderInfo.setVisibility(View.GONE);
+            getViewBinding().goPay.setVisibility(View.GONE);
+            getViewBinding().shareInfo.setVisibility(View.VISIBLE);
+            getViewBinding().shopcarAcitonBar.actionBarEdit.setText("完成");
         } else {
-            //orderInfo.setVisibility(View.VISIBLE);
-            goPay.setVisibility(View.VISIBLE);
-            shareInfo.setVisibility(View.GONE);
-            actionBarEdit.setText("编辑");
+            //getViewBinding().orderInfo.setVisibility(View.VISIBLE);
+            getViewBinding().goPay.setVisibility(View.VISIBLE);
+            getViewBinding().shareInfo.setVisibility(View.GONE);
+            getViewBinding().shopcarAcitonBar.actionBarEdit.setText("编辑");
         }
     }
 
@@ -602,7 +568,7 @@ public class ShopCarFragment extends BaseFragment implements
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -611,9 +577,9 @@ public class ShopCarFragment extends BaseFragment implements
         public void onLoadMore(boolean isSilence) {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    //xRefreshView.setLoadComplete(true);
+                    //getViewBinding().xrefreshview.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }

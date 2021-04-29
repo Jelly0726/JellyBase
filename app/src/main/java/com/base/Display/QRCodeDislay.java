@@ -9,17 +9,12 @@ import com.jelly.baselibrary.imageView.ImageViewPlus;
 import com.jelly.jellybase.R;
 import com.zxingx.library.utils.CreateQRImage;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * 支付扫码
  */
 public class QRCodeDislay extends Presentation {
-    private Unbinder unbinder;
     private String code;
-    @BindView(R.id.qrCode)
     ImageViewPlus qrCode;
     public QRCodeDislay(Context outerContext, Display display) {
         super(outerContext, display);
@@ -32,13 +27,11 @@ public class QRCodeDislay extends Presentation {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qrcode_dislay);
-        unbinder= ButterKnife.bind(this);
+        qrCode=findViewById(R.id.qrCode);
         CreateQRImage.createQRImage(code, qrCode);
     }
     @Override
     public void dismiss() {
-        if (unbinder!=null)
-            unbinder.unbind();
         super.dismiss();
 
     }

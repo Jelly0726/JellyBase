@@ -16,13 +16,8 @@ import com.base.BaseApplication;
 import com.jelly.baselibrary.appManager.ExecutorManager;
 import com.jelly.jellybase.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class AdvertisingDislay extends Presentation {
-    private Unbinder unbinder;
-    @BindView(R.id.video)
     SurfaceView video;
     private MediaPlayer mediaPlayer;
     private AudioManager audioMa;
@@ -37,7 +32,7 @@ public class AdvertisingDislay extends Presentation {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.advertising_dislay);
-        unbinder= ButterKnife.bind(this);
+        video=findViewById(R.id.video);
         mediaPlayer=new MediaPlayer();
         audioMa = (AudioManager) BaseApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
         video.getHolder().addCallback(new SHCallBack());
@@ -55,8 +50,6 @@ public class AdvertisingDislay extends Presentation {
     @Override
     public void dismiss() {
         DisplayUtils.getInstance().setPosition(mediaPlayer.getCurrentPosition());
-        if (unbinder!=null)
-            unbinder.unbind();
         if (mediaPlayer!=null) {
             mediaPlayer.setOnPreparedListener(null);
             mediaPlayer.setOnCompletionListener(null);

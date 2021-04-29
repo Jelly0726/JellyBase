@@ -3,23 +3,23 @@ package com.jelly.jellybase.activity;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.jelly.mvp.contact.AccountDetailContact;
-import com.jelly.mvp.presenter.AccountDetailPresenter;
-import com.base.httpmvp.retrofitapi.methods.ResultData;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.base.httpmvp.retrofitapi.methods.ResultData;
 import com.jelly.baselibrary.model.AccountDetail;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.recyclerViewUtil.ItemDecoration;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AccountDetailsAdapter;
+import com.jelly.jellybase.databinding.AccountDetailsActivityBinding;
+import com.jelly.mvp.contact.AccountDetailContact;
+import com.jelly.mvp.presenter.AccountDetailPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 
@@ -37,14 +35,9 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/9/27.
  */
 
-public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContact.View,AccountDetailContact.Presenter>
-        implements AccountDetailContact.View{
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.mRecyclerView)
-    SwipeRecyclerView mRecyclerView;
-    @BindView(R.id.mRefreshLayout)
-    SwipeRefreshLayout mRefreshLayout;
+public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContact.View
+        ,AccountDetailContact.Presenter, AccountDetailsActivityBinding>
+        implements AccountDetailContact.View, View.OnClickListener {
     private LinearLayoutManager layoutManager;
     private AccountDetailsAdapter adapter;
     private List<AccountDetail> mList =new ArrayList<>();
@@ -57,30 +50,26 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         iniView();
         iniXRefreshView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.account_details_activity;
-    }
     private void iniView (){
+        getViewBinding().leftBack.setOnClickListener(this);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
     private void iniXRefreshView(){
-        mRefreshLayout.setOnRefreshListener(mRefreshListener);
+        getViewBinding().mRefreshLayout.setOnRefreshListener(mRefreshListener);
         adapter=new AccountDetailsAdapter(this);
-        mRecyclerView.setHasFixedSize(true);
+        getViewBinding(). mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.addItemDecoration(createItemDecoration());
-        mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
-        mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
-        mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
-        mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
-        mRecyclerView.setAdapter(adapter);
+        getViewBinding(). mRecyclerView.setLayoutManager(layoutManager);
+        getViewBinding().mRecyclerView.addItemDecoration(createItemDecoration());
+        getViewBinding().mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
+        getViewBinding().mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+        getViewBinding(). mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
+        getViewBinding().mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+        getViewBinding().mRecyclerView.setAdapter(adapter);
     }
-    @OnClick({R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
@@ -161,7 +150,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         ResultData<AccountDetail> resultData= (ResultData<AccountDetail>) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            mRefreshLayout.setRefreshing(false);
+            getViewBinding().mRefreshLayout.setRefreshing(false);
         }
         mMaxToal=resultData.getTotal();
         mList.addAll(resultData.getRows());
@@ -169,7 +158,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         // 数据完更多数据，一定要掉用这个方法。
         // 第一个参数：表示此次数据是否为空。
         // 第二个参数：表示是否还有更多数据。
-        mRecyclerView.loadMoreFinish(resultData.getRows().size()==0, mMaxToal>(page*size));
+        getViewBinding().mRecyclerView.loadMoreFinish(resultData.getRows().size()==0, mMaxToal>(page*size));
     }
 
     @Override
@@ -177,13 +166,13 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         ToastUtils.showToast(this,message);
         if (isRefresh) {
             mList.clear();
-            mRefreshLayout.setRefreshing(false);
+            getViewBinding().mRefreshLayout.setRefreshing(false);
         }else
             page--;
         adapter.notifyDataSetChanged(mList);
         // 数据完更多数据，一定要掉用这个方法。
         // 第一个参数：表示此次数据是否为空。
         // 第二个参数：表示是否还有更多数据。
-        mRecyclerView.loadMoreFinish(true, mMaxToal>(page*size));
+        getViewBinding().mRecyclerView.loadMoreFinish(true, mMaxToal>(page*size));
     }
 }

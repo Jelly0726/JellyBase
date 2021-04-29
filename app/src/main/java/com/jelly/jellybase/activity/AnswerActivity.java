@@ -16,6 +16,7 @@ import com.jelly.baselibrary.album.AlbumAdapter;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AnswerActivityBinding;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigButton;
 import com.mylhyl.circledialog.callback.ConfigDialog;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/11/2.
  */
 
-public class AnswerActivity extends BaseActivity implements View.OnClickListener{
+public class AnswerActivity extends BaseActivity<AnswerActivityBinding> implements View.OnClickListener{
     private static final String filePath=Environment.getExternalStorageDirectory().getPath();//文件路径
     private Uri imageUri;
     private LinearLayout left_back;
@@ -63,10 +64,6 @@ public class AnswerActivity extends BaseActivity implements View.OnClickListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.answer_activity;
     }
     private void iniView(){
         left_back= (LinearLayout) findViewById(R.id.left_back);

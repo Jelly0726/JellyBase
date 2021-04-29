@@ -17,15 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.webview.DownloadCompleteReceiver;
 import com.jelly.baselibrary.webview.WebConfig;
 import com.jelly.baselibrary.webview.WebTools;
@@ -33,30 +31,19 @@ import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
 import com.jelly.baselibrary.webview.tbs.WebViewJavaScriptFunction;
 import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.BaseTbsWebviewBinding;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/2/7.
  */
 
-public class JSWebViewActivity extends BaseActivity {
-    @BindView(R.id.topNav_layout)
-    LinearLayout topNav_layout;
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.title_tv)
-    TextView title_tv;
+public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implements View.OnClickListener {
     private X5WebView mWebView;
-    @BindView(R.id.webfilechooser)
-    ViewGroup mViewParent;
-    @BindView(R.id.refresh_layout)
-    SwipeRefreshLayout mRefreshLayout;
     private WebTools webTools;
     private DownloadCompleteReceiver receiver;
 
@@ -67,7 +54,7 @@ public class JSWebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         try {
-            if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
+            if (Integer.parseInt(Build.VERSION.SDK) >= 11) {
                 getWindow()
                         .setFlags(
                                 android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
@@ -85,17 +72,13 @@ public class JSWebViewActivity extends BaseActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(receiver, intentFilter);
-
+        getViewBinding().leftBack.setOnClickListener(this);
         //WebView
         init();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.base_tbs_webview;
-    }
     private void init() {
         //mRefreshLayout.setEnabled(false);//关闭滑动刷新
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        getViewBinding().refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mWebView.setVisible(false);
@@ -103,7 +86,7 @@ public class JSWebViewActivity extends BaseActivity {
             }
         }); // 刷新监听。
         // 设置子视图是否允许滚动到顶部
-        mRefreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+        getViewBinding().refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override//返回true 就是子布局手势，false 就是自己使用
             public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
                 LogUtils.i("getScrollY()="+child.getScrollY());
@@ -118,16 +101,16 @@ public class JSWebViewActivity extends BaseActivity {
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
-        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
+        getViewBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.FILL_PARENT,
                 FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setOnScrollChangedCallback(new X5WebView.OnScrollChangedCallback() {
             public void onScroll(int l, int t) {
-                //DebugLog.d("We Scrolled etc..." + l + " t =" + t);
+                //LogUtils.d("We Scrolled etc..." + l + " t =" + t);
                 if (t == 0) {//webView在顶部
-                    mRefreshLayout.setEnabled(true);
+                    getViewBinding().refreshLayout.setEnabled(true);
                 } else {//webView不是顶部
-                    mRefreshLayout.setEnabled(false);
+                    getViewBinding().refreshLayout.setEnabled(false);
                 }
             }
         });
@@ -178,12 +161,12 @@ public class JSWebViewActivity extends BaseActivity {
                 mWebView.setVisible(true);
                 mWebView.loadUrl(webTools.url);
             }
-            title_tv.setText(webTools.title);
+            getViewBinding().titleTv.setText(webTools.title);
         }
         mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                topNav_layout.setVisibility(View.VISIBLE);
+                getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
                 LogUtils.i("onPageStarted  url="+url);
             }
 
@@ -192,9 +175,9 @@ public class JSWebViewActivity extends BaseActivity {
                 LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
-                    topNav_layout.setVisibility(View.GONE);
+                    getViewBinding().topNavLayout.setVisibility(View.GONE);
                 }else {
-                    topNav_layout.setVisibility(View.VISIBLE);
+                    getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -202,7 +185,7 @@ public class JSWebViewActivity extends BaseActivity {
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress>=100){
                     mWebView.setVisible(true);
-                    mRefreshLayout.setRefreshing(false);
+                    getViewBinding().refreshLayout.setRefreshing(false);
                 }
             }
             @Override
@@ -220,8 +203,8 @@ public class JSWebViewActivity extends BaseActivity {
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
     }
-    @OnClick({R.id.left_back})
-    public void onClick(View view){
+   @Override
+   public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:
                 finish();
@@ -284,12 +267,11 @@ public class JSWebViewActivity extends BaseActivity {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mViewParent.removeAllViews();
+            getViewBinding().webfilechooser.removeAllViews();
             mWebView.stopLoading();
             mWebView.removeAllViews();
             mWebView.destroy();
             mWebView = null;
-            mViewParent = null;
         }
         unregisterReceiver(receiver);
         super.onDestroy();

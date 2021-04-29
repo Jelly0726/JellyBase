@@ -6,33 +6,25 @@ import android.bluetooth.BluetoothGattService;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.bluetooth.BleManager;
 import com.jelly.baselibrary.bluetooth.data.BleDevice;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.comm.Observer;
 import com.jelly.jellybase.blebluetooth.comm.ObserverManager;
+import com.jelly.jellybase.databinding.BluetoothActivityOperationBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-public class OperationActivity extends BaseActivity implements Observer {
+public class OperationActivity extends BaseActivity<BluetoothActivityOperationBinding> implements Observer, View.OnClickListener {
 
     public static final String KEY_DATA = "key_data";
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.title_tv)
-    TextView title_tv;
     private BleDevice bleDevice;
     private BluetoothGattService bluetoothGattService;
     private BluetoothGattCharacteristic characteristic;
@@ -46,15 +38,11 @@ public class OperationActivity extends BaseActivity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initData();
         initView();
+        initData();
         initPage();
 
         ObserverManager.getInstance().addObserver(this);
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.bluetooth_activity_operation;
     }
     @Override
     protected void onDestroy() {
@@ -69,7 +57,6 @@ public class OperationActivity extends BaseActivity implements Observer {
             finish();
         }
     }
-    @OnClick({R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId()))return;
         switch (v.getId()) {
@@ -100,6 +87,7 @@ public class OperationActivity extends BaseActivity implements Observer {
     }
 
     private void initView() {
+        getViewBinding().leftBack.setOnClickListener(this);
     }
 
     private void initData() {
@@ -119,7 +107,7 @@ public class OperationActivity extends BaseActivity implements Observer {
 
     public void changePage(int page) {
         currentPage = page;
-        title_tv.setText(titles[page]);
+        getViewBinding().titleTv.setText(titles[page]);
         updateFragment(page);
         if (currentPage == 1) {
             ((CharacteristicListFragment) fragments.get(1)).showData();

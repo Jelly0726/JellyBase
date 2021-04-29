@@ -33,8 +33,8 @@ import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.baselibrary.bankcard.BankUtil;
 import com.jelly.baselibrary.config.ConfigKey;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
 import com.jelly.jellybase.R;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 

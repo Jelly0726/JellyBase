@@ -5,22 +5,22 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.jelly.baselibrary.bankcard.BankCardInfo;
-import com.jelly.mvp.contact.BankCartListContact;
-import com.jelly.mvp.presenter.BankListPresenter;
+import com.andview.refreshview.XRefreshView;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.BankCardListAdapter;
+import com.jelly.jellybase.databinding.BankcardlistActivityBinding;
+import com.jelly.mvp.contact.BankCartListContact;
+import com.jelly.mvp.presenter.BankListPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
 import com.yanzhenjie.recyclerview.SwipeMenu;
 import com.yanzhenjie.recyclerview.SwipeMenuBridge;
@@ -33,25 +33,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.View,BankCartListContact.Presenter>
-        implements BankCartListContact.View {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.top_right)
-    LinearLayout top_right;
-
-    @BindView(R.id.recycler_view_test_rv)
-    SwipeRecyclerView recyclerView;
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
+public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.View
+        ,BankCartListContact.Presenter, BankcardlistActivityBinding>
+        implements BankCartListContact.View, View.OnClickListener {
     private LinearLayoutManager layoutManager;
     private BankCardListAdapter adapter;
     private List<BankCardInfo> mList =new ArrayList<>();
@@ -64,11 +54,9 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
         iniView();
         iniXRefreshView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.bankcardlist_activity;
-    }
     private void iniView(){
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().topRight.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -101,26 +89,25 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     private void iniXRefreshView(){
         adapter=new BankCardListAdapter(this,mList);
         //xRefreshView = (XRefreshView) findViewById(R.id.xrefreshview);
-        xRefreshView.setPullLoadEnable(true);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
         //recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
-        recyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getViewBinding().recyclerViewTestRv.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
+        getViewBinding().recyclerViewTestRv.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
 //        recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
 //        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
-        recyclerView.setSwipeMenuCreator(swipeMenuCreator);
-        recyclerView.setOnItemMenuClickListener(mMenuItemClickListener);
+        getViewBinding().recyclerViewTestRv.setSwipeMenuCreator(swipeMenuCreator);
+        getViewBinding().recyclerViewTestRv.setOnItemMenuClickListener(mMenuItemClickListener);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
-        recyclerView.setAdapter(adapter);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
        // adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
         adapter.setOnItemClickListener(onItemClickListener);
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
-    @OnClick({R.id.left_back,R.id.top_right})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
@@ -236,17 +223,17 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
         List list= (List) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
             if (list.size()<pageSize){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else {
-                xRefreshView.setLoadComplete(false);
+                getViewBinding().xrefreshview.setLoadComplete(false);
             }
         }else {
             if (list.size()==0){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else
-                xRefreshView.stopLoadMore();
+                getViewBinding().xrefreshview.stopLoadMore();
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
@@ -255,9 +242,9 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     @Override
     public void bankListFailed(boolean isRefresh, String message) {
         if (isRefresh){
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
         }else {
-            xRefreshView.stopLoadMore();
+            getViewBinding().xrefreshview.stopLoadMore();
         }
         ToastUtils.showToast(this,message);
     }

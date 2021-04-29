@@ -5,39 +5,29 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XRefreshViewFooter;
 import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.view.CustomerFooter;
-import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
-import com.jelly.jellybase.R;
+import com.jelly.baselibrary.recyclerViewUtil.ItemDecoration;
 import com.jelly.jellybase.adpater.ProductEvaluateAdapter;
+import com.jelly.jellybase.databinding.ProductEvaluateFragmentBinding;
 import com.jelly.jellybase.datamodel.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 
 /**
  * Created by Administrator on 2017/9/21.
  */
 
-public class ProductEvaluateFragment extends BaseFragment {
-    @BindView(R.id.recycler_view_test_rv)
-    RecyclerView recyclerView;
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
+public class ProductEvaluateFragment extends BaseFragment<ProductEvaluateFragmentBinding> {
     private LinearLayoutManager layoutManager;
     private ProductEvaluateAdapter adapter;
     private List<Product> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
-    @Override
-    public int getLayoutId() {
-        return R.layout.product_evaluate_fragment;
-    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -75,37 +65,34 @@ public class ProductEvaluateFragment extends BaseFragment {
             mList.add(new Product());
         }
         adapter=new ProductEvaluateAdapter(this.getActivity(),mList);
-        xRefreshView.setPullLoadEnable(true);
-        recyclerView.setHasFixedSize(true);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
         // 设置静默加载模式
 //		xRefreshView1.setSilenceLoadMore();
         layoutManager = new LinearLayoutManager(this.getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
         Rect rect=new Rect();
         rect.bottom=0;
         rect.top= 1;
         rect.left=0;
         rect.right=0;
-        recyclerView.addItemDecoration(new ItemDecoration(rect,0, ItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,0,ItemDecoration.NONE, ItemDecoration.NONE));
         // 静默加载模式不能设置footerview
-        recyclerView.setAdapter(adapter);
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
 //        xRefreshView1.setAutoLoadMore(false);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
 
         //当需要使用数据不满一屏时不显示点击加载更多的效果时，解注释下面的三行代码
         //并注释掉第四行代码
-        CustomerFooter customerFooter = new CustomerFooter(this.getActivity());
-        customerFooter.setRecyclerView(recyclerView);
-        adapter.setCustomLoadMoreView(customerFooter);
-        //adapter.setCustomLoadMoreView(new XRefreshViewFooter(this.getActivity()));
+        adapter.setCustomLoadMoreView(new XRefreshViewFooter(this.getActivity()));
         //xRefreshView.setCustomFooterView(new XRefreshViewFooter(this.getActivity()));
 //        recyclerviewAdapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
 //		xRefreshView1.setPullLoadEnable(false);
         //设置静默加载时提前加载的item个数
 //		xRefreshView1.setPreLoadCount(2);
 
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
 //		// 实现Recyclerview的滚动监听，在这里可以自己处理到达底部加载更多的操作，可以不实现onLoadMore方法，更加自由
 //		xRefreshView1.setOnRecyclerViewScrollListener(new OnScrollListener() {
 //			@Override
@@ -132,7 +119,7 @@ public class ProductEvaluateFragment extends BaseFragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -143,7 +130,7 @@ public class ProductEvaluateFragment extends BaseFragment {
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }

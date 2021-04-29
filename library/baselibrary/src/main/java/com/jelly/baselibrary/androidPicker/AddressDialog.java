@@ -13,13 +13,12 @@ import android.widget.RadioGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.R2;
 import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.addressmodel.City;
 import com.jelly.baselibrary.addressmodel.Province;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.mylhyl.circledialog.AbsBaseCircleDialog;
 import com.yanzhenjie.album.impl.OnItemClickListener;
 

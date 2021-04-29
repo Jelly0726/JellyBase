@@ -8,37 +8,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.MapUtil.DestinationActivity;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XScrollView;
 import com.base.BaseApplication;
+import com.base.MapUtil.DestinationActivity;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.model.ScanResult;
 import com.jelly.baselibrary.mypopupmenu.BaseItem;
 import com.jelly.baselibrary.mypopupmenu.TopMiddlePopup;
 import com.jelly.baselibrary.mypopupmenu.Util;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XScrollView;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.HomeAdapter;
+import com.jelly.jellybase.databinding.HomeFragmentActivityBinding;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.datamodel.Product;
 import com.jelly.jellybase.seach.SearchActivity;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 import com.zxingx.library.ScanQRcodeActivity;
 import com.zxingx.library.activity.CodeUtils;
 
@@ -57,44 +54,15 @@ import systemdb.PositionEntity;
  * Created by Administrator on 2017/9/18.
  */
 
-public class HomeActivity extends BaseActivity {
-    private View mRootView;
+public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
     private final int zxingRequestCode=1;
     private final int addressRequestCode=2;
-    private ImageView saomiao_img;
-    private LinearLayout left_address;
-    private TextView address_tv;
     private PositionEntity positionEntity;
-    private TextView home_search;
 
-    private LinearLayout price_layout;
-    private TextView price_tv;
-    private LinearLayout classify_layout;
-    private TextView classify_tv;
-    private LinearLayout state_layout;
-    private TextView state_tv;
-    private LinearLayout price_layout1;
-    private TextView price_tv1;
-    private LinearLayout classify_layout1;
-    private TextView classify_tv1;
-    private LinearLayout state_layout1;
-    private TextView state_tv1;
-
-    private LinearLayout unconfirmed_layout;
-    private LinearLayout obligation_layout;
-    private LinearLayout unsendout_layout;
-
-    private View stickyview;
-    private View stickyview_layout;
     private int stickyY=0;
     private boolean isSticky=false;
-    private RecyclerView recyclerView;
-    private XRefreshView xRefreshView;
-    private XScrollView scrollView;
     private GridLayoutManager layoutManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private HomeAdapter adapter;
-    private TextView textView;
     private List<Product> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
@@ -106,60 +74,33 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRootView=getLayoutInflater().inflate(R.layout.home_fragment_activity,null);
-        setContentView(mRootView);
         iniView();
         iniXRefreshView();
         iniBanner();
         processLogic();
     }
-    @Override
-    public int getLayoutId(){
-        return -1;
-    }
     private void iniView (){
-        saomiao_img= (ImageView) findViewById(R.id.saomiao_img);
-        saomiao_img.setOnClickListener(listener);
-        left_address= (LinearLayout) findViewById(R.id.left_address);
-        left_address.setOnClickListener(listener);
-        address_tv= (TextView) findViewById(R.id.address_tv);
-        home_search= (TextView) findViewById(R.id.home_search);
-        home_search.setOnClickListener(listener);
+        getViewBinding().saomiaoImg.setOnClickListener(listener);
+        getViewBinding().leftAddress.setOnClickListener(listener);
+        getViewBinding().homeSearch.setOnClickListener(listener);
 
-        stickyview_layout=findViewById(R.id.home_sticky_layout);
-        iniSticky(mRootView);
+        iniSticky(getViewBinding().getRoot());
 
-        unconfirmed_layout= (LinearLayout) findViewById(R.id.unconfirmed_layout);
-        unconfirmed_layout.setOnClickListener(listener);
-        obligation_layout= (LinearLayout) findViewById(R.id.obligation_layout);
-        obligation_layout.setOnClickListener(listener);
-        unsendout_layout= (LinearLayout) findViewById(R.id.unsendout_layout);
-        unsendout_layout.setOnClickListener(listener);
+        getViewBinding().homeGride.unconfirmedLayout.setOnClickListener(listener);
+        getViewBinding().homeGride.obligationLayout.setOnClickListener(listener);
+        getViewBinding().homeGride.unsendoutLayout.setOnClickListener(listener);
 
-        stickyview=findViewById(R.id.stickyview);
-        iniSticky1(stickyview);
+        iniSticky1(getViewBinding().stickyview.getRoot());
     }
     private void iniSticky(View view){
-        price_layout= (LinearLayout) view.findViewById(R.id.price_layout);
-        price_tv= (TextView) view.findViewById(R.id.price_tv);
-        price_layout.setOnClickListener(listener);
-        classify_layout= (LinearLayout) view.findViewById(R.id.classify_layout);
-        classify_tv= (TextView) view.findViewById(R.id.classify_tv);
-        classify_layout.setOnClickListener(listener);
-        state_layout= (LinearLayout) view.findViewById(R.id.state_layout);
-        state_tv= (TextView) view.findViewById(R.id.state_tv);
-        state_layout.setOnClickListener(listener);
+        getViewBinding().homeSticky.priceLayout.setOnClickListener(listener);
+        getViewBinding().homeSticky.classifyLayout.setOnClickListener(listener);
+        getViewBinding().homeSticky.stateLayout.setOnClickListener(listener);
     }
     private void iniSticky1(View view){
-        price_layout1= (LinearLayout) view.findViewById(R.id.price_layout);
-        price_tv1= (TextView) view.findViewById(R.id.price_tv);
-        price_layout1.setOnClickListener(listener);
-        classify_layout1= (LinearLayout) view.findViewById(R.id.classify_layout);
-        classify_tv1= (TextView) view.findViewById(R.id.classify_tv);
-        classify_layout1.setOnClickListener(listener);
-        state_layout1= (LinearLayout) view.findViewById(R.id.state_layout);
-        state_tv1= (TextView) view.findViewById(R.id.state_tv);
-        state_layout1.setOnClickListener(listener);
+        getViewBinding().stickyview.priceLayout.setOnClickListener(listener);
+        getViewBinding().stickyview.classifyLayout.setOnClickListener(listener);
+        getViewBinding().stickyview.stateLayout.setOnClickListener(listener);
     }
     private void iniXRefreshView(){
         for (int i=0;i<9;i++){
@@ -167,49 +108,46 @@ public class HomeActivity extends BaseActivity {
         }
         adapter=new HomeAdapter(this,mList);
         adapter.setOnItemClickListener(onItemClickListener);
-        xRefreshView = (XRefreshView) findViewById(R.id.custom_view);
-        scrollView = (XScrollView) findViewById(R.id.xscrollview);
-        scrollView.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
                 int[] location = new int[2];
-                stickyview.getLocationOnScreen(location);
+                getViewBinding().stickyview.getRoot().getLocationOnScreen(location);
                 int y = location[1];
                 stickyY = y;
             }
 
             @Override
             public void onScroll(int l, int t, int oldl, int oldt) {
-                if (stickyview_layout == null) return;
+                if (getViewBinding().homeSticky.getRoot() == null) return;
                 int[] location = new int[2];
-                stickyview_layout.getLocationOnScreen(location);
+                getViewBinding().homeSticky.getRoot().getLocationOnScreen(location);
                 int y = location[1];
                 int getTop = y;
                 if (getTop <= stickyY) {
-                    stickyview.setVisibility(View.VISIBLE);
+                    getViewBinding().stickyview.getRoot().setVisibility(View.VISIBLE);
                     isSticky=true;
                 } else {
-                    stickyview.setY(0);
-                    stickyview.setVisibility(View.GONE);
+                    getViewBinding().stickyview.getRoot().setY(0);
+                    getViewBinding().stickyview.getRoot().setVisibility(View.GONE);
                     isSticky=false;
                 }
             }
         });
-        xRefreshView.setAutoRefresh(false);
-        xRefreshView.setPullLoadEnable(true);
-        xRefreshView.setPullRefreshEnable(true);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
-        xRefreshView.setAutoLoadMore(false);
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().customView.setAutoRefresh(false);
+        getViewBinding().customView.setPullLoadEnable(true);
+        getViewBinding().customView.setPullRefreshEnable(true);
+        getViewBinding().customView.setPinnedTime(1000);
+        getViewBinding().customView.setMoveForHorizontal(true);
+        getViewBinding().customView.setAutoLoadMore(false);
+        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getViewBinding().recyclerViewTestRv.setNestedScrollingEnabled(false);
         layoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(22,2, SimpleItemDecoration.NONE));
-        recyclerView.setAdapter(adapter);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,2, SimpleItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
     }
     /**
      * 设置弹窗
@@ -236,58 +174,58 @@ public class HomeActivity extends BaseActivity {
         switch (type){
             case 0:
                 if(!oNcount){
-                    price_tv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                    price_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_down);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    price_tv.setCompoundDrawables(null, null, img, null);
-                    price_tv1.setCompoundDrawables(null, null, img, null);
+                    getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                    getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=true;
                 }else {
-                    price_tv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                    price_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_up);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    price_tv.setCompoundDrawables(null, null, img, null);
-                    price_tv1.setCompoundDrawables(null, null, img, null);
+                    getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                    getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=false;
                 }
 
-                classify_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                classify_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                state_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                state_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 1:
                 oNcount=false;
-                price_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                price_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                price_tv.setCompoundDrawables(null, null, img, null);
-                price_tv1.setCompoundDrawables(null, null, img, null);
+                getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
 
-                classify_tv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                classify_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
 
-                state_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                state_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 2:
                 oNcount=false;
-                price_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                price_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                price_tv.setCompoundDrawables(null, null, img, null);
-                price_tv1.setCompoundDrawables(null, null, img, null);
+                getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
 
-                classify_tv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                classify_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                state_tv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                state_tv1.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                 break;
         }
 
@@ -314,7 +252,7 @@ public class HomeActivity extends BaseActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -325,7 +263,7 @@ public class HomeActivity extends BaseActivity {
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }
@@ -350,7 +288,7 @@ public class HomeActivity extends BaseActivity {
         if(requestCode==addressRequestCode && resultCode== addressRequestCode){
             //Log.i("ss","data="+data.getStringExtra("result"));
             positionEntity= (PositionEntity) data.getSerializableExtra("search");
-            address_tv.setText(positionEntity.address);
+            getViewBinding().addressTv.setText(positionEntity.address);
         }
     }
 
@@ -378,9 +316,9 @@ public class HomeActivity extends BaseActivity {
                 case R.id.classify_layout:
                     onChangeFiltrate(1);
                     if(isSticky){
-                        setPopup(Util.Anim_TopMiddle,classify_layout1);
+                        setPopup(Util.Anim_TopMiddle,getViewBinding().stickyview.classifyLayout);
                     }else {
-                        setPopup(Util.Anim_TopMiddle,classify_layout);
+                        setPopup(Util.Anim_TopMiddle,getViewBinding().homeSticky.classifyLayout);
                     }
                     break;
                 case R.id.state_layout:

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.LinearLayout;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.config.BaseConfig;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.WeixinpayActivityBinding;
 import com.jelly.jellybase.weixinpay.PayUtil;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -23,9 +23,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 /**微信支付回调
  * Created by BYPC006 on 2016/8/24.
  */
-public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends BaseActivity<WeixinpayActivityBinding> implements IWXAPIEventHandler {
 	private IWXAPI mApi;
-	private LinearLayout left_back;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +35,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 		mApi = WXAPIFactory.createWXAPI(this, BaseConfig.WechatPay_APP_ID);
 		mApi.handleIntent(getIntent(), this);
 	}
-	@Override
-	public int getLayoutId(){
-		return R.layout.weixinpay_activity;
-	}
 	private void initView(){
-		left_back = (LinearLayout) findViewById(R.id.left_back);
-		left_back.setOnClickListener(mListener);
+		getViewBinding().leftBack.setOnClickListener(mListener);
 
 	}
 

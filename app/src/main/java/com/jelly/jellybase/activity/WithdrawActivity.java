@@ -6,24 +6,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.base.BaseApplication;
+import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.bankcard.BankCardInfo;
 import com.jelly.baselibrary.config.ConfigKey;
-import com.jelly.mvp.contact.WithdrawalsContact;
-import com.jelly.mvp.presenter.WithdrawalsPresenter;
-import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.moneyedittext.MoneyTextWatcher;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.WithdrawActivityBinding;
+import com.jelly.mvp.contact.WithdrawalsContact;
+import com.jelly.mvp.presenter.WithdrawalsPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
@@ -36,17 +33,9 @@ import io.reactivex.ObservableTransformer;
  * Created by JELLY on 2017/9/26.
  */
 
-public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,WithdrawalsContact.Presenter> implements WithdrawalsContact.View{
+public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
+        ,WithdrawalsContact.Presenter, WithdrawActivityBinding> implements WithdrawalsContact.View{
     private static final int requestCode=0;
-    private LinearLayout left_back;
-    private LinearLayout change_bank;
-    private ImageView bank_logo;
-    private TextView bank_name;
-    private TextView bank_no;
-    private TextView bank_tx;
-    private TextView commit_tv;
-    private TextView charge_tv;
-    private EditText amount;
     private BankCardInfo bankInfo;
     private double charge=0;
     @Override
@@ -55,31 +44,18 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
         charge=getIntent().getDoubleExtra("charge",0);
         iniView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.withdraw_activity;
-    }
     @SuppressLint("WrongViewCast")
     private void iniView(){
-        left_back= (LinearLayout) findViewById(R.id.left_back);
-        left_back.setOnClickListener(listener);
-        change_bank= (LinearLayout) findViewById(R.id.change_bank);
-        change_bank.setOnClickListener(listener);
-        bank_tx= (TextView) findViewById(R.id.bank_tx);
-        bank_tx.setOnClickListener(listener);
-        commit_tv= (TextView) findViewById(R.id.commit_tv);
-        commit_tv.setOnClickListener(listener);
-        bank_name= (TextView) findViewById(R.id.bank_name);
-        bank_no= (TextView) findViewById(R.id.bank_no);
-        bank_logo= (ImageView) findViewById(R.id.bank_logo);
-        charge_tv= (TextView) findViewById(R.id.charge_tv);
-        amount=findViewById(R.id.amount);
-        amount.addTextChangedListener(new MoneyTextWatcher(amount){
+        getViewBinding().leftBack.setOnClickListener(listener);
+        getViewBinding().changeBank.setOnClickListener(listener);
+        getViewBinding().bankTx.setOnClickListener(listener);
+        getViewBinding().commitTv.setOnClickListener(listener);
+        getViewBinding().amount.addTextChangedListener(new MoneyTextWatcher(getViewBinding().amount){
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s.toString().trim())){
                     double acount=Double.parseDouble(s.toString().trim());
-                    charge_tv.setText("手续费：¥"+String.valueOf(acount*charge)+"元");
+                    getViewBinding().chargeTv.setText("手续费：¥"+String.valueOf(acount*charge)+"元");
                 }
             }
         }.setDigits(2));
@@ -88,19 +64,19 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
                 ConfigKey.DEFAULT_BANK);
         bankInfo=gson.fromJson(json,BankCardInfo.class);
         if (bankInfo==null){
-            bank_tx.setVisibility(View.VISIBLE);
-            change_bank.setVisibility(View.GONE);
+            getViewBinding().bankTx.setVisibility(View.VISIBLE);
+            getViewBinding().changeBank.setVisibility(View.GONE);
         }else {
-            bank_tx.setVisibility(View.GONE);
-            change_bank.setVisibility(View.VISIBLE);
+            getViewBinding().bankTx.setVisibility(View.GONE);
+            getViewBinding().changeBank.setVisibility(View.VISIBLE);
             iniDataBank();
         }
     }
     private void iniDataBank(){
-        bank_name.setText(bankInfo.getBankName());
+        getViewBinding().bankName.setText(bankInfo.getBankName());
         String bankNo=bankInfo.getBankNo().substring(bankInfo.getBankNo().length()-4,
                 bankInfo.getBankNo().length());
-        bank_no.setText("尾号"+bankNo);
+        getViewBinding().bankNo.setText("尾号"+bankNo);
         if(bankInfo.getBankLogo()!=null){
             if (bankInfo.getBankLogo().trim().length()>6){
                 Glide.with(this)
@@ -109,11 +85,11 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
                         .error(R.drawable.yinlian)
                         .dontAnimate()
                         .centerCrop()
-                        .into(bank_logo);
+                        .into(getViewBinding().bankLogo);
                 return;
             }
         }
-        bank_logo.setImageResource(R.drawable.yinlian);
+        getViewBinding().bankLogo.setImageResource(R.drawable.yinlian);
     }
     @Override
     protected void onDestroy() {
@@ -156,7 +132,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
                         ToastUtils.showToast(WithdrawActivity.this,"请选择提现银行卡!");
                         return;
                     }
-                    String amounts=amount.getText().toString().trim();
+                    String amounts=getViewBinding().amount.getText().toString().trim();
                     if (TextUtils.isEmpty(amounts)){
                         ToastUtils.showToast(WithdrawActivity.this,"请输入提现金额!");
                         return;
@@ -174,12 +150,12 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
             if (data!=null) {
                 bankInfo= (BankCardInfo) data.getSerializableExtra("data");
                 if(bankInfo==null){
-                    bank_tx.setVisibility(View.VISIBLE);
-                    change_bank.setVisibility(View.GONE);
+                    getViewBinding().bankTx.setVisibility(View.VISIBLE);
+                    getViewBinding().changeBank.setVisibility(View.GONE);
                     return;
                 }
-                bank_tx.setVisibility(View.GONE);
-                change_bank.setVisibility(View.VISIBLE);
+                getViewBinding().bankTx.setVisibility(View.GONE);
+                getViewBinding().changeBank.setVisibility(View.VISIBLE);
                 iniDataBank();
             }
         }
@@ -187,7 +163,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View,W
 
     @Override
     public Object withdrawalsParam() {
-        String amounts=amount.getText().toString().trim();
+        String amounts=getViewBinding().amount.getText().toString().trim();
         Map map=new TreeMap();
         map.put("amount",amounts);
         map.put("withdrawalaccount",bankInfo.getBankNo());

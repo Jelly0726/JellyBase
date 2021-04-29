@@ -2,38 +2,26 @@ package com.jelly.jellybase.userInfo;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.jelly.baselibrary.applicationUtil.AppUtils;
-import com.jelly.mvp.contact.AboutContact;
-import com.jelly.mvp.presenter.AboutUsPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.model.AboutUs;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.UserAboutActivityBinding;
+import com.jelly.mvp.contact.AboutContact;
+import com.jelly.mvp.presenter.AboutUsPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/19.
  */
 
-public class AboutActivity extends BaseActivityImpl<AboutContact.View,AboutContact.Presenter> implements AboutContact.View {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.versions_tv)
-    TextView versions_tv;
-    @BindView(R.id.name_tv)
-    TextView name_tv;
-    @BindView(R.id.address_tv)
-    TextView address_tv;
-    @BindView(R.id.phone_tv)
-    TextView phone_tv;
+public class AboutActivity extends BaseActivityImpl<AboutContact.View
+        ,AboutContact.Presenter, UserAboutActivityBinding> implements AboutContact.View , View.OnClickListener {
 
     private AboutUs aboutUs;
     @Override
@@ -42,12 +30,8 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.View,AboutConta
         iniView();
         presenter.aboutUs(true);
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.user_about_activity;
-    }
     private void iniView(){
-
+getViewBinding().leftBack.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -55,10 +39,10 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.View,AboutConta
         super.onBackPressed();
     }
     private void iniData(){
-        versions_tv.setText("V "+ AppUtils.getAppVersion(this)+" ("+ AppUtils.getVersionCode(this)+")");
-        name_tv.setText(aboutUs.getCompanyname());
-        address_tv.setText(aboutUs.getAddress());
-        phone_tv.setText(aboutUs.getTelephone());
+        getViewBinding().versionsTv.setText("V "+ AppUtils.getAppVersion(this)+" ("+ AppUtils.getVersionCode(this)+")");
+        getViewBinding().nameTv.setText(aboutUs.getCompanyname());
+        getViewBinding().addressTv.setText(aboutUs.getAddress());
+        getViewBinding().phoneTv.setText(aboutUs.getTelephone());
     }
     @Override
     protected void onDestroy() {
@@ -79,7 +63,6 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.View,AboutConta
     public <T> ObservableTransformer<T, T> bindLifecycle() {
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
-    @OnClick({R.id.left_back})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;

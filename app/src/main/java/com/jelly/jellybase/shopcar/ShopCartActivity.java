@@ -4,12 +4,13 @@ import android.os.Bundle;
 
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.ShopcartFragmentActivityBinding;
 
 /**
  * Created by Administrator on 2017/10/28.
  */
 
-public class ShopCartActivity extends BaseActivity {
+public class ShopCartActivity extends BaseActivity<ShopcartFragmentActivityBinding> {
     private ShopCarFragment shopCarFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,6 @@ public class ShopCartActivity extends BaseActivity {
                 .replace(R.id.main, shopCarFragment)
                 .commit();
 
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.shopcart_fragment_activity;
     }
 
     /**

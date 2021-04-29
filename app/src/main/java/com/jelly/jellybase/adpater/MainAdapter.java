@@ -17,16 +17,17 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.andview.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.baselibrary.multiClick.OnMultiClickListener;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
 public class MainAdapter extends BaseRecyclerAdapter<MainAdapter.ViewHolder> {
 

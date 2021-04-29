@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import butterknife.OnClick
 import com.jelly.baselibrary.Utils.RMBUtils
 import com.base.BaseApplication.Companion.instance
 import com.jelly.baselibrary.applicationUtil.AppUtils
@@ -17,6 +16,7 @@ import com.jelly.baselibrary.eventBus.NetEvent
 import com.jelly.baselibrary.toast.ToastUtils
 import com.jelly.baselibrary.BaseActivity
 import com.jelly.jellybase.R
+import com.jelly.jellybase.databinding.ShopcartActivityBinding
 import com.jelly.jellybase.shopcart.CartInfo
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.yanzhenjie.recyclerview.*
@@ -24,7 +24,7 @@ import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration
 import kotlinx.android.synthetic.main.shopcart_activity.*
 import java.util.*
 
-class ShopCartActivity : BaseActivity(), OnItemClickListener
+class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickListener,View.OnClickListener
     {
     protected lateinit var mLayoutManager: RecyclerView.LayoutManager
     protected lateinit var mItemDecoration: RecyclerView.ItemDecoration
@@ -180,9 +180,6 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
         page = 1
 //        presenter.getShoppingCart(true, lifecycleProvider.bindUntilEvent<Any>(ActivityEvent.DESTROY))
     }
-        override fun getLayoutId(): Int {
-            return R.layout.shopcart_activity
-        }
     override fun onDestroy() {
         super.onDestroy()
         val netEvent= NetEvent<Any>()
@@ -193,9 +190,13 @@ class ShopCartActivity : BaseActivity(), OnItemClickListener
 //        return ShoppingCartPresenter(this)
 //    }
 
-    private fun iniView() {}
-    @OnClick(R.id.back_layout, R.id.allSelect_box, R.id.settlement_tv, R.id.goShop)
-    fun onClick(view: View) {
+    private fun iniView() {
+        viewBinding!!.backLayout.setOnClickListener(this)
+        viewBinding!!.allSelectBox.setOnClickListener(this)
+        viewBinding!!.settlementTv.setOnClickListener(this)
+        viewBinding!!.emptyShopcart.goShop.setOnClickListener(this)
+    }
+    override fun onClick(view: View) {
         val intent: Intent
         when (view.id) {
             R.id.back_layout -> finish()

@@ -19,18 +19,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.bluetooth.BleManager;
 import com.jelly.baselibrary.bluetooth.callback.BleGattCallback;
 import com.jelly.baselibrary.bluetooth.callback.BleMtuChangedCallback;
@@ -41,45 +37,24 @@ import com.jelly.baselibrary.bluetooth.exception.BleException;
 import com.jelly.baselibrary.bluetooth.scan.BleScanRuleConfig;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.blebluetooth.adapter.DeviceAdapter;
 import com.jelly.jellybase.blebluetooth.comm.ObserverManager;
 import com.jelly.jellybase.blebluetooth.operation.OperationActivity;
+import com.jelly.jellybase.databinding.BluetoothActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * 扫描低功率蓝牙
  */
-public class BluetoothBLEActivity extends BaseActivity {
+public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBinding>implements View.OnClickListener {
 
     private static final String TAG = BluetoothBLEActivity.class.getSimpleName();
     private static final int REQUEST_CODE_OPEN_GPS = 1;
     private static final int REQUEST_CODE_PERMISSION_LOCATION = 2;
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.layout_setting)
-    LinearLayout layout_setting;
-    @BindView(R.id.txt_setting)
-    Button txt_setting;
-    @BindView(R.id.btn_scan)
-    Button btn_scan;
-    @BindView(R.id.et_name)
-    EditText et_name;
-    @BindView(R.id.et_mac)
-    EditText et_mac;
-    @BindView(R.id.et_uuid)
-    EditText et_uuid;
-    @BindView(R.id.sw_auto)
-    Switch sw_auto;
-    @BindView(R.id.img_loading)
-    ImageView img_loading;
 
     private Animation operatingAnim;
     private DeviceAdapter mDeviceAdapter;
@@ -106,10 +81,6 @@ public class BluetoothBLEActivity extends BaseActivity {
 
     }
     @Override
-    public int getLayoutId(){
-        return R.layout.bluetooth_activity_main;
-    }
-    @Override
     protected void onResume() {
         super.onResume();
         showConnectedDevice();
@@ -122,7 +93,6 @@ public class BluetoothBLEActivity extends BaseActivity {
         BleManager.getInstance().destroy();
     }
 
-    @OnClick({R.id.left_back,R.id.btn_scan,R.id.txt_setting})
     public void onClick(View v) {
         if (AntiShake.check(v.getId()))return;
         switch (v.getId()) {
@@ -130,29 +100,32 @@ public class BluetoothBLEActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.btn_scan:
-                if (btn_scan.getText().equals(getString(R.string.start_scan))) {
+                if (getViewBinding().btnScan.getText().equals(getString(R.string.start_scan))) {
                     checkPermissions();
-                } else if (btn_scan.getText().equals(getString(R.string.stop_scan))) {
+                } else if (getViewBinding().btnScan.getText().equals(getString(R.string.stop_scan))) {
                     BleManager.getInstance().cancelScan();
                 }
                 break;
 
             case R.id.txt_setting:
-                if (layout_setting.getVisibility() == View.VISIBLE) {
-                    layout_setting.setVisibility(View.GONE);
-                    txt_setting.setText(getString(R.string.expand_search_settings));
+                if (getViewBinding().layoutSetting.getVisibility() == View.VISIBLE) {
+                    getViewBinding().layoutSetting.setVisibility(View.GONE);
+                    getViewBinding().txtSetting.setText(getString(R.string.expand_search_settings));
                 } else {
-                    layout_setting.setVisibility(View.VISIBLE);
-                    txt_setting.setText(getString(R.string.retrieve_search_settings));
+                    getViewBinding().layoutSetting.setVisibility(View.VISIBLE);
+                    getViewBinding().txtSetting.setText(getString(R.string.retrieve_search_settings));
                 }
                 break;
         }
     }
 
     private void initView() {
-        btn_scan.setText(getString(R.string.start_scan));
-        layout_setting.setVisibility(View.GONE);
-        txt_setting.setText(getString(R.string.expand_search_settings));
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().btnScan.setOnClickListener(this);
+        getViewBinding().txtSetting.setOnClickListener(this);
+        getViewBinding().btnScan.setText(getString(R.string.start_scan));
+        getViewBinding().layoutSetting.setVisibility(View.GONE);
+        getViewBinding().txtSetting.setText(getString(R.string.expand_search_settings));
 
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_rotate);
         operatingAnim.setInterpolator(new LinearInterpolator());
@@ -199,7 +172,7 @@ public class BluetoothBLEActivity extends BaseActivity {
 
     private void setScanRule() {
         String[] uuids;
-        String str_uuid = et_uuid.getText().toString();
+        String str_uuid = getViewBinding().etUuid.getText().toString();
         if (TextUtils.isEmpty(str_uuid)) {
             uuids = null;
         } else {
@@ -220,16 +193,16 @@ public class BluetoothBLEActivity extends BaseActivity {
         }
 
         String[] names;
-        String str_name = et_name.getText().toString();
+        String str_name = getViewBinding().etName.getText().toString();
         if (TextUtils.isEmpty(str_name)) {
             names = null;
         } else {
             names = str_name.split(",");
         }
 
-        String mac = et_mac.getText().toString();
+        String mac = getViewBinding().etMac.getText().toString();
 
-        boolean isAutoConnect = sw_auto.isChecked();
+        boolean isAutoConnect = getViewBinding().swAuto.isChecked();
 
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
                 .setServiceUuids(serviceUuids)      // 只扫描指定的服务的设备，可选
@@ -251,9 +224,9 @@ public class BluetoothBLEActivity extends BaseActivity {
             public void onScanStarted(boolean success) {
                 mDeviceAdapter.clearScanDevice();
                 mDeviceAdapter.notifyDataSetChanged();
-                img_loading.startAnimation(operatingAnim);
-                img_loading.setVisibility(View.VISIBLE);
-                btn_scan.setText(getString(R.string.stop_scan));
+                getViewBinding().imgLoading.startAnimation(operatingAnim);
+                getViewBinding().imgLoading.setVisibility(View.VISIBLE);
+                getViewBinding().btnScan.setText(getString(R.string.stop_scan));
             }
 
             @Override
@@ -277,9 +250,9 @@ public class BluetoothBLEActivity extends BaseActivity {
              */
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-                img_loading.clearAnimation();
-                img_loading.setVisibility(View.INVISIBLE);
-                btn_scan.setText(getString(R.string.start_scan));
+                getViewBinding().imgLoading.clearAnimation();
+                getViewBinding().imgLoading.setVisibility(View.INVISIBLE);
+                getViewBinding().btnScan.setText(getString(R.string.start_scan));
             }
         });
     }
@@ -293,9 +266,9 @@ public class BluetoothBLEActivity extends BaseActivity {
 
             @Override
             public void onConnectFail(BleDevice bleDevice, BleException exception) {
-                img_loading.clearAnimation();
-                img_loading.setVisibility(View.INVISIBLE);
-                btn_scan.setText(getString(R.string.start_scan));
+                getViewBinding().imgLoading.clearAnimation();
+                getViewBinding().imgLoading.setVisibility(View.INVISIBLE);
+                getViewBinding().btnScan.setText(getString(R.string.start_scan));
                 progressDialog.dismiss();
                 Toast.makeText(BluetoothBLEActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
             }

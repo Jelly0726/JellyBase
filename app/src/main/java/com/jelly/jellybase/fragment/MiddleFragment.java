@@ -3,29 +3,26 @@ package com.jelly.jellybase.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import com.jelly.baselibrary.addressmodel.Address;
 import com.base.BaseApplication;
+import com.google.gson.Gson;
+import com.jelly.baselibrary.BaseFragment;
+import com.jelly.baselibrary.FragmentAdapter;
+import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.middleBar.MiddleBarItem;
 import com.jelly.baselibrary.middleBar.MiddleBarLayout;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.FragmentAdapter;
-import com.google.gson.Gson;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BottomBarActivity;
 import com.jelly.jellybase.activity.ChangeAddressActivity;
+import com.jelly.jellybase.databinding.LocationFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import systemdb.PositionEntity;
 
 
@@ -33,24 +30,12 @@ import systemdb.PositionEntity;
  * Created by Administrator on 2017/9/18.
  */
 
-public class MiddleFragment extends BaseFragment{
+public class MiddleFragment extends BaseFragment<LocationFragmentBinding> implements View.OnClickListener {
     private static final int areaRresultCode=0;
     private PositionEntity entity;
     private Address address;
-    @BindView(R.id.address_tv)
-    TextView address_tv;
-    @BindView(R.id.changeAddress_tv)
-    TextView changeAddress_tv;
-    @BindView(R.id.vp_content)
-    ViewPager mVpContent;
-    @BindView(R.id.bbl)
-    MiddleBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
-    @Override
-    public int getLayoutId() {
-        return R.layout.location_fragment;
-    }
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -79,13 +64,13 @@ public class MiddleFragment extends BaseFragment{
         initViewPagerListener();
     }
     private void iniData(){
+        getViewBinding().changeAddressTv.setOnClickListener(this);
         if (address!=null){
-            address_tv.setText(address.getDistrict().getAreaName());
+            getViewBinding().addressTv.setText(address.getDistrict().getAreaName());
         }else if (entity!=null) {
-            address_tv.setText(entity.district);
+            getViewBinding().addressTv.setText(entity.district);
         }
     }
-    @OnClick({R.id.changeAddress_tv})
     public void onClick(View v){
         if (AntiShake.check(v.getId()))return;
         Intent intent;
@@ -113,9 +98,9 @@ public class MiddleFragment extends BaseFragment{
 
     private void initViewPagerListener() {
         myAdapter= new FragmentAdapter(getChildFragmentManager(),mFragmentList);
-        mVpContent.setAdapter(myAdapter);
-        mBottomBarLayout.setViewPager(mVpContent);
-        mBottomBarLayout.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
+        getViewBinding().vpContent.setAdapter(myAdapter);
+        getViewBinding().bbl.setViewPager(getViewBinding().vpContent);
+        getViewBinding().bbl.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final MiddleBarItem bottomBarItem, int position) {
                 BaseFragment baseFragment= (BaseFragment) mFragmentList.get(position);
@@ -137,9 +122,9 @@ public class MiddleFragment extends BaseFragment{
             ((BottomBarActivity)getActivity()).onActivityResult(requestCode, resultCode, data);
             address=data.getParcelableExtra("address");
             if (address!=null){
-                address_tv.setText(address.getDistrict().getAreaName());
+                getViewBinding().addressTv.setText(address.getDistrict().getAreaName());
             }else if (entity!=null) {
-                address_tv.setText(entity.district);
+                getViewBinding().addressTv.setText(entity.district);
             }
         }
     }

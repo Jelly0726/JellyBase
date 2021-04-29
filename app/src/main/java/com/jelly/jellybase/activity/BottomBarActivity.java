@@ -7,20 +7,19 @@ import android.view.KeyEvent;
 
 import androidx.fragment.app.Fragment;
 
-import com.jelly.baselibrary.BackInterface;
-import com.jelly.baselibrary.BaseActivity;
 import com.base.BaseApplication;
-import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.FragmentAdapter;
 import com.base.HermesManager;
-import com.jelly.baselibrary.config.IntentAction;
 import com.base.sqldao.LoginDaoUtils;
 import com.chaychan.library.BottomBarItem;
 import com.chaychan.library.BottomBarLayout;
-import com.chaychan.library.NoPreloadViewPager;
+import com.jelly.baselibrary.BackInterface;
+import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.BaseFragment;
+import com.jelly.baselibrary.FragmentAdapter;
 import com.jelly.baselibrary.addressmodel.Address;
+import com.jelly.baselibrary.config.IntentAction;
 import com.jelly.baselibrary.eventBus.NetEvent;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.BottombarActivityBinding;
 import com.jelly.jellybase.datamodel.CurrentItem;
 import com.jelly.jellybase.fragment.HomeFragment;
 import com.jelly.jellybase.fragment.MeFragment;
@@ -40,11 +39,9 @@ import java.util.List;
 import systemdb.Login;
 import systemdb.PositionEntity;
 
-public class BottomBarActivity extends BaseActivity implements BackInterface {
+public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> implements BackInterface {
     private static final int areaRresultCode=0;
     private final int zxingRequestCode=1;
-    private NoPreloadViewPager mVpContent;
-    private BottomBarLayout mBottomBarLayout;
     private FragmentAdapter myAdapter;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
@@ -65,10 +62,6 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
         startService(stateGuardService);
         //isLogin();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.bottombar_activity;
     }
     @Override
     protected void onDestroy() {
@@ -113,8 +106,6 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         }
     }
     private void initView() {
-        mVpContent = (NoPreloadViewPager) findViewById(R.id.vp_content);
-        mBottomBarLayout = (BottomBarLayout) findViewById(R.id.bbl);
     }
 
     private void initData() {
@@ -137,9 +128,9 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
 
     private void initListener() {
         myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
-        mVpContent.setAdapter(myAdapter);
-        mBottomBarLayout.setViewPager(mVpContent);
-        mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
+        getViewBinding().vpContent.setAdapter(myAdapter);
+        getViewBinding().bbl.setViewPager(getViewBinding().vpContent);
+        getViewBinding().bbl.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final BottomBarItem bottomBarItem, int position, int currentPosition) {
             }
@@ -168,9 +159,9 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         if(requestCode==areaRresultCode && resultCode== areaRresultCode){
             address=data.getParcelableExtra("address");
             if (address!=null){
-                mBottomBarLayout.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+                getViewBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
             }else if (entity!=null) {
-                mBottomBarLayout.setText(3,entity.district);//设置第三个页签显示的文字
+                getViewBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
             }
         }
     }
@@ -179,7 +170,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     public void onEvent(NetEvent netEvent){
         if (netEvent.getEventType().equals(CurrentItem.class.getName())){
             CurrentItem currentItem= (CurrentItem) netEvent.getEvent();
-            mBottomBarLayout.setCurrentItem(currentItem.getItemIndex());
+            getViewBinding().bbl.setCurrentItem(currentItem.getItemIndex());
             BaseFragment baseFragment= (BaseFragment) myAdapter.getItem(currentItem.getItemIndex());
             baseFragment.setData(currentItem.getData());
         }
@@ -190,9 +181,9 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
             if (entity.latitue!=0d&&entity.longitude!=0d) {
                 this.entity=entity;
                 if (address!=null){
-                    mBottomBarLayout.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+                    getViewBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
                 }else if (entity!=null) {
-                    mBottomBarLayout.setText(3,entity.district);//设置第三个页签显示的文字
+                    getViewBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
                 }
                 //停止定位服务
                 Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
@@ -207,7 +198,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
     }
     @Override
     public void onBackPressed() {
-        BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(mBottomBarLayout.getCurrentItem());
+        BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getViewBinding().bbl.getCurrentItem());
         if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
             if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                 super.onBackPressed();
@@ -222,7 +213,7 @@ public class BottomBarActivity extends BaseActivity implements BackInterface {
         try {
             // Check if the key event was the Back button and if there's history
             if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-                BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(mBottomBarLayout.getCurrentItem());
+                BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getViewBinding().bbl.getCurrentItem());
                 if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
                     if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                         super.onBackPressed();

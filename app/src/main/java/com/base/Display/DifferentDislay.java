@@ -29,16 +29,10 @@ import com.jeremyliao.liveeventbus.LiveEventBus;
 
 import java.lang.reflect.Member;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 /**
  * 客显
  */
 public class DifferentDislay extends Presentation{
-    private Unbinder unbinder;
-    @BindView(R.id.video)
     SurfaceView video;
     private MediaPlayer mediaPlayer;
     private AudioManager audioMa;
@@ -56,7 +50,7 @@ public class DifferentDislay extends Presentation{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.different_dislay);
-        unbinder= ButterKnife.bind(this);
+        video=findViewById(R.id.video);
         iniView();
         iniRecyclerView();
         mediaPlayer=new MediaPlayer();
@@ -178,8 +172,6 @@ public class DifferentDislay extends Presentation{
     @Override
     public void dismiss() {
         DisplayUtils.getInstance().setPosition(mediaPlayer.getCurrentPosition());
-        if (unbinder!=null)
-            unbinder.unbind();
         if (observer!=null)
             LiveEventBus.get("CashierDeskActivity").removeObserver(observer);
         if (mediaPlayer!=null) {

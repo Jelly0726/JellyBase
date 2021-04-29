@@ -10,9 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.base.BaseApplication;
-import com.jelly.baselibrary.richtext.OkHttpImageDownloader;
 import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.richtext.OkHttpImageDownloader;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.ResolveHtmlActivityBinding;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
@@ -22,26 +23,18 @@ import com.zzhoujay.richtext.callback.Callback;
 import com.zzhoujay.richtext.callback.DrawableGetter;
 import com.zzhoujay.richtext.ig.DefaultImageGetter;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * Created by Administrator on 2017/12/18.
  */
 
-public class ResolveHtmlActivity extends BaseActivity {
-    @BindView(R.id.productDetail_tv)
-    TextView productDetail_tv;
+public class ResolveHtmlActivity extends BaseActivity<ResolveHtmlActivityBinding> implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniVew();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.resolve_html_activity;
-    }
     private void iniVew(){
+        getViewBinding().leftBack.setOnClickListener(this);
         String html="<h1>百度一下,你就知道官</h1>"
                 + "全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，" +
                 "可以瞬间找到相关的搜索结果。"
@@ -52,7 +45,7 @@ public class ResolveHtmlActivity extends BaseActivity {
         RichText.initCacheDir(BaseApplication.getInstance());
         if (html.toLowerCase().contains(".gif")) {
             //gif图片关闭硬件加速
-            productDetail_tv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            getViewBinding().productDetailTv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         RichText.from(html) // 数据源
                 .type(RichType.html) // 数据格式,不设置默认是Html,使用fromMarkdown的默认是Markdown格式
@@ -95,7 +88,7 @@ public class ResolveHtmlActivity extends BaseActivity {
                     }
                 })
                 .bind(this)
-                .into(productDetail_tv);
+                .into(getViewBinding().productDetailTv);
     }
     @Override
     protected void onDestroy() {
@@ -105,7 +98,6 @@ public class ResolveHtmlActivity extends BaseActivity {
         //在应用退出时调用
         RichText.recycle();
     }
-    @OnClick({R.id.left_back})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:

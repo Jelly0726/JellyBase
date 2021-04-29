@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.CheckResult;
+import androidx.viewbinding.ViewBinding;
 
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
-import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.BaseFragment;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.LifecycleTransformer;
@@ -25,7 +26,7 @@ import io.reactivex.subjects.BehaviorSubject;
  * Created by Administrator on 2017/9/21.
  */
 
-public abstract class BaseFragmentImpl<V extends IBaseView,P extends BasePresenter> extends BaseFragment
+public abstract class BaseFragmentImpl<V extends IBaseView,P extends BasePresenter ,VB extends ViewBinding> extends BaseFragment<VB>
         implements LifecycleProvider<FragmentEvent> ,IBaseView {
 
     protected P presenter;

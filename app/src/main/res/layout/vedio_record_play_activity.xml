@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="#000">
+    android:background="#000"
+    tools:viewBindingIgnore="true">
 
     <RelativeLayout
         android:id="@+id/libTitle_RL"

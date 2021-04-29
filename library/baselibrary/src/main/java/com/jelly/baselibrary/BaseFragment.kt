@@ -6,8 +6,7 @@ import android.hardware.input.InputManager
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import butterknife.ButterKnife
-import butterknife.Unbinder
+import androidx.viewbinding.ViewBinding
 import com.jelly.baselibrary.SystemBar.StatusBarUtil
 import com.jelly.baselibrary.log.LogUtils
 import hugo.weaving.DebugLog
@@ -15,6 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
 
 /**
  * Created by Administrator on 2017/9/21.
@@ -25,9 +27,9 @@ import kotlinx.coroutines.launch
  * @see .onFragmentFirstVisible
  */
 @DebugLog
-abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
+abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by MainScope() {
     protected var rootView: View? = null
-    private lateinit var mUnbinder: Unbinder
+    protected var viewBinding: T?=null
     //是否可见
     var isFragmentVisible = false
         private set
@@ -68,11 +70,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         initVariable()
         LogUtils.i("SSSS", "onCreate=====$this")
     }
-
-    /**
-     * 当前Fragment的布局
-     */
-    abstract fun getLayoutId():Int
     /**
      * 初始化Fragment的布局。加载布局和findViewById的操作通常在此函数内完成，但是不建议执行耗时的操作
      * @param inflater
@@ -81,20 +78,46 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      * @return
      */
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        if (null == rootView) {
-            rootView = inflater.inflate(getLayoutId(), container, false)
+        //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        if (viewBinding==null) {
+            val type = javaClass.genericSuperclass as ParameterizedType
+            type?.let { it ->
+                for (cl in it.actualTypeArguments) {
+                    try {
+                        cl as Class<T>
+                        //多个泛型时判断类的name是否以Binding，不是跳过本次
+                        if (!cl.name.endsWith("Binding")) continue
+                        val inflate: Method = cl.getDeclaredMethod(
+                                "inflate",
+                                LayoutInflater::class.java,
+                                ViewGroup::class.java,
+                                Boolean::class.javaPrimitiveType
+                        )
+                        viewBinding = inflate.invoke(null, inflater, container, false) as T?
+                        return@let
+                    } catch (e: NoSuchMethodException) {
+                        e.printStackTrace()
+                    } catch (e: IllegalAccessException) {
+                        e.printStackTrace()
+                    } catch (e: InvocationTargetException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
         }
-        // 缓存的viewiew需要判断是否已经被加过parent，
-        // 如果有parent需要从parent删除，要不然会发生这个view已经有parent的错误。
-        val parent = rootView!!.getParent() as ViewGroup?
-        parent?.let {
+        viewBinding?.let {it->
+            rootView= it.root
+            // 缓存的viewiew需要判断是否已经被加过parent，
+            // 如果有parent需要从parent删除，要不然会发生这个view已经有parent的错误。
+             rootView!!.parent as ViewGroup?
+        }?.let {it->
             it.removeView(rootView)
         }
-        mUnbinder = ButterKnife.bind(this, rootView!!)
+        //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         return rootView
     }
 
@@ -113,23 +136,23 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         }
         iniSofia()
         LogUtils.i(
-                "SSSS",
-                "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this"
+            "SSSS",
+            "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this"
         )
         if (isFirstVisible && isVisibleToUser) {
             onFragmentFirstVisible()
             isFirstVisible = false
             LogUtils.i(
-                    "SSSS",
-                    "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this
+                "SSSS",
+                "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this
             )
         }
         if (isVisibleToUser) {
             isFragmentVisible = true
             onFragmentVisibleChange(true)
             LogUtils.i(
-                    "SSSS",
-                    "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this"
+                "SSSS",
+                "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this"
             )
             return
         }
@@ -137,8 +160,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
             isFragmentVisible = false
             onFragmentVisibleChange(false)
             LogUtils.i(
-                    "SSSS",
-                    "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this"
+                "SSSS",
+                "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this"
             )
         }
     }
@@ -148,6 +171,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         isFragmentVisible = false
         isReuseView = true
         rootView = null
+        viewBinding = null
     }
 
     /**
@@ -239,8 +263,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
      * @param savedInstanceState
      */
     override fun onViewCreated(
-            view: View,
-            savedInstanceState: Bundle?
+        view: View,
+        savedInstanceState: Bundle?
     ) { //如果setUserVisibleHint()在rootView创建前调用时，那么
 //就等到rootView创建完后才回调onFragmentVisibleChange(true)
 //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
@@ -249,8 +273,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
             rootView = view
         }
         super.onViewCreated(
-                (if (isReuseView && rootView != null) rootView!! else view),
-                savedInstanceState
+            (if (isReuseView && rootView != null) rootView!! else view),
+            savedInstanceState
         )
     }
 
@@ -271,8 +295,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onStart() {
         super.onStart()
         LogUtils.i(
-                "SSSS",
-                "onStart=====$this  getUserVisibleHint()=$userVisibleHint"
+            "SSSS",
+            "onStart=====$this  getUserVisibleHint()=$userVisibleHint"
         )
     }
 
@@ -284,13 +308,13 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         //告诉FragmentActivity，当前Fragment在栈顶
         if (mBackInterface != null) mBackInterface!!.setSelectedFragment(this)
         LogUtils.i(
-                "SSSS",
-                "onResume=====$this  getUserVisibleHint()=$userVisibleHint"
+            "SSSS",
+            "onResume=====$this  getUserVisibleHint()=$userVisibleHint"
         )
         if (userVisibleHint) {
             LogUtils.i(
-                    "SSSS",
-                    "onResume=====$this  isFirstVisible()=$isFirstVisible"
+                "SSSS",
+                "onResume=====$this  isFirstVisible()=$isFirstVisible"
             )
             if (isFirstVisible) {
                 onFragmentFirstVisible()
@@ -326,7 +350,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope by MainScope() {
         //结束协程
         cancel()
         super.onDestroyView()
-        mUnbinder?.let { it.unbind() }
         LogUtils.i("SSSS", "onDestroyView=====$this")
     }
 

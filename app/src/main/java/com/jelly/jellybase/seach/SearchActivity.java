@@ -6,17 +6,15 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.base.BaseApplication;
-import com.jelly.baselibrary.multiClick.OnMultiClickListener;
 import com.base.sqldao.HistoryDaoUtils;
-import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.baselibrary.view.FlowLayout;
+import com.jelly.baselibrary.multiClick.OnMultiClickListener;
+import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.SearchActivityBinding;
 
 import java.util.List;
 
@@ -26,33 +24,22 @@ import systemdb.SearchHistory;
  * Created by Administrator on 2017/9/28.
  */
 
-public class SearchActivity extends BaseActivity {
-    private EditText search_edit;
-    private TextView cancel_tv;
-    private ImageView clear_history;
-
-    private FlowLayout search_history;
+public class SearchActivity extends BaseActivity<SearchActivityBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
         iniHistory();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.search_activity;
-    }
     private void iniView(){
-        cancel_tv= (TextView) findViewById(R.id.cancel_tv);
-        cancel_tv.setOnClickListener(listener);
+        getViewBinding().cancelTv.setOnClickListener(listener);
 
-        search_edit= (EditText) findViewById(R.id.search_edit);
         //监听键盘搜索按钮
-        search_edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        getViewBinding().searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH){
-                    String search=search_edit.getText().toString().trim();
+                    String search=getViewBinding().searchEdit.getText().toString().trim();
                     if(search.length()>0) {
                         SearchHistory history = new SearchHistory();
                         history.setTime(System.currentTimeMillis());
@@ -67,26 +54,24 @@ public class SearchActivity extends BaseActivity {
         });
         String search=getIntent().getStringExtra("search");
         if(search!=null){
-            search_edit.setText(search);
-            search_edit.setSelection(search.length());
+            getViewBinding().searchEdit.setText(search);
+            getViewBinding().searchEdit.setSelection(search.length());
         }
-        search_history= (FlowLayout) findViewById(R.id.search_history);
 
-        clear_history= (ImageView) findViewById(R.id.clear_history);
-        clear_history.setOnClickListener(listener);
+        getViewBinding().clearHistory.setOnClickListener(listener);
     }
     /**
      * 初始化历史搜索
      * */
     private void iniHistory(){
-        if(search_history.getChildCount()>0){
-            search_history.removeAllViewsInLayout();
+        if(getViewBinding().searchHistory.getChildCount()>0){
+            getViewBinding().searchHistory.removeAllViewsInLayout();
         }
         List<SearchHistory> historyList= HistoryDaoUtils.getInstance(BaseApplication.getInstance()).getAllList();
         if(historyList!=null){
             for (int i = 0; i < historyList.size(); i++) {
                 TextView tv = (TextView) getLayoutInflater().inflate(
-                        R.layout.search_history_tv, search_history, false);
+                        R.layout.search_history_tv, getViewBinding().searchHistory, false);
                 tv.setText(historyList.get(i).getHistory());
                 tv.setTag(historyList.get(i));
                 //点击事件
@@ -101,7 +86,7 @@ public class SearchActivity extends BaseActivity {
                         setBackData(history.getHistory());
                     }
                 });
-                search_history.addView(tv);
+                getViewBinding().searchHistory.addView(tv);
             }
         }
     }

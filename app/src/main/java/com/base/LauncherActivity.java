@@ -14,7 +14,7 @@ import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.dialog.PrivacyDialog;
 import com.jelly.jellybase.BuildConfig;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.BaseActivityLauncherBinding;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.permissionx.guolindev.PermissionX;
 import com.permissionx.guolindev.callback.RequestCallback;
@@ -26,7 +26,7 @@ import java.util.List;
 import hugo.weaving.DebugLog;
 
 @DebugLog
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +92,6 @@ public class LauncherActivity extends BaseActivity {
                 }
             }, 1000);
         }
-    }
-    @Override
-    public int getLayoutId(){
-        //下面为纯色背景启动图标  若使用背景图片(styles)注释下面即可
-        return  R.layout.base_activity_launcher;
-//        return -1;
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +16,7 @@
             android:layout_width="30mm"
             android:layout_height="30mm"
             android:layout_centerVertical="true"
-            android:src="@drawable/bluetooth_connected_24dp" />
+            app:srcCompat="@drawable/bluetooth_connected_24dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -58,7 +61,7 @@
                 android:layout_width="18mm"
                 android:layout_height="18mm"
                 android:layout_marginLeft="5mm"
-                android:src="@drawable/bluetooth_rssi_24dp" />
+                app:srcCompat="@drawable/bluetooth_rssi_24dp" />
 
             <Button
                 android:id="@+id/btn_connect"

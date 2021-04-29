@@ -12,9 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.viewpager.widget.PagerAdapter;
@@ -29,6 +27,7 @@ import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AmapOfflineMapLayoutBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,27 +37,18 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity extends BaseActivity implements
+public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding> implements
         OfflineMapDownloadListener, View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private OfflineMapManager amapManager = null;// 离线地图下载控制器
     private List<OfflineMapProvince> provinceList = new ArrayList<OfflineMapProvince>();// 保存一级目录的省直辖市
     // private HashMap<Object, List<OfflineMapCity>> cityMap = new
     // HashMap<Object, List<OfflineMapCity>>();// 保存二级目录的市
-
-    private TextView mDownloadText;
-    private TextView mDownloadedText;
-    private ImageView mBackImage;
-
-    // view pager 两个list以及他们的adapter
-    private ViewPager mContentViewPage;
     private ExpandableListView mAllOfflineMapList;
     private ListView mDownLoadedList;
-
     private OfflineListAdapter adapter;
     private OfflineDownloadedAdapter mDownloadedAdapter;
     private PagerAdapter mPageAdapter;
-
     private MapView mapView;
 
     // 刚进入该页面时初始化弹出的dialog
@@ -84,7 +74,7 @@ public class OfflineMapActivity extends BaseActivity implements
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATE_LIST:
-                    if (mContentViewPage.getCurrentItem() == 0) {
+                    if (getViewBinding().contentViewpage.getCurrentItem() == 0) {
                         ((BaseExpandableListAdapter) adapter)
                                 .notifyDataSetChanged();
                     } else {
@@ -133,10 +123,6 @@ public class OfflineMapActivity extends BaseActivity implements
 
         init();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.amap_offline_map_layout;
-    }
     /**
      * 初始化如果已下载的城市多的话，会比较耗时
      */
@@ -184,23 +170,18 @@ public class OfflineMapActivity extends BaseActivity implements
         initDownloadedList();
 
         // 顶部
-        mDownloadText = (TextView) findViewById(R.id.download_list_text);
-        mDownloadedText = (TextView) findViewById(R.id.downloaded_list_text);
-
-        mDownloadText.setOnClickListener(this);
-        mDownloadedText.setOnClickListener(this);
-        mBackImage = (ImageView) findViewById(R.id.back_image_view);
-        mBackImage.setOnClickListener(this);
+        getViewBinding().downloadListText.setOnClickListener(this);
+        getViewBinding().downloadedListText.setOnClickListener(this);
+        getViewBinding().backImageView.setOnClickListener(this);
 
         // view pager 用到了所有城市list和已下载城市list所有放在最后初始化
-        mContentViewPage = (ViewPager) findViewById(R.id.content_viewpage);
 
-        mPageAdapter = new OfflinePagerAdapter(mContentViewPage,
+        mPageAdapter = new OfflinePagerAdapter(getViewBinding().contentViewpage,
                 mAllOfflineMapList, mDownLoadedList);
 
-        mContentViewPage.setAdapter(mPageAdapter);
-        mContentViewPage.setCurrentItem(0);
-        mContentViewPage.setOnPageChangeListener(this);
+        getViewBinding().contentViewpage.setAdapter(mPageAdapter);
+        getViewBinding().contentViewpage.setCurrentItem(0);
+        getViewBinding().contentViewpage.setOnPageChangeListener(this);
 
     }
 
@@ -474,42 +455,42 @@ public class OfflineMapActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
-        if (v.equals(mDownloadText)) {
-            int paddingHorizontal = mDownloadText.getPaddingLeft();
-            int paddingVertical = mDownloadText.getPaddingTop();
-            mContentViewPage.setCurrentItem(0);
+        if (v.equals(getViewBinding().downloadListText)) {
+            int paddingHorizontal = getViewBinding().downloadListText.getPaddingLeft();
+            int paddingVertical = getViewBinding().downloadListText.getPaddingTop();
+            getViewBinding().contentViewpage.setCurrentItem(0);
 
-            mDownloadText
+            getViewBinding().downloadListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_pressed);
 
-            mDownloadedText
+            getViewBinding().downloadedListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_normal);
 
-            mDownloadedText.setPadding(paddingHorizontal, paddingVertical,
+            getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
-            mDownloadText.setPadding(paddingHorizontal, paddingVertical,
+            getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
             mDownloadedAdapter.notifyDataChange();
 
-        } else if (v.equals(mDownloadedText)) {
-            int paddingHorizontal = mDownloadedText.getPaddingLeft();
-            int paddingVertical = mDownloadedText.getPaddingTop();
-            mContentViewPage.setCurrentItem(1);
+        } else if (v.equals(getViewBinding().downloadedListText)) {
+            int paddingHorizontal = getViewBinding().downloadedListText.getPaddingLeft();
+            int paddingVertical = getViewBinding().downloadedListText.getPaddingTop();
+            getViewBinding().contentViewpage.setCurrentItem(1);
 
-            mDownloadText
+            getViewBinding().downloadListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_normal);
-            mDownloadedText
+            getViewBinding().downloadedListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_pressed);
-            mDownloadedText.setPadding(paddingHorizontal, paddingVertical,
+            getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
-            mDownloadText.setPadding(paddingHorizontal, paddingVertical,
+            getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
             mDownloadedAdapter.notifyDataChange();
 
-        } else if (v.equals(mBackImage)) {
+        } else if (v.equals(getViewBinding().backImageView)) {
             // 返回
             finish();
         }
@@ -528,30 +509,30 @@ public class OfflineMapActivity extends BaseActivity implements
 
     @Override
     public void onPageSelected(int arg0) {
-        int paddingHorizontal = mDownloadedText.getPaddingLeft();
-        int paddingVertical = mDownloadedText.getPaddingTop();
+        int paddingHorizontal = getViewBinding().downloadedListText.getPaddingLeft();
+        int paddingVertical = getViewBinding().downloadedListText.getPaddingTop();
 
         switch (arg0) {
             case 0:
-                mDownloadText
+                getViewBinding().downloadListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_pressed);
-                mDownloadedText
+                getViewBinding().downloadedListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_normal);
                 // mPageAdapter.notifyDataSetChanged();
                 break;
             case 1:
-                mDownloadText
+                getViewBinding().downloadListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_normal);
 
-                mDownloadedText
+                getViewBinding().downloadedListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_pressed);
                 // mDownloadedAdapter.notifyDataChange();
                 break;
         }
         handler.sendEmptyMessage(UPDATE_LIST);
-        mDownloadedText.setPadding(paddingHorizontal, paddingVertical,
+        getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                 paddingHorizontal, paddingVertical);
-        mDownloadText.setPadding(paddingHorizontal, paddingVertical,
+        getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                 paddingHorizontal, paddingVertical);
 
     }

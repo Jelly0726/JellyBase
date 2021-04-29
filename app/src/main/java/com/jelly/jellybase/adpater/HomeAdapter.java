@@ -17,55 +17,31 @@
 package com.jelly.jellybase.adpater;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.jelly.baselibrary.BaseAdapter;
 import com.jelly.baselibrary.multiClick.OnMultiClickListener;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.recyclerview.BaseRecyclerAdapter;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.datamodel.Product;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collection;
 import java.util.List;
 
-public class HomeAdapter extends BaseRecyclerAdapter<HomeAdapter.ViewHolder> {
+public class HomeAdapter extends BaseAdapter<HomeAdapter.ViewHolder> {
 
-    private LayoutInflater mInflater;
-    private Context context;
     private List<Product> mList;
     public HomeAdapter(Context context, List<Product> mList) {
-        this.context=context;
-        mInflater = LayoutInflater.from(context);
+        super(context);
         this.mList=mList;
-    }
-    @Override
-    public int getAdapterItemViewType(int position) {
-        return 0;
-    }
-    @Override
-    public int getAdapterItemCount() {
-        return mList.size();
-    }
-
-    @Override
-    public ViewHolder getViewHolder(View view) {
-        return new ViewHolder(view);
-    }
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        final View view = mInflater.inflate(R.layout.home_item_product, parent, false);
-        view.setOnClickListener(listener);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position, boolean isItem) {
-        //将position保存在itemView的Tag中，以便点击时进行获取
-        holder.itemView.setTag(position);
     }
     private OnMultiClickListener listener=new OnMultiClickListener() {
         @Override
@@ -73,6 +49,33 @@ public class HomeAdapter extends BaseRecyclerAdapter<HomeAdapter.ViewHolder> {
             mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     };
+
+    @Override
+    public void notifyDataSetChanged(@NotNull List<?> dataList) {
+        this.mList.clear();
+        this.mList.addAll((Collection<? extends Product>) dataList);
+        notifyDataSetChanged();
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final View view = getInflater().inflate(R.layout.home_item_product, parent, false);
+        view.setOnClickListener(listener);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //将position保存在itemView的Tag中，以便点击时进行获取
+        holder.itemView.setTag(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
+    }
+
     /**
      * item的ViewHolder
      */

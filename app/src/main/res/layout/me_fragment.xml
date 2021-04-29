@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jelly.baselibrary.xrefreshview.XRefreshView
+<com.andview.refreshview.XRefreshView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/xrefreshview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee">
-    <com.jelly.baselibrary.xrefreshview.XNestedScrollView
+    <com.andview.refreshview.XScrollView
         android:id="@+id/nestedScroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -128,7 +129,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="60mm"
                     android:elevation="5mm"
-                    android:src="@mipmap/ic_launcher"
+                    app:srcCompat="@mipmap/ic_launcher"
                     />
             </RelativeLayout>
             <LinearLayout
@@ -169,5 +170,5 @@
                     android:src="@mipmap/right_next"/>
             </LinearLayout>
         </LinearLayout>
-    </com.jelly.baselibrary.xrefreshview.XNestedScrollView>
-</com.jelly.baselibrary.xrefreshview.XRefreshView>
+    </com.andview.refreshview.XScrollView>
+</com.andview.refreshview.XRefreshView>

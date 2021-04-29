@@ -2,22 +2,20 @@ package com.jelly.jellybase.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.jelly.mvp.contact.MessageContact;
-import com.jelly.mvp.presenter.MessagePresenter;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XRefreshViewFooter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.model.Message;
+import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
-import com.jelly.baselibrary.xrefreshview.view.SimpleItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.MessageAdapter;
+import com.jelly.jellybase.databinding.MessageActivityBinding;
+import com.jelly.mvp.contact.MessageContact;
+import com.jelly.mvp.presenter.MessagePresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.ArrayList;
@@ -25,23 +23,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 /**
  * 消息通知
  */
-public class MessageActivity extends BaseActivityImpl<MessageContact.View,MessageContact.Presenter>
-        implements MessageContact.View {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.recycler_view_test_rv)
-    RecyclerView recyclerView;
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
-    @BindView(R.id.title_tv)
-    TextView title_tv;
+public class MessageActivity extends BaseActivityImpl<MessageContact.View
+        ,MessageContact.Presenter, MessageActivityBinding>
+        implements MessageContact.View , View.OnClickListener {
     private LinearLayoutManager layoutManager;
     private MessageAdapter adapter;
     private List<Message> mList =new ArrayList<>();
@@ -54,14 +43,10 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View,Messag
         iniXRefreshView();
     }
     @Override
-    public int getLayoutId(){
-        return R.layout.message_activity;
-    }
-    @Override
     protected void onResume() {
         super.onResume();
         startRownumber=0;
-        xRefreshView.setLoadComplete(false);
+        getViewBinding().xrefreshview.setLoadComplete(false);
         presenter.getMessage(true);
     }
     @Override
@@ -78,22 +63,22 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View,Messag
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView (){
+        getViewBinding().leftBack.setOnClickListener(this);
     }
     private void iniXRefreshView(){
         adapter=new MessageAdapter(this,mList);
-        xRefreshView.setPullLoadEnable(true);
-        xRefreshView.setPullRefreshEnable(true);
-        recyclerView.setHasFixedSize(true);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getViewBinding().xrefreshview.setPullRefreshEnable(true);
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
-        recyclerView.setAdapter(adapter);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
-    @OnClick({R.id.left_back})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.left_back:
@@ -109,7 +94,7 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View,Messag
         @Override
         public void onRefresh(boolean isPullDown) {
             startRownumber=0;
-            xRefreshView.setLoadComplete(false);
+            getViewBinding().xrefreshview.setLoadComplete(false);
             presenter.getMessage(true);
         }
 
@@ -132,17 +117,17 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View,Messag
         List<Message> list= (List<Message>) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
             if (list.size()<pageSize){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else {
-                xRefreshView.setLoadComplete(false);
+                getViewBinding().xrefreshview.setLoadComplete(false);
             }
         }else {
             if (list.size()==0){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else
-                xRefreshView.stopLoadMore();
+                getViewBinding().xrefreshview.stopLoadMore();
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
@@ -151,9 +136,9 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View,Messag
     @Override
     public void getMessageFailed(boolean isRefresh, String message) {
         if (isRefresh){
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
         }else {
-            xRefreshView.stopLoadMore();
+            getViewBinding().xrefreshview.stopLoadMore();
         }
         ToastUtils.showToast(this,message);
     }

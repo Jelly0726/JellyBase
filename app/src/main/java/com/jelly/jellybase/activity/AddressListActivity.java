@@ -7,31 +7,28 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.jelly.mvp.contact.AddressContact;
-import com.jelly.mvp.presenter.AddressPresenter;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XRefreshViewFooter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.recyclerViewUtil.ItemDecoration;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.adpater.AddressListAdapter;
+import com.jelly.jellybase.databinding.AddressreceiverActivityBinding;
 import com.jelly.jellybase.datamodel.RecevierAddress;
+import com.jelly.mvp.contact.AddressContact;
+import com.jelly.mvp.presenter.AddressPresenter;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.callback.ConfigText;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.TextParams;
 import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +41,11 @@ import io.reactivex.ObservableTransformer;
  * Created by Administrator on 2017/10/13.
  */
 
-public class AddressListActivity extends BaseActivityImpl<AddressContact.View,AddressContact.Presenter>
+public class AddressListActivity extends BaseActivityImpl<AddressContact.View
+        ,AddressContact.Presenter, AddressreceiverActivityBinding>
         implements AddressContact.View,View.OnClickListener{
-    private LinearLayout left_back;
-    private TextView add_address;
-
-    private RecyclerView recyclerView;
-    private XRefreshView xRefreshView;
     private LinearLayoutManager layoutManager;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private AddressListAdapter adapter;
-    private TextView textView;
     private List<RecevierAddress> mList =new ArrayList<>();
     private int startRownumber=0;
     private int pageSize=10;
@@ -67,10 +58,6 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
         super.onCreate(savedInstanceState);
         iniView();
         iniXRefreshView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.addressreceiver_activity;
     }
     @Override
     public AddressContact.Presenter initPresenter() {
@@ -94,10 +81,8 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
     }
 
     private void iniView (){
-        left_back= (LinearLayout) findViewById(R.id.left_back);
-        left_back.setOnClickListener(this);
-        add_address= (TextView) findViewById(R.id.add_address);
-        add_address.setOnClickListener(this);
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().addAddress.setOnClickListener(this);
     }
 
     @Override
@@ -116,22 +101,20 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
     }
     private void iniXRefreshView(){
         adapter=new AddressListAdapter(this,mList);
-        xRefreshView = (XRefreshView) findViewById(R.id.xrefreshview);
-        xRefreshView.setPullLoadEnable(true);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
-        recyclerView.setHasFixedSize(true);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
         Rect rect=new Rect();
         rect.bottom=22;
         rect.top=0;
         rect.left=0;
         rect.right=0;
-        recyclerView.addItemDecoration(new ItemDecoration(rect,1, ItemDecoration.NONE));
+        getViewBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,1,-1, ItemDecoration.NONE));
         // 静默加载模式不能设置footerview
-        recyclerView.setAdapter(adapter);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
+        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
         adapter.setOnItemClickListener(onItemClickListener);
         adapter.setDeleteAddress(new AddressListAdapter.DeleteAddress() {
@@ -176,7 +159,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
             }
         });
 
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     /**
      * 滑动刷新
@@ -242,17 +225,17 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
         List list= (List) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
             if (list.size()<pageSize){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else {
-                xRefreshView.setLoadComplete(false);
+                getViewBinding().xrefreshview.setLoadComplete(false);
             }
         }else {
             if (list.size()==0){
-                xRefreshView.setLoadComplete(true);
+                getViewBinding().xrefreshview.setLoadComplete(true);
             }else
-                xRefreshView.stopLoadMore();
+                getViewBinding().xrefreshview.stopLoadMore();
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
@@ -261,9 +244,9 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View,Ad
     @Override
     public void getAddressListFailed(boolean isRefresh, String message) {
         if (isRefresh){
-            xRefreshView.stopRefresh();
+            getViewBinding().xrefreshview.stopRefresh();
         }else {
-            xRefreshView.stopLoadMore();
+            getViewBinding().xrefreshview.stopLoadMore();
         }
         ToastUtils.showToast(this,message);
     }

@@ -14,8 +14,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.log.LogUtils;
@@ -24,28 +22,19 @@ import com.jelly.baselibrary.webview.WebTools;
 import com.jelly.baselibrary.webview.tbs.TBSClientCallBack;
 import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.BaseWebviewActivityBinding;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2017/11/3.
  */
 
-public class BaseWebViewActivity extends BaseActivity {
+public class BaseWebViewActivity extends BaseActivity<BaseWebviewActivityBinding> implements View.OnClickListener {
     private WebTools webTools;
     private X5WebView mWebView;
-    @BindView(R.id.webfilechooser)
-    ViewGroup mViewParent;
-    @BindView(R.id.topNav_layout)
-    LinearLayout topNav_layout;
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.title_tv)
-    TextView title_tv;
 
     private ValueCallback<Uri> uploadFile;
     private ValueCallback<Uri[]> arg1;
@@ -54,7 +43,7 @@ public class BaseWebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         try {
-            if (Integer.parseInt(android.os.Build.VERSION.SDK) >= 11) {
+            if (Integer.parseInt(Build.VERSION.SDK) >= 11) {
                 getWindow()
                         .setFlags(
                                 android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
@@ -69,11 +58,8 @@ public class BaseWebViewActivity extends BaseActivity {
         }
         iniWebView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.base_webview_activity;
-    }
     private void iniWebView() {
+        getViewBinding().leftBack.setOnClickListener(this);
         //WebView
         mWebView = new X5WebView(this, null);
 //        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
@@ -81,18 +67,18 @@ public class BaseWebViewActivity extends BaseActivity {
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
-        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
+        getViewBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.FILL_PARENT,
                 FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setVisible(true);
         if (!TextUtils.isEmpty(webTools.url)) {
             mWebView.loadUrl(webTools.url);
         }
-        title_tv.setText(webTools.title);
+        getViewBinding().titleTv.setText(webTools.title);
         mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                topNav_layout.setVisibility(View.VISIBLE);
+                getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
                 LogUtils.i("onPageStarted  url="+url);
             }
 
@@ -101,9 +87,9 @@ public class BaseWebViewActivity extends BaseActivity {
                 LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
-                    topNav_layout.setVisibility(View.GONE);
+                    getViewBinding().topNavLayout.setVisibility(View.GONE);
                 }else {
-                    topNav_layout.setVisibility(View.VISIBLE);
+                    getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -123,7 +109,7 @@ public class BaseWebViewActivity extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.left_back})
+    @Override
     public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:
@@ -156,12 +142,11 @@ public class BaseWebViewActivity extends BaseActivity {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mViewParent.removeAllViews();
+            getViewBinding().webfilechooser.removeAllViews();
             mWebView.stopLoading();
             mWebView.removeAllViews();
             mWebView.destroy();
             mWebView = null;
-            mViewParent = null;
         }
         super.onDestroy();
     }

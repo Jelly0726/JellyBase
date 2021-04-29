@@ -17,9 +17,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +30,7 @@ import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AmapOfflinemapActivityOldBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +40,7 @@ import java.util.List;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity_Old extends BaseActivity implements
+public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityOldBinding> implements
 		OfflineMapDownloadListener {
 	private OfflineMapManager amapManager = null;// 离线地图下载控制器
 	private List<OfflineMapProvince> provinceList = new ArrayList<OfflineMapProvince>();// 保存一级目录的省直辖市
@@ -52,7 +50,6 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 	private boolean isStart = false;// 判断是否开始下载,true表示开始下载，false表示下载失败
 	private boolean[] isOpen;// 记录一级目录是否打开
 
-	ExpandableListView expandableListView;
 
 	// 刚进入该页面时初始化弹出的dialog
 	private ProgressDialog initDialog;
@@ -104,14 +101,9 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 		context = OfflineMapActivity_Old.this;
 		initDialog();
 
-		expandableListView = (ExpandableListView) findViewById(R.id.list);
-		expandableListView.setGroupIndicator(null);
-		expandableListView.setAdapter(adapter);
+		getViewBinding().list.setGroupIndicator(null);
+		getViewBinding().list.setAdapter(adapter);
 
-	}
-	@Override
-	public int getLayoutId(){
-		return R.layout.amap_offlinemap_activity_old;
 	}
 	/**
 	 * 初始化如果已下载的城市多的话，会比较耗时
@@ -220,8 +212,8 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 	 * 为列表绑定数据源
 	 */
 	private void initData() {
-		expandableListView
-				.setOnGroupCollapseListener(new OnGroupCollapseListener() {
+		getViewBinding().list
+				.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
 					@Override
 					public void onGroupCollapse(int groupPosition) {
@@ -230,8 +222,8 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 					}
 				});
 
-		expandableListView
-				.setOnGroupExpandListener(new OnGroupExpandListener() {
+		getViewBinding().list
+				.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
 					@Override
 					public void onGroupExpand(int groupPosition) {
@@ -239,7 +231,7 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 					}
 				});
 		// 设置二级item点击的监听器
-		expandableListView.setOnChildClickListener(new OnChildClickListener() {
+		getViewBinding().list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
@@ -287,13 +279,13 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 			}
 		});
 
-		expandableListView
+		getViewBinding().list
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
-						if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+						if (getViewBinding().list.getPackedPositionType(id) == getViewBinding().list.PACKED_POSITION_TYPE_CHILD) {
 							groupPosition = ExpandableListView
 									.getPackedPositionGroup(id);
 							childPosition = ExpandableListView
@@ -644,7 +636,7 @@ public class OfflineMapActivity_Old extends BaseActivity implements
 		case OfflineMapStatus.EXCEPTION_NETWORK_LOADING:
 			Log.e("amap-download", "download: " + " EXCEPTION_NETWORK_LOADING "
 					+ downName);
-			Toast.makeText(OfflineMapActivity_Old.this, "网络异常", 1000).show();
+			Toast.makeText(OfflineMapActivity_Old.this, "网络异常", Toast.LENGTH_LONG).show();
 			amapManager.pause();
 			break;
 		case OfflineMapStatus.EXCEPTION_SDCARD:

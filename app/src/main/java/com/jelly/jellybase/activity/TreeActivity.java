@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.tree.adapter.IMultipleItem;
 import com.jelly.baselibrary.tree.adapter.SectionExpandHelper;
 import com.jelly.baselibrary.tree.adapter.ViewHolder;
@@ -14,15 +14,14 @@ import com.jelly.baselibrary.tree.bean.BaseItem;
 import com.jelly.baselibrary.tree.bean.GrandSon;
 import com.jelly.baselibrary.tree.bean.Item;
 import com.jelly.baselibrary.tree.bean.Section;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.TreeActivityBinding;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TreeActivity extends BaseActivity {
-    private RecyclerView mRecyclerView;
+public class TreeActivity extends BaseActivity<TreeActivityBinding> {
     private List<Section> mSectionList;             //数据集合
     private SectionExpandHelper mHelper;            //使用层级树的帮助工具类
 
@@ -32,13 +31,8 @@ public class TreeActivity extends BaseActivity {
         mSectionList = new ArrayList<>();
         findView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.tree_activity;
-    }
     public void findView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerView);
-        mHelper = new SectionExpandHelper(TreeActivity.this, mRecyclerView, new IMultipleItem() {
+        mHelper = new SectionExpandHelper(TreeActivity.this,  getViewBinding().mRecyclerView, new IMultipleItem() {
             private static final int VIEW_TYPE_TWO = R.layout.tree_two_layout;
             private static final int VIEW_TYPE_SECTION = R.layout.tree_section_layout;
             private static final int VIEW_TYPE_THREE = R.layout.tree_three_layout;

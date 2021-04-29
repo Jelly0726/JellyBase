@@ -3,15 +3,16 @@ package com.jelly.jellybase.activity;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 
-import com.jelly.baselibrary.BaseActivity;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.LinechartActivityBinding;
 
 import java.util.ArrayList;
 
@@ -19,17 +20,11 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/12/19.
  */
 
-public class LineChartActivity extends BaseActivity {
-    private LineChart lineChart;
+public class LineChartActivity extends BaseActivity<LinechartActivityBinding> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lineChart=findViewById(R.id.chart);
         setData(45, 100);
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.linechart_activity;
     }
     private void setData(int count, float range) {
 
@@ -43,12 +38,12 @@ public class LineChartActivity extends BaseActivity {
 
         LineDataSet set1;
 
-        if (lineChart.getData() != null &&
-                lineChart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet)lineChart.getData().getDataSetByIndex(0);
+        if (getViewBinding().chart.getData() != null &&
+                getViewBinding().chart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet)getViewBinding().chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
-            lineChart.getData().notifyDataChanged();
-            lineChart.notifyDataSetChanged();
+            getViewBinding().chart.getData().notifyDataChanged();
+            getViewBinding().chart.notifyDataSetChanged();
         } else {
             // create a dataset and give it a type
             set1 = new LineDataSet(values, "DataSet 1");
@@ -78,7 +73,7 @@ public class LineChartActivity extends BaseActivity {
             LineData data = new LineData(dataSets);
 
             // set data
-            lineChart.setData(data);
+            getViewBinding().chart.setData(data);
         }
     }
 }

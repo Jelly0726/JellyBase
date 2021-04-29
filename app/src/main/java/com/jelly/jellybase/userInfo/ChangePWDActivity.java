@@ -3,54 +3,38 @@ package com.jelly.jellybase.userInfo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.jelly.baselibrary.encrypt.MD5;
-import com.jelly.mvp.contact.UpdataPwdContact;
-import com.jelly.mvp.presenter.UpdatePasswordPresenter;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
+import com.jelly.baselibrary.encrypt.MD5;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.password.PwdCheckUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.UserChangepwdActivityBinding;
+import com.jelly.mvp.contact.UpdataPwdContact;
+import com.jelly.mvp.presenter.UpdatePasswordPresenter;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
  */
 
-public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View,UpdataPwdContact.Presenter>
-        implements UpdataPwdContact.View {
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.old_pwd)
-    EditText old_pwd;
-    @BindView(R.id.new_pwd)
-    EditText new_pwd;
-    @BindView(R.id.new_pwd1)
-    EditText new_pwd1;
-    @BindView(R.id.commit_tv)
-    TextView commit_tv;
-
+public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View
+        ,UpdataPwdContact.Presenter, UserChangepwdActivityBinding>
+        implements UpdataPwdContact.View, View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
     }
-    @Override
-    public int getLayoutId(){
-        return R.layout.user_changepwd_activity;
-    }
     private void iniView(){
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().commitTv.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -75,7 +59,6 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View,Up
     public <T> ObservableTransformer<T, T> bindLifecycle() {
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
-    @OnClick({R.id.left_back,R.id.commit_tv})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
@@ -86,8 +69,8 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View,Up
                 finish();
                 break;
             case R.id.commit_tv:
-                String newPwd=new_pwd.getText().toString().trim();
-                String newPwd1=new_pwd1.getText().toString().trim();
+                String newPwd=getViewBinding().newPwd.getText().toString().trim();
+                String newPwd1=getViewBinding().newPwd1.getText().toString().trim();
                 if (!PwdCheckUtil.validPwd4(newPwd)){
                     ToastUtils.showShort(this,"请输入6-16位非纯数字、字母、符号新密码!");
                     return;
@@ -104,9 +87,9 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View,Up
 
     @Override
     public Object getUpdatePasswordParam() {
-        String oldPwd=old_pwd.getText().toString().trim();
+        String oldPwd=getViewBinding().oldPwd.getText().toString().trim();
         oldPwd= MD5.MD5Encode(oldPwd);
-        String newPwd=new_pwd.getText().toString().trim();
+        String newPwd=getViewBinding().newPwd.getText().toString().trim();
         newPwd= MD5.MD5Encode(newPwd);
         Map<String,String> map=new TreeMap();
         map.put("password",newPwd);

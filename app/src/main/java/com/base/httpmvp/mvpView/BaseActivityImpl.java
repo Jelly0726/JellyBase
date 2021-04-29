@@ -3,6 +3,7 @@ package com.base.httpmvp.mvpView;
 import android.os.Bundle;
 
 import androidx.annotation.CheckResult;
+import androidx.viewbinding.ViewBinding;
 
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpbase.BasePresenter;
@@ -23,7 +24,8 @@ import io.reactivex.subjects.BehaviorSubject;
 /**
  * Created by Administrator on 2016/3/14.
  */
-public abstract class BaseActivityImpl<V extends IBaseView, P extends BasePresenter> extends BaseActivity
+public abstract class BaseActivityImpl<V extends IBaseView, P extends BasePresenter
+        ,VB extends ViewBinding> extends BaseActivity<VB>
         implements LifecycleProvider<ActivityEvent>, IBaseView {
     public LifecycleProvider lifecycleProvider;
     public P presenter;

@@ -4,56 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 
+import com.andview.refreshview.XRefreshView;
 import com.base.BaseApplication;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.model.MyInfo;
 import com.jelly.baselibrary.multiClick.AntiShake;
-import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.xrefreshview.XNestedScrollView;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.activity.BalanceActivity;
 import com.jelly.jellybase.activity.BankCardListActivity;
 import com.jelly.jellybase.activity.MessageActivity;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-
+import com.jelly.jellybase.databinding.MeFragmentBinding;
 /**
  * Created by Administrator on 2018/1/6.
  */
 
-public class MeFragment extends BaseFragment {
-    @BindView(R.id.xrefreshview)
-    XRefreshView xRefreshView;
-    @BindView(R.id.nestedScroll_view)
-    XNestedScrollView scrollView;
-    @BindView(R.id.name_tv)
-    TextView name_tv;
-    @BindView(R.id.balance_layout)
-    LinearLayout balance_layout;
-    @BindView(R.id.message_layout)
-    LinearLayout message_layout;
-    @BindView(R.id.tv_point)
-    TextView tv_point;
-    @BindView(R.id.balance_tv)
-    TextView balance_tv;
-    @BindView(R.id.bankcard_layout)
-    LinearLayout bankcard_layout;
-    @BindView(R.id.banksqy_tv)
-    TextView banksqy_tv;
+public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.OnClickListener {
     private MyInfo myInfo;
-    @Override
-    public int getLayoutId() {
-        return R.layout.me_fragment;
-    }
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 
@@ -67,6 +38,9 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getViewBinding().balanceLayout.setOnClickListener(this);
+        getViewBinding().bankcardLayout.setOnClickListener(this);
+        getViewBinding().messageLayout.setOnClickListener(this);
         iniXRefreshView();
         if (getActivity()!=null){
             if (BaseApplication.getInstance().isLogin()){
@@ -74,7 +48,7 @@ public class MeFragment extends BaseFragment {
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
             }else {
-                name_tv.setText("未登录");
+                getViewBinding().nameTv.setText("未登录");
             }
         }
     }
@@ -88,12 +62,12 @@ public class MeFragment extends BaseFragment {
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
             }else {
-                name_tv.setText("未登录");
+                getViewBinding().nameTv.setText("未登录");
             }
             if (AppPrefs.getBoolean(BaseApplication.getInstance(), ConfigKey.NEWMESSAGE)){
-                tv_point.setVisibility(View.GONE);
+                getViewBinding().tvPoint.setVisibility(View.GONE);
             }else {
-                tv_point.setVisibility(View.GONE);
+                getViewBinding().tvPoint.setVisibility(View.GONE);
             }
         }
     }
@@ -111,25 +85,13 @@ public class MeFragment extends BaseFragment {
         return false;
     }
     private void iniXRefreshView(){
-        xRefreshView.setAutoRefresh(false);
-        xRefreshView.setPullLoadEnable(true);
-        xRefreshView.setPullRefreshEnable(true);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setMoveForHorizontal(true);
-        xRefreshView.setAutoLoadMore(false);
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
-
-        scrollView.setOnScrollListener(new XNestedScrollView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(NestedScrollView view, int scrollState, boolean arriveBottom) {
-
-            }
-
-            @Override
-            public void onScroll(int l, int t, int oldl, int oldt) {
-
-            }
-        });
+        getViewBinding().xrefreshview.setAutoRefresh(false);
+        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getViewBinding().xrefreshview.setPullRefreshEnable(true);
+        getViewBinding().xrefreshview.setPinnedTime(1000);
+        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getViewBinding().xrefreshview.setAutoLoadMore(false);
+        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
 
     }
     /**
@@ -142,7 +104,7 @@ public class MeFragment extends BaseFragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -153,19 +115,18 @@ public class MeFragment extends BaseFragment {
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }
     };
-    @OnClick({R.id.balance_layout,R.id.bankcard_layout,R.id.message_layout})
     public void onClick(View view){
         if (AntiShake.check(view.getId()))return;
         Intent intent;
         switch (view.getId()){
             case R.id.balance_layout:
                 intent=new Intent(BaseApplication.getInstance(), BalanceActivity.class);
-                intent.putExtra("Balance",balance_tv.getText().toString().trim());
+                intent.putExtra("Balance",getViewBinding().balanceTv.getText().toString().trim());
                 startActivity(intent);
                 break;
             case R.id.bankcard_layout:

@@ -6,7 +6,6 @@ plugins{
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'com.huawei.agconnect'
-    id 'com.jakewharton.butterknife'
 }
 android {
     //生产环境域名地址
@@ -199,6 +198,10 @@ android {
     androidExtensions {
         experimental = true
     }
+    viewBinding{
+        //开启viewbinding
+        enabled=true
+    }
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -207,7 +210,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //基础
     implementation project(path: ':library:baselibrary')
-    //butterknife注解式绑定id
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
 }

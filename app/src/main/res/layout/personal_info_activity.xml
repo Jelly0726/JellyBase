@@ -50,14 +50,14 @@
                 />
         </LinearLayout>
     </LinearLayout>
-    <com.jelly.baselibrary.xrefreshview.XRefreshView
+    <com.andview.refreshview.XRefreshView
         android:id="@+id/custom_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         xrefreshview:autoRefresh="false"
         >
-        <com.jelly.baselibrary.xrefreshview.XScrollView
+        <com.andview.refreshview.XScrollView
             android:id="@+id/xscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -383,8 +383,8 @@
                         android:src="@mipmap/right_next"/>
                 </LinearLayout>
             </LinearLayout>
-        </com.jelly.baselibrary.xrefreshview.XScrollView>
-    </com.jelly.baselibrary.xrefreshview.XRefreshView>
+        </com.andview.refreshview.XScrollView>
+    </com.andview.refreshview.XRefreshView>
     <TextView
         android:id="@+id/commit_tv"
         android:layout_width="match_parent"

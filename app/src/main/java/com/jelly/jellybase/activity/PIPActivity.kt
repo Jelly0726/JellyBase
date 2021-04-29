@@ -5,12 +5,13 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import butterknife.OnClick
 import com.base.daemon.DaemonEnv
 import com.jelly.baselibrary.eventBus.NetEvent
 import com.jelly.baselibrary.log.LogUtils
 import com.jelly.baselibrary.BaseActivity
+import com.jelly.baselibrary.multiClick.AntiShake
 import com.jelly.jellybase.R
+import com.jelly.jellybase.databinding.PipModeActivityBinding
 import com.jelly.jellybase.server.TraceServiceImpl
 import com.jeremyliao.liveeventbus.LiveEventBus
 import kotlinx.android.synthetic.main.pip_mode_activity.*
@@ -18,33 +19,30 @@ import kotlinx.android.synthetic.main.pip_mode_activity.*
 /**
  * PIP模式
  */
-class PIPActivity : BaseActivity(){
+class PIPActivity : BaseActivity<PipModeActivityBinding>(),View.OnClickListener{
     private lateinit var mObserver: Observer<Any>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         iniView()
-    }
-    override fun getLayoutId(): Int {
-        return R.layout.pip_mode_activity
     }
     override fun onDestroy() {
         super.onDestroy()
         LiveEventBus.get("PIPActivity").removeObserver(mObserver)
     }
     private fun iniView(){
-        mObserver=object :Observer<Any>{
-            override fun onChanged(netEvent:Any?) {
-                netEvent?.let {
-                    netEvent as NetEvent<Any>
-                    msgTv.text="${netEvent.event}"
-                }
+        viewBinding!!.backLayout.setOnClickListener(this)
+        viewBinding!!.btn.setOnClickListener(this)
+        mObserver= Observer<Any> { netEvent ->
+            netEvent?.let {
+                netEvent as NetEvent<Any>
+                msgTv.text="${netEvent.event}"
             }
         }
         LiveEventBus.get("PIPActivity")
                 .observeForever(mObserver)
     }
-    @OnClick(R.id.back_layout,R.id.btn)
-    fun onClick(view:View){
+    override fun onClick(view:View){
+        if (AntiShake.check(view))return
         when(view.id){
             R.id.back_layout->{
                 //启动或停止守护服务，运行在:watch子进程中

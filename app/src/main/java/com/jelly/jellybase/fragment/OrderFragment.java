@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.jelly.baselibrary.BaseFragment;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.WalletFragmentBinding;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class OrderFragment extends BaseFragment{
-    @Override
-    public int getLayoutId() {
-        return R.layout.wallet_fragment;
-    }
+public class OrderFragment extends BaseFragment<WalletFragmentBinding>{
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
 

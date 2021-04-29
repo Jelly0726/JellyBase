@@ -6,16 +6,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.Button;
 
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.VedioRecordMainBinding;
 
 import java.io.File;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<VedioRecordMainBinding> {
 
-    Button button;
     String videoPath;
 
     @Override
@@ -26,7 +24,6 @@ public class MainActivity extends BaseActivity {
                     Manifest.permission.RECORD_AUDIO,
                     Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS, Manifest.permission.CAMERA}, 5);
         }
-        button = (Button) findViewById(R.id.btn_record_video);
         File fpath = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "video");
 //        File fpath = new File(MediaUtils.getOutputMediaFileUri(this, MediaUtils.MEDIA_TYPE_VIDEO).getPath());
@@ -34,16 +31,12 @@ public class MainActivity extends BaseActivity {
             fpath.mkdirs();
         }
         videoPath = fpath.getAbsolutePath();
-        button.setOnClickListener(new View.OnClickListener() {
+        getViewBinding().btnRecordVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent intent = VedioRecordActivity.startRecordActivity(videoPath,MainActivity.this);
                 startActivity(intent);
             }
         });
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.vedio_record_main;
     }
 }

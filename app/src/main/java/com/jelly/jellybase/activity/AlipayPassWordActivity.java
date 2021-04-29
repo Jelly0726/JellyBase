@@ -7,26 +7,22 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.passwordView.Callback;
 import com.jelly.baselibrary.passwordView.PasswordKeypad;
-import com.jelly.baselibrary.BaseActivity;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AlipayPasswordActivityBinding;
 
 /**
  * Created by JELLY on 2017/11/3.
  */
 
-public class AlipayPassWordActivity extends BaseActivity {
+public class AlipayPassWordActivity extends BaseActivity<AlipayPasswordActivityBinding> {
     private PasswordKeypad mKeypad;
     private boolean state;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.alipay_password_activity;
     }
     private void iniView(){
         mKeypad = new PasswordKeypad();
@@ -65,7 +61,7 @@ public class AlipayPassWordActivity extends BaseActivity {
                 //todo:做一些埋点类的需求
             }
         });
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mKeypad.show(getSupportFragmentManager(), "PasswordKeypad");

@@ -2,6 +2,7 @@
 <win.smartown.tableLayout.FreeScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg"
@@ -12,7 +13,8 @@
     app:scrollBarStartDis="0mm"
     app:scrollBarColor="#ccc"
     app:scrollBarRadius="1mm"
-    app:isClick="false">
+    app:isClick="false"
+    tools:viewBindingIgnore="true">
 
     <win.smartown.tableLayout.TableLayout
         android:id="@+id/main_table"

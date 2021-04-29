@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
-import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewListener;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.model.AMapCalcRouteResult;
@@ -21,11 +20,10 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.base.MapUtil.mscUtil.TTSController;
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AmapBasicNaviBinding;
 
-public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener,AMapNaviViewListener {
+public class SimpleNaviActivity extends BaseActivity<AmapBasicNaviBinding> implements AMapNaviListener,AMapNaviViewListener {
 
-	private AMapNaviView mAMapNaviView;
 	private AMapNavi mAMapNavi;
 	private TTSController mTtsManager;
 	private boolean isGps;
@@ -34,9 +32,8 @@ public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mAMapNaviView = (AMapNaviView) findViewById(R.id.navi_view);
-		mAMapNaviView.onCreate(savedInstanceState);
-		mAMapNaviView.setAMapNaviViewListener(this);
+		getViewBinding().naviView.onCreate(savedInstanceState);
+		getViewBinding().naviView.setAMapNaviViewListener(this);
 
 		mTtsManager = TTSController.getInstance(getApplicationContext());
 		mTtsManager.init();
@@ -54,19 +51,15 @@ public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener
 		}
 	}
 	@Override
-	public int getLayoutId(){
-		return R.layout.amap_basic_navi;
-	}
-	@Override
 	protected void onResume() {
 		super.onResume();
-		mAMapNaviView.onResume();
+		getViewBinding().naviView.onResume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mAMapNaviView.onPause();
+		getViewBinding().naviView.onPause();
 
 		mTtsManager.stopSpeaking();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
@@ -75,7 +68,7 @@ public class SimpleNaviActivity extends BaseActivity implements AMapNaviListener
 
 	@Override
 	protected void onDestroy() {
-		mAMapNaviView.onDestroy();
+		getViewBinding().naviView.onDestroy();
 		mAMapNavi.stopNavi();
 		super.onDestroy();
 	}

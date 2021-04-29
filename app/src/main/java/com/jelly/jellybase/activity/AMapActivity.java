@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -13,7 +12,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
@@ -38,15 +36,16 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
 import com.amap.api.navi.view.RouteOverLay;
-import com.base.MapUtil.SimpleNaviActivity;
-import com.base.MapUtil.mscUtil.TTSController;
 import com.base.BaseApplication;
 import com.base.HermesManager;
+import com.base.MapUtil.SimpleNaviActivity;
+import com.base.MapUtil.mscUtil.TTSController;
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AmapActivityBinding;
 import com.jelly.jellybase.server.LocationService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,21 +54,12 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * Created by Administrator on 2018/3/13.
  */
 
-public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap.OnCameraChangeListener,
-        AMap.OnMapLoadedListener,LocationSource,AMap.OnMarkerClickListener{
-    @BindView(R.id.left_back)
-    LinearLayout left_back;
-    @BindView(R.id.starNavi_layout)
-    LinearLayout starNavi_layout;
-    @BindView(R.id.aMapView)
-    MapView aMapView;                                    //高德地图
+public class AMapActivity extends BaseActivity<AmapActivityBinding> implements AMapNaviListener ,AMap.OnCameraChangeListener,
+        AMap.OnMapLoadedListener,LocationSource,AMap.OnMarkerClickListener, View.OnClickListener {
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
     private OnLocationChangedListener mListener;
@@ -105,15 +95,13 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         HermesManager.getHermesManager().addEvent(this);
         Intent intent=new Intent(this, LocationService.class);
         startService(intent);
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.amap_activity;
+        getViewBinding().leftBack.setOnClickListener(this);
+        getViewBinding().starNaviLayout.setOnClickListener(this);
     }
     private void initAmap(Bundle savedInstanceState){
-        aMapView.onCreate(savedInstanceState);//必须写
+        getViewBinding().aMapView.onCreate(savedInstanceState);//必须写
         if (aMap == null) {
-            aMap = aMapView.getMap();
+            aMap = getViewBinding().aMapView.getMap();
             // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
             // 地图根据面向方向旋转（AMap.LOCATION_TYPE_MAP_ROTATE）三种模式
             // 如果要设置定位的默认状态，可以在此处进行设置
@@ -165,7 +153,6 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
     }
-    @OnClick({R.id.left_back,R.id.starNavi_layout})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.left_back:
@@ -186,13 +173,13 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     }
     @Override
     protected void onResume() {
-        aMapView.onResume();
+        getViewBinding().aMapView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        aMapView.onPause();
+        getViewBinding().aMapView.onPause();
         mTtsManager.stopSpeaking();
         super.onPause();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
@@ -202,14 +189,13 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     @Override
     protected void onDestroy() {
         mAMapNavi.stopNavi();
-        if(aMapView!=null) {
-            aMapView.onDestroy();
+        if(getViewBinding().aMapView!=null) {
+            getViewBinding().aMapView.onDestroy();
         }
         if(aMap!=null) {
             aMap.clear();
             aMap = null;
         }
-        aMapView=null;
         mListener = null;
         EventBus.getDefault().unregister(this);
         HermesManager.getHermesManager().removeEvent(this);
@@ -219,7 +205,7 @@ public class AMapActivity extends BaseActivity implements AMapNaviListener ,AMap
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        aMapView.onSaveInstanceState(outState);
+        getViewBinding().aMapView.onSaveInstanceState(outState);
 
     }
     /**

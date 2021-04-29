@@ -13,6 +13,7 @@ import com.jelly.baselibrary.passwordView.Callback;
 import com.jelly.baselibrary.passwordView.PasswordKeypad;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.PaymentActivityBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
  * Created by JELLY on 2017/11/3.
  */
 
-public class PaymentActivity extends BaseActivity {
+public class PaymentActivity extends BaseActivity<PaymentActivityBinding> {
     private PasswordKeypad mKeypad;
     private boolean state;
     private List<PayMothod> mList;
@@ -29,10 +30,6 @@ public class PaymentActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iniView();
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.payment_activity;
     }
     private void iniView(){
         mKeypad = new PasswordKeypad();
@@ -76,7 +73,7 @@ public class PaymentActivity extends BaseActivity {
         mList.add(new PayMothod().setName("微信").setPayType(1).setIcon(R.mipmap.payment_weixin).setMark("推荐使用"));
         mList.add(new PayMothod().setName("支付宝").setPayType(2).setIcon(R.mipmap.payment_zhifubao).setMark(""));
         mList.add(new PayMothod().setName("银联").setPayType(3).setIcon(R.mipmap.payment_yinglian).setMark(""));
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PaymentDialog paymentDialog=PaymentDialog.getInstance();

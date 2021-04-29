@@ -4,34 +4,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.jelly.baselibrary.eventBus.NetEvent;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XScrollView;
 import com.jelly.baselibrary.BaseFragment;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XScrollView;
+import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.ProductDetailsFragmentBinding;
 import com.jelly.jellybase.datamodel.CurrentItem;
 
 import org.greenrobot.eventbus.EventBus;
 
-import butterknife.BindView;
 
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class ProductDetailsFragment extends BaseFragment {
-    @BindView(R.id.product_parameter)
-    TextView product_parameter;
-    @BindView(R.id.custom_view)
-    XRefreshView xRefreshView;
-    @BindView(R.id.xscrollview)
-    XScrollView scrollView;
-    @Override
-    public int getLayoutId() {
-        return R.layout.product_details_fragment;
-    }
+public class ProductDetailsFragment extends BaseFragment<ProductDetailsFragmentBinding> {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -64,8 +53,8 @@ public class ProductDetailsFragment extends BaseFragment {
 
     }
     private void initView() {
-        product_parameter.setOnClickListener(listener);
-        scrollView.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getViewBinding().productParameter.setOnClickListener(listener);
+        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
             }
@@ -74,13 +63,13 @@ public class ProductDetailsFragment extends BaseFragment {
             public void onScroll(int l, int t, int oldl, int oldt) {
             }
         });
-        xRefreshView.setAutoRefresh(false);
-        xRefreshView.setPullLoadEnable(false);
-        xRefreshView.setPullRefreshEnable(false);
-        xRefreshView.setPinnedTime(1000);
-        xRefreshView.setAutoLoadMore(false);
+        getViewBinding().customView.setAutoRefresh(false);
+        getViewBinding().customView.setPullLoadEnable(false);
+        getViewBinding().customView.setPullRefreshEnable(false);
+        getViewBinding().customView.setPinnedTime(1000);
+        getViewBinding().customView.setAutoLoadMore(false);
 //		outView.setSilenceLoadMore();
-        xRefreshView.setXRefreshViewListener(simpleXRefreshListener);
+        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
         //xRefreshView.setCustomFooterView(new CustomerFooter(this.getActivity()));
     }
     private View.OnClickListener listener=new View.OnClickListener() {
@@ -105,7 +94,7 @@ public class ProductDetailsFragment extends BaseFragment {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    xRefreshView.stopRefresh();
+                    getViewBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -116,7 +105,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    xRefreshView.stopLoadMore();
+                    getViewBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }

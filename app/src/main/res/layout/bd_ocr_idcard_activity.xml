@@ -14,7 +14,8 @@
         android:paddingTop="16mm"
         android:paddingBottom="16mm"
         android:background="@color/main_bg"
-        tools:context=".bdocr.IDCardActivity">
+        tools:context=".bdocr.IDCardActivity"
+    tools:viewBindingIgnore="true">
 
     <Button
             android:text="相册选择 正面"

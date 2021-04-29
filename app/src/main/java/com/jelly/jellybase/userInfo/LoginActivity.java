@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.annotation.IdRes;
 import androidx.fragment.app.Fragment;
@@ -14,44 +13,34 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.base.BaseApplication;
+import com.google.gson.Gson;
+import com.jelly.baselibrary.BackInterface;
+import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.social.SocialUtil;
-import com.jelly.baselibrary.BackInterface;
-import com.jelly.baselibrary.BaseActivity;
-import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.view.NoPreloadViewPager;
-import com.google.gson.Gson;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.UserLoginActivityBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
 /**
  * Created by Administrator on 2017/9/18.
  */
 
-public class LoginActivity extends BaseActivity implements
-        NoPreloadViewPager.OnPageChangeListener,BackInterface {
+public class LoginActivity extends BaseActivity<UserLoginActivityBinding> implements
+        NoPreloadViewPager.OnPageChangeListener,BackInterface, View.OnClickListener {
 
-    @BindView(R.id.register_account)
-    TextView register_account;
     private String phone="";
     private String password;
     private int from=-1;
-    @BindView(R.id.topbar_rg)
-    RadioGroup topbar_rg;
-    @BindView(R.id.left_rb)
-    RadioButton left_rb;
-    @BindView(R.id.vp_content)
-    NoPreloadViewPager mVpContent;
     private List<BaseFragment> mFragmentList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +51,6 @@ public class LoginActivity extends BaseActivity implements
 
     }
     @Override
-    public int getLayoutId(){
-        return R.layout.user_login_activity;
-    }
-    @Override
     public void getExtra() {
         super.getExtra();
         phone=getIntent().getStringExtra("phone");
@@ -74,14 +59,14 @@ public class LoginActivity extends BaseActivity implements
     }
 
     private void iniView (){
-
-        mVpContent.setOnPageChangeListener(this);
-        topbar_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+getViewBinding().registerAccount.setOnClickListener(this);
+        getViewBinding().vpContent.setOnPageChangeListener(this);
+        getViewBinding().topbarRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                for (int i=0;i<topbar_rg.getChildCount();i++){
-                    if (topbar_rg.getChildAt(i).getId()==checkedId){
-                        mVpContent.setCurrentItem(i, false);
+                for (int i=0;i<getViewBinding().topbarRg.getChildCount();i++){
+                    if (getViewBinding().topbarRg.getChildAt(i).getId()==checkedId){
+                        getViewBinding().vpContent.setCurrentItem(i, false);
                     }else {
                     }
                 }
@@ -102,12 +87,12 @@ public class LoginActivity extends BaseActivity implements
 
         UserDyLoginFragment allianceFragment = new UserDyLoginFragment();
         mFragmentList.add(allianceFragment);
-        left_rb.setChecked(true);
+        getViewBinding().leftRb.setChecked(true);
     }
 
     private void initListener() {
-        mVpContent.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        if (mVpContent.getAdapter().getCount() != topbar_rg.getChildCount()) {
+        getViewBinding().vpContent.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        if (getViewBinding().vpContent.getAdapter().getCount() != getViewBinding().topbarRg.getChildCount()) {
             throw new IllegalArgumentException("RadioGroup的子RadioButton数量必须和ViewPager条目数量一致");
         }
     }
@@ -120,7 +105,6 @@ public class LoginActivity extends BaseActivity implements
 
 
 
-    @OnClick({R.id.register_account})
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
             return;
@@ -154,8 +138,8 @@ public class LoginActivity extends BaseActivity implements
 
     @Override
     public void onPageSelected(int position) {
-        ((RadioButton)topbar_rg.getChildAt(position)).setChecked(true);
-        mVpContent.setCurrentItem(position, false);
+        ((RadioButton)getViewBinding().topbarRg.getChildAt(position)).setChecked(true);
+        getViewBinding().vpContent.setCurrentItem(position, false);
     }
 
     @Override

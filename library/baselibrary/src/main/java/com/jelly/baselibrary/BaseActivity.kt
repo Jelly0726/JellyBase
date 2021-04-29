@@ -18,11 +18,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.ButterKnife
-import butterknife.Unbinder
+import androidx.viewbinding.ViewBinding
 import cn.jpush.android.api.JPushInterface
-import com.jelly.baselibrary.config.IntentAction
-import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.SystemBar.StatusBarUtil
 import com.jelly.baselibrary.appManager.AppSubject
 import com.jelly.baselibrary.appManager.FixMemLeak
@@ -30,7 +27,9 @@ import com.jelly.baselibrary.appManager.Observable
 import com.jelly.baselibrary.appManager.Observer
 import com.jelly.baselibrary.applicationUtil.AppPrefs
 import com.jelly.baselibrary.config.ConfigKey
+import com.jelly.baselibrary.config.IntentAction
 import com.jelly.baselibrary.log.LogUtils
+import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.view.GrayFrameLayout
 import com.jelly.baselibrary.view.SoftKeyboardManager
 import com.mylhyl.circledialog.CircleDialog
@@ -40,15 +39,19 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
 
 /**
  * Created by Administrator on 2017/12/5.
  */
 @DebugLog
-abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
+abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
+        Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
+    protected var viewBinding: T? = null
     private var softKeyboardManager: SoftKeyboardManager? = null
     private var frameLayout: FrameLayout? = null//最外层布局
-    private lateinit var mUnbinder: Unbinder
     private var mRecevier: InnerRecevier? = null
     private var mFilter: IntentFilter? = null
     private var isResume = false
@@ -61,10 +64,6 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
 //    public Presentation mPresentation;//双屏客显
     }
 
-    /**
-     * 当前Activity的布局
-     */
-    abstract fun getLayoutId(): Int
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
             val result = fixOrientation()
@@ -89,15 +88,36 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             StrictMode.setThreadPolicy(policy)
         }
         //====
-        if (getLayoutId() > 0)
-            setContentView(getLayoutId())
+        //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        val type = javaClass.genericSuperclass as ParameterizedType
+        type?.let { it ->
+            for (cl in it.actualTypeArguments) {
+                try {
+                    cl as Class<T>
+                    //多个泛型时判断类的name是否以Binding，不是跳过本次
+                    if (!cl.name.endsWith("Binding"))continue
+                    val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
+                    viewBinding = inflate.invoke(null, layoutInflater) as T?
+                    viewBinding?.let { it ->
+                        setContentView(it.root)
+                    }
+                    return@let
+                } catch (e: NoSuchMethodException) {
+                    e.printStackTrace()
+                } catch (e: IllegalAccessException) {
+                    e.printStackTrace()
+                } catch (e: InvocationTargetException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
         frameLayout?.let {
             //监听SoftKeyboard的弹出与隐藏状态
             softKeyboardManager = SoftKeyboardManager(it);
             softKeyboardManager!!.addSoftKeyboardStateListener(this);
         }
-        handler = MyHandler(this)
-        mUnbinder = ButterKnife.bind(this)
+        handler = MyHandler(this as BaseActivity<ViewBinding>)
         getExtra()
         mRecevier = InnerRecevier()
         mFilter = IntentFilter()
@@ -299,6 +319,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
     fun finish(time: Int) {
         Handler().postDelayed({ finish() }, time.toLong())
     }
+
     override fun finish() { // TODO Auto-generated method stub
         if (this !is LauncherActivity)
             circleDialog?.let {
@@ -309,6 +330,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         FixMemLeak.fixLeak(this)
         super.finish()
     }
+
     override fun onDestroy() {
         //结束协程
         cancel()
@@ -319,11 +341,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
             unregisterReceiver(mRecevier)
         }
         AppSubject.getInstance().detach(this)
-        mUnbinder?.let { it.unbind() }
         softKeyboardManager?.let {
             it.removeSoftKeyboardStateListener(this);
             it.dispose();
         }
+        viewBinding = null
         super.onDestroy()
     }
 
@@ -368,7 +390,7 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
         //获取root在窗体的可视区域
         frameLayout!!.getWindowVisibleDisplayFrame(rect)
         //获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
-        val rootInvisibleHeight: Int = frameLayout!!.getRootView().getHeight() - rect.bottom
+        val rootInvisibleHeight: Int = frameLayout!!.rootView.height - rect.bottom
         //若不可视区域高度大于100，则键盘显示
         if (rootInvisibleHeight > 100) {
             val location = IntArray(2)
@@ -426,7 +448,11 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
                 val reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY)
                 if (reason != null) { //Log.i("msg", "action:" + action + ",reason:" + reason);
                     if (reason == SYSTEM_DIALOG_REASON_HOME_KEY) { // 短按home键
-                        AppPrefs.putBoolean(applicationContext, ConfigKey.ISHOME, true)
+                        AppPrefs.putBoolean(
+                                applicationContext,
+                                ConfigKey.ISHOME,
+                                true
+                        )
                     } else if (reason
                             == SYSTEM_DIALOG_REASON_RECENT_APPS
                     ) { // 长按home键
@@ -444,14 +470,14 @@ abstract class BaseActivity : AppCompatActivity(), Observer<Any>, CoroutineScope
 
     private var circleDialog: CircleDialog.Builder? = null
 
-    private class MyHandler(activity: BaseActivity) : Handler() {
+    private class MyHandler(activity: BaseActivity<ViewBinding>) : Handler() {
         private val activityWeakReference = WeakReference(activity)
         override fun handleMessage(msg: Message) {
             val activity = activityWeakReference.get()
             if (activity != null) {
                 when (msg.arg1) {
                     0 -> if (activity.circleDialog == null) {
-                        synchronized(activity) {
+                        synchronized(activity.applicationContext) {
                             if (activity.circleDialog == null) {
                                 activity.circleDialog = CircleDialog.Builder()
                                         .configDialog { params -> params.width = 0.6f }

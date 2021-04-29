@@ -25,34 +25,33 @@ import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.CustomDownloadingDialogListener;
 import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
+import com.andview.refreshview.XRefreshView;
+import com.andview.refreshview.XRefreshViewFooter;
 import com.baidu.autoupdatesdk.AppUpdateInfo;
 import com.baidu.autoupdatesdk.AppUpdateInfoForInstall;
 import com.baidu.autoupdatesdk.BDAutoUpdateSDK;
 import com.baidu.autoupdatesdk.CPCheckUpdateCallback;
 import com.baidu.autoupdatesdk.CPUpdateDownloadCallback;
-import com.jelly.baselibrary.Contacts.ContactsActivity;
-import com.base.GuideActivity;
-import com.jelly.baselibrary.Utils.StorageQueryUtil;
 import com.base.BaseApplication;
+import com.base.GuideActivity;
+import com.base.daemon.DaemonEnv;
+import com.base.webview.BaseWebViewActivity;
+import com.base.webview.JSWebViewActivity;
+import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.Contacts.ContactsActivity;
+import com.jelly.baselibrary.Utils.StorageQueryUtil;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.checkVersion.BaseDialog;
 import com.jelly.baselibrary.config.BaseConfig;
-import com.base.daemon.DaemonEnv;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.mic.MicService;
 import com.jelly.baselibrary.multiClick.AntiShake;
+import com.jelly.baselibrary.recyclerViewUtil.ItemDecoration;
 import com.jelly.baselibrary.redpacket.StartActivity;
 import com.jelly.baselibrary.toast.ToastUtils;
-import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.view.FloatingDraftButton;
-import com.base.webview.BaseWebViewActivity;
-import com.base.webview.JSWebViewActivity;
 import com.jelly.baselibrary.webview.WebConfig;
 import com.jelly.baselibrary.webview.WebTools;
-import com.jelly.baselibrary.xrefreshview.XRefreshView;
-import com.jelly.baselibrary.xrefreshview.XRefreshViewFooter;
-import com.jelly.baselibrary.xrefreshview.listener.OnItemClickListener;
-import com.jelly.baselibrary.xrefreshview.view.ItemDecoration;
 import com.jelly.jellybase.activity.AMapActivity;
 import com.jelly.jellybase.activity.AddShopcartActivity;
 import com.jelly.jellybase.activity.AlipayPassWordActivity;
@@ -87,6 +86,7 @@ import com.jelly.jellybase.adpater.MainAdapter;
 import com.jelly.jellybase.bdocr.OCRMainActivity;
 import com.jelly.jellybase.blebluetooth.BluetoothBLEActivity;
 import com.jelly.jellybase.bluetooth.BluetoothActivity;
+import com.jelly.jellybase.databinding.MainActivityBinding;
 import com.jelly.jellybase.encrypt.EncryptActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.server.TraceServiceImpl;
@@ -99,6 +99,7 @@ import com.jelly.jellybase.userInfo.SettingsActivity;
 import com.tencent.external.tmselfupdatesdk.ITMSelfUpdateListener;
 import com.tencent.external.tmselfupdatesdk.TMSelfUpdateManager;
 import com.tencent.external.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
+import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -106,7 +107,7 @@ import java.lang.reflect.Field;
 import hugo.weaving.DebugLog;
 
 @DebugLog
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity<MainActivityBinding> {
 
     private RecyclerView recyclerView;
     private XRefreshView xRefreshView;
@@ -145,10 +146,6 @@ public class MainActivity extends BaseActivity {
         });
       long[] longs = StorageQueryUtil.queryWithStorageManager(this);
         LogUtils.i("longs="+ JSON.toJSONString(longs));
-    }
-    @Override
-    public int getLayoutId(){
-        return R.layout.main_activity;
     }
     //此接口用于查询当前服务端是否有新版本， 有的话取回新版本信息。
     private class MyCheckUpdateCallback implements CPCheckUpdateCallback {
@@ -466,7 +463,7 @@ public class MainActivity extends BaseActivity {
         rect.top=0;
         rect.left=0;
         rect.right=0;
-        recyclerView.addItemDecoration(new ItemDecoration(rect,1, ItemDecoration.NONE));
+        recyclerView.addItemDecoration(new ItemDecoration(rect,1,-1, ItemDecoration.NONE));
         // 静默加载模式不能设置footerview
         recyclerView.setAdapter(adapter);
         xRefreshView.setPinnedTime(1000);

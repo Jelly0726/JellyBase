@@ -9,7 +9,8 @@
     android:paddingRight="16mm"
     android:paddingTop="16mm"
     android:orientation="vertical"
-    android:background="@color/main_bg">
+    android:background="@color/main_bg"
+    tools:viewBindingIgnore="true">
 
     <EditText
         android:id="@+id/toAddEt"

@@ -18,16 +18,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.amap.api.maps.offlinemap.OfflineMapCity;
-import com.jelly.baselibrary.config.BaseBroadcast;
 import com.base.sqldao.PositionDaoUtils;
 import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.config.BaseBroadcast;
 import com.jelly.jellybase.R;
+import com.jelly.jellybase.databinding.AmapDestinationBinding;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,25 +35,12 @@ import systemdb.PositionEntity;
 
 /**
  */
-public class DestinationActivity extends BaseActivity implements OnClickListener,TextWatcher
+public class DestinationActivity extends BaseActivity<AmapDestinationBinding> implements OnClickListener,TextWatcher
 		,OnItemClickListener {
-
-	private ListView mRecommendList;
-
-	private ImageView mBack_Image;
-
-	private TextView mSearchText;
-	private TextView address_tv;
-	private TextView location_tv;
-
-	private EditText mDestinaionText;
-
 	private RecomandAdapter mRecomandAdapter;
-
 	private RouteTask mRouteTask;
 	private InputMethodManager imm;//输入法服务
 	private int resultCode=-1;
-
 	private List<OfflineMapCity> cityLisi;
 	//private Spinner city_sp;
 	private List<PositionEntity> posList;
@@ -69,32 +54,26 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 		from=getIntent().getIntExtra("from",0);
 
 		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		mRecommendList=(ListView) findViewById(R.id.recommend_list);
-		mBack_Image=(ImageView) findViewById(R.id.destination_back);
-		mBack_Image.setOnClickListener(this);
+		getViewBinding().destinationBack.setOnClickListener(this);
 
-		mSearchText=(TextView) findViewById(R.id.destination_search);
-		mSearchText.setOnClickListener(this);
-		address_tv=(TextView) findViewById(R.id.address_tv);
-		location_tv=(TextView) findViewById(R.id.location_tv);
-		location_tv.setOnClickListener(this);
+		getViewBinding().destinationSearch.setOnClickListener(this);
+		getViewBinding().locationTv.setOnClickListener(this);
 
 
 
-		mDestinaionText=(EditText) findViewById(R.id.destination_edittext);
-		mDestinaionText.addTextChangedListener(this);
-		mDestinaionText.setOnClickListener(this);
+		getViewBinding().destinationEdittext.addTextChangedListener(this);
+		getViewBinding().destinationEdittext.setOnClickListener(this);
 		//监听键盘搜索按钮
-		mDestinaionText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		getViewBinding().destinationEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH){
 					//隐藏输入法
-					imm.hideSoftInputFromWindow(mDestinaionText.getWindowToken(), 0);
-					if (!TextUtils.isEmpty(mDestinaionText.getText().toString()) &&
+					imm.hideSoftInputFromWindow(getViewBinding().destinationEdittext.getWindowToken(), 0);
+					if (!TextUtils.isEmpty(getViewBinding().destinationEdittext.getText().toString()) &&
 							RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 						PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-						poiSearchTask.search(mDestinaionText.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+						poiSearchTask.search(getViewBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 					}
 					return true;
 				}
@@ -103,8 +82,8 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 		});
 		posList= PositionDaoUtils.getInstance(this).getAllList();
 		mRecomandAdapter=new RecomandAdapter(getApplicationContext());
-		mRecommendList.setAdapter(mRecomandAdapter);
-		mRecommendList.setOnItemClickListener(this);
+		getViewBinding().recommendList.setAdapter(mRecomandAdapter);
+		getViewBinding().recommendList.setOnItemClickListener(this);
 
 		mRouteTask= RouteTask.getInstance(getApplicationContext());
 		city= RouteTask.getInstance(getApplicationContext()).getStartPoint().city;
@@ -116,10 +95,6 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 		}
 
 		resultCode=getIntent().getIntExtra("resultCode",-1);
-	}
-	@Override
-	public int getLayoutId(){
-		return R.layout.amap_destination;
 	}
 	@Override
 	public void afterTextChanged(Editable arg0) {
@@ -154,18 +129,18 @@ public class DestinationActivity extends BaseActivity implements OnClickListener
 				break;
 			case R.id.destination_search:
 				//隐藏输入法
-				imm.hideSoftInputFromWindow(mDestinaionText.getWindowToken(), 0);
-				if (!TextUtils.isEmpty(mDestinaionText.getText().toString()) &&
+				imm.hideSoftInputFromWindow(getViewBinding().destinationEdittext.getWindowToken(), 0);
+				if (!TextUtils.isEmpty(getViewBinding().destinationEdittext.getText().toString()) &&
 						RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 					PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-					poiSearchTask.search(mDestinaionText.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+					poiSearchTask.search(getViewBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 				}
 				break;
 			case R.id.destination_edittext://
 				//隐藏输入法
 				//imm.hideSoftInputFromWindow(zhanghu_layout.getWindowToken(), 0);
 				//显示输入法
-				imm.showSoftInputFromInputMethod(mDestinaionText.getWindowToken(),0);
+				imm.showSoftInputFromInputMethod(getViewBinding().destinationEdittext.getWindowToken(),0);
 				break;
 			case R.id.location_tv:
 				Intent ii=new Intent(BaseBroadcast.SEARCH_RECEIVER);
