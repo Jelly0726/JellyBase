@@ -162,7 +162,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
         @Override
         public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-            int width = getResources().getDimensionPixelSize(R.dimen.xswipe_dp_70);
+            int width = 70;
 
             // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
             // 2. 指定具体的高，比如80;
@@ -177,7 +177,7 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(BankCardListActivity.this)
-                        .setBackground(R.drawable.xswipe_selector_red)
+                        .setBackground(android.R.color.white)
                         .setImage(R.drawable.ic_delete_red)
                         .setText("删除")
                         .setTextColor(Color.WHITE)

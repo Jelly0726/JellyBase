@@ -75,7 +75,7 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
             // 添加右侧的，如果不添加，则右侧不会出现菜单。
             run {
                 val deleteItem = SwipeMenuItem(this@ShopCartActivity)
-                    .setBackground(R.drawable.xswipe_selector_red)
+                    .setBackground(android.R.color.white)
                     .setImage(R.drawable.ic_delete_red)
                     .setText("删除")
                     .setTextColor(Color.WHITE)

@@ -1,3 +1,4 @@
+include ':swipervsample'
 include ':jnisample'
 include ':library:baselibrary'
 include ':app'

@@ -91,7 +91,6 @@ import com.jelly.jellybase.encrypt.EncryptActivity;
 import com.jelly.jellybase.nfc.NFCMainActivity;
 import com.jelly.jellybase.server.TraceServiceImpl;
 import com.jelly.jellybase.shopcar.ShopCartActivity;
-import com.jelly.jellybase.swipeRefresh.activity.XSwipeMainActivity;
 import com.jelly.jellybase.tablelayout.TableLayoutActivity;
 import com.jelly.jellybase.userInfo.LoginActivity;
 import com.jelly.jellybase.userInfo.RegisterActivity;
@@ -616,11 +615,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                     intent=new Intent(BaseApplication.getInstance(), TreeActivity.class);
                     startActivity(intent);
                     break;
-                case 24://RecyclerView侧滑菜单
-                    intent=new Intent(BaseApplication.getInstance(), XSwipeMainActivity.class);
-                    startActivity(intent);
-                    break;
-                case 25://高德地图
+                case 24://高德地图
                     intent=new Intent(BaseApplication.getInstance(), AMapActivity.class);
                     intent.putExtra("name","怡富花园二期-东门");
                     intent.putExtra("address","福建省厦门市思明区莲前西路314号");
@@ -628,55 +623,55 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                     intent.putExtra("longitude",118.1387329102);
                     startActivity(intent);
                     break;
-                case 26://NFC
+                case 25://NFC
                     intent=new Intent(BaseApplication.getInstance(), NFCMainActivity.class);
                     startActivity(intent);
                     break;
-                case 27://消息通知
+                case 26://消息通知
                     intent=new Intent(BaseApplication.getInstance(), MessageActivity.class);
                     startActivity(intent);
                     break;
-                case 28://获取安卓设备唯一编码
+                case 27://获取安卓设备唯一编码
                     intent=new Intent(BaseApplication.getInstance(), UniqueIDActivity.class);
                     startActivity(intent);
                     break;
-                case 29://视频播放器gsyVideoPlayer
+                case 28://视频播放器gsyVideoPlayer
                     intent=new Intent(BaseApplication.getInstance(), GSYVideoActivity.class);
                     startActivity(intent);
                     break;
-                case 30://百度文字识别（身份证等）
+                case 29://百度文字识别（身份证等）
                     intent=new Intent(BaseApplication.getInstance(), OCRMainActivity.class);
                     startActivity(intent);
                     break;
-                case 31://AutoComleteTextView自动补齐
+                case 30://AutoComleteTextView自动补齐
                     intent=new Intent(BaseApplication.getInstance(), AutoTextAvtivity.class);
                     startActivity(intent);
                     break;
-                case 32://低功率蓝牙
+                case 31://低功率蓝牙
                     intent=new Intent(BaseApplication.getInstance(), BluetoothBLEActivity.class);
                     startActivity(intent);
                     break;
-                case 33://传统蓝牙
+                case 32://传统蓝牙
                     intent=new Intent(BaseApplication.getInstance(), BluetoothActivity.class);
                     startActivity(intent);
                     break;
-                case 34://取消订单
+                case 33://取消订单
                     intent=new Intent(BaseApplication.getInstance(), CancelOrderActivity.class);
                     startActivity(intent);
                     break;
-                case 35://身份证校验
+                case 34://身份证校验
                     intent=new Intent(BaseApplication.getInstance(), IDCartActivity.class);
                     startActivity(intent);
                     break;
-                case 36://复制、粘贴
+                case 35://复制、粘贴
                     intent=new Intent(BaseApplication.getInstance(), CopyActivity.class);
                     startActivity(intent);
                     break;
-                case 37://自动抢红包
+                case 36://自动抢红包
                     intent=new Intent(BaseApplication.getInstance(), StartActivity.class);
                     startActivity(intent);
                     break;
-                case 38://webView下载文件
+                case 37://webView下载文件
                     intent=new Intent(BaseApplication.getInstance(), JSWebViewActivity.class);
                     WebTools webTools=new WebTools();
                     webTools.title="文件下载";
@@ -684,55 +679,55 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                     intent.putExtra(WebConfig.CONTENT, webTools);
                     startActivity(intent);
                     break;
-                case 39://崩溃日志
+                case 38://崩溃日志
                     intent=new Intent(BaseApplication.getInstance(), CrashActivity.class);
                     startActivity(intent);
                     break;
-                case 40://获取应用签名MD5值
+                case 39://获取应用签名MD5值
                     intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
-                case 41://NDK(.so)测试
+                case 40://NDK(.so)测试
                     intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
-                case 42://    <item>native加密解密</item>
+                case 41://    <item>native加密解密</item>
                     intent=new Intent(BaseApplication.getInstance(), EncryptActivity.class);
                     startActivity(intent);
                     break;
-                case 43:// 发送邮件
+                case 42:// 发送邮件
                     intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
-                case 44:// 录小视频
+                case 43:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 45:// PIP模式
+                case 44:// PIP模式
                     intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
-                case 46:// 简单的表格控件
+                case 45:// 简单的表格控件
                     intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
                     startActivity(intent);
                     break;
-                case 47:// 判断是否真机
+                case 46:// 判断是否真机
                     intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
                     startActivity(intent);
                     break;
-                case 48:// 添加角标
+                case 47:// 添加角标
                     intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
                     startActivity(intent);
                     break;
-                case 49:// 选择器
+                case 48:// 选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.androidpicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 50:// 文件选择器
+                case 49:// 文件选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 51:// 所属银行
+                case 50:// 所属银行
                     intent=new Intent(BaseApplication.getInstance(), BankActivity.class);
                     startActivity(intent);
                     break;

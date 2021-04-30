@@ -50,6 +50,7 @@
             <option value="$PROJECT_DIR$/library/ocr_ui" />
             <option value="$PROJECT_DIR$/library/tableLayout" />
             <option value="$PROJECT_DIR$/library/viewpagerlayoutmanager" />
+            <option value="$PROJECT_DIR$/swipervsample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
