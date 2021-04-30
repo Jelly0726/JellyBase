@@ -209,8 +209,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //华为推送
-    implementation 'com.huawei.agconnect:agconnect-core:1.5.1.300'
-    implementation 'com.huawei.hms:push:5.0.4.302'
+    //其它已存在的依赖不要删除
+    implementation 'com.huawei.hms:push:5.1.1.301'
     //基础
     implementation project(path: ':library:baselibrary')
 }
