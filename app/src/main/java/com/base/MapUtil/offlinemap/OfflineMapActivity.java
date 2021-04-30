@@ -74,7 +74,7 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATE_LIST:
-                    if (getViewBinding().contentViewpage.getCurrentItem() == 0) {
+                    if (getBinding().contentViewpage.getCurrentItem() == 0) {
                         ((BaseExpandableListAdapter) adapter)
                                 .notifyDataSetChanged();
                     } else {
@@ -170,18 +170,18 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
         initDownloadedList();
 
         // 顶部
-        getViewBinding().downloadListText.setOnClickListener(this);
-        getViewBinding().downloadedListText.setOnClickListener(this);
-        getViewBinding().backImageView.setOnClickListener(this);
+        getBinding().downloadListText.setOnClickListener(this);
+        getBinding().downloadedListText.setOnClickListener(this);
+        getBinding().backImageView.setOnClickListener(this);
 
         // view pager 用到了所有城市list和已下载城市list所有放在最后初始化
 
-        mPageAdapter = new OfflinePagerAdapter(getViewBinding().contentViewpage,
+        mPageAdapter = new OfflinePagerAdapter(getBinding().contentViewpage,
                 mAllOfflineMapList, mDownLoadedList);
 
-        getViewBinding().contentViewpage.setAdapter(mPageAdapter);
-        getViewBinding().contentViewpage.setCurrentItem(0);
-        getViewBinding().contentViewpage.setOnPageChangeListener(this);
+        getBinding().contentViewpage.setAdapter(mPageAdapter);
+        getBinding().contentViewpage.setCurrentItem(0);
+        getBinding().contentViewpage.setOnPageChangeListener(this);
 
     }
 
@@ -455,42 +455,42 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
 
     @Override
     public void onClick(View v) {
-        if (v.equals(getViewBinding().downloadListText)) {
-            int paddingHorizontal = getViewBinding().downloadListText.getPaddingLeft();
-            int paddingVertical = getViewBinding().downloadListText.getPaddingTop();
-            getViewBinding().contentViewpage.setCurrentItem(0);
+        if (v.equals(getBinding().downloadListText)) {
+            int paddingHorizontal = getBinding().downloadListText.getPaddingLeft();
+            int paddingVertical = getBinding().downloadListText.getPaddingTop();
+            getBinding().contentViewpage.setCurrentItem(0);
 
-            getViewBinding().downloadListText
+            getBinding().downloadListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_pressed);
 
-            getViewBinding().downloadedListText
+            getBinding().downloadedListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_normal);
 
-            getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
+            getBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
-            getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
+            getBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
             mDownloadedAdapter.notifyDataChange();
 
-        } else if (v.equals(getViewBinding().downloadedListText)) {
-            int paddingHorizontal = getViewBinding().downloadedListText.getPaddingLeft();
-            int paddingVertical = getViewBinding().downloadedListText.getPaddingTop();
-            getViewBinding().contentViewpage.setCurrentItem(1);
+        } else if (v.equals(getBinding().downloadedListText)) {
+            int paddingHorizontal = getBinding().downloadedListText.getPaddingLeft();
+            int paddingVertical = getBinding().downloadedListText.getPaddingTop();
+            getBinding().contentViewpage.setCurrentItem(1);
 
-            getViewBinding().downloadListText
+            getBinding().downloadListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_normal);
-            getViewBinding().downloadedListText
+            getBinding().downloadedListText
                     .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_pressed);
-            getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
+            getBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
-            getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
+            getBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                     paddingHorizontal, paddingVertical);
 
             mDownloadedAdapter.notifyDataChange();
 
-        } else if (v.equals(getViewBinding().backImageView)) {
+        } else if (v.equals(getBinding().backImageView)) {
             // 返回
             finish();
         }
@@ -509,30 +509,30 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
 
     @Override
     public void onPageSelected(int arg0) {
-        int paddingHorizontal = getViewBinding().downloadedListText.getPaddingLeft();
-        int paddingVertical = getViewBinding().downloadedListText.getPaddingTop();
+        int paddingHorizontal = getBinding().downloadedListText.getPaddingLeft();
+        int paddingVertical = getBinding().downloadedListText.getPaddingTop();
 
         switch (arg0) {
             case 0:
-                getViewBinding().downloadListText
+                getBinding().downloadListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_pressed);
-                getViewBinding().downloadedListText
+                getBinding().downloadedListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_normal);
                 // mPageAdapter.notifyDataSetChanged();
                 break;
             case 1:
-                getViewBinding().downloadListText
+                getBinding().downloadListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab1_normal);
 
-                getViewBinding().downloadedListText
+                getBinding().downloadedListText
                         .setBackgroundResource(R.drawable.amap_offlinearrow_tab2_pressed);
                 // mDownloadedAdapter.notifyDataChange();
                 break;
         }
         handler.sendEmptyMessage(UPDATE_LIST);
-        getViewBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
+        getBinding().downloadedListText.setPadding(paddingHorizontal, paddingVertical,
                 paddingHorizontal, paddingVertical);
-        getViewBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
+        getBinding().downloadListText.setPadding(paddingHorizontal, paddingVertical,
                 paddingHorizontal, paddingVertical);
 
     }

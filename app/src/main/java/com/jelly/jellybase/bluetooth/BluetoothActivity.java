@@ -57,11 +57,11 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
         super.onCreate(savedInstanceState);
         bluetoothPermissions();
         if (BluetoothUtil.getBlueToothStatus(this) == true) {
-            getViewBinding().ckBluetooth.setChecked(true);
+            getBinding().ckBluetooth.setChecked(true);
         }
-        getViewBinding().ckBluetooth.setOnCheckedChangeListener(this);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().tvDiscovery.setOnClickListener(this);
+        getBinding().ckBluetooth.setOnCheckedChangeListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().tvDiscovery.setOnClickListener(this);
         mBluetooth = BluetoothAdapter.getDefaultAdapter();
         if (mBluetooth == null) {
             Toast.makeText(this, "本机未找到蓝牙功能", Toast.LENGTH_SHORT).show();
@@ -90,7 +90,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                     }
                 } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
                         bleDevice.getState() != DeviceAdapter.CONNECTED) {
-                    getViewBinding().tvDiscovery.setText("开始连接");
+                    getBinding().tvDiscovery.setText("开始连接");
                     BlueConnectTask connectTask = new BlueConnectTask(bleDevice.getAddress());
                     connectTask.setBlueConnectListener(BluetoothActivity.this);
                     connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
@@ -100,7 +100,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
             @Override
             public void onDisConnect(final BlueDevice bleDevice,int position) {
                 cancelDiscovery();
-                getViewBinding().tvDiscovery.setText("连接已断开");
+                getBinding().tvDiscovery.setText("连接已断开");
                 mBlueSocket=null;
                 if (bleDevice.getSocket() != null) {
                     try {
@@ -123,7 +123,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                         bleDevice.getState() == DeviceAdapter.CONNECTED) {
                     mBlueSocket=bleDevice.getSocket();
                     if (mBlueSocket!=null) {
-                        getViewBinding().tvDiscovery.setText("正在发送消息");
+                        getBinding().tvDiscovery.setText("正在发送消息");
                         InputDialogFragment dialog = InputDialogFragment.newInstance(
                                 "", 0, "请输入要发送的消息");
                         String fragTag = getResources().getString(R.string.app_name);
@@ -132,7 +132,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                 }
             }
         });
-        getViewBinding().lvBluetooth.setAdapter(adapter);
+        getBinding().lvBluetooth.setAdapter(adapter);
     }
     // 定义获取基于地理位置的动态权限
     private void bluetoothPermissions() {
@@ -151,9 +151,9 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (BluetoothUtil.getBlueToothStatus(this) == true) {
-                getViewBinding().ckBluetooth.setChecked(true);
+                getBinding().ckBluetooth.setChecked(true);
             }
-            getViewBinding().ckBluetooth.setOnCheckedChangeListener(this);
+            getBinding().ckBluetooth.setOnCheckedChangeListener(this);
             mBluetooth = BluetoothAdapter.getDefaultAdapter();
             if (mBluetooth == null) {
                 Toast.makeText(this, "本机未找到蓝牙功能", Toast.LENGTH_SHORT).show();
@@ -231,14 +231,14 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
         if (mBluetooth.isDiscovering() != true) {
             mDeviceList.clear();
             adapter.notifyDataSetChanged();
-            getViewBinding().tvDiscovery.setText("正在搜索蓝牙设备");
+            getBinding().tvDiscovery.setText("正在搜索蓝牙设备");
             mBluetooth.startDiscovery();
         }
     }
 
     private void cancelDiscovery() {
         mHandler.removeCallbacks(mRefresh);
-        getViewBinding().tvDiscovery.setText("取消搜索蓝牙设备");
+        getBinding().tvDiscovery.setText("取消搜索蓝牙设备");
         if (mBluetooth.isDiscovering() == true) {
             mBluetooth.cancelDiscovery();
         }
@@ -294,16 +294,16 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                 }
             } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
                 mHandler.removeCallbacks(mRefresh);
-                getViewBinding().tvDiscovery.setText("蓝牙设备搜索完成");
+                getBinding().tvDiscovery.setText("蓝牙设备搜索完成");
             } else if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 if (device.getBondState() == BluetoothDevice.BOND_BONDING) {
-                    getViewBinding().tvDiscovery.setText("正在配对" + device.getName());
+                    getBinding().tvDiscovery.setText("正在配对" + device.getName());
                 } else if (device.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    getViewBinding().tvDiscovery.setText("完成配对" + device.getName());
+                    getBinding().tvDiscovery.setText("完成配对" + device.getName());
                     mHandler.postDelayed(mRefresh, 50);
                 } else if (device.getBondState() == BluetoothDevice.BOND_NONE) {
-                    getViewBinding().tvDiscovery.setText("取消配对" + device.getName());
+                    getBinding().tvDiscovery.setText("取消配对" + device.getName());
                 }
             }
         }
@@ -321,13 +321,13 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                 Boolean result = (Boolean) createBondMethod.invoke(device);
             } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
                     item.getState() != DeviceAdapter.CONNECTED) {
-                getViewBinding().tvDiscovery.setText("开始连接");
+                getBinding().tvDiscovery.setText("开始连接");
                 BlueConnectTask connectTask = new BlueConnectTask(item.getAddress());
                 connectTask.setBlueConnectListener(this);
                 connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
             } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
                     item.getState() == DeviceAdapter.CONNECTED) {
-                getViewBinding().tvDiscovery.setText("正在发送消息");
+                getBinding().tvDiscovery.setText("正在发送消息");
                 InputDialogFragment dialog = InputDialogFragment.newInstance(
                         "", 0, "请输入要发送的消息");
                 String fragTag = getResources().getString(R.string.app_name);
@@ -335,7 +335,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
             }
         } catch (Exception e) {
             e.printStackTrace();
-            getViewBinding().tvDiscovery.setText("配对异常：" + e.getMessage());
+            getBinding().tvDiscovery.setText("配对异常：" + e.getMessage());
         }
     }
 
@@ -355,11 +355,11 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
     @Override
     public void onBlueConnect(String address, BluetoothSocket socket) {
         if (socket==null){
-            getViewBinding().tvDiscovery.setText("连接失败");
+            getBinding().tvDiscovery.setText("连接失败");
             return;
         }
         mBlueSocket = socket;
-        getViewBinding().tvDiscovery.setText("连接成功");
+        getBinding().tvDiscovery.setText("连接成功");
         refreshAddress(address,socket);
     }
     //刷新已连接的状态

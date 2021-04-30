@@ -100,32 +100,32 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
                 finish();
                 break;
             case R.id.btn_scan:
-                if (getViewBinding().btnScan.getText().equals(getString(R.string.start_scan))) {
+                if (getBinding().btnScan.getText().equals(getString(R.string.start_scan))) {
                     checkPermissions();
-                } else if (getViewBinding().btnScan.getText().equals(getString(R.string.stop_scan))) {
+                } else if (getBinding().btnScan.getText().equals(getString(R.string.stop_scan))) {
                     BleManager.getInstance().cancelScan();
                 }
                 break;
 
             case R.id.txt_setting:
-                if (getViewBinding().layoutSetting.getVisibility() == View.VISIBLE) {
-                    getViewBinding().layoutSetting.setVisibility(View.GONE);
-                    getViewBinding().txtSetting.setText(getString(R.string.expand_search_settings));
+                if (getBinding().layoutSetting.getVisibility() == View.VISIBLE) {
+                    getBinding().layoutSetting.setVisibility(View.GONE);
+                    getBinding().txtSetting.setText(getString(R.string.expand_search_settings));
                 } else {
-                    getViewBinding().layoutSetting.setVisibility(View.VISIBLE);
-                    getViewBinding().txtSetting.setText(getString(R.string.retrieve_search_settings));
+                    getBinding().layoutSetting.setVisibility(View.VISIBLE);
+                    getBinding().txtSetting.setText(getString(R.string.retrieve_search_settings));
                 }
                 break;
         }
     }
 
     private void initView() {
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().btnScan.setOnClickListener(this);
-        getViewBinding().txtSetting.setOnClickListener(this);
-        getViewBinding().btnScan.setText(getString(R.string.start_scan));
-        getViewBinding().layoutSetting.setVisibility(View.GONE);
-        getViewBinding().txtSetting.setText(getString(R.string.expand_search_settings));
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().btnScan.setOnClickListener(this);
+        getBinding().txtSetting.setOnClickListener(this);
+        getBinding().btnScan.setText(getString(R.string.start_scan));
+        getBinding().layoutSetting.setVisibility(View.GONE);
+        getBinding().txtSetting.setText(getString(R.string.expand_search_settings));
 
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_rotate);
         operatingAnim.setInterpolator(new LinearInterpolator());
@@ -172,7 +172,7 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
 
     private void setScanRule() {
         String[] uuids;
-        String str_uuid = getViewBinding().etUuid.getText().toString();
+        String str_uuid = getBinding().etUuid.getText().toString();
         if (TextUtils.isEmpty(str_uuid)) {
             uuids = null;
         } else {
@@ -193,16 +193,16 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
         }
 
         String[] names;
-        String str_name = getViewBinding().etName.getText().toString();
+        String str_name = getBinding().etName.getText().toString();
         if (TextUtils.isEmpty(str_name)) {
             names = null;
         } else {
             names = str_name.split(",");
         }
 
-        String mac = getViewBinding().etMac.getText().toString();
+        String mac = getBinding().etMac.getText().toString();
 
-        boolean isAutoConnect = getViewBinding().swAuto.isChecked();
+        boolean isAutoConnect = getBinding().swAuto.isChecked();
 
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
                 .setServiceUuids(serviceUuids)      // 只扫描指定的服务的设备，可选
@@ -224,9 +224,9 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
             public void onScanStarted(boolean success) {
                 mDeviceAdapter.clearScanDevice();
                 mDeviceAdapter.notifyDataSetChanged();
-                getViewBinding().imgLoading.startAnimation(operatingAnim);
-                getViewBinding().imgLoading.setVisibility(View.VISIBLE);
-                getViewBinding().btnScan.setText(getString(R.string.stop_scan));
+                getBinding().imgLoading.startAnimation(operatingAnim);
+                getBinding().imgLoading.setVisibility(View.VISIBLE);
+                getBinding().btnScan.setText(getString(R.string.stop_scan));
             }
 
             @Override
@@ -250,9 +250,9 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
              */
             @Override
             public void onScanFinished(List<BleDevice> scanResultList) {
-                getViewBinding().imgLoading.clearAnimation();
-                getViewBinding().imgLoading.setVisibility(View.INVISIBLE);
-                getViewBinding().btnScan.setText(getString(R.string.start_scan));
+                getBinding().imgLoading.clearAnimation();
+                getBinding().imgLoading.setVisibility(View.INVISIBLE);
+                getBinding().btnScan.setText(getString(R.string.start_scan));
             }
         });
     }
@@ -266,9 +266,9 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
 
             @Override
             public void onConnectFail(BleDevice bleDevice, BleException exception) {
-                getViewBinding().imgLoading.clearAnimation();
-                getViewBinding().imgLoading.setVisibility(View.INVISIBLE);
-                getViewBinding().btnScan.setText(getString(R.string.start_scan));
+                getBinding().imgLoading.clearAnimation();
+                getBinding().imgLoading.setVisibility(View.INVISIBLE);
+                getBinding().btnScan.setText(getString(R.string.start_scan));
                 progressDialog.dismiss();
                 Toast.makeText(BluetoothBLEActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
             }

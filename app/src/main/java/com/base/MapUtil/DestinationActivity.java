@@ -54,26 +54,26 @@ public class DestinationActivity extends BaseActivity<AmapDestinationBinding> im
 		from=getIntent().getIntExtra("from",0);
 
 		imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-		getViewBinding().destinationBack.setOnClickListener(this);
+		getBinding().destinationBack.setOnClickListener(this);
 
-		getViewBinding().destinationSearch.setOnClickListener(this);
-		getViewBinding().locationTv.setOnClickListener(this);
+		getBinding().destinationSearch.setOnClickListener(this);
+		getBinding().locationTv.setOnClickListener(this);
 
 
 
-		getViewBinding().destinationEdittext.addTextChangedListener(this);
-		getViewBinding().destinationEdittext.setOnClickListener(this);
+		getBinding().destinationEdittext.addTextChangedListener(this);
+		getBinding().destinationEdittext.setOnClickListener(this);
 		//监听键盘搜索按钮
-		getViewBinding().destinationEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		getBinding().destinationEdittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEARCH){
 					//隐藏输入法
-					imm.hideSoftInputFromWindow(getViewBinding().destinationEdittext.getWindowToken(), 0);
-					if (!TextUtils.isEmpty(getViewBinding().destinationEdittext.getText().toString()) &&
+					imm.hideSoftInputFromWindow(getBinding().destinationEdittext.getWindowToken(), 0);
+					if (!TextUtils.isEmpty(getBinding().destinationEdittext.getText().toString()) &&
 							RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 						PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-						poiSearchTask.search(getViewBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+						poiSearchTask.search(getBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 					}
 					return true;
 				}
@@ -82,8 +82,8 @@ public class DestinationActivity extends BaseActivity<AmapDestinationBinding> im
 		});
 		posList= PositionDaoUtils.getInstance(this).getAllList();
 		mRecomandAdapter=new RecomandAdapter(getApplicationContext());
-		getViewBinding().recommendList.setAdapter(mRecomandAdapter);
-		getViewBinding().recommendList.setOnItemClickListener(this);
+		getBinding().recommendList.setAdapter(mRecomandAdapter);
+		getBinding().recommendList.setOnItemClickListener(this);
 
 		mRouteTask= RouteTask.getInstance(getApplicationContext());
 		city= RouteTask.getInstance(getApplicationContext()).getStartPoint().city;
@@ -129,18 +129,18 @@ public class DestinationActivity extends BaseActivity<AmapDestinationBinding> im
 				break;
 			case R.id.destination_search:
 				//隐藏输入法
-				imm.hideSoftInputFromWindow(getViewBinding().destinationEdittext.getWindowToken(), 0);
-				if (!TextUtils.isEmpty(getViewBinding().destinationEdittext.getText().toString()) &&
+				imm.hideSoftInputFromWindow(getBinding().destinationEdittext.getWindowToken(), 0);
+				if (!TextUtils.isEmpty(getBinding().destinationEdittext.getText().toString()) &&
 						RouteTask.getInstance(getApplicationContext()).getStartPoint() !=null) {
 					PoiSearchTask poiSearchTask=new PoiSearchTask(getApplicationContext(), mRecomandAdapter);
-					poiSearchTask.search(getViewBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
+					poiSearchTask.search(getBinding().destinationEdittext.getText().toString(), RouteTask.getInstance(getApplicationContext()).getStartPoint().city);
 				}
 				break;
 			case R.id.destination_edittext://
 				//隐藏输入法
 				//imm.hideSoftInputFromWindow(zhanghu_layout.getWindowToken(), 0);
 				//显示输入法
-				imm.showSoftInputFromInputMethod(getViewBinding().destinationEdittext.getWindowToken(),0);
+				imm.showSoftInputFromInputMethod(getBinding().destinationEdittext.getWindowToken(),0);
 				break;
 			case R.id.location_tv:
 				Intent ii=new Intent(BaseBroadcast.SEARCH_RECEIVER);

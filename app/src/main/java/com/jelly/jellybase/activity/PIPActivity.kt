@@ -30,8 +30,8 @@ class PIPActivity : BaseActivity<PipModeActivityBinding>(),View.OnClickListener{
         LiveEventBus.get("PIPActivity").removeObserver(mObserver)
     }
     private fun iniView(){
-        viewBinding!!.backLayout.setOnClickListener(this)
-        viewBinding!!.btn.setOnClickListener(this)
+        binding!!.backLayout.setOnClickListener(this)
+        binding!!.btn.setOnClickListener(this)
         mObserver= Observer<Any> { netEvent ->
             netEvent?.let {
                 netEvent as NetEvent<Any>

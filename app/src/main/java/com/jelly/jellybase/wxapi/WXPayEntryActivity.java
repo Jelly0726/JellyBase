@@ -36,7 +36,7 @@ public class WXPayEntryActivity extends BaseActivity<WeixinpayActivityBinding> i
 		mApi.handleIntent(getIntent(), this);
 	}
 	private void initView(){
-		getViewBinding().leftBack.setOnClickListener(mListener);
+		getBinding().leftBack.setOnClickListener(mListener);
 
 	}
 

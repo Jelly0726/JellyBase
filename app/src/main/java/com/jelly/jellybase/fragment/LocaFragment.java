@@ -69,18 +69,18 @@ public class LocaFragment extends BaseFragment<LocaFragmentBinding> {
 
     private void iniXRefreshView(){
         adapter=new LocaFragmentAdapter(getActivity(),mList);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(1,1, SimpleItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
 
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(getActivity()));
 
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     /**
      * 滑动刷新
@@ -92,7 +92,7 @@ public class LocaFragment extends BaseFragment<LocaFragmentBinding> {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().xrefreshview.stopRefresh();
+                    getBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -103,7 +103,7 @@ public class LocaFragment extends BaseFragment<LocaFragmentBinding> {
                 public void run() {
                     //getViewBinding().xrefreshview.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().xrefreshview.stopLoadMore();
+                    getBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }

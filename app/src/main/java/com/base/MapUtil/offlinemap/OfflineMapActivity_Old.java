@@ -101,8 +101,8 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 		context = OfflineMapActivity_Old.this;
 		initDialog();
 
-		getViewBinding().list.setGroupIndicator(null);
-		getViewBinding().list.setAdapter(adapter);
+		getBinding().list.setGroupIndicator(null);
+		getBinding().list.setAdapter(adapter);
 
 	}
 	/**
@@ -212,7 +212,7 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 	 * 为列表绑定数据源
 	 */
 	private void initData() {
-		getViewBinding().list
+		getBinding().list
 				.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
 					@Override
@@ -222,7 +222,7 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 					}
 				});
 
-		getViewBinding().list
+		getBinding().list
 				.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
 					@Override
@@ -231,7 +231,7 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 					}
 				});
 		// 设置二级item点击的监听器
-		getViewBinding().list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+		getBinding().list.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v,
@@ -279,13 +279,13 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 			}
 		});
 
-		getViewBinding().list
+		getBinding().list
 				.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 					@Override
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
-						if (getViewBinding().list.getPackedPositionType(id) == getViewBinding().list.PACKED_POSITION_TYPE_CHILD) {
+						if (getBinding().list.getPackedPositionType(id) == getBinding().list.PACKED_POSITION_TYPE_CHILD) {
 							groupPosition = ExpandableListView
 									.getPackedPositionGroup(id);
 							childPosition = ExpandableListView

@@ -51,24 +51,24 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         iniXRefreshView();
     }
     private void iniView (){
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
     private void iniXRefreshView(){
-        getViewBinding().mRefreshLayout.setOnRefreshListener(mRefreshListener);
+        getBinding().mRefreshLayout.setOnRefreshListener(mRefreshListener);
         adapter=new AccountDetailsAdapter(this);
-        getViewBinding(). mRecyclerView.setHasFixedSize(true);
+        getBinding(). mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        getViewBinding(). mRecyclerView.setLayoutManager(layoutManager);
-        getViewBinding().mRecyclerView.addItemDecoration(createItemDecoration());
-        getViewBinding().mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
-        getViewBinding().mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
-        getViewBinding(). mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
-        getViewBinding().mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
-        getViewBinding().mRecyclerView.setAdapter(adapter);
+        getBinding(). mRecyclerView.setLayoutManager(layoutManager);
+        getBinding().mRecyclerView.addItemDecoration(createItemDecoration());
+        getBinding().mRecyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
+        getBinding().mRecyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+        getBinding(). mRecyclerView.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
+        getBinding().mRecyclerView.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+        getBinding().mRecyclerView.setAdapter(adapter);
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -150,7 +150,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         ResultData<AccountDetail> resultData= (ResultData<AccountDetail>) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            getViewBinding().mRefreshLayout.setRefreshing(false);
+            getBinding().mRefreshLayout.setRefreshing(false);
         }
         mMaxToal=resultData.getTotal();
         mList.addAll(resultData.getRows());
@@ -158,7 +158,7 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         // 数据完更多数据，一定要掉用这个方法。
         // 第一个参数：表示此次数据是否为空。
         // 第二个参数：表示是否还有更多数据。
-        getViewBinding().mRecyclerView.loadMoreFinish(resultData.getRows().size()==0, mMaxToal>(page*size));
+        getBinding().mRecyclerView.loadMoreFinish(resultData.getRows().size()==0, mMaxToal>(page*size));
     }
 
     @Override
@@ -166,13 +166,13 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
         ToastUtils.showToast(this,message);
         if (isRefresh) {
             mList.clear();
-            getViewBinding().mRefreshLayout.setRefreshing(false);
+            getBinding().mRefreshLayout.setRefreshing(false);
         }else
             page--;
         adapter.notifyDataSetChanged(mList);
         // 数据完更多数据，一定要掉用这个方法。
         // 第一个参数：表示此次数据是否为空。
         // 第二个参数：表示是否还有更多数据。
-        getViewBinding().mRecyclerView.loadMoreFinish(true, mMaxToal>(page*size));
+        getBinding().mRecyclerView.loadMoreFinish(true, mMaxToal>(page*size));
     }
 }

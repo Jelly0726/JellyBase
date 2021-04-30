@@ -46,11 +46,11 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Vie
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().commitBtn.setOnClickListener(this);
-        getViewBinding().cancelCauseTv.setOnClickListener(this);
-        getViewBinding().causeLayout.setVisibility(View.GONE);
-        getViewBinding().cancelCauseEdit.addTextChangedListener(new TextWatcher() {
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().commitBtn.setOnClickListener(this);
+        getBinding().cancelCauseTv.setOnClickListener(this);
+        getBinding().causeLayout.setVisibility(View.GONE);
+        getBinding().cancelCauseEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -65,7 +65,7 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Vie
             public void afterTextChanged(Editable s) {
                 String ss=s.toString();
                 if (!TextUtils.isEmpty(ss)){
-                    getViewBinding().causeNumTv.setText(ss.length()+"/100");
+                    getBinding().causeNumTv.setText(ss.length()+"/100");
                 }
             }
         });
@@ -105,7 +105,7 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Vie
     private void iniCause(){
         cause= getResources().getStringArray(R.array.cause);
         cancelCause=cause[0];
-        getViewBinding().cancelCauseTv.setText(cancelCause);
+        getBinding().cancelCauseTv.setText(cancelCause);
         causePicker = new SinglePicker<>(this, cause);
         causePicker.setCanceledOnTouchOutside(false);
         causePicker.setSelectedIndex(0);
@@ -114,11 +114,11 @@ public class CancelOrderActivity extends BaseActivityImpl<CancelOrderContact.Vie
             @Override
             public void onItemPicked(int index, String item) {
                 cancelCause=item;
-                getViewBinding().cancelCauseTv.setText(cancelCause);
+                getBinding().cancelCauseTv.setText(cancelCause);
                 if (cancelCause.trim().equals(cause[cause.length-1])){
-                    getViewBinding().causeLayout.setVisibility(View.VISIBLE);
+                    getBinding().causeLayout.setVisibility(View.VISIBLE);
                 }else {
-                    getViewBinding().causeLayout.setVisibility(View.GONE);
+                    getBinding().causeLayout.setVisibility(View.GONE);
                 }
             }
         });

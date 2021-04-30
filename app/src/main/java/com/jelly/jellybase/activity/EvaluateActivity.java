@@ -23,11 +23,11 @@ public class EvaluateActivity extends BaseActivity<EvaluateActivityBinding> impl
     }
 
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().topRight.setOnClickListener(this);
-        getViewBinding().describeRatingBar.setRating(4);
-        getViewBinding().logisticsRatingBar.setRating(4);
-        getViewBinding().storeRatingBar.setRating(4);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().topRight.setOnClickListener(this);
+        getBinding().describeRatingBar.setRating(4);
+        getBinding().logisticsRatingBar.setRating(4);
+        getBinding().storeRatingBar.setRating(4);
 //        describeRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
 //            @Override
 //            public void onRatingChange(BaseRatingBar baseRatingBar, float v) {
@@ -42,7 +42,7 @@ public class EvaluateActivity extends BaseActivity<EvaluateActivityBinding> impl
                 finish();
                 break;
             case R.id.top_right:
-                String contents=getViewBinding().contentEd.getText().toString();
+                String contents= getBinding().contentEd.getText().toString();
                 if (TextUtils.isEmpty(contents)){
                     ToastUtils.showToast(this,"请输入评价内容");
                     return;

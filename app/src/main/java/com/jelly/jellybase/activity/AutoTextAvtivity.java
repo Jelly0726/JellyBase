@@ -21,14 +21,14 @@ public class AutoTextAvtivity extends BaseActivity<AutotextActivityBinding> impl
         iniView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
         adapter=new AutoTextAdapter(this);
-        getViewBinding().autoTextEd.setAdapter(adapter);
+        getBinding().autoTextEd.setAdapter(adapter);
 
 //        适配器 适配下拉列表的数据
         adapters = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, res);
 //        给适配器加载数据源
-        getViewBinding().autoTextEds.setAdapter(adapters);
+        getBinding().autoTextEds.setAdapter(adapters);
     }
     public void onClick(View view){
         if (AntiShake.check(view.getId()))return;

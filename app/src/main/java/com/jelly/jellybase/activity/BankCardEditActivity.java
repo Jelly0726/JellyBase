@@ -38,10 +38,10 @@ public class BankCardEditActivity extends BaseActivityImpl<BankCartContact.View
         iniView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().commitTv.setOnClickListener(this);
-        getViewBinding().bankCardName.setText(bankCardInfo.getBankName()+"·"+bankCardInfo.getType());
-        getViewBinding().bankCardId.setText(bankCardInfo.getBankNo());
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().commitTv.setOnClickListener(this);
+        getBinding().bankCardName.setText(bankCardInfo.getBankName()+"·"+bankCardInfo.getType());
+        getBinding().bankCardId.setText(bankCardInfo.getBankNo());
     }
     @Override
     public void onBackPressed() {

@@ -33,8 +33,8 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View
         iniView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().commitTv.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().commitTv.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -69,8 +69,8 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View
                 finish();
                 break;
             case R.id.commit_tv:
-                String newPwd=getViewBinding().newPwd.getText().toString().trim();
-                String newPwd1=getViewBinding().newPwd1.getText().toString().trim();
+                String newPwd= getBinding().newPwd.getText().toString().trim();
+                String newPwd1= getBinding().newPwd1.getText().toString().trim();
                 if (!PwdCheckUtil.validPwd4(newPwd)){
                     ToastUtils.showShort(this,"请输入6-16位非纯数字、字母、符号新密码!");
                     return;
@@ -87,9 +87,9 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View
 
     @Override
     public Object getUpdatePasswordParam() {
-        String oldPwd=getViewBinding().oldPwd.getText().toString().trim();
+        String oldPwd= getBinding().oldPwd.getText().toString().trim();
         oldPwd= MD5.MD5Encode(oldPwd);
-        String newPwd=getViewBinding().newPwd.getText().toString().trim();
+        String newPwd= getBinding().newPwd.getText().toString().trim();
         newPwd= MD5.MD5Encode(newPwd);
         Map<String,String> map=new TreeMap();
         map.put("password",newPwd);

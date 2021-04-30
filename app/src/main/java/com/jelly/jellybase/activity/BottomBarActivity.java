@@ -128,9 +128,9 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
 
     private void initListener() {
         myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
-        getViewBinding().vpContent.setAdapter(myAdapter);
-        getViewBinding().bbl.setViewPager(getViewBinding().vpContent);
-        getViewBinding().bbl.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
+        getBinding().vpContent.setAdapter(myAdapter);
+        getBinding().bbl.setViewPager(getBinding().vpContent);
+        getBinding().bbl.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final BottomBarItem bottomBarItem, int position, int currentPosition) {
             }
@@ -159,9 +159,9 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
         if(requestCode==areaRresultCode && resultCode== areaRresultCode){
             address=data.getParcelableExtra("address");
             if (address!=null){
-                getViewBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+                getBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
             }else if (entity!=null) {
-                getViewBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
+                getBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
             }
         }
     }
@@ -170,7 +170,7 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
     public void onEvent(NetEvent netEvent){
         if (netEvent.getEventType().equals(CurrentItem.class.getName())){
             CurrentItem currentItem= (CurrentItem) netEvent.getEvent();
-            getViewBinding().bbl.setCurrentItem(currentItem.getItemIndex());
+            getBinding().bbl.setCurrentItem(currentItem.getItemIndex());
             BaseFragment baseFragment= (BaseFragment) myAdapter.getItem(currentItem.getItemIndex());
             baseFragment.setData(currentItem.getData());
         }
@@ -181,9 +181,9 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
             if (entity.latitue!=0d&&entity.longitude!=0d) {
                 this.entity=entity;
                 if (address!=null){
-                    getViewBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
+                    getBinding().bbl.setText(3,address.getDistrict().getAreaName());//设置第三个页签显示的文字
                 }else if (entity!=null) {
-                    getViewBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
+                    getBinding().bbl.setText(3,entity.district);//设置第三个页签显示的文字
                 }
                 //停止定位服务
                 Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
@@ -198,7 +198,7 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
     }
     @Override
     public void onBackPressed() {
-        BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getViewBinding().bbl.getCurrentItem());
+        BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getBinding().bbl.getCurrentItem());
         if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
             if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                 super.onBackPressed();
@@ -213,7 +213,7 @@ public class BottomBarActivity extends BaseActivity<BottombarActivityBinding> im
         try {
             // Check if the key event was the Back button and if there's history
             if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-                BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getViewBinding().bbl.getCurrentItem());
+                BaseFragment mBaseFragment= (BaseFragment) mFragmentList.get(getBinding().bbl.getCurrentItem());
                 if(mBaseFragment == null || !mBaseFragment.onBackPressed()){
                     if(getSupportFragmentManager().getBackStackEntryCount() == 0){
                         super.onBackPressed();

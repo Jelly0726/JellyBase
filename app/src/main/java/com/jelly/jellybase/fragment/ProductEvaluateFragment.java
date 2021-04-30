@@ -65,23 +65,23 @@ public class ProductEvaluateFragment extends BaseFragment<ProductEvaluateFragmen
             mList.add(new Product());
         }
         adapter=new ProductEvaluateAdapter(this.getActivity(),mList);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
         // 设置静默加载模式
 //		xRefreshView1.setSilenceLoadMore();
         layoutManager = new LinearLayoutManager(this.getActivity());
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
         Rect rect=new Rect();
         rect.bottom=0;
         rect.top= 1;
         rect.left=0;
         rect.right=0;
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,0,ItemDecoration.NONE, ItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,0,ItemDecoration.NONE, ItemDecoration.NONE));
         // 静默加载模式不能设置footerview
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
 //        xRefreshView1.setAutoLoadMore(false);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
 
         //当需要使用数据不满一屏时不显示点击加载更多的效果时，解注释下面的三行代码
         //并注释掉第四行代码
@@ -92,7 +92,7 @@ public class ProductEvaluateFragment extends BaseFragment<ProductEvaluateFragmen
         //设置静默加载时提前加载的item个数
 //		xRefreshView1.setPreLoadCount(2);
 
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
 //		// 实现Recyclerview的滚动监听，在这里可以自己处理到达底部加载更多的操作，可以不实现onLoadMore方法，更加自由
 //		xRefreshView1.setOnRecyclerViewScrollListener(new OnScrollListener() {
 //			@Override
@@ -119,7 +119,7 @@ public class ProductEvaluateFragment extends BaseFragment<ProductEvaluateFragmen
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().xrefreshview.stopRefresh();
+                    getBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -130,7 +130,7 @@ public class ProductEvaluateFragment extends BaseFragment<ProductEvaluateFragmen
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().xrefreshview.stopLoadMore();
+                    getBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }

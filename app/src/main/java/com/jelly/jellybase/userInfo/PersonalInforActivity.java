@@ -75,7 +75,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             sexList.add(new Sex(1, "男"));
             sexList.add(new Sex(2, "女"));
             sex=sexList.get(0);
-            getViewBinding().sexTv.setText(sex.getName());
+            getBinding().sexTv.setText(sex.getName());
         }
         iniView();
         initXRefreshView();
@@ -83,37 +83,37 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
 
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().commitTv.setOnClickListener(this);
-        getViewBinding().changePwd.setOnClickListener(this);
-        getViewBinding().avatarLayout.setOnClickListener(this);
-        getViewBinding().birthdayTv.setOnClickListener(this);
-        getViewBinding().editTv.setOnClickListener(this);
-        getViewBinding().sexTv.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().commitTv.setOnClickListener(this);
+        getBinding().changePwd.setOnClickListener(this);
+        getBinding().avatarLayout.setOnClickListener(this);
+        getBinding().birthdayTv.setOnClickListener(this);
+        getBinding().editTv.setOnClickListener(this);
+        getBinding().sexTv.setOnClickListener(this);
         if (userInfo!=null) {
             //iniEditable(false);
-            getViewBinding().niknameTv.setText(userInfo.getNickname());
+            getBinding().niknameTv.setText(userInfo.getNickname());
             if (!TextUtils.isEmpty(userInfo.getNickname()))
-                getViewBinding().niknameTv.setSelection(userInfo.getNickname().length());
-            getViewBinding().nameTv.setText(userInfo.getName());
+                getBinding().niknameTv.setSelection(userInfo.getNickname().length());
+            getBinding().nameTv.setText(userInfo.getName());
             if (!TextUtils.isEmpty(userInfo.getName()))
-                getViewBinding().nameTv.setSelection(userInfo.getName().length());
-            getViewBinding().emailTv.setText(userInfo.getEmail());
+                getBinding().nameTv.setSelection(userInfo.getName().length());
+            getBinding().emailTv.setText(userInfo.getEmail());
             if (!TextUtils.isEmpty(userInfo.getEmail()))
-                getViewBinding().emailTv.setSelection(userInfo.getEmail().length());
+                getBinding().emailTv.setSelection(userInfo.getEmail().length());
             if (userInfo.getSex()) {
                 sex=sexList.get(0);
             }else {
                 sex=sexList.get(1);
             }
-            getViewBinding().sexTv.setText(sex.getName());
-            getViewBinding().birthdayTv.setText(userInfo.getBirthday());
-            getViewBinding().idcartTv.setText(userInfo.getIdcard());
+            getBinding().sexTv.setText(sex.getName());
+            getBinding().birthdayTv.setText(userInfo.getBirthday());
+            getBinding().idcartTv.setText(userInfo.getIdcard());
             if (!TextUtils.isEmpty(userInfo.getIdcard()))
-                getViewBinding().idcartTv.setSelection(userInfo.getIdcard().length());
-            getViewBinding().phoneTv.setText("未绑定");
+                getBinding().idcartTv.setSelection(userInfo.getIdcard().length());
+            getBinding().phoneTv.setText("未绑定");
             if (!TextUtils.isEmpty(userInfo.getMobile())){
-                getViewBinding().phoneTv.setText(userInfo.getMobile());
+                getBinding().phoneTv.setText(userInfo.getMobile());
             }
             if (!TextUtils.isEmpty(userInfo.getPhoto())&&!TextUtils.isEmpty(userInfo.getIP())){
                 String phto=userInfo.getIP()+userInfo.getPhoto();
@@ -125,7 +125,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                         .load(phto)
                         .skipMemoryCache(true)//不使用内存缓存
                         .diskCacheStrategy(DiskCacheStrategy.NONE)//不使用缓存
-                        .into(getViewBinding().storeImg);
+                        .into(getBinding().storeImg);
             }
         }
     }
@@ -137,18 +137,18 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     // iniEditable(false);是否编辑
     private void iniEditable(boolean editable){
         if (editable){
-            getViewBinding().editTv.setVisibility(View.GONE);
-            getViewBinding().commitTv.setVisibility(View.VISIBLE);
+            getBinding().editTv.setVisibility(View.GONE);
+            getBinding().commitTv.setVisibility(View.VISIBLE);
         }else {
-            getViewBinding().editTv.setVisibility(View.VISIBLE);
-            getViewBinding().commitTv.setVisibility(View.GONE);
+            getBinding().editTv.setVisibility(View.VISIBLE);
+            getBinding().commitTv.setVisibility(View.GONE);
         }
-        getViewBinding().niknameTv.setEnabled(editable);
-        getViewBinding().avatarLayout.setEnabled(editable);
-        getViewBinding().niknameTv.setEnabled(editable);
-        getViewBinding().nameTv.setEnabled(editable);
-        getViewBinding().birthdayTv.setEnabled(editable);
-        getViewBinding().idcartTv.setEnabled(editable);
+        getBinding().niknameTv.setEnabled(editable);
+        getBinding().avatarLayout.setEnabled(editable);
+        getBinding().niknameTv.setEnabled(editable);
+        getBinding().nameTv.setEnabled(editable);
+        getBinding().birthdayTv.setEnabled(editable);
+        getBinding().idcartTv.setEnabled(editable);
     }
     private void showDialog(){
         final String[] items = {"拍照", "从相册选择"};
@@ -250,7 +250,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 .start();
     }
     private void initXRefreshView(){
-        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
             }
@@ -259,13 +259,13 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             public void onScroll(int l, int t, int oldl, int oldt) {
             }
         });
-        getViewBinding().customView.setAutoRefresh(false);
-        getViewBinding().customView.setPullLoadEnable(false);
-        getViewBinding().customView.setPullRefreshEnable(false);
-        getViewBinding().customView.setPinnedTime(1000);
-        getViewBinding().customView.setAutoLoadMore(false);
+        getBinding().customView.setAutoRefresh(false);
+        getBinding().customView.setPullLoadEnable(false);
+        getBinding().customView.setPullRefreshEnable(false);
+        getBinding().customView.setPinnedTime(1000);
+        getBinding().customView.setAutoLoadMore(false);
 //		outView.setSilenceLoadMore();
-        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
         //getViewBinding().customView.setCustomFooterView(new CustomerFooter(this.getActivity()));
     }
     @Override
@@ -302,10 +302,10 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 onYearMonthDayPicker();
                 break;
             case R.id.commit_tv:
-                String nikname=getViewBinding().niknameTv.getText().toString();
-                String name=getViewBinding().nameTv.getText().toString();
-                String birthday=getViewBinding().birthdayTv.getText().toString().trim();
-                String idcart=getViewBinding().idcartTv.getText().toString().trim();
+                String nikname= getBinding().niknameTv.getText().toString();
+                String name= getBinding().nameTv.getText().toString();
+                String birthday= getBinding().birthdayTv.getText().toString().trim();
+                String idcart= getBinding().idcartTv.getText().toString().trim();
                 if (TextUtils.isEmpty(nikname)||TextUtils.isEmpty(name)||
                         TextUtils.isEmpty(birthday)||TextUtils.isEmpty(idcart)){
                     ToastUtils.showToast(this,"昵称，姓名，生日，身份证不能为空!");
@@ -331,7 +331,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().customView.stopRefresh();
+                    getBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -342,7 +342,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 public void run() {
                     //getViewBinding().customView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().customView.stopLoadMore();
+                    getBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }
@@ -360,7 +360,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
             public void onItemPicked(int index, Sex item) {
 //                showToast("index=" + index + ", id=" + item.getId() + ", name=" + item.getName());
                 sex=item;
-                getViewBinding().sexTv.setText(sex.getName());
+                getBinding().sexTv.setText(sex.getName());
             }
         });
         picker.show();
@@ -387,7 +387,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
                 mYear=year;
                 mMonth=month;
                 mDay=day;
-                getViewBinding().birthdayTv.setText(year + "-" + month + "-" + day);
+                getBinding().birthdayTv.setText(year + "-" + month + "-" + day);
             }
         });
         picker.setOnWheelListener(new DatePicker.OnWheelListener() {
@@ -421,12 +421,12 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     }
     @Override
     public Object getPersonalInfoParam() {
-        String nikname=getViewBinding().niknameTv.getText().toString();
-        String name=getViewBinding().nameTv.getText().toString();
-        String birthday=getViewBinding().birthdayTv.getText().toString().trim();
-        String idcart=getViewBinding().idcartTv.getText().toString().trim();
-        String phone=getViewBinding().phoneTv.getText().toString().trim();
-        String email=getViewBinding().emailTv.getText().toString().trim();
+        String nikname= getBinding().niknameTv.getText().toString();
+        String name= getBinding().nameTv.getText().toString();
+        String birthday= getBinding().birthdayTv.getText().toString().trim();
+        String idcart= getBinding().idcartTv.getText().toString().trim();
+        String phone= getBinding().phoneTv.getText().toString().trim();
+        String email= getBinding().emailTv.getText().toString().trim();
         boolean sexs=false;
         if (sex.getId()==1){
             sexs=true;
@@ -474,7 +474,7 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
         uploadData=(UploadData)mCallBackVo;
         Album.getAlbumConfig().
                 getAlbumLoader()
-                .load( getViewBinding().storeImg, mAlbumFiles.get(0));
+                .load( getBinding().storeImg, mAlbumFiles.get(0));
     }
 
     @Override

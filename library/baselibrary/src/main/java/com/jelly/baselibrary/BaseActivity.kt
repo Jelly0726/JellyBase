@@ -49,7 +49,7 @@ import java.lang.reflect.ParameterizedType
 @DebugLog
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
         Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
-    protected var viewBinding: T? = null
+    protected lateinit var binding: T
     private var softKeyboardManager: SoftKeyboardManager? = null
     private var frameLayout: FrameLayout? = null//最外层布局
     private var mRecevier: InnerRecevier? = null
@@ -88,30 +88,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
             StrictMode.setThreadPolicy(policy)
         }
         //====
-        //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        val type = javaClass.genericSuperclass as ParameterizedType
-        type?.let { it ->
-            for (cl in it.actualTypeArguments) {
-                try {
-                    cl as Class<T>
-                    //多个泛型时判断类的name是否以Binding，不是跳过本次
-                    if (!cl.name.endsWith("Binding"))continue
-                    val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
-                    viewBinding = inflate.invoke(null, layoutInflater) as T?
-                    viewBinding?.let { it ->
-                        setContentView(it.root)
-                    }
-                    return@let
-                } catch (e: NoSuchMethodException) {
-                    e.printStackTrace()
-                } catch (e: IllegalAccessException) {
-                    e.printStackTrace()
-                } catch (e: InvocationTargetException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-        //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        bindingView()
         frameLayout?.let {
             //监听SoftKeyboard的弹出与隐藏状态
             softKeyboardManager = SoftKeyboardManager(it);
@@ -130,6 +107,37 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
         if (mRecevier != null) {
             registerReceiver(mRecevier, mFilter)
         }
+    }
+
+    /**
+     * 绑定视图
+     */
+    private fun bindingView() {
+        //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+        val type = javaClass.genericSuperclass as ParameterizedType
+        type?.let { it ->
+            for (cl in it.actualTypeArguments) {
+                try {
+                    cl as Class<T>
+                    //多个泛型时判断类的name是否以Binding，不是跳过本次
+                    if (!cl.name.endsWith("Binding")) continue
+                    val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
+                    binding = inflate.invoke(null, layoutInflater) as T
+                    binding?.let { it ->
+                        setContentView(it.root)
+                    }
+                    return@let
+                } catch (e: NoSuchMethodException) {
+                    e.printStackTrace()
+                } catch (e: IllegalAccessException) {
+                    e.printStackTrace()
+                } catch (e: InvocationTargetException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+        //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        if (binding==null)finish()
     }
 
     /**
@@ -345,7 +353,6 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
             it.removeSoftKeyboardStateListener(this);
             it.dispose();
         }
-        viewBinding = null
         super.onDestroy()
     }
 

@@ -20,7 +20,7 @@ public class ScreenShortActivity extends BaseActivity<ScreenshortActivityBinding
         iniView();
     }
     private void iniView(){
-        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
+        getBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 QRDialogLogout qrDialogLogout=QRDialogLogout.getInstance();

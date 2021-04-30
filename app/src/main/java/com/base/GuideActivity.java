@@ -31,13 +31,13 @@ public class GuideActivity extends BaseActivity<BaseActivityGuideBinding> {
     private void iniBar(){
     }
     private void initView() {
-        getViewBinding().bannerGuideForeground.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+        getBinding().bannerGuideForeground.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
                 Toast.makeText(banner.getContext(), "点击了第" + (position + 1) + "页", Toast.LENGTH_SHORT).show();
             }
         });
-        getViewBinding().bannerGuideForeground.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+        getBinding().bannerGuideForeground.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
 ////                SimpleDraweeView simpleDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.sdv_item_fresco_content);
@@ -61,7 +61,7 @@ public class GuideActivity extends BaseActivity<BaseActivityGuideBinding> {
          * 在 BGABanner 里已经帮开发者处理了防止重复点击事件
          * 在 BGABanner 里已经帮开发者处理了「跳过按钮」和「进入按钮」的显示与隐藏
          */
-        getViewBinding().bannerGuideForeground.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
+        getBinding().bannerGuideForeground.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
                 startActivity(new Intent(GuideActivity.this, MainActivity.class));
@@ -78,8 +78,8 @@ public class GuideActivity extends BaseActivity<BaseActivityGuideBinding> {
         List<String> imgs=new ArrayList<>();
         imgs.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505712555066&di=72523b179ae82854526ae5281277a93c&imgtype=jpg&src=http%3A%2F%2Fimg2.niutuku.com%2Fdesk%2F1208%2F2009%2Fntk-2009-18712.jpg");
         imgs.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505712553329&di=3a87a3a0ce8efc04c874143938cdf8ce&imgtype=0&src=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2F455377.jpg");
-        getViewBinding().bannerGuideForeground.setAutoPlayAble(imgs.size() > 1);
-        getViewBinding().bannerGuideForeground.setData(imgs,null);
+        getBinding().bannerGuideForeground.setAutoPlayAble(imgs.size() > 1);
+        getBinding().bannerGuideForeground.setData(imgs,null);
     }
 
     @Override
@@ -87,13 +87,13 @@ public class GuideActivity extends BaseActivity<BaseActivityGuideBinding> {
         super.onResume();
 
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
-        getViewBinding().bannerGuideBackground.setBackgroundResource(android.R.color.white);
+        getBinding().bannerGuideBackground.setBackgroundResource(android.R.color.white);
     }
 
     @Override
     protected void onDestroy() {
-        getViewBinding().bannerGuideBackground.onDestroy();
-        getViewBinding().bannerGuideForeground.onDestroy();
+        getBinding().bannerGuideBackground.onDestroy();
+        getBinding().bannerGuideForeground.onDestroy();
         super.onDestroy();
     }
 }

@@ -12,13 +12,13 @@ public class UniqueIDActivity extends BaseActivity<UniqueidActivityBinding> impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().button1.setOnClickListener(this);
-        getViewBinding().button2.setOnClickListener(this);
-        getViewBinding().button3.setOnClickListener(this);
-        getViewBinding().button4.setOnClickListener(this);
-        getViewBinding().button5.setOnClickListener(this);
-        getViewBinding().button6.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().button1.setOnClickListener(this);
+        getBinding().button2.setOnClickListener(this);
+        getBinding().button3.setOnClickListener(this);
+        getBinding().button4.setOnClickListener(this);
+        getBinding().button5.setOnClickListener(this);
+        getBinding().button6.setOnClickListener(this);
     }
     public void onClick(View view){
         switch (view.getId()){
@@ -26,22 +26,22 @@ public class UniqueIDActivity extends BaseActivity<UniqueidActivityBinding> impl
                 finish();
                 break;
             case R.id.button1:
-                getViewBinding().idTv.setText(PhoneUtil.getUniqueID(getApplicationContext()));
+                getBinding().idTv.setText(PhoneUtil.getUniqueID(getApplicationContext()));
                 break;
             case R.id.button2:
-                getViewBinding().id1Tv.setText(PhoneUtil.getDeviceId(getApplicationContext()));
+                getBinding().id1Tv.setText(PhoneUtil.getDeviceId(getApplicationContext()));
                 break;
             case R.id.button3:
-                getViewBinding().id2Tv.setText(PhoneUtil.getPseudoUniqueID());
+                getBinding().id2Tv.setText(PhoneUtil.getPseudoUniqueID());
                 break;
             case R.id.button4:
-                getViewBinding().id3Tv.setText(PhoneUtil.getAndroidId(getApplicationContext()));
+                getBinding().id3Tv.setText(PhoneUtil.getAndroidId(getApplicationContext()));
                 break;
             case R.id.button5:
-                getViewBinding().id4Tv.setText(PhoneUtil.getSimSerialNumber(getApplicationContext()));
+                getBinding().id4Tv.setText(PhoneUtil.getSimSerialNumber(getApplicationContext()));
                 break;
             case R.id.button6:
-                getViewBinding().id5Tv.setText(PhoneUtil.getSerialNumber(getApplicationContext()));
+                getBinding().id5Tv.setText(PhoneUtil.getSerialNumber(getApplicationContext()));
                 break;
         }
     }

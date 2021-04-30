@@ -41,14 +41,14 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
         super.onBackPressed();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().okTv.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().okTv.setOnClickListener(this);
     }
     private void initCountDownBtn() {
-        getViewBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone))
                 {
                     ToastUtils.showToast(ChangePhoneActivity.this,"请输入手机号");
@@ -61,7 +61,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getViewBinding().btnGetVer.onDestroy();
+        getBinding().btnGetVer.onDestroy();
     }
 
     @Override
@@ -87,9 +87,9 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
                 finish();
                 break;
             case R.id.ok_tv:
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
-                String pw=getViewBinding().passwordEdit.getText().toString().trim();
-                String vcode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
+                String pw= getBinding().passwordEdit.getText().toString().trim();
+                String vcode= getBinding().verificationCodeEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(pw)||
                         TextUtils.isEmpty(vcode)){
                     ToastUtils.showToast(this,"手机号、验证码、密码不能为空！");
@@ -102,7 +102,7 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
 
     @Override
     public Object getVerifiCodeParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
         map.put("flag",3);//验证码标识：1注册，2忘记密码，3修改手机号
@@ -113,8 +113,8 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
     public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
-        getViewBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-        getViewBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
+        getBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        getBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
     }
 
     @Override
@@ -124,10 +124,10 @@ public class ChangePhoneActivity extends BaseActivityImpl<UpdatePhoneContact.Vie
 
     @Override
     public Object getUpdatePhoneParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
-        String pw=getViewBinding().passwordEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
+        String pw= getBinding().passwordEdit.getText().toString().trim();
         pw= MD5.MD5Encode(pw);
-        String vcode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+        String vcode= getBinding().verificationCodeEdit.getText().toString().trim();
         Map<String,String> map=new TreeMap<>();
         map.put("phone",phone);
         map.put("vericode",vcode);

@@ -25,13 +25,13 @@ public class BalanceActivity extends BaseActivity<BalanceActivityBinding> implem
         iniData();
     }
     private void iniView (){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().rechargeLayout.setOnClickListener(this);
-        getViewBinding().withdrawLayout.setOnClickListener(this);
-        getViewBinding().accountDetails.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().rechargeLayout.setOnClickListener(this);
+        getBinding().withdrawLayout.setOnClickListener(this);
+        getBinding().accountDetails.setOnClickListener(this);
     }
     private void iniData(){
-        getViewBinding().balnaceTv.setText(balance);
+        getBinding().balnaceTv.setText(balance);
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

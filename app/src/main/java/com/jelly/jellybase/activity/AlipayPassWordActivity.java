@@ -61,7 +61,7 @@ public class AlipayPassWordActivity extends BaseActivity<AlipayPasswordActivityB
                 //todo:做一些埋点类的需求
             }
         });
-        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
+        getBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mKeypad.show(getSupportFragmentManager(), "PasswordKeypad");

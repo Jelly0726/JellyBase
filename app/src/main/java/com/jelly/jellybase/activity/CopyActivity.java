@@ -24,13 +24,13 @@ public class CopyActivity extends BaseActivity<CopyActivityBinding> implements V
     }
     private void iniView(){
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().pintCopyBtn.setOnClickListener(this);
-        getViewBinding().pintPasteBtn.setOnClickListener(this);
-        getViewBinding().netCopyBtn.setOnClickListener(this);
-        getViewBinding().netPasteBtn.setOnClickListener(this);
-        getViewBinding().intentTextBtn.setOnClickListener(this);
-        getViewBinding().intentPasteBtn.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().pintCopyBtn.setOnClickListener(this);
+        getBinding().pintPasteBtn.setOnClickListener(this);
+        getBinding().netCopyBtn.setOnClickListener(this);
+        getBinding().netPasteBtn.setOnClickListener(this);
+        getBinding().intentTextBtn.setOnClickListener(this);
+        getBinding().intentPasteBtn.setOnClickListener(this);
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId()))return;
@@ -39,7 +39,7 @@ public class CopyActivity extends BaseActivity<CopyActivityBinding> implements V
                 finish();
                 break;
             case R.id.pintCopy_btn:
-                String ssss=getViewBinding().pintTextTv.getText().toString();
+                String ssss= getBinding().pintTextTv.getText().toString();
                 ClipData mClipData =ClipData.newPlainText("Label", ssss);         //‘Label’这是任意文字标签
                 mClipboardManager.setPrimaryClip(mClipData);
                 ToastUtils.showShort(this, "复制成功，可以发给朋友们了。");
@@ -53,8 +53,8 @@ public class CopyActivity extends BaseActivity<CopyActivityBinding> implements V
                     if (text == null) {
                         return;
                     }
-                    getViewBinding().pintTextEd.setText(text);
-                    getViewBinding().pintTextEd.setSelection(text.length());
+                    getBinding().pintTextEd.setText(text);
+                    getBinding().pintTextEd.setSelection(text.length());
                 }
                 break;
             case R.id.netCopy_btn:
@@ -64,7 +64,7 @@ public class CopyActivity extends BaseActivity<CopyActivityBinding> implements V
                  ClipData clipData = ClipData.newUri(getContentResolver(), "copy from demo", uri);
                  mClipboardManager.setPrimaryClip(clipData);
                  */
-                String netCopy=getViewBinding().netTextTv.getText().toString();
+                String netCopy= getBinding().netTextTv.getText().toString();
                 ClipData clipData= ClipData.newRawUri("Label", Uri.parse(netCopy));
                 mClipboardManager.setPrimaryClip(clipData);
                 ToastUtils.showShort(this, "复制成功，可以发给朋友们了。");
@@ -77,8 +77,8 @@ public class CopyActivity extends BaseActivity<CopyActivityBinding> implements V
                     if (uri == null) {
                         return;
                     }
-                    getViewBinding().netTextEd.setText(uri.toString());
-                    getViewBinding().netTextEd.setSelection(uri.toString().length());
+                    getBinding().netTextEd.setText(uri.toString());
+                    getBinding().netTextEd.setSelection(uri.toString().length());
                 }
                 break;
             case R.id.intentText_btn:

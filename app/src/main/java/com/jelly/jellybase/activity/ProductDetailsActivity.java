@@ -60,17 +60,17 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
         initViewPagerListener();
     }
     private void iniView(){
-        getViewBinding().productdetailsBack.setOnClickListener(this);
-        getViewBinding().airlinesTv.setOnClickListener(this);
-        getViewBinding().addcartTv.setOnClickListener(this);
-        getViewBinding().buyImmediately.setOnClickListener(this);
-        getViewBinding().banner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
+        getBinding().productdetailsBack.setOnClickListener(this);
+        getBinding().airlinesTv.setOnClickListener(this);
+        getBinding().addcartTv.setOnClickListener(this);
+        getBinding().buyImmediately.setOnClickListener(this);
+        getBinding().banner.setDelegate(new BGABanner.Delegate<ImageView, String>() {
             @Override
             public void onBannerItemClick(BGABanner banner, ImageView itemView, String model, int position) {
                 Toast.makeText(banner.getContext(), "点击了第" + (position + 1) + "页", Toast.LENGTH_SHORT).show();
             }
         });
-        getViewBinding().banner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
+        getBinding().banner.setAdapter(new BGABanner.Adapter<ImageView, String>() {
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, String model, int position) {
 ////                SimpleDraweeView simpleDraweeView = (SimpleDraweeView) itemView.findViewById(R.id.sdv_item_fresco_content);
@@ -86,8 +86,8 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
             }
         });
         if (isShanGou){
-            getViewBinding().shangouLayout.setVisibility(View.VISIBLE);
-            getViewBinding().shangouImg.setVisibility(View.VISIBLE);
+            getBinding().shangouLayout.setVisibility(View.VISIBLE);
+            getBinding().shangouImg.setVisibility(View.VISIBLE);
             time=24*3600;
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -98,7 +98,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                getViewBinding().timeTv.setText("距离结束：00:00:00");
+                                getBinding().timeTv.setText("距离结束：00:00:00");
                             }
                         });
                     }
@@ -107,7 +107,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            getViewBinding().timeTv.setText("距离结束："+ MyDate.secToTimeEN(time));
+                            getBinding().timeTv.setText("距离结束："+ MyDate.secToTimeEN(time));
                         }
                     });
                 }
@@ -140,7 +140,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
         List<String> imgs=new ArrayList<>();
         imgs.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505712555066&di=72523b179ae82854526ae5281277a93c&imgtype=jpg&src=http%3A%2F%2Fimg2.niutuku.com%2Fdesk%2F1208%2F2009%2Fntk-2009-18712.jpg");
         imgs.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1505712553329&di=3a87a3a0ce8efc04c874143938cdf8ce&imgtype=0&src=http%3A%2F%2Fimgstore.cdn.sogou.com%2Fapp%2Fa%2F100540002%2F455377.jpg");
-        getViewBinding().banner.setData(imgs,null);
+        getBinding().banner.setData(imgs,null);
     }
     private void initViewPagerView() {
     }
@@ -158,9 +158,9 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
 
     private void initViewPagerListener() {
         myAdapter= new FragmentAdapter(getSupportFragmentManager(),mFragmentList);
-        getViewBinding().vpContent.setAdapter(myAdapter);
-        getViewBinding().bbl.setViewPager(getViewBinding().vpContent);
-        getViewBinding().bbl.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
+        getBinding().vpContent.setAdapter(myAdapter);
+        getBinding().bbl.setViewPager(getBinding().vpContent);
+        getBinding().bbl.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final MiddleBarItem bottomBarItem, int position) {
             }
@@ -174,19 +174,19 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
     @Override
     protected void onResume() {
         super.onResume();
-        getViewBinding().banner.startAutoPlay();
+        getBinding().banner.startAutoPlay();
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
-        getViewBinding().banner.setBackgroundResource(android.R.color.white);
+        getBinding().banner.setBackgroundResource(android.R.color.white);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        getViewBinding().banner.stopAutoPlay();
+        getBinding().banner.stopAutoPlay();
     }
 
     @Override
     protected void onDestroy() {
-        getViewBinding().banner.onDestroy();
+        getBinding().banner.onDestroy();
         if(timer!=null){
             timer.cancel();
         }
@@ -197,7 +197,7 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
     public void onEvent(NetEvent netEvent){
         if (netEvent.getEventType().equals(CurrentItem.class.getName())){
             CurrentItem currentItem= (CurrentItem) netEvent.getEvent();
-            getViewBinding().bbl.setCurrentItem(currentItem.getItemIndex());
+            getBinding().bbl.setCurrentItem(currentItem.getItemIndex());
         }
     }
 

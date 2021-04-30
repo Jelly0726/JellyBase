@@ -32,8 +32,8 @@ public class SimpleNaviActivity extends BaseActivity<AmapBasicNaviBinding> imple
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		getViewBinding().naviView.onCreate(savedInstanceState);
-		getViewBinding().naviView.setAMapNaviViewListener(this);
+		getBinding().naviView.onCreate(savedInstanceState);
+		getBinding().naviView.setAMapNaviViewListener(this);
 
 		mTtsManager = TTSController.getInstance(getApplicationContext());
 		mTtsManager.init();
@@ -53,13 +53,13 @@ public class SimpleNaviActivity extends BaseActivity<AmapBasicNaviBinding> imple
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getViewBinding().naviView.onResume();
+		getBinding().naviView.onResume();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		getViewBinding().naviView.onPause();
+		getBinding().naviView.onPause();
 
 		mTtsManager.stopSpeaking();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
@@ -68,7 +68,7 @@ public class SimpleNaviActivity extends BaseActivity<AmapBasicNaviBinding> imple
 
 	@Override
 	protected void onDestroy() {
-		getViewBinding().naviView.onDestroy();
+		getBinding().naviView.onDestroy();
 		mAMapNavi.stopNavi();
 		super.onDestroy();
 	}

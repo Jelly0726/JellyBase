@@ -95,13 +95,13 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
         HermesManager.getHermesManager().addEvent(this);
         Intent intent=new Intent(this, LocationService.class);
         startService(intent);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().starNaviLayout.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().starNaviLayout.setOnClickListener(this);
     }
     private void initAmap(Bundle savedInstanceState){
-        getViewBinding().aMapView.onCreate(savedInstanceState);//必须写
+        getBinding().aMapView.onCreate(savedInstanceState);//必须写
         if (aMap == null) {
-            aMap = getViewBinding().aMapView.getMap();
+            aMap = getBinding().aMapView.getMap();
             // 设置定位的类型为定位模式：定位（AMap.LOCATION_TYPE_LOCATE）、跟随（AMap.LOCATION_TYPE_MAP_FOLLOW）
             // 地图根据面向方向旋转（AMap.LOCATION_TYPE_MAP_ROTATE）三种模式
             // 如果要设置定位的默认状态，可以在此处进行设置
@@ -173,13 +173,13 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     }
     @Override
     protected void onResume() {
-        getViewBinding().aMapView.onResume();
+        getBinding().aMapView.onResume();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        getViewBinding().aMapView.onPause();
+        getBinding().aMapView.onPause();
         mTtsManager.stopSpeaking();
         super.onPause();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
@@ -189,8 +189,8 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     @Override
     protected void onDestroy() {
         mAMapNavi.stopNavi();
-        if(getViewBinding().aMapView!=null) {
-            getViewBinding().aMapView.onDestroy();
+        if(getBinding().aMapView!=null) {
+            getBinding().aMapView.onDestroy();
         }
         if(aMap!=null) {
             aMap.clear();
@@ -205,7 +205,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getViewBinding().aMapView.onSaveInstanceState(outState);
+        getBinding().aMapView.onSaveInstanceState(outState);
 
     }
     /**

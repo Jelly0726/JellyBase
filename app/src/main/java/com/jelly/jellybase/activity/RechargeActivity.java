@@ -59,8 +59,8 @@ public class RechargeActivity extends BaseActivity<RechargeActivityBinding> {
     }
 
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(listener);
-        getViewBinding().changePay.setOnClickListener(listener);
+        getBinding().leftBack.setOnClickListener(listener);
+        getBinding().changePay.setOnClickListener(listener);
     }
     private OnMultiClickListener listener=new OnMultiClickListener() {
         @Override
@@ -88,8 +88,8 @@ public class RechargeActivity extends BaseActivity<RechargeActivityBinding> {
             @Override
             public void onItemPicked(int index, PayTypePicker item) {
                 //showToast("index=" + index + ", id=" + item.getId() + ", name=" + item.getName());
-                getViewBinding().payLogo.setImageResource(item.getPayLogo());
-                getViewBinding().payName.setText(item.getTitle());
+                getBinding().payLogo.setImageResource(item.getPayLogo());
+                getBinding().payName.setText(item.getTitle());
             }
         });
         picker.show();

@@ -59,7 +59,7 @@ public class BaseWebViewActivity extends BaseActivity<BaseWebviewActivityBinding
         iniWebView();
     }
     private void iniWebView() {
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
         //WebView
         mWebView = new X5WebView(this, null);
 //        mWebView.setLayerType(View.LAYER_TYPE_HARDWARE,null);//开启硬件加速
@@ -67,18 +67,18 @@ public class BaseWebViewActivity extends BaseActivity<BaseWebviewActivityBinding
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
-        getViewBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
+        getBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.FILL_PARENT,
                 FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setVisible(true);
         if (!TextUtils.isEmpty(webTools.url)) {
             mWebView.loadUrl(webTools.url);
         }
-        getViewBinding().titleTv.setText(webTools.title);
+        getBinding().titleTv.setText(webTools.title);
         mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
+                getBinding().topNavLayout.setVisibility(View.VISIBLE);
                 LogUtils.i("onPageStarted  url="+url);
             }
 
@@ -87,9 +87,9 @@ public class BaseWebViewActivity extends BaseActivity<BaseWebviewActivityBinding
                 LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
-                    getViewBinding().topNavLayout.setVisibility(View.GONE);
+                    getBinding().topNavLayout.setVisibility(View.GONE);
                 }else {
-                    getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
+                    getBinding().topNavLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -142,7 +142,7 @@ public class BaseWebViewActivity extends BaseActivity<BaseWebviewActivityBinding
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            getViewBinding().webfilechooser.removeAllViews();
+            getBinding().webfilechooser.removeAllViews();
             mWebView.stopLoading();
             mWebView.removeAllViews();
             mWebView.destroy();

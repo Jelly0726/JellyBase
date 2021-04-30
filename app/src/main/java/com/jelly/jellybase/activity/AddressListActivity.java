@@ -81,8 +81,8 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View
     }
 
     private void iniView (){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().addAddress.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().addAddress.setOnClickListener(this);
     }
 
     @Override
@@ -101,20 +101,20 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View
     }
     private void iniXRefreshView(){
         adapter=new AddressListAdapter(this,mList);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
         Rect rect=new Rect();
         rect.bottom=22;
         rect.top=0;
         rect.left=0;
         rect.right=0;
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,1,-1, ItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,1,-1, ItemDecoration.NONE));
         // 静默加载模式不能设置footerview
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
         adapter.setOnItemClickListener(onItemClickListener);
         adapter.setDeleteAddress(new AddressListAdapter.DeleteAddress() {
@@ -159,7 +159,7 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View
             }
         });
 
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     /**
      * 滑动刷新
@@ -225,17 +225,17 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View
         List list= (List) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            getViewBinding().xrefreshview.stopRefresh();
+            getBinding().xrefreshview.stopRefresh();
             if (list.size()<pageSize){
-                getViewBinding().xrefreshview.setLoadComplete(true);
+                getBinding().xrefreshview.setLoadComplete(true);
             }else {
-                getViewBinding().xrefreshview.setLoadComplete(false);
+                getBinding().xrefreshview.setLoadComplete(false);
             }
         }else {
             if (list.size()==0){
-                getViewBinding().xrefreshview.setLoadComplete(true);
+                getBinding().xrefreshview.setLoadComplete(true);
             }else
-                getViewBinding().xrefreshview.stopLoadMore();
+                getBinding().xrefreshview.stopLoadMore();
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
@@ -244,9 +244,9 @@ public class AddressListActivity extends BaseActivityImpl<AddressContact.View
     @Override
     public void getAddressListFailed(boolean isRefresh, String message) {
         if (isRefresh){
-            getViewBinding().xrefreshview.stopRefresh();
+            getBinding().xrefreshview.stopRefresh();
         }else {
-            getViewBinding().xrefreshview.stopLoadMore();
+            getBinding().xrefreshview.stopLoadMore();
         }
         ToastUtils.showToast(this,message);
     }

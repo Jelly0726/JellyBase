@@ -53,8 +53,8 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsFragmentB
 
     }
     private void initView() {
-        getViewBinding().productParameter.setOnClickListener(listener);
-        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getBinding().productParameter.setOnClickListener(listener);
+        getBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
             }
@@ -63,13 +63,13 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsFragmentB
             public void onScroll(int l, int t, int oldl, int oldt) {
             }
         });
-        getViewBinding().customView.setAutoRefresh(false);
-        getViewBinding().customView.setPullLoadEnable(false);
-        getViewBinding().customView.setPullRefreshEnable(false);
-        getViewBinding().customView.setPinnedTime(1000);
-        getViewBinding().customView.setAutoLoadMore(false);
+        getBinding().customView.setAutoRefresh(false);
+        getBinding().customView.setPullLoadEnable(false);
+        getBinding().customView.setPullRefreshEnable(false);
+        getBinding().customView.setPinnedTime(1000);
+        getBinding().customView.setAutoLoadMore(false);
 //		outView.setSilenceLoadMore();
-        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
         //xRefreshView.setCustomFooterView(new CustomerFooter(this.getActivity()));
     }
     private View.OnClickListener listener=new View.OnClickListener() {
@@ -94,7 +94,7 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsFragmentB
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().customView.stopRefresh();
+                    getBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -105,7 +105,7 @@ public class ProductDetailsFragment extends BaseFragment<ProductDetailsFragmentB
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().customView.stopLoadMore();
+                    getBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }

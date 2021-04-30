@@ -32,14 +32,14 @@ public class SearchActivity extends BaseActivity<SearchActivityBinding> {
         iniHistory();
     }
     private void iniView(){
-        getViewBinding().cancelTv.setOnClickListener(listener);
+        getBinding().cancelTv.setOnClickListener(listener);
 
         //监听键盘搜索按钮
-        getViewBinding().searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        getBinding().searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH){
-                    String search=getViewBinding().searchEdit.getText().toString().trim();
+                    String search= getBinding().searchEdit.getText().toString().trim();
                     if(search.length()>0) {
                         SearchHistory history = new SearchHistory();
                         history.setTime(System.currentTimeMillis());
@@ -54,24 +54,24 @@ public class SearchActivity extends BaseActivity<SearchActivityBinding> {
         });
         String search=getIntent().getStringExtra("search");
         if(search!=null){
-            getViewBinding().searchEdit.setText(search);
-            getViewBinding().searchEdit.setSelection(search.length());
+            getBinding().searchEdit.setText(search);
+            getBinding().searchEdit.setSelection(search.length());
         }
 
-        getViewBinding().clearHistory.setOnClickListener(listener);
+        getBinding().clearHistory.setOnClickListener(listener);
     }
     /**
      * 初始化历史搜索
      * */
     private void iniHistory(){
-        if(getViewBinding().searchHistory.getChildCount()>0){
-            getViewBinding().searchHistory.removeAllViewsInLayout();
+        if(getBinding().searchHistory.getChildCount()>0){
+            getBinding().searchHistory.removeAllViewsInLayout();
         }
         List<SearchHistory> historyList= HistoryDaoUtils.getInstance(BaseApplication.getInstance()).getAllList();
         if(historyList!=null){
             for (int i = 0; i < historyList.size(); i++) {
                 TextView tv = (TextView) getLayoutInflater().inflate(
-                        R.layout.search_history_tv, getViewBinding().searchHistory, false);
+                        R.layout.search_history_tv, getBinding().searchHistory, false);
                 tv.setText(historyList.get(i).getHistory());
                 tv.setTag(historyList.get(i));
                 //点击事件
@@ -86,7 +86,7 @@ public class SearchActivity extends BaseActivity<SearchActivityBinding> {
                         setBackData(history.getHistory());
                     }
                 });
-                getViewBinding().searchHistory.addView(tv);
+                getBinding().searchHistory.addView(tv);
             }
         }
     }

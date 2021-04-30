@@ -38,17 +38,17 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
         initCountDownBtn();
     }
     private void iniView(){
-        getViewBinding().agree.setChecked(false);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().nextTv.setOnClickListener(this);
-        getViewBinding().loginTv.setOnClickListener(this);
-       getViewBinding().clause.setOnClickListener(this);
+        getBinding().agree.setChecked(false);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().nextTv.setOnClickListener(this);
+        getBinding().loginTv.setOnClickListener(this);
+       getBinding().clause.setOnClickListener(this);
     }
     private void initCountDownBtn() {
-        getViewBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone))
                 {
                     ToastUtils.showToast(RegisterActivity.this,"请输入手机号");
@@ -60,8 +60,8 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
     }
     @Override
     protected void onDestroy() {
-        if ( getViewBinding().btnGetVer!=null) {
-            getViewBinding().btnGetVer.onDestroy();
+        if ( getBinding().btnGetVer!=null) {
+            getBinding().btnGetVer.onDestroy();
         }
         super.onDestroy();
     }
@@ -92,14 +92,14 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
                 finish();
                 break;
             case R.id.next_tv:
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
-                String verificationCode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
+                String verificationCode= getBinding().verificationCodeEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(verificationCode))
                 {
                     ToastUtils.showToast(RegisterActivity.this,"请输入手机号和验证码");
                     return;
                 }
-                if (getViewBinding().agree.isChecked())
+                if (getBinding().agree.isChecked())
                 {
                     presenter.userRegister();
                 }else {
@@ -113,14 +113,14 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
                 webTools.title="服务协议";
                 intent.putExtra(WebConfig.CONTENT,webTools);
                 startActivity(intent);
-                getViewBinding().agree.setChecked(true);
+                getBinding().agree.setChecked(true);
                 break;
         }
     }
     @Override
     public Object getRegParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
-        String verificationCode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
+        String verificationCode= getBinding().verificationCodeEdit.getText().toString().trim();
         Map map=new TreeMap();
         map.put("account",phone);
         map.put("vericode",verificationCode);
@@ -129,7 +129,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
 
     @Override
     public void excuteSuccess( Object mCallBackVo) {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
         Intent intent=new Intent(RegisterActivity.this,SetPWDActivity.class);
         intent.putExtra("phone",phone);
         startActivity(intent);
@@ -142,7 +142,7 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
 
     @Override
     public Object getVerifiCodeParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
         map.put("flag",1);//验证码标识：1注册，2忘记密码，3修改手机号
@@ -153,8 +153,8 @@ public class RegisterActivity extends BaseActivityImpl<RegisterContact.View
     public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
-        getViewBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-        getViewBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
+        getBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        getBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
     }
 
     @Override

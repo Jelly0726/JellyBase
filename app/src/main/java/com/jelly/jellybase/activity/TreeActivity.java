@@ -32,7 +32,7 @@ public class TreeActivity extends BaseActivity<TreeActivityBinding> {
         findView();
     }
     public void findView() {
-        mHelper = new SectionExpandHelper(TreeActivity.this,  getViewBinding().mRecyclerView, new IMultipleItem() {
+        mHelper = new SectionExpandHelper(TreeActivity.this,  getBinding().mRecyclerView, new IMultipleItem() {
             private static final int VIEW_TYPE_TWO = R.layout.tree_two_layout;
             private static final int VIEW_TYPE_SECTION = R.layout.tree_section_layout;
             private static final int VIEW_TYPE_THREE = R.layout.tree_three_layout;

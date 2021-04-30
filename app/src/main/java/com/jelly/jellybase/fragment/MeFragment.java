@@ -38,9 +38,9 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getViewBinding().balanceLayout.setOnClickListener(this);
-        getViewBinding().bankcardLayout.setOnClickListener(this);
-        getViewBinding().messageLayout.setOnClickListener(this);
+        getBinding().balanceLayout.setOnClickListener(this);
+        getBinding().bankcardLayout.setOnClickListener(this);
+        getBinding().messageLayout.setOnClickListener(this);
         iniXRefreshView();
         if (getActivity()!=null){
             if (BaseApplication.getInstance().isLogin()){
@@ -48,7 +48,7 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
             }else {
-                getViewBinding().nameTv.setText("未登录");
+                getBinding().nameTv.setText("未登录");
             }
         }
     }
@@ -62,12 +62,12 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
                     //presenter.getMyInfo(lifecycleProvider.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
                 }
             }else {
-                getViewBinding().nameTv.setText("未登录");
+                getBinding().nameTv.setText("未登录");
             }
             if (AppPrefs.getBoolean(BaseApplication.getInstance(), ConfigKey.NEWMESSAGE)){
-                getViewBinding().tvPoint.setVisibility(View.GONE);
+                getBinding().tvPoint.setVisibility(View.GONE);
             }else {
-                getViewBinding().tvPoint.setVisibility(View.GONE);
+                getBinding().tvPoint.setVisibility(View.GONE);
             }
         }
     }
@@ -85,13 +85,13 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
         return false;
     }
     private void iniXRefreshView(){
-        getViewBinding().xrefreshview.setAutoRefresh(false);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
-        getViewBinding().xrefreshview.setPullRefreshEnable(true);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
-        getViewBinding().xrefreshview.setAutoLoadMore(false);
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setAutoRefresh(false);
+        getBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().xrefreshview.setPullRefreshEnable(true);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().xrefreshview.setAutoLoadMore(false);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
 
     }
     /**
@@ -104,7 +104,7 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().xrefreshview.stopRefresh();
+                    getBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -115,7 +115,7 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().xrefreshview.stopLoadMore();
+                    getBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }
@@ -126,7 +126,7 @@ public class MeFragment extends BaseFragment<MeFragmentBinding> implements View.
         switch (view.getId()){
             case R.id.balance_layout:
                 intent=new Intent(BaseApplication.getInstance(), BalanceActivity.class);
-                intent.putExtra("Balance",getViewBinding().balanceTv.getText().toString().trim());
+                intent.putExtra("Balance", getBinding().balanceTv.getText().toString().trim());
                 startActivity(intent);
                 break;
             case R.id.bankcard_layout:

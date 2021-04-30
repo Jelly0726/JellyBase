@@ -18,11 +18,11 @@ public class BadgeMainActivity extends BaseActivity<BadgeMainActivityBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewBinding().btnSet.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    int count = Integer.parseInt(getViewBinding().etCount.getText().toString());
+                    int count = Integer.parseInt(getBinding().etCount.getText().toString());
                     if (BadgeUtils.setCount(count, BadgeMainActivity.this)) {
                         Toast.makeText(BadgeMainActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
                     } else {
@@ -34,11 +34,11 @@ public class BadgeMainActivity extends BaseActivity<BadgeMainActivityBinding> {
                 }
             }
         });
-       getViewBinding().btnNotification.setOnClickListener(new View.OnClickListener() {
+       getBinding().btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    int count = Integer.parseInt(getViewBinding().etCount.getText().toString());
+                    int count = Integer.parseInt(getBinding().etCount.getText().toString());
                     if (BadgeUtils.setNotificationBadge(count, BadgeMainActivity.this)) {
                         Toast.makeText(BadgeMainActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
                     } else {
@@ -50,12 +50,12 @@ public class BadgeMainActivity extends BaseActivity<BadgeMainActivityBinding> {
                 }
             }
         });
-        getViewBinding().btnSetBadge.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnSetBadge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int badgeCount = 0;
                 try {
-                    badgeCount = Integer.parseInt(getViewBinding().etCount.getText().toString());
+                    badgeCount = Integer.parseInt(getBinding().etCount.getText().toString());
                 } catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(), "Error input", Toast.LENGTH_SHORT).show();
                 }
@@ -71,12 +71,12 @@ public class BadgeMainActivity extends BaseActivity<BadgeMainActivityBinding> {
             }
         });
 
-        getViewBinding().btnSetBadgeByNotification.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnSetBadgeByNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int badgeCount = 0;
                 try {
-                    badgeCount = Integer.parseInt(getViewBinding().etCount.getText().toString());
+                    badgeCount = Integer.parseInt(getBinding().etCount.getText().toString());
                 } catch (NumberFormatException e) {
                     Toast.makeText(getApplicationContext(), "Error input", Toast.LENGTH_SHORT).show();
                 }
@@ -88,7 +88,7 @@ public class BadgeMainActivity extends BaseActivity<BadgeMainActivityBinding> {
             }
         });
 
-        getViewBinding().btnRemoveBadge.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnRemoveBadge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean success = ShortcutBadger.removeCount(BadgeMainActivity.this);

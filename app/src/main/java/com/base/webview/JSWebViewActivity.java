@@ -72,13 +72,13 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(receiver, intentFilter);
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
         //WebView
         init();
     }
     private void init() {
         //mRefreshLayout.setEnabled(false);//关闭滑动刷新
-        getViewBinding().refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        getBinding().refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mWebView.setVisible(false);
@@ -86,7 +86,7 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
             }
         }); // 刷新监听。
         // 设置子视图是否允许滚动到顶部
-        getViewBinding().refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
+        getBinding().refreshLayout.setOnChildScrollUpCallback(new SwipeRefreshLayout.OnChildScrollUpCallback() {
             @Override//返回true 就是子布局手势，false 就是自己使用
             public boolean canChildScrollUp(SwipeRefreshLayout parent, @Nullable View child) {
                 LogUtils.i("getScrollY()="+child.getScrollY());
@@ -101,16 +101,16 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
         mWebView.setVerticalScrollBarEnabled(false); //垂直不显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);//滚动条在WebView内侧显示
         mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条在WebView外侧显示
-        getViewBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
+        getBinding().webfilechooser.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.FILL_PARENT,
                 FrameLayout.LayoutParams.FILL_PARENT));
         mWebView.setOnScrollChangedCallback(new X5WebView.OnScrollChangedCallback() {
             public void onScroll(int l, int t) {
                 //LogUtils.d("We Scrolled etc..." + l + " t =" + t);
                 if (t == 0) {//webView在顶部
-                    getViewBinding().refreshLayout.setEnabled(true);
+                    getBinding().refreshLayout.setEnabled(true);
                 } else {//webView不是顶部
-                    getViewBinding().refreshLayout.setEnabled(false);
+                    getBinding().refreshLayout.setEnabled(false);
                 }
             }
         });
@@ -161,12 +161,12 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
                 mWebView.setVisible(true);
                 mWebView.loadUrl(webTools.url);
             }
-            getViewBinding().titleTv.setText(webTools.title);
+            getBinding().titleTv.setText(webTools.title);
         }
         mWebView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
+                getBinding().topNavLayout.setVisibility(View.VISIBLE);
                 LogUtils.i("onPageStarted  url="+url);
             }
 
@@ -175,9 +175,9 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
                 LogUtils.i("onReceivedTitle  arg1="+arg1);
                 if (!arg1.contains("Page Error")
                         &&!arg1.contains("about:blank")){
-                    getViewBinding().topNavLayout.setVisibility(View.GONE);
+                    getBinding().topNavLayout.setVisibility(View.GONE);
                 }else {
-                    getViewBinding().topNavLayout.setVisibility(View.VISIBLE);
+                    getBinding().topNavLayout.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -185,7 +185,7 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress>=100){
                     mWebView.setVisible(true);
-                    getViewBinding().refreshLayout.setRefreshing(false);
+                    getBinding().refreshLayout.setRefreshing(false);
                 }
             }
             @Override
@@ -267,7 +267,7 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearHistory();
             ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            getViewBinding().webfilechooser.removeAllViews();
+            getBinding().webfilechooser.removeAllViews();
             mWebView.stopLoading();
             mWebView.removeAllViews();
             mWebView.destroy();

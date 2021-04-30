@@ -55,8 +55,8 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
         iniXRefreshView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().topRight.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().topRight.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -89,24 +89,24 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     private void iniXRefreshView(){
         adapter=new BankCardListAdapter(this,mList);
         //xRefreshView = (XRefreshView) findViewById(R.id.xrefreshview);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().xrefreshview.setPullLoadEnable(true);
         //recyclerView = (RecyclerView) findViewById(R.id.recycler_view_test_rv);
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
-        getViewBinding().recyclerViewTestRv.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
-        getViewBinding().recyclerViewTestRv.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().recyclerViewTestRv.setLongPressDragEnabled(false); // 长按拖拽，默认关闭。
+        getBinding().recyclerViewTestRv.setItemViewSwipeEnabled(false); // 滑动删除，默认关闭。
 //        recyclerView.useDefaultLoadMore(); // 使用默认的加载更多的View。
 //        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
-        getViewBinding().recyclerViewTestRv.setSwipeMenuCreator(swipeMenuCreator);
-        getViewBinding().recyclerViewTestRv.setOnItemMenuClickListener(mMenuItemClickListener);
+        getBinding().recyclerViewTestRv.setSwipeMenuCreator(swipeMenuCreator);
+        getBinding().recyclerViewTestRv.setOnItemMenuClickListener(mMenuItemClickListener);
         layoutManager = new LinearLayoutManager(this);
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,1, SimpleItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
        // adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
         adapter.setOnItemClickListener(onItemClickListener);
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -223,17 +223,17 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
         List list= (List) mCallBackVo;
         if (isRefresh){
             mList.clear();
-            getViewBinding().xrefreshview.stopRefresh();
+            getBinding().xrefreshview.stopRefresh();
             if (list.size()<pageSize){
-                getViewBinding().xrefreshview.setLoadComplete(true);
+                getBinding().xrefreshview.setLoadComplete(true);
             }else {
-                getViewBinding().xrefreshview.setLoadComplete(false);
+                getBinding().xrefreshview.setLoadComplete(false);
             }
         }else {
             if (list.size()==0){
-                getViewBinding().xrefreshview.setLoadComplete(true);
+                getBinding().xrefreshview.setLoadComplete(true);
             }else
-                getViewBinding().xrefreshview.stopLoadMore();
+                getBinding().xrefreshview.stopLoadMore();
         }
         mList.addAll(list);
         adapter.notifyDataSetChanged();
@@ -242,9 +242,9 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     @Override
     public void bankListFailed(boolean isRefresh, String message) {
         if (isRefresh){
-            getViewBinding().xrefreshview.stopRefresh();
+            getBinding().xrefreshview.stopRefresh();
         }else {
-            getViewBinding().xrefreshview.stopLoadMore();
+            getBinding().xrefreshview.stopLoadMore();
         }
         ToastUtils.showToast(this,message);
     }

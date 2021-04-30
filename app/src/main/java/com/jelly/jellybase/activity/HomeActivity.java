@@ -80,27 +80,27 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         processLogic();
     }
     private void iniView (){
-        getViewBinding().saomiaoImg.setOnClickListener(listener);
-        getViewBinding().leftAddress.setOnClickListener(listener);
-        getViewBinding().homeSearch.setOnClickListener(listener);
+        getBinding().saomiaoImg.setOnClickListener(listener);
+        getBinding().leftAddress.setOnClickListener(listener);
+        getBinding().homeSearch.setOnClickListener(listener);
 
-        iniSticky(getViewBinding().getRoot());
+        iniSticky(getBinding().getRoot());
 
-        getViewBinding().homeGride.unconfirmedLayout.setOnClickListener(listener);
-        getViewBinding().homeGride.obligationLayout.setOnClickListener(listener);
-        getViewBinding().homeGride.unsendoutLayout.setOnClickListener(listener);
+        getBinding().homeGride.unconfirmedLayout.setOnClickListener(listener);
+        getBinding().homeGride.obligationLayout.setOnClickListener(listener);
+        getBinding().homeGride.unsendoutLayout.setOnClickListener(listener);
 
-        iniSticky1(getViewBinding().stickyview.getRoot());
+        iniSticky1(getBinding().stickyview.getRoot());
     }
     private void iniSticky(View view){
-        getViewBinding().homeSticky.priceLayout.setOnClickListener(listener);
-        getViewBinding().homeSticky.classifyLayout.setOnClickListener(listener);
-        getViewBinding().homeSticky.stateLayout.setOnClickListener(listener);
+        getBinding().homeSticky.priceLayout.setOnClickListener(listener);
+        getBinding().homeSticky.classifyLayout.setOnClickListener(listener);
+        getBinding().homeSticky.stateLayout.setOnClickListener(listener);
     }
     private void iniSticky1(View view){
-        getViewBinding().stickyview.priceLayout.setOnClickListener(listener);
-        getViewBinding().stickyview.classifyLayout.setOnClickListener(listener);
-        getViewBinding().stickyview.stateLayout.setOnClickListener(listener);
+        getBinding().stickyview.priceLayout.setOnClickListener(listener);
+        getBinding().stickyview.classifyLayout.setOnClickListener(listener);
+        getBinding().stickyview.stateLayout.setOnClickListener(listener);
     }
     private void iniXRefreshView(){
         for (int i=0;i<9;i++){
@@ -108,46 +108,46 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         }
         adapter=new HomeAdapter(this,mList);
         adapter.setOnItemClickListener(onItemClickListener);
-        getViewBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
+        getBinding().xscrollview.setOnScrollListener(new XScrollView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(ScrollView view, int scrollState, boolean arriveBottom) {
                 int[] location = new int[2];
-                getViewBinding().stickyview.getRoot().getLocationOnScreen(location);
+                getBinding().stickyview.getRoot().getLocationOnScreen(location);
                 int y = location[1];
                 stickyY = y;
             }
 
             @Override
             public void onScroll(int l, int t, int oldl, int oldt) {
-                if (getViewBinding().homeSticky.getRoot() == null) return;
+                if (getBinding().homeSticky.getRoot() == null) return;
                 int[] location = new int[2];
-                getViewBinding().homeSticky.getRoot().getLocationOnScreen(location);
+                getBinding().homeSticky.getRoot().getLocationOnScreen(location);
                 int y = location[1];
                 int getTop = y;
                 if (getTop <= stickyY) {
-                    getViewBinding().stickyview.getRoot().setVisibility(View.VISIBLE);
+                    getBinding().stickyview.getRoot().setVisibility(View.VISIBLE);
                     isSticky=true;
                 } else {
-                    getViewBinding().stickyview.getRoot().setY(0);
-                    getViewBinding().stickyview.getRoot().setVisibility(View.GONE);
+                    getBinding().stickyview.getRoot().setY(0);
+                    getBinding().stickyview.getRoot().setVisibility(View.GONE);
                     isSticky=false;
                 }
             }
         });
-        getViewBinding().customView.setAutoRefresh(false);
-        getViewBinding().customView.setPullLoadEnable(true);
-        getViewBinding().customView.setPullRefreshEnable(true);
-        getViewBinding().customView.setPinnedTime(1000);
-        getViewBinding().customView.setMoveForHorizontal(true);
-        getViewBinding().customView.setAutoLoadMore(false);
-        getViewBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().customView.setAutoRefresh(false);
+        getBinding().customView.setPullLoadEnable(true);
+        getBinding().customView.setPullRefreshEnable(true);
+        getBinding().customView.setPinnedTime(1000);
+        getBinding().customView.setMoveForHorizontal(true);
+        getBinding().customView.setAutoLoadMore(false);
+        getBinding().customView.setXRefreshViewListener(simpleXRefreshListener);
 
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
-        getViewBinding().recyclerViewTestRv.setNestedScrollingEnabled(false);
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().recyclerViewTestRv.setNestedScrollingEnabled(false);
         layoutManager = new GridLayoutManager(this,2);
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,2, SimpleItemDecoration.NONE));
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.addItemDecoration(new SimpleItemDecoration(22,2, SimpleItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
     }
     /**
      * 设置弹窗
@@ -174,58 +174,58 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         switch (type){
             case 0:
                 if(!oNcount){
-                    getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                    getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_down);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
-                    getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=true;
                 }else {
-                    getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                    getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_up);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
-                    getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=false;
                 }
 
-                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 1:
                 oNcount=false;
-                getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
-                getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
 
-                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
 
-                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 2:
                 oNcount=false;
-                getViewBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                getViewBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
-                getViewBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().homeSticky.priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().stickyview.priceTv.setCompoundDrawables(null, null, img, null);
 
-                getViewBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
-                getViewBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().homeSticky.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stickyview.classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                getViewBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
-                getViewBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().homeSticky.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().stickyview.stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                 break;
         }
 
@@ -252,7 +252,7 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().customView.stopRefresh();
+                    getBinding().customView.stopRefresh();
                 }
             }, 2000);
         }
@@ -263,7 +263,7 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().customView.stopLoadMore();
+                    getBinding().customView.stopLoadMore();
                 }
             }, 1000);
         }
@@ -288,7 +288,7 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         if(requestCode==addressRequestCode && resultCode== addressRequestCode){
             //Log.i("ss","data="+data.getStringExtra("result"));
             positionEntity= (PositionEntity) data.getSerializableExtra("search");
-            getViewBinding().addressTv.setText(positionEntity.address);
+            getBinding().addressTv.setText(positionEntity.address);
         }
     }
 
@@ -316,9 +316,9 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
                 case R.id.classify_layout:
                     onChangeFiltrate(1);
                     if(isSticky){
-                        setPopup(Util.Anim_TopMiddle,getViewBinding().stickyview.classifyLayout);
+                        setPopup(Util.Anim_TopMiddle, getBinding().stickyview.classifyLayout);
                     }else {
-                        setPopup(Util.Anim_TopMiddle,getViewBinding().homeSticky.classifyLayout);
+                        setPopup(Util.Anim_TopMiddle, getBinding().homeSticky.classifyLayout);
                     }
                     break;
                 case R.id.state_layout:

@@ -73,7 +73,7 @@ public class PaymentActivity extends BaseActivity<PaymentActivityBinding> {
         mList.add(new PayMothod().setName("微信").setPayType(1).setIcon(R.mipmap.payment_weixin).setMark("推荐使用"));
         mList.add(new PayMothod().setName("支付宝").setPayType(2).setIcon(R.mipmap.payment_zhifubao).setMark(""));
         mList.add(new PayMothod().setName("银联").setPayType(3).setIcon(R.mipmap.payment_yinglian).setMark(""));
-        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
+        getBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PaymentDialog paymentDialog=PaymentDialog.getInstance();

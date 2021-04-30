@@ -58,7 +58,7 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
 
     private void iniView() {
         MProgressUtil.getInstance().initialize(this);
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
     }
 
     public void onClick(View v) {
@@ -99,7 +99,7 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
                 // ，true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
                 .imageDownloader(new DefaultImageDownloader()) // 设置DefaultImageGetter的图片下载器
                 .cache(CacheType.all)//默认为CacheType.ALL
-                .into(getViewBinding().messageDetailTv);
+                .into(getBinding().messageDetailTv);
     }
 
     @Override

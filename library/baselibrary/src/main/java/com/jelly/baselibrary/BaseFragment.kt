@@ -29,21 +29,27 @@ import java.lang.reflect.ParameterizedType
 @DebugLog
 abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by MainScope() {
     protected var rootView: View? = null
-    protected var viewBinding: T?=null
+    private var _binding: T? = null
+    val binding get() =_binding
+
     //是否可见
     var isFragmentVisible = false
         private set
+
     //是否复用view
     var isReuseView = true
         private set
+
     //是否第一次可见
     private var isFirstVisible = false
+
     //是否连接过服务器
     var isConnected = false
     private var isKeyboard = false //是否有外接键盘
     private var isDisable = true //是否屏蔽软键盘
     abstract fun setData(json: String?)
     var mBackInterface: BackInterface? = null
+
     /**
      * 所有继承BackHandledFragment的子类都将在这个方法中实现物理Back键按下后的逻辑
      * FragmentActivity捕捉到物理返回键点击事件后会首先询问Fragment是否消费该事件
@@ -70,6 +76,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
         initVariable()
         LogUtils.i("SSSS", "onCreate=====$this")
     }
+
     /**
      * 初始化Fragment的布局。加载布局和findViewById的操作通常在此函数内完成，但是不建议执行耗时的操作
      * @param inflater
@@ -78,12 +85,12 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
      * @return
      */
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        if (viewBinding==null) {
+        if (_binding == null) {
             val type = javaClass.genericSuperclass as ParameterizedType
             type?.let { it ->
                 for (cl in it.actualTypeArguments) {
@@ -97,7 +104,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
                                 ViewGroup::class.java,
                                 Boolean::class.javaPrimitiveType
                         )
-                        viewBinding = inflate.invoke(null, inflater, container, false) as T?
+                        _binding = inflate.invoke(null, inflater, container, false) as T?
                         return@let
                     } catch (e: NoSuchMethodException) {
                         e.printStackTrace()
@@ -109,12 +116,12 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
                 }
             }
         }
-        viewBinding?.let {it->
-            rootView= it.root
+        _binding?.let { it ->
+            rootView = it.root
             // 缓存的viewiew需要判断是否已经被加过parent，
             // 如果有parent需要从parent删除，要不然会发生这个view已经有parent的错误。
-             rootView!!.parent as ViewGroup?
-        }?.let {it->
+            rootView!!.parent as ViewGroup?
+        }?.let { it ->
             it.removeView(rootView)
         }
         //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -131,28 +138,28 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
         //setUserVisibleHint()有可能在fragment的生命周期外被调用
         LogUtils.i("SSSS", "setUserVisibleHint=====$isVisibleToUser  $this")
         LogUtils.i("SSSS", "setUserVisibleHint rootView=====$rootView  $this")
-        if (rootView == null) {
+        if (rootView == null || binding == null) {
             return
         }
         iniSofia()
         LogUtils.i(
-            "SSSS",
-            "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this"
+                "SSSS",
+                "setUserVisibleHint isFirstVisible=====$isFirstVisible  $this"
         )
         if (isFirstVisible && isVisibleToUser) {
             onFragmentFirstVisible()
             isFirstVisible = false
             LogUtils.i(
-                "SSSS",
-                "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this
+                    "SSSS",
+                    "setUserVisibleHint isFirstVisible && isVisibleToUser==" + (isFirstVisible && isVisibleToUser) + "  " + this
             )
         }
         if (isVisibleToUser) {
             isFragmentVisible = true
             onFragmentVisibleChange(true)
             LogUtils.i(
-                "SSSS",
-                "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this"
+                    "SSSS",
+                    "setUserVisibleHint isFragmentVisible=====$isFragmentVisible  $this"
             )
             return
         }
@@ -160,8 +167,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
             isFragmentVisible = false
             onFragmentVisibleChange(false)
             LogUtils.i(
-                "SSSS",
-                "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this"
+                    "SSSS",
+                    "setUserVisibleHint isFragmentVisible=$isFragmentVisible  $this"
             )
         }
     }
@@ -171,7 +178,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
         isFragmentVisible = false
         isReuseView = true
         rootView = null
-        viewBinding = null
+        _binding = null
     }
 
     /**
@@ -263,8 +270,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
      * @param savedInstanceState
      */
     override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
+            view: View,
+            savedInstanceState: Bundle?
     ) { //如果setUserVisibleHint()在rootView创建前调用时，那么
 //就等到rootView创建完后才回调onFragmentVisibleChange(true)
 //保证onFragmentVisibleChange()的回调发生在rootView创建完成之后，以便支持ui操作
@@ -273,8 +280,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
             rootView = view
         }
         super.onViewCreated(
-            (if (isReuseView && rootView != null) rootView!! else view),
-            savedInstanceState
+                (if (isReuseView && rootView != null) rootView!! else view),
+                savedInstanceState
         )
     }
 
@@ -295,8 +302,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
     override fun onStart() {
         super.onStart()
         LogUtils.i(
-            "SSSS",
-            "onStart=====$this  getUserVisibleHint()=$userVisibleHint"
+                "SSSS",
+                "onStart=====$this  getUserVisibleHint()=$userVisibleHint"
         )
     }
 
@@ -308,13 +315,13 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
         //告诉FragmentActivity，当前Fragment在栈顶
         if (mBackInterface != null) mBackInterface!!.setSelectedFragment(this)
         LogUtils.i(
-            "SSSS",
-            "onResume=====$this  getUserVisibleHint()=$userVisibleHint"
+                "SSSS",
+                "onResume=====$this  getUserVisibleHint()=$userVisibleHint"
         )
         if (userVisibleHint) {
             LogUtils.i(
-                "SSSS",
-                "onResume=====$this  isFirstVisible()=$isFirstVisible"
+                    "SSSS",
+                    "onResume=====$this  isFirstVisible()=$isFirstVisible"
             )
             if (isFirstVisible) {
                 onFragmentFirstVisible()

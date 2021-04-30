@@ -91,10 +91,10 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
     }
 
     private void iniData() {
-        getViewBinding().loginTv.setOnClickListener(this);
-        getViewBinding().forgetPwd.setOnClickListener(this);
-        getViewBinding().registerAccount.setOnClickListener(this);
-        getViewBinding().pwdVisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        getBinding().loginTv.setOnClickListener(this);
+        getBinding().forgetPwd.setOnClickListener(this);
+        getBinding().registerAccount.setOnClickListener(this);
+        getBinding().pwdVisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -103,24 +103,24 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
                     /**
                      * 第二种
                      */
-                    getViewBinding().passwordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    getBinding().passwordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 } else {
                     //默认状态显示密码--设置文本 要一起写才能起作用 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
                     //mEtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     /**
                      * 第二种
                      */
-                    getViewBinding().passwordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    getBinding().passwordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 }
-                if (!TextUtils.isEmpty(getViewBinding().passwordEdit.getText().toString()))
-                    getViewBinding().passwordEdit.setSelection(getViewBinding().passwordEdit.getText().toString().length());
+                if (!TextUtils.isEmpty(getBinding().passwordEdit.getText().toString()))
+                    getBinding().passwordEdit.setSelection(getBinding().passwordEdit.getText().toString().length());
             }
         });
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && from == 0) {
-            getViewBinding().phoneEdit.setText(phone);
-            getViewBinding().phoneEdit.setSelection(phone.length());
-            getViewBinding().passwordEdit.setText(password);
-            getViewBinding().passwordEdit.setSelection(password.length());
+            getBinding().phoneEdit.setText(phone);
+            getBinding().phoneEdit.setSelection(phone.length());
+            getBinding().passwordEdit.setText(password);
+            getBinding().passwordEdit.setSelection(password.length());
             presenter.userLogin();
         }
     }
@@ -132,8 +132,8 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
         Intent intent;
         switch (v.getId()) {
             case R.id.login_tv:
-                phone = getViewBinding().phoneEdit.getText().toString().trim();
-                password = getViewBinding().passwordEdit.getText().toString().trim();
+                phone = getBinding().phoneEdit.getText().toString().trim();
+                password = getBinding().passwordEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
                     ToastUtils.showToast(getContext(), "请输入您的手机号和动态密码!");
                     return;
@@ -201,7 +201,7 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
         Map map = new TreeMap();
         map.put("salesphone", phone);
         map.put("password", password);
-        map.put("isparallel", getViewBinding().isparallel.isChecked());
+        map.put("isparallel", getBinding().isparallel.isChecked());
 
 //        if (openInfo.getPlatform().equals(ThirdInfoEntity.PLATFORM_QQ)){
 //            map.put("openid",openInfo.getOpenId());

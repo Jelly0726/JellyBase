@@ -54,12 +54,12 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.View
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(listener);
-        getViewBinding().changePwd.setOnClickListener(listener);
-        getViewBinding().changePhone.setOnClickListener(listener);
-        getViewBinding().checkUpdata.setOnClickListener(listener);
-        getViewBinding().about.setOnClickListener(listener);
-        getViewBinding().exitTv.setOnClickListener(listener);
+        getBinding().leftBack.setOnClickListener(listener);
+        getBinding().changePwd.setOnClickListener(listener);
+        getBinding().changePhone.setOnClickListener(listener);
+        getBinding().checkUpdata.setOnClickListener(listener);
+        getBinding().about.setOnClickListener(listener);
+        getBinding().exitTv.setOnClickListener(listener);
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override

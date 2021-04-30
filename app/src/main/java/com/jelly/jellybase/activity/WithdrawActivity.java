@@ -46,16 +46,16 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
     }
     @SuppressLint("WrongViewCast")
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(listener);
-        getViewBinding().changeBank.setOnClickListener(listener);
-        getViewBinding().bankTx.setOnClickListener(listener);
-        getViewBinding().commitTv.setOnClickListener(listener);
-        getViewBinding().amount.addTextChangedListener(new MoneyTextWatcher(getViewBinding().amount){
+        getBinding().leftBack.setOnClickListener(listener);
+        getBinding().changeBank.setOnClickListener(listener);
+        getBinding().bankTx.setOnClickListener(listener);
+        getBinding().commitTv.setOnClickListener(listener);
+        getBinding().amount.addTextChangedListener(new MoneyTextWatcher(getBinding().amount){
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s.toString().trim())){
                     double acount=Double.parseDouble(s.toString().trim());
-                    getViewBinding().chargeTv.setText("手续费：¥"+String.valueOf(acount*charge)+"元");
+                    getBinding().chargeTv.setText("手续费：¥"+String.valueOf(acount*charge)+"元");
                 }
             }
         }.setDigits(2));
@@ -64,19 +64,19 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
                 ConfigKey.DEFAULT_BANK);
         bankInfo=gson.fromJson(json,BankCardInfo.class);
         if (bankInfo==null){
-            getViewBinding().bankTx.setVisibility(View.VISIBLE);
-            getViewBinding().changeBank.setVisibility(View.GONE);
+            getBinding().bankTx.setVisibility(View.VISIBLE);
+            getBinding().changeBank.setVisibility(View.GONE);
         }else {
-            getViewBinding().bankTx.setVisibility(View.GONE);
-            getViewBinding().changeBank.setVisibility(View.VISIBLE);
+            getBinding().bankTx.setVisibility(View.GONE);
+            getBinding().changeBank.setVisibility(View.VISIBLE);
             iniDataBank();
         }
     }
     private void iniDataBank(){
-        getViewBinding().bankName.setText(bankInfo.getBankName());
+        getBinding().bankName.setText(bankInfo.getBankName());
         String bankNo=bankInfo.getBankNo().substring(bankInfo.getBankNo().length()-4,
                 bankInfo.getBankNo().length());
-        getViewBinding().bankNo.setText("尾号"+bankNo);
+        getBinding().bankNo.setText("尾号"+bankNo);
         if(bankInfo.getBankLogo()!=null){
             if (bankInfo.getBankLogo().trim().length()>6){
                 Glide.with(this)
@@ -85,11 +85,11 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
                         .error(R.drawable.yinlian)
                         .dontAnimate()
                         .centerCrop()
-                        .into(getViewBinding().bankLogo);
+                        .into(getBinding().bankLogo);
                 return;
             }
         }
-        getViewBinding().bankLogo.setImageResource(R.drawable.yinlian);
+        getBinding().bankLogo.setImageResource(R.drawable.yinlian);
     }
     @Override
     protected void onDestroy() {
@@ -132,7 +132,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
                         ToastUtils.showToast(WithdrawActivity.this,"请选择提现银行卡!");
                         return;
                     }
-                    String amounts=getViewBinding().amount.getText().toString().trim();
+                    String amounts= getBinding().amount.getText().toString().trim();
                     if (TextUtils.isEmpty(amounts)){
                         ToastUtils.showToast(WithdrawActivity.this,"请输入提现金额!");
                         return;
@@ -150,12 +150,12 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
             if (data!=null) {
                 bankInfo= (BankCardInfo) data.getSerializableExtra("data");
                 if(bankInfo==null){
-                    getViewBinding().bankTx.setVisibility(View.VISIBLE);
-                    getViewBinding().changeBank.setVisibility(View.GONE);
+                    getBinding().bankTx.setVisibility(View.VISIBLE);
+                    getBinding().changeBank.setVisibility(View.GONE);
                     return;
                 }
-                getViewBinding().bankTx.setVisibility(View.GONE);
-                getViewBinding().changeBank.setVisibility(View.VISIBLE);
+                getBinding().bankTx.setVisibility(View.GONE);
+                getBinding().changeBank.setVisibility(View.VISIBLE);
                 iniDataBank();
             }
         }
@@ -163,7 +163,7 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
 
     @Override
     public Object withdrawalsParam() {
-        String amounts=getViewBinding().amount.getText().toString().trim();
+        String amounts= getBinding().amount.getText().toString().trim();
         Map map=new TreeMap();
         map.put("amount",amounts);
         map.put("withdrawalaccount",bankInfo.getBankNo());

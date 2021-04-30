@@ -59,14 +59,14 @@ public class LoginActivity extends BaseActivity<UserLoginActivityBinding> implem
     }
 
     private void iniView (){
-getViewBinding().registerAccount.setOnClickListener(this);
-        getViewBinding().vpContent.setOnPageChangeListener(this);
-        getViewBinding().topbarRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+getBinding().registerAccount.setOnClickListener(this);
+        getBinding().vpContent.setOnPageChangeListener(this);
+        getBinding().topbarRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                for (int i=0;i<getViewBinding().topbarRg.getChildCount();i++){
-                    if (getViewBinding().topbarRg.getChildAt(i).getId()==checkedId){
-                        getViewBinding().vpContent.setCurrentItem(i, false);
+                for (int i = 0; i< getBinding().topbarRg.getChildCount(); i++){
+                    if (getBinding().topbarRg.getChildAt(i).getId()==checkedId){
+                        getBinding().vpContent.setCurrentItem(i, false);
                     }else {
                     }
                 }
@@ -87,12 +87,12 @@ getViewBinding().registerAccount.setOnClickListener(this);
 
         UserDyLoginFragment allianceFragment = new UserDyLoginFragment();
         mFragmentList.add(allianceFragment);
-        getViewBinding().leftRb.setChecked(true);
+        getBinding().leftRb.setChecked(true);
     }
 
     private void initListener() {
-        getViewBinding().vpContent.setAdapter(new MyAdapter(getSupportFragmentManager()));
-        if (getViewBinding().vpContent.getAdapter().getCount() != getViewBinding().topbarRg.getChildCount()) {
+        getBinding().vpContent.setAdapter(new MyAdapter(getSupportFragmentManager()));
+        if (getBinding().vpContent.getAdapter().getCount() != getBinding().topbarRg.getChildCount()) {
             throw new IllegalArgumentException("RadioGroup的子RadioButton数量必须和ViewPager条目数量一致");
         }
     }
@@ -138,8 +138,8 @@ getViewBinding().registerAccount.setOnClickListener(this);
 
     @Override
     public void onPageSelected(int position) {
-        ((RadioButton)getViewBinding().topbarRg.getChildAt(position)).setChecked(true);
-        getViewBinding().vpContent.setCurrentItem(position, false);
+        ((RadioButton) getBinding().topbarRg.getChildAt(position)).setChecked(true);
+        getBinding().vpContent.setCurrentItem(position, false);
     }
 
     @Override

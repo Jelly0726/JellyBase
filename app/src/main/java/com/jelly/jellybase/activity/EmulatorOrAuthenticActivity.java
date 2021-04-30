@@ -17,10 +17,10 @@ public class EmulatorOrAuthenticActivity extends BaseActivity<EmulatorOrAuthenti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewBinding().backLayout.setOnClickListener(this);
-        getViewBinding().start.setOnClickListener(this);
-        getViewBinding().startJni.setOnClickListener(this);
-        getViewBinding().startJniNorm.setOnClickListener(this);
+        getBinding().backLayout.setOnClickListener(this);
+        getBinding().start.setOnClickListener(this);
+        getBinding().startJni.setOnClickListener(this);
+        getBinding().startJniNorm.setOnClickListener(this);
     }
 
     @Override
@@ -34,13 +34,13 @@ public class EmulatorOrAuthenticActivity extends BaseActivity<EmulatorOrAuthenti
                 finish();
                 break;
             case R.id.start:
-                getViewBinding().result.setText("Java模式验证结果当前运行环境为：" + (AntiEmulator.verify(this) ? "模拟器" : "真机"));
+                getBinding().result.setText("Java模式验证结果当前运行环境为：" + (AntiEmulator.verify(this) ? "模拟器" : "真机"));
                 break;
             case R.id.startJniNorm://标准模式
-                getViewBinding().result.setText("标准模式验证结果当前运行环境为：" + (diff.strazzere.anti.AntiEmulator.check(this) ? "模拟器" : "真机"));
+                getBinding().result.setText("标准模式验证结果当前运行环境为：" + (diff.strazzere.anti.AntiEmulator.check(this) ? "模拟器" : "真机"));
                 break;
             case R.id.startJni://安全模式
-                getViewBinding().result.setText("安全模式验证结果当前运行环境为：" + (diff.strazzere.anti.AntiEmulator.checkSafely(this) ? "模拟器" : "真机"));
+                getBinding().result.setText("安全模式验证结果当前运行环境为：" + (diff.strazzere.anti.AntiEmulator.checkSafely(this) ? "模拟器" : "真机"));
                 break;
         }
     }

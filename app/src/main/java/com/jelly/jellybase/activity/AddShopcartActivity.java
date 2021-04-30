@@ -20,7 +20,7 @@ public class AddShopcartActivity extends BaseActivity<AddShopcartActivityBinding
         iniView();
     }
     private void iniView(){
-        getViewBinding().button.setOnClickListener(new View.OnClickListener() {
+        getBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddCartDialog addCartDialog1=AddCartDialog.getInstance();

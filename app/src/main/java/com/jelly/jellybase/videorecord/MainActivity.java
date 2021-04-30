@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity<VedioRecordMainBinding> {
             fpath.mkdirs();
         }
         videoPath = fpath.getAbsolutePath();
-        getViewBinding().btnRecordVideo.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnRecordVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                Intent intent = VedioRecordActivity.startRecordActivity(videoPath,MainActivity.this);

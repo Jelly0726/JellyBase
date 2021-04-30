@@ -33,9 +33,9 @@ public class PickActivity extends BaseActivity<AddressTimeActivityBinding> imple
         iniView();
     }
     private void iniView(){
-        getViewBinding().selectAddress.setOnClickListener(this);
+        getBinding().selectAddress.setOnClickListener(this);
 
-        getViewBinding().beginDate.setOnClickListener(this);
+        getBinding().beginDate.setOnClickListener(this);
     }
     /**
      * 弹出选择框
@@ -59,7 +59,7 @@ public class PickActivity extends BaseActivity<AddressTimeActivityBinding> imple
                     PickActivity.this.year=year;
                     PickActivity.this.month=month;
                     PickActivity.this.day=day;
-                    getViewBinding().beginDate.setText(year + "-" + month + "-" + day);
+                    getBinding().beginDate.setText(year + "-" + month + "-" + day);
                 }
             });
             picker.setOnWheelListener(new DatePicker.OnWheelListener() {
@@ -98,10 +98,10 @@ public class PickActivity extends BaseActivity<AddressTimeActivityBinding> imple
             public void onAddressPicked(Province province, City city, County county) {
                 if (county == null) {
                     //showToast(province.getAreaName() + city.getAreaName());
-                    getViewBinding().selectAddress.setText(province.getAreaName() + city.getAreaName());
+                    getBinding().selectAddress.setText(province.getAreaName() + city.getAreaName());
                 } else {
                     //showToast(province.getAreaName() + city.getAreaName() + county.getAreaName());
-                    getViewBinding().selectAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                    getBinding().selectAddress.setText(province.getAreaName() + city.getAreaName() + county.getAreaName());
                 }
             }
         });

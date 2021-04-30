@@ -191,10 +191,10 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
 //    }
 
     private fun iniView() {
-        viewBinding!!.backLayout.setOnClickListener(this)
-        viewBinding!!.allSelectBox.setOnClickListener(this)
-        viewBinding!!.settlementTv.setOnClickListener(this)
-        viewBinding!!.emptyShopcart.goShop.setOnClickListener(this)
+        binding!!.backLayout.setOnClickListener(this)
+        binding!!.allSelectBox.setOnClickListener(this)
+        binding!!.settlementTv.setOnClickListener(this)
+        binding!!.emptyShopcart.goShop.setOnClickListener(this)
     }
     override fun onClick(view: View) {
         val intent: Intent

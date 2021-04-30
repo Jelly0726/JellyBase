@@ -67,11 +67,11 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
         return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().addressTv.setOnClickListener(this);
-        getViewBinding().commitLayout.setOnClickListener(this);
-        getViewBinding().deleteAddress.setOnClickListener(this);
-        getViewBinding().addressTvs.addTextChangedListener(new TextWatcher() {
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().addressTv.setOnClickListener(this);
+        getBinding().commitLayout.setOnClickListener(this);
+        getBinding().deleteAddress.setOnClickListener(this);
+        getBinding().addressTvs.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -86,8 +86,8 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             public void afterTextChanged(Editable s) {
                 String address=mProvince+mCity+mCounty;
                 if (s.toString().trim().length()<address.length()){
-                    getViewBinding().addressTvs.setText(address);
-                    getViewBinding().addressTvs.setSelection(address.length());
+                    getBinding().addressTvs.setText(address);
+                    getBinding().addressTvs.setSelection(address.length());
                 }
 
             }
@@ -96,26 +96,26 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             mProvince=recevierAddress.getProvince();
             mCity=recevierAddress.getCity();
             mCounty=recevierAddress.getArea();
-            getViewBinding().addressTv.setText(recevierAddress.getProvince()+recevierAddress.getCity()+recevierAddress.getArea());
+            getBinding().addressTv.setText(recevierAddress.getProvince()+recevierAddress.getCity()+recevierAddress.getArea());
             String address=mProvince+mCity+mCounty+"";
-            getViewBinding().addressTvs.setText(address+recevierAddress.getAddress());
+            getBinding().addressTvs.setText(address+recevierAddress.getAddress());
             if (!TextUtils.isEmpty(recevierAddress.getAddress()))
-                getViewBinding().addressTvs.setSelection(address.length()+recevierAddress.getAddress().length());
-            getViewBinding().nameEdit.setText(recevierAddress.getName());
+                getBinding().addressTvs.setSelection(address.length()+recevierAddress.getAddress().length());
+            getBinding().nameEdit.setText(recevierAddress.getName());
             if (!TextUtils.isEmpty(recevierAddress.getName()))
-                getViewBinding().nameEdit.setSelection(recevierAddress.getName().length());
-            getViewBinding().phoneEdit.setText(StringUtil.getReplace(recevierAddress.getPhone(),4,8));
+                getBinding().nameEdit.setSelection(recevierAddress.getName().length());
+            getBinding().phoneEdit.setText(StringUtil.getReplace(recevierAddress.getPhone(),4,8));
             if (!TextUtils.isEmpty(recevierAddress.getPhone()))
-                getViewBinding().phoneEdit.setSelection(recevierAddress.getPhone().length());
-            getViewBinding().defaultCheckBox.setChecked(recevierAddress.isDefault());
+                getBinding().phoneEdit.setSelection(recevierAddress.getPhone().length());
+            getBinding().defaultCheckBox.setChecked(recevierAddress.isDefault());
         }
-        getViewBinding().phoneEdit.setOnKeyListener(new View.OnKeyListener() {
+        getBinding().phoneEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 //You can identify which key pressed buy checking keyCode value with KeyEvent.KEYCODE_
                 if(keyCode == KeyEvent.KEYCODE_DEL) {
                     //this is for backspace
-                    getViewBinding().phoneEdit.getText().clear();
+                    getBinding().phoneEdit.getText().clear();
                 }
                 return false;
             }
@@ -132,9 +132,9 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                 break;
             case R.id.commit_layout:
                 operatype=1;
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
-                String name=getViewBinding().nameEdit.getText().toString();
-                String address=getViewBinding().addressTvs.getText().toString();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
+                String name= getBinding().nameEdit.getText().toString();
+                String address= getBinding().addressTvs.getText().toString();
                 if (TextUtils.isEmpty(name)){
                     ToastUtils.showToast(this,"姓名不能为空!");
                     return;
@@ -200,23 +200,23 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                 if (county == null) {
                     //showToast(province.getAreaName() + city.getAreaName());
                     String addre=province.getAreaName() + city.getAreaName();
-                    getViewBinding().addressTv.setText(addre);
-                    String str=getViewBinding().addressTvs.getText().toString().trim();
+                    getBinding().addressTv.setText(addre);
+                    String str= getBinding().addressTvs.getText().toString().trim();
                     if(str.length()>0){
                         str=str.replace(mProvince,province.getAreaName());
                         str=str.replace(mCity,city.getAreaName());
                     }else {
                         str=addre;
                     }
-                    getViewBinding().addressTvs.setText(str);
-                    getViewBinding().addressTvs.setSelection(str.length());
+                    getBinding().addressTvs.setText(str);
+                    getBinding().addressTvs.setSelection(str.length());
                     mProvince=province.getAreaName();
                     mCity=city.getAreaName();
                 } else {
                     //showToast(province.getAreaName() + city.getAreaName() + county.getAreaName());
                     String addre=province.getAreaName() + city.getAreaName()+county.getAreaName();
-                    getViewBinding().addressTv.setText(addre);
-                    String str=getViewBinding().addressTvs.getText().toString().trim();
+                    getBinding().addressTv.setText(addre);
+                    String str= getBinding().addressTvs.getText().toString().trim();
                     if(str.length()>0){
                         str=str.replace(mProvince,province.getAreaName());
                         str=str.replace(mCity,city.getAreaName());
@@ -224,8 +224,8 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
                     }else {
                         str=addre;
                     }
-                    getViewBinding().addressTvs.setText(str);
-                    getViewBinding().addressTvs.setSelection(str.length());
+                    getBinding().addressTvs.setText(str);
+                    getBinding().addressTvs.setSelection(str.length());
                     mProvince=province.getAreaName();
                     mCity=city.getAreaName();
                     mCounty=county.getAreaName();
@@ -240,12 +240,12 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
     }
     @Override
     public Object operaAddressParam() {
-        String phone = getViewBinding().phoneEdit.getText().toString().trim();
+        String phone = getBinding().phoneEdit.getText().toString().trim();
         if (!PwdCheckUtil.isDigit2(phone)){
             phone=recevierAddress.getPhone();
         }
-        String name = getViewBinding().nameEdit.getText().toString();
-        String address = getViewBinding().addressTvs.getText().toString();
+        String name = getBinding().nameEdit.getText().toString();
+        String address = getBinding().addressTvs.getText().toString();
         Map map = new TreeMap();
         map.put("addressid", recevierAddress.getAddressid());
         if (operatype == 1){
@@ -255,7 +255,7 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
             map.put("city", mCity);
             map.put("area", mCounty);
             map.put("address", address.replace(mProvince + mCity + mCounty, ""));
-            map.put("isdefault", getViewBinding().defaultCheckBox.isChecked());
+            map.put("isdefault", getBinding().defaultCheckBox.isChecked());
         }
         map.put("operatype",operatype);
         return map;

@@ -36,19 +36,19 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Vie
         iniView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().commitTv.setOnClickListener(this);
-        getViewBinding().bankCardId.setBankCardListener(new BandCardEditText.BankCardListener() {
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().commitTv.setOnClickListener(this);
+        getBinding().bankCardId.setBankCardListener(new BandCardEditText.BankCardListener() {
             @Override
             public void success(String name,String type) {
-                getViewBinding().bankCardName.setText(name+"·"+type);
+                getBinding().bankCardName.setText(name+"·"+type);
                 bankName=name;
                 bankType=type;
             }
 
             @Override
             public void failure() {
-                getViewBinding().bankCardName.setText("没有查到所属银行");
+                getBinding().bankCardName.setText("没有查到所属银行");
                 bankName="没有查到所属银行";
                 bankType="储蓄卡";
             }
@@ -87,9 +87,9 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Vie
                 finish();
                 break;
             case R.id.commit_tv:
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
-                String cardholder=getViewBinding().cardholderEdit.getText().toString().trim();
-                String bankCard=getViewBinding().bankCardId.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
+                String cardholder= getBinding().cardholderEdit.getText().toString().trim();
+                String bankCard= getBinding().bankCardId.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(cardholder)||
                         TextUtils.isEmpty(bankCard)){
                     ToastUtils.showToast(this,"手机号、持卡人、卡号不能为空！");
@@ -102,9 +102,9 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Vie
 
     @Override
     public Object addBankParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
-        String cardholder=getViewBinding().cardholderEdit.getText().toString().trim();
-        String bankCard=getViewBinding().bankCardId.getCardNo().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
+        String cardholder= getBinding().cardholderEdit.getText().toString().trim();
+        String bankCard= getBinding().bankCardId.getCardNo().toString().trim();
         Map map=new TreeMap();
         map.put("phone",phone);
         map.put("bankname",bankName);

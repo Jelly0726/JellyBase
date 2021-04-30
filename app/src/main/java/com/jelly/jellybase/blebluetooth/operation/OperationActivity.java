@@ -87,7 +87,7 @@ public class OperationActivity extends BaseActivity<BluetoothActivityOperationBi
     }
 
     private void initView() {
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
     }
 
     private void initData() {
@@ -107,7 +107,7 @@ public class OperationActivity extends BaseActivity<BluetoothActivityOperationBi
 
     public void changePage(int page) {
         currentPage = page;
-        getViewBinding().titleTv.setText(titles[page]);
+        getBinding().titleTv.setText(titles[page]);
         updateFragment(page);
         if (currentPage == 1) {
             ((CharacteristicListFragment) fragments.get(1)).showData();

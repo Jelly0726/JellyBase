@@ -31,7 +31,7 @@ public class AboutActivity extends BaseActivityImpl<AboutContact.View
         presenter.aboutUs(true);
     }
     private void iniView(){
-getViewBinding().leftBack.setOnClickListener(this);
+getBinding().leftBack.setOnClickListener(this);
     }
     @Override
     public void onBackPressed() {
@@ -39,10 +39,10 @@ getViewBinding().leftBack.setOnClickListener(this);
         super.onBackPressed();
     }
     private void iniData(){
-        getViewBinding().versionsTv.setText("V "+ AppUtils.getAppVersion(this)+" ("+ AppUtils.getVersionCode(this)+")");
-        getViewBinding().nameTv.setText(aboutUs.getCompanyname());
-        getViewBinding().addressTv.setText(aboutUs.getAddress());
-        getViewBinding().phoneTv.setText(aboutUs.getTelephone());
+        getBinding().versionsTv.setText("V "+ AppUtils.getAppVersion(this)+" ("+ AppUtils.getVersionCode(this)+")");
+        getBinding().nameTv.setText(aboutUs.getCompanyname());
+        getBinding().addressTv.setText(aboutUs.getAddress());
+        getBinding().phoneTv.setText(aboutUs.getTelephone());
     }
     @Override
     protected void onDestroy() {

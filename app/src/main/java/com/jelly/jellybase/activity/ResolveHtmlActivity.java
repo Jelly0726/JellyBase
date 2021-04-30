@@ -34,7 +34,7 @@ public class ResolveHtmlActivity extends BaseActivity<ResolveHtmlActivityBinding
         iniVew();
     }
     private void iniVew(){
-        getViewBinding().leftBack.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
         String html="<h1>百度一下,你就知道官</h1>"
                 + "全球最大的中文搜索引擎、致力于让网民更便捷地获取信息，找到所求。百度超过千亿的中文网页数据库，" +
                 "可以瞬间找到相关的搜索结果。"
@@ -45,7 +45,7 @@ public class ResolveHtmlActivity extends BaseActivity<ResolveHtmlActivityBinding
         RichText.initCacheDir(BaseApplication.getInstance());
         if (html.toLowerCase().contains(".gif")) {
             //gif图片关闭硬件加速
-            getViewBinding().productDetailTv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            getBinding().productDetailTv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
         RichText.from(html) // 数据源
                 .type(RichType.html) // 数据格式,不设置默认是Html,使用fromMarkdown的默认是Markdown格式
@@ -88,7 +88,7 @@ public class ResolveHtmlActivity extends BaseActivity<ResolveHtmlActivityBinding
                     }
                 })
                 .bind(this)
-                .into(getViewBinding().productDetailTv);
+                .into(getBinding().productDetailTv);
     }
     @Override
     protected void onDestroy() {

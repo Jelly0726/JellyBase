@@ -20,15 +20,15 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> {
     @Override
     public void onFragmentVisibleChange(boolean isVisible) {
         if (isVisible) {
-            getViewBinding().webView.setVisible(isVisible);
-            getViewBinding().webView.loadUrl("https://www.baidu.com");
+            getBinding().webView.setVisible(isVisible);
+            getBinding().webView.loadUrl("https://www.baidu.com");
         }
     }
 
     @Override
     public void onFragmentFirstVisible() {
-        getViewBinding().webView.setVisible(true);
-        getViewBinding().webView.loadUrl("https://www.baidu.com");
+        getBinding().webView.setVisible(true);
+        getBinding().webView.loadUrl("https://www.baidu.com");
     }
 
     @Override
@@ -41,8 +41,8 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> {
     }
     @Override
     public boolean onBackPressed() {
-        if (getViewBinding().webView != null && getViewBinding().webView.canGoBack()) {
-            getViewBinding().webView.goBack();
+        if (getBinding().webView != null && getBinding().webView.canGoBack()) {
+            getBinding().webView.goBack();
             return true;
         }
         return false;
@@ -53,39 +53,39 @@ public class HomeFragment extends BaseFragment<HomeFragmentBinding> {
         iniData();
     }
     private void iniData(){
-        getViewBinding().webView.setVisible(getUserVisibleHint());
-        getViewBinding().webView.loadUrl("https://www.baidu.com");
-        getViewBinding().webView.setClientCallBack(new TBSClientCallBack(){
+        getBinding().webView.setVisible(getUserVisibleHint());
+        getBinding().webView.loadUrl("https://www.baidu.com");
+        getBinding().webView.setClientCallBack(new TBSClientCallBack(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress>=100&&getActivity()!=null){
-                    getViewBinding().webView.setVisible(true);
-                    getViewBinding().customView.stopRefresh();
+                    getBinding().webView.setVisible(true);
+                    getBinding().customView.stopRefresh();
                 }
             }
         });
-        getViewBinding().customView.setPullLoadEnable(false);
-        getViewBinding().customView.setAutoRefresh(false);
-        getViewBinding().customView.setAutoLoadMore(false);
-        getViewBinding().customView.setPinnedTime(1000);
-        getViewBinding().customView.setMoveForHorizontal(true);
-        getViewBinding().customView.setOnTopRefreshTime(new OnTopRefreshTime() {
+        getBinding().customView.setPullLoadEnable(false);
+        getBinding().customView.setAutoRefresh(false);
+        getBinding().customView.setAutoLoadMore(false);
+        getBinding().customView.setPinnedTime(1000);
+        getBinding().customView.setMoveForHorizontal(true);
+        getBinding().customView.setOnTopRefreshTime(new OnTopRefreshTime() {
 
             @Override
             public boolean isTop() {
-                if (getViewBinding().webView.getWebScrollY() == 0) {
-                    View firstVisibleChild = getViewBinding().webView.getChildAt(0);
+                if (getBinding().webView.getWebScrollY() == 0) {
+                    View firstVisibleChild = getBinding().webView.getChildAt(0);
                     return firstVisibleChild.getTop() >= 0;
                 }
                 return false;
             }
         });
-        getViewBinding().customView.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
+        getBinding().customView.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
 
             @Override
             public void onRefresh(boolean isPullDown) {
-                getViewBinding().webView.setVisible(false);
-                getViewBinding().webView.reload();
+                getBinding().webView.setVisible(false);
+                getBinding().webView.reload();
             }
 
             @Override

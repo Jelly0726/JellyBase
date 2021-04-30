@@ -41,8 +41,8 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         phone=getIntent().getStringExtra("phone");
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().nextTv.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().nextTv.setOnClickListener(this);
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击
@@ -53,8 +53,8 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View
                 finish();
                 break;
             case R.id.next_tv:
-                String password=getViewBinding().passwordEdit.getText().toString().trim();
-                String password1=getViewBinding().password1Edit.getText().toString().trim();
+                String password= getBinding().passwordEdit.getText().toString().trim();
+                String password1= getBinding().password1Edit.getText().toString().trim();
                 if (TextUtils.isEmpty(password)||TextUtils.isEmpty(password1)){
                     ToastUtils.showToast(this,"请输入密码!");
                     return;
@@ -92,7 +92,7 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View
     }
     @Override
     public Object getSetPassWordParam() {
-        String password=getViewBinding().passwordEdit.getText().toString().trim();
+        String password= getBinding().passwordEdit.getText().toString().trim();
         password= MD5.MD5Encode(password);
         Map map=new TreeMap();
         map.put("salesphone",phone);
@@ -104,7 +104,7 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View
     public void excuteSuccess( Object mCallBackVo) {
         LoginDaoUtils.getInstance(BaseApplication.getInstance()).clear();
         AppSubject.getInstance().detachAll();
-        String password=getViewBinding().passwordEdit.getText().toString().trim();
+        String password= getBinding().passwordEdit.getText().toString().trim();
         Intent intent = new Intent();
         //intent.setClass(this, LoginActivity.class);
         intent.putExtra("phone",phone);

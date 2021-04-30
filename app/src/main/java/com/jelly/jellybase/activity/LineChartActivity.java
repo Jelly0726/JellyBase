@@ -38,12 +38,12 @@ public class LineChartActivity extends BaseActivity<LinechartActivityBinding> {
 
         LineDataSet set1;
 
-        if (getViewBinding().chart.getData() != null &&
-                getViewBinding().chart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet)getViewBinding().chart.getData().getDataSetByIndex(0);
+        if (getBinding().chart.getData() != null &&
+                getBinding().chart.getData().getDataSetCount() > 0) {
+            set1 = (LineDataSet) getBinding().chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
-            getViewBinding().chart.getData().notifyDataChanged();
-            getViewBinding().chart.notifyDataSetChanged();
+            getBinding().chart.getData().notifyDataChanged();
+            getBinding().chart.notifyDataSetChanged();
         } else {
             // create a dataset and give it a type
             set1 = new LineDataSet(values, "DataSet 1");
@@ -73,7 +73,7 @@ public class LineChartActivity extends BaseActivity<LinechartActivityBinding> {
             LineData data = new LineData(dataSets);
 
             // set data
-            getViewBinding().chart.setData(data);
+            getBinding().chart.setData(data);
         }
     }
 }

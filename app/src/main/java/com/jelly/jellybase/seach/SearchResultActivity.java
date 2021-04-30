@@ -49,15 +49,15 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
         iniXRefreshView();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(listener);
+        getBinding().leftBack.setOnClickListener(listener);
 
-        getViewBinding().backSearch.setText(search);
-        getViewBinding().backSearch.setOnClickListener(listener);
+        getBinding().backSearch.setText(search);
+        getBinding().backSearch.setOnClickListener(listener);
 
 
-        getViewBinding().priceLayout.setOnClickListener(listener);
-        getViewBinding().classifyLayout.setOnClickListener(listener);
-        getViewBinding().stateLayout.setOnClickListener(listener);
+        getBinding().priceLayout.setOnClickListener(listener);
+        getBinding().classifyLayout.setOnClickListener(listener);
+        getBinding().stateLayout.setOnClickListener(listener);
     }
     private void iniXRefreshView(){
         for (int i=0;i<9;i++){
@@ -65,21 +65,21 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
         }
         adapter=new SearchResultAdapter(this,mList);
         adapter.setOnItemClickListener(onItemClickListener);
-        getViewBinding().xrefreshview.setPullLoadEnable(true);
-        getViewBinding().recyclerViewTestRv.setHasFixedSize(true);
+        getBinding().xrefreshview.setPullLoadEnable(true);
+        getBinding().recyclerViewTestRv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        getViewBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
+        getBinding().recyclerViewTestRv.setLayoutManager(layoutManager);
         Rect rect=new Rect();
         rect.bottom=0;
         rect.top=0;
         rect.left=0;
         rect.right=0;
-        getViewBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,0,-1, ItemDecoration.NONE));
-        getViewBinding().recyclerViewTestRv.setAdapter(adapter);
-        getViewBinding().xrefreshview.setPinnedTime(1000);
-        getViewBinding().xrefreshview.setMoveForHorizontal(true);
+        getBinding().recyclerViewTestRv.addItemDecoration(new ItemDecoration(rect,0,-1, ItemDecoration.NONE));
+        getBinding().recyclerViewTestRv.setAdapter(adapter);
+        getBinding().xrefreshview.setPinnedTime(1000);
+        getBinding().xrefreshview.setMoveForHorizontal(true);
         adapter.setCustomLoadMoreView(new XRefreshViewFooter(this));
-        getViewBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
+        getBinding().xrefreshview.setXRefreshViewListener(simpleXRefreshListener);
     }
     /**
      * 设置弹窗
@@ -101,44 +101,44 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
         switch (type){
             case 0:
                 if(!oNcount){
-                    getViewBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_down);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    getViewBinding().priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=true;
                 }else {
-                    getViewBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                    getBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                     img = getResources().getDrawable(R.mipmap.price_up);
                     img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                    getViewBinding().priceTv.setCompoundDrawables(null, null, img, null);
+                    getBinding().priceTv.setCompoundDrawables(null, null, img, null);
                     oNcount=false;
                 }
 
-                getViewBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                getViewBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 1:
                 oNcount=false;
-                getViewBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                getViewBinding().priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().priceTv.setCompoundDrawables(null, null, img, null);
 
-                getViewBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
 
-                getViewBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 break;
             case 2:
                 oNcount=false;
-                getViewBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().priceTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
                 img = getResources().getDrawable(R.mipmap.price_down);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                getViewBinding().priceTv.setCompoundDrawables(null, null, img, null);
+                getBinding().priceTv.setCompoundDrawables(null, null, img, null);
 
-                getViewBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
+                getBinding().classifyTv.setTextColor(getResources().getColor(R.color.home_filtrate_un));
 
-                getViewBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
+                getBinding().stateTv.setTextColor(getResources().getColor(R.color.home_filtrate_on));
                 break;
         }
 
@@ -165,7 +165,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    getViewBinding().xrefreshview.stopRefresh();
+                    getBinding().xrefreshview.stopRefresh();
                 }
             }, 2000);
         }
@@ -176,7 +176,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
                 public void run() {
                     //xRefreshView.setLoadComplete(true);
                     // 刷新完成必须调用此方法停止加载
-                    getViewBinding().xrefreshview.stopLoadMore();
+                    getBinding().xrefreshview.stopLoadMore();
                 }
             }, 1000);
         }
@@ -201,7 +201,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultActivityBindi
                 case R.id.classify_layout:
                     onChangeFiltrate(1);
                     setPopup(Util.Anim_TopMiddle);
-                    topMiddlePopup.show(getViewBinding().classifyLayout);
+                    topMiddlePopup.show(getBinding().classifyLayout);
                     break;
                 case R.id.state_layout:
                     onChangeFiltrate(2);

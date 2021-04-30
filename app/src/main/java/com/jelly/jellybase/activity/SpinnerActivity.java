@@ -22,14 +22,14 @@ public class SpinnerActivity extends BaseActivity<SpinnerActivityBinding> {
     }
     private void iniView(){
         final String[] mItems = {"One", "Two", "Three", "Four", "Five"};
-        getViewBinding().spProductTypes.setItems(mItems);
-        getViewBinding().spProductTypes.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+        getBinding().spProductTypes.setItems(mItems);
+        getBinding().spProductTypes.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
             }
         });
-        getViewBinding().spProductTypes.setOnNothingSelectedListener(new MaterialSpinner.OnNothingSelectedListener() {
+        getBinding().spProductTypes.setOnNothingSelectedListener(new MaterialSpinner.OnNothingSelectedListener() {
 
             @Override public void onNothingSelected(MaterialSpinner spinner) {
                 Snackbar.make(spinner, "Nothing selected", Snackbar.LENGTH_LONG).show();

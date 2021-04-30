@@ -63,11 +63,11 @@ public class WalletFragment extends BaseFragment<LocationFragmentBinding> implem
         initViewPagerListener();
     }
     private void iniData(){
-        getViewBinding().changeAddressTv.setOnClickListener(this);
+        getBinding().changeAddressTv.setOnClickListener(this);
         if (address!=null){
-            getViewBinding().addressTv.setText(address.getDistrict().getAreaName());
+            getBinding().addressTv.setText(address.getDistrict().getAreaName());
         }else if (entity!=null) {
-            getViewBinding().addressTv.setText(entity.district);
+            getBinding().addressTv.setText(entity.district);
         }
     }
     public void onClick(View v){
@@ -97,9 +97,9 @@ public class WalletFragment extends BaseFragment<LocationFragmentBinding> implem
 
     private void initViewPagerListener() {
         myAdapter= new FragmentAdapter(getChildFragmentManager(),mFragmentList);
-        getViewBinding().vpContent.setAdapter(myAdapter);
-        getViewBinding().bbl.setViewPager(getViewBinding().vpContent);
-        getViewBinding().bbl.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
+        getBinding().vpContent.setAdapter(myAdapter);
+        getBinding().bbl.setViewPager(getBinding().vpContent);
+        getBinding().bbl.setOnItemSelectedListener(new MiddleBarLayout.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final MiddleBarItem bottomBarItem, int position) {
                 BaseFragment baseFragment= (BaseFragment) mFragmentList.get(position);
@@ -121,9 +121,9 @@ public class WalletFragment extends BaseFragment<LocationFragmentBinding> implem
             ((BottomBarActivity)getActivity()).onActivityResult(requestCode, resultCode, data);
             address=data.getParcelableExtra("address");
             if (address!=null){
-                getViewBinding().addressTv.setText(address.getDistrict().getAreaName());
+                getBinding().addressTv.setText(address.getDistrict().getAreaName());
             }else if (entity!=null) {
-                getViewBinding().addressTv.setText(entity.district);
+                getBinding().addressTv.setText(entity.district);
             }
         }
     }

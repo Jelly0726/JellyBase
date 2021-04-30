@@ -90,23 +90,23 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View
     }
 
     private void iniData() {
-        getViewBinding().loginTv.setOnClickListener(this);
-        getViewBinding().forgetPwd.setOnClickListener(this);
-        getViewBinding().registerAccount.setOnClickListener(this);
+        getBinding().loginTv.setOnClickListener(this);
+        getBinding().forgetPwd.setOnClickListener(this);
+        getBinding().registerAccount.setOnClickListener(this);
         if (!TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password) && from == 0) {
-            getViewBinding().phoneEdit.setText(phone);
-            getViewBinding().phoneEdit.setSelection(phone.length());
-            getViewBinding().passwordEdit.setText(password);
-            getViewBinding().passwordEdit.setSelection(password.length());
+            getBinding().phoneEdit.setText(phone);
+            getBinding().phoneEdit.setSelection(phone.length());
+            getBinding().passwordEdit.setText(password);
+            getBinding().passwordEdit.setSelection(password.length());
             presenter.userLogin();
         }
     }
 
     private void initCountDownBtn() {
-        getViewBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone = getViewBinding().phoneEdit.getText().toString().trim();
+                String phone = getBinding().phoneEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)) {
                     ToastUtils.showToast(getContext(), "请输入手机号");
                     return;
@@ -123,8 +123,8 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View
         Intent intent;
         switch (v.getId()) {
             case R.id.login_tv:
-                phone = getViewBinding().phoneEdit.getText().toString().trim();
-                password = getViewBinding().passwordEdit.getText().toString().trim();
+                phone = getBinding().phoneEdit.getText().toString().trim();
+                password = getBinding().passwordEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
                     ToastUtils.showToast(getContext(), "请输入您的手机号和动态密码!");
                     return;
@@ -240,7 +240,7 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View
 
     @Override
     public Object getVerifiCodeParam() {
-        String phone = getViewBinding().phoneEdit.getText().toString().trim();
+        String phone = getBinding().phoneEdit.getText().toString().trim();
         Map map = new TreeMap<>();
         map.put("phone", phone);
         map.put("flag", 1);//验证码标识：1注册，2忘记密码，3修改手机号
@@ -251,8 +251,8 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View
     public void verifiCodeSuccess(Object mCallBackVo) {
         HttpResult httpResultAll = (HttpResult) mCallBackVo;
         ToastUtils.showToast(getContext(), httpResultAll.getMsg());
-        getViewBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-        getViewBinding().btnGetVer.startCountDownTimer(60000, 1000);//设置倒计时时间，间隔
+        getBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        getBinding().btnGetVer.startCountDownTimer(60000, 1000);//设置倒计时时间，间隔
     }
 
     @Override

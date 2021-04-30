@@ -16,11 +16,11 @@ public class IDCartActivity extends BaseActivity<IdcartActivityBinding> implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().IDCardBtn.setOnClickListener(this);
-        getViewBinding().IDCardUtilsBtn.setOnClickListener(this);
-        getViewBinding().IDEntityBtn.setOnClickListener(this);
-        getViewBinding().IDCardEdit.setKeyListener(new NumberKeyListener() {
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().IDCardBtn.setOnClickListener(this);
+        getBinding().IDCardUtilsBtn.setOnClickListener(this);
+        getBinding().IDEntityBtn.setOnClickListener(this);
+        getBinding().IDCardEdit.setKeyListener(new NumberKeyListener() {
             @Override
             public int getInputType() {
                 return android.text.InputType.TYPE_CLASS_PHONE;
@@ -40,19 +40,19 @@ public class IDCartActivity extends BaseActivity<IdcartActivityBinding> implemen
                 finish();
                 break;
             case R.id.IDCard_btn:
-                String IDCar=getViewBinding().IDCardEdit.getText().toString().toUpperCase();
+                String IDCar= getBinding().IDCardEdit.getText().toString().toUpperCase();
                 if (!IDCard.IDCardValidate(IDCar)){
                     ToastUtils.showShort(this, "无效");
                 }
                 break;
             case R.id.IDCardUtils_btn:
-                String IDCardUtil=getViewBinding().IDCardEdit.getText().toString();
+                String IDCardUtil= getBinding().IDCardEdit.getText().toString();
                 if (!IDCardUtils.validateCard(IDCardUtil)){
                     ToastUtils.showShort(this, "无效");
                 }
                 break;
             case R.id.IDEntity_btn:
-                String IDEntit=getViewBinding().IDCardEdit.getText().toString();
+                String IDEntit= getBinding().IDCardEdit.getText().toString();
                 if (!IDEntity.checkIDCard(IDEntit)){
                     ToastUtils.showShort(this, "无效");
                 }

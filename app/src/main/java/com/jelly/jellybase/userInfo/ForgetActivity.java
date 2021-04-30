@@ -35,15 +35,15 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
         initCountDownBtn();
     }
     private void iniView(){
-        getViewBinding().leftBack.setOnClickListener(this);
-        getViewBinding().nextTv.setOnClickListener(this);
-        getViewBinding().btnGetVer.setOnClickListener(this);
+        getBinding().leftBack.setOnClickListener(this);
+        getBinding().nextTv.setOnClickListener(this);
+        getBinding().btnGetVer.setOnClickListener(this);
     }
     private void initCountDownBtn() {
-        getViewBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
+        getBinding().btnGetVer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone))
                 {
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号");
@@ -56,7 +56,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        getViewBinding().btnGetVer.onDestroy();
+        getBinding().btnGetVer.onDestroy();
     }
 
     @Override
@@ -81,8 +81,8 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
                 finish();
                 break;
             case R.id.next_tv:
-                String phone=getViewBinding().phoneEdit.getText().toString().trim();
-                String verificationCode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+                String phone= getBinding().phoneEdit.getText().toString().trim();
+                String verificationCode= getBinding().verificationCodeEdit.getText().toString().trim();
                 if (TextUtils.isEmpty(phone)||TextUtils.isEmpty(verificationCode))
                 {
                     ToastUtils.showToast(ForgetActivity.this,"请输入手机号和验证码");
@@ -95,7 +95,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
 
     @Override
     public Object getVerifiCodeParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
         map.put("flag",2);//验证码标识：1注册，2忘记密码，3修改手机号
@@ -106,8 +106,8 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
     public void verifiCodeSuccess( Object mCallBackVo) {
         HttpResult httpResultAll= (HttpResult)mCallBackVo;
         ToastUtils.showToast(this,httpResultAll.getMsg());
-        getViewBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
-        getViewBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
+        getBinding().btnGetVer.setStartCountDownText("再次获取");//设置倒计时开始时按钮上的显示文字
+        getBinding().btnGetVer.startCountDownTimer(60000,1000);//设置倒计时时间，间隔
     }
 
     @Override
@@ -117,8 +117,8 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
 
     @Override
     public Object forgetPasswordParam() {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
-        String verificationCode=getViewBinding().verificationCodeEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
+        String verificationCode= getBinding().verificationCodeEdit.getText().toString().trim();
         Map map=new TreeMap<>();
         map.put("phone",phone);
         map.put("vericode",verificationCode);
@@ -127,7 +127,7 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
 
     @Override
     public void forgetPasswordSuccess( Object mCallBackVo) {
-        String phone=getViewBinding().phoneEdit.getText().toString().trim();
+        String phone= getBinding().phoneEdit.getText().toString().trim();
         Intent intent=new Intent(this,RefeshSetPWDActivity.class);
         intent.putExtra("phone",phone);
         startActivity(intent);
