@@ -283,8 +283,6 @@ dependencies {
     api 'com.github.lihangleo2:ShadowLayout:3.1.9'
     //底部导航
     api project(':library:BottomBar')
-    //华为推送
-    api 'com.huawei.hms:push:5.0.4.302'
     //内存溢出检测
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.6'
     //zxing扫码
