@@ -845,7 +845,7 @@
         <!--↑↑↑daemon保活服务↑↑↑-->
         <service android:name=".server.LocationService"
             android:enabled="true"
-            />
+            android:foregroundServiceType="location"/>
         <service
             android:name=".server.BadgeIntentService"
             android:exported="false"></service>
