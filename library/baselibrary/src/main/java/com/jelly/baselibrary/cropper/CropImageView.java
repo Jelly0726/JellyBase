@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.cropper.cropwindow.edge.Edge;
@@ -40,7 +41,7 @@ import com.jelly.baselibrary.cropper.util.PaintUtil;
 /**
  * Custom view that provides cropping capabilities to an image.
  */
-public class CropImageView extends androidx.appcompat.widget.AppCompatImageView {
+public class CropImageView extends AppCompatImageView {
 
     // Private Constants ///////////////////////////////////////////////////////////////////////////
 
