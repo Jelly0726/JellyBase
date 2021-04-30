@@ -64,6 +64,7 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
     private GridLayoutManager layoutManager;
     private HomeAdapter adapter;
     private List<Product> mList =new ArrayList<>();
+    private ArrayList<BaseItem> items = new ArrayList<BaseItem>();
     private int startRownumber=0;
     private int pageSize=10;
 
@@ -158,10 +159,11 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         int width=Util.getScreenWidth(BaseApplication.getInstance());
         int height=Util.getScreenHeight(BaseApplication.getInstance());
         LogUtils.i("width="+width+",height="+height);
-        ArrayList<BaseItem> items = new ArrayList<BaseItem>();
-        items.add(new BaseItem("集团客户",-1));
-        items.add(new BaseItem("集团客户",-1));
-        items.add(new BaseItem("集团客户",-1));
+        if (items.size()==0) {
+            items.add(new BaseItem("集团客户", 0));
+            items.add(new BaseItem("集团客户", 1));
+            items.add(new BaseItem("集团客户", 2));
+        }
         topMiddlePopup = new TopMiddlePopup(this,
                 width,
                 height,
@@ -239,6 +241,11 @@ public class HomeActivity extends BaseActivity<HomeFragmentActivityBinding> {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
+            if (items.size()>position)
+                for ( BaseItem item :items){
+                    item.setCheck(false);
+                }
+                items.get(position).isCheck=true;
             topMiddlePopup.dismiss();
         }
     };
