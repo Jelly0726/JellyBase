@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarLayout;
 import com.haibin.calendarview.CalendarView;
-import com.jelly.baselibrary.R2;
+import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.Utils.MyDate;
 import com.jelly.baselibrary.log.LogUtils;
 import com.jelly.baselibrary.toast.ToastUtils;
@@ -22,34 +22,29 @@ import com.mylhyl.circledialog.AbsBaseCircleDialog;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * 日历选择-自定义
  * Created by hupei on 2017/4/5.
  */
-public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarView.OnCalendarSelectListener,
+public class DatePickerDialog extends AbsBaseCircleDialog
+        implements CalendarView.OnCalendarSelectListener,
         CalendarView.OnYearChangeListener,
         CalendarView.OnYearViewChangeListener,
         CalendarView.OnMonthChangeListener,
         CalendarView.OnWeekChangeListener,
         CalendarView.OnViewChangeListener,
-        CalendarView.OnCalendarInterceptListener{
-    private Unbinder mUnbinder;
+        CalendarView.OnCalendarInterceptListener
+        , View.OnClickListener {
     private View view;
-    @BindView(R2.id.tv_month_day)
     TextView mTextMonthDay;
-    @BindView(R2.id.calendarView)
     CalendarView mCalendarView;
-    @BindView(R2.id.calendarLayout)
     CalendarLayout mCalendarLayout;
-    @BindView(R2.id.previousTwo)
+    ImageView previous;
     ImageView previousTwo;
-    @BindView(R2.id.nextTwo)
+    ImageView next;
     ImageView nextTwo;
+    ImageView close;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -64,25 +59,39 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
 
     @Override
     public View createView(Context context, LayoutInflater inflater, ViewGroup container) {
-        if (view==null){
-            view= inflater.inflate(R2.layout.date_picker_dialog, container, false);
-            mUnbinder= ButterKnife.bind(this, view);
+        if (view == null) {
+            view = inflater.inflate(R.layout.date_picker_dialog, container, false);
         }
         return view;
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         iniView();
         initData();
     }
-    private void iniView(){
 
+    private void iniView() {
+        mTextMonthDay=view.findViewById(R.id.tv_month_day);
+        mCalendarView=view.findViewById(R.id.calendarView);
+        mCalendarLayout=view.findViewById(R.id.calendarLayout);
+        previous=view.findViewById(R.id.previous);
+        previousTwo=view.findViewById(R.id.previousTwo);
+        next=view.findViewById(R.id.next);
+        nextTwo=view.findViewById(R.id.nextTwo);
+        close=view.findViewById(R.id.close);
+        close.setOnClickListener(this);
+        mTextMonthDay.setOnClickListener(this);
+        next.setOnClickListener(this);
+        nextTwo.setOnClickListener(this);
+        previous.setOnClickListener(this);
+        previousTwo.setOnClickListener(this);
         mCalendarView.setOnYearChangeListener(this);
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearViewChangeListener(this);
@@ -94,46 +103,41 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
         mYear = mCalendarView.getCurYear();
         mMonth = mCalendarView.getCurMonth();
         mDay = mCalendarView.getCurDay();
-        mTextMonthDay.setText(mCalendarView.getCurYear() + "年"+mCalendarView.getCurMonth() + "月" );
+        mTextMonthDay.setText(mCalendarView.getCurYear() + "年" + mCalendarView.getCurMonth() + "月");
     }
+
     private void initData() {
 
 
-
     }
+
     @Override
     public void onResume() {
         super.onResume();
     }
 
-    @OnClick({ R2.id.tv_month_day,R2.id.close,R2.id.previous,R2.id.previousTwo,R2.id.next,R2.id.nextTwo})
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R2.id.tv_month_day:
-                if (!mCalendarLayout.isExpand()) {
-                    mCalendarLayout.expand();
-                    return;
-                }
-                mCalendarView.showYearSelectLayout(mYear);
-                mTextMonthDay.setText(String.valueOf(mYear));
-                break;
-            case R2.id.close:
-                dismiss();
-                break;
-            case R2.id.previous:
-                mCalendarView.scrollToPre(true);
-                break;
-            case R2.id.previousTwo:
-                mCalendarView.scrollToCalendar(mYear-1,mMonth,mDay,true);
-                break;
-            case R2.id.next:
-                mCalendarView.scrollToNext(true);
-                break;
-            case R2.id.nextTwo:
-                mCalendarView.scrollToCalendar(mYear+1,mMonth,mDay,true);
-                break;
+        int id = v.getId();
+        if (id == R.id.tv_month_day) {
+            if (!mCalendarLayout.isExpand()) {
+                mCalendarLayout.expand();
+                return;
+            }
+            mCalendarView.showYearSelectLayout(mYear);
+            mTextMonthDay.setText(String.valueOf(mYear));
+        } else if (id == R.id.close) {
+            dismiss();
+        } else if (id == R.id.previous) {
+            mCalendarView.scrollToPre(true);
+        } else if (id == R.id.previousTwo) {
+            mCalendarView.scrollToCalendar(mYear - 1, mMonth, mDay, true);
+        } else if (id == R.id.next) {
+            mCalendarView.scrollToNext(true);
+        } else if (id == R.id.nextTwo) {
+            mCalendarView.scrollToCalendar(mYear + 1, mMonth, mDay, true);
         }
     }
+
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
@@ -150,7 +154,7 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
     public void onCalendarSelect(Calendar calendar, boolean isClick) {
         boolean isEnable = onCalendarIntercept(calendar);//日期是否可用，没有被拦截，被拦截的可以置灰
         if (isEnable) {
-            mCalendarView.scrollToCalendar(mYear,mMonth,mDay,true);
+            mCalendarView.scrollToCalendar(mYear, mMonth, mDay, true);
             return;
         }
         mTextMonthDay.setText(calendar.getYear() + "年" + calendar.getMonth() + "月");
@@ -158,15 +162,16 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
         mMonth = calendar.getMonth();
         mDay = calendar.getDay();
         dismiss();
-        if (onComplete!=null)
-            onComplete.onComplete(mYear,mMonth,mDay);
+        if (onComplete != null)
+            onComplete.onComplete(mYear, mMonth, mDay);
     }
 
     @Override
     public void onYearChange(int year) {
-        mYear =year;
+        mYear = year;
         mTextMonthDay.setText(year + "年" + mMonth + "月");
     }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onMonthChange(int year, int month) {
@@ -213,9 +218,10 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
         int year = calendar.getYear();
         int month = calendar.getMonth();
         int day = calendar.getDay();
-        if (year< MyDate.getYear())return true;
-        if (year== MyDate.getYear()&&month<MyDate.getMonth())return true;
-        if (year== MyDate.getYear()&&month==MyDate.getMonth()&&day<MyDate.getDay())return true;
+        if (year < MyDate.getYear()) return true;
+        if (year == MyDate.getYear() && month < MyDate.getMonth()) return true;
+        if (year == MyDate.getYear() && month == MyDate.getMonth() && day < MyDate.getDay())
+            return true;
         return false;
     }
 
@@ -234,7 +240,7 @@ public class DatePickerDialog extends AbsBaseCircleDialog implements CalendarVie
         this.onComplete = onComplete;
     }
 
-    public interface OnComplete{
+    public interface OnComplete {
         public void onComplete(int year, int month, int day);
     }
 }

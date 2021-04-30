@@ -7,7 +7,6 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
     id 'com.huawei.agconnect'
-    id 'com.jakewharton.butterknife'
 }
 
 android {
@@ -95,17 +94,8 @@ dependencies {
 
     //AndroidX包下找不到SwipeRefreshLayout
     api "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    //butterknife注解式绑定id  androidx 10.0.0
-    //butterknife注解式绑定id
-    compileOnly 'com.jakewharton:butterknife:10.2.3'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.3'
-    //butterknife注解式绑定id kotlin
-//        kapt 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //多进程数据共享SharedPreferences
     api 'net.grandcentrix.tray:tray:0.12.0'
-
-    //
 //        compile 'xiaofei.library:hermes-eventbus:0.3.0'
     api 'org.greenrobot:eventbus:3.1.1'
     //okhttp CheckVersionLib 使用的是okhttp:4.3.1

@@ -13,7 +13,7 @@ import android.widget.RadioGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.jelly.baselibrary.R2;
+import com.jelly.baselibrary.R;
 import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.addressmodel.City;
@@ -24,30 +24,17 @@ import com.yanzhenjie.album.impl.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 /**
  * 地址选择器
  * Created by hupei on 2017/4/5.
  */
-public class AddressDialog extends AbsBaseCircleDialog {
+public class AddressDialog extends AbsBaseCircleDialog implements View.OnClickListener {
     protected View rootView;
-    private Unbinder mUnbinder;
-    @BindView(R2.id.address_cancel_img)
     ImageView cancel_img;
-    @BindView(R2.id.address_gp)
     RadioGroup address_gp;
-    @BindView(R2.id.province_rb)
     RadioButton province_rb;
-    @BindView(R2.id.city_rb)
     RadioButton city_rb;
-    @BindView(R2.id.district_rb)
     RadioButton district_rb;
-    @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
     private GridLayoutManager layoutManager;
     private AddressAdapter adapter;
@@ -68,21 +55,31 @@ public class AddressDialog extends AbsBaseCircleDialog {
     @Override
     public void onDetach() {
         super.onDetach();
-        mUnbinder.unbind();
     }
 
     @Override
     public View createView(Context context, LayoutInflater inflater, ViewGroup container) {
         if (rootView == null)
-            rootView =inflater.inflate(R2.layout.address_dialog, container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+            rootView =inflater.inflate(R.layout.address_dialog, container, false);
         return rootView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        iniView();
         iniData();
+    }
+    private void iniView(){
+        cancel_img=rootView.findViewById(R.id.address_cancel_img);
+        cancel_img.setOnClickListener(this);
+        address_gp=rootView.findViewById(R.id.address_gp);
+        province_rb=rootView.findViewById(R.id.province_rb);
+        province_rb.setOnClickListener(this);
+        city_rb=rootView.findViewById(R.id.city_rb);
+        city_rb.setOnClickListener(this);
+        district_rb=rootView.findViewById(R.id.district_rb);
+        recyclerView=rootView.findViewById(R.id.recycler_view);
     }
     private void iniData(){
         adapter=new AddressAdapter(getActivity(),mList);
@@ -131,33 +128,29 @@ public class AddressDialog extends AbsBaseCircleDialog {
             adapter.setData(mList);
 
     }
-    @OnClick({R2.id.cancel_img,R2.id.province_rb,R2.id.city_rb})
     public void onClick(View v) {
-        switch (v.getId()){
-            case R2.id.cancel_img:
-                dismiss();
-                break;
-            case R2.id.province_rb:
-                province_rb.setChecked(true);
-                province_rb.setText("请选择");
-                province=null;
-                city=null;
-                district =null;
-                city_rb.setText("");
-                city_rb.setVisibility(View.GONE);
-                district_rb.setText("");
-                district_rb.setVisibility(View.GONE);
-                adapter.setData(mList);
-                break;
-            case R2.id.city_rb:
-                city_rb.setChecked(true);
-                city_rb.setText("请选择");
-                city=null;
-                district =null;
-                district_rb.setText("");
-                district_rb.setVisibility(View.GONE);
-                adapter.setData(province.getCities());
-                break;
+        int id = v.getId();
+        if (id == R.id.cancel_img) {
+            dismiss();
+        } else if (id == R.id.province_rb) {
+            province_rb.setChecked(true);
+            province_rb.setText("请选择");
+            province = null;
+            city = null;
+            district = null;
+            city_rb.setText("");
+            city_rb.setVisibility(View.GONE);
+            district_rb.setText("");
+            district_rb.setVisibility(View.GONE);
+            adapter.setData(mList);
+        } else if (id == R.id.city_rb) {
+            city_rb.setChecked(true);
+            city_rb.setText("请选择");
+            city = null;
+            district = null;
+            district_rb.setText("");
+            district_rb.setVisibility(View.GONE);
+            adapter.setData(province.getCities());
         }
     }
     public OnAddressPickListener getOnAddressPickListener() {

@@ -8,44 +8,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.R;
-import com.jelly.baselibrary.R2;
+import com.jelly.baselibrary.databinding.RedPacketGuideActivityBinding;
 
 import java.io.IOException;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 /**
  * 自动抢红包使用说明
  */
-public class GuideActivity extends AppCompatActivity {
-
-    @BindView(R2.id.left_back)
-    LinearLayout left_back;
-    @BindView(R2.id.view_pager)
-    ViewPager viewPager;
-
+public class GuideActivity extends BaseActivity<RedPacketGuideActivityBinding> implements View.OnClickListener {
     private String[] imgs = new String[]{"guide_1.jpg", "guide_2.jpg", "guide_3.jpg", "guide_4.jpg", "guide_5.jpg"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.red_packet_guide_activity);
-        ButterKnife.bind(this);
-        viewPager.setOffscreenPageLimit(imgs.length);
-        viewPager.setAdapter(new ImageViewPagerAdapter(this));
+        getBinding().viewPager.setOffscreenPageLimit(imgs.length);
+        getBinding().viewPager.setAdapter(new ImageViewPagerAdapter(this));
+        getBinding().leftBack.setOnClickListener(this);
     }
-    @OnClick({R2.id.left_back})
     public void onClick(View view){
-        switch (view.getId()){
-            case R2.id.left_back:
-                finish();
-                break;
+        if (view.getId() == R.id.left_back) {
+            finish();
         }
     }
     public class ImageViewPagerAdapter extends PagerAdapter {

@@ -21,8 +21,6 @@ buildscript {
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         // 增加agcp配置。
         classpath 'com.huawei.agconnect:agcp:1.4.2.300'
-        //butterknife注解式绑定id
-        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
     }
 }
 

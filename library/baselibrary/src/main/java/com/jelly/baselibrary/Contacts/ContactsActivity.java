@@ -11,17 +11,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.Contacts.adapter.ContactsSortAdapter;
 import com.jelly.baselibrary.Contacts.model.SortModel;
 import com.jelly.baselibrary.Contacts.model.SortToken;
@@ -29,8 +25,8 @@ import com.jelly.baselibrary.Contacts.utils.CharacterParser;
 import com.jelly.baselibrary.Contacts.utils.PinyinComparator;
 import com.jelly.baselibrary.Contacts.view.SideBar;
 import com.jelly.baselibrary.R;
-import com.jelly.baselibrary.R2;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.jelly.baselibrary.databinding.ContactsActivityBinding;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration;
@@ -40,27 +36,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
-public class ContactsActivity extends AppCompatActivity implements OnItemClickListener{
-	private Unbinder unbinder;
-	@BindView(R2.id.left_back)
-	LinearLayout left_back;
-	@BindView(R2.id.right_text)
-	LinearLayout right_text;
-	@BindView(R2.id.lv_contacts)
-	RecyclerView mRecyclerView;
-	@BindView(R2.id.et_search)
-	EditText etSearch;
-	@BindView(R2.id.ivClearText)
-	ImageView ivClearText;
-	@BindView(R2.id.sidrbar)
-	SideBar sideBar;
-	@BindView(R2.id.dialog)
-	TextView dialog;
+public class ContactsActivity extends BaseActivity<ContactsActivityBinding> 
+		implements OnItemClickListener,OnClickListener{
 
 	private List<SortModel> mAllContactsList;
 	private ContactsSortAdapter adapter;
@@ -74,16 +51,11 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.contacts_activity);
-		unbinder=ButterKnife.bind(this);
 		init();
 	}
 
 	@Override
 	protected void onDestroy() {
-		if (unbinder!=null)
-			unbinder.unbind();
-		unbinder=null;
 		super.onDestroy();
 
 	}
@@ -94,7 +66,7 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 		loadContacts();
 	}
 	private void initView() {
-		sideBar.setTextView(dialog);
+		getBinding().sidrbar.setTextView(getBinding().dialog);
 		/** 给ListView设置adapter **/
 		characterParser = CharacterParser.getInstance();
 		mAllContactsList = new ArrayList<SortModel>();
@@ -104,9 +76,11 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 		adapter.setOnItemClickListener(this);
 		mLayoutManager = createLayoutManager();
 		mItemDecoration = createItemDecoration();
-		mRecyclerView.setLayoutManager(mLayoutManager);
-		mRecyclerView.addItemDecoration(mItemDecoration);
-		mRecyclerView.setAdapter(adapter);
+		getBinding().lvContacts.setLayoutManager(mLayoutManager);
+		getBinding().lvContacts.addItemDecoration(mItemDecoration);
+		getBinding().lvContacts.setAdapter(adapter);
+		getBinding().leftBack.setOnClickListener(this);
+		getBinding().rightText.setOnClickListener(this);
 	}
 	protected RecyclerView.LayoutManager createLayoutManager() {
 		return new LinearLayoutManager(this);
@@ -119,14 +93,14 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 	private void initListener() {
 
 		/**清除输入字符**/
-		ivClearText.setOnClickListener(new OnClickListener() {
+		getBinding().ivClearText.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				etSearch.setText("");
+				getBinding().etSearch.setText("");
 			}
 		});
-		etSearch.addTextChangedListener(new TextWatcher() {
+		getBinding().etSearch.addTextChangedListener(new TextWatcher() {
 
 			@Override
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
@@ -141,11 +115,11 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 			@Override
 			public void afterTextChanged(Editable e) {
 
-				String content = etSearch.getText().toString();
+				String content = getBinding().etSearch.getText().toString();
 				if ("".equals(content)) {
-					ivClearText.setVisibility(View.INVISIBLE);
+					getBinding().ivClearText.setVisibility(View.INVISIBLE);
 				} else {
-					ivClearText.setVisibility(View.VISIBLE);
+					getBinding().ivClearText.setVisibility(View.VISIBLE);
 				}
 				if (content.length() > 0) {
 					ArrayList<SortModel> fileterList = (ArrayList<SortModel>) search(content);
@@ -154,40 +128,37 @@ public class ContactsActivity extends AppCompatActivity implements OnItemClickLi
 				} else {
 					adapter.updateListView(mAllContactsList);
 				}
-				mRecyclerView.scrollToPosition(0);
+				getBinding().lvContacts.scrollToPosition(0);
 
 			}
 
 		});
 
 		//设置右侧[A-Z]快速导航栏触摸监听
-		sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+		getBinding().sidrbar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
 
 			@Override
 			public void onTouchingLetterChanged(String s) {
 				//该字母首次出现的位置
 				int position = adapter.getPositionForSection(s.charAt(0));
 				if (position != -1) {
-					mRecyclerView.scrollToPosition(position);
+					getBinding().lvContacts.scrollToPosition(position);
 				}
 			}
 		});
 
 	}
 
-	@OnClick({R2.id.left_back,R2.id.right_text})
 	public void onClick(View v) {
 		if (AntiShake.check(v.getId())) {    //判断是否多次点击
 			return;
 		}
-		switch (v.getId()){
-			case R2.id.left_back:
-				finish();
-				break;
-			case R2.id.right_text:
-				List list=adapter.getSelectedList();
-				ToastUtils.showToast(this,"已选择："+list.size()+"个联系人");
-				break;
+		int id = v.getId();
+		if (id == R.id.left_back) {
+			finish();
+		} else if (id == R.id.right_text) {
+			List list = adapter.getSelectedList();
+			ToastUtils.showToast(this, "已选择：" + list.size() + "个联系人");
 		}
 	}
 	private void loadContacts() {
