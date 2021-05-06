@@ -24,8 +24,13 @@ abstract class BaseAdapterB<V : ViewBinding>(context: Context) :
                     cl as Class<V>
                     //多个泛型时判断类的name是否以Binding，不是跳过本次
                     if (!cl.name.endsWith("Binding")) continue
-                    val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
-                    val viewBinding = inflate.invoke(null, inflater) as V
+                    val inflate: Method = cl.getDeclaredMethod(
+                            "inflate",
+                            LayoutInflater::class.java,
+                            ViewGroup::class.java,
+                            Boolean::class.javaPrimitiveType
+                    )
+                    val viewBinding = inflate.invoke(null, inflater,parent,false) as V
                     return VBindHolder(viewBinding)
                 } catch (e: NoSuchMethodException) {
                     e.printStackTrace()
