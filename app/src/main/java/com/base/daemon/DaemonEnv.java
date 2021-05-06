@@ -7,6 +7,9 @@ import androidx.annotation.*;
 
 import java.util.*;
 
+/**
+ * https://github.com/xingda920813/HelloDaemon
+ */
 public final class DaemonEnv {
 
     private DaemonEnv() {}
