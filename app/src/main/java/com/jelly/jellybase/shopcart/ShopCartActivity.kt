@@ -18,6 +18,7 @@ import com.jelly.baselibrary.BaseActivity
 import com.jelly.jellybase.R
 import com.jelly.jellybase.databinding.ShopcartActivityBinding
 import com.jelly.jellybase.shopcart.CartInfo
+import com.jelly.jellybase.shopcart.ShopCartAdapter
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.yanzhenjie.recyclerview.*
 import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration

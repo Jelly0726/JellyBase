@@ -1,4 +1,4 @@
-package com.luolifen.easybio.shopcart
+package com.jelly.jellybase.shopcart
 
 import android.content.Context
 import androidx.core.content.ContextCompat
@@ -19,21 +19,17 @@ import com.jelly.baselibrary.applicationUtil.AppUtils
 import com.jelly.baselibrary.imageView.ImageViewPlus
 import com.bumptech.glide.Glide
 import com.jelly.jellybase.R
-import com.jelly.jellybase.shopcart.CartInfo
 import com.mylhyl.circledialog.CircleDialog
 import com.mylhyl.circledialog.params.InputParams
 
 class ShopCartAdapter(context: Context) :
     RecyclerView.Adapter<ShopCartAdapter.GroupViewHolder>(),
     StickAdapter<ShopCartAdapter.GroupViewHolder> {
-    private val context:Context
+    private val context:Context = context
     private var mListItems: List<CartInfo>? = null
     var checkInterface: CheckInterface? = null
     var modifyCountInterface: ModifyCountInterface? = null
     private var circleDialog: CircleDialog.Builder? = null
-    init {
-        this@ShopCartAdapter.context=context
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(viewType, parent, false)
