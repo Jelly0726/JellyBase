@@ -55,13 +55,6 @@ android {
         //additionalParameters "--no-version-vectors"
     }
     packagingOptions {
-        exclude 'classes.dex'
-        exclude '**.**'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
 //解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
         doNotStrip "*/arm64-v8a/*.so"
 //        doNotStrip "*/armeabi/*.so"
