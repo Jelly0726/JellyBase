@@ -112,6 +112,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                         ,Manifest.permission.WRITE_CALENDAR
                         ,Manifest.permission.ACCESS_COARSE_LOCATION
                         ,Manifest.permission.ACCESS_FINE_LOCATION
+                        ,Manifest.permission.ACCESS_BACKGROUND_LOCATION
                         ,Manifest.permission.SEND_SMS
                         ,Manifest.permission.READ_SMS
                         ,Manifest.permission.CALL_PHONE

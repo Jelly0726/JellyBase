@@ -368,7 +368,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="728a1ca11a5075f98cc9dcdbf609f753"/>
         <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService" />
+        <service android:name="com.amap.api.location.APSService"
+            android:foregroundServiceType="location"/>
         <!-- ↑↑↑↑↑↑↑高德地图↑↑↑↑↑↑↑-->
         <!-- ↓↓↓↓↓百度自动更新↓↓↓↓↓ -->
         <meta-data android:name="BDAPPID" android:value="10591456"/>
@@ -846,8 +847,7 @@
         <service android:name=".server.TraceServiceImpl"/>
         <!--↑↑↑daemon保活服务↑↑↑-->
         <service android:name=".server.LocationService"
-            android:enabled="true"
-            android:foregroundServiceType="location"/>
+            android:enabled="true" />
         <service
             android:name=".server.BadgeIntentService"
             android:exported="false"></service>
