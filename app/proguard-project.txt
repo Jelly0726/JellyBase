@@ -16,49 +16,32 @@
 #   public *;
 #}
 ###############################通用混淆规则begin##########################################
-#指定代码的压缩级别
--optimizationpasses 5
-#包明不混合大小写
--dontusemixedcaseclassnames
-#不去忽略非公共的库类
--dontskipnonpubliclibraryclasses
- #优化  不优化输入的类文件
--dontoptimize
- #预校验
--dontpreverify
- #混淆时是否记录日志
--verbose
- # 混淆时所采用的算法
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
-#保护注解
--keepattributes *Annotation*
--dontskipnonpubliclibraryclassmembers
--dontwarn dalvik.**
--dontwarn com.tencent.smtt.**
--dontwarn android.content.res.**
--dontwarn org.apache.http.conn.scheme.**
--dontwarn org.apache.http.params.**
-#-overloadaggressively
-# 保持哪些类不被混淆
--keep public class * extends android.app.Fragment
--keep public class * extends androidx.fragment.app.Fragment
--keep public class * extends android.app.Activity
--keep public class * extends com.zhy.autolayout.AutoLayoutActivity
--keep public class * extends android.support.v7.app.ActionBarActivity
--keep public class * extends androidx.appcompat.app.ActionBarActivity
--keep public class * extends android.support.v7.app.AppCompatActivity
--keep public class * extends androidx.appcompat.app.AppCompatActivity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
--keep public class * extends android.app.backup.BackupAgentHelper
--keep public class * extends android.preference.Preference
--keep public class com.android.vending.licensing.ILicensingService
-#如果有引用v4包可以添加下面这行
--keep public class * extends android.support.v4.app.Fragment
-#忽略警告
-#-ignorewarning
+# 设置混淆的压缩比率 0 ~ 7
+ -optimizationpasses 5
+ # 混淆时不使用大小写混合，混淆后的类名为小写
+ -dontusemixedcaseclassnames
+ # 指定不去忽略非公共库的类
+ -dontskipnonpubliclibraryclasses
+ # 指定不去忽略非公共库的成员
+ -dontskipnonpubliclibraryclassmembers
+ # 混淆时不做预校验
+ -dontpreverify
+ # 混淆时不记录日志
+ -verbose
+ # 忽略警告
+# -ignorewarning
+ # 代码优化
+ -dontshrink
+ # 不优化输入的类文件
+ -dontoptimize
+ # 保留注解不混淆
+ -keepattributes *Annotation*,InnerClasses
+ # 避免混淆泛型
+ -keepattributes Signature
+ # 保留代码行号，方便异常信息的追踪
+ -keepattributes SourceFile,LineNumberTable
+ # 混淆采用的算法
+ -optimizations !code/simplification/cast,!field/*,!class/merging/*
 #####################记录生成的日志数据,gradle build时在本项目根目录输出################
 #apk 包内所有 class 的内部结构
 -dump class_files.txt
@@ -69,7 +52,35 @@
 #混淆前后的映射
 -printmapping mapping.txt
 #####################记录生成的日志数据，gradle build时 在本项目根目录输出-end################
-
+-dontwarn dalvik.**
+-dontwarn com.tencent.smtt.**
+-dontwarn android.content.res.**
+-dontwarn org.apache.http.conn.scheme.**
+-dontwarn org.apache.http.params.**
+#-overloadaggressively
+# 保持哪些类不被混淆
+-keep public class * extends android.app.Fragment
+-keep public class * extends androidx.fragment.app.Fragment
+-keep public class * extends android.app.Activity
+-keep public class * extends androidx.appcompat.app.ActionBarActivity
+-keep public class * extends androidx.appcompat.app.AppCompatActivity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends com.zhy.autolayout.AutoLayoutActivity
+-keep public class * extends android.support.v7.app.ActionBarActivity
+-keep public class * extends android.support.v7.app.AppCompatActivity
+-keep public class com.android.vending.licensing.ILicensingService
+#如果有引用v4包可以添加下面这行
+-keep public class * extends android.support.v4.app.Fragment
+-keep class * implements androidx.viewbinding.ViewBinding {
+ public <fields>;
+ private <fields>;
+ public <methods>;
+}
 #如果引用了v4或者v7包
 -dontwarn android.support.**
 ############<span></span>混淆保护自己项目的部分代码以及引用的第三方jar包library-end##################
@@ -94,14 +105,17 @@
 -keep public class * extends android.app.Activity{
 	public <fields>;
 	public <methods>;
+	public void *(android.view.View);
 }
 -keep public class * extends android.support.v7.app.AppCompatActivity{
 	public <fields>;
 	public <methods>;
+	public void *(android.view.View);
 }
 -keep public class * extends android.support.v7.app.ActionBarActivity{
 	public <fields>;
 	public <methods>;
+	public void *(android.view.View);
 }
 -keep public class * extends android.app.Application{
 	public <fields>;
@@ -114,6 +128,10 @@
 -keepclassmembers class * implements android.os.Parcelable {
  public <fields>;
  private <fields>;
+}
+#避免回调函数 onXXEvent 混淆
+-keepclassmembers class * {
+    void *(*Event);
 }
 #保持 Serializable 不被混淆
 -keepnames class * implements java.io.Serializable
@@ -145,9 +163,19 @@
 -keepattributes Signature
 #保持WEB接口不被混淆
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
-   public *;
+    public *;
 }
--keep class com.buyun.zbphone.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
+-keepclassmembers class * extends android.webkit.webViewClient {
+    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
+    public boolean *(android.webkit.WebView, java.lang.String);
+}
+-keepclassmembers class * extends android.webkit.webViewClient {
+    public void *(android.webkit.webView, jav.lang.String);
+}
+#-keep public class [包名.类名]$[内部类]{
+#    public *;
+#}
+-keepattributes JavascriptInterface
 -keep class com.jelly.baselibrary.webview.** { *; }#保持WEB接口不被混淆 此处xxx.xxx是自己接口的包名
 #移除log 测试了下没有用还是建议自己定义一个开关控制是否输出日志
 #-assumenosideeffects class android.util.Log {
@@ -385,7 +413,7 @@ public static java.lang.String TABLENAME;
     @retrofit2.* <methods>;
 }
 # 保留实体类和成员不被混淆
- -keep public class com.base.httpmvp.databean.** {
+ -keep public class com.base.httpmvp.retrofitapi.methods.** {
      public void set*(***);
      public *** get*();
      public *** is*();
@@ -583,7 +611,7 @@ public void xxxxxx(**);
 -keep class android.arch.lifecycle.** { *; }
 -keep class android.arch.core.** { *; }
 #======================= 自定义toast:=======================
- -dontwarn com.base.toast.**
+ -dontwarn com.jelly.baselibrary.toast.**
  -keep class com.jelly.baselibrary.toast.** { *; }
 #======================= for androidx:=======================
 -dontwarn com.jeremyliao.liveeventbus.**
@@ -906,7 +934,7 @@ public void xxxxxx(**);
 -keep class com.jelly.baselibrary.eventBus.**{*;}
 -keep class com.jelly.baselibrary.model.**{*;}
 -keep class com.base.httpmvp.retrofitapi.methods.**{*;}
--keep class com.base.httpmvp.databean.**{*;}
+-keep class com.base.httpmvp.mvpbase.**{*;}
 #-keep public class java.**
 -dontwarn com.google.android.maps.**
 -dontwarn android.webkit.WebView.**
@@ -928,7 +956,7 @@ public void xxxxxx(**);
 -dontwarn com.google.code.**
 -dontwarn com.jakewharton.**
 -dontwarn com.android.support.**
--dontwarn com.base.webview.**
+-dontwarn com.jelly.baselibrary.webview.**
 -dontwarn android.webkit.**
 -keep class androidx.** {*;}
 -keep public class * extends androidx.**

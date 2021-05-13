@@ -27,13 +27,6 @@ android {
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
         //ndk编译生成.so文件
-        ndk { //高德地图设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-//            moduleName "testjni"         //生成的so名字
-            abiFilters "armeabi-v7a", "x86", "arm64-v8a", 'x86_64'//输出指定三种abi体系结构下的so库。
-//            //极光推送选择要添加的对应cpu类型的.so库。
-//            //abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a','arm64-v8a','x86', 'x86_64', 'mips', 'mips64'
-//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-        }
         //极光推送
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
@@ -104,9 +97,9 @@ android {
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_DEBUG_HOST}"//开发环境域名地址
             // 移除无用的resource文件
-            shrinkResources false
-            minifyEnabled false
-            zipAlignEnabled false
+            shrinkResources true
+            minifyEnabled true
+            zipAlignEnabled true
             proguardFiles 'proguard-project.txt'
             //自定义导出apk文件名
             applicationVariants.all { variant ->
@@ -150,28 +143,6 @@ android {
             debuggable true
         }
     }
-    packagingOptions {
-        exclude 'classes.dex'
-        exclude '**.**'
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-//解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
-        doNotStrip "*/arm64-v8a/*.so"
-        doNotStrip "*/armeabi/*.so"
-        doNotStrip "*/armeabi-v7a/*.so"
-        doNotStrip "*/x86/*.so"
-        doNotStrip "*/mips/*.so"
-//        doNotStrip "*/mips64/*.so"
-//        doNotStrip "*/x86_64/*.so"
-    }
-//    dexOptions {
-//        //jumboMode= true
-//        incremental true
-//        javaMaxHeapSize "4g"
-//    }
 
     // For Java compilers:
     compileOptions {
@@ -189,7 +160,6 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-    ndkVersion "21.0.6113669"
     aaptOptions {
         //采用低版本构建生成PNG图片的兼容方式；
         //additionalParameters "--no-version-vectors"
@@ -203,14 +173,41 @@ android {
         enabled=true
     }
 }
+//导入智能更新 SDK 的 AAR 文件
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //华为推送
     //其它已存在的依赖不要删除
     implementation 'com.huawei.hms:push:5.1.1.301'
+    //百度智能更新 SDK 的 AAR 文件
+    implementation(name: 'autoupdatesdk-release', ext: 'aar')
+    implementation files('libs/ocr-sdk.jar')
+    implementation files('libs/Msc.jar')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //基础
     implementation project(path: ':library:baselibrary')
+    //高德地图so及jar
+
+    //因为导航里已经有地图所以3D地图和导航不能同时导入
+    //api 'com.amap.api:3dmap:latest.integration'
+    //    api 'com.amap.api:3dmap:6.5.0'
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+//        api 'com.amap.api:location:5.0.0'
+    //搜索功能
+    implementation 'com.amap.api:search:latest.integration'
+//        api 'com.amap.api:search:7.3.0'
+    //导航
+    implementation 'com.amap.api:navi-3dmap:latest.integration'
+//        api 'com.amap.api:navi-3dmap:7.5.0'
+    //百度文字识别(身份证、银行卡等)
+    implementation files('libs/ocr-sdk.jar')
+    implementation project(path: ':library:ocr_ui')
 }

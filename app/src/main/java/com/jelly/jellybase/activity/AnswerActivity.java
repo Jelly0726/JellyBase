@@ -5,16 +5,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.album.AlbumAdapter;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
-import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.annotation.OnClick;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.AnswerActivityBinding;
 import com.mylhyl.circledialog.CircleDialog;
@@ -37,10 +38,9 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/11/2.
  */
 
-public class AnswerActivity extends BaseActivity<AnswerActivityBinding> implements View.OnClickListener{
+public class AnswerActivity extends BaseActivity<AnswerActivityBinding> {
     private static final String filePath=Environment.getExternalStorageDirectory().getPath();//文件路径
     private Uri imageUri;
-    private LinearLayout left_back;
 
     private AlbumAdapter mAdapter;
     private ArrayList<AlbumFile> mAlbumFiles=new ArrayList<>();
@@ -66,8 +66,6 @@ public class AnswerActivity extends BaseActivity<AnswerActivityBinding> implemen
         iniView();
     }
     private void iniView(){
-        left_back= (LinearLayout) findViewById(R.id.left_back);
-        left_back.setOnClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         Divider divider = AlbumUtils.getDivider(Color.WHITE);
@@ -87,11 +85,15 @@ public class AnswerActivity extends BaseActivity<AnswerActivityBinding> implemen
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mAlbumFiles);
     }
-    @Override
+    @OnClick({R.id.left_back,R.id.let_me_answer})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.left_back:
+                LogUtils.i("点击返回");
                 finish();
+                break;
+            case R.id.let_me_answer:
+                LogUtils.i("点击提交");
                 break;
         }
     }

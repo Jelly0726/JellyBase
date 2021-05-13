@@ -36,11 +36,13 @@
             <option value="$PROJECT_DIR$/library/WheelPicker" />
             <option value="$PROJECT_DIR$/library/ZxingQRCodeX" />
             <option value="$PROJECT_DIR$/library/album" />
+            <option value="$PROJECT_DIR$/library/annotation" />
             <option value="$PROJECT_DIR$/library/anti_emulator" />
             <option value="$PROJECT_DIR$/library/base64" />
             <option value="$PROJECT_DIR$/library/baselibrary" />
             <option value="$PROJECT_DIR$/library/blurkit" />
             <option value="$PROJECT_DIR$/library/circleDialog-androidx" />
+            <option value="$PROJECT_DIR$/library/complier" />
             <option value="$PROJECT_DIR$/library/form" />
             <option value="$PROJECT_DIR$/library/htmlEditor" />
             <option value="$PROJECT_DIR$/library/jcvideoplayer-lib" />

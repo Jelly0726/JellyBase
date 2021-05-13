@@ -142,9 +142,6 @@ public class TTSController implements AMapNaviListener, ICallBack {
 
     @Override
     public void onCalculateRouteFailure(int arg0) {
-        if (wordList != null) {
-            wordList.addLast("路线规划失败");
-        }
     }
 
     @Override
@@ -273,6 +270,7 @@ public class TTSController implements AMapNaviListener, ICallBack {
         }
         handler.obtainMessage(CHECK_TTS_PLAY).sendToTarget();
     }
+
     @Override
     public void showModeCross(AMapModelCross aMapModelCross) {
 
@@ -300,7 +298,9 @@ public class TTSController implements AMapNaviListener, ICallBack {
 
     @Override
     public void onCalculateRouteFailure(AMapCalcRouteResult aMapCalcRouteResult) {
-
+        if (wordList != null) {
+            wordList.addLast("路线规划失败");
+        }
     }
 
     @Override

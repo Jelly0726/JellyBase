@@ -1,3 +1,5 @@
+include ':library:annotation'
+include ':library:complier'
 include ':swipervsample'
 include ':jnisample'
 include ':library:baselibrary'

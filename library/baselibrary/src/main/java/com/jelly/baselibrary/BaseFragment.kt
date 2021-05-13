@@ -125,6 +125,8 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
             it.removeView(rootView)
         }
         //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑使用viewbinding绑定视图↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+        //绑定点击事件
+        BindUtil.bind(this,rootView!!)
         return rootView
     }
 

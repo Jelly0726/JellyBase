@@ -18,11 +18,11 @@ import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.config.IntentAction;
 import com.jelly.baselibrary.encrypt.MD5;
-import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.social.SocialUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.token.TokenModel;
+import com.jelly.annotation.OnClick;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserPwloginFragmentBinding;
 import com.jelly.mvp.contact.LoginContact;
@@ -47,7 +47,7 @@ import systemdb.Login;
 
 public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
         , LoginContact.Presenter, UserPwloginFragmentBinding>
-        implements LoginContact.View, View.OnClickListener {
+        implements LoginContact.View {
     private String phone = "";
     private String password;
     private double from = -1;
@@ -91,9 +91,6 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
     }
 
     private void iniData() {
-        getBinding().loginTv.setOnClickListener(this);
-        getBinding().forgetPwd.setOnClickListener(this);
-        getBinding().registerAccount.setOnClickListener(this);
         getBinding().pwdVisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -125,10 +122,8 @@ public class UserPwLoginFragment extends BaseFragmentImpl<LoginContact.View
         }
     }
 
+    @OnClick({R.id.login_tv, R.id.forget_pwd, R.id.wechat_tv, R.id.qq_tv})
     public void onClick(View v) {
-        if (AntiShake.check(v.getId())) {    //判断是否多次点击
-            return;
-        }
         Intent intent;
         switch (v.getId()) {
             case R.id.login_tv:

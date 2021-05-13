@@ -17,8 +17,6 @@ android {
         //ndk编译生成.so文件
         ndk {
 //            moduleName "testjni"         //生成的so名字
-//            abiFilters "armeabi-v7a", "x86", "arm64-v8a"//输出指定三种abi体系结构下的so库。
-//            //极光推送选择要添加的对应cpu类型的.so库。
             abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
 //            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
@@ -106,12 +104,14 @@ android {
         doNotStrip "*/mips/*.so"
 //        doNotStrip "*/mips64/*.so"
 //        doNotStrip "*/x86_64/*.so"
+        pickFirst 'lib/*/libcrypto.so'
+        pickFirst 'lib/*/libssl.so'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    ndkVersion "21.0.6113669"
+    ndkVersion "21.4.7075529"
     sourceSets {
         main {
 //            jniLibs.srcDirs = ['alley\\lib']
@@ -120,7 +120,8 @@ android {
             //libocr-sdk.so 为百度文字识别需要的so文件
             //libAMapSDK_NAVI_v7_5_0.so libmsc.so libneonuijni.so 为高德需要的so文件
             // libcrypto.so libssl.so 为加密需要的so文件
-            jniLibs.srcDirs = ['libs']
+//            jniLibs.srcDirs = ['libs']
+//            jniLibs.srcDirs = ['src/main/jniLibs']
 //            manifest.srcFile 'src/main/AndroidManifest.xml'
 //            java.srcDirs = ['src/main/java', 'src/main/aidl']
 //            resources.srcDirs = ['src/main/java', 'src/main/aidl']

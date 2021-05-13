@@ -34,6 +34,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -772,6 +773,54 @@ public class StringUtil {
     public static boolean isBase64(String str) {
         String base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$";
         return Pattern.matches(base64Pattern, str);
+    }
+
+    /**
+     * @Description: 将map的Key大写转换成小写
+     * @Param: list
+     * @return:
+     * @Author: 吴昊天
+     * @Date: 2020/6/23 16:40
+     */
+    public static List<Map<String, Object>> upperCaseToLowerCase(List<Map<String, Object>> list) {
+
+        List<Map<String, Object>> objects = new ArrayList<>();
+        try {
+            for (Map<String, Object> map : list) {
+                Map<String, Object> stringObjectHashMap = new HashMap<>();
+                for (String oldKey : map.keySet()) {
+                    //key是旧的key值
+                    String newKey = oldKey.toLowerCase();
+                    //调用lineToHump方法，将下划线转成驼峰式
+                    String s = lineToHump(newKey);
+                    stringObjectHashMap.put(s, map.get(oldKey));
+
+                }
+                objects.add(stringObjectHashMap);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return objects;
+    }
+    private static Pattern linePattern = Pattern.compile("_(\\w)");
+    /**
+     * @Description: 下划线转驼峰
+     * @Param:
+     * @return:
+     * @Author: 吴昊天
+     * @Date: 2020/6/23 16:55
+     */
+    public static String lineToHump(String str) {
+        str = str.toLowerCase();
+        Matcher matcher = linePattern.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
     }
     public static void main(String[] arg){
 //        System.out.println(NativeUtils.getNativeString());

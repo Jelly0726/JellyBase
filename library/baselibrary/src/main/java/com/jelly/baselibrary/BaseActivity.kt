@@ -89,6 +89,8 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
         }
         //====
         bindingView()
+        //绑定点击事件
+        BindUtil.bind(this)
         frameLayout?.let {
             //监听SoftKeyboard的弹出与隐藏状态
             softKeyboardManager = SoftKeyboardManager(it);
