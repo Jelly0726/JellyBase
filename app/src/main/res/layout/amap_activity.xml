@@ -38,8 +38,8 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/starNavi_layout"
-            android:layout_width="100mm"
-            android:layout_height="20mm"
+            android:layout_width="120mm"
+            android:layout_height="35mm"
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
