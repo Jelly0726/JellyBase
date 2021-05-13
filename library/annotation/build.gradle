@@ -9,6 +9,7 @@ java {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly 'com.google.android:android:4.1.1.4'
     compileOnly  "androidx.annotation:annotation:1.0.0"
