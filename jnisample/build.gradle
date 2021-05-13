@@ -104,8 +104,8 @@ android {
         doNotStrip "*/mips/*.so"
 //        doNotStrip "*/mips64/*.so"
 //        doNotStrip "*/x86_64/*.so"
-        pickFirst 'lib/*/libcrypto.so'
-        pickFirst 'lib/*/libssl.so'
+        pickFirst 'src/main/jniLibs/*/libcrypto.so'
+        pickFirst 'src/main/jniLibs/*/libssl.so'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

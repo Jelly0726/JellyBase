@@ -32,9 +32,9 @@ android {
             debuggable true
         }
     }
-    viewBinding{
-        //开启viewbinding
-        enabled=true
+    //开启viewbinding
+    buildFeatures{
+        viewBinding=true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
