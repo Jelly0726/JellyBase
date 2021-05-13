@@ -10,7 +10,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 set(openssl_dir ${CMAKE_SOURCE_DIR})
 #配置加载头文件
 include_directories(${openssl_dir}/alley/include)
-
+# 设置so文件输出到jniLibs目录中
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.

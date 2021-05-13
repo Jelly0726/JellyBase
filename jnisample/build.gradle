@@ -120,7 +120,7 @@ android {
             //libocr-sdk.so 为百度文字识别需要的so文件
             //libAMapSDK_NAVI_v7_5_0.so libmsc.so libneonuijni.so 为高德需要的so文件
             // libcrypto.so libssl.so 为加密需要的so文件
-//            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDirs = ['libs']
 //            jniLibs.srcDirs = ['src/main/jniLibs']
 //            manifest.srcFile 'src/main/AndroidManifest.xml'
 //            java.srcDirs = ['src/main/java', 'src/main/aidl']
