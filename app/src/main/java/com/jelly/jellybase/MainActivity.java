@@ -687,47 +687,43 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                     intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
                     startActivity(intent);
                     break;
-                case 40://NDK(.so)测试
-                    intent=new Intent(BaseApplication.getInstance(), SingMD5Activity.class);
-                    startActivity(intent);
-                    break;
-                case 41://    <item>native加密解密</item>
+                case 40://    <item>native加密解密</item>
                     intent=new Intent(BaseApplication.getInstance(), EncryptActivity.class);
                     startActivity(intent);
                     break;
-                case 42:// 发送邮件
+                case 41:// 发送邮件
                     intent=new Intent(BaseApplication.getInstance(), SendEmailActivity.class);
                     startActivity(intent);
                     break;
-                case 43:// 录小视频
+                case 42:// 录小视频
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.videorecord.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 44:// PIP模式
+                case 43:// PIP模式
                     intent=new Intent(BaseApplication.getInstance(), PIPActivity.class);
                     startActivity(intent);
                     break;
-                case 45:// 简单的表格控件
+                case 44:// 简单的表格控件
                     intent=new Intent(BaseApplication.getInstance(), TableLayoutActivity.class);
                     startActivity(intent);
                     break;
-                case 46:// 判断是否真机
+                case 45:// 判断是否真机
                     intent=new Intent(BaseApplication.getInstance(), EmulatorOrAuthenticActivity.class);
                     startActivity(intent);
                     break;
-                case 47:// 添加角标
+                case 46:// 添加角标
                     intent=new Intent(BaseApplication.getInstance(), BadgeMainActivity.class);
                     startActivity(intent);
                     break;
-                case 48:// 选择器
+                case 47:// 选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.androidpicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 49:// 文件选择器
+                case 48:// 文件选择器
                     intent=new Intent(BaseApplication.getInstance(), com.jelly.jellybase.filepicker.MainActivity.class);
                     startActivity(intent);
                     break;
-                case 50:// 所属银行
+                case 49:// 所属银行
                     intent=new Intent(BaseApplication.getInstance(), BankActivity.class);
                     startActivity(intent);
                     break;

@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
-import com.jelly.baselibrary.nativeUtil.NativeUtils;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.Singmd5ActivityBinding;
@@ -30,8 +29,6 @@ public class SingMD5Activity extends BaseActivity<Singmd5ActivityBinding> implem
         getBinding().otherApkBtn.setOnClickListener(this);
         getBinding().otherApkCopy.setOnClickListener(this);
         getBinding().otherInfoBtn.setOnClickListener(this);
-        getBinding().ndkBtn.setOnClickListener(this);
-        getBinding().ndkCopy.setOnClickListener(this);
         mClipboardManager =(ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
     }
     public void onClick(View view){
@@ -71,15 +68,6 @@ public class SingMD5Activity extends BaseActivity<Singmd5ActivityBinding> implem
                     return;
                 }
                 getBinding().otherApkTv.setText(AppUtils.getSign(this,pas));
-                break;
-            case R.id.ndk_copy:
-                String s= getBinding().ndkTv.getText().toString();
-                ClipData mClipDa =ClipData.newPlainText("Label", s);         //‘Label’这是任意文字标签
-                mClipboardManager.setPrimaryClip(mClipDa);
-                ToastUtils.showShort(this, "复制成功，可以发给朋友们了。");
-                break;
-            case R.id.ndk_btn:
-                getBinding().ndkTv.setText(NativeUtils.getNativeString());
                 break;
         }
     }
