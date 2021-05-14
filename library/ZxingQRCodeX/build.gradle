@@ -21,7 +21,7 @@ android {
         }
         customDebugType {
             //可调试 也适用于包含 C/C++ 代码的模块 正式发布需要关闭，注意其他库的也要关闭
-            debuggable true
+            debuggable false
         }
     }
     compileOptions {

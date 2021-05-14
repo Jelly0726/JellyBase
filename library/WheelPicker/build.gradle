@@ -11,7 +11,7 @@ android {
     buildTypes {
         customDebugType {
             //可调试 也适用于包含 C/C++ 代码的模块
-            debuggable true
+            debuggable false
         }
     }
 }
