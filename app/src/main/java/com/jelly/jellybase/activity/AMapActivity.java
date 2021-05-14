@@ -58,8 +58,8 @@ import java.util.ArrayList;
  * Created by Administrator on 2018/3/13.
  */
 
-public class AMapActivity extends BaseActivity<AmapActivityBinding> implements AMapNaviListener ,AMap.OnCameraChangeListener,
-        AMap.OnMapLoadedListener,LocationSource,AMap.OnMarkerClickListener, View.OnClickListener {
+public class AMapActivity extends BaseActivity<AmapActivityBinding> implements AMapNaviListener, AMap.OnCameraChangeListener,
+        AMap.OnMapLoadedListener, LocationSource, AMap.OnMarkerClickListener, View.OnClickListener {
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
     private OnLocationChangedListener mListener;
@@ -73,19 +73,20 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     //起点终点列表
     private ArrayList<NaviLatLng> mStartPoints = new ArrayList<NaviLatLng>();
     private ArrayList<NaviLatLng> mEndPoints = new ArrayList<NaviLatLng>();
-    private double latitude =0d;
-    private double longitude=0d;
-    private String address="";
-    private String name="";
-    private static float zoom=14f;                                      //地图缩放
-    private boolean isFirstTime=true;
+    private double latitude = 0d;
+    private double longitude = 0d;
+    private String address = "";
+    private String name = "";
+    private static float zoom = 14f;                                      //地图缩放
+    private boolean isFirstTime = true;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        latitude=getIntent().getDoubleExtra("latitude",0d);
-        longitude=getIntent().getDoubleExtra("longitude",0d);
-        address=getIntent().getStringExtra("address");
-        name=getIntent().getStringExtra("name");
+        latitude = getIntent().getDoubleExtra("latitude", 0d);
+        longitude = getIntent().getDoubleExtra("longitude", 0d);
+        address = getIntent().getStringExtra("address");
+        name = getIntent().getStringExtra("name");
 
         MProgressUtil.getInstance().initialize(this.getApplicationContext());
         initAmap(savedInstanceState);
@@ -93,12 +94,13 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
         EventBus.getDefault().register(this);
         HermesManager.getHermesManager().addEvent(this);
-        Intent intent=new Intent(this, LocationService.class);
+        Intent intent = new Intent(this, LocationService.class);
         startService(intent);
         getBinding().leftBack.setOnClickListener(this);
         getBinding().starNaviLayout.setOnClickListener(this);
     }
-    private void initAmap(Bundle savedInstanceState){
+
+    private void initAmap(Bundle savedInstanceState) {
         getBinding().aMapView.onCreate(savedInstanceState);//必须写
         if (aMap == null) {
             aMap = getBinding().aMapView.getMap();
@@ -145,32 +147,37 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
             aMap.getUiSettings().setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_LEFT);//设置logo位置
         }
     }
-    private void initNavi(){
+
+    private void initNavi() {
         mTtsManager = TTSController.getInstance(getApplicationContext());
         mTtsManager.init();
 
         mAMapNavi = AMapNavi.getInstance(getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
+        //是否启用内置语音
+        mAMapNavi.setUseInnerVoice(false, false);
     }
-    public void onClick(View view){
-        switch (view.getId()){
+
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.left_back:
                 finish();
                 break;
             case R.id.starNavi_layout:
-                if (mStartPoints.size()<=0){
-                    ToastUtils.showToast(this,"定位中...");
+                if (mStartPoints.size() <= 0) {
+                    ToastUtils.showToast(this, "定位中...");
                     return;
                 }
-                if (latitude==0d||longitude==0d){
-                    ToastUtils.showToast(this,"门店经纬度异常！");
+                if (latitude == 0d || longitude == 0d) {
+                    ToastUtils.showToast(this, "门店经纬度异常！");
                     return;
                 }
                 calculateDriveRoute();
                 break;
         }
     }
+
     @Override
     protected void onResume() {
         getBinding().aMapView.onResume();
@@ -180,19 +187,22 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     @Override
     protected void onPause() {
         getBinding().aMapView.onPause();
-        mTtsManager.stopSpeaking();
+        if (mTtsManager != null)
+            mTtsManager.stopSpeaking();
         super.onPause();
 //        停止导航之后，会触及底层stop，然后就不会再有回调了，但是讯飞当前还是没有说完的半句话还是会说完
+        // if (mAMapNavi != null)
 //        mAMapNavi.stopNavi();
     }
 
     @Override
     protected void onDestroy() {
-        mAMapNavi.stopNavi();
-        if(getBinding().aMapView!=null) {
+        if (mAMapNavi != null)
+            mAMapNavi.stopNavi();
+        if (getBinding().aMapView != null) {
             getBinding().aMapView.onDestroy();
         }
-        if(aMap!=null) {
+        if (aMap != null) {
             aMap.clear();
             aMap = null;
         }
@@ -208,6 +218,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
         getBinding().aMapView.onSaveInstanceState(outState);
 
     }
+
     /**
      * 计算驾车路线
      */
@@ -215,22 +226,23 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     private void calculateDriveRoute() {
         MProgressUtil.getInstance().show(this);
         mEndPoints.clear();
-        NaviLatLng  mNaviEnd = new NaviLatLng(latitude,longitude);
+        NaviLatLng mNaviEnd = new NaviLatLng(latitude, longitude);
         mEndPoints.add(mNaviEnd);
         try {
             //congestion 躲避拥堵,avoidhightspeed 不走高速,cost 避免收费,hightspeed 高速优先,multipleroute 多路径
-            int strategy=mAMapNavi.strategyConvert(true, false, false, false, false);
+            int strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
             boolean isSuccess = mAMapNavi.calculateDriveRoute(mStartPoints,
                     mEndPoints, null, strategy);
             if (!isSuccess) {
-                ToastUtils.show(this,"路线计算失败,检查参数情况");
+                ToastUtils.show(this, "路线计算失败,检查参数情况");
                 MProgressUtil.getInstance().dismiss();
             }
-        }catch (Exception e){
-            ToastUtils.show(this,e.toString());
+        } catch (Exception e) {
+            ToastUtils.show(this, e.toString());
             MProgressUtil.getInstance().dismiss();
         }
     }
+
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
         mListener = onLocationChangedListener;
@@ -240,27 +252,32 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     public void deactivate() {
 
     }
+
     /**
      * 视图范围改变时回调
+     *
      * @param cameraPosition
      */
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
 
     }
+
     /**
      * 视图范围改变结束回调
+     *
      * @param cameraPosition
      */
     @Override
     public void onCameraChangeFinish(CameraPosition cameraPosition) {
     }
+
     /**
      * 当地图载入成功后回调此方法。
      */
     @Override
     public void onMapLoaded() {
-        if (latitude!=0d||longitude!=0d){
+        if (latitude != 0d || longitude != 0d) {
             MarkerOptions markerOption = new MarkerOptions();
             markerOption.position(new LatLng(latitude, longitude));
             markerOption.title(name).snippet(address);
@@ -272,6 +289,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
             aMap.addMarker(markerOption);
         }
     }
+
     /**
      * 导航初始化失败时的回调函数。
      */
@@ -290,6 +308,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 启动导航后的回调函数
+     *
      * @param i
      */
     @Override
@@ -307,6 +326,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 当GPS位置有更新时的回调函数
+     *
      * @param aMapNaviLocation
      */
     @Override
@@ -316,6 +336,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 导航播报信息回调函数(过时)
+     *
      * @param i
      * @param s
      */
@@ -326,6 +347,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 导航播报信息回调函数。
+     *
      * @param s
      */
     @Override
@@ -351,61 +373,60 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 路径规划失败后的回调函数
-     *
      */
     @Override
     public void onCalculateRouteFailure(int arg0) {
         mIsCalculateRouteSuccess = false;
         MProgressUtil.getInstance().dismiss();
         String msg = "路径计算失败";
-        switch (arg0){
+        switch (arg0) {
 //                case PathPlanningErrCode.SUCCESS_ROUTE:
 //                    msg = arg0+"-路径计算成功";
 //                    break;
             case PathPlanningErrCode.ERROR_CONNECTION:
-                msg = arg0+"-路径计算错误异常：网络超时或网络失败";
+                msg = arg0 + "-路径计算错误异常：网络超时或网络失败";
                 break;
             case PathPlanningErrCode.ERROR_STARTPOINT:
-                msg = arg0+"-路径计算错误异常：起点错误";
+                msg = arg0 + "-路径计算错误异常：起点错误";
                 break;
             case PathPlanningErrCode.ERROR_PROTOCOL:
-                msg = arg0+"-路径计算错误异常：协议解析错误";
+                msg = arg0 + "-路径计算错误异常：协议解析错误";
                 break;
             case PathPlanningErrCode.ERROR_ENDPOINT:
-                msg = arg0+"-路径计算错误异常：终点错误";
+                msg = arg0 + "-路径计算错误异常：终点错误";
                 break;
             case PathPlanningErrCode.ERROR_NOROADFORSTARTPOINT:
-                msg = arg0+"-路径计算错误异常：起点没有找到道路";
+                msg = arg0 + "-路径计算错误异常：起点没有找到道路";
                 break;
             case PathPlanningErrCode.ERROR_NOROADFORENDPOINT:
-                msg = arg0+"-路径计算错误异常：终点没有找到道路";
+                msg = arg0 + "-路径计算错误异常：终点没有找到道路";
                 break;
             case PathPlanningErrCode.ERROR_NOROADFORWAYPOINT:
-                msg = arg0+"-路径计算错误异常：途径点没有找到道路";
+                msg = arg0 + "-路径计算错误异常：途径点没有找到道路";
                 break;
             case PathPlanningErrCode.INVALID_USER_KEY:
-                msg = arg0+"-用户key非法或过期";
+                msg = arg0 + "-用户key非法或过期";
                 break;
             case PathPlanningErrCode.SERVICE_NOT_EXIST:
-                msg = arg0+"-请求服务不存在";
+                msg = arg0 + "-请求服务不存在";
                 break;
             case PathPlanningErrCode.SERVICE_RESPONSE_ERROR:
-                msg = arg0+"-请求服务响应错误";
+                msg = arg0 + "-请求服务响应错误";
                 break;
             case PathPlanningErrCode.INSUFFICIENT_PRIVILEGES:
-                msg = arg0+"-无权限访问此服务";
+                msg = arg0 + "-无权限访问此服务";
                 break;
             case PathPlanningErrCode.OVER_QUOTA:
-                msg = arg0+"-请求超出配额";
+                msg = arg0 + "-请求超出配额";
                 break;
             case PathPlanningErrCode.INVALID_PARAMS:
-                msg = arg0+"-请求参数非法";
+                msg = arg0 + "-请求参数非法";
                 break;
             case PathPlanningErrCode.UNKNOWN_ERROR:
-                msg = arg0+"-未知错误";
+                msg = arg0 + "-未知错误";
                 break;
             default:
-                msg = arg0+"-路径计算失败";
+                msg = arg0 + "-路径计算失败";
                 break;
         }
         Toast.makeText(AMapActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -429,6 +450,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 驾车路径导航到达某个途经点的回调函数。
+     *
      * @param i
      */
     @Override
@@ -438,6 +460,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 用户手机GPS设置是否开启的回调函数。
+     *
      * @param b
      */
     @Override
@@ -447,6 +470,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 导航过程中的摄像头信息回调函数
+     *
      * @param aMapCameraInfos
      */
     @Override
@@ -461,6 +485,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 服务区信息回调函数
+     *
      * @param amapServiceAreaInfos
      */
     @Override
@@ -470,14 +495,17 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 导航引导信息回调 naviinfo 是导航信息类。
+     *
      * @param naviInfo
      */
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
 
     }
+
     /**
      * 巡航模式（无路线规划）下，道路设施信息更新回调(过时)
+     *
      * @param aMapNaviTrafficFacilityInfo
      */
     @Override
@@ -487,6 +515,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 显示路口放大图回调(实景图)。
+     *
      * @param aMapNaviCross
      */
     @Override
@@ -535,7 +564,6 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 路径规划成功后的回调函数
-     *
      */
     @Override
     public void onCalculateRouteSuccess(int[] ints) {
@@ -554,6 +582,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 通知当前是否显示平行路切换
+     *
      * @param i
      */
     @Override
@@ -563,6 +592,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 巡航模式（无路线规划）下，道路设施信息更新回调
+     *
      * @param aMapNaviTrafficFacilityInfos
      */
     @Override
@@ -572,6 +602,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 巡航模式（无路线规划）下，统计信息更新回调 连续5个点大于15km/h后开始回调
+     *
      * @param aimLessModeStat
      */
     @Override
@@ -581,6 +612,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 巡航模式（无路线规划）下，统计信息更新回调 当拥堵长度大于500米且拥堵时间大于5分钟时回调.
+     *
      * @param aimLessModeCongestionInfo
      */
     @Override
@@ -590,6 +622,7 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
 
     /**
      * 回调各种类型的提示音，类似高德导航"叮".
+     *
      * @param i
      */
     @Override
@@ -621,21 +654,22 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(NetEvent netEvent){
-        Log.i("SSSS","netEvent.getEventType()="+netEvent.getEventType());
-        if (netEvent.getEventType().equals(AMapLocation.class.getName())){
+    public void onEvent(NetEvent netEvent) {
+        Log.i("SSSS", "netEvent.getEventType()=" + netEvent.getEventType());
+        if (netEvent.getEventType().equals(AMapLocation.class.getName())) {
 //            Intent intent=new Intent(BaseApplication.getInstance(), LocationService.class);
 //            BaseApplication.getInstance().stopService(intent);
-            if(isFirstTime) {
+            if (isFirstTime) {
                 AMapLocation aMapLocation = (AMapLocation) netEvent.getEvent();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                isFirstTime=false;
+                isFirstTime = false;
                 mStartPoints.clear();
-                NaviLatLng  mStart = new NaviLatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+                NaviLatLng mStart = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                 mStartPoints.add(mStart);
-                if (aMapLocation.getLatitude()!=0d&&aMapLocation.getLongitude()!=0d){
-                    Intent stateGuardService =  new Intent(BaseApplication.getInstance(), LocationService.class);
+                if (aMapLocation.getLatitude() != 0d && aMapLocation.getLongitude() != 0d) {
+                    Intent stateGuardService = new Intent(BaseApplication.getInstance(), LocationService.class);
                     BaseApplication.getInstance().stopService(stateGuardService);
                 }
             }

@@ -623,10 +623,12 @@
         </activity>
         <!--↓↓↓↓高德地图↓↓↓↓-->
         <activity android:name=".activity.AMapActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateUnchanged|stateHidden"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name="com.base.MapUtil.SimpleNaviActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:windowSoftInputMode="stateUnchanged|stateHidden|adjustPan"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
@@ -847,7 +849,8 @@
         <service android:name=".server.TraceServiceImpl"/>
         <!--↑↑↑daemon保活服务↑↑↑-->
         <service android:name=".server.LocationService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:foregroundServiceType="location"/>
         <service
             android:name=".server.BadgeIntentService"
             android:exported="false"></service>

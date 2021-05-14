@@ -5,6 +5,7 @@ plugins{
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.huawei.agconnect'
 }
 android {
     //生产环境域名地址
@@ -158,16 +159,22 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
 
     }
+    // 移除lint检查的error
     lintOptions {
-        checkReleaseBuilds false
+        checkReleaseBuilds false //打包release版本的时候是否进行检测
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
-        abortOnError false
+        abortOnError false // 有错误是否停止build
     }
-    aaptOptions {
-        //采用低版本构建生成PNG图片的兼容方式；
-        //additionalParameters "--no-version-vectors"
-    }
+    //关闭Android Studio的PNG合法性检查的
+//    aaptOptions.cruncherEnabled = false
+//    aaptOptions.useNewCruncher = false
+    // multiDex的一些相关配置，这样配置可以让你的编译速度更快
+//    dexOptions {
+//        preDexLibraries = false // 让它不要对Lib做preDexing
+//        incremental true      // 开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
+//        javaMaxHeapSize "4g"     // 设置java堆内存大小
+//    }
     //kotlin Parcelize传值
     androidExtensions {
         experimental = true
@@ -176,7 +183,23 @@ android {
     buildFeatures{
         viewBinding=true
     }
-    packagingOptions {
+    packagingOptions {/*
+        exclude  在打包时移除项目中的相关文件，不打入apk文件中
+        doNotStrip 剔除对应的架构的工具链
+        pickFirst  当有多个匹配项的时候匹配到第一个就可以了
+      */
+        exclude 'classes.dex'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
 //解决加android:extractNativeLibs="false" 会导致加固后不能安装 的问题
         doNotStrip "*/arm64-v8a/*.so"
 //        doNotStrip "*/armeabi/*.so"
@@ -198,6 +221,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //华为推送
+    //其它已存在的依赖不要删除
+    implementation 'com.huawei.hms:push:5.1.1.301'
     //百度智能更新 SDK 的 AAR 文件
     implementation(name: 'autoupdatesdk-release', ext: 'aar')
     implementation files('libs/Msc.jar')

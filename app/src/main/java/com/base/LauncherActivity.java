@@ -117,6 +117,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                         ,Manifest.permission.READ_SMS
                         ,Manifest.permission.CALL_PHONE
                         ,Manifest.permission.READ_PHONE_STATE
+                        ,Manifest.permission.WRITE_SETTINGS
                         ,Manifest.permission.ACCESS_NOTIFICATION_POLICY
                         ,Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
                 )
