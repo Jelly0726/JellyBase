@@ -170,11 +170,18 @@ android {
 //    aaptOptions.cruncherEnabled = false
 //    aaptOptions.useNewCruncher = false
     // multiDex的一些相关配置，这样配置可以让你的编译速度更快
-//    dexOptions {
-//        preDexLibraries = false // 让它不要对Lib做preDexing
-//        incremental true      // 开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
-//        javaMaxHeapSize "4g"     // 设置java堆内存大小
-//    }
+    dexOptions {
+        //使用增量模式构建
+        incremental true
+        //最大堆内存
+        javaMaxHeapSize "8g"  //注意内存是自己电脑内存大小配置
+        //是否支持大工程模式
+        jumboMode = true
+        //预编译
+        preDexLibraries = false
+        //线程数
+        threadCount = 5
+    }
     //kotlin Parcelize传值
     androidExtensions {
         experimental = true
