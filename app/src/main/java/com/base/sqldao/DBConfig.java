@@ -5,5 +5,5 @@ package com.base.sqldao;
  */
 
 public class DBConfig {
-    public static final String DBNAME = "WholesaleDB";//数据库名称
+    public static final String DBNAME = "Jelly_DB";//数据库名称
 }
