@@ -103,9 +103,7 @@ import com.yanzhenjie.album.impl.OnItemClickListener;
 import java.io.File;
 import java.lang.reflect.Field;
 
-import hugo.weaving.DebugLog;
 
-@DebugLog
 public class MainActivity extends BaseActivity<MainActivityBinding> {
 
     private RecyclerView recyclerView;

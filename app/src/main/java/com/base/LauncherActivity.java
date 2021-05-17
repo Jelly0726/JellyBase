@@ -23,9 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import hugo.weaving.DebugLog;
 
-@DebugLog
 public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

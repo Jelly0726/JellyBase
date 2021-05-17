@@ -55,11 +55,18 @@ android {
 //    aaptOptions.cruncherEnabled = false
 //    aaptOptions.useNewCruncher = false
     // multiDex的一些相关配置，这样配置可以让你的编译速度更快
-//    dexOptions {
-//        preDexLibraries = false // 让它不要对Lib做preDexing
-//        incremental true      // 开启incremental dexing,优化编译效率，这个功能android studio默认是关闭的。
-//        javaMaxHeapSize "4g"     // 设置java堆内存大小
-//    }
+    dexOptions {
+        //使用增量模式构建
+        incremental true
+        //最大堆内存
+        javaMaxHeapSize "4g"  //注意内存是自己电脑内存大小配置
+        //是否支持大工程模式
+        jumboMode = true
+        //预编译
+        preDexLibraries = false
+        //线程数
+        threadCount = 5
+    }
     packagingOptions {/*
         exclude  在打包时移除项目中的相关文件，不打入apk文件中
         doNotStrip 剔除对应的架构的工具链
@@ -108,8 +115,8 @@ dependencies {
     //屏幕适配
     api 'me.jessyan:autosize:1.2.1'
 //      kotlin协程
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
     api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
     //recyclerview
     api 'androidx.recyclerview:recyclerview:1.1.0'

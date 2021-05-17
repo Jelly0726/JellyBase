@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = '1.4.30'
     repositories {
 //        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
@@ -28,11 +28,10 @@ allprojects {
 //        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
-        maven { url 'https://jitpack.io'}
         //从api 26开始，support libraries 需要从google的maven仓库下载
-       // maven { url "https://maven.google.com" }
-        maven { url 'https://dl.google.com/dl/android/maven2/' }
-        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+//        maven { url 'https://dl.google.com/dl/android/maven2/' }
+        //配置新浪第三方登录 SDK的Maven仓地址。导致sync变慢
+//        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
         google()
         // 配置HMS Core SDK的Maven仓地址。
         maven {url 'https://developer.huawei.com/repo/'}

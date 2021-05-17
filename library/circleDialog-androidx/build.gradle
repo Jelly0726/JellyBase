@@ -34,6 +34,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "com.squareup.leakcanary:leakcanary-android:1.5.4"
+    //Airbnb 动画库Lottie
     implementation "com.airbnb.android:lottie:2.5.4"
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40"
     implementation "com.squareup.picasso:picasso:2.5.2"
