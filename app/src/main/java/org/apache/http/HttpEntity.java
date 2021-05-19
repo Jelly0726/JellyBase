@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public interface HttpEntity {
     boolean isRepeatable();
 

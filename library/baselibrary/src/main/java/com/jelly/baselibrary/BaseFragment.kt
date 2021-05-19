@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.jelly.baselibrary.SystemBar.StatusBarUtil
 import com.jelly.baselibrary.log.LogUtils
-import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -26,7 +25,6 @@ import java.lang.reflect.ParameterizedType
  * @see .onFragmentVisibleChange
  * @see .onFragmentFirstVisible
  */
-@DebugLog
 abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by MainScope() {
     protected var rootView: View? = null
     private var _binding: T? = null

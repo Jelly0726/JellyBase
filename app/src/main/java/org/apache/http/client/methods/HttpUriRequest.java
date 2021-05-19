@@ -5,7 +5,7 @@ import org.apache.http.HttpRequest;
 import java.net.URI;
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public interface HttpUriRequest extends HttpRequest {
     String getMethod();
 

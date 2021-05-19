@@ -41,7 +41,6 @@ import com.wenming.library.upload.email.EmailReporter
 import com.wenming.library.upload.http.HttpReporter
 import com.yanzhenjie.album.Album
 import com.yanzhenjie.album.AlbumConfig
-import hugo.weaving.DebugLog
 import io.reactivex.functions.Consumer
 import io.reactivex.plugins.RxJavaPlugins
 import me.jessyan.autosize.AutoSizeConfig
@@ -54,7 +53,6 @@ import java.io.IOException
 /**
  * Created by Administrator on 2015/10/8.
  */
-@DebugLog
 class BaseApplication : Application(), AppCallBack {
     companion object {
         private lateinit var myApp: BaseApplication

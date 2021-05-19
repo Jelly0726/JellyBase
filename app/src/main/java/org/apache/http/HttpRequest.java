@@ -2,7 +2,7 @@ package org.apache.http;
 
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public interface HttpRequest extends HttpMessage {
     org.apache.http.RequestLine getRequestLine();
 }

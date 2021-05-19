@@ -1,8 +1,5 @@
 plugins{
     id 'com.android.application'
-    //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间
-    //在Java1.8会出现org.aspectj.apache.bcel.classfile.ClassFormatException错误
-    id 'com.jakewharton.hugo'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
@@ -222,6 +219,17 @@ android {
 repositories {
     flatDir {
         dirs 'libs'
+    }
+}
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            //注: 某些输入文件使用或覆盖了已过时的 API。
+            //注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+            //注: 某些输入文件使用了未经检查或不安全的操作。
+            //注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
     }
 }
 dependencies {

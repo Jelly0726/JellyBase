@@ -6,7 +6,7 @@
 package org.apache.http.protocol;
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public interface HttpContext {
     String RESERVED_PREFIX = "http.";
 

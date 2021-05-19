@@ -15,9 +15,6 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // in the individual module build.gradle files
-        classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
-        //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         // 增加agcp配置。
         classpath 'com.huawei.agconnect:agcp:1.5.1.300'
     }
@@ -28,10 +25,11 @@ allprojects {
 //        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         jcenter()
+        //单独配置dl.bintray.com会导致sync变慢
+        maven { url 'https://jitpack.io' }
         //从api 26开始，support libraries 需要从google的maven仓库下载
-//        maven { url 'https://dl.google.com/dl/android/maven2/' }
-        //配置新浪第三方登录 SDK的Maven仓地址。导致sync变慢
-//        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        maven { url 'https://dl.google.com/dl/android/maven2/' }
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
         google()
         // 配置HMS Core SDK的Maven仓地址。
         maven {url 'https://developer.huawei.com/repo/'}

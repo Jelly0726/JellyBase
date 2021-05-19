@@ -2,7 +2,7 @@ package org.apache.http;
 
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public final class HttpHost {
     public static final String DEFAULT_SCHEME_NAME = "http";
     protected final String hostname;

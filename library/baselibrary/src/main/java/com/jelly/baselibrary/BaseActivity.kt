@@ -33,7 +33,6 @@ import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.view.GrayFrameLayout
 import com.jelly.baselibrary.view.SoftKeyboardManager
 import com.mylhyl.circledialog.CircleDialog
-import hugo.weaving.DebugLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -46,7 +45,6 @@ import java.lang.reflect.ParameterizedType
 /**
  * Created by Administrator on 2017/12/5.
  */
-@DebugLog
 abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
         Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
     protected lateinit var binding: T

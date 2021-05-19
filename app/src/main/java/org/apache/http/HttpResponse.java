@@ -4,7 +4,7 @@ package org.apache.http;
 import java.util.Locale;
 
 /** @deprecated */
-@Deprecated
+//@Deprecated
 public interface HttpResponse extends HttpMessage {
     StatusLine getStatusLine();
 
