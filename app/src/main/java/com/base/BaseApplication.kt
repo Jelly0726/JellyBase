@@ -9,7 +9,6 @@ import android.os.Looper
 import android.os.Process
 import android.text.TextUtils
 import android.util.Log
-import androidx.multidex.MultiDex
 import cn.jpush.android.api.JPushInterface
 import com.base.MapUtil.LocationTask
 import com.base.cockroach.Cockroach
@@ -195,11 +194,6 @@ class BaseApplication : Application(), AppCallBack {
                 //如果关闭对 sp 的支持, 在布局时就应该使用副单位填写字体的尺寸
                 //如果开启 sp, 对其他三方库控件影响不大, 也可以不关闭对 sp 的支持, 这里我就继续开启 sp, 请自行斟酌自己的项目是否需要关闭对 sp 的支持
                 .setSupportSP(false).supportSubunits = Subunits.MM
-    }
-
-    override fun attachBaseContext(base: Context) {
-        super.attachBaseContext(base)
-        MultiDex.install(base)
     }
 
     val isLogin: Boolean

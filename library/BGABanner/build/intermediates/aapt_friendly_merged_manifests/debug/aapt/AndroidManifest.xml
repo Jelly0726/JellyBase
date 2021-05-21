@@ -3,7 +3,7 @@
     package="cn.bingoogolapple.bgabanner" >
 
     <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="29" />
+        android:minSdkVersion="21"
+        android:targetSdkVersion="30" />
 
 </manifest>

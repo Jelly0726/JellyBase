@@ -1,13 +1,11 @@
 package com.base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.jellybase.MainActivity;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.BaseActivityGuideBinding;
 
@@ -64,7 +62,7 @@ public class GuideActivity extends BaseActivity<BaseActivityGuideBinding> {
         getBinding().bannerGuideForeground.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                BaseApplication.getInstance().goMainActivity();//进入主界面
                 finish();
 
             }

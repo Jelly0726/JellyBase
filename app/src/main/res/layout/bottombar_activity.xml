@@ -1,98 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg">
+
     <com.chaychan.library.NoPreloadViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="45mm"
-        ></com.chaychan.library.NoPreloadViewPager>
+        android:layout_marginBottom="40mm">
+
+    </com.chaychan.library.NoPreloadViewPager>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40mm"
+        android:background="@drawable/bottombar_white_bg"
+        android:layout_alignParentBottom="true"/>
 
     <com.chaychan.library.BottomBarLayout
         android:id="@+id/bbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bottombar_white_bg">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <com.chaychan.library.BottomBarItem
             android:layout_width="0mm"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:iconHeight="20mm"
-            app:iconWidth="20mm"
             app:iconNormal="@mipmap/home_un"
             app:iconSelected="@mipmap/home_on"
+            app:iconWidth="20mm"
             app:itemText="首页"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#333333"
             app:itemTextSize="8mm"
             app:openTouchBg="false"
-           />
+            app:textColorNormal="#999999"
+            app:textColorSelected="#333333" />
+
         <com.chaychan.library.BottomBarItem
             android:layout_width="0mm"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:iconHeight="20mm"
-            app:iconWidth="20mm"
             app:iconNormal="@mipmap/order_un"
             app:iconSelected="@mipmap/order_on"
+            app:iconWidth="20mm"
             app:itemText="钱包"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#333333"
             app:itemTextSize="8mm"
             app:openTouchBg="false"
-            />
+            app:textColorNormal="#999999"
+            app:textColorSelected="#333333" />
+
         <com.chaychan.library.BottomBarItem
             android:layout_width="0mm"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            app:iconHeight="60mm"
             app:iconNormal="@mipmap/middle_on"
             app:iconSelected="@mipmap/middle_on"
+            app:isSkip="true"
             app:itemText="支付"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#333333"
             app:itemTextSize="8mm"
             app:openTouchBg="false"
-            app:isSkip="true"
-            android:layout_gravity="bottom"
-            />
+            app:textColorNormal="#999999"
+            app:textColorSelected="#333333" />
 
         <com.chaychan.library.BottomBarItem
             android:layout_width="0mm"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:iconHeight="20mm"
-            app:iconWidth="20mm"
             app:iconNormal="@mipmap/wallet_un"
             app:iconSelected="@mipmap/wallet_on"
+            app:iconWidth="20mm"
             app:itemText="发现"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#333333"
             app:itemTextSize="8mm"
             app:openTouchBg="false"
-            />
+            app:textColorNormal="#999999"
+            app:textColorSelected="#333333" />
 
         <com.chaychan.library.BottomBarItem
             android:layout_width="0mm"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             app:iconHeight="20mm"
-            app:iconWidth="20mm"
             app:iconNormal="@mipmap/me_un"
             app:iconSelected="@mipmap/me_on"
+            app:iconWidth="20mm"
             app:itemText="我的"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#333333"
             app:itemTextSize="8mm"
             app:openTouchBg="false"
-            />
+            app:textColorNormal="#999999"
+            app:textColorSelected="#333333" />
 
     </com.chaychan.library.BottomBarLayout>
 </RelativeLayout>

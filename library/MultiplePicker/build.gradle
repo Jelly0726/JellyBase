@@ -6,8 +6,7 @@ ext {
     pomDescription = "multiple picker for android"
 }
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 30
     buildTypes {
         customDebugType {
             //可调试 也适用于包含 C/C++ 代码的模块
@@ -17,5 +16,5 @@ android {
 }
 dependencies {
     implementation project(":library:Common")
-    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.2.0'
 }

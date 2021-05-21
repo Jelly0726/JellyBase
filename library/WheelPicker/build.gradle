@@ -6,8 +6,7 @@ ext {
     pomDescription = "wheel picker for android, include date picker, time picker, option picker, address picker, etc."
 }
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 30
     buildTypes {
         customDebugType {
             //可调试 也适用于包含 C/C++ 代码的模块
