@@ -5,6 +5,9 @@ import android.net.NetworkCapabilities;
 
 import com.jelly.baselibrary.log.LogUtils;
 
+/**
+ * 监听网络是否可用
+ */
 public class NetworkCallbackImpl extends ConnectivityManager.NetworkCallback {
     @Override
     public void onAvailable(Network network) {
