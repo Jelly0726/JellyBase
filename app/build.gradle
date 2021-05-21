@@ -15,7 +15,7 @@ android {
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.jelly.jellybase"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 3
         versionName "1.0.3F" //versionName 包含"F"表示强制更新

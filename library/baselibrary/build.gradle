@@ -28,7 +28,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -179,6 +179,9 @@ dependencies {
     api project(path: ':library:WheelPicker')
     //文件选择器 示例 AndroidPicker-master
     api project(path: ':library:FilePicker')
+    //文件选择器
+//    api project(path: ':library:FileChooser')//2.2.4
+    api 'com.droidninja:filepicker:2.2.5'
     //颜色选择器 示例 AndroidPicker-master
     api project(path: ':library:ColorPicker')
     //多级选择器 示例 AndroidPicker-master
@@ -299,8 +302,6 @@ dependencies {
 //        api files('libs/libss/email-additionnal.jar')//logreport里已包含，备份到libss里
 //        api files('libs/libss/email-mail.jar')//logreport里已包含，备份到libss里
     api files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
-    //文件选择器
-    api project(path: ':library:FileChooser')
     //BGABanner
     api project(path: ':library:BGABanner')
     //投影

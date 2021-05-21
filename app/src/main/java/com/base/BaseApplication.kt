@@ -16,6 +16,7 @@ import com.base.cockroach.Cockroach
 import com.base.cockroach.CrashUtils
 import com.base.cockroach.ExceptionHandler
 import com.base.daemon.DaemonEnv
+import com.jelly.baselibrary.applicationUtil.NetworkUtils
 import com.base.sqldao.DBManager
 import com.bumptech.glide.Glide
 import com.jelly.baselibrary.AppCallBack
@@ -102,6 +103,7 @@ class BaseApplication : Application(), AppCallBack {
         // false：激活状态（Started）可以实时收到消息，非激活状态（Stoped）无法实时收到消息，
         // 需等到Activity重新变成激活状态，方可收到消息
         if (packageName == curProcessName) {
+            NetworkUtils.getInstance().registerNetWorkCallBack(this)
             //初始化
             AppInit.init(this)
             //初始化数据库

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.base.httpmvp.retrofitapi.HttpUtils;
-import com.base.httpmvp.retrofitapi.NetworkUtils;
+import com.jelly.baselibrary.applicationUtil.NetworkUtils;
 
 import java.io.IOException;
 
@@ -55,7 +55,7 @@ public class BaseInterceptor implements Interceptor {
             }
         }
         //网络不可用
-        if (!NetworkUtils.isAvailable(mContext)) {
+        if (!NetworkUtils.getInstance().isAvailable()) {
             if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
                 //在请求头中加入：强制使用缓存，不访问网络
                 /*
@@ -115,7 +115,7 @@ public class BaseInterceptor implements Interceptor {
         }
         Response response = chain.proceed(request);
         //网络可用
-        if (NetworkUtils.isAvailable(mContext)) {
+        if (NetworkUtils.getInstance().isAvailable()) {
             int maxAge = 0;
             // 有网络时 在响应头中加入：设置缓存超时时间0个小时
             response.newBuilder()

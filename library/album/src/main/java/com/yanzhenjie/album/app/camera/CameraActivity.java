@@ -159,6 +159,7 @@ public class CameraActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CODE_ACTIVITY_TAKE_IMAGE:
             case CODE_ACTIVITY_TAKE_VIDEO: {

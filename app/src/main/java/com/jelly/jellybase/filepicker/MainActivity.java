@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     .showFolderView(true)
                     .enableSelectAll(false)
                     .enableImagePicker(true)
-                    .setCameraPlaceholder(R.drawable.ic_picker_camera)
+                    .setCameraPlaceholder(R.drawable.ic_camera)
                     .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .pickPhoto(this, CUSTOM_REQUEST_CODE);
         }
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
                     .addFileSupport("AAC", pdfs, R.drawable.pdf_blue)
                     .enableDocSupport(true)
                     .enableSelectAll(true)
-                    .sortDocumentsBy(SortingTypes.name)
+                    .sortDocumentsBy(SortingTypes.NAME)
                     .withOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                     .pickFile(this);
         }

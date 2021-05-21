@@ -1,17 +1,20 @@
 package com.base.jiguang;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.jelly.baselibrary.applicationUtil.NetworkUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -86,18 +89,34 @@ public class ExampleUtil {
     }
 
     public static boolean isConnected(Context context) {
-        ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = conn.getActiveNetworkInfo();
-        return (info != null && info.isConnected());
+        return NetworkUtils.getInstance().isAvailable();
     }
 
     public static String getImei(Context context, String imei) {
-        try {
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            imei = telephonyManager.getDeviceId();
-        } catch (Exception e) {
-            Log.e(ExampleUtil.class.getSimpleName(), e.getMessage());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        {
+            imei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } else {
+            final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    return "";
+                }
+            }
+            assert mTelephony != null;
+            if (mTelephony.getDeviceId() != null)
+            {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                {
+                    imei = mTelephony.getImei();
+                }else {
+                    imei = mTelephony.getDeviceId();
+                }
+            } else {
+                imei = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            }
         }
+        Log.d("imei", imei);
         return imei;
     }
 }

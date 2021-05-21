@@ -211,6 +211,7 @@ public class AlbumActivity extends BaseActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case CODE_ACTIVITY_NULL: {
                 if (resultCode == RESULT_OK) {

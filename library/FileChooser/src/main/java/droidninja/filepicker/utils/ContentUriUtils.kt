@@ -25,7 +25,7 @@ object ContentUriUtils {
             if (isExternalStorageDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
-                return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                return Environment.getExternalStorageState().toString() + "/" + split[1]
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
                 uri = ContentUris.withAppendedId(
@@ -52,15 +52,18 @@ object ContentUriUtils {
                 return uri.lastPathSegment
             }
             val projection = arrayOf(
-                    MediaStore.Images.Media.DATA
+//                    MediaStore.Images.Media.DATA
+                    MediaStore.Images.Media._ID
             )
             try {
                 val cursor = context.contentResolver?.query(uri, projection, selection, selectionArgs, null)
                 var path: String? = null
                 if (cursor != null) {
-                    val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    val columnIndexID = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
                     if (cursor.moveToFirst()) {
-                        path = cursor.getString(column_index)
+                        var imageId = cursor.getLong(columnIndexID)
+                        path = Uri.withAppendedPath(uri, "" + imageId).path
+//                        path = cursor.getString(column_index)
                         cursor.close()
                     }
                 }
