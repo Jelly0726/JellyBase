@@ -24,11 +24,11 @@ android {
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
         //ndk编译生成.so文件
-//        ndk {
-////            moduleName "testjni"         //生成的so名字
-//            abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
-////            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-//        }
+        ndk {
+//            moduleName "testjni"         //生成的so名字
+            abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
         //极光推送
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
