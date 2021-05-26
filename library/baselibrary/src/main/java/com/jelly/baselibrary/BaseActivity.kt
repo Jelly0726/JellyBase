@@ -72,10 +72,6 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
 //        // 全屏
 //        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
 //                WindowManager.LayoutParams. FLAG_FULLSCREEN);
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating) {
-            val result = fixOrientation()
-            LogUtils.i("onCreate fixOrientation when Oreo, result = $result")
-        }
         detectUsbAudioDevice()
         super.onCreate(savedInstanceState)
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
