@@ -11,5 +11,6 @@ import androidx.annotation.IdRes
         , setter = "setOnClickListener"
 )
 annotation class OnClick(
-        @IdRes vararg val value: Int = [View.NO_ID]
+        val isCheck:Boolean=false,//是否启用防重复点击校验
+        @IdRes vararg val value: Int = [View.NO_ID]//设置点击事件的id集合
 )

@@ -28,5 +28,5 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.appcompat:appcompat:1.2.0"
     //Airbnb 动画库Lottie
-    implementation "com.airbnb.android:lottie:3.5.0"
+    implementation "com.airbnb.android:lottie:3.7.0"
 }

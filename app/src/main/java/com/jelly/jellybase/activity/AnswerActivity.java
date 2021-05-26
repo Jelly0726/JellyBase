@@ -85,7 +85,8 @@ public class AnswerActivity extends BaseActivity<AnswerActivityBinding> {
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged(mAlbumFiles);
     }
-    @OnClick({R.id.left_back,R.id.let_me_answer})
+    @OnClick(isCheck = true
+            ,value = {R.id.left_back,R.id.let_me_answer})
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.left_back:

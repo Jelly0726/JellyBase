@@ -33,7 +33,7 @@ public class AmapTTSController {
     private Context mContext;
     private SpeechSynthesizer mTts;
     private boolean isPlaying = false;
-    private LinkedList<String> wordList = new LinkedList();
+    private LinkedList<String> wordList = new LinkedList<String>();
     private final int TTS_PLAY = 1;
     private final int CHECK_TTS_PLAY = 2;
     private Handler handler = new Handler() {

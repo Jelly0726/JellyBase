@@ -124,6 +124,9 @@ public class MProgressUtil {
     public void dismiss(){
         MProgressDialog.dismissProgress();
     }
+    public boolean isShowing(){
+       return MProgressDialog.isShowing();
+    }
     public OnDialogDismissListener getDismissListener() {
         return onDialogDismissListener;
     }

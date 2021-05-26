@@ -19,25 +19,30 @@ import java.util.regex.Pattern
 class BindUtil {
 
     companion object {
-        fun bind(target: Activity){
+        fun bind(target: Activity) {
             val sourceView: View = target.window.decorView
             bind(target, sourceView)
         }
-        fun bind(target: Dialog){
+
+        fun bind(target: Dialog) {
             val sourceView: View = target.window!!.decorView
             bind(target, sourceView)
         }
-        fun bind(target: View){
+
+        fun bind(target: View) {
             bind(target, target)
         }
-        fun bind(target: Any, source: Activity){
-            val sourceView=source.window.decorView
+
+        fun bind(target: Any, source: Activity) {
+            val sourceView = source.window.decorView
             bind(target, sourceView)
         }
-        fun bind(target: Any, source: Dialog){
-            val sourceView=source.window!!.decorView
+
+        fun bind(target: Any, source: Dialog) {
+            val sourceView = source.window!!.decorView
             bind(target, sourceView)
         }
+
         fun bind(target: Any, sourceView: View) {
             // 1. 开头是一样的，获取到class对象
             val clazz: Class<*> = target.javaClass;
@@ -61,33 +66,44 @@ class BindUtil {
                     val eventMethodName = eventBus.setter;
                     try {
                         // 10. 通过反射拿到方法注解中的值(这里就是所有view的id数组)
+                        val isCk = aClass.getDeclaredMethod("isCheck");
+                        val isCheck = isCk.invoke(annotation) ?: continue
                         val ids = aClass.getDeclaredMethod("value");
-                        val viewIds = ids.invoke(annotation) ?:continue
+                        val viewIds = ids.invoke(annotation) ?: continue
                         viewIds as IntArray
                         // 11. 遍历id数组
                         for (viewId in viewIds) {
                             if (viewId == View.NO_ID) continue
                             // 12. 获取view
-                            val findViewMethod = sourceView.javaClass.getMethod("findViewById", Int::class.java);
+                            val findViewMethod =
+                                sourceView.javaClass.getMethod("findViewById", Int::class.java);
                             val view = findViewMethod.invoke(sourceView, viewId) ?: continue
                             view as View
                             // 13. 如果有这个view，才进行处理
                             // 14. 动态代理，代理事件类型，交给我们的方法来处理
-                            val proxy = Proxy.newProxyInstance(target.javaClass.classLoader, arrayOf(eventType.java),
-                                    InvocationHandler { _, _, args ->
-                                        // 执行当前activity中的方法，参数不能少，需要跟原事件方法参数一样
-                                        val view = args[0]
-                                        if (!AntiShake.check(view)) {
-                                            //获取方法的参数类型数组。用于确定参数数量
-                                            val typePars = method.parameterTypes
-                                            if (typePars.size == 1)
-                                                method.invoke(target, view)
-                                            else if (typePars.isEmpty())
-                                                method.invoke(target)
+                            val proxy = Proxy.newProxyInstance(target.javaClass.classLoader,
+                                arrayOf(eventType.java),
+                                InvocationHandler { _, _, args ->
+                                    // 执行当前activity中的方法，参数不能少，需要跟原事件方法参数一样
+                                    val view = args[0]
+                                    isCheck as Boolean
+                                    if (isCheck) {//做防重复校验
+                                        if (AntiShake.check(view)) {
+                                            //重复点击
+                                            return@InvocationHandler this
                                         }
-                                    })
+                                    }
+                                    //获取方法的参数类型数组。用于确定参数数量
+                                    val typePars = method.parameterTypes
+                                    if (typePars.size == 1)
+                                        method.invoke(target, view)
+                                    else if (typePars.isEmpty())
+                                        method.invoke(target)
+                                    else method.invoke(target, args)
+                                })
                             // 获取activity中的事件方法
-                            val activityEventMethod = view.javaClass.getMethod(eventMethodName, eventType.java)
+                            val activityEventMethod =
+                                view.javaClass.getMethod(eventMethodName, eventType.java)
                             // 15. 当这个方法执行的时候，自动执行代理方法
                             activityEventMethod.invoke(view, proxy)
                         }

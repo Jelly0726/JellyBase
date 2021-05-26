@@ -1,7 +1,6 @@
 package com.base.MapUtil;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -27,8 +26,9 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
-import com.base.MapUtil.mscUtil.TTSController;
 import com.base.BaseApplication;
+import com.base.MapUtil.mscUtil.TTSController;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 
 import java.io.ObjectStreamException;
 import java.util.List;
@@ -47,7 +47,7 @@ public class AMapNaviTask implements AMapNaviListener {
     private TTSController mTtsManager;
     private boolean isStar=false;//规划完成是否开始导航
     private boolean isculateRoute=false;//是否规划完成
-    private ProgressDialog mRouteCalculatorProgressDialog;      // 路径规划过程显示状态
+    private MProgressUtil mRouteCalculatorProgressDialog;      // 路径规划过程显示状态
     // 是否需要跟随定位
     private boolean isNeedFollow = true;
     // 处理静止后跟随的timer
@@ -140,11 +140,10 @@ public class AMapNaviTask implements AMapNaviListener {
                 }
                 if(activity!=null) {
                     if (mRouteCalculatorProgressDialog == null) {
-                        mRouteCalculatorProgressDialog = new ProgressDialog(activity);
-                        mRouteCalculatorProgressDialog.setCancelable(true);
+                        mRouteCalculatorProgressDialog = MProgressUtil.getInstance();
                     }
                     if (!mRouteCalculatorProgressDialog.isShowing()) {
-                        mRouteCalculatorProgressDialog.show();
+                        mRouteCalculatorProgressDialog.show(activity);
                     }
                 }
             }else {
