@@ -25,6 +25,24 @@ import java.util.List;
 
 
 public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> {
+    private Runnable runnable=new Runnable() {
+        public void run() {
+            if (BaseApplication.getInstance().isLogin()) {
+                //BaseApplication.getInstance().goLoginActivity();
+                BaseApplication.getInstance().goMainActivity();//进入主界面
+                //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+                finish();
+            } else {
+                if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
+                    BaseApplication.getInstance().goLoginActivity();
+                } else {
+                    BaseApplication.getInstance().goMainActivity();//进入主界面
+                }
+                //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
+                finish();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,24 +89,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                 requestPermission();
             }
         } else {
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    if (BaseApplication.getInstance().isLogin()) {
-                        //BaseApplication.getInstance().goLoginActivity();
-                        BaseApplication.getInstance().goMainActivity();//进入主界面
-                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                        finish();
-                    } else {
-                        if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-                            BaseApplication.getInstance().goLoginActivity();
-                        } else {
-                            BaseApplication.getInstance().goMainActivity();//进入主界面
-                        }
-                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                        finish();
-                    }
-                }
-            }, 1000);
+            new Handler().postDelayed(runnable, 1000);
         }
     }
     @Override
@@ -140,24 +141,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                         if (allGranted) {//允许
                         } else {//拒绝
                         }
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                if (BaseApplication.getInstance().isLogin()) {
-                                    //BaseApplication.getInstance().goLoginActivity();
-                                    BaseApplication.getInstance().goMainActivity();//进入主界面
-                                    //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                                    finish();
-                                } else {
-                                    if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-                                        BaseApplication.getInstance().goLoginActivity();
-                                    } else {
-                                        BaseApplication.getInstance().goMainActivity();//进入主界面
-                                    }
-                                    //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                                    finish();
-                                }
-                            }
-                        }, 1000);
+                        new Handler().postDelayed(runnable, 1000);
                     }
                 });
     }
@@ -166,24 +150,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==0&&resultCode==0){
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    if (BaseApplication.getInstance().isLogin()) {
-                        //BaseApplication.getInstance().goLoginActivity();
-                        BaseApplication.getInstance().goMainActivity();//进入主界面
-                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                        finish();
-                    } else {
-                        if (BuildConfig.IS_MUST_LOGIN) {//是否必须登录
-                            BaseApplication.getInstance().goLoginActivity();
-                        } else {
-                            BaseApplication.getInstance().goMainActivity();//进入主界面
-                        }
-                        //BaseApplication.getInstance().goGuideActivity();//进入引导页界面
-                        finish();
-                    }
-                }
-            }, 1000);
+            new Handler().postDelayed(runnable, 1000);
         }
     }
 
@@ -200,6 +167,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
 
     @Override
     protected void onDestroy() {
+        runnable=null;
         super.onDestroy();
     }
 
