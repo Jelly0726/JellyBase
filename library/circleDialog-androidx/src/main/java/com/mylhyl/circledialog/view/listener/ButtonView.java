@@ -19,4 +19,18 @@ public interface ButtonView {
     View getView();
 
     boolean isEmpty();
+
+    /**
+     * 重启倒计时
+     *
+     * @since 5.3.6
+     */
+    void timerRestart();
+
+    /**
+     * 取消倒计时
+     *
+     * @since 5.3.6
+     */
+    void timerCancel();
 }

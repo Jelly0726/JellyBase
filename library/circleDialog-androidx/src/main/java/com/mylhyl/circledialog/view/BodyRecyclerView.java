@@ -109,8 +109,6 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         }
         setLayoutManager(mLayoutManager);
         setHasFixedSize(true);
-        //加个下方的内边距，让item和边框有个距离
-//        setPadding(0,0,0,20);
     }
 
     private void createItemDecoration() {
@@ -224,7 +222,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         public void onBindViewHolder(Holder holder, int position) {
             CircleDrawableSelector circleDrawableSelector = new CircleDrawableSelector(Color.TRANSPARENT,
                     mBackgroundColorPress);
-            BackgroundHelper.INSTANCE.handleBackground(holder.item, circleDrawableSelector);
+            BackgroundHelper.handleBackground(holder.item, circleDrawableSelector);
 
             String label;
             T item = mItems.get(position);
@@ -250,7 +248,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
             this.mItemClickListener = listener;
         }
 
-        static class Holder extends RecyclerView.ViewHolder implements OnClickListener {
+        static class Holder extends ViewHolder implements OnClickListener {
             OnRvItemClickListener mOnRvItemClickListener;
             TextView item;
 
@@ -270,7 +268,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         }
     }
 
-    static class GridItemDecoration extends RecyclerView.ItemDecoration {
+    static class GridItemDecoration extends ItemDecoration {
 
         private Drawable mDivider;
         private int mDividerHeight;
@@ -374,7 +372,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
             int childCount = parent.getChildCount();
             for (int i = 0; i < childCount; i++) {
                 final View child = parent.getChildAt(i);
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                final LayoutParams params = (LayoutParams) child.getLayoutParams();
                 final int left = child.getLeft() - params.leftMargin;
                 final int top = child.getBottom() + params.bottomMargin;
                 final int right = child.getRight() + params.rightMargin + mDividerHeight;
@@ -389,7 +387,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
             for (int i = 0; i < childCount; i++) {
                 final View child = parent.getChildAt(i);
 
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                final LayoutParams params = (LayoutParams) child.getLayoutParams();
                 final int left = child.getRight() + params.rightMargin;
                 final int top = child.getTop() - params.topMargin;
                 final int right = left + mDividerHeight;
@@ -401,7 +399,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         }
     }
 
-    static class LinearItemDecoration extends RecyclerView.ItemDecoration {
+    static class LinearItemDecoration extends ItemDecoration {
 
         private Drawable mDivider;
         private int mDividerHeight;
@@ -414,7 +412,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
         }
 
         @Override
-        public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        public void onDrawOver(Canvas c, RecyclerView parent, State state) {
             if (mOrientation == LinearLayoutManager.VERTICAL) {
                 drawVertical(c, parent);
             } else {
@@ -454,7 +452,7 @@ class BodyRecyclerView extends RecyclerView implements ItemsView {
             final int childCount = parent.getChildCount();
             for (int i = 0; i < childCount; i++) {
                 final View child = parent.getChildAt(i);
-                final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+                final LayoutParams params = (LayoutParams) child.getLayoutParams();
                 final int left = child.getRight() + params.rightMargin;
                 final int right = left + mDividerHeight;
                 mDivider.setBounds(left, top, right, bottom);

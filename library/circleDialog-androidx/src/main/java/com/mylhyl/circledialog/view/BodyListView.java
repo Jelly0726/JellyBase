@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +47,7 @@ final class BodyListView extends ListView implements ItemsView {
     }
 
     @Override
-    public void regOnItemClickListener(AdapterView.OnItemClickListener listener) {
+    public void regOnItemClickListener(OnItemClickListener listener) {
         setOnItemClickListener(listener);
     }
 

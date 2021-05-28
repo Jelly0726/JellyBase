@@ -95,6 +95,7 @@ public abstract class AbsBaseCircleDialog extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
         remove();
+        mSystemBarConfig = null;
     }
     public void show(FragmentManager manager, String tag) {
         FragmentTransaction ft = manager.beginTransaction();
@@ -177,24 +178,19 @@ public abstract class AbsBaseCircleDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = createView(getContext(), inflater, container);
-        return view;
+        return createView(getContext(), inflater, container);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         CircleDrawable circleDrawable = new CircleDrawable(mBackgroundColor, Controller.dp2px(getContext(), mRadius));
-        BackgroundHelper.INSTANCE.handleBackground(view, circleDrawable);
+        BackgroundHelper.handleBackground(view, circleDrawable);
 
         view.setAlpha(mAlpha);
     }
 
     public abstract View createView(Context context, LayoutInflater inflater, ViewGroup container);
-
-    public SystemBarConfig getSystemBarConfig() {
-        return mSystemBarConfig;
-    }
 
     /**
      * 设置对话框位置
@@ -214,15 +210,6 @@ public abstract class AbsBaseCircleDialog extends DialogFragment {
     protected void setCanceledOnTouchOutside(boolean cancel) {
         mCanceledOnTouchOutside = cancel;
     }
-
-//    /**
-//     * 设置对话框返回键关闭关闭
-//     *
-//     * @param cancel true允许
-//     */
-//    protected void setCanceledBack(boolean cancel) {
-//        mCanceledBack = cancel;
-//    }
 
     /**
      * 设置对话框宽度

@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import android.text.InputType;
 import android.view.Gravity;
 
+import com.mylhyl.circledialog.internal.MaxLengthByteWatcher;
+import com.mylhyl.circledialog.internal.MaxLengthEnWatcher;
+import com.mylhyl.circledialog.internal.MaxLengthWatcher;
 import com.mylhyl.circledialog.res.values.CircleColor;
 import com.mylhyl.circledialog.res.values.CircleDimen;
 
@@ -40,62 +43,77 @@ public class InputParams implements Parcelable {
      * 输入框与body视图的距离 dp
      */
     public int[] margins = CircleDimen.INPUT_MARGINS;
+
     /**
      * 输入框的高度 dp
      */
     public int inputHeight = CircleDimen.INPUT_HEIGHT;
+
     /**
      * 输入框提示语
      */
     public String hintText;
+
     /**
      * 输入框提示语颜色
      */
     public int hintTextColor = CircleColor.INPUT_TEXT_HINT;
+
     /**
      * 输入框背景资源文件
      */
     public int inputBackgroundResourceId;
+
     /**
      * 输入框边框线条粗细 dp
      */
     public int strokeWidth = 1;
+
     /**
      * 输入框边框线条颜色
      */
     public int strokeColor = CircleColor.INPUT_STROKE;
+
     /**
      * 输入框的背景
      */
     public int inputBackgroundColor;
+
     /**
      * body视图的背景色
      */
     public int backgroundColor;
+
     /**
      * 输入框字体大小 sp
      */
     public int textSize = CircleDimen.INPUT_TEXT_SIZE;
+
     /**
      * 输入框字体颜色 rgb
      */
     public int textColor = CircleColor.INPUT_TEXT;
+
     /**
      * 输入类型
      */
     public int inputType = InputType.TYPE_NULL;
+
     /**
      * 文字对齐方式，默认左上角
      */
     public int gravity = Gravity.LEFT | Gravity.TOP;
+
     /**
      * 文本
      */
     public String text;
+
     /**
      * 内间距 [left, top, right, bottom] dp
      */
     public int[] padding = CircleDimen.INPUT_PADDING;
+
     /**
      * 字样式
      * {@linkplain Typeface#NORMAL NORMAL}
@@ -104,30 +122,56 @@ public class InputParams implements Parcelable {
      * {@linkplain Typeface#BOLD_ITALIC BOLD_ITALIC}
      */
     public int styleText = Typeface.NORMAL;
+
     /**
      * 输入框限制字符数量，如counter=50：中(占2个)英(1个)文总字符数
      */
     public int maxLen=20;
+
     /**
      * 计数器外边距 [右，下] dp
      */
     public int[] counterMargins = CircleDimen.INPUT_COUNTER_MARGINS;
+
     /**
      * 计数器字体颜色值 rgb
      */
     public int counterColor = CircleColor.INPUT_COUNTER_TEXT;
+
     /**
      * 显示软键盘
      */
     public boolean showSoftKeyboard=true;
+
     /**
      * 是否禁止输入表情
      */
     public boolean isEmojiInput=false;
+
     /**
      * 输入限制计数器中文是否算1个字符
+     *
+     * @see #maxLengthType
+     * @deprecated since 5.3.5 之后将移除
      */
+    @Deprecated
     public boolean isCounterAllEn=false;
+
+    /**
+     * 输入长度最大限制计数类型
+     * <p>
+     * 默认按字节计算
+     * <p>
+     * {@link MaxLengthByteWatcher 0=按字节长度计算}
+     * <p>
+     * {@link MaxLengthWatcher 1=中文按2个长度计算，其它字符按1个长度计算}
+     * <p>
+     * {@link MaxLengthEnWatcher 2=全部按1个长度计算}
+     *
+     * @since 5.3.5
+     */
+    public int maxLengthType;
+
     public InputParams() {
     }
 
@@ -154,6 +198,7 @@ public class InputParams implements Parcelable {
         this.showSoftKeyboard = in.readByte() != 0;
         this.isEmojiInput = in.readByte() != 0;
         this.isCounterAllEn = in.readByte() != 0;
+        this.maxLengthType = in.readInt();
         this.type = in.readInt();
         this.digits = in.readInt();
     }
@@ -187,6 +232,7 @@ public class InputParams implements Parcelable {
         dest.writeByte(this.showSoftKeyboard ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isEmojiInput ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isCounterAllEn ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.maxLengthType);
         dest.writeInt(this.type);
         dest.writeInt(this.digits);
     }

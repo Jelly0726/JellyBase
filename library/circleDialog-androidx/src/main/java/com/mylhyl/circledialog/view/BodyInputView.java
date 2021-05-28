@@ -14,6 +14,7 @@ import com.mylhyl.circledialog.internal.BackgroundHelper;
 import com.mylhyl.circledialog.internal.CircleParams;
 import com.mylhyl.circledialog.internal.Controller;
 import com.mylhyl.circledialog.internal.EmojiFilter;
+import com.mylhyl.circledialog.internal.MaxLengthByteWatcher;
 import com.mylhyl.circledialog.internal.MaxLengthEnWatcher;
 import com.mylhyl.circledialog.internal.MaxLengthWatcher;
 import com.mylhyl.circledialog.params.DialogParams;
@@ -49,13 +50,7 @@ final class BodyInputView extends RelativeLayout implements InputView {
 
     public BodyInputView(Context context, CircleParams circleParams) {
         super(context);
-        mDialogParams = circleParams.dialogParams;
-        mTitleParams = circleParams.titleParams;
-        mSubTitleParams = circleParams.subTitleParams;
-        mInputParams = circleParams.inputParams;
-        mOnInputCounterChangeListener = circleParams.circleListeners.inputCounterChangeListener;
-        mOnCreateInputListener = circleParams.circleListeners.createInputListener;
-        init();
+        init(circleParams);
     }
 
 
@@ -69,17 +64,23 @@ final class BodyInputView extends RelativeLayout implements InputView {
         return this;
     }
 
-    private void init() {
+    private void init(CircleParams circleParams) {
+        mDialogParams = circleParams.dialogParams;
+        mTitleParams = circleParams.titleParams;
+        mSubTitleParams = circleParams.subTitleParams;
+        mInputParams = circleParams.inputParams;
+        mOnInputCounterChangeListener = circleParams.circleListeners.inputCounterChangeListener;
+        mOnCreateInputListener = circleParams.circleListeners.createInputListener;
+
         int rlPaddingTop = mTitleParams == null ?
                 mSubTitleParams == null ? CircleDimen.TITLE_PADDING[1] : mSubTitleParams.padding[1] :
                 mTitleParams.padding[1];
-//        setPadding(0,rlPaddingTop, 0, 0);
         setPadding(0, Controller.dp2px(getContext(), rlPaddingTop), 0, 0);
 
         //如果标题没有背景色，则使用默认色
         int backgroundColor = mInputParams.backgroundColor != 0 ?
                 mInputParams.backgroundColor : mDialogParams.backgroundColor;
-        BackgroundHelper.INSTANCE.handleBodyBackground(this, backgroundColor);
+        BackgroundHelper.handleBodyBackground(this, backgroundColor, circleParams);
 
         // fix: 2020/4/27 八阿哥 since 5.2.0 修复软键盘自动弹出的问题
         setFocusableInTouchMode(true);
@@ -88,6 +89,7 @@ final class BodyInputView extends RelativeLayout implements InputView {
         createInput();
 
         createCounter();
+
         if (mInputParams.type==InputParams.INPUT_MONEY){
             mEditText.setFilters(new InputFilter[]{new MoneyValueFilter().setDigits(mInputParams.digits)});
         }else if (mInputParams.isEmojiInput) {
@@ -120,6 +122,7 @@ final class BodyInputView extends RelativeLayout implements InputView {
         mEditText.setHintTextColor(mInputParams.hintTextColor);
         mEditText.setTextSize(mInputParams.textSize);
         mEditText.setTextColor(mInputParams.textColor);
+
         mEditText.getViewTreeObserver()
                 .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -127,7 +130,7 @@ final class BodyInputView extends RelativeLayout implements InputView {
                         mEditText.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         int height = mEditText.getMeasuredHeight();
 //                        if (mInputParams.inputHeight > height) {
-                            mEditText.setHeight(Controller.dp2px(getContext(), mInputParams.inputHeight));
+                        mEditText.setHeight(Controller.dp2px(getContext(), mInputParams.inputHeight));
 //                            mEditText.setHeight(mInputParams.inputHeight);
 //                        }
                     }
@@ -138,12 +141,13 @@ final class BodyInputView extends RelativeLayout implements InputView {
             mEditText.setText(mInputParams.text);
             mEditText.setSelection(mInputParams.text.length());
         }
+
         int backgroundResourceId = mInputParams.inputBackgroundResourceId;
         if (backgroundResourceId == 0) {
             int strokeWidth = Controller.dp2px(getContext(), mInputParams.strokeWidth);
             InputDrawable inputDrawable = new InputDrawable(strokeWidth, mInputParams.strokeColor,
                     mInputParams.inputBackgroundColor);
-            BackgroundHelper.INSTANCE.handleBackground(mEditText, inputDrawable);
+            BackgroundHelper.handleBackground(mEditText, inputDrawable);
         } else {
             mEditText.setBackgroundResource(backgroundResourceId);
         }
@@ -155,11 +159,9 @@ final class BodyInputView extends RelativeLayout implements InputView {
                     Controller.dp2px(getContext(), margins[1]),
                     Controller.dp2px(getContext(), margins[2]),
                     Controller.dp2px(getContext(), margins[3]));
-//            layoutParams.setMargins(margins[0], margins[1], margins[2], margins[3]);
         }
         int[] padding = mInputParams.padding;
         if (padding != null) {
-//            mEditText.setPadding(padding[0], padding[1], padding[2], padding[3]);
             mEditText.setPadding(Controller.dp2px(getContext(), padding[0]),
                     Controller.dp2px(getContext(), padding[1]),
                     Controller.dp2px(getContext(), padding[2]),
@@ -172,7 +174,7 @@ final class BodyInputView extends RelativeLayout implements InputView {
 
     private void createCounter() {
         if (mInputParams.maxLen <= 0) {
-
+            return;
         }
         LayoutParams layoutParamsCounter = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         //右下
@@ -182,9 +184,6 @@ final class BodyInputView extends RelativeLayout implements InputView {
             layoutParamsCounter.setMargins(0, 0,
                     Controller.dp2px(getContext(), mInputParams.counterMargins[0]),
                     Controller.dp2px(getContext(), mInputParams.counterMargins[1]));
-//            layoutParamsCounter.setMargins(0, 0,
-//                    mInputParams.counterMargins[0],
-//                    mInputParams.counterMargins[1]);
         }
         mTvCounter = new TextView(getContext());
         if (mDialogParams.typeface != null) {
@@ -193,11 +192,14 @@ final class BodyInputView extends RelativeLayout implements InputView {
         mTvCounter.setTextSize(INPUT_COUNTER__TEXT_SIZE);
         mTvCounter.setTextColor(mInputParams.counterColor);
 
-        if (mInputParams.isCounterAllEn) {
+        if (mInputParams.maxLengthType == 1) {
+            mEditText.addTextChangedListener(new MaxLengthWatcher(mInputParams.maxLen, mEditText, mTvCounter,
+                    mOnInputCounterChangeListener));
+        } else if (mInputParams.maxLengthType == 2) {
             mEditText.addTextChangedListener(new MaxLengthEnWatcher(mInputParams.maxLen, mEditText, mTvCounter,
                     mOnInputCounterChangeListener));
         } else {
-            mEditText.addTextChangedListener(new MaxLengthWatcher(mInputParams.maxLen, mEditText, mTvCounter,
+            mEditText.addTextChangedListener(new MaxLengthByteWatcher(mInputParams.maxLen, mEditText, mTvCounter,
                     mOnInputCounterChangeListener));
         }
         addView(mTvCounter, layoutParamsCounter);

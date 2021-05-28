@@ -9,8 +9,9 @@ import java.util.regex.Pattern;
  * Created by hupei on 2018/11/1 11:21.
  */
 public class EmojiFilter implements InputFilter {
-    Pattern emojiPattern = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
-            Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+    private static final Pattern EMOJI_PATTERN =
+            Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                    Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
 
     public EmojiFilter() {
     }
@@ -25,14 +26,12 @@ public class EmojiFilter implements InputFilter {
         int len = source.length();
         for (int i = 0; i < len; i++) {
             char codePoint = source.charAt(i);
-            // 如果不能匹配,则该字符是Emoji表情
             if (!isEmojiCharacter(codePoint)) {
                 return true;
             }
         }
         return false;
     }
-
     /**
      * 判断是否是Emoji
      *
@@ -48,7 +47,7 @@ public class EmojiFilter implements InputFilter {
 
     @Override
     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-        if (this.emojiPattern.matcher(source).find() || containsEmoji(source)) {
+        if (this.EMOJI_PATTERN.matcher(source).find() || containsEmoji(source)) {
             return "";
         }
         return source;

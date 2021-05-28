@@ -14,9 +14,11 @@ import android.widget.TextView;
 import com.mylhyl.circledialog.internal.BackgroundHelper;
 import com.mylhyl.circledialog.internal.CircleParams;
 import com.mylhyl.circledialog.internal.Controller;
+import com.mylhyl.circledialog.params.ButtonParams;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.ProgressParams;
 import com.mylhyl.circledialog.res.values.CircleDimen;
+import com.mylhyl.circledialog.view.listener.CountDownTimerObserver;
 import com.mylhyl.circledialog.view.listener.OnCreateProgressListener;
 
 import java.lang.reflect.Field;
@@ -33,13 +35,11 @@ final class BodyProgressView extends LinearLayout {
     private ProgressBar mProgressBar;
     private TextView mTextView;
     private Handler mViewUpdateHandler;
+    private CountDownTimerObserver mCountDownTimerObserver;
 
     public BodyProgressView(Context context, CircleParams circleParams) {
         super(context);
-        this.mDialogParams = circleParams.dialogParams;
-        this.mProgressParams = circleParams.progressParams;
-        this.mOnCreateProgressListener = circleParams.circleListeners.createProgressListener;
-        init();
+        init(circleParams);
     }
 
     /**
@@ -95,13 +95,37 @@ final class BodyProgressView extends LinearLayout {
         onProgressChanged();
     }
 
-    private void init() {
+    public CountDownTimerObserver getCountDownTimerObserver() {
+        return mCountDownTimerObserver;
+    }
+
+    private void init(CircleParams circleParams) {
+        this.mDialogParams = circleParams.dialogParams;
+        this.mProgressParams = circleParams.progressParams;
+        this.mOnCreateProgressListener = circleParams.circleListeners.createProgressListener;
+        ButtonParams positiveParams = circleParams.positiveParams;
+        // add: 2021/1/21 hupei since 5.3.6 倒计时超时的文本
+        if (positiveParams != null && positiveParams.countDownTime > 0 && positiveParams.countDownInterval > 0) {
+            mCountDownTimerObserver = new CountDownTimerObserver() {
+                @Override
+                public void onTimerTick(long millisUntilFinished) {
+                    mProgressBar.setVisibility(VISIBLE);
+                    mTextView.setText(mProgressParams.text);
+                }
+
+                @Override
+                public void onTimerFinish() {
+                    mProgressBar.setVisibility(INVISIBLE);
+                    mTextView.setText(mProgressParams.timeoutText);
+                }
+            };
+        }
         setOrientation(LinearLayout.VERTICAL);
 
         //如果没有背景色，则使用默认色
         int backgroundColor = mProgressParams.backgroundColor != 0 ?
                 mProgressParams.backgroundColor : mDialogParams.backgroundColor;
-        BackgroundHelper.INSTANCE.handleBodyBackground(this, backgroundColor);
+        BackgroundHelper.handleBodyBackground(this, backgroundColor, circleParams);
 
         createProgressBar();
         createText();
