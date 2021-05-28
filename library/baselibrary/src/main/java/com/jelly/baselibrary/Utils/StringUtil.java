@@ -523,8 +523,7 @@ public class StringUtil {
             //居中对齐imageSpan
             CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
             /**
-             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标，可以把0换成字符串长度-1，
-             * 把1换成字符串长度，切记要在后面加一个空格占位，否则会切割掉你原本的字符串哦。
+             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。
              */
             sp.setSpan(imageSpan, 0, 1, ImageSpan.ALIGN_BASELINE);
             return sp;
@@ -537,10 +536,10 @@ public class StringUtil {
             //居中对齐imageSpan
             CenterAlignImageSpan imageSpan = new CenterAlignImageSpan(drawable);
             /**
-             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标，可以把0换成字符串长度-1，
-             * 把1换成字符串长度，切记要在后面加一个空格占位，否则会切割掉你原本的字符串哦。
+             * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标
+              则从文字的长度开始。
              */
-            sp.setSpan(imageSpan, 0, text.length(), ImageSpan.ALIGN_BASELINE);
+            sp.setSpan(imageSpan, text.length(), text.length()+1, ImageSpan.ALIGN_BASELINE);
             return sp;
         }
     }
