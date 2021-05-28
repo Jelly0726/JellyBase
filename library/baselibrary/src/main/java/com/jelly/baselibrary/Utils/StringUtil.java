@@ -540,7 +540,7 @@ public class StringUtil {
              * 解释一下0,1： 开始位置从0开始，到第一个位置结束。 如果大家想在最后面加上图标，可以把0换成字符串长度-1，
              * 把1换成字符串长度，切记要在后面加一个空格占位，否则会切割掉你原本的字符串哦。
              */
-            sp.setSpan(imageSpan, -1, text.length(), ImageSpan.ALIGN_BASELINE);
+            sp.setSpan(imageSpan, 0, text.length(), ImageSpan.ALIGN_BASELINE);
             return sp;
         }
     }
