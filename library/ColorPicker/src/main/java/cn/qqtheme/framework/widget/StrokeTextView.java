@@ -9,10 +9,9 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
-
 import java.lang.reflect.Field;
 
+import androidx.annotation.ColorInt;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 /**

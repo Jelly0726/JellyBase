@@ -1,15 +1,14 @@
 package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
+import androidx.annotation.FloatRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.FloatRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +124,7 @@ public class LinkagePicker<Fst extends LinkageFirst<Snd>, Snd extends LinkageSec
         int j = 0;
         for (Snd s : snds) {
             if (s.equals(snd)) {
-                selectedFirstIndex = i;
+                selectedSecondIndex = j;
                 break;
             } else if (s.getId().equals(snd.getId()) || s.getName().contains(snd.getName())) {
                 selectedSecondIndex = j;

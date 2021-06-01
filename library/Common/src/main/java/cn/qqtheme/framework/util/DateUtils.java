@@ -1,6 +1,5 @@
 package cn.qqtheme.framework.util;
 
-
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 

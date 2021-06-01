@@ -1,14 +1,13 @@
 package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

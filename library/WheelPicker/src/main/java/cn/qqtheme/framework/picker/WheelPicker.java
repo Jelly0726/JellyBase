@@ -2,14 +2,13 @@ package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import cn.qqtheme.framework.popup.ConfirmPopup;
 import cn.qqtheme.framework.widget.WheelView;

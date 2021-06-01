@@ -11,13 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import cn.qqtheme.framework.adapter.FileAdapter;
 import cn.qqtheme.framework.adapter.PathAdapter;
 import cn.qqtheme.framework.entity.FileItem;

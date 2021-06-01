@@ -23,7 +23,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
 

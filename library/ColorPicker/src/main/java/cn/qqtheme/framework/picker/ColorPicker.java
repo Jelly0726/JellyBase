@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.util.Locale;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
-
-import java.util.Locale;
-
 import cn.qqtheme.framework.icons.ColorPickerIcon;
 import cn.qqtheme.framework.popup.ConfirmPopup;
 import cn.qqtheme.framework.util.ConvertUtils;
