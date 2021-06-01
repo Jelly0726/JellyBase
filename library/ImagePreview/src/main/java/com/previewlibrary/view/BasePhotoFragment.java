@@ -203,7 +203,11 @@ public class BasePhotoFragment extends Fragment {
             rootView.setTag(beanViewInfo.getUrl());
             //是否展示动画
             isTransPhoto = bundle.getBoolean(KEY_TRANS_PHOTO, false);
-            if (beanViewInfo.getUrl().toLowerCase().endsWith(".gif")) {
+            if (beanViewInfo.getRes()!=null && beanViewInfo.getRes()>0){
+                imageView.setZoomable(false);
+                //加载图
+                ZoomMediaLoader.getInstance().getLoader().displayImage(this, beanViewInfo.getRes(), imageView, mySimpleTarget);
+            }else if (beanViewInfo.getUrl().toLowerCase().endsWith(".gif")) {
                 imageView.setZoomable(false);
                 //加载图
                 ZoomMediaLoader.getInstance().getLoader().displayGifImage(this, beanViewInfo.getUrl(), imageView, mySimpleTarget);

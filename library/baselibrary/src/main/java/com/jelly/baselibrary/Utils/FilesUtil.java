@@ -38,6 +38,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -212,6 +213,22 @@ public class FilesUtil {
         //*获取Res资源的url  ContentResolver.SCHEME_ANDROID_RESOURCE*/
         Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + resId);
         return uri;
+    }
+    /**
+     * 通过文件名获取资源id 例子：getResId("icon", R.drawable.class);
+     *
+     * @param variableName
+     * @param c
+     * @return
+     */
+    public static int getResId(String variableName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(variableName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
     /**
      * 根据Asset资源名称获取Asset资源的uri

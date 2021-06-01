@@ -18,7 +18,11 @@ public interface IThumbViewInfo extends Parcelable {
      * @return String
      * ****/
     String getUrl();
-
+    /****
+     * 本地资源图片地址
+     * @return int
+     * ****/
+    Integer getRes();
     /**
      * 记录坐标
      * @return Rect

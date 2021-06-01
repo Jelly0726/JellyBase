@@ -189,6 +189,6 @@ public class ImageUtils {
         String path = filePath.toUpperCase();
         return path.endsWith(".PNG") || path.endsWith(".JPG")
                 || path.endsWith(".JPEG") || path.endsWith(".BMP")
-                || path.endsWith(".GIF");
+                || path.endsWith(".GIF")|| path.endsWith(".WEBP");
     }
 }
