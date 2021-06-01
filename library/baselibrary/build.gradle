@@ -277,7 +277,7 @@ dependencies {
     //日志崩溃管理框架
     api project(path: ':library:logreport')
     api project(path: ':library:form')
-    api 'com.jeremyliao:live-event-bus-x:1.7.3'
+    api 'com.jeremyliao:live-event-bus-x:1.7.3'//线程通讯
 //        api 'com.jeremyliao:live-event-bus:1.7.3'
 
     //弹窗对话框
