@@ -6,15 +6,12 @@ import android.view.MotionEvent;
 
 /**
  * 禁止viewpager页面的滑动的效果
- * Created by Administrator on 2017/6/1.
  */
 
 /**
  * 手动控制viewpager是否可以左右滑动
  * 去除滑动动画
  * setNoScroll(boolean noScroll)
- *
- * @author ex-panyong
  */
 public class NoScrollViewPager extends NoPreloadViewPager {
     private boolean noScroll = false;
