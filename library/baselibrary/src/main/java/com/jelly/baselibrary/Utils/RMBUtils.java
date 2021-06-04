@@ -143,7 +143,11 @@ public class RMBUtils {
      */
     public static final String toRMBStr(double amount){
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        return currencyFormat.format(amount);
+        String result= currencyFormat.format(amount);
+        if (result.startsWith("¥")){
+            return result;
+        }
+        return result.replace("￥", "¥");
     }
     /**
      * @Title: numToRMBStr
