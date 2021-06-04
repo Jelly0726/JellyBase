@@ -147,7 +147,8 @@ public class RMBUtils {
         if (result.startsWith("¥")){
             return result;
         }
-        return result.replace("￥", "¥");
+        // \D -- 匹配一个非数字字符。等价于 [^0-9]。
+        return result.replaceFirst("\\D", "¥");
     }
     /**
      * @Title: numToRMBStr
