@@ -52,6 +52,8 @@
         <attr name="backgroundColorSelected" format="color" />
         <!--第一行和第一列的背景色-->
         <attr name="firstBackgroundColor" format="color" />
+        <!--第一行或第一列的文字是否加粗-->
+        <attr name="firstIsBold" format="boolean" />
     </declare-styleable>
     <declare-styleable name="FreeScrollView">
         <!--滑动条距离屏幕左边距的距离-->

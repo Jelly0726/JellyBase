@@ -2,6 +2,7 @@ package win.smartown.tableLayout;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -20,11 +21,13 @@ public class TableColumn extends LinearLayout {
     private String[] content;
     private Callback callback;
     private float maxTextViewWidth;
+    private boolean firstIsBold=false;
 
-    public TableColumn(Context context, String[] content, Callback callback) {
+    public TableColumn(Context context, String[] content,boolean firstIsBold, Callback callback) {
         super(context);
         this.content = content;
         this.callback = callback;
+        this.firstIsBold = firstIsBold;
         init();
     }
 
@@ -45,12 +48,12 @@ public class TableColumn extends LinearLayout {
     private void init() {
         Log.i("TableColumn", "init");
         int orientation = callback.getTableLayout().getOrientation();
-       if (orientation==HORIZONTAL) {
-           setOrientation(VERTICAL);
-       }else {
-           setOrientation(HORIZONTAL);
-           maxTextViewWidth = callback.getTableLayout().getMaxTableColumnWidth();
-       }
+        if (orientation==HORIZONTAL) {
+            setOrientation(VERTICAL);
+        }else {
+            setOrientation(HORIZONTAL);
+            maxTextViewWidth = callback.getTableLayout().getMaxTableColumnWidth();
+        }
         initContent();
     }
 
@@ -68,6 +71,9 @@ public class TableColumn extends LinearLayout {
             textView.setGravity(getTextGravity(callback.getTableLayout().getTableTextGravity()));
             textView.setPadding(padding, 0, padding, 0);
             textView.setText(text);
+            if (firstIsBold){
+                textView.setTypeface(Typeface.DEFAULT_BOLD);
+            }
             textViews.add(textView);
         }
         callback.getTableLayout().setMaxTableColumnWidth(maxTextViewWidth);

@@ -44,6 +44,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
     private int tableTextColorSelected;
     private int backgroundColorSelected;
     private int firstBackgroundColor;
+    private boolean firstIsBold;//第一行或第一列是否粗体
     private TableAdapter adapter;
 
     private Paint paint;
@@ -94,6 +95,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             tableTextColorSelected = typedArray.getColor(R.styleable.TableLayout_tableTextColorSelected, Color.BLACK);
             backgroundColorSelected = typedArray.getColor(R.styleable.TableLayout_backgroundColorSelected, Color.TRANSPARENT);
             firstBackgroundColor = typedArray.getColor(R.styleable.TableLayout_firstBackgroundColor, Color.TRANSPARENT);
+            firstIsBold = typedArray.getBoolean(R.styleable.TableLayout_firstIsBold,false);
             typedArray.recycle();
         } else {
             tableMode = 0;
@@ -109,6 +111,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
             tableTextColorSelected = Color.BLACK;
             backgroundColorSelected = Color.TRANSPARENT;
             firstBackgroundColor = Color.TRANSPARENT;
+            firstIsBold=false;
         }
 //        setOrientation(HORIZONTAL);
         setWillNotDraw(false);
@@ -116,13 +119,13 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         paint.setAntiAlias(true);
         if (isInEditMode()) {
             String[] content = {"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"};
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
-            addView(new TableColumn(getContext(), content, this));
+            addView(new TableColumn(getContext(), content, firstIsBold,this));
+            addView(new TableColumn(getContext(), content, false,this));
+            addView(new TableColumn(getContext(), content, false,this));
+            addView(new TableColumn(getContext(), content,false, this));
+            addView(new TableColumn(getContext(), content,false, this));
+            addView(new TableColumn(getContext(), content, false,this));
+            addView(new TableColumn(getContext(), content,false, this));
         }
     }
 
@@ -313,15 +316,26 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         //当填充方向为 VERTICAL 时需要先计算出最大单元格的宽度
         if (getOrientation() == VERTICAL) {
             for (int i = 0; i < count; i++) {
-                ViewGroup view = new TableColumn(getContext(), adapter.getColumnContent(i), this);
+                ViewGroup view;
+                if (i == 0){
+                    view = new TableColumn(getContext(),
+                            adapter.getColumnContent(i), firstIsBold,this);
+                }else {
+                    view = new TableColumn(getContext(),
+                            adapter.getColumnContent(i), false,this);
+                }
                 addView(view);
             }
         }
         for (int i = 0; i < count; i++) {
-            ViewGroup view = new TableColumn(getContext(), adapter.getColumnContent(i), this);
+            ViewGroup view ;
             if (i == 0) {
+                view = new TableColumn(getContext(), adapter.getColumnContent(i),
+                        firstIsBold,this);
                 //设置第一列背景色
                 view.setBackgroundColor(firstBackgroundColor);
+            }else {
+                view = new TableColumn(getContext(), adapter.getColumnContent(i),false, this);
             }
             //设置每行的第一个单元格背景色
             View child = view.getChildAt(0);
