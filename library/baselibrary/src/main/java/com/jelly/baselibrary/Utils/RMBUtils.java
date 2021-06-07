@@ -151,6 +151,16 @@ public class RMBUtils {
         return result.replaceFirst("\\D", "¥");
     }
     /**
+     * 格式化数字
+     * @param amount
+     * @return  例：10,000.57
+     */
+    public static final String toFormatStr(double amount){
+        NumberFormat currencyFormat = NumberFormat.getNumberInstance();
+        String result= currencyFormat.format(amount);
+        return result;
+    }
+    /**
      * @Title: numToRMBStr
      * @Description: 将货币转换为大写形式
      * @param val	  传入的数据

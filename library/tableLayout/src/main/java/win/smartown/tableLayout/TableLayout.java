@@ -314,6 +314,7 @@ public class TableLayout extends LinearLayout implements TableColumn.Callback {
         if (getOrientation() == VERTICAL) {
             for (int i = 0; i < count; i++) {
                 ViewGroup view = new TableColumn(getContext(), adapter.getColumnContent(i), this);
+                addView(view);
             }
         }
         for (int i = 0; i < count; i++) {
