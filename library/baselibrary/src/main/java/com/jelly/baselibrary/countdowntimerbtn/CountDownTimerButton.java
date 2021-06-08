@@ -56,7 +56,7 @@ public class CountDownTimerButton extends androidx.appcompat.widget.AppCompatBut
 
     private void initState() {
         changeBackGroundColor(STATE_STOPCOUNT);
-        setClickable(true);
+        setEnabled(true);
         setText(stopCountDownText);
     }
 
@@ -95,7 +95,7 @@ public class CountDownTimerButton extends androidx.appcompat.widget.AppCompatBut
                     return;
                 }
                 changeBackGroundColor(STATE_STARTCOUNT);
-                setClickable(false);
+                setEnabled(false);
                 setText(startCountDownText+"(" + millsUtilFinished / 1000 + ")");
             }
 
@@ -106,7 +106,7 @@ public class CountDownTimerButton extends androidx.appcompat.widget.AppCompatBut
                     return;
                 }
                 setText(stopCountDownText);
-                setClickable(true);
+                setEnabled(true);
                 changeBackGroundColor(STATE_STOPCOUNT);
             }
         });
