@@ -121,7 +121,7 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
             }
         }
         mItemViews.get(position).refreshTab(true);
-        mViewPager.setCurrentItem(position, mSmoothScroll);
+//        mViewPager.setCurrentItem(position, mSmoothScroll);
         if (onItemSelectedListener != null) {
             onItemSelectedListener.onItemSelected(getBottomItem(position), mCurrentItem, position);
         }
@@ -176,7 +176,7 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
      */
     private void resetState() {
         if (mCurrentItem < mItemViews.size()) {
-            if (mItemViews.get(mCurrentItem).isSelected()) {
+            if (mItemViews.get(mCurrentItem).isSelected()){
                 mItemViews.get(mCurrentItem).refreshTab(false);
             }
         }
@@ -202,7 +202,14 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
     public void setUnread(int position, int unreadNum) {
         mItemViews.get(position).setUnreadNum(unreadNum);
     }
-
+    /**
+     * 设置底部文字
+     *
+     * @param position 底部标签的下标
+     */
+    public void setText(int position,String text) {
+        mItemViews.get(position).getTextView().setText(text);
+    }
     /**
      * 设置提示消息
      *
@@ -220,14 +227,6 @@ public class BottomBarLayout extends LinearLayout implements NoPreloadViewPager.
      */
     public void hideMsg(int position) {
         mItemViews.get(position).hideMsg();
-    }
-    /**
-     * 设置底部文字
-     *
-     * @param position 底部标签的下标
-     */
-    public void setText(int position,String text) {
-        mItemViews.get(position).getTextView().setText(text);
     }
 
     /**

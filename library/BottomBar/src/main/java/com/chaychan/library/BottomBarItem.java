@@ -166,11 +166,11 @@ public class BottomBarItem extends LinearLayout {
             layoutParams.height = iconHeight;
         }
 
-        if (useLottie) {
+        if (useLottie){
             mLottieView.setLayoutParams(layoutParams);
             mLottieView.setAnimation(lottieJson);
             mLottieView.setRepeatCount(0);
-        } else {
+        }else{
             mImageView.setImageDrawable(normalIcon);
             mImageView.setLayoutParams(layoutParams);
         }
@@ -234,6 +234,7 @@ public class BottomBarItem extends LinearLayout {
         this.normalIcon = normalIcon;
         refreshTab();
     }
+
     public void setNormalIcon(int resId) {
         setNormalIcon(UIUtils.getDrawable(context, resId));
     }
@@ -246,30 +247,27 @@ public class BottomBarItem extends LinearLayout {
     public void setSelectedIcon(int resId) {
         setSelectedIcon(UIUtils.getDrawable(context, resId));
     }
-
     public void setIsSkip(boolean mIsSkip) {
         this.mIsSkip = mIsSkip;
     }
-
     public boolean getIsSkip() {
         return mIsSkip;
     }
-
     public void refreshTab(boolean isSelected) {
         setSelected(isSelected);
         refreshTab();
     }
 
     public void refreshTab() {
-        if (useLottie) {
-            if (isSelected()) {
+        if (useLottie){
+            if (isSelected()){
                 mLottieView.playAnimation();
-            } else {
+            }else{
                 //取消动画 进度设置为0
                 mLottieView.cancelAnimation();
                 mLottieView.setProgress(0);
             }
-        } else {
+        }else{
             mImageView.setImageDrawable(isSelected() ? selectedIcon : normalIcon);
         }
 

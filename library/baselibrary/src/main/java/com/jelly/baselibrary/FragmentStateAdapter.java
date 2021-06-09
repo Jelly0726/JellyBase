@@ -7,8 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.jelly.baselibrary.BaseFragment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class FragmentStateAdapter extends FragmentStatePagerAdapter {
     private List<Fragment> mFragmentList = new ArrayList<>();
     private FragmentManager fm;
     public FragmentStateAdapter(FragmentManager fm, List<Fragment> mFragmentList) {
-        super(fm);
+        super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         this.mFragmentList=mFragmentList;
         this.fm=fm;
     }
