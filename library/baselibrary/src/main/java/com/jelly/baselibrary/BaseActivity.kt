@@ -20,7 +20,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import cn.jpush.android.api.JPushInterface
-import com.jelly.baselibrary.SystemBar.StatusBarUtil
+import com.jelly.baselibrary.systemBar.StatusBarUtil
 import com.jelly.baselibrary.appManager.AppSubject
 import com.jelly.baselibrary.appManager.FixMemLeak
 import com.jelly.baselibrary.appManager.Observable

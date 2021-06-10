@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.jelly.baselibrary.SystemBar.StatusBarUtil
+import com.jelly.baselibrary.systemBar.StatusBarUtil
 import com.jelly.baselibrary.log.LogUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jelly.mvvmdemo">
+
+    <application
+        android:name="com.jelly.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JellyBase" >
+        <!--↓↓↓↓↓ 屏幕适配 设计稿的尺寸。↓↓↓↓↓-->
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
+        <!--↑↑↑↑↑↑↑ 屏幕适配 设计稿的尺寸。↑↑↑↑↑↑↑-->
+        <!--↓↓↓↓↓circle_dialog↓↓↓↓↓-->
+        <meta-data
+            android:name="circle_dialog_design_width" android:value="1200"/>
+        <meta-data
+            android:name="circle_dialog_design_height" android:value="1920"/>
+        <!--↑↑↑↑↑↑↑↑circle_dialog↑↑↑↑↑↑↑↑-->
+        <activity android:name="com.jelly.mvvmdemo.MainActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--↓↓↓↓↓↓↓内容提供器↓↓↓↓↓↓↓↓-->
+        <provider
+            android:name="com.jelly.provider.JellyProvider"
+            android:authorities="${applicationId}.jellybase.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!--↑↑↑↑↑↑↑↑内容提供器↑↑↑↑↑↑↑↑-->
+    </application>
+
+</manifest>

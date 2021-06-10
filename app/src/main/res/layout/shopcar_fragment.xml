@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--↓↓↓↓↓↓↓↓自定义状态栏底色↓↓↓↓↓↓↓↓-->
-    <com.jelly.baselibrary.SystemBar.StatusView
+    <com.jelly.baselibrary.systemBar.StatusView
         android:id="@+id/status_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
