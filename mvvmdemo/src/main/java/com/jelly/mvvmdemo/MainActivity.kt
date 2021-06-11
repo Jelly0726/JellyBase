@@ -2,15 +2,22 @@ package com.jelly.mvvmdemo
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.Observable
 import com.jelly.mvvmdemo.databinding.MainActivityBinding
+import com.jelly.mvvmdemo.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<MainActivityBinding>() {
-   lateinit var demoVo:DemoVo
+   lateinit var demoVo:MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        demoVo = DemoVo()
+        demoVo = MainViewModel()
         demoVo.text="健康的是否会客户"
         binding.demoVo = demoVo
+        demoVo.isShow.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback(){
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+
+            }
+        })
     }
 
     fun onClick(view: View) {

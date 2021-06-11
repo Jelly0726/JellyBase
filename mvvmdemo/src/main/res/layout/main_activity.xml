@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <import type="com.jelly.mvvmdemo.DemoVo"/>
+        <import type="com.jelly.mvvmdemo.viewmodel.MainViewModel"/>
         <variable name="demoVo"
-            type="DemoVo" />
+            type="MainViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
