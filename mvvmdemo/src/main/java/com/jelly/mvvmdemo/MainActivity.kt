@@ -15,7 +15,11 @@ class MainActivity : BaseActivity<MainActivityBinding>() {
         binding.demoVo = demoVo
         demoVo.isShow.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback(){
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (demoVo.isShow.get()){//弹出进度条
 
+                }else{//关闭进度条
+
+                }
             }
         })
     }
