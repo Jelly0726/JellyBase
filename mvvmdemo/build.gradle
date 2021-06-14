@@ -64,58 +64,59 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     // 存储访问框架（SAF）
-    api 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
     //屏幕适配
-    api 'me.jessyan:autosize:1.2.1'
+    implementation 'me.jessyan:autosize:1.2.1'
 //      kotlin协程
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
-    api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+    implementation "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
     //recyclerview
-    api 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     //AndroidX包下找不到SwipeRefreshLayout
-    api "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     //多进程数据共享SharedPreferences
-    api 'net.grandcentrix.tray:tray:0.12.0'
+    implementation 'net.grandcentrix.tray:tray:0.12.0'
 //        compile 'xiaofei.library:hermes-eventbus:0.3.0'
-    api 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //okhttp CheckVersionLib 使用的是okhttp:4.3.1
 //        api 'com.squareup.okhttp3:okhttp:3.12.1'
-
+    //ProgressDialog
+    implementation 'com.github.maning0303:MNProgressHUD:V1.1.8'
     //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
-    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
 
     //Retrofit
-    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
 
     //Retrofit2所需要的包
-    api 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 
     //ConverterFactory的Gson依赖包
-    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
     //ConverterFactory的String依赖包
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
 
     //添加Retrofit对Rxjava的支持
-    api 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
 
     //RxJava
-    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
 
     //JSON解析
-    api 'com.alibaba:fastjson:1.1.55.android'
+    implementation 'com.alibaba:fastjson:1.1.55.android'
     //RecyclerView侧滑菜单
 //        api 'com.yanzhenjie.recyclerview:support:1.3.2'
-    api 'com.yanzhenjie.recyclerview:x:1.3.2'
+    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
     //glide图片加载库
 //        api 'com.github.bumptech.glide:glide:3.7.0'
-    api 'com.github.bumptech.glide:glide:4.11.0'
-    api project(path: ':library:circleDialog-androidx')
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation project(path: ':library:circleDialog-androidx')
     //自定义注解--绑定点击事件
-    api project(path: ':library:annotation')
+    implementation project(path: ':library:annotation')
 }
