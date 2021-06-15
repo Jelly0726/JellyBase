@@ -28,6 +28,7 @@ class MainViewModel:ViewModel(){
         Handler(Looper.myLooper()!!).postDelayed(Runnable {
             text.set("的是否结束看来苦加入公会")
             isShow.set(false)
+            mLisr.clear()
             for (i in 0..3){
                 mLisr.add(DemoVo())
             }

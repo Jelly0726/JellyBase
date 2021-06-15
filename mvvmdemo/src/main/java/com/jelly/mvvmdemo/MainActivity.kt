@@ -6,7 +6,6 @@ import androidx.databinding.Observable
 import com.jelly.mprogressdialog.MProgressUtil
 import com.jelly.mvvmdemo.databinding.MainActivityBinding
 import com.jelly.mvvmdemo.viewmodel.MainViewModel
-import com.maning.mndialoglibrary.MProgressDialog
 
 class MainActivity : BaseActivity<MainActivityBinding>() {
    lateinit var demoVo:MainViewModel
