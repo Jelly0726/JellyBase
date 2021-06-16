@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.jelly.baselibrary.systemBar.StatusBarUtil
 import com.jelly.baselibrary.log.LogUtils
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.lang.reflect.ParameterizedType
@@ -217,7 +214,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
      * UsbManager检测是否为键盘
      */
     private fun detectUsbAudioDevice() {
-        launch {
+        launch(Dispatchers.Main) {
             activity?.let {
                 isKeyboard = false
                 //第二种 通过InputManager获取

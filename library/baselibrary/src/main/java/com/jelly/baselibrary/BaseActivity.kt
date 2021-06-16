@@ -1,7 +1,6 @@
 package com.jelly.baselibrary
 
 import android.app.Activity
-import android.app.LauncherActivity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -33,10 +32,7 @@ import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.view.GrayFrameLayout
 import com.jelly.baselibrary.view.SoftKeyboardManager
 import com.mylhyl.circledialog.CircleDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
@@ -56,7 +52,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
     private var isKeyboard = false //是否有外接键盘
     private var isDisable = true //是否屏蔽软键盘
     private var handler: Handler? = null
-
+    var isDismiss=true//是否关闭activity的时候也要关闭异常登录提示框
     companion object {
         //    public DisplayManager mDisplayManager;//双屏客显
 //    public Presentation mPresentation;//双屏客显
@@ -140,7 +136,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
      * UsbManager检测是否为键盘
      */
     private fun detectUsbAudioDevice() {
-        launch {
+        launch(Dispatchers.Main) {
             isKeyboard = false
             //第二种 通过InputManager获取
             val inputManager =
@@ -321,11 +317,11 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
      * @param time 延迟时间
      */
     fun finish(time: Int) {
-        Handler().postDelayed({ finish() }, time.toLong())
+        Handler(Looper.myLooper()!!).postDelayed({ finish() }, time.toLong())
     }
 
     override fun finish() { // TODO Auto-generated method stub
-        if (this !is LauncherActivity)
+        if (isDismiss)
             circleDialog?.let {
                 it.dismiss()
                 circleDialog = null
