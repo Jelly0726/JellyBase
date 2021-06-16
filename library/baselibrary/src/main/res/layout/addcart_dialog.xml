@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#60000000">
+    android:background="#60000000"
+    tools:viewBindingIgnore="true">
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,113 +79,91 @@
             android:layout_marginRight="15mm"/>
 
     </RelativeLayout>
-    <LinearLayout
+    <com.jelly.baselibrary.view.MaxHeightScrollView
+        android:id="@+id/mScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="23mm"
-        android:background="@color/white">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="15mm"
-            android:text="选择分类"
-            android:layout_marginLeft="15mm"/>
-        <com.jelly.baselibrary.view.FlowLayout
-            android:id="@+id/classify_layout"
+        android:background="@color/white"
+        app:max_height="400mm">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14mm"
-            android:layout_marginBottom="14mm"
-            android:layout_marginLeft="20mm"
-            android:layout_marginRight="20mm">
-        </com.jelly.baselibrary.view.FlowLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#fff">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1mm"
-            android:background="#eeeeee"
-            android:layout_marginLeft="30mm"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="65mm"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="15mm"
-        android:paddingRight="15mm"
-        android:background="#fff">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:textSize="15mm"
-            android:textColor="#313131"
-            android:text="购买数量"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#fff">
-            <TextView
-                android:gravity="center"
-                android:textSize="14mm"
-                android:text="—"
-                android:id="@+id/reduce_goodsNum"
-                android:layout_width="50mm"
-                android:layout_height="35mm" />
-
-            <TextView
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textSize="14mm"
-                android:text="1"
-                android:id="@+id/goods_Num"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="35mm" />
+                android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1mm"
+                android:background="#eeeeee"
+                android:layout_below="@+id/mRecyclerView"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45mm"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15mm"
+                android:paddingRight="15mm"
+                android:layout_marginTop="1mm"
+                android:layout_below="@+id/mRecyclerView">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:textSize="15mm"
+                    android:textColor="#313131"
+                    android:text="购买数量"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="14mm"
+                        android:text="—"
+                        android:id="@+id/reduce_goodsNum"
+                        android:layout_width="50mm"
+                        android:layout_height="35mm" />
 
-            <TextView
-                android:gravity="center"
-                android:textSize="14mm"
-                android:text="+"
-                android:id="@+id/increase_goods_Num"
-                android:layout_width="50mm"
-                android:layout_height="35mm" />
-        </LinearLayout>
-    </LinearLayout>
+                    <TextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="14mm"
+                        android:text="1"
+                        android:id="@+id/goods_Num"
+                        android:layout_width="match_parent"
+                        android:layout_height="35mm" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:textSize="14mm"
+                        android:text="+"
+                        android:id="@+id/increase_goods_Num"
+                        android:layout_width="50mm"
+                        android:layout_height="35mm" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </com.jelly.baselibrary.view.MaxHeightScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#fff">
-        <View
+        >
+        <TextView
+            android:id="@+id/confirm_tv"
             android:layout_width="match_parent"
-            android:layout_height="1mm"
-            android:background="#eeeeee"
-            android:layout_marginLeft="30mm"/>
+            android:layout_height="49mm"
+            android:textSize="14mm"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:text="确定"
+            android:background="@drawable/payment_btn_bg"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20mm"
-        android:background="#fff"/>
-    <TextView
-        android:id="@+id/confirm_tv"
-        android:layout_width="match_parent"
-        android:layout_height="49mm"
-        android:textSize="14mm"
-        android:textColor="#fff"
-        android:gravity="center"
-        android:text="确定"
-        android:background="@drawable/payment_btn_bg"/>
 </LinearLayout>

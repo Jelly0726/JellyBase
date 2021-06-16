@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.jelly.baselibrary.BaseActivity;
-import com.jelly.baselibrary.dialog.AddCartDialog;
+import com.jelly.baselibrary.addcartdialog.AddCartDialog;
 import com.jelly.jellybase.databinding.AddShopcartActivityBinding;
 
 /**
@@ -23,7 +23,7 @@ public class AddShopcartActivity extends BaseActivity<AddShopcartActivityBinding
         getBinding().button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddCartDialog addCartDialog1=AddCartDialog.getInstance();
+                AddCartDialog addCartDialog1=AddCartDialog.Companion.getInstance();
                 addCartDialog1.show(getSupportFragmentManager(),"addCartDialog");
             }
         });

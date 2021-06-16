@@ -32,7 +32,6 @@ import com.jelly.baselibrary.webview.tbs.WebViewJavaScriptFunction;
 import com.jelly.baselibrary.webview.tbs.X5WebView;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.BaseTbsWebviewBinding;
-import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -200,8 +199,8 @@ public class JSWebViewActivity extends BaseActivity<BaseTbsWebviewBinding>implem
                 JSWebViewActivity.this.uploadFile=uploadFile;
             }
         });
-        CookieSyncManager.createInstance(this);
-        CookieSyncManager.getInstance().sync();
+//        CookieSyncManager.createInstance(this);
+//        CookieSyncManager.getInstance().sync();
     }
    @Override
    public void onClick(View view){

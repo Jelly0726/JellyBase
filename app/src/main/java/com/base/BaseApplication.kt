@@ -1,7 +1,6 @@
 package com.base
 
 import android.app.Application
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Handler
@@ -15,7 +14,6 @@ import com.base.cockroach.Cockroach
 import com.base.cockroach.CrashUtils
 import com.base.cockroach.ExceptionHandler
 import com.base.daemon.DaemonEnv
-import com.jelly.baselibrary.applicationUtil.NetworkUtils
 import com.base.sqldao.DBManager
 import com.bumptech.glide.Glide
 import com.jelly.baselibrary.AppCallBack
@@ -24,9 +22,11 @@ import com.jelly.baselibrary.album.GlideAlbumLoader
 import com.jelly.baselibrary.appManager.AppSubject
 import com.jelly.baselibrary.applicationUtil.AppPrefs
 import com.jelly.baselibrary.applicationUtil.ChangeLanguageHelper
+import com.jelly.baselibrary.applicationUtil.NetworkUtils
 import com.jelly.baselibrary.config.ConfigKey
 import com.jelly.baselibrary.config.IntentAction
 import com.jelly.baselibrary.log.LogUtils
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil
 import com.jelly.baselibrary.toast.ToastUtils
 import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.jellybase.BuildConfig
@@ -86,6 +86,7 @@ class BaseApplication : Application(), AppCallBack {
     override fun onCreate() {
         super.onCreate()
         myApp = this
+        MProgressUtil.getInstance().initialize(this)
         LogUtils.init(BuildConfig.LOG_DEBUG)
         //RxJava2 取消订阅后，抛出的异常无法捕获，导致程序崩溃
         RxJavaPlugins.setErrorHandler(Consumer<Throwable?> { })

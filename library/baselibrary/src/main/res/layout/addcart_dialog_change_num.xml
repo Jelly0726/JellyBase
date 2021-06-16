@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="280mm"
-    android:layout_height="170mm">
+    android:layout_height="170mm"
+    tools:viewBindingIgnore="true">
 
     <TextView
         android:padding="5mm"
         android:layout_marginStart="10mm"
         android:layout_marginTop="10mm"
         android:textColor="@color/grey_color1"
-        android:textSize="28mm"
+        android:textSize="14mm"
         android:text="修改购买数量"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -30,7 +33,7 @@
         <EditText
             android:id="@+id/dialog_num"
             android:background="@drawable/shopcar_icon_cart_count"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:textStyle="bold"
             android:textColor="@color/ic_taobao"
             android:text="1"
@@ -59,7 +62,7 @@
             android:textStyle="bold"
             android:textColor="@color/shopcar_white"
             android:background="@color/grey_color3"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:gravity="center"
             android:text="取消"
             android:id="@+id/dialog_Nbutton"
@@ -70,7 +73,7 @@
             android:background="@color/ic_red"
             android:textColor="@color/shopcar_white"
             android:gravity="center"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:layout_marginStart="10mm"
             android:text="确定"
             android:id="@+id/dialog_Pbutton"

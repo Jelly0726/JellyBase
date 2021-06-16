@@ -2,7 +2,6 @@ package com.base.MapUtil.offlinemap;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -29,6 +28,7 @@ import com.amap.api.maps.offlinemap.OfflineMapManager.OfflineMapDownloadListener
 import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
 import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.AmapOfflinemapActivityOldBinding;
 
@@ -49,10 +49,6 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 	private int childPosition = -1;// 记录二级目录的position
 	private boolean isStart = false;// 判断是否开始下载,true表示开始下载，false表示下载失败
 	private boolean[] isOpen;// 记录一级目录是否打开
-
-
-	// 刚进入该页面时初始化弹出的dialog
-	private ProgressDialog initDialog;
 	// 长按弹出的dialog
 	private Dialog todoDialog;
 
@@ -72,15 +68,12 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 				((BaseExpandableListAdapter) adapter).notifyDataSetChanged();
 				break;
 			case DISMISS_INIT_DIALOG:
-				initDialog.dismiss();
+				MProgressUtil.getInstance().dismiss();
 				initData();
 				handler.sendEmptyMessage(UPDATE_LIST);
 				break;
 			case SHOW_INIT_DIALOG:
-				if (initDialog != null) {
-					initDialog.show();
-				}
-
+					MProgressUtil.getInstance().show(OfflineMapActivity_Old.this,"正在获取离线城市列表");
 				break;
 			default:
 				break;
@@ -109,13 +102,7 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 	 * 初始化如果已下载的城市多的话，会比较耗时
 	 */
 	private void initDialog() {
-
-		initDialog = new ProgressDialog(this);
-		initDialog.setMessage("正在获取离线城市列表");
-		initDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-		initDialog.setCancelable(false);
-		initDialog.show();
-
+		MProgressUtil.getInstance().show(OfflineMapActivity_Old.this,"正在获取离线城市列表");
 		handler.sendEmptyMessage(SHOW_INIT_DIALOG);
 
 		new Thread(new Runnable() {

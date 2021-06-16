@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
+import com.jelly.baselibrary.androidPicker.AddressPickTask;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;

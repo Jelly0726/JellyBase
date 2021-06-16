@@ -1,19 +1,18 @@
 package com.base.utils;
 
 
+import android.annotation.SuppressLint;
 import android.app.usage.StorageStats;
 import android.app.usage.StorageStatsManager;
 import android.content.Context;
-import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageStats;
 import android.os.Build;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+
 import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +42,7 @@ public class AppSizeUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             getAppSizeO(context);
         } else {
-            getAppsize(context);
+//            getAppsize(context);
         }
     }
     /**
@@ -86,6 +85,7 @@ public class AppSizeUtils {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getAppSizeO(Context context) {
+        @SuppressLint("WrongConstant")
         StorageStatsManager storageStatsManager = (StorageStatsManager) context.getSystemService(Context.STORAGE_STATS_SERVICE);
         StorageManager storageManager = (StorageManager) context.getSystemService(Context.STORAGE_SERVICE);
         //获取所有应用的StorageVolume列表
@@ -128,31 +128,31 @@ public class AppSizeUtils {
     /**
      * 获取应用大小8.0以下
      */
-    public void getAppsize(Context context) {
-        try {
-            Method method = PackageManager.class.getMethod("getPackageSizeInfo",
-                    new Class[]{String.class, IPackageStatsObserver.class});
-            // 调用 getPackageSizeInfo 方法，需要两个参数：1、需要检测的应用包名；2、回调
-            method.invoke(context.getPackageManager(), context.getPackageName(),
-                    new IPackageStatsObserver.Stub() {
-                @Override
-                public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) {
-                    //总缓存=应用内部缓存+外部缓存
-                    long cacheSize=pStats.cacheSize+pStats.externalCacheSize;
-                    //总数据=应用内部数据+外部数据+外部媒体+外部obb
-                    long dataSize=pStats.dataSize+pStats.externalDataSize+pStats.externalMediaSize+pStats.externalObbSize;
-                    //总程序大小=内部代码+外部代码
-                    long codeSize=pStats.codeSize+pStats.externalCodeSize;
-                    if (onBackListent != null) {
-                        onBackListent.backData(cacheSize,dataSize,codeSize);
-                    }
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void getAppsize(Context context) {
+//        try {
+//            Method method = PackageManager.class.getMethod("getPackageSizeInfo",
+//                    new Class[]{String.class, IPackageStatsObserver.class});
+//            // 调用 getPackageSizeInfo 方法，需要两个参数：1、需要检测的应用包名；2、回调
+//            method.invoke(context.getPackageManager(), context.getPackageName(),
+//                    new IPackageStatsObserver.Stub() {
+//                @Override
+//                public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) {
+//                    //总缓存=应用内部缓存+外部缓存
+//                    long cacheSize=pStats.cacheSize+pStats.externalCacheSize;
+//                    //总数据=应用内部数据+外部数据+外部媒体+外部obb
+//                    long dataSize=pStats.dataSize+pStats.externalDataSize+pStats.externalMediaSize+pStats.externalObbSize;
+//                    //总程序大小=内部代码+外部代码
+//                    long codeSize=pStats.codeSize+pStats.externalCodeSize;
+//                    if (onBackListent != null) {
+//                        onBackListent.backData(cacheSize,dataSize,codeSize);
+//                    }
+//
+//                }
+//            });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
     public OnBackListent onBackListent;
     public interface OnBackListent {
         void backData(long cacheSize, long dataSize, long codeSize);

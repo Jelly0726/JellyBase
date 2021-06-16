@@ -13,7 +13,7 @@ import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.FragmentAdapter;
 import com.jelly.baselibrary.Utils.MyDate;
-import com.jelly.baselibrary.dialog.AddCartDialog;
+import com.jelly.baselibrary.addcartdialog.AddCartDialog;
 import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.baselibrary.middleBar.MiddleBarItem;
 import com.jelly.baselibrary.middleBar.MiddleBarLayout;
@@ -124,11 +124,11 @@ public class ProductDetailsActivity extends BaseActivity<ProductDetailsActivityB
             case R.id.airlines_tv:
                 break;
             case R.id.addcart_tv:
-                AddCartDialog addCartDialog=AddCartDialog.getInstance();
+                AddCartDialog addCartDialog=AddCartDialog.Companion.getInstance();
                 addCartDialog.show(getSupportFragmentManager(),"addCartDialog");
                 break;
             case R.id.buy_immediately:
-                AddCartDialog addCartDialog1=AddCartDialog.getInstance();
+                AddCartDialog addCartDialog1=AddCartDialog.Companion.getInstance();
                 addCartDialog1.show(getSupportFragmentManager(),"addCartDialog");
                 break;
         }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 
 import com.base.daemon.DaemonEnv;
@@ -89,7 +90,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                 requestPermission();
             }
         } else {
-            new Handler().postDelayed(runnable, 1000);
+            new Handler(Looper.myLooper()).postDelayed(runnable, 1000);
         }
     }
     @Override
@@ -141,7 +142,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                         if (allGranted) {//允许
                         } else {//拒绝
                         }
-                        new Handler().postDelayed(runnable, 1000);
+                        new Handler(Looper.myLooper()).postDelayed(runnable, 1000);
                     }
                 });
     }
@@ -150,7 +151,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==0&&resultCode==0){
-            new Handler().postDelayed(runnable, 1000);
+            new Handler(Looper.myLooper()).postDelayed(runnable, 1000);
         }
     }
 

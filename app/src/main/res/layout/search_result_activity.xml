@@ -13,17 +13,17 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100mm"
+        android:layout_height="50mm"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_marginBottom="1mm"
         android:background="@color/navi_color">
         <LinearLayout
             android:id="@+id/left_back"
-            android:layout_width="100mm"
-            android:layout_height="100mm"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20mm">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,19 +36,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|left"
-            android:textSize="30mm"
-            android:layout_marginTop="15mm"
-            android:layout_marginBottom="15mm"
-            android:paddingLeft="15mm"
-            android:paddingRight="15mm"
+            android:textSize="15mm"
+            android:layout_marginTop="7mm"
+            android:layout_marginBottom="7mm"
+            android:paddingLeft="7mm"
+            android:paddingRight="7mm"
             android:text=""
             android:textColor="#727272"
             android:background="@drawable/search_edit_bg"/>
         <LinearLayout
-            android:layout_width="100mm"
-            android:layout_height="100mm"
+            android:layout_width="50mm"
+            android:layout_height="50mm"
             android:gravity="center_vertical"
-            android:paddingLeft="20mm">
+            android:paddingLeft="10mm">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,8 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="20mm"
-        android:paddingBottom="20mm"
+        android:paddingTop="10mm"
+        android:paddingBottom="10mm"
         android:background="#ffffff">
         <LinearLayout
             android:id="@+id/price_layout"
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/home_filtrate_on"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:gravity="center"
                 android:text="价格"
                 android:drawableRight="@mipmap/price_down"/>
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/home_filtrate_un"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:gravity="center"
                 android:text="分类"
                 />
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/home_filtrate_un"
-                android:textSize="28mm"
+                android:textSize="14mm"
                 android:gravity="center"
                 android:text="销量优先"
                 />

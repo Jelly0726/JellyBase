@@ -57,7 +57,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="59mm"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#fff"
@@ -78,23 +78,23 @@
             android:text="描述相符"
             android:layout_marginLeft="11mm"
             android:layout_marginRight="15mm"/>
-        <com.willy.ratingbar.BaseRatingBar
+        <com.willy.ratingbar.ScaleRatingBar
             android:id="@+id/describeRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            rb:numStars="5"
-            rb:rating="4"
-            rb:starWidth="20mm"
-            rb:starHeight="0mm"
-            rb:starPadding="0mm"
-            rb:stepSize="0.5"
-            rb:isIndicator="false"
-            rb:clickable="true"
-            rb:scrollable="true"
-            rb:clearRatingEnabled="true"
-            rb:drawableEmpty="@mipmap/star_b_empty"
-            rb:drawableFilled="@mipmap/star_b_full">
-        </com.willy.ratingbar.BaseRatingBar>
+            rb:srb_numStars="5"
+            rb:srb_minimumStars="1"
+            rb:srb_rating="4"
+            rb:srb_starWidth="15mm"
+            rb:srb_starHeight="15mm"
+            rb:srb_starPadding="8mm"
+            rb:srb_stepSize="0.5"
+            rb:srb_isIndicator="false"
+            rb:srb_clickable="true"
+            rb:srb_scrollable="true"
+            rb:srb_clearRatingEnabled="true"
+            rb:srb_drawableEmpty="@mipmap/star_b_empty"
+            rb:srb_drawableFilled="@mipmap/star_b_full"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -143,18 +143,19 @@
                 android:id="@+id/logisticsRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                rb:numStars="5"
-                rb:rating="2"
-                rb:starWidth="20mm"
-                rb:starHeight="0mm"
-                rb:starPadding="0mm"
-                rb:stepSize="0.5"
-                rb:isIndicator="false"
-                rb:clickable="true"
-                rb:scrollable="true"
-                rb:clearRatingEnabled="true"
-                rb:drawableEmpty="@mipmap/star_b_empty"
-                rb:drawableFilled="@mipmap/star_b_full">
+                rb:srb_numStars="5"
+                rb:srb_minimumStars="1"
+                rb:srb_rating="4"
+                rb:srb_starWidth="15mm"
+                rb:srb_starHeight="15mm"
+                rb:srb_starPadding="8mm"
+                rb:srb_stepSize="0.5"
+                rb:srb_isIndicator="false"
+                rb:srb_clickable="true"
+                rb:srb_scrollable="true"
+                rb:srb_clearRatingEnabled="true"
+                rb:srb_drawableEmpty="@mipmap/star_b_empty"
+                rb:srb_drawableFilled="@mipmap/star_b_full">
             </com.willy.ratingbar.BaseRatingBar>
         </LinearLayout>
         <LinearLayout
@@ -175,18 +176,19 @@
                 android:id="@+id/storeRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                rb:numStars="5"
-                rb:rating="2"
-                rb:starWidth="20mm"
-                rb:starHeight="0mm"
-                rb:starPadding="0mm"
-                rb:stepSize="0.5"
-                rb:isIndicator="false"
-                rb:clickable="true"
-                rb:scrollable="true"
-                rb:clearRatingEnabled="true"
-                rb:drawableEmpty="@mipmap/star_b_empty"
-                rb:drawableFilled="@mipmap/star_b_full">
+                rb:srb_numStars="5"
+                rb:srb_minimumStars="1"
+                rb:srb_rating="4"
+                rb:srb_starWidth="15mm"
+                rb:srb_starHeight="15mm"
+                rb:srb_starPadding="8mm"
+                rb:srb_stepSize="0.5"
+                rb:srb_isIndicator="false"
+                rb:srb_clickable="true"
+                rb:srb_scrollable="true"
+                rb:srb_clearRatingEnabled="true"
+                rb:srb_drawableEmpty="@mipmap/star_b_empty"
+                rb:srb_drawableFilled="@mipmap/star_b_full">
             </com.willy.ratingbar.BaseRatingBar>
         </LinearLayout>
 

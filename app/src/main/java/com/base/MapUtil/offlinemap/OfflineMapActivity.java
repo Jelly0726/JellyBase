@@ -1,6 +1,5 @@
 package com.base.MapUtil.offlinemap;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import com.amap.api.maps.offlinemap.OfflineMapManager.OfflineMapDownloadListener
 import com.amap.api.maps.offlinemap.OfflineMapProvince;
 import com.amap.api.maps.offlinemap.OfflineMapStatus;
 import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.AmapOfflineMapLayoutBinding;
 
@@ -50,10 +50,6 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
     private OfflineDownloadedAdapter mDownloadedAdapter;
     private PagerAdapter mPageAdapter;
     private MapView mapView;
-
-    // 刚进入该页面时初始化弹出的dialog
-    private ProgressDialog initDialog;
-
     /**
      * 更新所有列表
      */
@@ -89,12 +85,12 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
                     break;
 
                 case DISMISS_INIT_DIALOG:
-                    initDialog.dismiss();
+                    MProgressUtil.getInstance().dismiss();
                     handler.sendEmptyMessage(UPDATE_LIST);
                     break;
                 case SHOW_INIT_DIALOG:
-                    if (initDialog != null) {
-                        initDialog.show();
+                    if (!MProgressUtil.getInstance().isShowing()) {
+                        MProgressUtil.getInstance().show(OfflineMapActivity.this,"正在获取离线城市列表");
                     }
 
                     break;
@@ -127,12 +123,7 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
      * 初始化如果已下载的城市多的话，会比较耗时
      */
     private void initDialog() {
-
-        initDialog = new ProgressDialog(this);
-        initDialog.setMessage("正在获取离线城市列表");
-        initDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        initDialog.setCancelable(false);
-        initDialog.show();
+        MProgressUtil.getInstance().show(OfflineMapActivity.this,"正在获取离线城市列表");
 
         handler.sendEmptyMessage(SHOW_INIT_DIALOG);
 
@@ -350,10 +341,9 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
         if (amapManager != null) {
             amapManager.destroy();
         }
-
-        if(initDialog != null) {
-            initDialog.dismiss();
-            initDialog.cancel();
+        MProgressUtil.getInstance().show(OfflineMapActivity.this,"正在获取离线城市列表");
+        if(MProgressUtil.getInstance().isShowing()) {
+            MProgressUtil.getInstance().dismiss();
         }
     }
 

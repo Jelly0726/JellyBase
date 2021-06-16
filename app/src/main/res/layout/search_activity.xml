@@ -13,21 +13,21 @@
     <!--↑↑↑↑↑自定义状态栏底色。↑↑↑↑↑-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75mm"
+        android:layout_height="40mm"
         android:orientation="horizontal"
-        android:layout_marginTop="20mm"
-        android:layout_marginBottom="20mm"
-        android:paddingLeft="30mm"
-        android:paddingRight="20mm">
+        android:layout_marginTop="10mm"
+        android:layout_marginBottom="10mm"
+        android:paddingLeft="15mm"
+        android:paddingRight="10mm">
         <EditText
             android:id="@+id/search_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:textColor="#727272"
-            android:paddingLeft="30mm"
-            android:paddingRight="30mm"
+            android:paddingLeft="15mm"
+            android:paddingRight="15mm"
             android:hint="关键字/商品名"
             android:textColorHint="#727272"
             android:imeOptions="actionSearch"
@@ -36,31 +36,31 @@
             android:background="@drawable/search_edit_bg"/>
         <TextView
             android:id="@+id/cancel_tv"
-            android:layout_width="100mm"
+            android:layout_width="50mm"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:textColor="#727272"
             android:text="取消"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88mm"
+        android:layout_height="44mm"
         android:orientation="horizontal"
-        android:paddingLeft="30mm"
-        android:paddingRight="30mm">
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textColor="#313131"
-            android:textSize="28mm"
+            android:textSize="14mm"
             android:gravity="center_vertical"
             android:text="历史搜索"/>
         <ImageView
             android:id="@+id/clear_history"
-            android:layout_width="88mm"
-            android:layout_height="88mm"
+            android:layout_width="44mm"
+            android:layout_height="44mm"
             android:scaleType="center"
             android:src="@mipmap/search_delete"
             android:layout_gravity="center_vertical"/>
@@ -69,8 +69,8 @@
         android:id="@+id/search_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="30mm"
-        android:paddingRight="30mm">
+        android:paddingLeft="15mm"
+        android:paddingRight="15mm">
 
     </com.jelly.baselibrary.view.FlowLayout>
 </LinearLayout>

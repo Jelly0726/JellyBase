@@ -1,17 +1,17 @@
-package com.jelly.baselibrary.androidPicker;
+package com.jelly.baselibrary.androidPicker
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-
-import androidx.fragment.app.FragmentActivity;
-
-import com.alibaba.fastjson.JSON;
-import com.jelly.baselibrary.addressmodel.Province;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-
+import android.app.Activity
+import android.app.ProgressDialog
+import android.os.AsyncTask
+import androidx.fragment.app.FragmentActivity
+import com.alibaba.fastjson.JSON
+import com.jelly.baselibrary.addressmodel.Province
+import com.jelly.baselibrary.androidPicker.AddressDialog
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil
+import kotlinx.coroutines.*
+import java.lang.Exception
+import java.lang.ref.WeakReference
+import java.util.ArrayList
 
 /**
  * 获取地址数据并显示地址选择器
@@ -19,85 +19,80 @@ import java.util.ArrayList;
  * @author 李玉江[QQ:1032694760]
  * @since 2015/12/15
  */
-public class AddressDialogTask extends AsyncTask<String, Void, ArrayList<Province>> {
-    private WeakReference<Activity> activity;
-    private ProgressDialog dialog;
-    private Callback callback;
-    private String selectedProvince = "", selectedCity = "", selectedCounty = "";
-    private boolean hideProvince = false;
-    private boolean hideCounty = false;
-
-    public AddressDialogTask(Activity activity) {
-        this.activity = new WeakReference<>(activity);;
+class AddressDialogTask(activity: Activity?) : CoroutineScope by MainScope() {
+    private val activity: WeakReference<Activity?> = WeakReference(activity)
+    private var callback: Callback? = null
+    private var selectedProvince = ""
+    private var selectedCity = ""
+    private var selectedCounty = ""
+    private var hideProvince = false
+    private var hideCounty = false
+    fun setHideProvince(hideProvince: Boolean) {
+        this.hideProvince = hideProvince
     }
 
-    public void setHideProvince(boolean hideProvince) {
-        this.hideProvince = hideProvince;
+    fun setHideCounty(hideCounty: Boolean) {
+        this.hideCounty = hideCounty
     }
 
-    public void setHideCounty(boolean hideCounty) {
-        this.hideCounty = hideCounty;
+    fun setCallback(callback: Callback?) {
+        this.callback = callback
     }
 
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
-
-    @Override
-    protected void onPreExecute() {
-        if (activity.get()==null)return;
-        dialog = ProgressDialog.show(activity.get(), null, "正在初始化数据...", true, true);
-    }
-
-    @Override
-    protected ArrayList<Province> doInBackground(String... params) {
-        if (params != null) {
-            switch (params.length) {
-                case 1:
-                    selectedProvince = params[0];
-                    break;
-                case 2:
-                    selectedProvince = params[0];
-                    selectedCity = params[1];
-                    break;
-                case 3:
-                    selectedProvince = params[0];
-                    selectedCity = params[1];
-                    selectedCounty = params[2];
-                    break;
-                default:
-                    break;
+    fun execute(vararg params: String) {
+        if (activity.get() == null) {
+            callback!!.onAddressInitFailed()
+            return
+        }
+        launch(Dispatchers.Main){
+            MProgressUtil.getInstance().show(activity.get(), "正在初始化数据...")
+          val result= async(Dispatchers.IO) {
+                if (params != null) {
+                    when (params.size) {
+                        1 -> selectedProvince = params[0]
+                        2 -> {
+                            selectedProvince = params[0]
+                            selectedCity = params[1]
+                        }
+                        3 -> {
+                            selectedProvince = params[0]
+                            selectedCity = params[1]
+                            selectedCounty = params[2]
+                        }
+                        else -> {
+                        }
+                    }
+                }
+                val data = ArrayList<Province>()
+                try {
+                    val json = ConvertUtils.toString(
+                        activity.get()!!.assets.open("city.json")
+                    )
+                    data.addAll(JSON.parseArray(json, Province::class.java))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+              data
+            }
+            result.await()?.let {result->
+                MProgressUtil.getInstance().dismiss()
+                if (result.size > 0) {
+                    val addCartDialog = AddressDialog.getInstance()
+                    addCartDialog.setData(result)
+                    addCartDialog.onAddressPickListener = callback
+                    addCartDialog.show(
+                        (activity.get() as FragmentActivity?)!!.supportFragmentManager,
+                        "addCartDialog"
+                    )
+                } else {
+                    callback!!.onAddressInitFailed()
+                }
             }
         }
-        ArrayList<Province> data = new ArrayList<>();
-        try {
-            if (activity.get()==null)return data;
-            String json = ConvertUtils.toString(activity.get().getAssets().open("city.json"));
-            data.addAll(JSON.parseArray(json, Province.class));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data;
     }
 
-    @Override
-    protected void onPostExecute(ArrayList<Province> result) {
-        dialog.dismiss();
-        if (result.size() > 0) {
-            if (activity.get()==null){callback.onAddressInitFailed();return;}
-            AddressDialog addCartDialog= AddressDialog.getInstance();
-            addCartDialog.setData(result);
-            addCartDialog.setOnAddressPickListener(callback);
-            addCartDialog.show(((FragmentActivity)activity.get()).getSupportFragmentManager(),"addCartDialog");
-        } else {
-            callback.onAddressInitFailed();
-        }
-    }
-
-    public interface Callback extends AddressDialog.OnAddressPickListener {
-
-        void onAddressInitFailed();
-
+    interface Callback : AddressDialog.OnAddressPickListener {
+        fun onAddressInitFailed()
     }
 
 }

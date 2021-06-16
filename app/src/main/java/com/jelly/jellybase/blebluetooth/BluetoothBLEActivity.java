@@ -2,7 +2,6 @@ package com.jelly.jellybase.blebluetooth;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.content.Context;
@@ -35,6 +34,7 @@ import com.jelly.baselibrary.bluetooth.callback.BleScanCallback;
 import com.jelly.baselibrary.bluetooth.data.BleDevice;
 import com.jelly.baselibrary.bluetooth.exception.BleException;
 import com.jelly.baselibrary.bluetooth.scan.BleScanRuleConfig;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
@@ -58,7 +58,6 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
 
     private Animation operatingAnim;
     private DeviceAdapter mDeviceAdapter;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +128,6 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
 
         operatingAnim = AnimationUtils.loadAnimation(this, R.anim.bluetooth_rotate);
         operatingAnim.setInterpolator(new LinearInterpolator());
-        progressDialog = new ProgressDialog(this);
 
         mDeviceAdapter = new DeviceAdapter(this);
         mDeviceAdapter.setOnDeviceClickListener(new DeviceAdapter.OnDeviceClickListener() {
@@ -261,7 +259,7 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
         BleManager.getInstance().connect(bleDevice, new BleGattCallback() {
             @Override
             public void onStartConnect() {
-                progressDialog.show();
+                MProgressUtil.getInstance().show(BluetoothBLEActivity.this);
             }
 
             @Override
@@ -269,20 +267,20 @@ public class BluetoothBLEActivity extends BaseActivity<BluetoothActivityMainBind
                 getBinding().imgLoading.clearAnimation();
                 getBinding().imgLoading.setVisibility(View.INVISIBLE);
                 getBinding().btnScan.setText(getString(R.string.start_scan));
-                progressDialog.dismiss();
+                MProgressUtil.getInstance().dismiss();
                 Toast.makeText(BluetoothBLEActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onConnectSuccess(BleDevice bleDevice, BluetoothGatt gatt, int status) {
-                progressDialog.dismiss();
+                MProgressUtil.getInstance().dismiss();
                 mDeviceAdapter.addDevice(bleDevice);
                 mDeviceAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onDisConnected(boolean isActiveDisConnected, BleDevice bleDevice, BluetoothGatt gatt, int status) {
-                progressDialog.dismiss();
+                MProgressUtil.getInstance().dismiss();
 
                // mDeviceAdapter.removeDevice(bleDevice);
                 mDeviceAdapter.addDevice(bleDevice);
