@@ -8,12 +8,14 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.core.content.pm.PackageInfoCompat;
+
+import com.base.BaseApplication;
 import com.jelly.baselibrary.appManager.ExecutorManager;
 
 import java.io.BufferedWriter;
@@ -57,7 +59,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
     /**
      * 默认放在内存卡的root路径
      */
-    private String CAHCE_CRASH_LOG = Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator;
+    private String CAHCE_CRASH_LOG = BaseApplication.getInstance().getExternalFilesDir(null)+ File.separator;
     /**
      * 系统默认的异常类
      */
@@ -369,7 +371,7 @@ public abstract class CrashAppLog implements Thread.UncaughtExceptionHandler{
                 if (packageInfo != null) {
 
                     String versionName = packageInfo.versionName;
-                    String versionCode = ""+packageInfo.versionCode;
+                    String versionCode = ""+ PackageInfoCompat.getLongVersionCode(packageInfo);
                     String packName = packageInfo.packageName;
                     crashAppLog.put("崩溃时间",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
                     crashAppLog.put("versionName",versionName);

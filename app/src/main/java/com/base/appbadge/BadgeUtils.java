@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -46,7 +47,7 @@ public class BadgeUtils {
             Log.d("BRAND", Build.BRAND);
             switch (Build.BRAND.toLowerCase()) {
                 case "xiaomi":
-                    new Handler().postDelayed(new Runnable() {
+                    new Handler(Looper.myLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             setNotificationBadge(count, context);

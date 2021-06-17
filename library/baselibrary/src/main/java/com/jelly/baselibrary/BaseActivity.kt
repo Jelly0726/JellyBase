@@ -136,7 +136,7 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
      * UsbManager检测是否为键盘
      */
     private fun detectUsbAudioDevice() {
-        launch(Dispatchers.Main) {
+        launch{
             isKeyboard = false
             //第二种 通过InputManager获取
             val inputManager =

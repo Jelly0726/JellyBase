@@ -214,7 +214,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment(), CoroutineScope by Mai
      * UsbManager检测是否为键盘
      */
     private fun detectUsbAudioDevice() {
-        launch(Dispatchers.Main) {
+        launch{
             activity?.let {
                 isKeyboard = false
                 //第二种 通过InputManager获取

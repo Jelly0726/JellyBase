@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,7 +92,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                     getBinding().tvDiscovery.setText("开始连接");
                     BlueConnectTask connectTask = new BlueConnectTask(bleDevice.getAddress());
                     connectTask.setBlueConnectListener(BluetoothActivity.this);
-                    connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
+                    connectTask.executeOnExecutor(device);
                 }
             }
 
@@ -127,7 +126,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                         InputDialogFragment dialog = InputDialogFragment.newInstance(
                                 "", 0, "请输入要发送的消息");
                         String fragTag = getResources().getString(R.string.app_name);
-                        dialog.show(getFragmentManager(), fragTag);
+                        dialog.show(getSupportFragmentManager(), fragTag);
                     }
                 }
             }
@@ -189,7 +188,7 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
             if (mBluetooth.getState() == BluetoothAdapter.STATE_ON) {
                 BlueAcceptTask acceptTask = new BlueAcceptTask(true);
                 acceptTask.setBlueAcceptListener(BluetoothActivity.this);
-                acceptTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                acceptTask.executeOnExecutor();
             } else {
                 mHandler.postDelayed(this, 1000);
             }
@@ -324,14 +323,14 @@ public class BluetoothActivity extends BaseActivity<BluetoothActivityBinding> im
                 getBinding().tvDiscovery.setText("开始连接");
                 BlueConnectTask connectTask = new BlueConnectTask(item.getAddress());
                 connectTask.setBlueConnectListener(this);
-                connectTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, device);
+                connectTask.executeOnExecutor(device);
             } else if (device.getBondState() == BluetoothDevice.BOND_BONDED &&
                     item.getState() == DeviceAdapter.CONNECTED) {
                 getBinding().tvDiscovery.setText("正在发送消息");
                 InputDialogFragment dialog = InputDialogFragment.newInstance(
                         "", 0, "请输入要发送的消息");
                 String fragTag = getResources().getString(R.string.app_name);
-                dialog.show(getFragmentManager(), fragTag);
+                dialog.show(getSupportFragmentManager(), fragTag);
             }
         } catch (Exception e) {
             e.printStackTrace();

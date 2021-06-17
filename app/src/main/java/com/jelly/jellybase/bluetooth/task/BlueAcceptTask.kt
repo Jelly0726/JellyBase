@@ -1,85 +1,84 @@
-package com.jelly.jellybase.bluetooth.task;
+package com.jelly.jellybase.bluetooth.task
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothServerSocket;
-import android.bluetooth.BluetoothSocket;
-import android.os.AsyncTask;
-import android.util.Log;
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothServerSocket
+import android.bluetooth.BluetoothSocket
+import android.util.Log
+import com.jelly.jellybase.bluetooth.util.BluetoothConnector
+import kotlinx.coroutines.*
+import java.lang.reflect.Method
 
-import com.jelly.jellybase.bluetooth.util.BluetoothConnector;
+class BlueAcceptTask(secure: Boolean) : CoroutineScope by MainScope() {
+    private val mAdapter: BluetoothAdapter
+    private var mmServerSocket: BluetoothServerSocket? = null
+   fun executeOnExecutor(vararg params: Any){
+       Log.d(TAG, "doInBackground")
+       launch {
+           val socket= withContext(Dispatchers.IO) {
+               var socket: BluetoothSocket? = null
+               while (true) {
+                   try {
+                       socket = mmServerSocket!!.accept()
+                   } catch (e: Exception) {
+                       e.printStackTrace()
+                       try {
+                           Thread.sleep(1000)
+                       } catch (e1: InterruptedException) {
+                           e1.printStackTrace()
+                       }
+                   }
+                   if (socket != null) {
+                       break
+                   }
+               }
+               socket
+           }
+           mListener!!.onBlueAccept(socket)
+       }
+    }
+    private var mListener: BlueAcceptListener? = null
+    fun setBlueAcceptListener(listener: BlueAcceptListener?) {
+        mListener = listener
+    }
 
-import java.lang.reflect.Method;
+    interface BlueAcceptListener {
+        fun onBlueAccept(socket: BluetoothSocket?)
+    }
 
+    companion object {
+        private const val TAG = "BlueAcceptTask"
+        private const val NAME_SECURE = "BluetoothChatSecure"
+        private const val NAME_INSECURE = "BluetoothChatInsecure"
+    }
 
-public class BlueAcceptTask extends AsyncTask<Void, Void, BluetoothSocket> {
-    private final static String TAG = "BlueAcceptTask";
-    private static final String NAME_SECURE = "BluetoothChatSecure";
-    private static final String NAME_INSECURE = "BluetoothChatInsecure";
-    private BluetoothAdapter mAdapter;
-    private BluetoothServerSocket mmServerSocket;
-
-    public BlueAcceptTask(boolean secure) {
-        Log.d(TAG, "BlueAcceptTask");
-        mAdapter = BluetoothAdapter.getDefaultAdapter();
+    init {
+        Log.d(TAG, "BlueAcceptTask")
+        mAdapter = BluetoothAdapter.getDefaultAdapter()
         try {
-            if (secure) {
-                mmServerSocket = mAdapter.listenUsingRfcommWithServiceRecord(
-                        NAME_SECURE, BluetoothConnector.uuid);
+            mmServerSocket = if (secure) {
+                mAdapter.listenUsingRfcommWithServiceRecord(
+                    NAME_SECURE, BluetoothConnector.uuid
+                )
             } else {
-                mmServerSocket = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
-                        NAME_INSECURE, BluetoothConnector.uuid);
+                mAdapter.listenUsingInsecureRfcommWithServiceRecord(
+                    NAME_INSECURE, BluetoothConnector.uuid
+                )
             }
-        } catch (Exception e) {
-            Log.d(TAG, "BlueAcceptTask First failed");
-            e.printStackTrace();
-            Method listenMethod = null;
+        } catch (e: Exception) {
+            Log.d(TAG, "BlueAcceptTask First failed")
+            e.printStackTrace()
+            var listenMethod: Method? = null
             try {
-                listenMethod = mAdapter.getClass().getMethod(
-                        "listenUsingRfcommOn", new Class[]{int.class});
-                mmServerSocket = (BluetoothServerSocket) listenMethod.invoke(
-                        mAdapter, new Object[]{29});
-            } catch (Exception e1) {
-                Log.d(TAG, "BlueAcceptTask Second failed");
-                e1.printStackTrace();
+                listenMethod = mAdapter.javaClass.getMethod(
+                    "listenUsingRfcommOn", *arrayOf<Class<*>?>(Int::class.javaPrimitiveType)
+                )
+                mmServerSocket = listenMethod.invoke(
+                    mAdapter, *arrayOf<Any>(29)
+                ) as BluetoothServerSocket
+            } catch (e1: Exception) {
+                Log.d(TAG, "BlueAcceptTask Second failed")
+                e1.printStackTrace()
             }
         }
     }
-
-    @Override
-    protected BluetoothSocket doInBackground(Void... params) {
-        Log.d(TAG, "doInBackground");
-        BluetoothSocket socket = null;
-        while (true) {
-            try {
-                socket = mmServerSocket.accept();
-            } catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            if (socket != null) {
-                break;
-            }
-        }
-        return socket;
-    }
-
-    @Override
-    protected void onPostExecute(BluetoothSocket socket) {
-        mListener.onBlueAccept(socket);
-    }
-
-    private BlueAcceptListener mListener;
-
-    public void setBlueAcceptListener(BlueAcceptListener listener) {
-        mListener = listener;
-    }
-
-    public static interface BlueAcceptListener {
-        public abstract void onBlueAccept(BluetoothSocket socket);
-    }
-
 }

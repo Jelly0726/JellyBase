@@ -1,8 +1,8 @@
 package com.base.crashlog;
 
-import android.os.Environment;
 import android.text.TextUtils;
 
+import com.base.BaseApplication;
 import com.jelly.baselibrary.Utils.FilesUtil;
 import com.jelly.baselibrary.config.BaseConfig;
 import com.jelly.baselibrary.log.LogUtils;
@@ -42,7 +42,7 @@ public class CrashApphandler extends CrashAppLog{
         //动态的改变缓存目录和缓存文件数量
         if (crashAppLog != null){
 
-            crashAppLog.setCAHCE_CRASH_LOG(Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"crashLog");
+            crashAppLog.setCAHCE_CRASH_LOG(BaseApplication.getInstance().getExternalFilesDir(null) + File.separator+"crashLog");
             crashAppLog.setLIMIT_LOG_COUNT(5);
         }
     }
@@ -64,7 +64,7 @@ public class CrashApphandler extends CrashAppLog{
                     map.put("text", jsonObject1.toString());
                     OkHttpClient httpClient = new OkHttpClient();
                     MediaType JSON = MediaType.parse("application/json;charset=utf-8");
-                    RequestBody requestBody = RequestBody.create(JSON, map.toString());
+                    RequestBody requestBody = RequestBody.Companion.create(map.toString(),JSON);
                     Request request = new Request.Builder()
                             .url(BaseConfig.sendError_URL)
                             .post(requestBody)

@@ -56,6 +56,7 @@ public class LauncherActivity extends BaseActivity<BaseActivityLauncherBinding> 
                 return;
             }
         }
+        setDismiss(false);
         //开启服务//true  表示停止服务，false  表示启动服务
         TraceServiceImpl.sShouldStopService = true;
         DaemonEnv.startServiceMayBind(TraceServiceImpl.class);

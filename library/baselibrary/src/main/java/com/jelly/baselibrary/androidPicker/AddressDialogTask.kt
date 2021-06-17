@@ -44,7 +44,7 @@ class AddressDialogTask(activity: Activity?) : CoroutineScope by MainScope() {
             callback!!.onAddressInitFailed()
             return
         }
-        launch(Dispatchers.Main){
+        launch{
             MProgressUtil.getInstance().show(activity.get(), "正在初始化数据...")
           val result= async(Dispatchers.IO) {
                 if (params != null) {

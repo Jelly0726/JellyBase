@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.SystemClock;
 
+import androidx.core.content.pm.PackageInfoCompat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -67,7 +69,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             return "应用包名：" + packageInfo.packageName + "\n应用版本：" + packageInfo.versionName
-                    +"\n应用版本号：" + packageInfo.versionCode+"\n";
+                    +"\n应用版本号：" + PackageInfoCompat.getLongVersionCode(packageInfo) +"\n";
         } catch (Exception e) {
             e.printStackTrace();
         }

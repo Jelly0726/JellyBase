@@ -43,7 +43,7 @@ class AddressPickTask(activity: Activity) : CoroutineScope by MainScope() {
             callback!!.onAddressInitFailed()
             return
         }
-        launch(Dispatchers.Main){
+        launch{
             MProgressUtil.getInstance().show(activity.get(), "正在初始化数据...")
             val data=async(Dispatchers.IO) {
                 if (params != null) {

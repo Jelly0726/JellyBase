@@ -3,6 +3,7 @@ package com.base.MapUtil.mscUtil;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class AmapTTSController {
     private LinkedList<String> wordList = new LinkedList<String>();
     private final int TTS_PLAY = 1;
     private final int CHECK_TTS_PLAY = 2;
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(Looper.myLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

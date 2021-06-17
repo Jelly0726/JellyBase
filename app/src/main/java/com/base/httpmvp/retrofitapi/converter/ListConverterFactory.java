@@ -103,7 +103,7 @@ public class ListConverterFactory extends Converter.Factory {
 		@Override
 		public RequestBody convert(T value) throws IOException {
 			String string = mGson.toJson(value);
-			return RequestBody.create(MediaType.parse("application/json; charset=UTF-8"),string);
+			return RequestBody.Companion.create(string,MediaType.parse("application/json; charset=UTF-8"));
 		}
 	}
 	public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {

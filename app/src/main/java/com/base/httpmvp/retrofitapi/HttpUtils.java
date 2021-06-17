@@ -80,7 +80,7 @@ public class HttpUtils {
         ResponseBody body=response.body();
         BufferedSource source = body.source();
         source.request(Long.MAX_VALUE); // Buffer the entire body.
-        Buffer buffer = source.buffer();
+        Buffer buffer = source.getBuffer();
         Charset charset = Charset.forName("UTF-8");
         MediaType contentType =body.contentType();
         if (contentType != null) {

@@ -3,7 +3,6 @@ package com.jelly.jellybase.bluetooth.widget;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.DialogFragment;
 
 public class InputDialogFragment extends DialogFragment {
     private static final String TAG = "InputDialogFragment";

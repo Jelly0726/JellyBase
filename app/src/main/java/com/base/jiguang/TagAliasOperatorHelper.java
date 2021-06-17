@@ -2,6 +2,7 @@ package com.base.jiguang;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.util.SparseArray;
@@ -67,7 +68,7 @@ public class TagAliasOperatorHelper {
     public void put(int sequence,TagAliasBean tagAliasBean){
         tagAliasActionCache.put(sequence,tagAliasBean);
     }
-    private Handler delaySendHandler = new Handler(){
+    private Handler delaySendHandler = new Handler(Looper.myLooper()){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){

@@ -1,51 +1,48 @@
-package com.jelly.jellybase.bluetooth.task;
+package com.jelly.jellybase.bluetooth.task
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.os.AsyncTask;
-import android.util.Log;
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
+import android.util.Log
+import com.jelly.jellybase.bluetooth.util.BluetoothConnector
+import com.jelly.jellybase.bluetooth.util.BluetoothConnector.NativeBluetoothSocket
+import kotlinx.coroutines.*
 
-import com.jelly.jellybase.bluetooth.util.BluetoothConnector;
-
-
-public class BlueConnectTask extends AsyncTask<BluetoothDevice, Void, BluetoothSocket> {
-    private final static String TAG = "BlueConnectTask";
-    private String mAddress;
-
-    public BlueConnectTask(String address) {
-        mAddress = address;
-    }
-
-    @Override
-    protected BluetoothSocket doInBackground(BluetoothDevice... params) {
-        BluetoothConnector connector = new BluetoothConnector(params[0], true,
-                BluetoothAdapter.getDefaultAdapter(), null);
-        Log.d(TAG, "doInBackground");
-        BluetoothSocket socket = null;
-        //蓝牙连接需要完整的权限,有些机型弹出提示对话框"***想进行通信",这就不行,日志会报错:
-        //read failed, socket might closed or timeout, read ret: -1
-        try {
-            socket = ((BluetoothConnector.NativeBluetoothSocket) connector.connect()).getUnderlyingSocket();
-        } catch (Exception e) {
-            e.printStackTrace();
+class BlueConnectTask(private val mAddress: String) : CoroutineScope by MainScope() {
+    fun executeOnExecutor(vararg params: BluetoothDevice) {
+        launch {
+            //蓝牙连接需要完整的权限,有些机型弹出提示对话框"***想进行通信",这就不行,日志会报错:
+                //read failed, socket might closed or timeout, read ret: -1
+            val socket=withContext(Dispatchers.Default) {
+                    val connector = BluetoothConnector(
+                        params[0], true,
+                        BluetoothAdapter.getDefaultAdapter(), null
+                    )
+                    Log.d(TAG, "doInBackground")
+                    var socket: BluetoothSocket? = null
+                    //蓝牙连接需要完整的权限,有些机型弹出提示对话框"***想进行通信",这就不行,日志会报错:
+                    //read failed, socket might closed or timeout, read ret: -1
+                    try {
+                        socket = (connector.connect() as NativeBluetoothSocket).underlyingSocket
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    socket
+                }
+            mListener!!.onBlueConnect(mAddress, socket)
         }
-        return socket;
     }
 
-    @Override
-    protected void onPostExecute(BluetoothSocket socket) {
-        mListener.onBlueConnect(mAddress, socket);
+    private var mListener: BlueConnectListener? = null
+    fun setBlueConnectListener(listener: BlueConnectListener?) {
+        mListener = listener
     }
 
-    private BlueConnectListener mListener;
-
-    public void setBlueConnectListener(BlueConnectListener listener) {
-        mListener = listener;
+    interface BlueConnectListener {
+        fun onBlueConnect(address: String?, socket: BluetoothSocket?)
     }
 
-    public static interface BlueConnectListener {
-        public abstract void onBlueConnect(String address, BluetoothSocket socket);
+    companion object {
+        private const val TAG = "BlueConnectTask"
     }
-
 }

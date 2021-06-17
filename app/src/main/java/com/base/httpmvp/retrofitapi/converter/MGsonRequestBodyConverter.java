@@ -35,6 +35,6 @@ final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 //        adapter.write(jsonWriter, value);
 //        jsonWriter.close();
 //        return RequestBody.create(MEDIA_TYPE, buffer.readUtf8());
-        return RequestBody.create(MEDIA_TYPE, JSON.toJSONString(value));
+        return RequestBody.Companion.create( JSON.toJSONString(value),MEDIA_TYPE);
     }
 }

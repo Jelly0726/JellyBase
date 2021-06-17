@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.core.content.pm.PackageInfoCompat;
 
 import java.io.ObjectStreamException;
 import java.io.PrintWriter;
@@ -73,10 +74,11 @@ public class CrashUtils {
      */
     private String getAppInfo(Context context) {
         try {
+
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             return "应用包名：" + packageInfo.packageName + "\n应用版本：" + packageInfo.versionName
-                    +"\n应用版本号：" + packageInfo.versionCode+"\n";
+                    +"\n应用版本号：" + PackageInfoCompat.getLongVersionCode(packageInfo)+"\n";
         } catch (Exception e) {
             e.printStackTrace();
         }
