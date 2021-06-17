@@ -32,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -714,7 +715,20 @@ public class StringUtil {
         if (distance<1000){
             return String.valueOf(distance)+"米";
         }
-        return (distance/1000)+"千米";
+        DecimalFormat df= new DecimalFormat("######0.00");
+        return df.format(distance/1000.00)+"千米";
+    }
+    /**
+     * 对距离格式化
+     * @param distance 距离 单位(m)
+     * @return 格式化后的距离包含单位
+     */
+    public static String distanceFormatEn(int distance){
+        if (distance<1000){
+            return String.valueOf(distance)+"m";
+        }
+        DecimalFormat df= new DecimalFormat("######0.00");
+        return df.format(distance/1000.00)+"km";
     }
     /**
      * 跟输入的整数获取比他大的基数的倍数
