@@ -3,7 +3,7 @@ package droidninja.filepicker.models
 import android.net.Uri
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Media @JvmOverloads constructor(override var id: Long = 0,

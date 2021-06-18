@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+/*序列化插件*/
+apply plugin: 'kotlin-parcelize'
 
 version = "2.2.4"
 

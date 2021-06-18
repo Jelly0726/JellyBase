@@ -1,6 +1,8 @@
 package com.base.httpmvp.mvpbase
 
 import com.google.gson.Gson
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 /**
  * mvp中的Presenter
@@ -8,6 +10,9 @@ import com.google.gson.Gson
 abstract class BasePresenter<V : IBaseView?, E : BaseModel> {
     @JvmField
     var mGson = Gson()
+    val moshi = Moshi.Builder()
+        .addLast(KotlinJsonAdapterFactory())
+        .build()
     @JvmField
     var mView //给子类使用view
             : V? = null

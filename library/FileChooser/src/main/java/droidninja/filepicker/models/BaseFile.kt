@@ -4,7 +4,7 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import droidninja.filepicker.utils.FilePickerUtils.contains
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 /**
  * Created by droidNinja on 29/07/16.

@@ -1,7 +1,7 @@
 package droidninja.filepicker.models
 
 import android.net.Uri
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Document @JvmOverloads constructor(override var id: Long = 0,

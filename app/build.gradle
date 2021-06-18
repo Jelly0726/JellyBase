@@ -2,8 +2,9 @@ plugins{
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
     id 'com.huawei.agconnect'
+    /*序列化插件*/
+    id 'kotlin-parcelize'
 }
 android {
     //生产环境域名地址
@@ -178,10 +179,6 @@ android {
         preDexLibraries = false
         //线程数
         threadCount = 5
-    }
-    //kotlin Parcelize传值
-    androidExtensions {
-        experimental = true
     }
     //开启viewbinding
     buildFeatures{
