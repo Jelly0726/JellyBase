@@ -1,26 +1,25 @@
-package com.base.httpmvp.mvpbase;
+package com.base.httpmvp.mvpbase
 
-import io.reactivex.ObservableTransformer;
+import androidx.lifecycle.LifecycleOwner
+import io.reactivex.ObservableTransformer
 
 /**
  * mvp中的view
  */
-
-public interface IBaseView {
-
+interface IBaseView {
     /**
      * 显示操作进度
      */
-    public void showProgress();
+    fun showProgress()
 
     /**
      * 关闭进度
      */
-    public void closeProgress();
+    fun closeProgress()
+
     /**
      * 绑定生命周期
-     * @param <T>
      * @return
-     */
-    <T> ObservableTransformer<T,T> bindLifecycle();
+    </T> */
+    fun bindLifecycle(): LifecycleOwner?
 }

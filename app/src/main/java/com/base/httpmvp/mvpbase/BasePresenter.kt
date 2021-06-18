@@ -1,41 +1,46 @@
-package com.base.httpmvp.mvpbase;
+package com.base.httpmvp.mvpbase
 
-import com.google.gson.Gson;
+import com.google.gson.Gson
 
 /**
  * mvp中的Presenter
  */
-public abstract class BasePresenter<V extends IBaseView, E extends BaseModel> {
-    public Gson mGson = new Gson();
-    public V mView;//给子类使用view
-    public E mModel;//执行请求
+abstract class BasePresenter<V : IBaseView?, E : BaseModel> {
+    @JvmField
+    var mGson = Gson()
+    @JvmField
+    var mView //给子类使用view
+            : V? = null
+    @JvmField
+    var mModel //执行请求
+            : E? = null
 
     /**
      * 附加到view上
      *
      * @param v
      */
-    public void attachView(V v) {
-        mView = v;
-        start();
+    fun attachView(v: V) {
+        mView = v
+        start()
     }
 
     /**
      * 从view分离
      */
-    public void detachView() {
-        if (mView!=null) {
-            mView.closeProgress();
-            mView = null;
+    fun detachView() {
+        if (mView != null) {
+            mView!!.closeProgress()
+            mView = null
         }
         if (mModel != null) {
-            mModel.unDisposable();
-            mModel = null;
+            mModel!!.unDisposable()
+            mModel = null
         }
     }
 
     /**
      * 初始化
      */
-    public abstract void start();
+    abstract fun start()
 }

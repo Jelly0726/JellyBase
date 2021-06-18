@@ -147,23 +147,22 @@ dependencies {
     //okhttp CheckVersionLib 使用的是okhttp:4.3.1
 //        api 'com.squareup.okhttp3:okhttp:3.12.1'
 
-    //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
-    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
-
-    //Retrofit
-    api 'com.squareup.retrofit2:retrofit:2.5.0'
-
-    //Retrofit2所需要的包
-    api 'com.squareup.retrofit2:converter-gson:2.5.0'
-
     //ConverterFactory的Gson依赖包
     api 'com.squareup.retrofit2:converter-scalars:2.5.0'
-
-    //ConverterFactory的String依赖包
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-
-    //添加Retrofit对Rxjava的支持
-    api 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+    //RxJava
+//    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+//    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    //Retrofit
+    api 'com.squareup.retrofit2:retrofit:2.7.0'
+    api 'com.squareup.retrofit2:converter-gson:2.7.0'
+    api 'io.reactivex:rxandroid:1.2.1'
+    api "io.reactivex.rxjava3:rxjava:3.0.0-RC2"
+    api 'com.squareup.okhttp3:logging-interceptor:4.3.1' //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0' // 必要依赖，和Rxjava结合必须用到
+    //RxLifecycle库通过绑定生命周期的方式，来解决Retrofit2内存泄漏的问题。
+    api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
+    api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.1.0'
+    api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
 
     //RxJava
     api 'io.reactivex.rxjava2:rxandroid:2.1.0'
