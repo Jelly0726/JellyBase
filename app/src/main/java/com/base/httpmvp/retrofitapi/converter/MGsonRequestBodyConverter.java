@@ -1,8 +1,7 @@
 package com.base.httpmvp.retrofitapi.converter;
 
-import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -18,13 +17,12 @@ import retrofit2.Converter;
 final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
+    private Moshi moshi;
+    private JsonAdapter<T> adapter;
 
-    private final Gson gson;
-    private final TypeAdapter<T> adapter;
-
-    MGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
-        this.gson = gson;
-        this.adapter = adapter;
+    MGsonRequestBodyConverter(Moshi moshi, JsonAdapter<T>  adapter) {
+        this.moshi=moshi;
+        this.adapter=adapter;
     }
 
     @Override
@@ -35,6 +33,6 @@ final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 //        adapter.write(jsonWriter, value);
 //        jsonWriter.close();
 //        return RequestBody.create(MEDIA_TYPE, buffer.readUtf8());
-        return RequestBody.Companion.create( JSON.toJSONString(value),MEDIA_TYPE);
+        return RequestBody.create(MEDIA_TYPE, adapter.toJson(value));
     }
 }

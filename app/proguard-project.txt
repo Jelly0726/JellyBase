@@ -448,6 +448,9 @@ public static java.lang.String TABLENAME;
  -keepattributes Signature
  -dontwarn com.alibaba.fastjson.**
  -keep class com.alibaba.fastjson.**{*; }
+  #====================moshi====================
+ -dontwarn com.squareup.moshi.**
+ -keep class com.squareup.moshi.**{*; }
   #====================AndroidPicker====================
 -keepattributes InnerClasses,Signature
  -dontwarn cn.qqtheme.framework.entity.**

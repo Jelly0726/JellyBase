@@ -3,14 +3,10 @@ package com.base.httpmvp.retrofitapi.converter;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpUtils;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
-import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
-import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
-import com.base.httpmvp.retrofitapi.methods.HttpState;
-import com.google.gson.Gson;
-import com.google.gson.TypeAdapter;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -26,13 +22,12 @@ import retrofit2.Converter;
 final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
-    private final Gson gson;
-    private final TypeAdapter<T> adapter;
     //private final Type type;
-
-    MGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
-        this.gson = gson;
-        this.adapter = adapter;
+    private Moshi moshi;
+    private JsonAdapter<T>  adapter;
+    MGsonResponseBodyConverter(Moshi moshi, JsonAdapter<T>  adapter) {
+        this.moshi=moshi;
+        this.adapter=adapter;
     }
 //    MGsonResponseBodyConverter(Gson gson, Type type) {
 //        this.gson = gson;
@@ -49,17 +44,17 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
         if (!HttpUtils.isJson(response)){
             throw new ApiException("非法数据格式!"+response);
         }
-        HttpState httpState = gson.fromJson(response, HttpState.class);
-        if (!httpState.isReturnState()) {
-            if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
-                throw new TokenNotExistException();
-            } else if (httpState.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
-                throw new TokenInvalidException();
-            } else {
-                // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
-                throw new ApiException(httpState.getMessage());
-            }
-        }
+//        HttpState httpState = gson.fromJson(response, HttpState.class);
+//        if (!httpState.isReturnState()) {
+//            if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
+//                throw new TokenNotExistException();
+//            } else if (httpState.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
+//                throw new TokenInvalidException();
+//            } else {
+//                // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
+//                throw new ApiException(httpState.getMessage());
+//            }
+//        }
         try {
 //            MediaType contentType = value.contentType();
 //            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;
@@ -71,6 +66,7 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             //List<SearchResul> list=gson.fromJson(json, new TypeToken<List<SearchResul>>(){}.getType());
             //T users = gson.fromJson(response,type);
             T users = adapter.fromJson(response);
+
             return users;
         } catch (Exception e){
             Log.i("ss","convert e="+e);
