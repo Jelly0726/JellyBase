@@ -22,7 +22,6 @@ import com.jelly.jellybase.shopcart.ShopCartAdapter
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.yanzhenjie.recyclerview.*
 import com.yanzhenjie.recyclerview.widget.DefaultItemDecoration
-import kotlinx.android.synthetic.main.shopcart_activity.*
 import java.util.*
 
 class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickListener,View.OnClickListener
@@ -155,7 +154,7 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
     }
     private val checkInterface =object: ShopCartAdapter.CheckInterface {
         override fun checkChild(childPosition: Int, isChecked: Boolean) {
-            allSelect_box!!.isChecked = isCheckAll//全选
+            binding.allSelectBox!!.isChecked = isCheckAll//全选
             mAdapter.notifyDataSetChanged(mDataList)
             calulate()
         }
@@ -230,24 +229,24 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
 
     private fun iniSofia() {}
     private fun iniRecyclerView() {
-        refresh_layout.setOnRefreshListener(mRefreshListener)
+        binding.refreshLayout.setOnRefreshListener(mRefreshListener)
         mAdapter = ShopCartAdapter(this)
         mLayoutManager = createLayoutManager()
         mItemDecoration = createItemDecoration()
-        mRecyclerView.layoutManager = mLayoutManager
-        mRecyclerView.addItemDecoration(mItemDecoration)
-        mRecyclerView.setOnItemClickListener(this)
-        mRecyclerView.useDefaultLoadMore() // 使用默认的加载更多的View。
-        mRecyclerView.setLoadMoreListener(mLoadMoreListener) // 加载更多的监听。
-        mRecyclerView.isLongPressDragEnabled = false // 长按拖拽，默认关闭。
-        mRecyclerView.isItemViewSwipeEnabled = false // 滑动删除，默认关闭。
-        mRecyclerView.setSwipeMenuCreator(swipeMenuCreator)
-        mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener)
-        mRecyclerView.adapter = mAdapter
+        binding.mRecyclerView.layoutManager = mLayoutManager
+        binding. mRecyclerView.addItemDecoration(mItemDecoration)
+        binding.mRecyclerView.setOnItemClickListener(this)
+        binding. mRecyclerView.useDefaultLoadMore() // 使用默认的加载更多的View。
+        binding. mRecyclerView.setLoadMoreListener(mLoadMoreListener) // 加载更多的监听。
+        binding.mRecyclerView.isLongPressDragEnabled = false // 长按拖拽，默认关闭。
+        binding.mRecyclerView.isItemViewSwipeEnabled = false // 滑动删除，默认关闭。
+        binding.mRecyclerView.setSwipeMenuCreator(swipeMenuCreator)
+        binding. mRecyclerView.setOnItemMenuClickListener(mMenuItemClickListener)
+        binding.mRecyclerView.adapter = mAdapter
         mDataList = ArrayList()
         mAdapter.checkInterface = checkInterface
         mAdapter.modifyCountInterface = countInterface
-        empty_shopcart.visibility = View.VISIBLE
+        binding.emptyShopcart.root.visibility = View.VISIBLE
     }
 
     protected fun createLayoutManager(): RecyclerView.LayoutManager {
@@ -266,8 +265,8 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
     }
 
     private fun clearCart() {
-        settlement_tv!!.text = "结算(0)"
-        empty_shopcart!!.visibility = View.VISIBLE
+        binding.settlementTv!!.text = "结算(0)"
+        binding.emptyShopcart!!.root.visibility = View.VISIBLE
     }
 
     /**
@@ -287,7 +286,7 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
         if (mDataList.size == 0) {
             clearCart()
         } else {
-            empty_shopcart!!.visibility = View.GONE
+            binding.emptyShopcart!!.root.visibility = View.GONE
         }
     }
 
@@ -297,7 +296,7 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
      */
     private fun doCheckAll() {
         for (goods in mDataList) {
-            goods.isSelect = allSelect_box!!.isChecked
+            goods.isSelect =  binding.allSelectBox!!.isChecked
         }
         mAdapter.notifyDataSetChanged(mDataList)
         calulate()
@@ -330,12 +329,12 @@ class ShopCartActivity : BaseActivity<ShopcartActivityBinding>(), OnItemClickLis
 //            shopingToal+=java.lang.Double.parseDouble(goods.price) * goods.goodsNum
 //            shopingCount+=goods.goodsNum
         }
-        totalPrice!!.text = "合计：¥" + RMBUtils.getTwoDecimal1(mtotalPrice) + ""
-        settlement_tv!!.text = "结算(" + selectList.size + ")"
+        binding.totalPrice!!.text = "合计：¥" + RMBUtils.getTwoDecimal1(mtotalPrice) + ""
+        binding.settlementTv!!.text = "结算(" + selectList.size + ")"
         if (mDataList.size == 0) {
             clearCart()
         } else {
-            empty_shopcart!!.visibility = View.GONE
+            binding.emptyShopcart!!.root.visibility = View.GONE
         }
     }
 

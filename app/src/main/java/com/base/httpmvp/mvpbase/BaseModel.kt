@@ -15,7 +15,7 @@ import io.reactivex.disposables.Disposable
  * mvp中的model
  * @param <T>
 </T> */
-class BaseModel {
+open class BaseModel {
     /**
      * 封装线程管理和订阅的过程
      * @param observable  被订阅者

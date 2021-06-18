@@ -14,7 +14,6 @@ import com.jelly.jellybase.R
 import com.jelly.jellybase.databinding.PipModeActivityBinding
 import com.jelly.jellybase.server.TraceServiceImpl
 import com.jeremyliao.liveeventbus.LiveEventBus
-import kotlinx.android.synthetic.main.pip_mode_activity.*
 
 /**
  * PIP模式
@@ -35,7 +34,7 @@ class PIPActivity : BaseActivity<PipModeActivityBinding>(),View.OnClickListener{
         mObserver= Observer<Any> { netEvent ->
             netEvent?.let {
                 netEvent as NetEvent<Any>
-                msgTv.text="${netEvent.event}"
+                binding.msgTv.text="${netEvent.event}"
             }
         }
         LiveEventBus.get("PIPActivity")
