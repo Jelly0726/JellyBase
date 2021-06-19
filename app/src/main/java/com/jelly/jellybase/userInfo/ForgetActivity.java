@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.jelly.baselibrary.multiClick.AntiShake;
@@ -13,12 +15,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserForgetActivityBinding;
 import com.jelly.mvp.contact.ForgetPwdContact;
 import com.jelly.mvp.presenter.ForgetPasswordPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/28.
@@ -69,8 +68,8 @@ public class ForgetActivity extends BaseActivityImpl<ForgetPwdContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

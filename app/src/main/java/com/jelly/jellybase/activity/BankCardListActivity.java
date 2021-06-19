@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.andview.refreshview.XRefreshView;
@@ -19,7 +20,6 @@ import com.jelly.jellybase.adpater.BankCardListAdapter;
 import com.jelly.jellybase.databinding.BankcardlistActivityBinding;
 import com.jelly.mvp.contact.BankCartListContact;
 import com.jelly.mvp.presenter.BankListPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.album.impl.OnItemClickListener;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
 import com.yanzhenjie.recyclerview.SwipeMenu;
@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
@@ -83,8 +81,8 @@ public class BankCardListActivity extends BaseActivityImpl<BankCartListContact.V
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private void iniXRefreshView(){
         adapter=new BankCardListAdapter(this,mList);

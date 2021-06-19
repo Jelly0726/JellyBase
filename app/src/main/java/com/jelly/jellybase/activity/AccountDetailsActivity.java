@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -20,15 +21,12 @@ import com.jelly.jellybase.adpater.AccountDetailsAdapter;
 import com.jelly.jellybase.databinding.AccountDetailsActivityBinding;
 import com.jelly.mvp.contact.AccountDetailContact;
 import com.jelly.mvp.presenter.AccountDetailPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 
 /**
@@ -105,8 +103,8 @@ public class AccountDetailsActivity extends BaseActivityImpl<AccountDetailContac
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     /**
      * 刷新。

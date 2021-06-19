@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.encrypt.MD5;
 import com.jelly.baselibrary.multiClick.AntiShake;
@@ -13,12 +15,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserChangepwdActivityBinding;
 import com.jelly.mvp.contact.UpdataPwdContact;
 import com.jelly.mvp.presenter.UpdatePasswordPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
@@ -56,8 +55,8 @@ public class ChangePWDActivity extends BaseActivityImpl<UpdataPwdContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

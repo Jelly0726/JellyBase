@@ -7,6 +7,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.bumptech.glide.Glide;
@@ -21,12 +23,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.WithdrawActivityBinding;
 import com.jelly.mvp.contact.WithdrawalsContact;
 import com.jelly.mvp.presenter.WithdrawalsPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 
 /**
@@ -107,8 +106,8 @@ public class WithdrawActivity extends BaseActivityImpl<WithdrawalsContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private View.OnClickListener listener=new View.OnClickListener() {
         @Override

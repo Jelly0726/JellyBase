@@ -3,6 +3,7 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.andview.refreshview.XRefreshView;
@@ -16,14 +17,11 @@ import com.jelly.jellybase.adpater.MessageAdapter;
 import com.jelly.jellybase.databinding.MessageActivityBinding;
 import com.jelly.mvp.contact.MessageContact;
 import com.jelly.mvp.presenter.MessagePresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * 消息通知
@@ -59,8 +57,8 @@ public class MessageActivity extends BaseActivityImpl<MessageContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private void iniView (){
         getBinding().leftBack.setOnClickListener(this);

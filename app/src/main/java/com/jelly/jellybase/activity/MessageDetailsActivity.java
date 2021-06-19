@@ -3,6 +3,8 @@ package com.jelly.jellybase.activity;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.model.Message;
@@ -12,15 +14,12 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.MessageDetailsActivityBinding;
 import com.jelly.mvp.contact.MessageDetailsContact;
 import com.jelly.mvp.presenter.MessageDetailsPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zzhoujay.richtext.CacheType;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.ig.DefaultImageDownloader;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * 消息通知详情
@@ -52,8 +51,8 @@ public class MessageDetailsActivity extends BaseActivityImpl<MessageDetailsConta
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
 
     private void iniView() {

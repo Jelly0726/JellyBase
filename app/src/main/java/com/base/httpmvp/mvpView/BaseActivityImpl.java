@@ -2,23 +2,16 @@ package com.base.httpmvp.mvpView;
 
 import android.os.Bundle;
 
-import androidx.annotation.CheckResult;
 import androidx.viewbinding.ViewBinding;
 
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpbase.BasePresenter;
 import com.base.httpmvp.mvpbase.IBaseView;
-import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.BaseActivity;
+import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
-import com.trello.rxlifecycle3.LifecycleProvider;
-import com.trello.rxlifecycle3.LifecycleTransformer;
-import com.trello.rxlifecycle3.RxLifecycle;
 import com.trello.rxlifecycle3.android.ActivityEvent;
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
 
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.subjects.BehaviorSubject;
 
 /**
@@ -26,8 +19,7 @@ import io.reactivex.subjects.BehaviorSubject;
  */
 public abstract class BaseActivityImpl<V extends IBaseView, P extends BasePresenter
         ,VB extends ViewBinding> extends BaseActivity<VB>
-        implements LifecycleProvider<ActivityEvent>, IBaseView {
-    public LifecycleProvider lifecycleProvider;
+        implements  IBaseView {
     public P presenter;
     private V mView;
 
@@ -35,7 +27,6 @@ public abstract class BaseActivityImpl<V extends IBaseView, P extends BasePresen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
-        lifecycleProvider = this;
         if (presenter == null) {
             presenter = initPresenter();
         }
@@ -94,26 +85,7 @@ public abstract class BaseActivityImpl<V extends IBaseView, P extends BasePresen
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
-    @Override
-    @NonNull
-    @CheckResult
-    public final Observable<ActivityEvent> lifecycle() {
-        return lifecycleSubject.hide();
-    }
 
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull ActivityEvent event) {
-        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindToLifecycle() {
-        return RxLifecycleAndroid.bindActivity(lifecycleSubject);
-    }
 
     /**
      * 在子类中初始化对应的presenter

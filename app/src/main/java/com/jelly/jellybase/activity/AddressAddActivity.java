@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.androidPicker.AddressPickTask;
 import com.jelly.baselibrary.toast.ToastUtils;
@@ -13,7 +15,6 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.AddaddressActivityBinding;
 import com.jelly.mvp.contact.OperaAddressContact;
 import com.jelly.mvp.presenter.OperaAddressPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -21,7 +22,6 @@ import java.util.TreeMap;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/13.
@@ -49,8 +49,8 @@ public class AddressAddActivity extends BaseActivityImpl<OperaAddressContact.Vie
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private void iniView(){
         getBinding().leftBack.setOnClickListener(this);

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.bankcard.BandCardEditText;
 import com.jelly.baselibrary.multiClick.AntiShake;
@@ -12,12 +14,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.BankcardAddActivityBinding;
 import com.jelly.mvp.contact.AddBankCartContact;
 import com.jelly.mvp.presenter.AddBankPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 
 /**
@@ -75,8 +74,8 @@ public class AddBankCardActivity extends BaseActivityImpl<AddBankCartContact.Vie
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

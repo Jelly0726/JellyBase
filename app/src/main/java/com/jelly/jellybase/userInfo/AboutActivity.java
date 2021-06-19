@@ -3,6 +3,8 @@ package com.jelly.jellybase.userInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.model.AboutUs;
@@ -12,9 +14,6 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserAboutActivityBinding;
 import com.jelly.mvp.contact.AboutContact;
 import com.jelly.mvp.presenter.AboutUsPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/19.
@@ -60,8 +59,8 @@ getBinding().leftBack.setOnClickListener(this);
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     public void onClick(View v) {
         if (AntiShake.check(v.getId())) {    //判断是否多次点击

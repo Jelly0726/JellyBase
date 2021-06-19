@@ -9,6 +9,8 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.Utils.StringUtil;
 import com.jelly.baselibrary.androidPicker.AddressPickTask;
@@ -25,7 +27,6 @@ import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.callback.ConfigText;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.params.TextParams;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -33,7 +34,6 @@ import java.util.TreeMap;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/10/13.
@@ -63,8 +63,8 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private void iniView(){
         getBinding().leftBack.setOnClickListener(this);

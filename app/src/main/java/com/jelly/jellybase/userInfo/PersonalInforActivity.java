@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.andview.refreshview.XRefreshView;
 import com.andview.refreshview.XScrollView;
@@ -32,7 +33,6 @@ import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.params.ButtonParams;
 import com.mylhyl.circledialog.params.DialogParams;
 import com.mylhyl.circledialog.view.listener.OnRvItemClickListener;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
@@ -47,7 +47,6 @@ import java.util.TreeMap;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.SinglePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
-import io.reactivex.ObservableTransformer;
 
 
 /**
@@ -278,8 +277,8 @@ public class PersonalInforActivity extends BaseActivityImpl<PersonalInfoContact.
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
    
     public void onClick(View v) {

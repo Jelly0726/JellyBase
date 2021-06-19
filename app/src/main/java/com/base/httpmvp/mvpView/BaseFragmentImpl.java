@@ -3,7 +3,6 @@ package com.base.httpmvp.mvpView;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.CheckResult;
 import androidx.viewbinding.ViewBinding;
 
 import com.base.httpmvp.mvpbase.BasePresenter;
@@ -11,14 +10,8 @@ import com.base.httpmvp.mvpbase.IBaseView;
 import com.jelly.baselibrary.BaseFragment;
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener;
-import com.trello.rxlifecycle3.LifecycleProvider;
-import com.trello.rxlifecycle3.LifecycleTransformer;
-import com.trello.rxlifecycle3.RxLifecycle;
 import com.trello.rxlifecycle3.android.FragmentEvent;
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
 
-import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.annotations.Nullable;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -27,33 +20,11 @@ import io.reactivex.subjects.BehaviorSubject;
  */
 
 public abstract class BaseFragmentImpl<V extends IBaseView,P extends BasePresenter ,VB extends ViewBinding> extends BaseFragment<VB>
-        implements LifecycleProvider<FragmentEvent> ,IBaseView {
+        implements IBaseView {
 
     protected P presenter;
     private V mView;
-    public LifecycleProvider lifecycleProvider;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final Observable<FragmentEvent> lifecycle() {
-        return lifecycleSubject.hide();
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindUntilEvent(@NonNull FragmentEvent event) {
-        return RxLifecycle.bindUntilEvent(lifecycleSubject, event);
-    }
-
-    @Override
-    @NonNull
-    @CheckResult
-    public final <T> LifecycleTransformer<T> bindToLifecycle() {
-        return RxLifecycleAndroid.bindFragment(lifecycleSubject);
-    }
 
     @Override
     public void onAttach(android.app.Activity activity) {
@@ -65,7 +36,6 @@ public abstract class BaseFragmentImpl<V extends IBaseView,P extends BasePresent
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE);
-        lifecycleProvider=this;
         if (presenter == null) {
             presenter = initPresenter();
         }

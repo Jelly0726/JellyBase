@@ -9,6 +9,7 @@ import com.jelly.baselibrary.model.*
 import com.jelly.baselibrary.token.TokenModel
 import com.jelly.jellybase.datamodel.RecevierAddress
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import systemdb.Login
@@ -119,7 +120,7 @@ interface IApiService {
     fun upload(
         @Header("token") token: String?,
         @Part("description") description: RequestBody?,
-        @Part file: Part?
+        @Part file: MultipartBody.Part
     ): Observable<HttpResultData<UploadData>>
 
     //银行卡列表

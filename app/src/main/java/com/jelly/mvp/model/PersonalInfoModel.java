@@ -3,6 +3,8 @@ package com.jelly.mvp.model;
 
 import android.text.TextUtils;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
@@ -10,14 +12,13 @@ import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
-import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.model.UploadBean;
 import com.jelly.baselibrary.model.UploadData;
+import com.jelly.baselibrary.token.GlobalToken;
 
 import java.io.File;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableTransformer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -26,7 +27,7 @@ public class PersonalInfoModel extends BaseModel {
     /**
      * 上传文件(图片)
      */
-    public void upload(File file, UploadBean uploadBean, ObservableTransformer composer, ObserverResponseListener<HttpResult> listener){
+    public void upload(File file, UploadBean uploadBean, LifecycleOwner composer, ObserverResponseListener<HttpResult> listener){
         // 创建 RequestBody，用于封装构建RequestBody
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);

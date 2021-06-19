@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.base.sqldao.LoginDaoUtils;
@@ -18,12 +20,9 @@ import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserSetpwdActivityBinding;
 import com.jelly.mvp.contact.SetPwdContact;
 import com.jelly.mvp.presenter.SetPassWordActivityPresenter;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 
 import java.util.Map;
 import java.util.TreeMap;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/28.
@@ -87,8 +86,8 @@ public class SetPWDActivity extends BaseActivityImpl<SetPwdContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     @Override
     public Object getSetPassWordParam() {

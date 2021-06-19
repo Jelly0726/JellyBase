@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.LifecycleOwner;
+
 import com.baidu.autoupdatesdk.UICheckUpdateCallback;
 import com.base.httpmvp.mvpView.BaseActivityImpl;
 import com.jelly.baselibrary.appManager.AppSubject;
@@ -19,9 +21,6 @@ import com.jelly.mvp.presenter.SettingPresenter;
 import com.mylhyl.circledialog.CircleDialog;
 import com.mylhyl.circledialog.callback.ConfigDialog;
 import com.mylhyl.circledialog.params.DialogParams;
-import com.trello.rxlifecycle3.android.ActivityEvent;
-
-import io.reactivex.ObservableTransformer;
 
 /**
  * Created by Administrator on 2017/9/27.
@@ -50,8 +49,8 @@ public class SettingsActivity extends BaseActivityImpl<SettingContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(ActivityEvent.DESTROY);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
     private void iniView(){
         getBinding().leftBack.setOnClickListener(listener);

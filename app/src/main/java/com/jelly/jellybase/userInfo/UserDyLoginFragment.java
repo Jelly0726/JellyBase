@@ -6,12 +6,14 @@ import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.base.BaseApplication;
 import com.base.httpmvp.mvpView.BaseFragmentImpl;
 import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.jiguang.TagAliasOperatorHelper;
 import com.google.gson.Gson;
+import com.jelly.annotation.OnClick;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
 import com.jelly.baselibrary.config.IntentAction;
@@ -20,12 +22,10 @@ import com.jelly.baselibrary.social.SocialUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.token.TokenModel;
-import com.jelly.annotation.OnClick;
 import com.jelly.jellybase.R;
 import com.jelly.jellybase.databinding.UserDyloginFragmentBinding;
 import com.jelly.mvp.contact.LoginContact;
 import com.jelly.mvp.presenter.LoginActivityPresenter;
-import com.trello.rxlifecycle3.android.FragmentEvent;
 
 import net.arvin.socialhelper.callback.SocialLoginCallback;
 import net.arvin.socialhelper.entities.ThirdInfoEntity;
@@ -36,7 +36,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import cn.jpush.android.api.JPushInterface;
-import io.reactivex.ObservableTransformer;
 import systemdb.Login;
 
 /**
@@ -170,8 +169,8 @@ public class UserDyLoginFragment extends BaseFragmentImpl<LoginContact.View
     }
 
     @Override
-    public <T> ObservableTransformer<T, T> bindLifecycle() {
-        return lifecycleProvider.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW);
+    public LifecycleOwner bindLifecycle() {
+        return this;
     }
 
     @Override
