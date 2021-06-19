@@ -11,15 +11,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class JsonUtil {
+public class JsonTool {
     private Moshi moshi;
     /**
      * 内部类，在装载该内部类时才会去创建单利对象
      */
     private static class SingletonHolder {
-        private static final JsonUtil instance = new JsonUtil();
+        private static final JsonTool instance = new JsonTool();
     }
-    private JsonUtil(){
+    private JsonTool(){
         moshi = new Moshi
                 .Builder()
                 .addLast(new ColorAdapter())
@@ -29,8 +29,8 @@ public class JsonUtil {
     /**
      * 单一实例
      */
-    public static JsonUtil get() {
-        return JsonUtil.SingletonHolder.instance;
+    public static JsonTool get() {
+        return JsonTool.SingletonHolder.instance;
     }
 
     /**
@@ -40,7 +40,7 @@ public class JsonUtil {
      * @throws ObjectStreamException
      */
     private Object readResolve() throws ObjectStreamException {
-        return JsonUtil.SingletonHolder.instance;
+        return JsonTool.SingletonHolder.instance;
     }
     /**
      * 转JSON
