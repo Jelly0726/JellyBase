@@ -7,13 +7,13 @@ import android.view.View;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.alibaba.fastjson.JSON;
 import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.addressmodel.Address;
 import com.jelly.baselibrary.addressmodel.Area;
 import com.jelly.baselibrary.addressmodel.City;
 import com.jelly.baselibrary.addressmodel.Province;
 import com.jelly.baselibrary.androidPicker.AddressAdapter;
+import com.jelly.baselibrary.moshi.JsonTool;
 import com.jelly.baselibrary.multiClick.AntiShake;
 import com.jelly.baselibrary.recyclerViewUtil.SimpleItemDecoration;
 import com.jelly.jellybase.R;
@@ -90,7 +90,7 @@ public class ChangeAddressActivity extends BaseActivity<ChangeAddressActivityBin
     private void iniXRefreshView(){
         try {
             String json = ConvertUtils.toString(getAssets().open("city.json"));
-            mList.addAll(JSON.parseArray(json, Province.class));
+            mList.addAll(JsonTool.get().toList(json, Province.class));
         } catch (Exception e) {
             e.printStackTrace();
         }

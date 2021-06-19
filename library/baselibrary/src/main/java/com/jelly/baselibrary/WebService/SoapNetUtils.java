@@ -4,7 +4,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.alibaba.fastjson.JSON;
+
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -160,7 +161,7 @@ public class SoapNetUtils {
                 }
                 Object o;
                 if (fieldValue instanceof SoapPrimitive) {
-                    o = JSON.parseObject(fieldValue.toString(), type);
+                    o = JsonTool.get().fromJson(fieldValue.toString(), type);
                     fields[i].set(instance, o);
                 } else if (fieldValue instanceof SoapObject) {
                     if (type == ArrayList.class) {

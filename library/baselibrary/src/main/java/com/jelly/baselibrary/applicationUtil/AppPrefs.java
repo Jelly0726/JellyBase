@@ -2,10 +2,10 @@ package com.jelly.baselibrary.applicationUtil;
 
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
 import com.jelly.baselibrary.Utils.JsonUtil;
 import com.jelly.baselibrary.Utils.StringUtil;
 import com.jelly.baselibrary.encrypt.SafetyUtil;
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import net.grandcentrix.tray.TrayPreferences;
 
@@ -174,7 +174,7 @@ public class AppPrefs {
      */
     public static void putObject(Context context, String key, Object value) {
         if (value != null) {
-            String va = SafetyUtil.getInstance().encode(context, JSON.toJSONString(value), SafetyUtil.AES);
+            String va = SafetyUtil.getInstance().encode(context, JsonTool.get().toJson(value), SafetyUtil.AES);
             putString(context, key, va);
         } else
             remove(context, key);
@@ -198,7 +198,7 @@ public class AppPrefs {
             return null;
         }
         if (JsonUtil.getInstance().validate(json)) {
-            Object object = JSON.parseObject(json, cc);
+            Object object = JsonTool.get().fromJson(json, cc);
             return object;
         }
         return null;
@@ -222,7 +222,7 @@ public class AppPrefs {
             return null;
         }
         if (JsonUtil.getInstance().validate(json)) {
-            List<T> object = JSON.parseArray(json, cc);
+            List<T> object = JsonTool.get().toList(json, cc);
             return object;
         }
         return null;

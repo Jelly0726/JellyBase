@@ -8,8 +8,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import androidx.core.app.ActivityCompat;
 
-import com.alibaba.fastjson.JSON;
 import com.jelly.baselibrary.log.LogUtils;
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public class SmsUtil {
 //                break;
 //            }
         }
-        LogUtils.i("list="+ JSON.toJSONString(list));
+        LogUtils.i("list="+ JsonTool.get().toJson(list));
         return list;
     }
 }

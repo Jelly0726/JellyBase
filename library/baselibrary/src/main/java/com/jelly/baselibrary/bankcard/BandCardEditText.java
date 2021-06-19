@@ -12,9 +12,8 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.jelly.baselibrary.appManager.FixMemLeak;
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -387,107 +387,107 @@ public class BandCardEditText extends AppCompatEditText {
      * 获取所属银行
      */
     private void getBank(String kaNo) {
-            new AsyncTask<String, Integer, String>() {
-                private ExecutorService exec= Executors.newCachedThreadPool();
-                @Override
-                protected String doInBackground(final String... params) {
-                    Callable<String> callable = new Callable<String>() {
-                        @Override
-                        public String call() throws Exception {
-                            //https://apimg.alipay.com/combo.png?d=cashier&t=ICBC //获取logo图标
-                            String urls = "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json" +
-                                    "?input_charset=utf-8" +
-                                    "&cardNo="+params[0]+"&cardBinCheck=true";
-                            StringBuilder inputLine = new StringBuilder();
-                            String read = "";
-                            URL url = null;
-                            HttpURLConnection urlConnection = null;
-                            BufferedReader in = null;
-                            try {
-                                url = new URL(urls);
-                                urlConnection = (HttpURLConnection) url.openConnection();
-                                in = new BufferedReader( new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
-                                while((read=in.readLine())!=null){
-                                    inputLine.append(read+"\r\n");
-                                }
+        new AsyncTask<String, Integer, String>() {
+            private ExecutorService exec= Executors.newCachedThreadPool();
+            @Override
+            protected String doInBackground(final String... params) {
+                Callable<String> callable = new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        //https://apimg.alipay.com/combo.png?d=cashier&t=ICBC //获取logo图标
+                        String urls = "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json" +
+                                "?input_charset=utf-8" +
+                                "&cardNo="+params[0]+"&cardBinCheck=true";
+                        StringBuilder inputLine = new StringBuilder();
+                        String read = "";
+                        URL url = null;
+                        HttpURLConnection urlConnection = null;
+                        BufferedReader in = null;
+                        try {
+                            url = new URL(urls);
+                            urlConnection = (HttpURLConnection) url.openConnection();
+                            in = new BufferedReader( new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
+                            while((read=in.readLine())!=null){
+                                inputLine.append(read+"\r\n");
+                            }
 //                                System.out.println(inputLine.toString());
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }finally{
-                                if(in!=null){
-                                    try {
-                                        in.close();
-                                    } catch (IOException e) {
-                                        // TODO Auto-generated catch block
-                                        e.printStackTrace();
-                                    }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }finally{
+                            if(in!=null){
+                                try {
+                                    in.close();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
                                 }
                             }
-                            return inputLine.toString();
                         }
-                    };
-                    //{"cardType":"DC","bank":"CMBC","key":"6216912900342240","messages":[],"validated":true,"stat":"ok"}
-                    // 开始任务执行服务
-                    Future<String> task=exec.submit(callable);
-                    String string="";
-                    try {
-                        string=task.get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }finally {
-                        // 停止任务执行服务
-                        exec.shutdown();
+                        return inputLine.toString();
                     }
-                    if (TextUtils.isEmpty(string)){
-                       return "";
-                    }
-                    JSONObject jsonObject=JSON.parseObject(string);
-                    if (!jsonObject.getString("stat").equals("ok")){
-                        return "";
-                    }
-                    String bank=jsonObject.getString("bank");
-                    if (TextUtils.isEmpty(bank)){
-                        return "";
-                    }
-                    String cardType=jsonObject.getString("cardType");
-                    if (cardType.equals("DC")){
-                        cardType="储蓄卡";
-                    } else if (cardType.equals("CC")) {
-                        cardType="信用卡";
-                    }
-                    ArrayMap<String,String> result=new ArrayMap<>();
-                    JSONObject Map = JSON.parseObject(bankName);
-                    result.put("bankName",Map.getString(bank));
-                    result.put("cardType",cardType);
-                    result.put("cardKey",jsonObject.getString("key"));
-                    return JSON.toJSONString(result);
+                };
+                //{"cardType":"DC","bank":"CMBC","key":"6216912900342240","messages":[],"validated":true,"stat":"ok"}
+                // 开始任务执行服务
+                Future<String> task=exec.submit(callable);
+                String string="";
+                try {
+                    string=task.get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }finally {
+                    // 停止任务执行服务
+                    exec.shutdown();
                 }
+                if (TextUtils.isEmpty(string)){
+                    return "";
+                }
+                Map jsonObject = JsonTool.get().fromJson(string, Map.class);
+                if (!jsonObject.get("stat").equals("ok")){
+                    return "";
+                }
+                String bank=jsonObject.get("bank").toString();
+                if (TextUtils.isEmpty(bank)){
+                    return "";
+                }
+                String cardType=jsonObject.get("cardType").toString();
+                if (cardType.equals("DC")){
+                    cardType="储蓄卡";
+                } else if (cardType.equals("CC")) {
+                    cardType="信用卡";
+                }
+                ArrayMap<String,String> result=new ArrayMap<>();
+                Map Map = JsonTool.get().fromJson(bankName, Map.class);
+                result.put("bankName",Map.get(bank).toString());
+                result.put("cardType",cardType);
+                result.put("cardKey",jsonObject.get("key").toString());
+                return JsonTool.get().toJson(result);
+            }
 
-                @Override
-                protected void onPostExecute(String s) {
-                    super.onPostExecute(s);
-                    if (TextUtils.isEmpty(s))return;
-                    JSONObject Map = JSON.parseObject(s);
-                    String name = "";
-                    String type = "";
-                    if (Map != null) {
-                        if (!TextUtils.isEmpty(Map.getString("bankName"))) {
-                            name = Map.getString("bankName");
-                            type =Map.getString("cardType");
-                        }
-                    }
-                    if (listener != null) {
-                        if (name.trim().length() > 0) {
-                            listener.success(name, type);
-                        } else {
-                            listener.failure();
-                        }
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (TextUtils.isEmpty(s))return;
+                Map Map = JsonTool.get().fromJson(s, Map.class);
+                String name = "";
+                String type = "";
+                if (Map != null) {
+                    if (!TextUtils.isEmpty(Map.get("bankName").toString())) {
+                        name = Map.get("bankName").toString();
+                        type =Map.get("cardType").toString();
                     }
                 }
-            }.execute(kaNo);
+                if (listener != null) {
+                    if (name.trim().length() > 0) {
+                        listener.success(name, type);
+                    } else {
+                        listener.failure();
+                    }
+                }
+            }
+        }.execute(kaNo);
     }
 }

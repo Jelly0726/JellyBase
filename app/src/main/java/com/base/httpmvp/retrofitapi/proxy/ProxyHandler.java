@@ -3,13 +3,13 @@ package com.base.httpmvp.retrofitapi.proxy;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
 import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
 import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
+import com.jelly.baselibrary.moshi.JsonTool;
 import com.jelly.baselibrary.token.GlobalToken;
 import com.jelly.baselibrary.token.IGlobalManager;
 import com.jelly.baselibrary.token.TokenModel;
@@ -111,7 +111,7 @@ public class ProxyHandler implements InvocationHandler {
                 // call the refresh token api.
                     Map<String,String> map=new TreeMap<>();
                     //map.put("saleid",login.getUserID()+"");
-                    HttpMethods.getInstance().getToken(JSON.toJSON(map).toString(),null
+                    HttpMethods.getInstance().getToken(JsonTool.get().toJson(map),null
                             ,new Observer<HttpResultData<TokenModel>>() {
 
                                 @Override

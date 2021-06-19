@@ -6,7 +6,7 @@ import android.os.AsyncTask
 import cn.qqtheme.framework.entity.Province
 import cn.qqtheme.framework.picker.AddressPicker
 import cn.qqtheme.framework.util.ConvertUtils
-import com.alibaba.fastjson.JSON
+import com.jelly.baselibrary.moshi.JsonTool
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
@@ -67,7 +67,7 @@ class AddressPickTask(activity: Activity) : CoroutineScope by MainScope() {
                     val json = ConvertUtils.toString(
                         activity.get()!!.assets.open("city.json")
                     )
-                    data.addAll(JSON.parseArray(json, Province::class.java))
+                    data.addAll(JsonTool.get().toList(json, Province::class.java))
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

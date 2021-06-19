@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alibaba.fastjson.JSON;
 import com.jelly.baselibrary.androidPicker.AddressPickTask;
+import com.jelly.baselibrary.moshi.JsonTool;
 import com.jelly.jellybase.R;
 
 import java.util.ArrayList;
@@ -432,7 +432,7 @@ public class MainActivity extends BaseActivity {
         try {
             ArrayList<Province> data = new ArrayList<>();
             String json = ConvertUtils.toString(getAssets().open("city2.json"));
-            data.addAll(JSON.parseArray(json, Province.class));
+            data.addAll(JsonTool.get().toList(json, Province.class));
             AddressPicker picker = new AddressPicker(this, data);
             picker.setShadowVisible(true);
             picker.setTextSizeAutoFit(false);
