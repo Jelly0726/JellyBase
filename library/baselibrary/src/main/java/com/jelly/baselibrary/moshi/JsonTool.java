@@ -24,6 +24,7 @@ public class JsonTool {
     private JsonTool() {
         moshi = new Moshi
                 .Builder()
+                .addLast(new StringAdapter())
                 .addLast(new ColorAdapter())
                 .addLast(new KotlinJsonAdapterFactory())
                 .build();

@@ -27,7 +27,7 @@ open class BaseModel {
     ) {
         val observer: Observer<T> = object : Observer<T> {
             override fun onError(e: Throwable) {
-                listener?.onFailure(e.message)
+                listener?.onFailure(e.message!!)
                 removeDisposable(this.hashCode())
             }
 
