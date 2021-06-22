@@ -3,7 +3,6 @@ package com.jelly.baselibrary.moshi;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory;
 
 import java.io.IOException;
 import java.io.ObjectStreamException;
@@ -24,9 +23,8 @@ public class JsonTool {
     private JsonTool() {
         moshi = new Moshi
                 .Builder()
-                .addLast(new StringAdapter())
-                .addLast(new ColorAdapter())
-                .addLast(new KotlinJsonAdapterFactory())
+                .add(new StringAdapter())
+                .add(new ColorAdapter())
                 .build();
     }
 
@@ -60,6 +58,19 @@ public class JsonTool {
         String json = jsonAdapter.toJson(obj);
         return json;
     }
+    /**
+     * 转JSON
+     *
+     * @param obj
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public <T> String toJson(T obj,Type type) {
+        JsonAdapter<T> jsonAdapter = moshi.adapter(type);
+        String json = jsonAdapter.toJson(obj);
+        return json;
+    }
 
     /**
      * 转JSON
@@ -89,7 +100,25 @@ public class JsonTool {
         JsonAdapter<T> jsonAdapter = moshi.adapter(tClass);
         T obj = null;
         try {
-            obj = jsonAdapter.fromJson(json);
+            obj = jsonAdapter.nullSafe().fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
+    /**
+     * JSON 转 T
+     *
+     * @param json
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public <T> T fromJson(String json,Type type) {
+        JsonAdapter<T> jsonAdapter = moshi.adapter(type);
+        T obj = null;
+        try {
+            obj = jsonAdapter.nullSafe().fromJson(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +139,7 @@ public class JsonTool {
         JsonAdapter<T> jsonAdapter = moshi.adapter(tClass);
         T obj = null;
         try {
-            obj = jsonAdapter.fromJson(json);
+            obj = jsonAdapter.nullSafe().fromJson(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -130,7 +159,25 @@ public class JsonTool {
         JsonAdapter<List<T>> adapter = moshi.adapter(type);
         List<T> list = null;
         try {
-            list = adapter.fromJson(json);
+            list = adapter.nullSafe().fromJson(json);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    /**
+     * JSON 转 List<T>
+     *
+     * @param json
+     * @param type
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> toList(String json, Type type) {
+        JsonAdapter<List<T>> adapter = moshi.adapter(type);
+        List<T> list = null;
+        try {
+            list = adapter.nullSafe().fromJson(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,7 +199,7 @@ public class JsonTool {
         JsonAdapter<List<T>> adapter = moshi.adapter(type);
         List<T> list = null;
         try {
-            list = adapter.fromJson(json);
+            list = adapter.nullSafe().fromJson(json);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,9 +1,9 @@
 package com.base.httpmvp.retrofitapi.converter;
 
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import okhttp3.MediaType;
@@ -17,12 +17,9 @@ import retrofit2.Converter;
 final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
-    private Moshi moshi;
-    private JsonAdapter<T> adapter;
-
-    MGsonRequestBodyConverter(Moshi moshi, JsonAdapter<T>  adapter) {
-        this.moshi=moshi;
-        this.adapter=adapter;
+    private final Type type;
+    MGsonRequestBodyConverter(Type type) {
+        this.type=type;
     }
 
     @Override
@@ -33,6 +30,7 @@ final class MGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
 //        adapter.write(jsonWriter, value);
 //        jsonWriter.close();
 //        return RequestBody.create(MEDIA_TYPE, buffer.readUtf8());
-        return RequestBody.create(MEDIA_TYPE, adapter.toJson(value));
+//        return RequestBody.create(MEDIA_TYPE, adapter.toJson(value));
+        return RequestBody.create(MEDIA_TYPE, JsonTool.get().toJson(value,type));
     }
 }

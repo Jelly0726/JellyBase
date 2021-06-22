@@ -19,7 +19,6 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import cn.jpush.android.api.JPushInterface
-import com.jelly.baselibrary.systemBar.StatusBarUtil
 import com.jelly.baselibrary.appManager.AppSubject
 import com.jelly.baselibrary.appManager.FixMemLeak
 import com.jelly.baselibrary.appManager.Observable
@@ -28,6 +27,7 @@ import com.jelly.baselibrary.applicationUtil.AppPrefs
 import com.jelly.baselibrary.config.ConfigKey
 import com.jelly.baselibrary.config.IntentAction
 import com.jelly.baselibrary.log.LogUtils
+import com.jelly.baselibrary.systemBar.StatusBarUtil
 import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.view.GrayFrameLayout
 import com.jelly.baselibrary.view.SoftKeyboardManager
@@ -53,6 +53,18 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
     private var isDisable = true //是否屏蔽软键盘
     private var handler: Handler? = null
     var isDismiss=true//是否关闭activity的时候也要关闭异常登录提示框
+    //activity切换动画
+//    enum class TransitionMode {
+//        LEFT, RIGHT, TOP, BOTTOM, SCALE, FADE
+//    }
+//
+//    /**
+//     * 设置activity切换动画默认TransitionMode.LEFT
+//     * 子类可重载
+//     */
+//    fun getOverridePendingTransitionMode(): TransitionMode{
+//        return TransitionMode.LEFT
+//    }
     companion object {
         //    public DisplayManager mDisplayManager;//双屏客显
 //    public Presentation mPresentation;//双屏客显
@@ -68,6 +80,23 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
 //        // 全屏
 //        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
 //                WindowManager.LayoutParams. FLAG_FULLSCREEN);
+        //activity进入动画
+//        if (getOverridePendingTransitionMode() != null) {
+//            when(getOverridePendingTransitionMode()) {
+//                TransitionMode.LEFT ->
+//                overridePendingTransition(R.anim.activity_left_in, R.anim.activity_left_out)
+//                TransitionMode.RIGHT ->
+//                overridePendingTransition(R.anim.activity_right_in, R.anim.activity_right_out)
+//                TransitionMode.TOP ->
+//                overridePendingTransition(R.anim.activity_top_in, R.anim.activity_top_out)
+//                TransitionMode.BOTTOM ->
+//                overridePendingTransition(R.anim.activity_bottom_in, R.anim.activity_bottom_out)
+//                TransitionMode.SCALE ->
+//                overridePendingTransition(R.anim.activity_scale_in, R.anim.activity_scale_out)
+//                TransitionMode.FADE ->
+//                overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out)
+//            }
+//        }
         detectUsbAudioDevice()
         super.onCreate(savedInstanceState)
         //====解决java.net.SocketException：sendto failed：ECONNRESET（由对等方重置连接）
@@ -329,6 +358,35 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
         AppSubject.getInstance().detach(this)
         FixMemLeak.fixLeak(this)
         super.finish()
+        //activity退出动画
+//        if (getOverridePendingTransitionMode() != null) {
+//            when (getOverridePendingTransitionMode()) {
+//                TransitionMode.LEFT -> overridePendingTransition(
+//                    R.anim.activity_right_in,
+//                    R.anim.activity_right_out
+//                )
+//                TransitionMode.RIGHT -> overridePendingTransition(
+//                    R.anim.activity_left_in,
+//                    R.anim.activity_left_out
+//                )
+//                TransitionMode.TOP -> overridePendingTransition(
+//                    R.anim.activity_bottom_in,
+//                    R.anim.activity_bottom_out
+//                )
+//                TransitionMode.BOTTOM -> overridePendingTransition(
+//                    R.anim.activity_top_in,
+//                    R.anim.activity_top_out
+//                )
+//                TransitionMode.SCALE -> overridePendingTransition(
+//                    R.anim.activity_scale_in_disappear,
+//                    R.anim.activity_scale_out_disappear
+//                )
+//                TransitionMode.FADE -> overridePendingTransition(
+//                    R.anim.activity_fade_in_disappear,
+//                    R.anim.activity_fade_out_disappear
+//                )
+//            }
+//        }
     }
 
     override fun onDestroy() {

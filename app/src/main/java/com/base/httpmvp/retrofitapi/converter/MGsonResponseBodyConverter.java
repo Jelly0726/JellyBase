@@ -5,10 +5,10 @@ import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.HttpUtils;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+import com.jelly.baselibrary.moshi.JsonTool;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import okhttp3.MediaType;
@@ -22,12 +22,9 @@ import retrofit2.Converter;
 final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
-    //private final Type type;
-    private Moshi moshi;
-    private JsonAdapter<T>  adapter;
-    MGsonResponseBodyConverter(Moshi moshi, JsonAdapter<T>  adapter) {
-        this.moshi=moshi;
-        this.adapter=adapter;
+    private final Type type;
+    MGsonResponseBodyConverter(Type type) {
+        this.type=type;
     }
 //    MGsonResponseBodyConverter(Gson gson, Type type) {
 //        this.gson = gson;
@@ -65,8 +62,7 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             //json转换为list
             //List<SearchResul> list=gson.fromJson(json, new TypeToken<List<SearchResul>>(){}.getType());
             //T users = gson.fromJson(response,type);
-            T users = adapter.fromJson(response);
-
+            T users = JsonTool.get().fromJson(response, type);
             return users;
         } catch (Exception e){
             Log.i("ss","convert e="+e);
