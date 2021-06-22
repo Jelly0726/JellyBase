@@ -12,6 +12,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.2.1'
         // NOTE: Do not place your application dependencies here; they belong
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        //kotlin官方提供的serialization序列化插件
+//        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
         // in the individual module build.gradle files
         classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
     }
@@ -166,7 +168,9 @@ dependencies {
     api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
     api 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.1.0'
     api 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
-    //kotlin解析JSON
+    //kotlin的JSON解析，moshi 更适合 Java和kotlin混合开发的Android
+    //kotlinx.serialization 是kotlin官方提供的更适合多平台移植
+//    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     api "com.squareup.moshi:moshi:$moshiVerion"
     api "com.squareup.moshi:moshi-kotlin:$moshiVerion"
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVerion")

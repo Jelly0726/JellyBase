@@ -257,6 +257,8 @@ dependencies {
 //        api 'com.amap.api:search:7.3.0'
     //导航
     implementation 'com.amap.api:navi-3dmap:latest.integration'
+    //kotlinx.serialization 是kotlin官方提供的更适合多平台移植
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 //        api 'com.amap.api:navi-3dmap:7.5.0'
     //百度文字识别(身份证、银行卡等)
     implementation files('libs/ocr-sdk.jar')

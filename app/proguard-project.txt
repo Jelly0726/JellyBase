@@ -449,8 +449,33 @@ public static java.lang.String TABLENAME;
  -dontwarn com.alibaba.fastjson.**
  -keep class com.alibaba.fastjson.**{*; }
   #====================moshi====================
- -dontwarn com.squareup.moshi.**
- -keep class com.squareup.moshi.**{*; }
+-dontwarn com.squareup.moshi.**
+-keep class com.squareup.moshi.**{*; }
+#====================kotlinx.serialization====================
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.SerializationKt
+
+-keep,includedescriptorclasses class com.jelly.baselibrary.**$$serializer { *; }
+# <-- change package name to your app's
+-keepclassmembers class com.jelly.baselibrary.** {
+# <-- change package name to your app's
+    *** Companion;
+}
+-keepclasseswithmembers class com.jelly.baselibrary.** {
+# <-- change package name to your app's
+    kotlinx.serialization.KSerializer serializer(...);
+}
+#====================
+ -keep,includedescriptorclasses class com.jelly.jellybase.**$$serializer { *; }
+  # <-- change package name to your app's
+ -keepclassmembers class com.jelly.jellybase.** {
+ # <-- change package name to your app's
+     *** Companion;
+ }
+ -keepclasseswithmembers class com.jelly.jellybase.** {
+ # <-- change package name to your app's
+     kotlinx.serialization.KSerializer serializer(...);
+ }
   #====================AndroidPicker====================
 -keepattributes InnerClasses,Signature
  -dontwarn cn.qqtheme.framework.entity.**
