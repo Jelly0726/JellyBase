@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.base.httpmvp.retrofitapi.HttpUtils;
-import com.jelly.baselibrary.applicationUtil.NetworkUtils;
+import com.base.httpmvp.retrofitapi.NetworkUtils;
+import com.jelly.baselibrary.Utils.StringUtil;
+import com.jelly.baselibrary.applicationUtil.AppUtils;
+import com.jelly.baselibrary.log.LogUtils;
 
 import java.io.IOException;
 
@@ -36,15 +38,22 @@ public class BaseInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request request = chain.request();
+
+      Request request = chain.request();
+       final  Request requests=request;
         if (request.method().equals("POST")) {
             requestBody = request.body();
             if (requestBody != null && requestBody.contentLength() == 0) {
                 requestBody = new RequestBody() {
                     @Override
                     public MediaType contentType() {
-                        return MediaType.parse("application/json; charset=UTF-8");
-//                        return MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8");
+                       String type= requests.header("Content-Type");
+                        LogUtils.i("type="+type);
+                       if (StringUtil.isEmpty(type))
+//                        return MediaType.parse("application/json; charset=UTF-8");
+                        return MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8");
+                       else
+                           return MediaType.parse(type);
                     }
 
                     @Override
@@ -55,7 +64,7 @@ public class BaseInterceptor implements Interceptor {
             }
         }
         //网络不可用
-        if (!NetworkUtils.getInstance().isAvailable()) {
+        if (!NetworkUtils.isAvailable(mContext)) {
             if (Build.VERSION.SDK != null && Build.VERSION.SDK_INT > 13) {
                 //在请求头中加入：强制使用缓存，不访问网络
                 /*
@@ -115,7 +124,7 @@ public class BaseInterceptor implements Interceptor {
         }
         Response response = chain.proceed(request);
         //网络可用
-        if (NetworkUtils.getInstance().isAvailable()) {
+        if (NetworkUtils.isAvailable(mContext)) {
             int maxAge = 0;
             // 有网络时 在响应头中加入：设置缓存超时时间0个小时
             response.newBuilder()

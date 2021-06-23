@@ -3,8 +3,12 @@ package com.base.httpmvp.retrofitapi.converter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.base.httpmvp.retrofitapi.HttpCode;
 import com.base.httpmvp.retrofitapi.HttpUtils;
 import com.base.httpmvp.retrofitapi.exception.ApiException;
+import com.base.httpmvp.retrofitapi.exception.TokenInvalidException;
+import com.base.httpmvp.retrofitapi.exception.TokenNotExistException;
+import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.jelly.baselibrary.moshi.JsonTool;
 
 import java.io.IOException;
@@ -23,8 +27,9 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
     private final Type type;
+
     MGsonResponseBodyConverter(Type type) {
-        this.type=type;
+        this.type = type;
     }
 //    MGsonResponseBodyConverter(Gson gson, Type type) {
 //        this.gson = gson;
@@ -34,24 +39,19 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
     @Override
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
-        Log.i("ss","response="+response);
-        if (TextUtils.isEmpty(response)){
+        Log.i("ss", "response=" + response);
+        if (TextUtils.isEmpty(response)) {
             throw new ApiException("服务器返回数据异常!");
         }
-        if (!HttpUtils.isJson(response)){
-            throw new ApiException("非法数据格式!"+response);
+        if (!HttpUtils.isJson(response)) {
+            throw new ApiException("非法数据格式!" + response);
         }
-//        HttpState httpState = gson.fromJson(response, HttpState.class);
-//        if (!httpState.isReturnState()) {
-//            if (httpState.getMessage().trim().equals(HttpCode.TOKEN_NOT_EXIST+"")) {
-//                throw new TokenNotExistException();
-//            } else if (httpState.getMessage().trim().equals(HttpCode.TOKEN_INVALID+"")) {
-//                throw new TokenInvalidException();
-//            } else {
-//                // 特定 API 的错误，在相应的 Subscriber 的 onError 的方法中进行处理
-//                throw new ApiException(httpState.getMessage());
-//            }
-//        }
+        HttpResult httpState = JsonTool.get().fromJson(response, HttpResult.class);
+        if (httpState.getState() == HttpCode.TOKEN_NOT_EXIST) {
+            throw new TokenNotExistException();
+        } else if (httpState.getState() == HttpCode.TOKEN_INVALID) {
+            throw new TokenInvalidException();
+        }
         try {
 //            MediaType contentType = value.contentType();
 //            Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;
@@ -64,10 +64,10 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             //T users = gson.fromJson(response,type);
             T users = JsonTool.get().fromJson(response, type);
             return users;
-        } catch (Exception e){
-            Log.i("ss","convert e="+e);
+        } catch (Exception e) {
+            Log.i("ss", "convert e=" + e);
             throw new ApiException(e);
-        }finally {
+        } finally {
             value.close();
         }
     }
