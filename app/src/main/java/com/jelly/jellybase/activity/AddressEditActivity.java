@@ -241,7 +241,7 @@ public class AddressEditActivity extends BaseActivityImpl<OperaAddressContact.Vi
     @Override
     public Object operaAddressParam() {
         String phone = getBinding().phoneEdit.getText().toString().trim();
-        if (!PwdCheckUtil.isDigit2(phone)){
+        if (!PwdCheckUtil.isAllDigit(phone)){
             phone=recevierAddress.getPhone();
         }
         String name = getBinding().nameEdit.getText().toString();

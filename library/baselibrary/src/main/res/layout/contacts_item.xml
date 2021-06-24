@@ -27,7 +27,7 @@
             android:id="@+id/cbChecked"
             android:layout_width="23mm"
             android:layout_height="23mm"
-            android:background="@drawable/checkbox_style"
+            android:background="@drawable/pay_method_checkbox_style"
             android:button="@null"
             android:clickable="false"
             android:focusable="false"

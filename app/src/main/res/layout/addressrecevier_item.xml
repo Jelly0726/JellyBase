@@ -67,7 +67,7 @@
             android:enabled="false"
             android:drawablePadding="5mm"
             android:textColor="#313131"
-            android:drawableLeft="@drawable/checkbox_style"
+            android:drawableLeft="@drawable/pay_method_checkbox_style"
             android:text="默认地址"
             android:id="@+id/default_checkBox"
             android:button="@null"

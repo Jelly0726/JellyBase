@@ -89,7 +89,7 @@
             android:layout_width="20mm"
             android:layout_height="20mm"
             android:layout_marginLeft="17mm"
-            android:background="@drawable/checkbox_style"
+            android:background="@drawable/pay_method_checkbox_style"
             android:button="@null"
             android:checked="false"
             android:layout_gravity="center_vertical"/>

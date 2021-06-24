@@ -178,7 +178,7 @@
                 android:layout_width="15mm"
                 android:layout_height="15mm"
                 android:button="@null"
-                android:background="@drawable/checkbox_style"/>
+                android:background="@drawable/pay_method_checkbox_style"/>
             <TextView
                 android:id="@+id/clause"
                 android:layout_width="wrap_content"

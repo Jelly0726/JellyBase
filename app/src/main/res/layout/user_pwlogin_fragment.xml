@@ -75,7 +75,7 @@
             android:layout_width="20mm"
             android:layout_height="20mm"
             android:layout_marginRight="5mm"
-            android:button="@drawable/checkbox_style"
+            android:button="@drawable/pay_method_checkbox_style"
             android:checked="false"/>
     </LinearLayout>
     <LinearLayout

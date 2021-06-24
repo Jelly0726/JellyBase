@@ -99,7 +99,18 @@ public class PwdCheckUtil {
         }
         return pwd.matches(regex);
     }
-
+    /**
+     * 要求是密码大于6位，并仅允许字母及数字组合 且必须含一位以上大写字母！！！
+     * @param pwd
+     * @return
+     */
+    public static boolean validPwd5(String pwd){
+        String regex = "^(?=.*?[A-Z])(?=.*?[0-9])[a-zA-Z0-9]{7,}$";
+        if(StringUtils.isEmpty(pwd)){
+            return false;
+        }
+        return pwd.matches(regex);
+    }
     /**
      * 获取密码复杂度等级（高、中、低）
      * @param pwd  密码
@@ -148,7 +159,7 @@ public class PwdCheckUtil {
      * @param pwd
      * @return
      */
-    public static boolean isDigit(String pwd){
+    public static boolean isInDigit(String pwd){
         return  pwd.matches(".*\\d+.*");
     }
     /**
@@ -156,8 +167,18 @@ public class PwdCheckUtil {
      * @param strNum
      * @return
      */
-    public static boolean isDigit2(String strNum) {
+    public static boolean isAllDigit(String strNum) {
         Pattern pattern = Pattern.compile("[0-9]{1,}");
+        Matcher matcher = pattern.matcher((CharSequence) strNum);
+        return matcher.matches();
+    }
+    /**
+     * 判断一个字符串是否数字开头
+     * @param strNum
+     * @return
+     */
+    public static boolean isStartDigit(String strNum) {
+        Pattern pattern = Pattern.compile("[0-9]\\\\w+");
         Matcher matcher = pattern.matcher((CharSequence) strNum);
         return matcher.matches();
     }
@@ -166,7 +187,7 @@ public class PwdCheckUtil {
      * @param pwd
      * @return
      */
-    public static boolean isCase(String pwd){
+    public static boolean isInCase(String pwd){
         return  pwd.matches(".*[a-zA-Z]+.*");
     }
     /**
@@ -174,8 +195,24 @@ public class PwdCheckUtil {
      * @param pwd
      * @return
      */
-    public static boolean isCase2(String pwd){
+    public static boolean isAllCase(String pwd){
         return  pwd.matches("[a-zA-Z]{1,}");
+    }
+    /**
+     * 是否英文字母开头
+     * @param pwd
+     * @return
+     */
+    public static boolean isStartCase(String pwd){
+        return  pwd.matches("[a-zA-Z]\\\\w+");
+    }
+    /**
+     * 是否英文大写字母开头
+     * @param pwd
+     * @return
+     */
+    public static boolean isStartUpCase(String pwd){
+        return  pwd.matches("[A-Z]\\\\w+");
     }
     /**
      * 判断是否含有特殊字符
@@ -183,7 +220,7 @@ public class PwdCheckUtil {
      * @param str
      * @return true为包含，false为不包含
      */
-    public static boolean isSpecialChar(String str) {
+    public static boolean isInSpecialChar(String str) {
         String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥¥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
@@ -194,7 +231,7 @@ public class PwdCheckUtil {
      * @param checkStr
      * @return
      */
-    public static boolean isChina(String checkStr){
+    public static boolean isInChina(String checkStr){
         if(!StringUtils.isEmpty(checkStr)){
             char[] checkChars = checkStr.toCharArray();
             for(int i = 0; i < checkChars.length; i++){
