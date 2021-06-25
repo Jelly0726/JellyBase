@@ -1,4 +1,4 @@
-package com.jelly.baselibrary.dialog;
+package com.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

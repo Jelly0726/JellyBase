@@ -13,7 +13,6 @@ import com.jelly.baselibrary.BaseActivity;
 import com.jelly.baselibrary.appManager.AppSubject;
 import com.jelly.baselibrary.applicationUtil.AppPrefs;
 import com.jelly.baselibrary.config.ConfigKey;
-import com.jelly.baselibrary.dialog.PrivacyDialog;
 import com.jelly.jellybase.BuildConfig;
 import com.jelly.jellybase.databinding.BaseActivityLauncherBinding;
 import com.jelly.jellybase.server.TraceServiceImpl;
