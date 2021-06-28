@@ -35,6 +35,7 @@ public class PaymentDialog extends AbsBaseCircleDialog implements View.OnClickLi
     private TextView cancle_tv;
     //账户余额
     private float balance = 0;
+    private boolean isPayPwd = false;//是否设置了支付密码
     //需支付金额，用以判断余额是否充足
     private float amount = 0;
     //选中的支付方式
@@ -132,6 +133,14 @@ public class PaymentDialog extends AbsBaseCircleDialog implements View.OnClickLi
 
     public void setOnConfirmListener(OnConfirmListener onConfirmListener) {
         this.onConfirmListener = onConfirmListener;
+    }
+
+    public boolean isPayPwd() {
+        return isPayPwd;
+    }
+
+    public void setPayPwd(boolean payPwd) {
+        isPayPwd = payPwd;
     }
 
     /**
