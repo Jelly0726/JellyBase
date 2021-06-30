@@ -550,8 +550,13 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
                                         .setText("登录过期或异地登录，请重新登录!")
                                         .setPositive("确定") {
                                             activity.circleDialog = null
+                                            //清除token
                                             GlobalToken.removeToken()
-                                            AppSubject.getInstance().detachAll()
+                                            //清除登录数据
+                                            AppPrefs.remove(AppInit.context,ConfigKey.LOGIN_INFO)
+                                            //关闭所有页面
+//                                        AppSubject.getInstance().detachAll()
+                                            //打开登录页
                                             val intent1 =
                                                     Intent()
                                             //intent.setClass(this, LoginActivity.class);

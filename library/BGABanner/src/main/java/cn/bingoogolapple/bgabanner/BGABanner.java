@@ -40,7 +40,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     private static final int RWC = RelativeLayout.LayoutParams.WRAP_CONTENT;
     private static final int LWC = LinearLayout.LayoutParams.WRAP_CONTENT;
     private static final int NO_PLACEHOLDER_DRAWABLE = -1;
-    private static final int VEL_THRESHOLD = 400;
+    private static final int VEL_THRESHOLD = 200;
     private BGAViewPager mViewPager;
     private List<View> mHackyViews;
     private List<View> mViews;
@@ -797,7 +797,7 @@ public class BGABanner extends RelativeLayout implements BGAViewPager.AutoPlayDe
     public void handleAutoPlayActionUpOrCancel(float xVelocity) {
         if (mViewPager != null) {
             if (mPageScrollPosition < mViewPager.getCurrentItem()) { // 往右滑
-                if (xVelocity > VEL_THRESHOLD || (mPageScrollPositionOffset < 0.7f && xVelocity > -VEL_THRESHOLD)) {
+                if (xVelocity > VEL_THRESHOLD || (mPageScrollPositionOffset < 0.3f && xVelocity > -VEL_THRESHOLD)) {
                     // 已达到右滑到接下来展示左边一页的条件，展示左边一页
                     mViewPager.setBannerCurrentItemInternal(mPageScrollPosition, true);
                 } else {

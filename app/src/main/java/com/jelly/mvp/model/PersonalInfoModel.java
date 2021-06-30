@@ -10,7 +10,6 @@ import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
 import com.base.httpmvp.retrofitapi.IApiService;
 import com.base.httpmvp.retrofitapi.function.HttpFunctions;
-import com.base.httpmvp.retrofitapi.methods.HttpResult;
 import com.base.httpmvp.retrofitapi.methods.HttpResultData;
 import com.jelly.baselibrary.model.UploadBean;
 import com.jelly.baselibrary.model.UploadData;
@@ -27,10 +26,10 @@ public class PersonalInfoModel extends BaseModel {
     /**
      * 上传文件(图片)
      */
-    public void upload(File file, UploadBean uploadBean, LifecycleOwner composer, ObserverResponseListener<HttpResult> listener){
+    public void upload(File file, UploadBean uploadBean, LifecycleOwner composer, ObserverResponseListener<HttpResultData<UploadData>> listener){
         // 创建 RequestBody，用于封装构建RequestBody
         RequestBody requestFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                RequestBody.create(file,MediaType.parse("multipart/form-data"));
         String type="image";
         if(!TextUtils.isEmpty(uploadBean.getFileType())){
             type=uploadBean.getFileType();
@@ -41,8 +40,8 @@ public class PersonalInfoModel extends BaseModel {
         // 添加描述
         String descriptionString =uploadBean.getFileDesc();
         RequestBody description =
-                RequestBody.create(
-                        MediaType.parse("multipart/form-data"), descriptionString);
+                RequestBody.create(descriptionString,
+                        MediaType.parse("multipart/form-data"));
         // 执行请求
         Observable observable = HttpMethods.getInstance().getProxy(IApiService.class).upload(GlobalToken.getToken().getToken(),
                 description, body)
