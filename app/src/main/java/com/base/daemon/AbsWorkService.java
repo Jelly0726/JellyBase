@@ -138,6 +138,8 @@ public abstract class AbsWorkService extends Service {
         stopWork(intent, flags, startId);
         //取消 Job / Alarm / Subscription
         cancelJobAlarmSub();
+        //清除通知栏
+        stopForeground(true);
     }
 
     @Override

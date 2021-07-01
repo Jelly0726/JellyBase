@@ -72,14 +72,13 @@ public class ApiException extends RuntimeException {
                 || throwable instanceof MalformedJsonException) {
             message = "解析错误("+ ERROR.PARSE_ERROR+")";     //均视为解析错误
             return message;
-
+        } else if (throwable instanceof SocketTimeoutException) {//连接超时
+            message = "连接超时(" + ERROR.NETWORD_ERROR + ")";//均视为网络错误
+            return message;
         } else if (throwable instanceof ConnectException
                 ||throwable instanceof SocketException
                 ||throwable instanceof IOException) {
             message = "连接失败("+ ERROR.NETWORD_ERROR+")";  //均视为网络错误
-            return message;
-        } else if (throwable instanceof SocketTimeoutException) {//连接超时
-            message = "连接超时(" + ERROR.NETWORD_ERROR + ")";//均视为网络错误
             return message;
         }else if (throwable instanceof TokenInvalidException){//token过期
             return "登录状态异常！";
