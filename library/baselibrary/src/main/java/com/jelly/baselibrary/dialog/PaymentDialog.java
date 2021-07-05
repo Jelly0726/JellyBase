@@ -118,6 +118,7 @@ public class PaymentDialog extends AbsBaseCircleDialog implements View.OnClickLi
         } else if (id == R.id.confirm_tv) {//确定
             if (selectId == -1) {
                 Toast.makeText(this.getActivity(), "没有选中", Toast.LENGTH_SHORT).show();
+                return;
             } else {
             }
             if (onConfirmListener != null) {
