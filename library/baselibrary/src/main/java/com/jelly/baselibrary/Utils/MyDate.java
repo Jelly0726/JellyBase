@@ -615,6 +615,34 @@ public class MyDate {
 		return timeStr;
 	}
 	/**
+	 * int型时间转换 比较距离结束
+	 * @param timestamp 时间
+	 * @return 刚刚  x分钟  一天后  ...
+	 */
+	public static String convertTimes(long timestamp) {
+		String timeStr = null;
+		long interval =timestamp;// (timestamp - System.currentTimeMillis()) / 1000;
+		if (interval <= 60) { //1分钟内 服务端的时间 可能和本地的有区别 所以小于0的 对于这个情况全部都显示刚刚
+			timeStr = interval+"秒";
+		} else if (interval < 60 * 60) { // 1小时内
+			timeStr = (interval / 60 == 0 ? 1 : interval / 60) + "分";
+		} else if (interval < 24 * 60 * 60) { // 一天内
+			timeStr = (interval / 60 * 60 == 0 ? 1 : interval / (60 * 60)) + "时";
+		} else if (interval < 30 * 24 * 60 * 60) { // 天
+			timeStr = (interval / 24 * 60 * 60 == 0 ? 1 : interval / (24 * 60 * 60)) + "天";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 月
+			timeStr = (interval / 30 * 24 * 60 * 60 == 0 ? 1 : interval / (30 * 24 * 60 * 60)) + "月";
+		} else if (interval < 12 * 30 * 24 * 60 * 60) { // 年
+			timeStr = (interval / 12 * 30 * 24 * 60 * 60 == 0 ? 1 : interval / (12 * 30 * 24 * 60 * 60)) + "年";
+		} else {
+			Date date = new Date();
+			date.setTime(interval);
+			timeStr = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
+		}
+
+		return timeStr;
+	}
+	/**
 	 * 将Calendar型时间转为固定格式的时间字符串
 	 * @param timeformat 时间格式
 	 * @param calendar   时间
