@@ -2,6 +2,7 @@
   {
     "citycode": "0837",
     "adcode": "513200",
+    "province": "四川省",
     "name": "阿坝藏族羌族自治州",
     "pinyin": "ABaCangZuQiangZuZiZhiZhou",
     "firstKey": "ABCZQZZZZ",
@@ -9,11 +10,13 @@
     "center": "102.221374,31.899792",
     "lon": "102.221374",
     "lat": "31.899792",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0915",
     "adcode": "610900",
+    "province": "陕西省",
     "name": "安康市",
     "pinyin": "AnKangShi",
     "firstKey": "AKS",
@@ -21,11 +24,13 @@
     "center": "109.029273,32.6903",
     "lon": "109.029273",
     "lat": "32.6903",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0997",
     "adcode": "652900",
+    "province": "新疆维吾尔自治区",
     "name": "阿克苏地区",
     "pinyin": "AKeSuDiQu",
     "firstKey": "AKSDQ",
@@ -33,11 +38,13 @@
     "center": "80.265068,41.170712",
     "lon": "80.265068",
     "lat": "41.170712",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0897",
     "adcode": "542500",
+    "province": "西藏自治区",
     "name": "阿里地区",
     "pinyin": "ALiDiQu",
     "firstKey": "ALDQ",
@@ -45,11 +52,13 @@
     "center": "80.105498,32.503187",
     "lon": "80.105498",
     "lat": "32.503187",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1997",
     "adcode": "659002",
+    "province": "新疆维吾尔自治区",
     "name": "阿拉尔市",
     "pinyin": "ALaErShi",
     "firstKey": "ALES",
@@ -57,11 +66,13 @@
     "center": "81.285884,40.541914",
     "lon": "81.285884",
     "lat": "40.541914",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0483",
     "adcode": "152900",
+    "province": "内蒙古自治区",
     "name": "阿拉善盟",
     "pinyin": "ALaShanMeng",
     "firstKey": "ALSM",
@@ -69,11 +80,13 @@
     "center": "105.706422,38.844814",
     "lon": "105.706422",
     "lat": "38.844814",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0906",
     "adcode": "654300",
+    "province": "新疆维吾尔自治区",
     "name": "阿勒泰地区",
     "pinyin": "ALeTaiDiQu",
     "firstKey": "ALTDQ",
@@ -81,11 +94,13 @@
     "center": "88.13963,47.848393",
     "lon": "88.13963",
     "lat": "47.848393",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0556",
     "adcode": "340800",
+    "province": "安徽省",
     "name": "安庆市",
     "pinyin": "AnQingShi",
     "firstKey": "AQS",
@@ -93,11 +108,13 @@
     "center": "117.043551,30.50883",
     "lon": "117.043551",
     "lat": "30.50883",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0412",
     "adcode": "210300",
+    "province": "辽宁省",
     "name": "鞍山市",
     "pinyin": "AnShanShi",
     "firstKey": "ASS",
@@ -105,11 +122,13 @@
     "center": "122.995632,41.110626",
     "lon": "122.995632",
     "lat": "41.110626",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0853",
     "adcode": "520400",
+    "province": "贵州省",
     "name": "安顺市",
     "pinyin": "AnShunShi",
     "firstKey": "ASS",
@@ -117,11 +136,13 @@
     "center": "105.932188,26.245544",
     "lon": "105.932188",
     "lat": "26.245544",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0372",
     "adcode": "410500",
+    "province": "河南省",
     "name": "安阳市",
     "pinyin": "AnYangShi",
     "firstKey": "AYS",
@@ -129,11 +150,13 @@
     "center": "114.352482,36.103442",
     "lon": "114.352482",
     "lat": "36.103442",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0552",
     "adcode": "340300",
+    "province": "安徽省",
     "name": "蚌埠市",
     "pinyin": "BangBuShi",
     "firstKey": "BBS",
@@ -141,11 +164,13 @@
     "center": "117.363228,32.939667",
     "lon": "117.363228",
     "lat": "32.939667",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0436",
     "adcode": "220800",
+    "province": "吉林省",
     "name": "白城市",
     "pinyin": "BaiChengShi",
     "firstKey": "BCS",
@@ -153,11 +178,13 @@
     "center": "122.841114,45.619026",
     "lon": "122.841114",
     "lat": "45.619026",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0312",
     "adcode": "130600",
+    "province": "河北省",
     "name": "保定市",
     "pinyin": "BaoDingShi",
     "firstKey": "BDS",
@@ -165,11 +192,13 @@
     "center": "115.482331,38.867657",
     "lon": "115.482331",
     "lat": "38.867657",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0909",
     "adcode": "652700",
+    "province": "新疆维吾尔自治区",
     "name": "博尔塔拉蒙古自治州",
     "pinyin": "BoErTaLaMengGuZiZhiZhou",
     "firstKey": "BETLMGZZZ",
@@ -177,11 +206,13 @@
     "center": "82.074778,44.903258",
     "lon": "82.074778",
     "lat": "44.903258",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0779",
     "adcode": "450500",
+    "province": "广西壮族自治区",
     "name": "北海市",
     "pinyin": "BeiHaiShi",
     "firstKey": "BHS",
@@ -189,11 +220,13 @@
     "center": "109.119254,21.473343",
     "lon": "109.119254",
     "lat": "21.473343",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "010",
     "adcode": "110100",
+    "province": "北京市",
     "name": "北京城区",
     "pinyin": "BeiJingChengQu",
     "firstKey": "BJCQ",
@@ -201,11 +234,13 @@
     "center": "116.405285,39.904989",
     "lon": "116.405285",
     "lat": "39.904989",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0917",
     "adcode": "610300",
+    "province": "陕西省",
     "name": "宝鸡市",
     "pinyin": "BaoJiShi",
     "firstKey": "BJS",
@@ -213,11 +248,13 @@
     "center": "107.14487,34.369315",
     "lon": "107.14487",
     "lat": "34.369315",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0857",
     "adcode": "520500",
+    "province": "贵州省",
     "name": "毕节市",
     "pinyin": "BiJieShi",
     "firstKey": "BJS",
@@ -225,11 +262,13 @@
     "center": "105.28501,27.301693",
     "lon": "105.28501",
     "lat": "27.301693",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810013",
+    "province": "香港特别行政区",
     "name": "北区",
     "pinyin": "BeiQu",
     "firstKey": "BQ",
@@ -237,11 +276,13 @@
     "center": "114.147404,22.496143",
     "lon": "114.147404",
     "lat": "22.496143",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0802",
     "adcode": "469025",
+    "province": "海南省",
     "name": "白沙黎族自治县",
     "pinyin": "BaiShaLiZuZiZhiXian",
     "firstKey": "BSLZZZX",
@@ -249,11 +290,13 @@
     "center": "109.452606,19.224584",
     "lon": "109.452606",
     "lat": "19.224584",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0776",
     "adcode": "451000",
+    "province": "广西壮族自治区",
     "name": "百色市",
     "pinyin": "BaiSeShi",
     "firstKey": "BSS",
@@ -261,11 +304,13 @@
     "center": "106.616285,23.897742",
     "lon": "106.616285",
     "lat": "23.897742",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0439",
     "adcode": "220600",
+    "province": "吉林省",
     "name": "白山市",
     "pinyin": "BaiShanShi",
     "firstKey": "BSS",
@@ -273,11 +318,13 @@
     "center": "126.427839,41.942505",
     "lon": "126.427839",
     "lat": "41.942505",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0875",
     "adcode": "530500",
+    "province": "云南省",
     "name": "保山市",
     "pinyin": "BaoShanShi",
     "firstKey": "BSS",
@@ -285,11 +332,13 @@
     "center": "99.167133,25.111802",
     "lon": "99.167133",
     "lat": "25.111802",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0801",
     "adcode": "469029",
+    "province": "海南省",
     "name": "保亭黎族苗族自治县",
     "pinyin": "BaoTingLiZuMiaoZuZiZhiXian",
     "firstKey": "BTLZMZZZX",
@@ -297,11 +346,13 @@
     "center": "109.70245,18.636371",
     "lon": "109.70245",
     "lat": "18.636371",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0472",
     "adcode": "150200",
+    "province": "内蒙古自治区",
     "name": "包头市",
     "pinyin": "BaoTouShi",
     "firstKey": "BTS",
@@ -309,11 +360,13 @@
     "center": "109.840405,40.658168",
     "lon": "109.840405",
     "lat": "40.658168",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1906",
     "adcode": "659005",
+    "province": "新疆维吾尔自治区",
     "name": "北屯市",
     "pinyin": "BeiTunShi",
     "firstKey": "BTS",
@@ -321,11 +374,13 @@
     "center": "87.824932,47.353177",
     "lon": "87.824932",
     "lat": "47.353177",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0414",
     "adcode": "210500",
+    "province": "辽宁省",
     "name": "本溪市",
     "pinyin": "BenXiShi",
     "firstKey": "BXS",
@@ -333,11 +388,13 @@
     "center": "123.770519,41.297909",
     "lon": "123.770519",
     "lat": "41.297909",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0996",
     "adcode": "652800",
+    "province": "新疆维吾尔自治区",
     "name": "巴音郭楞蒙古自治州",
     "pinyin": "BaYinGuoLengMengGuZiZhiZhou",
     "firstKey": "BYGLMGZZZ",
@@ -345,11 +402,13 @@
     "center": "86.150969,41.768552",
     "lon": "86.150969",
     "lat": "41.768552",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0478",
     "adcode": "150800",
+    "province": "内蒙古自治区",
     "name": "巴彦淖尔市",
     "pinyin": "BaYanNeErShi",
     "firstKey": "BYNES",
@@ -357,11 +416,13 @@
     "center": "107.416959,40.757402",
     "lon": "107.416959",
     "lat": "40.757402",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0943",
     "adcode": "620400",
+    "province": "甘肃省",
     "name": "白银市",
     "pinyin": "BaiYinShi",
     "firstKey": "BYS",
@@ -369,11 +430,13 @@
     "center": "104.173606,36.54568",
     "lon": "104.173606",
     "lat": "36.54568",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0543",
     "adcode": "371600",
+    "province": "山东省",
     "name": "滨州市",
     "pinyin": "BinZhouShi",
     "firstKey": "BZS",
@@ -381,11 +444,13 @@
     "center": "118.016974,37.383542",
     "lon": "118.016974",
     "lat": "37.383542",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0558",
     "adcode": "341600",
+    "province": "安徽省",
     "name": "亳州市",
     "pinyin": "BoZhouShi",
     "firstKey": "BZS",
@@ -393,11 +458,13 @@
     "center": "115.782939,33.869338",
     "lon": "115.782939",
     "lat": "33.869338",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0827",
     "adcode": "511900",
+    "province": "四川省",
     "name": "巴中市",
     "pinyin": "BaZhongShi",
     "firstKey": "BZS",
@@ -405,11 +472,13 @@
     "center": "106.753669,31.858809",
     "lon": "106.753669",
     "lat": "31.858809",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0431",
     "adcode": "220100",
+    "province": "吉林省",
     "name": "长春市",
     "pinyin": "ChangChunShi",
     "firstKey": "CCS",
@@ -417,11 +486,13 @@
     "center": "125.3245,43.886841",
     "lon": "125.3245",
     "lat": "43.886841",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0895",
     "adcode": "540300",
+    "province": "西藏自治区",
     "name": "昌都市",
     "pinyin": "ChangDuShi",
     "firstKey": "CDS",
@@ -429,11 +500,13 @@
     "center": "97.178452,31.136875",
     "lon": "97.178452",
     "lat": "31.136875",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0736",
     "adcode": "430700",
+    "province": "湖南省",
     "name": "常德市",
     "pinyin": "ChangDeShi",
     "firstKey": "CDS",
@@ -441,11 +514,13 @@
     "center": "111.691347,29.040225",
     "lon": "111.691347",
     "lat": "29.040225",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0314",
     "adcode": "130800",
+    "province": "河北省",
     "name": "承德市",
     "pinyin": "ChengDeShi",
     "firstKey": "CDS",
@@ -453,11 +528,13 @@
     "center": "117.939152,40.976204",
     "lon": "117.939152",
     "lat": "40.976204",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "028",
     "adcode": "510100",
+    "province": "四川省",
     "name": "成都市",
     "pinyin": "ChengDuShi",
     "firstKey": "CDS",
@@ -465,11 +542,13 @@
     "center": "104.065735,30.659462",
     "lon": "104.065735",
     "lat": "30.659462",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0476",
     "adcode": "150400",
+    "province": "内蒙古自治区",
     "name": "赤峰市",
     "pinyin": "ChiFengShi",
     "firstKey": "CFS",
@@ -477,11 +556,13 @@
     "center": "118.956806,42.275317",
     "lon": "118.956806",
     "lat": "42.275317",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0994",
     "adcode": "652300",
+    "province": "新疆维吾尔自治区",
     "name": "昌吉回族自治州",
     "pinyin": "ChangJiHuiZuZiZhiZhou",
     "firstKey": "CJHZZZZ",
@@ -489,11 +570,13 @@
     "center": "87.304012,44.014577",
     "lon": "87.304012",
     "lat": "44.014577",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0803",
     "adcode": "469026",
+    "province": "海南省",
     "name": "昌江黎族自治县",
     "pinyin": "ChangJiangLiZuZiZhiXian",
     "firstKey": "CJLZZZX",
@@ -501,11 +584,13 @@
     "center": "109.053351,19.260968",
     "lon": "109.053351",
     "lat": "19.260968",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0804",
     "adcode": "469023",
+    "province": "海南省",
     "name": "澄迈县",
     "pinyin": "ChengMaiXian",
     "firstKey": "CMX",
@@ -513,11 +598,13 @@
     "center": "110.007147,19.737095",
     "lon": "110.007147",
     "lat": "19.737095",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0731",
     "adcode": "430100",
+    "province": "湖南省",
     "name": "长沙市",
     "pinyin": "ChangShaShi",
     "firstKey": "CSS",
@@ -525,11 +612,13 @@
     "center": "112.982279,28.19409",
     "lon": "112.982279",
     "lat": "28.19409",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0878",
     "adcode": "532300",
+    "province": "云南省",
     "name": "楚雄彝族自治州",
     "pinyin": "ChuXiongYiZuZiZhiZhou",
     "firstKey": "CXYZZZZ",
@@ -537,11 +626,13 @@
     "center": "101.546046,25.041988",
     "lon": "101.546046",
     "lat": "25.041988",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0421",
     "adcode": "211300",
+    "province": "辽宁省",
     "name": "朝阳市",
     "pinyin": "ChaoYangShi",
     "firstKey": "CYS",
@@ -549,11 +640,13 @@
     "center": "120.451176,41.576758",
     "lon": "120.451176",
     "lat": "41.576758",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0768",
     "adcode": "445100",
+    "province": "广东省",
     "name": "潮州市",
     "pinyin": "ChaoZhouShi",
     "firstKey": "CZS",
@@ -561,11 +654,13 @@
     "center": "116.632301,23.661701",
     "lon": "116.632301",
     "lat": "23.661701",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0519",
     "adcode": "320400",
+    "province": "江苏省",
     "name": "常州市",
     "pinyin": "ChangZhouShi",
     "firstKey": "CZS",
@@ -573,11 +668,13 @@
     "center": "119.946973,31.772752",
     "lon": "119.946973",
     "lat": "31.772752",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0550",
     "adcode": "341100",
+    "province": "安徽省",
     "name": "滁州市",
     "pinyin": "ChuZhouShi",
     "firstKey": "CZS",
@@ -585,11 +682,13 @@
     "center": "118.316264,32.303627",
     "lon": "118.316264",
     "lat": "32.303627",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0566",
     "adcode": "341700",
+    "province": "安徽省",
     "name": "池州市",
     "pinyin": "ChiZhouShi",
     "firstKey": "CZS",
@@ -597,11 +696,13 @@
     "center": "117.489157,30.656037",
     "lon": "117.489157",
     "lat": "30.656037",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0735",
     "adcode": "431000",
+    "province": "湖南省",
     "name": "郴州市",
     "pinyin": "ChenZhouShi",
     "firstKey": "CZS",
@@ -609,11 +710,13 @@
     "center": "113.032067,25.793589",
     "lon": "113.032067",
     "lat": "25.793589",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1771",
     "adcode": "451400",
+    "province": "广西壮族自治区",
     "name": "崇左市",
     "pinyin": "ChongZuoShi",
     "firstKey": "CZS",
@@ -621,11 +724,13 @@
     "center": "107.353926,22.404108",
     "lon": "107.353926",
     "lat": "22.404108",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0317",
     "adcode": "130900",
+    "province": "河北省",
     "name": "沧州市",
     "pinyin": "CangZhouShi",
     "firstKey": "CZS",
@@ -633,11 +738,13 @@
     "center": "116.857461,38.310582",
     "lon": "116.857461",
     "lat": "38.310582",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0355",
     "adcode": "140400",
+    "province": "山西省",
     "name": "长治市",
     "pinyin": "ChangZhiShi",
     "firstKey": "CZS",
@@ -645,11 +752,13 @@
     "center": "113.113556,36.191112",
     "lon": "113.113556",
     "lat": "36.191112",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0806",
     "adcode": "469021",
+    "province": "海南省",
     "name": "定安县",
     "pinyin": "DingAnXian",
     "firstKey": "DAX",
@@ -657,11 +766,13 @@
     "center": "110.349235,19.684966",
     "lon": "110.349235",
     "lat": "19.684966",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0415",
     "adcode": "210600",
+    "province": "辽宁省",
     "name": "丹东市",
     "pinyin": "DanDongShi",
     "firstKey": "DDS",
@@ -669,11 +780,13 @@
     "center": "124.383044,40.124296",
     "lon": "124.383044",
     "lat": "40.124296",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0807",
     "adcode": "469007",
+    "province": "海南省",
     "name": "东方市",
     "pinyin": "DongFangShi",
     "firstKey": "DFS",
@@ -681,11 +794,13 @@
     "center": "108.653789,19.10198",
     "lon": "108.653789",
     "lat": "19.10198",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0769",
     "adcode": "441900",
+    "province": "广东省",
     "name": "东莞市",
     "pinyin": "DongGuanShi",
     "firstKey": "DGS",
@@ -693,11 +808,13 @@
     "center": "113.746262,23.046237",
     "lon": "113.746262",
     "lat": "23.046237",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0692",
     "adcode": "533100",
+    "province": "云南省",
     "name": "德宏傣族景颇族自治州",
     "pinyin": "DeHongDaiZuJingPoZuZiZhiZhou",
     "firstKey": "DHDZJPZZZZ",
@@ -705,11 +822,13 @@
     "center": "98.578363,24.436694",
     "lon": "98.578363",
     "lat": "24.436694",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0872",
     "adcode": "532900",
+    "province": "云南省",
     "name": "大理白族自治州",
     "pinyin": "DaLiBaiZuZiZhiZhou",
     "firstKey": "DLBZZZZ",
@@ -717,11 +836,13 @@
     "center": "100.225668,25.589449",
     "lon": "100.225668",
     "lat": "25.589449",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0411",
     "adcode": "210200",
+    "province": "辽宁省",
     "name": "大连市",
     "pinyin": "DaLianShi",
     "firstKey": "DLS",
@@ -729,11 +850,13 @@
     "center": "121.618622,38.91459",
     "lon": "121.618622",
     "lat": "38.91459",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810014",
+    "province": "香港特别行政区",
     "name": "大埔区",
     "pinyin": "DaPuQu",
     "firstKey": "DPQ",
@@ -741,11 +864,13 @@
     "center": "114.171713,22.44573",
     "lon": "114.171713",
     "lat": "22.44573",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810003",
+    "province": "香港特别行政区",
     "name": "东区",
     "pinyin": "DongQu",
     "firstKey": "DQ",
@@ -753,11 +878,13 @@
     "center": "114.225965,22.279779",
     "lon": "114.225965",
     "lat": "22.279779",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0887",
     "adcode": "533400",
+    "province": "云南省",
     "name": "迪庆藏族自治州",
     "pinyin": "DiQingCangZuZiZhiZhou",
     "firstKey": "DQCZZZZ",
@@ -765,11 +892,13 @@
     "center": "99.706463,27.826853",
     "lon": "99.706463",
     "lat": "27.826853",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0459",
     "adcode": "230600",
+    "province": "黑龙江省",
     "name": "大庆市",
     "pinyin": "DaQingShi",
     "firstKey": "DQS",
@@ -777,11 +906,13 @@
     "center": "125.11272,46.590734",
     "lon": "125.11272",
     "lat": "46.590734",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0767",
     "adcode": "442100",
+    "province": "广东省",
     "name": "东沙群岛",
     "pinyin": "DongShaQunDao",
     "firstKey": "DSQD",
@@ -789,11 +920,13 @@
     "center": "116.887312,20.617512",
     "lon": "116.887312",
     "lat": "20.617512",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820004",
+    "province": "澳门特别行政区",
     "name": "大堂区",
     "pinyin": "DaTangQu",
     "firstKey": "DTQ",
@@ -801,11 +934,13 @@
     "center": "113.55374,22.188119",
     "lon": "113.55374",
     "lat": "22.188119",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0352",
     "adcode": "140200",
+    "province": "山西省",
     "name": "大同市",
     "pinyin": "DaTongShi",
     "firstKey": "DTS",
@@ -813,11 +948,13 @@
     "center": "113.295259,40.09031",
     "lon": "113.295259",
     "lat": "40.09031",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0457",
     "adcode": "232700",
+    "province": "黑龙江省",
     "name": "大兴安岭地区",
     "pinyin": "DaXingAnLingDiQu",
     "firstKey": "DXALDQ",
@@ -825,11 +962,13 @@
     "center": "124.711526,52.335262",
     "lon": "124.711526",
     "lat": "52.335262",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0932",
     "adcode": "621100",
+    "province": "甘肃省",
     "name": "定西市",
     "pinyin": "DingXiShi",
     "firstKey": "DXS",
@@ -837,11 +976,13 @@
     "center": "104.626294,35.579578",
     "lon": "104.626294",
     "lat": "35.579578",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0546",
     "adcode": "370500",
+    "province": "山东省",
     "name": "东营市",
     "pinyin": "DongYingShi",
     "firstKey": "DYS",
@@ -849,11 +990,13 @@
     "center": "118.66471,37.434564",
     "lon": "118.66471",
     "lat": "37.434564",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0838",
     "adcode": "510600",
+    "province": "四川省",
     "name": "德阳市",
     "pinyin": "DeYangShi",
     "firstKey": "DYS",
@@ -861,11 +1004,13 @@
     "center": "104.398651,31.127991",
     "lon": "104.398651",
     "lat": "31.127991",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0534",
     "adcode": "371400",
+    "province": "山东省",
     "name": "德州市",
     "pinyin": "DeZhouShi",
     "firstKey": "DZS",
@@ -873,11 +1018,13 @@
     "center": "116.307428,37.453968",
     "lon": "116.307428",
     "lat": "37.453968",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0805",
     "adcode": "460400",
+    "province": "海南省",
     "name": "儋州市",
     "pinyin": "DanZhouShi",
     "firstKey": "DZS",
@@ -885,11 +1032,13 @@
     "center": "109.576782,19.517486",
     "lon": "109.576782",
     "lat": "19.517486",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0818",
     "adcode": "511700",
+    "province": "四川省",
     "name": "达州市",
     "pinyin": "DaZhouShi",
     "firstKey": "DZS",
@@ -897,11 +1046,13 @@
     "center": "107.502262,31.209484",
     "lon": "107.502262",
     "lat": "31.209484",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0477",
     "adcode": "150600",
+    "province": "内蒙古自治区",
     "name": "鄂尔多斯市",
     "pinyin": "EErDuoSiShi",
     "firstKey": "EEDSS",
@@ -909,11 +1060,13 @@
     "center": "109.99029,39.817179",
     "lon": "109.99029",
     "lat": "39.817179",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0718",
     "adcode": "422800",
+    "province": "湖北省",
     "name": "恩施土家族苗族自治州",
     "pinyin": "EnShiTuJiaZuMiaoZuZiZhiZhou",
     "firstKey": "ESTJZMZZZZ",
@@ -921,11 +1074,13 @@
     "center": "109.48699,30.283114",
     "lon": "109.48699",
     "lat": "30.283114",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0711",
     "adcode": "420700",
+    "province": "湖北省",
     "name": "鄂州市",
     "pinyin": "EZhouShi",
     "firstKey": "EZS",
@@ -933,11 +1088,13 @@
     "center": "114.890593,30.396536",
     "lon": "114.890593",
     "lat": "30.396536",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0770",
     "adcode": "450600",
+    "province": "广西壮族自治区",
     "name": "防城港市",
     "pinyin": "FangChengGangShi",
     "firstKey": "FCGS",
@@ -945,11 +1102,13 @@
     "center": "108.345478,21.614631",
     "lon": "108.345478",
     "lat": "21.614631",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0757",
     "adcode": "440600",
+    "province": "广东省",
     "name": "佛山市",
     "pinyin": "FuShanShi",
     "firstKey": "FSS",
@@ -957,11 +1116,13 @@
     "center": "113.122717,23.028762",
     "lon": "113.122717",
     "lat": "23.028762",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0413",
     "adcode": "210400",
+    "province": "辽宁省",
     "name": "抚顺市",
     "pinyin": "FuShunShi",
     "firstKey": "FSS",
@@ -969,11 +1130,13 @@
     "center": "123.921109,41.875956",
     "lon": "123.921109",
     "lat": "41.875956",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820005",
+    "province": "澳门特别行政区",
     "name": "风顺堂区",
     "pinyin": "FengShunTangQu",
     "firstKey": "FSTQ",
@@ -981,11 +1144,13 @@
     "center": "113.54167,22.187778",
     "lon": "113.54167",
     "lat": "22.187778",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0418",
     "adcode": "210900",
+    "province": "辽宁省",
     "name": "阜新市",
     "pinyin": "FuXinShi",
     "firstKey": "FXS",
@@ -993,11 +1158,13 @@
     "center": "121.648962,42.011796",
     "lon": "121.648962",
     "lat": "42.011796",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1558",
     "adcode": "341200",
+    "province": "安徽省",
     "name": "阜阳市",
     "pinyin": "FuYangShi",
     "firstKey": "FYS",
@@ -1005,11 +1172,13 @@
     "center": "115.819729,32.896969",
     "lon": "115.819729",
     "lat": "32.896969",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0591",
     "adcode": "350100",
+    "province": "福建省",
     "name": "福州市",
     "pinyin": "FuZhouShi",
     "firstKey": "FZS",
@@ -1017,11 +1186,13 @@
     "center": "119.306239,26.075302",
     "lon": "119.306239",
     "lat": "26.075302",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0794",
     "adcode": "361000",
+    "province": "江西省",
     "name": "抚州市",
     "pinyin": "FuZhouShi",
     "firstKey": "FZS",
@@ -1029,11 +1200,13 @@
     "center": "116.358351,27.98385",
     "lon": "116.358351",
     "lat": "27.98385",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0826",
     "adcode": "511600",
+    "province": "四川省",
     "name": "广安市",
     "pinyin": "GuangAnShi",
     "firstKey": "GAS",
@@ -1041,11 +1214,13 @@
     "center": "106.633369,30.456398",
     "lon": "106.633369",
     "lat": "30.456398",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1755",
     "adcode": "450800",
+    "province": "广西壮族自治区",
     "name": "贵港市",
     "pinyin": "GuiGangShi",
     "firstKey": "GGS",
@@ -1053,11 +1228,13 @@
     "center": "109.602146,23.0936",
     "lon": "109.602146",
     "lat": "23.0936",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0975",
     "adcode": "632600",
+    "province": "青海省",
     "name": "果洛藏族自治州",
     "pinyin": "GuoLuoCangZuZiZhiZhou",
     "firstKey": "GLCZZZZ",
@@ -1065,11 +1242,13 @@
     "center": "100.242143,34.4736",
     "lon": "100.242143",
     "lat": "34.4736",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0773",
     "adcode": "450300",
+    "province": "广西壮族自治区",
     "name": "桂林市",
     "pinyin": "GuiLinShi",
     "firstKey": "GLS",
@@ -1077,11 +1256,13 @@
     "center": "110.299121,25.274215",
     "lon": "110.299121",
     "lat": "25.274215",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0941",
     "adcode": "623000",
+    "province": "甘肃省",
     "name": "甘南藏族自治州",
     "pinyin": "GanNanCangZuZiZhiZhou",
     "firstKey": "GNCZZZZ",
@@ -1089,11 +1270,13 @@
     "center": "102.911008,34.986354",
     "lon": "102.911008",
     "lat": "34.986354",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810009",
+    "province": "香港特别行政区",
     "name": "观塘区",
     "pinyin": "GuanTangQu",
     "firstKey": "GTQ",
@@ -1101,11 +1284,13 @@
     "center": "114.214083,22.320679",
     "lon": "114.214083",
     "lat": "22.320679",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0851",
     "adcode": "520100",
+    "province": "贵州省",
     "name": "贵阳市",
     "pinyin": "GuiYangShi",
     "firstKey": "GYS",
@@ -1113,11 +1298,13 @@
     "center": "106.713478,26.578343",
     "lon": "106.713478",
     "lat": "26.578343",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0954",
     "adcode": "640400",
+    "province": "宁夏回族自治区",
     "name": "固原市",
     "pinyin": "GuYuanShi",
     "firstKey": "GYS",
@@ -1125,11 +1312,13 @@
     "center": "106.285241,36.004561",
     "lon": "106.285241",
     "lat": "36.004561",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0839",
     "adcode": "510800",
+    "province": "四川省",
     "name": "广元市",
     "pinyin": "GuangYuanShi",
     "firstKey": "GYS",
@@ -1137,11 +1326,13 @@
     "center": "105.829757,32.433668",
     "lon": "105.829757",
     "lat": "32.433668",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0836",
     "adcode": "513300",
+    "province": "四川省",
     "name": "甘孜藏族自治州",
     "pinyin": "GanZiCangZuZiZhiZhou",
     "firstKey": "GZCZZZZ",
@@ -1149,11 +1340,13 @@
     "center": "101.963815,30.050663",
     "lon": "101.963815",
     "lat": "30.050663",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "020",
     "adcode": "440100",
+    "province": "广东省",
     "name": "广州市",
     "pinyin": "GuangZhouShi",
     "firstKey": "GZS",
@@ -1161,11 +1354,13 @@
     "center": "113.280637,23.125178",
     "lon": "113.280637",
     "lat": "23.125178",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0797",
     "adcode": "360700",
+    "province": "江西省",
     "name": "赣州市",
     "pinyin": "GanZhouShi",
     "firstKey": "GZS",
@@ -1173,11 +1368,13 @@
     "center": "114.940278,25.85097",
     "lon": "114.940278",
     "lat": "25.85097",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0517",
     "adcode": "320800",
+    "province": "江苏省",
     "name": "淮安市",
     "pinyin": "HuaiAnShi",
     "firstKey": "HAS",
@@ -1185,11 +1382,13 @@
     "center": "119.021265,33.597506",
     "lon": "119.021265",
     "lat": "33.597506",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0970",
     "adcode": "632200",
+    "province": "青海省",
     "name": "海北藏族自治州",
     "pinyin": "HaiBeiCangZuZiZhiZhou",
     "firstKey": "HBCZZZZ",
@@ -1197,11 +1396,13 @@
     "center": "100.901059,36.959435",
     "lon": "100.901059",
     "lat": "36.959435",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0392",
     "adcode": "410600",
+    "province": "河南省",
     "name": "鹤壁市",
     "pinyin": "HeBiShi",
     "firstKey": "HBS",
@@ -1209,11 +1410,13 @@
     "center": "114.295444,35.748236",
     "lon": "114.295444",
     "lat": "35.748236",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0561",
     "adcode": "340600",
+    "province": "安徽省",
     "name": "淮北市",
     "pinyin": "HuaiBeiShi",
     "firstKey": "HBS",
@@ -1221,11 +1424,13 @@
     "center": "116.794664,33.971707",
     "lon": "116.794664",
     "lat": "33.971707",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0778",
     "adcode": "451200",
+    "province": "广西壮族自治区",
     "name": "河池市",
     "pinyin": "HeChiShi",
     "firstKey": "HCS",
@@ -1233,11 +1438,13 @@
     "center": "108.062105,24.695899",
     "lon": "108.062105",
     "lat": "24.695899",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820001",
+    "province": "澳门特别行政区",
     "name": "花地玛堂区",
     "pinyin": "HuaDiMaTangQu",
     "firstKey": "HDMTQ",
@@ -1245,11 +1452,13 @@
     "center": "113.552965,22.207882",
     "lon": "113.552965",
     "lat": "22.207882",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0972",
     "adcode": "630200",
+    "province": "青海省",
     "name": "海东市",
     "pinyin": "HaiDongShi",
     "firstKey": "HDS",
@@ -1257,11 +1466,13 @@
     "center": "102.10327,36.502916",
     "lon": "102.10327",
     "lat": "36.502916",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0310",
     "adcode": "130400",
+    "province": "河北省",
     "name": "邯郸市",
     "pinyin": "HanDanShi",
     "firstKey": "HDS",
@@ -1269,11 +1480,13 @@
     "center": "114.490686,36.612273",
     "lon": "114.490686",
     "lat": "36.612273",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810008",
+    "province": "香港特别行政区",
     "name": "黄大仙区",
     "pinyin": "HuangDaXianQu",
     "firstKey": "HDXQ",
@@ -1281,11 +1494,13 @@
     "center": "114.203985,22.336112",
     "lon": "114.203985",
     "lat": "22.336112",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0451",
     "adcode": "230100",
+    "province": "黑龙江省",
     "name": "哈尔滨市",
     "pinyin": "HaErBinShi",
     "firstKey": "HEBS",
@@ -1293,11 +1508,13 @@
     "center": "126.642464,45.756967",
     "lon": "126.642464",
     "lat": "45.756967",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0551",
     "adcode": "340100",
+    "province": "安徽省",
     "name": "合肥市",
     "pinyin": "HeFeiShi",
     "firstKey": "HFS",
@@ -1305,11 +1522,13 @@
     "center": "117.283042,31.86119",
     "lon": "117.283042",
     "lat": "31.86119",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0468",
     "adcode": "230400",
+    "province": "黑龙江省",
     "name": "鹤岗市",
     "pinyin": "HeGangShi",
     "firstKey": "HGS",
@@ -1317,11 +1536,13 @@
     "center": "130.277487,47.332085",
     "lon": "130.277487",
     "lat": "47.332085",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0713",
     "adcode": "421100",
+    "province": "湖北省",
     "name": "黄冈市",
     "pinyin": "HuangGangShi",
     "firstKey": "HGS",
@@ -1329,11 +1550,13 @@
     "center": "114.879365,30.447711",
     "lon": "114.879365",
     "lat": "30.447711",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0873",
     "adcode": "532500",
+    "province": "云南省",
     "name": "红河哈尼族彝族自治州",
     "pinyin": "HongHeHaNiZuYiZuZiZhiZhou",
     "firstKey": "HHHNZYZZZZ",
@@ -1341,11 +1564,13 @@
     "center": "103.384182,23.366775",
     "lon": "103.384182",
     "lat": "23.366775",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0471",
     "adcode": "150100",
+    "province": "内蒙古自治区",
     "name": "呼和浩特市",
     "pinyin": "HuHeHaoTeShi",
     "firstKey": "HHHTS",
@@ -1353,11 +1578,13 @@
     "center": "111.670801,40.818311",
     "lon": "111.670801",
     "lat": "40.818311",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0456",
     "adcode": "231100",
+    "province": "黑龙江省",
     "name": "黑河市",
     "pinyin": "HeiHeShi",
     "firstKey": "HHS",
@@ -1365,11 +1592,13 @@
     "center": "127.499023,50.249585",
     "lon": "127.499023",
     "lat": "50.249585",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0745",
     "adcode": "431200",
+    "province": "湖南省",
     "name": "怀化市",
     "pinyin": "HuaiHuaShi",
     "firstKey": "HHS",
@@ -1377,11 +1606,13 @@
     "center": "109.97824,27.550082",
     "lon": "109.97824",
     "lat": "27.550082",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0898",
     "adcode": "460100",
+    "province": "海南省",
     "name": "海口市",
     "pinyin": "HaiKouShi",
     "firstKey": "HKS",
@@ -1389,11 +1620,13 @@
     "center": "110.33119,20.031971",
     "lon": "110.33119",
     "lat": "20.031971",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0470",
     "adcode": "150700",
+    "province": "内蒙古自治区",
     "name": "呼伦贝尔市",
     "pinyin": "HuLunBeiErShi",
     "firstKey": "HLBES",
@@ -1401,11 +1634,13 @@
     "center": "119.758168,49.215333",
     "lon": "119.758168",
     "lat": "49.215333",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0429",
     "adcode": "211400",
+    "province": "辽宁省",
     "name": "葫芦岛市",
     "pinyin": "HuLuDaoShi",
     "firstKey": "HLDS",
@@ -1413,11 +1648,13 @@
     "center": "120.856394,40.755572",
     "lon": "120.856394",
     "lat": "40.755572",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0902",
     "adcode": "650500",
+    "province": "新疆维吾尔自治区",
     "name": "哈密市",
     "pinyin": "HaMiShi",
     "firstKey": "HMS",
@@ -1425,11 +1662,13 @@
     "center": "93.51316,42.833248",
     "lon": "93.51316",
     "lat": "42.833248",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0974",
     "adcode": "632500",
+    "province": "青海省",
     "name": "海南藏族自治州",
     "pinyin": "HaiNanCangZuZiZhiZhou",
     "firstKey": "HNCZZZZ",
@@ -1437,11 +1676,13 @@
     "center": "100.619542,36.280353",
     "lon": "100.619542",
     "lat": "36.280353",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0973",
     "adcode": "632300",
+    "province": "青海省",
     "name": "黄南藏族自治州",
     "pinyin": "HuangNanCangZuZiZhiZhou",
     "firstKey": "HNCZZZZ",
@@ -1449,11 +1690,13 @@
     "center": "102.019988,35.517744",
     "lon": "102.019988",
     "lat": "35.517744",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0554",
     "adcode": "340400",
+    "province": "安徽省",
     "name": "淮南市",
     "pinyin": "HuaiNanShi",
     "firstKey": "HNS",
@@ -1461,11 +1704,13 @@
     "center": "117.018329,32.647574",
     "lon": "117.018329",
     "lat": "32.647574",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0714",
     "adcode": "420200",
+    "province": "湖北省",
     "name": "黄石市",
     "pinyin": "HuangShiShi",
     "firstKey": "HSS",
@@ -1473,11 +1718,13 @@
     "center": "115.077048,30.220074",
     "lon": "115.077048",
     "lat": "30.220074",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0559",
     "adcode": "341000",
+    "province": "安徽省",
     "name": "黄山市",
     "pinyin": "HuangShanShi",
     "firstKey": "HSS",
@@ -1485,11 +1732,13 @@
     "center": "118.317325,29.709239",
     "lon": "118.317325",
     "lat": "29.709239",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0318",
     "adcode": "131100",
+    "province": "河北省",
     "name": "衡水市",
     "pinyin": "HengShuiShi",
     "firstKey": "HSS",
@@ -1497,11 +1746,13 @@
     "center": "115.665993,37.735097",
     "lon": "115.665993",
     "lat": "37.735097",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0903",
     "adcode": "653200",
+    "province": "新疆维吾尔自治区",
     "name": "和田地区",
     "pinyin": "HeTianDiQu",
     "firstKey": "HTDQ",
@@ -1509,11 +1760,13 @@
     "center": "79.92533,37.110687",
     "lon": "79.92533",
     "lat": "37.110687",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820002",
+    "province": "澳门特别行政区",
     "name": "花王堂区",
     "pinyin": "HuaWangTangQu",
     "firstKey": "HWTQ",
@@ -1521,11 +1774,13 @@
     "center": "113.549052,22.199175",
     "lon": "113.549052",
     "lat": "22.199175",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0977",
     "adcode": "632800",
+    "province": "青海省",
     "name": "海西蒙古族藏族自治州",
     "pinyin": "HaiXiMengGuZuCangZuZiZhiZhou",
     "firstKey": "HXMGZCZZZZ",
@@ -1533,11 +1788,13 @@
     "center": "97.370785,37.374663",
     "lon": "97.370785",
     "lat": "37.374663",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0762",
     "adcode": "441600",
+    "province": "广东省",
     "name": "河源市",
     "pinyin": "HeYuanShi",
     "firstKey": "HYS",
@@ -1545,11 +1802,13 @@
     "center": "114.697802,23.746266",
     "lon": "114.697802",
     "lat": "23.746266",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0734",
     "adcode": "430400",
+    "province": "湖南省",
     "name": "衡阳市",
     "pinyin": "HengYangShi",
     "firstKey": "HYS",
@@ -1557,11 +1816,13 @@
     "center": "112.607693,26.900358",
     "lon": "112.607693",
     "lat": "26.900358",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0752",
     "adcode": "441300",
+    "province": "广东省",
     "name": "惠州市",
     "pinyin": "HuiZhouShi",
     "firstKey": "HZS",
@@ -1569,11 +1830,13 @@
     "center": "114.412599,23.079404",
     "lon": "114.412599",
     "lat": "23.079404",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0530",
     "adcode": "371700",
+    "province": "山东省",
     "name": "菏泽市",
     "pinyin": "HeZeShi",
     "firstKey": "HZS",
@@ -1581,11 +1844,13 @@
     "center": "115.469381,35.246531",
     "lon": "115.469381",
     "lat": "35.246531",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0916",
     "adcode": "610700",
+    "province": "陕西省",
     "name": "汉中市",
     "pinyin": "HanZhongShi",
     "firstKey": "HZS",
@@ -1593,11 +1858,13 @@
     "center": "107.028621,33.077668",
     "lon": "107.028621",
     "lat": "33.077668",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1774",
     "adcode": "451100",
+    "province": "广西壮族自治区",
     "name": "贺州市",
     "pinyin": "HeZhouShi",
     "firstKey": "HZS",
@@ -1605,11 +1872,13 @@
     "center": "111.552056,24.414141",
     "lon": "111.552056",
     "lat": "24.414141",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0572",
     "adcode": "330500",
+    "province": "浙江省",
     "name": "湖州市",
     "pinyin": "HuZhouShi",
     "firstKey": "HZS",
@@ -1617,11 +1886,13 @@
     "center": "120.102398,30.867198",
     "lon": "120.102398",
     "lat": "30.867198",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0571",
     "adcode": "330100",
+    "province": "浙江省",
     "name": "杭州市",
     "pinyin": "HangZhouShi",
     "firstKey": "HZS",
@@ -1629,11 +1900,13 @@
     "center": "120.153576,30.287459",
     "lon": "120.153576",
     "lat": "30.287459",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0796",
     "adcode": "360800",
+    "province": "江西省",
     "name": "吉安市",
     "pinyin": "JiAnShi",
     "firstKey": "JAS",
@@ -1641,11 +1914,13 @@
     "center": "114.986373,27.111699",
     "lon": "114.986373",
     "lat": "27.111699",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0935",
     "adcode": "620300",
+    "province": "甘肃省",
     "name": "金昌市",
     "pinyin": "JinChangShi",
     "firstKey": "JCS",
@@ -1653,11 +1928,13 @@
     "center": "102.187888,38.514238",
     "lon": "102.187888",
     "lat": "38.514238",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0356",
     "adcode": "140500",
+    "province": "山西省",
     "name": "晋城市",
     "pinyin": "JinChengShi",
     "firstKey": "JCS",
@@ -1665,11 +1942,13 @@
     "center": "112.851274,35.497553",
     "lon": "112.851274",
     "lat": "35.497553",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0798",
     "adcode": "360200",
+    "province": "江西省",
     "name": "景德镇市",
     "pinyin": "JingDeZhenShi",
     "firstKey": "JDZS",
@@ -1677,11 +1956,13 @@
     "center": "117.214664,29.29256",
     "lon": "117.214664",
     "lat": "29.29256",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0579",
     "adcode": "330700",
+    "province": "浙江省",
     "name": "金华市",
     "pinyin": "JinHuaShi",
     "firstKey": "JHS",
@@ -1689,11 +1970,13 @@
     "center": "119.649506,29.089524",
     "lon": "119.649506",
     "lat": "29.089524",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0792",
     "adcode": "360400",
+    "province": "江西省",
     "name": "九江市",
     "pinyin": "JiuJiangShi",
     "firstKey": "JJS",
@@ -1701,11 +1984,13 @@
     "center": "115.992811,29.712034",
     "lon": "115.992811",
     "lat": "29.712034",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810007",
+    "province": "香港特别行政区",
     "name": "九龙城区",
     "pinyin": "JiuLongChengQu",
     "firstKey": "JLCQ",
@@ -1713,11 +1998,13 @@
     "center": "114.193047,22.312373",
     "lon": "114.193047",
     "lat": "22.312373",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0432",
     "adcode": "220200",
+    "province": "吉林省",
     "name": "吉林市",
     "pinyin": "JiLinShi",
     "firstKey": "JLS",
@@ -1725,11 +2012,13 @@
     "center": "126.55302,43.843577",
     "lon": "126.55302",
     "lat": "43.843577",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0750",
     "adcode": "440700",
+    "province": "广东省",
     "name": "江门市",
     "pinyin": "JiangMenShi",
     "firstKey": "JMS",
@@ -1737,11 +2026,13 @@
     "center": "113.094942,22.590431",
     "lon": "113.094942",
     "lat": "22.590431",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0724",
     "adcode": "420800",
+    "province": "湖北省",
     "name": "荆门市",
     "pinyin": "JingMenShi",
     "firstKey": "JMS",
@@ -1749,11 +2040,13 @@
     "center": "112.204251,31.03542",
     "lon": "112.204251",
     "lat": "31.03542",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0454",
     "adcode": "230800",
+    "province": "黑龙江省",
     "name": "佳木斯市",
     "pinyin": "JiaMuSiShi",
     "firstKey": "JMSS",
@@ -1761,11 +2054,13 @@
     "center": "130.361634,46.809606",
     "lon": "130.361634",
     "lat": "46.809606",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820006",
+    "province": "澳门特别行政区",
     "name": "嘉模堂区",
     "pinyin": "JiaMoTangQu",
     "firstKey": "JMTQ",
@@ -1773,11 +2068,13 @@
     "center": "113.558783,22.154124",
     "lon": "113.558783",
     "lat": "22.154124",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0537",
     "adcode": "370800",
+    "province": "山东省",
     "name": "济宁市",
     "pinyin": "JiNingShi",
     "firstKey": "JNS",
@@ -1785,11 +2082,13 @@
     "center": "116.587245,35.415393",
     "lon": "116.587245",
     "lat": "35.415393",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0531",
     "adcode": "370100",
+    "province": "山东省",
     "name": "济南市",
     "pinyin": "JiNanShi",
     "firstKey": "JNS",
@@ -1797,11 +2096,13 @@
     "center": "117.000923,36.675807",
     "lon": "117.000923",
     "lat": "36.675807",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0937",
     "adcode": "620900",
+    "province": "甘肃省",
     "name": "酒泉市",
     "pinyin": "JiuQuanShi",
     "firstKey": "JQS",
@@ -1809,11 +2110,13 @@
     "center": "98.510795,39.744023",
     "lon": "98.510795",
     "lat": "39.744023",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0467",
     "adcode": "230300",
+    "province": "黑龙江省",
     "name": "鸡西市",
     "pinyin": "JiXiShi",
     "firstKey": "JXS",
@@ -1821,11 +2124,13 @@
     "center": "130.975966,45.300046",
     "lon": "130.975966",
     "lat": "45.300046",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0573",
     "adcode": "330400",
+    "province": "浙江省",
     "name": "嘉兴市",
     "pinyin": "JiaXingShi",
     "firstKey": "JXS",
@@ -1833,11 +2138,13 @@
     "center": "120.750865,30.762653",
     "lon": "120.750865",
     "lat": "30.762653",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1937",
     "adcode": "620200",
+    "province": "甘肃省",
     "name": "嘉峪关市",
     "pinyin": "JiaYuGuanShi",
     "firstKey": "JYGS",
@@ -1845,11 +2152,13 @@
     "center": "98.277304,39.786529",
     "lon": "98.277304",
     "lat": "39.786529",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1391",
     "adcode": "419001",
+    "province": "河南省",
     "name": "济源市",
     "pinyin": "JiYuanShi",
     "firstKey": "JYS",
@@ -1857,11 +2166,13 @@
     "center": "112.590047,35.090378",
     "lon": "112.590047",
     "lat": "35.090378",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0663",
     "adcode": "445200",
+    "province": "广东省",
     "name": "揭阳市",
     "pinyin": "JieYangShi",
     "firstKey": "JYS",
@@ -1869,11 +2180,13 @@
     "center": "116.355733,23.543778",
     "lon": "116.355733",
     "lat": "23.543778",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0391",
     "adcode": "410800",
+    "province": "河南省",
     "name": "焦作市",
     "pinyin": "JiaoZuoShi",
     "firstKey": "JZS",
@@ -1881,11 +2194,13 @@
     "center": "113.238266,35.23904",
     "lon": "113.238266",
     "lat": "35.23904",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0716",
     "adcode": "421000",
+    "province": "湖北省",
     "name": "荆州市",
     "pinyin": "JingZhouShi",
     "firstKey": "JZS",
@@ -1893,11 +2208,13 @@
     "center": "112.23813,30.326857",
     "lon": "112.23813",
     "lat": "30.326857",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0416",
     "adcode": "210700",
+    "province": "辽宁省",
     "name": "锦州市",
     "pinyin": "JinZhouShi",
     "firstKey": "JZS",
@@ -1905,11 +2222,13 @@
     "center": "121.135742,41.119269",
     "lon": "121.135742",
     "lat": "41.119269",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0354",
     "adcode": "140700",
+    "province": "山西省",
     "name": "晋中市",
     "pinyin": "JinZhongShi",
     "firstKey": "JZS",
@@ -1917,11 +2236,13 @@
     "center": "112.736465,37.696495",
     "lon": "112.736465",
     "lat": "37.696495",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0378",
     "adcode": "410200",
+    "province": "河南省",
     "name": "开封市",
     "pinyin": "KaiFengShi",
     "firstKey": "KFS",
@@ -1929,11 +2250,13 @@
     "center": "114.341447,34.797049",
     "lon": "114.341447",
     "lat": "34.797049",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1999",
     "adcode": "659008",
+    "province": "新疆维吾尔自治区",
     "name": "可克达拉市",
     "pinyin": "KeKeDaLaShi",
     "firstKey": "KKDLS",
@@ -1941,11 +2264,13 @@
     "center": "80.63579,43.6832",
     "lon": "80.63579",
     "lat": "43.6832",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0990",
     "adcode": "650200",
+    "province": "新疆维吾尔自治区",
     "name": "克拉玛依市",
     "pinyin": "KeLaMaYiShi",
     "firstKey": "KLMYS",
@@ -1953,11 +2278,13 @@
     "center": "84.873946,45.595886",
     "lon": "84.873946",
     "lat": "45.595886",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0871",
     "adcode": "530100",
+    "province": "云南省",
     "name": "昆明市",
     "pinyin": "KunMingShi",
     "firstKey": "KMS",
@@ -1965,11 +2292,13 @@
     "center": "102.712251,25.040609",
     "lon": "102.712251",
     "lat": "25.040609",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810017",
+    "province": "香港特别行政区",
     "name": "葵青区",
     "pinyin": "KuiQingQu",
     "firstKey": "KQQ",
@@ -1977,11 +2306,13 @@
     "center": "114.13918,22.363908",
     "lon": "114.13918",
     "lat": "22.363908",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0998",
     "adcode": "653100",
+    "province": "新疆维吾尔自治区",
     "name": "喀什地区",
     "pinyin": "KaShiDiQu",
     "firstKey": "KSDQ",
@@ -1989,11 +2320,13 @@
     "center": "75.989138,39.467664",
     "lon": "75.989138",
     "lat": "39.467664",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1903",
     "adcode": "659009",
+    "province": "新疆维吾尔自治区",
     "name": "昆玉市",
     "pinyin": "KunYuShi",
     "firstKey": "KYS",
@@ -2001,11 +2334,13 @@
     "center": "79.287372,37.207994",
     "lon": "79.287372",
     "lat": "37.207994",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0908",
     "adcode": "653000",
+    "province": "新疆维吾尔自治区",
     "name": "克孜勒苏柯尔克孜自治州",
     "pinyin": "KeZiLeSuKeErKeZiZiZhiZhou",
     "firstKey": "KZLSKEKZZZZ",
@@ -2013,11 +2348,13 @@
     "center": "76.172825,39.713431",
     "lon": "76.172825",
     "lat": "39.713431",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0564",
     "adcode": "341500",
+    "province": "安徽省",
     "name": "六安市",
     "pinyin": "LiuAnShi",
     "firstKey": "LAS",
@@ -2025,11 +2362,13 @@
     "center": "116.507676,31.752889",
     "lon": "116.507676",
     "lat": "31.752889",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1772",
     "adcode": "451300",
+    "province": "广西壮族自治区",
     "name": "来宾市",
     "pinyin": "LaiBinShi",
     "firstKey": "LBS",
@@ -2037,11 +2376,13 @@
     "center": "109.229772,23.733766",
     "lon": "109.229772",
     "lat": "23.733766",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0635",
     "adcode": "371500",
+    "province": "山东省",
     "name": "聊城市",
     "pinyin": "LiaoChengShi",
     "firstKey": "LCS",
@@ -2049,11 +2390,13 @@
     "center": "115.980367,36.456013",
     "lon": "115.980367",
     "lat": "36.456013",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0883",
     "adcode": "530900",
+    "province": "云南省",
     "name": "临沧市",
     "pinyin": "LinCangShi",
     "firstKey": "LCS",
@@ -2061,11 +2404,13 @@
     "center": "100.08697,23.886567",
     "lon": "100.08697",
     "lat": "23.886567",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "2802",
     "adcode": "469027",
+    "province": "海南省",
     "name": "乐东黎族自治县",
     "pinyin": "LeDongLiZuZiZhiXian",
     "firstKey": "LDLZZZX",
@@ -2073,11 +2418,13 @@
     "center": "109.175444,18.74758",
     "lon": "109.175444",
     "lat": "18.74758",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810018",
+    "province": "香港特别行政区",
     "name": "离岛区",
     "pinyin": "LiDaoQu",
     "firstKey": "LDQ",
@@ -2085,11 +2432,13 @@
     "center": "113.946059,22.286371",
     "lon": "113.946059",
     "lat": "22.286371",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0738",
     "adcode": "431300",
+    "province": "湖南省",
     "name": "娄底市",
     "pinyin": "LouDiShi",
     "firstKey": "LDS",
@@ -2097,11 +2446,13 @@
     "center": "112.008497,27.728136",
     "lon": "112.008497",
     "lat": "27.728136",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820007",
+    "province": "澳门特别行政区",
     "name": "路凼填海区",
     "pinyin": "LuDangTianHaiQu",
     "firstKey": "LDTHQ",
@@ -2109,11 +2460,13 @@
     "center": "113.56925,22.136546",
     "lon": "113.56925",
     "lat": "22.136546",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0316",
     "adcode": "131000",
+    "province": "河北省",
     "name": "廊坊市",
     "pinyin": "LangFangShi",
     "firstKey": "LFS",
@@ -2121,11 +2474,13 @@
     "center": "116.704441,39.523927",
     "lon": "116.704441",
     "lat": "39.523927",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0357",
     "adcode": "141000",
+    "province": "山西省",
     "name": "临汾市",
     "pinyin": "LinFenShi",
     "firstKey": "LFS",
@@ -2133,11 +2488,13 @@
     "center": "111.517973,36.08415",
     "lon": "111.517973",
     "lat": "36.08415",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1896",
     "adcode": "469024",
+    "province": "海南省",
     "name": "临高县",
     "pinyin": "LinGaoXian",
     "firstKey": "LGX",
@@ -2145,11 +2502,13 @@
     "center": "109.687697,19.908293",
     "lon": "109.687697",
     "lat": "19.908293",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0395",
     "adcode": "411100",
+    "province": "河南省",
     "name": "漯河市",
     "pinyin": "LeiHeShi",
     "firstKey": "LHS",
@@ -2157,11 +2516,13 @@
     "center": "114.026405,33.575855",
     "lon": "114.026405",
     "lat": "33.575855",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0888",
     "adcode": "530700",
+    "province": "云南省",
     "name": "丽江市",
     "pinyin": "LiJiangShi",
     "firstKey": "LJS",
@@ -2169,11 +2530,13 @@
     "center": "100.233026,26.872108",
     "lon": "100.233026",
     "lat": "26.872108",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0358",
     "adcode": "141100",
+    "province": "山西省",
     "name": "吕梁市",
     "pinyin": "LvLiangShi",
     "firstKey": "LLS",
@@ -2181,11 +2544,13 @@
     "center": "111.134335,37.524366",
     "lon": "111.134335",
     "lat": "37.524366",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "2935",
     "adcode": "621200",
+    "province": "甘肃省",
     "name": "陇南市",
     "pinyin": "LongNanShi",
     "firstKey": "LNS",
@@ -2193,11 +2558,13 @@
     "center": "104.929379,33.388598",
     "lon": "104.929379",
     "lat": "33.388598",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0858",
     "adcode": "520200",
+    "province": "贵州省",
     "name": "六盘水市",
     "pinyin": "LiuPanShuiShi",
     "firstKey": "LPSS",
@@ -2205,11 +2572,13 @@
     "center": "104.846743,26.584643",
     "lon": "104.846743",
     "lat": "26.584643",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0809",
     "adcode": "469028",
+    "province": "海南省",
     "name": "陵水黎族自治县",
     "pinyin": "LingShuiLiZuZiZhiXian",
     "firstKey": "LSLZZZX",
@@ -2217,11 +2586,13 @@
     "center": "110.037218,18.505006",
     "lon": "110.037218",
     "lat": "18.505006",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0891",
     "adcode": "540100",
+    "province": "西藏自治区",
     "name": "拉萨市",
     "pinyin": "LaSaShi",
     "firstKey": "LSS",
@@ -2229,11 +2600,13 @@
     "center": "91.132212,29.660361",
     "lon": "91.132212",
     "lat": "29.660361",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0578",
     "adcode": "331100",
+    "province": "浙江省",
     "name": "丽水市",
     "pinyin": "LiShuiShi",
     "firstKey": "LSS",
@@ -2241,11 +2614,13 @@
     "center": "119.921786,28.451993",
     "lon": "119.921786",
     "lat": "28.451993",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0833",
     "adcode": "511100",
+    "province": "四川省",
     "name": "乐山市",
     "pinyin": "LeShanShi",
     "firstKey": "LSS",
@@ -2253,11 +2628,13 @@
     "center": "103.761263,29.582024",
     "lon": "103.761263",
     "lat": "29.582024",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0834",
     "adcode": "513400",
+    "province": "四川省",
     "name": "凉山彝族自治州",
     "pinyin": "LiangShanYiZuZiZhiZhou",
     "firstKey": "LSYZZZZ",
@@ -2265,11 +2642,13 @@
     "center": "102.258746,27.886762",
     "lon": "102.258746",
     "lat": "27.886762",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0930",
     "adcode": "622900",
+    "province": "甘肃省",
     "name": "临夏回族自治州",
     "pinyin": "LinXiaHuiZuZiZhiZhou",
     "firstKey": "LXHZZZZ",
@@ -2277,11 +2656,13 @@
     "center": "103.212006,35.599446",
     "lon": "103.212006",
     "lat": "35.599446",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0518",
     "adcode": "320700",
+    "province": "江苏省",
     "name": "连云港市",
     "pinyin": "LianYunGangShi",
     "firstKey": "LYGS",
@@ -2289,11 +2670,13 @@
     "center": "119.178821,34.600018",
     "lon": "119.178821",
     "lat": "34.600018",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0379",
     "adcode": "410300",
+    "province": "河南省",
     "name": "洛阳市",
     "pinyin": "LuoYangShi",
     "firstKey": "LYS",
@@ -2301,11 +2684,13 @@
     "center": "112.434468,34.663041",
     "lon": "112.434468",
     "lat": "34.663041",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0419",
     "adcode": "211000",
+    "province": "辽宁省",
     "name": "辽阳市",
     "pinyin": "LiaoYangShi",
     "firstKey": "LYS",
@@ -2313,11 +2698,13 @@
     "center": "123.18152,41.269402",
     "lon": "123.18152",
     "lat": "41.269402",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0539",
     "adcode": "371300",
+    "province": "山东省",
     "name": "临沂市",
     "pinyin": "LinYiShi",
     "firstKey": "LYS",
@@ -2325,11 +2712,13 @@
     "center": "118.326443,35.065282",
     "lon": "118.326443",
     "lat": "35.065282",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0597",
     "adcode": "350800",
+    "province": "福建省",
     "name": "龙岩市",
     "pinyin": "LongYanShi",
     "firstKey": "LYS",
@@ -2337,11 +2726,13 @@
     "center": "117.02978,25.091603",
     "lon": "117.02978",
     "lat": "25.091603",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0437",
     "adcode": "220400",
+    "province": "吉林省",
     "name": "辽源市",
     "pinyin": "LiaoYuanShi",
     "firstKey": "LYS",
@@ -2349,11 +2740,13 @@
     "center": "125.145349,42.902692",
     "lon": "125.145349",
     "lat": "42.902692",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0894",
     "adcode": "540400",
+    "province": "西藏自治区",
     "name": "林芝市",
     "pinyin": "LinZhiShi",
     "firstKey": "LZS",
@@ -2361,11 +2754,13 @@
     "center": "94.362348,29.654693",
     "lon": "94.362348",
     "lat": "29.654693",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0772",
     "adcode": "450200",
+    "province": "广西壮族自治区",
     "name": "柳州市",
     "pinyin": "LiuZhouShi",
     "firstKey": "LZS",
@@ -2373,11 +2768,13 @@
     "center": "109.411703,24.314617",
     "lon": "109.411703",
     "lat": "24.314617",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0931",
     "adcode": "620100",
+    "province": "甘肃省",
     "name": "兰州市",
     "pinyin": "LanZhouShi",
     "firstKey": "LZS",
@@ -2385,11 +2782,13 @@
     "center": "103.823557,36.058039",
     "lon": "103.823557",
     "lat": "36.058039",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0830",
     "adcode": "510500",
+    "province": "四川省",
     "name": "泸州市",
     "pinyin": "LuZhouShi",
     "firstKey": "LZS",
@@ -2397,11 +2796,13 @@
     "center": "105.443348,28.889138",
     "lon": "105.443348",
     "lat": "28.889138",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0555",
     "adcode": "340500",
+    "province": "安徽省",
     "name": "马鞍山市",
     "pinyin": "MaAnShanShi",
     "firstKey": "MASS",
@@ -2409,11 +2810,13 @@
     "center": "118.507906,31.689362",
     "lon": "118.507906",
     "lat": "31.689362",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0453",
     "adcode": "231000",
+    "province": "黑龙江省",
     "name": "牡丹江市",
     "pinyin": "MuDanJiangShi",
     "firstKey": "MDJS",
@@ -2421,11 +2824,13 @@
     "center": "129.618602,44.582962",
     "lon": "129.618602",
     "lat": "44.582962",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0668",
     "adcode": "440900",
+    "province": "广东省",
     "name": "茂名市",
     "pinyin": "MaoMingShi",
     "firstKey": "MMS",
@@ -2433,11 +2838,13 @@
     "center": "110.919229,21.659751",
     "lon": "110.919229",
     "lat": "21.659751",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1833",
     "adcode": "511400",
+    "province": "四川省",
     "name": "眉山市",
     "pinyin": "MeiShanShi",
     "firstKey": "MSS",
@@ -2445,11 +2852,13 @@
     "center": "103.831788,30.048318",
     "lon": "103.831788",
     "lat": "30.048318",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0816",
     "adcode": "510700",
+    "province": "四川省",
     "name": "绵阳市",
     "pinyin": "MianYangShi",
     "firstKey": "MYS",
@@ -2457,11 +2866,13 @@
     "center": "104.741722,31.46402",
     "lon": "104.741722",
     "lat": "31.46402",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0753",
     "adcode": "441400",
+    "province": "广东省",
     "name": "梅州市",
     "pinyin": "MeiZhouShi",
     "firstKey": "MZS",
@@ -2469,11 +2880,13 @@
     "center": "116.117582,24.299112",
     "lon": "116.117582",
     "lat": "24.299112",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0574",
     "adcode": "330200",
+    "province": "浙江省",
     "name": "宁波市",
     "pinyin": "NingBoShi",
     "firstKey": "NBS",
@@ -2481,11 +2894,13 @@
     "center": "121.549792,29.868388",
     "lon": "121.549792",
     "lat": "29.868388",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0791",
     "adcode": "360100",
+    "province": "江西省",
     "name": "南昌市",
     "pinyin": "NanChangShi",
     "firstKey": "NCS",
@@ -2493,11 +2908,13 @@
     "center": "115.892151,28.676493",
     "lon": "115.892151",
     "lat": "28.676493",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0817",
     "adcode": "511300",
+    "province": "四川省",
     "name": "南充市",
     "pinyin": "NanChongShi",
     "firstKey": "NCS",
@@ -2505,11 +2922,13 @@
     "center": "106.082974,30.795281",
     "lon": "106.082974",
     "lat": "30.795281",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0593",
     "adcode": "350900",
+    "province": "福建省",
     "name": "宁德市",
     "pinyin": "NingDeShi",
     "firstKey": "NDS",
@@ -2517,11 +2936,13 @@
     "center": "119.527082,26.65924",
     "lon": "119.527082",
     "lat": "26.65924",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0886",
     "adcode": "533300",
+    "province": "云南省",
     "name": "怒江傈僳族自治州",
     "pinyin": "NuJiangLiSuZuZiZhiZhou",
     "firstKey": "NJLSZZZZ",
@@ -2529,11 +2950,13 @@
     "center": "98.854304,25.850949",
     "lon": "98.854304",
     "lat": "25.850949",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "025",
     "adcode": "320100",
+    "province": "江苏省",
     "name": "南京市",
     "pinyin": "NanJingShi",
     "firstKey": "NJS",
@@ -2541,11 +2964,13 @@
     "center": "118.767413,32.041544",
     "lon": "118.767413",
     "lat": "32.041544",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1832",
     "adcode": "511000",
+    "province": "四川省",
     "name": "内江市",
     "pinyin": "NaJiangShi",
     "firstKey": "NJS",
@@ -2553,11 +2978,13 @@
     "center": "105.066138,29.58708",
     "lon": "105.066138",
     "lat": "29.58708",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0771",
     "adcode": "450100",
+    "province": "广西壮族自治区",
     "name": "南宁市",
     "pinyin": "NanNingShi",
     "firstKey": "NNS",
@@ -2565,11 +2992,13 @@
     "center": "108.320004,22.82402",
     "lon": "108.320004",
     "lat": "22.82402",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0599",
     "adcode": "350700",
+    "province": "福建省",
     "name": "南平市",
     "pinyin": "NanPingShi",
     "firstKey": "NPS",
@@ -2577,11 +3006,13 @@
     "center": "118.178459,26.635627",
     "lon": "118.178459",
     "lat": "26.635627",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810004",
+    "province": "香港特别行政区",
     "name": "南区",
     "pinyin": "NanQu",
     "firstKey": "NQ",
@@ -2589,11 +3020,13 @@
     "center": "114.160023,22.245811",
     "lon": "114.160023",
     "lat": "22.245811",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0896",
     "adcode": "540600",
+    "province": "西藏自治区",
     "name": "那曲市",
     "pinyin": "NaQuShi",
     "firstKey": "NQS",
@@ -2601,11 +3034,13 @@
     "center": "92.060214,31.476004",
     "lon": "92.060214",
     "lat": "31.476004",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0513",
     "adcode": "320600",
+    "province": "江苏省",
     "name": "南通市",
     "pinyin": "NanTongShi",
     "firstKey": "NTS",
@@ -2613,11 +3048,13 @@
     "center": "120.864608,32.016212",
     "lon": "120.864608",
     "lat": "32.016212",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0377",
     "adcode": "411300",
+    "province": "河南省",
     "name": "南阳市",
     "pinyin": "NanYangShi",
     "firstKey": "NYS",
@@ -2625,11 +3062,13 @@
     "center": "112.540918,32.999082",
     "lon": "112.540918",
     "lat": "32.999082",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0375",
     "adcode": "410400",
+    "province": "河南省",
     "name": "平顶山市",
     "pinyin": "PingDingShanShi",
     "firstKey": "PDSS",
@@ -2637,11 +3076,13 @@
     "center": "113.307718,33.735241",
     "lon": "113.307718",
     "lat": "33.735241",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0879",
     "adcode": "530800",
+    "province": "云南省",
     "name": "普洱市",
     "pinyin": "PuErShi",
     "firstKey": "PES",
@@ -2649,11 +3090,13 @@
     "center": "100.972344,22.777321",
     "lon": "100.972344",
     "lat": "22.777321",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0427",
     "adcode": "211100",
+    "province": "辽宁省",
     "name": "盘锦市",
     "pinyin": "PanJinShi",
     "firstKey": "PJS",
@@ -2661,11 +3104,13 @@
     "center": "122.06957,41.124484",
     "lon": "122.06957",
     "lat": "41.124484",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0933",
     "adcode": "620800",
+    "province": "甘肃省",
     "name": "平凉市",
     "pinyin": "PingLiangShi",
     "firstKey": "PLS",
@@ -2673,11 +3118,13 @@
     "center": "106.684691,35.54279",
     "lon": "106.684691",
     "lat": "35.54279",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0594",
     "adcode": "350300",
+    "province": "福建省",
     "name": "莆田市",
     "pinyin": "PuTianShi",
     "firstKey": "PTS",
@@ -2685,11 +3132,13 @@
     "center": "119.007558,25.431011",
     "lon": "119.007558",
     "lat": "25.431011",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0799",
     "adcode": "360300",
+    "province": "江西省",
     "name": "萍乡市",
     "pinyin": "PingXiangShi",
     "firstKey": "PXS",
@@ -2697,11 +3146,13 @@
     "center": "113.852186,27.622946",
     "lon": "113.852186",
     "lat": "27.622946",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0393",
     "adcode": "410900",
+    "province": "河南省",
     "name": "濮阳市",
     "pinyin": "PuYangShi",
     "firstKey": "PYS",
@@ -2709,11 +3160,13 @@
     "center": "115.041299,35.768234",
     "lon": "115.041299",
     "lat": "35.768234",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0812",
     "adcode": "510400",
+    "province": "四川省",
     "name": "攀枝花市",
     "pinyin": "PanZhiHuaShi",
     "firstKey": "PZHS",
@@ -2721,11 +3174,13 @@
     "center": "101.716007,26.580446",
     "lon": "101.716007",
     "lat": "26.580446",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0855",
     "adcode": "522600",
+    "province": "贵州省",
     "name": "黔东南苗族侗族自治州",
     "pinyin": "QianDongNanMiaoZuDongZuZiZhiZhou",
     "firstKey": "QDNMZDZZZZ",
@@ -2733,11 +3188,13 @@
     "center": "107.977488,26.583352",
     "lon": "107.977488",
     "lat": "26.583352",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0532",
     "adcode": "370200",
+    "province": "山东省",
     "name": "青岛市",
     "pinyin": "QingDaoShi",
     "firstKey": "QDS",
@@ -2745,11 +3202,13 @@
     "center": "120.355173,36.082982",
     "lon": "120.355173",
     "lat": "36.082982",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0335",
     "adcode": "130300",
+    "province": "河北省",
     "name": "秦皇岛市",
     "pinyin": "QinHuangDaoShi",
     "firstKey": "QHDS",
@@ -2757,11 +3216,13 @@
     "center": "119.586579,39.942531",
     "lon": "119.586579",
     "lat": "39.942531",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1894",
     "adcode": "469002",
+    "province": "海南省",
     "name": "琼海市",
     "pinyin": "QiongHaiShi",
     "firstKey": "QHS",
@@ -2769,11 +3230,13 @@
     "center": "110.466785,19.246011",
     "lon": "110.466785",
     "lat": "19.246011",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "2728",
     "adcode": "429005",
+    "province": "湖北省",
     "name": "潜江市",
     "pinyin": "QianJiangShi",
     "firstKey": "QJS",
@@ -2781,11 +3244,13 @@
     "center": "112.896866,30.421215",
     "lon": "112.896866",
     "lat": "30.421215",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0874",
     "adcode": "530300",
+    "province": "云南省",
     "name": "曲靖市",
     "pinyin": "QuJingShi",
     "firstKey": "QJS",
@@ -2793,11 +3258,13 @@
     "center": "103.797851,25.501557",
     "lon": "103.797851",
     "lat": "25.501557",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0854",
     "adcode": "522700",
+    "province": "贵州省",
     "name": "黔南布依族苗族自治州",
     "pinyin": "QianNanBuYiZuMiaoZuZiZhiZhou",
     "firstKey": "QNBYZMZZZZ",
@@ -2805,11 +3272,13 @@
     "center": "107.517156,26.258219",
     "lon": "107.517156",
     "lat": "26.258219",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0452",
     "adcode": "230200",
+    "province": "黑龙江省",
     "name": "齐齐哈尔市",
     "pinyin": "QiQiHaErShi",
     "firstKey": "QQHES",
@@ -2817,11 +3286,13 @@
     "center": "123.95792,47.342081",
     "lon": "123.95792",
     "lat": "47.342081",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0464",
     "adcode": "230900",
+    "province": "黑龙江省",
     "name": "七台河市",
     "pinyin": "QiTaiHeShi",
     "firstKey": "QTHS",
@@ -2829,11 +3300,13 @@
     "center": "131.015584,45.771266",
     "lon": "131.015584",
     "lat": "45.771266",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810010",
+    "province": "香港特别行政区",
     "name": "荃湾区",
     "pinyin": "QuanWanQu",
     "firstKey": "QWQ",
@@ -2841,11 +3314,13 @@
     "center": "114.121234,22.368458",
     "lon": "114.121234",
     "lat": "22.368458",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0859",
     "adcode": "522300",
+    "province": "贵州省",
     "name": "黔西南布依族苗族自治州",
     "pinyin": "QianXiNanBuYiZuMiaoZuZiZhiZhou",
     "firstKey": "QXNBYZMZZZZ",
@@ -2853,11 +3328,13 @@
     "center": "104.897971,25.08812",
     "lon": "104.897971",
     "lat": "25.08812",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0763",
     "adcode": "441800",
+    "province": "广东省",
     "name": "清远市",
     "pinyin": "QingYuanShi",
     "firstKey": "QYS",
@@ -2865,11 +3342,13 @@
     "center": "113.051227,23.685022",
     "lon": "113.051227",
     "lat": "23.685022",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0934",
     "adcode": "621000",
+    "province": "甘肃省",
     "name": "庆阳市",
     "pinyin": "QingYangShi",
     "firstKey": "QYS",
@@ -2877,11 +3356,13 @@
     "center": "107.638372,35.734218",
     "lon": "107.638372",
     "lat": "35.734218",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1899",
     "adcode": "469030",
+    "province": "海南省",
     "name": "琼中黎族苗族自治县",
     "pinyin": "QiongZhongLiZuMiaoZuZiZhiXian",
     "firstKey": "QZLZMZZZX",
@@ -2889,11 +3370,13 @@
     "center": "109.839996,19.03557",
     "lon": "109.839996",
     "lat": "19.03557",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0595",
     "adcode": "350500",
+    "province": "福建省",
     "name": "泉州市",
     "pinyin": "QuanZhouShi",
     "firstKey": "QZS",
@@ -2901,11 +3384,13 @@
     "center": "118.589421,24.908853",
     "lon": "118.589421",
     "lat": "24.908853",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0777",
     "adcode": "450700",
+    "province": "广西壮族自治区",
     "name": "钦州市",
     "pinyin": "QinZhouShi",
     "firstKey": "QZS",
@@ -2913,11 +3398,13 @@
     "center": "108.624175,21.967127",
     "lon": "108.624175",
     "lat": "21.967127",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0570",
     "adcode": "330800",
+    "province": "浙江省",
     "name": "衢州市",
     "pinyin": "QuZhouShi",
     "firstKey": "QZS",
@@ -2925,11 +3412,13 @@
     "center": "118.87263,28.941708",
     "lon": "118.87263",
     "lat": "28.941708",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0892",
     "adcode": "540200",
+    "province": "西藏自治区",
     "name": "日喀则市",
     "pinyin": "RiKaZeShi",
     "firstKey": "RKZS",
@@ -2937,11 +3426,13 @@
     "center": "88.885148,29.267519",
     "lon": "88.885148",
     "lat": "29.267519",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0633",
     "adcode": "371100",
+    "province": "山东省",
     "name": "日照市",
     "pinyin": "RiZhaoShi",
     "firstKey": "RZS",
@@ -2949,11 +3440,13 @@
     "center": "119.461208,35.428588",
     "lon": "119.461208",
     "lat": "35.428588",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0755",
     "adcode": "440300",
+    "province": "广东省",
     "name": "深圳市",
     "pinyin": "ShenChouShi",
     "firstKey": "SCS",
@@ -2961,11 +3454,13 @@
     "center": "114.085947,22.547",
     "lon": "114.085947",
     "lat": "22.547",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820008",
+    "province": "澳门特别行政区",
     "name": "圣方济各堂区",
     "pinyin": "ShengFangJiGeTangQu",
     "firstKey": "SFJGTQ",
@@ -2973,11 +3468,13 @@
     "center": "113.559954,22.124049",
     "lon": "113.559954",
     "lat": "22.124049",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0751",
     "adcode": "440200",
+    "province": "广东省",
     "name": "韶关市",
     "pinyin": "ShaoGuanShi",
     "firstKey": "SGS",
@@ -2985,11 +3482,13 @@
     "center": "113.591544,24.801322",
     "lon": "113.591544",
     "lat": "24.801322",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "021",
     "adcode": "310100",
+    "province": "上海市",
     "name": "上海城区",
     "pinyin": "ShangHaiChengQu",
     "firstKey": "SHCQ",
@@ -2997,11 +3496,13 @@
     "center": "121.472644,31.231706",
     "lon": "121.472644",
     "lat": "31.231706",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0455",
     "adcode": "231200",
+    "province": "黑龙江省",
     "name": "绥化市",
     "pinyin": "SuiHuaShi",
     "firstKey": "SHS",
@@ -3009,11 +3510,13 @@
     "center": "126.99293,46.637393",
     "lon": "126.99293",
     "lat": "46.637393",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1909",
     "adcode": "659007",
+    "province": "新疆维吾尔自治区",
     "name": "双河市",
     "pinyin": "ShuangHeShi",
     "firstKey": "SHS",
@@ -3021,11 +3524,13 @@
     "center": "82.353656,44.840524",
     "lon": "82.353656",
     "lat": "44.840524",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0993",
     "adcode": "659001",
+    "province": "新疆维吾尔自治区",
     "name": "石河子市",
     "pinyin": "ShiHeZiShi",
     "firstKey": "SHZS",
@@ -3033,11 +3538,13 @@
     "center": "86.041075,44.305886",
     "lon": "86.041075",
     "lat": "44.305886",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0311",
     "adcode": "130100",
+    "province": "河北省",
     "name": "石家庄市",
     "pinyin": "ShiJiaZhuangShi",
     "firstKey": "SJZS",
@@ -3045,11 +3552,13 @@
     "center": "114.502461,38.045474",
     "lon": "114.502461",
     "lat": "38.045474",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0914",
     "adcode": "611000",
+    "province": "陕西省",
     "name": "商洛市",
     "pinyin": "ShangLuoShi",
     "firstKey": "SLS",
@@ -3057,11 +3566,13 @@
     "center": "109.939776,33.868319",
     "lon": "109.939776",
     "lat": "33.868319",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0598",
     "adcode": "350400",
+    "province": "福建省",
     "name": "三明市",
     "pinyin": "SanMingShi",
     "firstKey": "SMS",
@@ -3069,11 +3580,13 @@
     "center": "117.635001,26.265444",
     "lon": "117.635001",
     "lat": "26.265444",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0398",
     "adcode": "411200",
+    "province": "河南省",
     "name": "三门峡市",
     "pinyin": "SanMenXiaShi",
     "firstKey": "SMXS",
@@ -3081,11 +3594,13 @@
     "center": "111.194099,34.777338",
     "lon": "111.194099",
     "lat": "34.777338",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1719",
     "adcode": "429021",
+    "province": "湖北省",
     "name": "神农架林区",
     "pinyin": "ShenNongJiaLinQu",
     "firstKey": "SNJLQ",
@@ -3093,11 +3608,13 @@
     "center": "110.671525,31.744449",
     "lon": "110.671525",
     "lat": "31.744449",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0893",
     "adcode": "540500",
+    "province": "西藏自治区",
     "name": "山南市",
     "pinyin": "ShanNanShi",
     "firstKey": "SNS",
@@ -3105,11 +3622,13 @@
     "center": "91.766529,29.236023",
     "lon": "91.766529",
     "lat": "29.236023",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0825",
     "adcode": "510900",
+    "province": "四川省",
     "name": "遂宁市",
     "pinyin": "SuiNingShi",
     "firstKey": "SNS",
@@ -3117,11 +3636,13 @@
     "center": "105.571331,30.513311",
     "lon": "105.571331",
     "lat": "30.513311",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0434",
     "adcode": "220300",
+    "province": "吉林省",
     "name": "四平市",
     "pinyin": "SiPingShi",
     "firstKey": "SPS",
@@ -3129,11 +3650,13 @@
     "center": "124.370785,43.170344",
     "lon": "124.370785",
     "lat": "43.170344",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0370",
     "adcode": "411400",
+    "province": "河南省",
     "name": "商丘市",
     "pinyin": "ShangQiuShi",
     "firstKey": "SQS",
@@ -3141,11 +3664,13 @@
     "center": "115.650497,34.437054",
     "lon": "115.650497",
     "lat": "34.437054",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0527",
     "adcode": "321300",
+    "province": "江苏省",
     "name": "宿迁市",
     "pinyin": "SuQianShi",
     "firstKey": "SQS",
@@ -3153,11 +3678,13 @@
     "center": "118.275162,33.963008",
     "lon": "118.275162",
     "lat": "33.963008",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0793",
     "adcode": "361100",
+    "province": "江西省",
     "name": "上饶市",
     "pinyin": "ShangRaoShi",
     "firstKey": "SRS",
@@ -3165,11 +3692,13 @@
     "center": "117.971185,28.44442",
     "lon": "117.971185",
     "lat": "28.44442",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "2898",
     "adcode": "460300",
+    "province": "海南省",
     "name": "三沙市",
     "pinyin": "SanShaShi",
     "firstKey": "SSS",
@@ -3177,11 +3706,13 @@
     "center": "112.34882,16.831039",
     "lon": "112.34882",
     "lat": "16.831039",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810006",
+    "province": "香港特别行政区",
     "name": "深水埗区",
     "pinyin": "ShenShuibiaQu",
     "firstKey": "SSbQ",
@@ -3189,11 +3720,13 @@
     "center": "114.163349,22.333775",
     "lon": "114.163349",
     "lat": "22.333775",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810016",
+    "province": "香港特别行政区",
     "name": "沙田区",
     "pinyin": "ShaTianQu",
     "firstKey": "STQ",
@@ -3201,11 +3734,13 @@
     "center": "114.195126,22.379715",
     "lon": "114.195126",
     "lat": "22.379715",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0754",
     "adcode": "440500",
+    "province": "广东省",
     "name": "汕头市",
     "pinyin": "ShanTouShi",
     "firstKey": "STS",
@@ -3213,11 +3748,13 @@
     "center": "116.708463,23.37102",
     "lon": "116.708463",
     "lat": "23.37102",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0660",
     "adcode": "441500",
+    "province": "广东省",
     "name": "汕尾市",
     "pinyin": "ShanWeiShi",
     "firstKey": "SWS",
@@ -3225,11 +3762,13 @@
     "center": "115.364238,22.774485",
     "lon": "115.364238",
     "lat": "22.774485",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0575",
     "adcode": "330600",
+    "province": "浙江省",
     "name": "绍兴市",
     "pinyin": "ShaoXingShi",
     "firstKey": "SXS",
@@ -3237,11 +3776,13 @@
     "center": "120.582112,29.997117",
     "lon": "120.582112",
     "lat": "29.997117",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0719",
     "adcode": "420300",
+    "province": "湖北省",
     "name": "十堰市",
     "pinyin": "ShiYanShi",
     "firstKey": "SYS",
@@ -3249,11 +3790,13 @@
     "center": "110.787916,32.646907",
     "lon": "110.787916",
     "lat": "32.646907",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "024",
     "adcode": "210100",
+    "province": "辽宁省",
     "name": "沈阳市",
     "pinyin": "ShenYangShi",
     "firstKey": "SYS",
@@ -3261,11 +3804,13 @@
     "center": "123.429096,41.796767",
     "lon": "123.429096",
     "lat": "41.796767",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0739",
     "adcode": "430500",
+    "province": "湖南省",
     "name": "邵阳市",
     "pinyin": "ShaoYangShi",
     "firstKey": "SYS",
@@ -3273,11 +3818,13 @@
     "center": "111.46923,27.237842",
     "lon": "111.46923",
     "lat": "27.237842",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0899",
     "adcode": "460200",
+    "province": "海南省",
     "name": "三亚市",
     "pinyin": "SanYaShi",
     "firstKey": "SYS",
@@ -3285,11 +3832,13 @@
     "center": "109.508268,18.247872",
     "lon": "109.508268",
     "lat": "18.247872",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0438",
     "adcode": "220700",
+    "province": "吉林省",
     "name": "松原市",
     "pinyin": "SongYuanShi",
     "firstKey": "SYS",
@@ -3297,11 +3846,13 @@
     "center": "124.823608,45.118243",
     "lon": "124.823608",
     "lat": "45.118243",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0469",
     "adcode": "230500",
+    "province": "黑龙江省",
     "name": "双鸭山市",
     "pinyin": "ShuangYaShanShi",
     "firstKey": "SYSS",
@@ -3309,11 +3860,13 @@
     "center": "131.157304,46.643442",
     "lon": "131.157304",
     "lat": "46.643442",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0722",
     "adcode": "421300",
+    "province": "湖北省",
     "name": "随州市",
     "pinyin": "SuiZhouShi",
     "firstKey": "SZS",
@@ -3321,11 +3874,13 @@
     "center": "113.37377,31.717497",
     "lon": "113.37377",
     "lat": "31.717497",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0512",
     "adcode": "320500",
+    "province": "江苏省",
     "name": "苏州市",
     "pinyin": "SuZhouShi",
     "firstKey": "SZS",
@@ -3333,11 +3888,13 @@
     "center": "120.619585,31.299379",
     "lon": "120.619585",
     "lat": "31.299379",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0557",
     "adcode": "341300",
+    "province": "安徽省",
     "name": "宿州市",
     "pinyin": "SuZhouShi",
     "firstKey": "SZS",
@@ -3345,11 +3902,13 @@
     "center": "116.984084,33.633891",
     "lon": "116.984084",
     "lat": "33.633891",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0349",
     "adcode": "140600",
+    "province": "山西省",
     "name": "朔州市",
     "pinyin": "ShuoZhouShi",
     "firstKey": "SZS",
@@ -3357,11 +3916,13 @@
     "center": "112.433387,39.331261",
     "lon": "112.433387",
     "lat": "39.331261",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0952",
     "adcode": "640200",
+    "province": "宁夏回族自治区",
     "name": "石嘴山市",
     "pinyin": "ShiZuiShanShi",
     "firstKey": "SZSS",
@@ -3369,11 +3930,13 @@
     "center": "106.376173,39.01333",
     "lon": "106.376173",
     "lat": "39.01333",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0538",
     "adcode": "370900",
+    "province": "山东省",
     "name": "泰安市",
     "pinyin": "TaiAnShi",
     "firstKey": "TAS",
@@ -3381,11 +3944,13 @@
     "center": "117.129063,36.194968",
     "lon": "117.129063",
     "lat": "36.194968",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0901",
     "adcode": "654200",
+    "province": "新疆维吾尔自治区",
     "name": "塔城地区",
     "pinyin": "TaChengDiQu",
     "firstKey": "TCDQ",
@@ -3393,11 +3958,13 @@
     "center": "82.985732,46.746301",
     "lon": "82.985732",
     "lat": "46.746301",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0919",
     "adcode": "610200",
+    "province": "陕西省",
     "name": "铜川市",
     "pinyin": "TongChuanShi",
     "firstKey": "TCS",
@@ -3405,11 +3972,13 @@
     "center": "108.979608,34.916582",
     "lon": "108.979608",
     "lat": "34.916582",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1892",
     "adcode": "469022",
+    "province": "海南省",
     "name": "屯昌县",
     "pinyin": "TunChangXian",
     "firstKey": "TCX",
@@ -3417,11 +3986,13 @@
     "center": "110.102773,19.362916",
     "lon": "110.102773",
     "lat": "19.362916",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0435",
     "adcode": "220500",
+    "province": "吉林省",
     "name": "通化市",
     "pinyin": "TongHuaShi",
     "firstKey": "THS",
@@ -3429,11 +4000,13 @@
     "center": "125.936501,41.721177",
     "lon": "125.936501",
     "lat": "41.721177",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "022",
     "adcode": "120100",
+    "province": "天津市",
     "name": "天津城区",
     "pinyin": "TianJinChengQu",
     "firstKey": "TJCQ",
@@ -3441,11 +4014,13 @@
     "center": "117.190182,39.125596",
     "lon": "117.190182",
     "lat": "39.125596",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0995",
     "adcode": "650400",
+    "province": "新疆维吾尔自治区",
     "name": "吐鲁番市",
     "pinyin": "TuLuFanShi",
     "firstKey": "TLFS",
@@ -3453,11 +4028,13 @@
     "center": "89.184078,42.947613",
     "lon": "89.184078",
     "lat": "42.947613",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0475",
     "adcode": "150500",
+    "province": "内蒙古自治区",
     "name": "通辽市",
     "pinyin": "TongLiaoShi",
     "firstKey": "TLS",
@@ -3465,11 +4042,13 @@
     "center": "122.263119,43.617429",
     "lon": "122.263119",
     "lat": "43.617429",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0410",
     "adcode": "211200",
+    "province": "辽宁省",
     "name": "铁岭市",
     "pinyin": "TieLingShi",
     "firstKey": "TLS",
@@ -3477,11 +4056,13 @@
     "center": "123.844279,42.290585",
     "lon": "123.844279",
     "lat": "42.290585",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0562",
     "adcode": "340700",
+    "province": "安徽省",
     "name": "铜陵市",
     "pinyin": "TongLingShi",
     "firstKey": "TLS",
@@ -3489,11 +4070,13 @@
     "center": "117.816576,30.929935",
     "lon": "117.816576",
     "lat": "30.929935",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1996",
     "adcode": "659006",
+    "province": "新疆维吾尔自治区",
     "name": "铁门关市",
     "pinyin": "TieMenGuanShi",
     "firstKey": "TMGS",
@@ -3501,11 +4084,13 @@
     "center": "85.501218,41.827251",
     "lon": "85.501218",
     "lat": "41.827251",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810011",
+    "province": "香港特别行政区",
     "name": "屯门区",
     "pinyin": "TunMenQu",
     "firstKey": "TMQ",
@@ -3513,11 +4098,13 @@
     "center": "113.976308,22.393896",
     "lon": "113.976308",
     "lat": "22.393896",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "1728",
     "adcode": "429006",
+    "province": "湖北省",
     "name": "天门市",
     "pinyin": "TianMenShi",
     "firstKey": "TMS",
@@ -3525,11 +4112,13 @@
     "center": "113.165862,30.653061",
     "lon": "113.165862",
     "lat": "30.653061",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1998",
     "adcode": "659003",
+    "province": "新疆维吾尔自治区",
     "name": "图木舒克市",
     "pinyin": "TuMuShuKeShi",
     "firstKey": "TMSKS",
@@ -3537,11 +4126,13 @@
     "center": "79.077978,39.867316",
     "lon": "79.077978",
     "lat": "39.867316",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0856",
     "adcode": "520600",
+    "province": "贵州省",
     "name": "铜仁市",
     "pinyin": "TongRenShi",
     "firstKey": "TRS",
@@ -3549,11 +4140,13 @@
     "center": "109.191555,27.718346",
     "lon": "109.191555",
     "lat": "27.718346",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0315",
     "adcode": "130200",
+    "province": "河北省",
     "name": "唐山市",
     "pinyin": "TangShanShi",
     "firstKey": "TSS",
@@ -3561,11 +4154,13 @@
     "center": "118.175393,39.635113",
     "lon": "118.175393",
     "lat": "39.635113",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0938",
     "adcode": "620500",
+    "province": "甘肃省",
     "name": "天水市",
     "pinyin": "TianShuiShi",
     "firstKey": "TSS",
@@ -3573,11 +4168,13 @@
     "center": "105.724998,34.578529",
     "lon": "105.724998",
     "lat": "34.578529",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0351",
     "adcode": "140100",
+    "province": "山西省",
     "name": "太原市",
     "pinyin": "TaiYuanShi",
     "firstKey": "TYS",
@@ -3585,11 +4182,13 @@
     "center": "112.549248,37.857014",
     "lon": "112.549248",
     "lat": "37.857014",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0523",
     "adcode": "321200",
+    "province": "江苏省",
     "name": "泰州市",
     "pinyin": "TaiZhouShi",
     "firstKey": "TZS",
@@ -3597,11 +4196,13 @@
     "center": "119.915176,32.484882",
     "lon": "119.915176",
     "lat": "32.484882",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0576",
     "adcode": "331000",
+    "province": "浙江省",
     "name": "台州市",
     "pinyin": "TaiZhouShi",
     "firstKey": "TZS",
@@ -3609,11 +4210,13 @@
     "center": "121.428599,28.661378",
     "lon": "121.428599",
     "lat": "28.661378",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1893",
     "adcode": "469005",
+    "province": "海南省",
     "name": "文昌市",
     "pinyin": "WenChangShi",
     "firstKey": "WCS",
@@ -3621,11 +4224,13 @@
     "center": "110.753975,19.612986",
     "lon": "110.753975",
     "lat": "19.612986",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1853",
     "adcode": "820003",
+    "province": "澳门特别行政区",
     "name": "望德堂区",
     "pinyin": "WangDeTangQu",
     "firstKey": "WDTQ",
@@ -3633,11 +4238,13 @@
     "center": "113.550252,22.193791",
     "lon": "113.550252",
     "lat": "22.193791",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0536",
     "adcode": "370700",
+    "province": "山东省",
     "name": "潍坊市",
     "pinyin": "WeiFangShi",
     "firstKey": "WFS",
@@ -3645,11 +4252,13 @@
     "center": "119.107078,36.70925",
     "lon": "119.107078",
     "lat": "36.70925",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0473",
     "adcode": "150300",
+    "province": "内蒙古自治区",
     "name": "乌海市",
     "pinyin": "WuHaiShi",
     "firstKey": "WHS",
@@ -3657,11 +4266,13 @@
     "center": "106.825563,39.673734",
     "lon": "106.825563",
     "lat": "39.673734",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "027",
     "adcode": "420100",
+    "province": "湖北省",
     "name": "武汉市",
     "pinyin": "WuHanShi",
     "firstKey": "WHS",
@@ -3669,11 +4280,13 @@
     "center": "114.298572,30.584355",
     "lon": "114.298572",
     "lat": "30.584355",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0631",
     "adcode": "371000",
+    "province": "山东省",
     "name": "威海市",
     "pinyin": "WeiHaiShi",
     "firstKey": "WHS",
@@ -3681,11 +4294,13 @@
     "center": "122.116394,37.509691",
     "lon": "122.116394",
     "lat": "37.509691",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0553",
     "adcode": "340200",
+    "province": "安徽省",
     "name": "芜湖市",
     "pinyin": "WuHuShi",
     "firstKey": "WHS",
@@ -3693,11 +4308,13 @@
     "center": "118.376451,31.326319",
     "lon": "118.376451",
     "lat": "31.326319",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1994",
     "adcode": "659004",
+    "province": "新疆维吾尔自治区",
     "name": "五家渠市",
     "pinyin": "WuJiaQuShi",
     "firstKey": "WJQS",
@@ -3705,11 +4322,13 @@
     "center": "87.526884,44.167401",
     "lon": "87.526884",
     "lat": "44.167401",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0474",
     "adcode": "150900",
+    "province": "内蒙古自治区",
     "name": "乌兰察布市",
     "pinyin": "WuLanChaBuShi",
     "firstKey": "WLCBS",
@@ -3717,11 +4336,13 @@
     "center": "113.114543,41.034126",
     "lon": "113.114543",
     "lat": "41.034126",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0991",
     "adcode": "650100",
+    "province": "新疆维吾尔自治区",
     "name": "乌鲁木齐市",
     "pinyin": "WuLuMuQiShi",
     "firstKey": "WLMQS",
@@ -3729,11 +4350,13 @@
     "center": "87.617733,43.792818",
     "lon": "87.617733",
     "lat": "43.792818",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0913",
     "adcode": "610500",
+    "province": "陕西省",
     "name": "渭南市",
     "pinyin": "WeiNanShi",
     "firstKey": "WNS",
@@ -3741,11 +4364,13 @@
     "center": "109.502882,34.499381",
     "lon": "109.502882",
     "lat": "34.499381",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1898",
     "adcode": "469006",
+    "province": "海南省",
     "name": "万宁市",
     "pinyin": "WanNingShi",
     "firstKey": "WNS",
@@ -3753,11 +4378,13 @@
     "center": "110.388793,18.796216",
     "lon": "110.388793",
     "lat": "18.796216",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0876",
     "adcode": "532600",
+    "province": "云南省",
     "name": "文山壮族苗族自治州",
     "pinyin": "WenShanZhuangZuMiaoZuZiZhiZhou",
     "firstKey": "WSZZMZZZZ",
@@ -3765,11 +4392,13 @@
     "center": "104.24401,23.36951",
     "lon": "104.24401",
     "lat": "23.36951",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1935",
     "adcode": "620600",
+    "province": "甘肃省",
     "name": "武威市",
     "pinyin": "WuWeiShi",
     "firstKey": "WWS",
@@ -3777,11 +4406,13 @@
     "center": "102.634697,37.929996",
     "lon": "102.634697",
     "lat": "37.929996",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0510",
     "adcode": "320200",
+    "province": "江苏省",
     "name": "无锡市",
     "pinyin": "WuXiShi",
     "firstKey": "WXS",
@@ -3789,11 +4420,13 @@
     "center": "120.301663,31.574729",
     "lon": "120.301663",
     "lat": "31.574729",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810002",
+    "province": "香港特别行政区",
     "name": "湾仔区",
     "pinyin": "WanZiQu",
     "firstKey": "WZQ",
@@ -3801,11 +4434,13 @@
     "center": "114.18299,22.276345",
     "lon": "114.18299",
     "lat": "22.276345",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0774",
     "adcode": "450400",
+    "province": "广西壮族自治区",
     "name": "梧州市",
     "pinyin": "WuZhouShi",
     "firstKey": "WZS",
@@ -3813,11 +4448,13 @@
     "center": "111.297604,23.474803",
     "lon": "111.297604",
     "lat": "23.474803",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0953",
     "adcode": "640300",
+    "province": "宁夏回族自治区",
     "name": "吴忠市",
     "pinyin": "WuZhongShi",
     "firstKey": "WZS",
@@ -3825,11 +4462,13 @@
     "center": "106.199409,37.986165",
     "lon": "106.199409",
     "lat": "37.986165",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0577",
     "adcode": "330300",
+    "province": "浙江省",
     "name": "温州市",
     "pinyin": "WenZhouShi",
     "firstKey": "WZS",
@@ -3837,11 +4476,13 @@
     "center": "120.672111,28.000575",
     "lon": "120.672111",
     "lat": "28.000575",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1897",
     "adcode": "469001",
+    "province": "海南省",
     "name": "五指山市",
     "pinyin": "WuZhiShanShi",
     "firstKey": "WZSS",
@@ -3849,11 +4490,13 @@
     "center": "109.516662,18.776921",
     "lon": "109.516662",
     "lat": "18.776921",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0482",
     "adcode": "152200",
+    "province": "内蒙古自治区",
     "name": "兴安盟",
     "pinyin": "XingAnMeng",
     "firstKey": "XAM",
@@ -3861,11 +4504,13 @@
     "center": "122.070317,46.076268",
     "lon": "122.070317",
     "lat": "46.076268",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "029",
     "adcode": "610100",
+    "province": "陕西省",
     "name": "西安市",
     "pinyin": "XiAnShi",
     "firstKey": "XAS",
@@ -3873,11 +4518,13 @@
     "center": "108.948024,34.263161",
     "lon": "108.948024",
     "lat": "34.263161",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0374",
     "adcode": "411000",
+    "province": "河南省",
     "name": "许昌市",
     "pinyin": "XuChangShi",
     "firstKey": "XCS",
@@ -3885,11 +4532,13 @@
     "center": "113.826063,34.022956",
     "lon": "113.826063",
     "lat": "34.022956",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0563",
     "adcode": "341800",
+    "province": "安徽省",
     "name": "宣城市",
     "pinyin": "XuanChengShi",
     "firstKey": "XCS",
@@ -3897,11 +4546,13 @@
     "center": "118.757995,30.945667",
     "lon": "118.757995",
     "lat": "30.945667",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810015",
+    "province": "香港特别行政区",
     "name": "西贡区",
     "pinyin": "XiGongQu",
     "firstKey": "XGQ",
@@ -3909,11 +4560,13 @@
     "center": "114.264813,22.314203",
     "lon": "114.264813",
     "lat": "22.314203",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0712",
     "adcode": "420900",
+    "province": "湖北省",
     "name": "孝感市",
     "pinyin": "XiaoGanShi",
     "firstKey": "XGS",
@@ -3921,11 +4574,13 @@
     "center": "113.926655,30.926423",
     "lon": "113.926655",
     "lat": "30.926423",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0479",
     "adcode": "152500",
+    "province": "内蒙古自治区",
     "name": "锡林郭勒盟",
     "pinyin": "XiLinGuoLeMeng",
     "firstKey": "XLGLM",
@@ -3933,11 +4588,13 @@
     "center": "116.090996,43.944018",
     "lon": "116.090996",
     "lat": "43.944018",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0592",
     "adcode": "350200",
+    "province": "福建省",
     "name": "厦门市",
     "pinyin": "XiaMenShi",
     "firstKey": "XMS",
@@ -3945,11 +4602,13 @@
     "center": "118.11022,24.490474",
     "lon": "118.11022",
     "lat": "24.490474",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0715",
     "adcode": "421200",
+    "province": "湖北省",
     "name": "咸宁市",
     "pinyin": "XianNingShi",
     "firstKey": "XNS",
@@ -3957,11 +4616,13 @@
     "center": "114.328963,29.832798",
     "lon": "114.328963",
     "lat": "29.832798",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0971",
     "adcode": "630100",
+    "province": "青海省",
     "name": "西宁市",
     "pinyin": "XiNingShi",
     "firstKey": "XNS",
@@ -3969,11 +4630,13 @@
     "center": "101.778916,36.623178",
     "lon": "101.778916",
     "lat": "36.623178",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0691",
     "adcode": "532800",
+    "province": "云南省",
     "name": "西双版纳傣族自治州",
     "pinyin": "XiShuangBanNaDaiZuZiZhiZhou",
     "firstKey": "XSBNDZZZZ",
@@ -3981,11 +4644,13 @@
     "center": "100.797941,22.001724",
     "lon": "100.797941",
     "lat": "22.001724",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0728",
     "adcode": "429004",
+    "province": "湖北省",
     "name": "仙桃市",
     "pinyin": "XianTaoShi",
     "firstKey": "XTS",
@@ -3993,11 +4658,13 @@
     "center": "113.453974,30.364953",
     "lon": "113.453974",
     "lat": "30.364953",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0732",
     "adcode": "430300",
+    "province": "湖南省",
     "name": "湘潭市",
     "pinyin": "XiangTanShi",
     "firstKey": "XTS",
@@ -4005,11 +4672,13 @@
     "center": "112.944052,27.82973",
     "lon": "112.944052",
     "lat": "27.82973",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0319",
     "adcode": "130500",
+    "province": "河北省",
     "name": "邢台市",
     "pinyin": "XingTaiShi",
     "firstKey": "XTS",
@@ -4017,11 +4686,13 @@
     "center": "114.508851,37.0682",
     "lon": "114.508851",
     "lat": "37.0682",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0373",
     "adcode": "410700",
+    "province": "河南省",
     "name": "新乡市",
     "pinyin": "XinXiangShi",
     "firstKey": "XXS",
@@ -4029,11 +4700,13 @@
     "center": "113.883991,35.302616",
     "lon": "113.883991",
     "lat": "35.302616",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0743",
     "adcode": "433100",
+    "province": "湖南省",
     "name": "湘西土家族苗族自治州",
     "pinyin": "XiangXiTuJiaZuMiaoZuZiZhiZhou",
     "firstKey": "XXTJZMZZZZ",
@@ -4041,11 +4714,13 @@
     "center": "109.739735,28.314296",
     "lon": "109.739735",
     "lat": "28.314296",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0376",
     "adcode": "411500",
+    "province": "河南省",
     "name": "信阳市",
     "pinyin": "XinYangShi",
     "firstKey": "XYS",
@@ -4053,11 +4728,13 @@
     "center": "114.075031,32.123274",
     "lon": "114.075031",
     "lat": "32.123274",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0710",
     "adcode": "420600",
+    "province": "湖北省",
     "name": "襄阳市",
     "pinyin": "XiangYangShi",
     "firstKey": "XYS",
@@ -4065,11 +4742,13 @@
     "center": "112.144146,32.042426",
     "lon": "112.144146",
     "lat": "32.042426",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0910",
     "adcode": "610400",
+    "province": "陕西省",
     "name": "咸阳市",
     "pinyin": "XianYangShi",
     "firstKey": "XYS",
@@ -4077,11 +4756,13 @@
     "center": "108.705117,34.333439",
     "lon": "108.705117",
     "lat": "34.333439",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0790",
     "adcode": "360500",
+    "province": "江西省",
     "name": "新余市",
     "pinyin": "XinYuShi",
     "firstKey": "XYS",
@@ -4089,11 +4770,13 @@
     "center": "114.930835,27.810834",
     "lon": "114.930835",
     "lat": "27.810834",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0516",
     "adcode": "320300",
+    "province": "江苏省",
     "name": "徐州市",
     "pinyin": "XuZhouShi",
     "firstKey": "XZS",
@@ -4101,11 +4784,13 @@
     "center": "117.184811,34.261792",
     "lon": "117.184811",
     "lat": "34.261792",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0350",
     "adcode": "140900",
+    "province": "山西省",
     "name": "忻州市",
     "pinyin": "XinZhouShi",
     "firstKey": "XZS",
@@ -4113,11 +4798,13 @@
     "center": "112.733538,38.41769",
     "lon": "112.733538",
     "lat": "38.41769",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0911",
     "adcode": "610600",
+    "province": "陕西省",
     "name": "延安市",
     "pinyin": "YanAnShi",
     "firstKey": "YAS",
@@ -4125,11 +4812,13 @@
     "center": "109.49081,36.596537",
     "lon": "109.49081",
     "lat": "36.596537",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0835",
     "adcode": "511800",
+    "province": "四川省",
     "name": "雅安市",
     "pinyin": "YaAnShi",
     "firstKey": "YAS",
@@ -4137,11 +4826,13 @@
     "center": "103.001033,29.987722",
     "lon": "103.001033",
     "lat": "29.987722",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1433",
     "adcode": "222400",
+    "province": "吉林省",
     "name": "延边朝鲜族自治州",
     "pinyin": "YanBianChaoXianZuZiZhiZhou",
     "firstKey": "YBCXZZZZ",
@@ -4149,11 +4840,13 @@
     "center": "129.513228,42.904823",
     "lon": "129.513228",
     "lat": "42.904823",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0831",
     "adcode": "511500",
+    "province": "四川省",
     "name": "宜宾市",
     "pinyin": "YiBinShi",
     "firstKey": "YBS",
@@ -4161,11 +4854,13 @@
     "center": "104.630825,28.760189",
     "lon": "104.630825",
     "lat": "28.760189",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0458",
     "adcode": "230700",
+    "province": "黑龙江省",
     "name": "伊春市",
     "pinyin": "YiChunShi",
     "firstKey": "YCS",
@@ -4173,11 +4868,13 @@
     "center": "128.899396,47.724775",
     "lon": "128.899396",
     "lat": "47.724775",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0717",
     "adcode": "420500",
+    "province": "湖北省",
     "name": "宜昌市",
     "pinyin": "YiChangShi",
     "firstKey": "YCS",
@@ -4185,11 +4882,13 @@
     "center": "111.290843,30.702636",
     "lon": "111.290843",
     "lat": "30.702636",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0515",
     "adcode": "320900",
+    "province": "江苏省",
     "name": "盐城市",
     "pinyin": "YanChengShi",
     "firstKey": "YCS",
@@ -4197,11 +4896,13 @@
     "center": "120.139998,33.377631",
     "lon": "120.139998",
     "lat": "33.377631",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0951",
     "adcode": "640100",
+    "province": "宁夏回族自治区",
     "name": "银川市",
     "pinyin": "YinChuanShi",
     "firstKey": "YCS",
@@ -4209,11 +4910,13 @@
     "center": "106.278179,38.46637",
     "lon": "106.278179",
     "lat": "38.46637",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0795",
     "adcode": "360900",
+    "province": "江西省",
     "name": "宜春市",
     "pinyin": "YiChunShi",
     "firstKey": "YCS",
@@ -4221,11 +4924,13 @@
     "center": "114.391136,27.8043",
     "lon": "114.391136",
     "lat": "27.8043",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0359",
     "adcode": "140800",
+    "province": "山西省",
     "name": "运城市",
     "pinyin": "YunChengShi",
     "firstKey": "YCS",
@@ -4233,11 +4938,13 @@
     "center": "111.003957,35.022778",
     "lon": "111.003957",
     "lat": "35.022778",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0766",
     "adcode": "445300",
+    "province": "广东省",
     "name": "云浮市",
     "pinyin": "YunFuShi",
     "firstKey": "YFS",
@@ -4245,11 +4952,13 @@
     "center": "112.044439,22.929801",
     "lon": "112.044439",
     "lat": "22.929801",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0662",
     "adcode": "441700",
+    "province": "广东省",
     "name": "阳江市",
     "pinyin": "YangJiangShi",
     "firstKey": "YJS",
@@ -4257,11 +4966,13 @@
     "center": "111.975107,21.859222",
     "lon": "111.975107",
     "lat": "21.859222",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810005",
+    "province": "香港特别行政区",
     "name": "油尖旺区",
     "pinyin": "YouJianWangQu",
     "firstKey": "YJWQ",
@@ -4269,11 +4980,13 @@
     "center": "114.173347,22.311632",
     "lon": "114.173347",
     "lat": "22.311632",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0417",
     "adcode": "210800",
+    "province": "辽宁省",
     "name": "营口市",
     "pinyin": "YingKouShi",
     "firstKey": "YKS",
@@ -4281,11 +4994,13 @@
     "center": "122.235151,40.667432",
     "lon": "122.235151",
     "lat": "40.667432",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0999",
     "adcode": "654000",
+    "province": "新疆维吾尔自治区",
     "name": "伊犁哈萨克自治州",
     "pinyin": "YiLiHaSaKeZiZhiZhou",
     "firstKey": "YLHSKZZZ",
@@ -4293,11 +5008,13 @@
     "center": "81.317946,43.92186",
     "lon": "81.317946",
     "lat": "43.92186",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810012",
+    "province": "香港特别行政区",
     "name": "元朗区",
     "pinyin": "YuanLangQu",
     "firstKey": "YLQ",
@@ -4305,11 +5022,13 @@
     "center": "114.032528,22.44132",
     "lon": "114.032528",
     "lat": "22.44132",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0912",
     "adcode": "610800",
+    "province": "陕西省",
     "name": "榆林市",
     "pinyin": "YuLinShi",
     "firstKey": "YLS",
@@ -4317,11 +5036,13 @@
     "center": "109.741193,38.290162",
     "lon": "109.741193",
     "lat": "38.290162",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0775",
     "adcode": "450900",
+    "province": "广西壮族自治区",
     "name": "玉林市",
     "pinyin": "YuLinShi",
     "firstKey": "YLS",
@@ -4329,11 +5050,13 @@
     "center": "110.154393,22.63136",
     "lon": "110.154393",
     "lat": "22.63136",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0353",
     "adcode": "140300",
+    "province": "山西省",
     "name": "阳泉市",
     "pinyin": "YangQuanShi",
     "firstKey": "YQS",
@@ -4341,11 +5064,13 @@
     "center": "113.583285,37.861188",
     "lon": "113.583285",
     "lat": "37.861188",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0976",
     "adcode": "632700",
+    "province": "青海省",
     "name": "玉树藏族自治州",
     "pinyin": "YuShuCangZuZiZhiZhou",
     "firstKey": "YSCZZZZ",
@@ -4353,11 +5078,13 @@
     "center": "97.008522,33.004049",
     "lon": "97.008522",
     "lat": "33.004049",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0535",
     "adcode": "370600",
+    "province": "山东省",
     "name": "烟台市",
     "pinyin": "YanTaiShi",
     "firstKey": "YTS",
@@ -4365,11 +5092,13 @@
     "center": "121.391382,37.539297",
     "lon": "121.391382",
     "lat": "37.539297",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0701",
     "adcode": "360600",
+    "province": "江西省",
     "name": "鹰潭市",
     "pinyin": "YingTanShi",
     "firstKey": "YTS",
@@ -4377,11 +5106,13 @@
     "center": "117.033838,28.238638",
     "lon": "117.033838",
     "lat": "28.238638",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0877",
     "adcode": "530400",
+    "province": "云南省",
     "name": "玉溪市",
     "pinyin": "YuXiShi",
     "firstKey": "YXS",
@@ -4389,11 +5120,13 @@
     "center": "102.543907,24.350461",
     "lon": "102.543907",
     "lat": "24.350461",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0737",
     "adcode": "430900",
+    "province": "湖南省",
     "name": "益阳市",
     "pinyin": "YiYangShi",
     "firstKey": "YYS",
@@ -4401,11 +5134,13 @@
     "center": "112.355042,28.570066",
     "lon": "112.355042",
     "lat": "28.570066",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0730",
     "adcode": "430600",
+    "province": "湖南省",
     "name": "岳阳市",
     "pinyin": "YueYangShi",
     "firstKey": "YYS",
@@ -4413,11 +5148,13 @@
     "center": "113.132855,29.37029",
     "lon": "113.132855",
     "lat": "29.37029",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0514",
     "adcode": "321000",
+    "province": "江苏省",
     "name": "扬州市",
     "pinyin": "YangZhouShi",
     "firstKey": "YZS",
@@ -4425,11 +5162,13 @@
     "center": "119.421003,32.393159",
     "lon": "119.421003",
     "lat": "32.393159",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0746",
     "adcode": "431100",
+    "province": "湖南省",
     "name": "永州市",
     "pinyin": "YongZhouShi",
     "firstKey": "YZS",
@@ -4437,11 +5176,13 @@
     "center": "111.608019,26.434516",
     "lon": "111.608019",
     "lat": "26.434516",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0533",
     "adcode": "370300",
+    "province": "山东省",
     "name": "淄博市",
     "pinyin": "ZiBoShi",
     "firstKey": "ZBS",
@@ -4449,11 +5190,13 @@
     "center": "118.047648,36.814939",
     "lon": "118.047648",
     "lat": "36.814939",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0813",
     "adcode": "510300",
+    "province": "四川省",
     "name": "自贡市",
     "pinyin": "ZiGongShi",
     "firstKey": "ZGS",
@@ -4461,11 +5204,13 @@
     "center": "104.773447,29.352765",
     "lon": "104.773447",
     "lat": "29.352765",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0756",
     "adcode": "440400",
+    "province": "广东省",
     "name": "珠海市",
     "pinyin": "ZhuHaiShi",
     "firstKey": "ZHS",
@@ -4473,11 +5218,13 @@
     "center": "113.553986,22.224979",
     "lon": "113.553986",
     "lat": "22.224979",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0744",
     "adcode": "430800",
+    "province": "湖南省",
     "name": "张家界市",
     "pinyin": "ZhangJiaJieShi",
     "firstKey": "ZJJS",
@@ -4485,11 +5232,13 @@
     "center": "110.479921,29.127401",
     "lon": "110.479921",
     "lat": "29.127401",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0313",
     "adcode": "130700",
+    "province": "河北省",
     "name": "张家口市",
     "pinyin": "ZhangJiaKouShi",
     "firstKey": "ZJKS",
@@ -4497,11 +5246,13 @@
     "center": "114.884091,40.811901",
     "lon": "114.884091",
     "lat": "40.811901",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0759",
     "adcode": "440800",
+    "province": "广东省",
     "name": "湛江市",
     "pinyin": "ZhanJiangShi",
     "firstKey": "ZJS",
@@ -4509,11 +5260,13 @@
     "center": "110.364977,21.274898",
     "lon": "110.364977",
     "lat": "21.274898",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0511",
     "adcode": "321100",
+    "province": "江苏省",
     "name": "镇江市",
     "pinyin": "ZhenJiangShi",
     "firstKey": "ZJS",
@@ -4521,11 +5274,13 @@
     "center": "119.452753,32.204402",
     "lon": "119.452753",
     "lat": "32.204402",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0394",
     "adcode": "411600",
+    "province": "河南省",
     "name": "周口市",
     "pinyin": "ZhouKouShi",
     "firstKey": "ZKS",
@@ -4533,11 +5288,13 @@
     "center": "114.649653,33.620357",
     "lon": "114.649653",
     "lat": "33.620357",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0396",
     "adcode": "411700",
+    "province": "河南省",
     "name": "驻马店市",
     "pinyin": "ZhuMaDianShi",
     "firstKey": "ZMDS",
@@ -4545,11 +5302,13 @@
     "center": "114.024736,32.980169",
     "lon": "114.024736",
     "lat": "32.980169",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "023",
     "adcode": "500100",
+    "province": "重庆市",
     "name": "重庆城区",
     "pinyin": "ZhongQingChengQu",
     "firstKey": "ZQCQ",
@@ -4557,11 +5316,13 @@
     "center": "106.504962,29.533155",
     "lon": "106.504962",
     "lat": "29.533155",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "023",
     "adcode": "500200",
+    "province": "重庆市",
     "name": "重庆郊县",
     "pinyin": "ZhongQingJiaoXian",
     "firstKey": "ZQJX",
@@ -4569,11 +5330,13 @@
     "center": "108.170255,29.291965",
     "lon": "108.170255",
     "lat": "29.291965",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0758",
     "adcode": "441200",
+    "province": "广东省",
     "name": "肇庆市",
     "pinyin": "ZhaoQingShi",
     "firstKey": "ZQS",
@@ -4581,11 +5344,13 @@
     "center": "112.472529,23.051546",
     "lon": "112.472529",
     "lat": "23.051546",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0760",
     "adcode": "442000",
+    "province": "广东省",
     "name": "中山市",
     "pinyin": "ZhongShanShi",
     "firstKey": "ZSS",
@@ -4593,11 +5358,13 @@
     "center": "113.382391,22.521113",
     "lon": "113.382391",
     "lat": "22.521113",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0580",
     "adcode": "330900",
+    "province": "浙江省",
     "name": "舟山市",
     "pinyin": "ZhouShanShi",
     "firstKey": "ZSS",
@@ -4605,11 +5372,13 @@
     "center": "122.106863,30.016028",
     "lon": "122.106863",
     "lat": "30.016028",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0870",
     "adcode": "530600",
+    "province": "云南省",
     "name": "昭通市",
     "pinyin": "ZhaoTongShi",
     "firstKey": "ZTS",
@@ -4617,11 +5386,13 @@
     "center": "103.717216,27.336999",
     "lon": "103.717216",
     "lat": "27.336999",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1953",
     "adcode": "640500",
+    "province": "宁夏回族自治区",
     "name": "中卫市",
     "pinyin": "ZhongWeiShi",
     "firstKey": "ZWS",
@@ -4629,11 +5400,13 @@
     "center": "105.189568,37.514951",
     "lon": "105.189568",
     "lat": "37.514951",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "1852",
     "adcode": "810001",
+    "province": "香港特别行政区",
     "name": "中西区",
     "pinyin": "ZhongXiQu",
     "firstKey": "ZXQ",
@@ -4641,11 +5414,13 @@
     "center": "114.154334,22.281931",
     "lon": "114.154334",
     "lat": "22.281931",
-    "level": "district"
+    "level": "district",
+    "districts": []
   },
   {
     "citycode": "0852",
     "adcode": "520300",
+    "province": "贵州省",
     "name": "遵义市",
     "pinyin": "ZunYiShi",
     "firstKey": "ZYS",
@@ -4653,11 +5428,13 @@
     "center": "106.937265,27.706626",
     "lon": "106.937265",
     "lat": "27.706626",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0936",
     "adcode": "620700",
+    "province": "甘肃省",
     "name": "张掖市",
     "pinyin": "ZhangYeShi",
     "firstKey": "ZYS",
@@ -4665,11 +5442,13 @@
     "center": "100.455472,38.932897",
     "lon": "100.455472",
     "lat": "38.932897",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0832",
     "adcode": "512000",
+    "province": "四川省",
     "name": "资阳市",
     "pinyin": "ZiYangShi",
     "firstKey": "ZYS",
@@ -4677,11 +5456,13 @@
     "center": "104.641917,30.122211",
     "lon": "104.641917",
     "lat": "30.122211",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0371",
     "adcode": "410100",
+    "province": "河南省",
     "name": "郑州市",
     "pinyin": "ZhengZhouShi",
     "firstKey": "ZZS",
@@ -4689,11 +5470,13 @@
     "center": "113.665412,34.757975",
     "lon": "113.665412",
     "lat": "34.757975",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0632",
     "adcode": "370400",
+    "province": "山东省",
     "name": "枣庄市",
     "pinyin": "ZaoZhuangShi",
     "firstKey": "ZZS",
@@ -4701,11 +5484,13 @@
     "center": "117.557964,34.856424",
     "lon": "117.557964",
     "lat": "34.856424",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0596",
     "adcode": "350600",
+    "province": "福建省",
     "name": "漳州市",
     "pinyin": "ZhangZhouShi",
     "firstKey": "ZZS",
@@ -4713,11 +5498,13 @@
     "center": "117.661801,24.510897",
     "lon": "117.661801",
     "lat": "24.510897",
-    "level": "city"
+    "level": "city",
+    "districts": []
   },
   {
     "citycode": "0733",
     "adcode": "430200",
+    "province": "湖南省",
     "name": "株洲市",
     "pinyin": "ZhuZhouShi",
     "firstKey": "ZZS",
@@ -4725,6 +5512,7 @@
     "center": "113.151737,27.835806",
     "lon": "113.151737",
     "lat": "27.835806",
-    "level": "city"
+    "level": "city",
+    "districts": []
   }
 ]
