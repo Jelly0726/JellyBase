@@ -1,0 +1,47 @@
+ext {
+    global=[
+            applicationId: "com.jelly.jellybase",
+            //为已经存在的applicationId添加后缀(就说变成不同的包名了)
+            applicationIdSuffix: "",
+            minSdkVersion: 21,
+            targetSdkVersion: 30,
+            versionCode: 132,
+            versionName: "3.6.2F",//versionName 包含"F"表示强制更新
+            //为版本名添加后缀
+            versionNameSuffix: "",
+            // 开启混淆
+            minifyEnabled: true,
+            //开启zipAlign优化
+            zipAlignEnabled: true,
+            // 不移除无用的resource文件
+            shrinkResources: false,
+    ]
+    // 多渠道产品信息
+    envInfo = [
+            x64:[//x64
+                 applicationId: global.applicationId,
+                 applicationIdSuffix: global.applicationIdSuffix,
+                 minSdkVersion: global.minSdkVersion,
+                 targetSdkVersion: global.targetSdkVersion,
+                 versionCode: global.versionCode,
+                 versionName: global.versionName,
+                 versionNameSuffix:global.versionNameSuffix,
+                 ndk:{
+                     abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+                 }
+            ],
+            x32:[//x32
+                 applicationId: global.applicationId,
+                 applicationIdSuffix: global.applicationIdSuffix,
+                 minSdkVersion: global.minSdkVersion,
+                 targetSdkVersion: global.targetSdkVersion,
+                 versionCode: global.versionCode,
+                 versionName: global.versionName,
+                 versionNameSuffix:global.versionNameSuffix,
+                 ndk:{
+                     abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+                 }
+            ],
+    ]
+}
+

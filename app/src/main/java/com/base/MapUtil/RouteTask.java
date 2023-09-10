@@ -2,6 +2,7 @@ package com.base.MapUtil;
 
 import android.content.Context;
 
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.BusRouteResult;
 import com.amap.api.services.route.DrivePath;
@@ -79,7 +80,11 @@ public class RouteTask implements OnRouteSearchListener {
 	}
 
 	private RouteTask(Context context) {
-		mRouteSearch = new RouteSearch(context);
+		try {
+			mRouteSearch = new RouteSearch(context);
+		} catch (AMapException e) {
+			throw new RuntimeException(e);
+		}
 		mRouteSearch.setRouteSearchListener(this);
 	}
 

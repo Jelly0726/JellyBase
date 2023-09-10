@@ -5,10 +5,10 @@ import android.os.Build;
 import android.util.Log;
 
 import com.base.httpmvp.retrofitapi.HttpUtils;
-import com.base.httpmvp.retrofitapi.NetworkUtils;
 import com.jelly.baselibrary.Utils.StringUtil;
 import com.jelly.baselibrary.applicationUtil.AppUtils;
 import com.jelly.baselibrary.log.LogUtils;
+import com.shuyu.gsyvideoplayer.utils.NetworkUtils;
 
 import java.io.IOException;
 

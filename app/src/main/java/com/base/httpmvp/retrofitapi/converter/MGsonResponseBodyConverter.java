@@ -47,9 +47,9 @@ final class MGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             throw new ApiException("非法数据格式!" + response);
         }
         HttpResult httpState = JsonTool.get().fromJson(response, HttpResult.class);
-        if (httpState.getState() == HttpCode.TOKEN_NOT_EXIST) {
+        if (httpState.getStatus() == HttpCode.TOKEN_NOT_EXIST) {
             throw new TokenNotExistException();
-        } else if (httpState.getState() == HttpCode.TOKEN_INVALID) {
+        } else if (httpState.getStatus() == HttpCode.TOKEN_INVALID) {
             throw new TokenInvalidException();
         }
         try {

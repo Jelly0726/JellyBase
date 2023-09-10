@@ -2,6 +2,7 @@ package com.base.MapUtil;
 
 import android.os.Bundle;
 
+import com.amap.api.maps.AMapException;
 import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviViewListener;
@@ -38,7 +39,11 @@ public class SimpleNaviActivity extends BaseActivity<AmapBasicNaviBinding> imple
 		mTtsManager = TTSController.getInstance(getApplicationContext());
 		mTtsManager.init();
 
-		mAMapNavi = AMapNavi.getInstance(getApplicationContext());
+		try {
+			mAMapNavi = AMapNavi.getInstance(getApplicationContext());
+		} catch (AMapException e) {
+			throw new RuntimeException(e);
+		}
 		mAMapNavi.addAMapNaviListener(this);
 		mAMapNavi.addAMapNaviListener(mTtsManager);
 

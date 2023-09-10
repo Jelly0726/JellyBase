@@ -37,8 +37,7 @@ import cn.jpush.android.api.JPushInterface;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding> implements
-        OfflineMapDownloadListener, View.OnClickListener, ViewPager.OnPageChangeListener {
+public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding> implements OfflineMapDownloadListener, View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private OfflineMapManager amapManager = null;// 离线地图下载控制器
     private List<OfflineMapProvince> provinceList = new ArrayList<OfflineMapProvince>();// 保存一级目录的省直辖市
@@ -186,7 +185,11 @@ public class OfflineMapActivity extends BaseActivity<AmapOfflineMapLayoutBinding
         mAllOfflineMapList = (ExpandableListView) provinceContainer
                 .findViewById(R.id.province_download_list);
 
-        amapManager = new OfflineMapManager(this, this);
+        try {
+            amapManager = new OfflineMapManager(this, this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         initProvinceListAndCityMap();
 

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Nathen on 16/7/31.

@@ -10,6 +10,7 @@ package com.base.MapUtil;
 
 import android.content.Context;
 
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
@@ -35,7 +36,11 @@ public class RegeocodeTask implements OnGeocodeSearchListener {
 	private GeocodeSearch mGeocodeSearch;
 
 	public RegeocodeTask(Context context) {
-		mGeocodeSearch = new GeocodeSearch(context);
+		try {
+			mGeocodeSearch = new GeocodeSearch(context);
+		} catch (AMapException e) {
+			throw new RuntimeException(e);
+		}
 		mGeocodeSearch.setOnGeocodeSearchListener(this);
 	}
 

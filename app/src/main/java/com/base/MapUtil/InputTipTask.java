@@ -11,6 +11,7 @@ package com.base.MapUtil;
 
 import android.content.Context;
 
+import com.amap.api.services.core.AMapException;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.Inputtips.InputtipsListener;
 import com.amap.api.services.help.InputtipsQuery;
@@ -51,7 +52,11 @@ public class InputTipTask implements InputtipsListener{
 		mAdapter=adapter;
 	}
 	private InputTipTask(Context context ){
-		mInputTips=new Inputtips(context, this);
+		try {
+			mInputTips=new Inputtips(context, this);
+		} catch (AMapException e) {
+			throw new RuntimeException(e);
+		}
 		this.context=context;
 
 	}

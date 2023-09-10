@@ -5,7 +5,7 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 

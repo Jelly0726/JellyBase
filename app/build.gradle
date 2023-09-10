@@ -6,6 +6,16 @@ plugins{
     /*序列化插件*/
     id 'kotlin-parcelize'
 }
+//中引入当前配置，之后才可以调用当前配置的信息：
+apply from: rootProject.getRootDir().getAbsolutePath() +"/app_config.gradle"
+
+//打包时间
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC"))
+}
+//获取local.properties的内容
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 android {
     //正式发布域名地址
     def API_REL_HOST = "\"http://driver.test.com/\""
@@ -14,22 +24,25 @@ android {
 
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.jelly.jellybase"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 3
-        versionName "1.0.3F" //versionName 包含"F"表示强制更新
+        applicationId envInfo.x32.applicationId
+        applicationIdSuffix envInfo.x32.applicationIdSuffix
+        minSdkVersion envInfo.x32.minSdkVersion
+        targetSdkVersion envInfo.x32.targetSdkVersion
+        versionCode envInfo.x32.versionCode
+        versionName envInfo.x32.versionName
+        versionNameSuffix envInfo.x32.versionNameSuffix//versionName 包含"F"表示强制更新
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-
+        //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
+        flavorDimensions "default"
         multiDexEnabled true
         //vectorDrawables.useSupportLibrary = true//使你的app使用矢量图support library；
         // android {compileOptions.encoding = "GBK"}  //增加的内容，可以解决部署到设备上汉字显示乱码的问题
         //ndk编译生成.so文件
-        ndk {
-//            moduleName "testjni"         //生成的so名字
-            abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
-//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
-        }
+//        ndk {
+////            moduleName "testjni"         //生成的so名字
+//            abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'
+////            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+//        }
         //极光推送
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
@@ -76,20 +89,56 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("Jelly.jks")
-            storePassword "1207qw"
-            keyAlias "jelly"
-            keyPassword "1207qw"
-            //v1SigningEnabled false
-            // v2SigningEnabled false
+            storeFile file(properties.getProperty("keystroe_storeFile"))
+            storePassword properties.getProperty("keystroe_storePassword")
+            keyAlias properties.getProperty("keystroe_keyAlias")
+            keyPassword properties.getProperty("keystroe_keyPassword")
+            v1SigningEnabled true
+            v2SigningEnabled true
         }
         debug {
-            storeFile file("Jelly.jks")
-            storePassword "1207qw"
-            keyAlias "jelly"
-            keyPassword "1207qw"
-            //v1SigningEnabled false
-            // v2SigningEnabled false
+            storeFile file(properties.getProperty("keystroe_storeFile"))
+            storePassword properties.getProperty("keystroe_storePassword")
+            keyAlias properties.getProperty("keystroe_keyAlias")
+            keyPassword properties.getProperty("keystroe_keyPassword")
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+    // 配置多渠道打包
+    // 在 productFlavors 中配置多少个渠道，最后打包就有多少个渠道可以选择打包
+    // defaultConfig{} 可以配置的，都可以在渠道里配置
+    // 这里指定了渠道之后，原本的 debug 和 release 渠道就不存在了
+    productFlavors {
+        // 这个渠道叫 x64
+        x64 {
+            applicationId envInfo.x64.applicationId
+            applicationIdSuffix envInfo.x64.applicationIdSuffix
+            minSdkVersion envInfo.x64.minSdkVersion
+            targetSdkVersion envInfo.x64.targetSdkVersion
+            versionCode envInfo.x64.versionCode
+            versionName envInfo.x64.versionName
+            versionNameSuffix envInfo.x64.versionNameSuffix
+            externalNativeBuild {
+                // 每个环境包名可以指定不同
+                ndk envInfo.x64.ndk
+            }
+        }
+        // 这个渠道叫 x32
+        x32 {
+            applicationId envInfo.x32.applicationId
+            applicationIdSuffix envInfo.x32.applicationIdSuffix
+            minSdkVersion envInfo.x32.minSdkVersion
+            targetSdkVersion envInfo.x32.targetSdkVersion
+            versionCode envInfo.x32.versionCode
+            versionName envInfo.x32.versionName
+            versionNameSuffix envInfo.x32.versionNameSuffix
+            externalNativeBuild{
+                ndk envInfo.x32.ndk
+//                ndk {
+//                    abiFilters 'armeabi-v7a' //,armeabi, 'x86', 'x86_64', 'arm64-v8a'
+//                }
+            }
         }
     }
     buildTypes {
@@ -99,21 +148,10 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"//是否输出LOG信息
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_DEBUG_HOST}"//开发环境域名地址
-            // 移除无用的resource文件
-            shrinkResources true
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles 'proguard-project.txt'
-            //自定义导出apk文件名
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->  // each 改为 all
-                    def fileName = "V${variant.versionName}_debug.apk"
-                    def outFile = output.outputFile
-                    if (outFile != null && outFile.name.endsWith('.apk')) {
-                        outputFileName = fileName  //  output.outputFile 改为 outputFileName
-                    }
-                }
-            }
+            zipAlignEnabled global.zipAlignEnabled
+            minifyEnabled global.minifyEnabled
+            shrinkResources global.shrinkResources
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             signingConfig signingConfigs.release
@@ -123,20 +161,10 @@ android {
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_REL_HOST}"//生产环境域名地址
             // 移除无用的resource文件
-            shrinkResources true
-            minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles 'proguard-project.txt'
-            //自定义导出apk文件名
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->  // each 改为 all
-                    def fileName = "V${variant.versionName}_release.apk"
-                    def outFile = output.outputFile
-                    if (outFile != null && outFile.name.endsWith('.apk')) {
-                        outputFileName = fileName  //  output.outputFile 改为 outputFileName
-                    }
-                }
-            }
+            zipAlignEnabled global.zipAlignEnabled
+            minifyEnabled global.minifyEnabled
+            shrinkResources global.shrinkResources
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 //        innerTest {
 //            matchingFallbacks = ['debug', 'release']
@@ -144,6 +172,51 @@ android {
         customDebugType {
             //可调试 也适用于包含 C/C++ 代码的模块 正式发布需要关闭，注意其他库的也要关闭
             debuggable false
+        }
+        // as 3.0 以上的
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                def outputFile = output.outputFile
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    /*指定输出到 ${project}/outputs/apk/release文件夹下*/
+                    // young 不建议更改，更改之后直接运行，会运行之后看不到 app
+                    //variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + "/outputs/apk/release")
+//                    variant.getPackageApplication().outputDirectory = new File(project.rootDir.absolutePath + File.separator + "app" + File.separator + "outputs" +
+//                            File.separator + variant.flavorName + File.separator + variant.buildType.name)
+                    // 指定 apk 的输出路径
+                    //输出apk名称为：渠道名_版本名_时间.apk
+//                    def fileName = "${variant.flavorName}-${variant.buildType.name}_v${variant.productFlavors[0].versionName}_b${variant.productFlavors[0].versionCode}_${releaseTime()}.apk"
+                    def fileName = "v${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}_${variant.buildType.name}.apk"
+                    outputFileName = fileName
+//                    if (variant.buildType.name.equals('release')) {
+//                        def fileName = "v${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}_release.apk"
+//                        outputFileName = fileName
+//                    }else{
+//                        def fileName = "v${defaultConfig.versionName}_${variant.productFlavors[0].name}_${releaseTime()}_debug.apk"
+//                        outputFileName = fileName
+//                    }
+                }
+            }
+            //  打包完成后复制到的目录
+            def outputFileDir = "${project.rootDir}/apk/"
+            // 打包完成后做的一些事,复制apk到指定文件夹
+            variant.assemble.doLast {
+                if (variant.buildType.name.equals('release')) {
+                    File out = new File(outputFileDir)
+                    copy {
+                        variant.outputs.forEach { file ->
+                            //复制到指定文件夹
+//                            copy {
+//                                from file.outputFile
+//                                into out
+//                            }
+                            //移动到指定文件夹
+                            ant.move file: file.outputFile,
+                                    todir: out
+                        }
+                    }
+                }
+            }
         }
     }
 //    ndkVersion "21.4.7075529"
@@ -180,6 +253,10 @@ android {
         //线程数
         threadCount = 5
     }
+    //DataBinding启用
+//    dataBinding {
+//        enabled = true
+//    }
     //开启viewbinding
     buildFeatures{
         viewBinding=true
@@ -250,17 +327,18 @@ dependencies {
     //api 'com.amap.api:3dmap:latest.integration'
     //    api 'com.amap.api:3dmap:6.5.0'
     //定位功能
-    implementation 'com.amap.api:location:latest.integration'
+//    implementation 'com.amap.api:location:latest.integration'
 //        api 'com.amap.api:location:5.0.0'
     //搜索功能
-    implementation 'com.amap.api:search:latest.integration'
+    implementation 'com.amap.api:search:9.7.0'
 //        api 'com.amap.api:search:7.3.0'
     //导航
-    implementation 'com.amap.api:navi-3dmap:latest.integration'
+    implementation 'com.amap.api:navi-3dmap:9.8.2_3dmap9.8.2'
     //api 'com.amap.api:navi-3dmap:7.5.0'
     //kotlinx.serialization 是kotlin官方提供的更适合多平台移植
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVerion")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVerion")
     //百度文字识别(身份证、银行卡等)
     implementation files('libs/ocr-sdk.jar')
     implementation project(path: ':library:ocr_ui')

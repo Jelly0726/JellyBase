@@ -41,8 +41,7 @@ import java.lang.reflect.ParameterizedType
 /**
  * Created by Administrator on 2017/12/5.
  */
-abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),
-        Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
+abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),Observer<Any>, CoroutineScope by MainScope(), SoftKeyboardManager.SoftKeyboardStateListener {
     protected lateinit var binding: T
     private var softKeyboardManager: SoftKeyboardManager? = null
     private var frameLayout: FrameLayout? = null//最外层布局

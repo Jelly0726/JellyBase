@@ -1,7 +1,6 @@
 package com.jelly.jellybase.server;
 
 import android.annotation.TargetApi;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,18 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
+
 import com.jelly.jellybase.R;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-public class BadgeIntentService extends IntentService {
+public class BadgeIntentService extends JobIntentService {
 
     private static final String NOTIFICATION_CHANNEL = "me.leolin.shortcutbadger.example";
 
     private int notificationId = 0;
 
     public BadgeIntentService() {
-        super("BadgeIntentService");
     }
 
     private NotificationManager mNotificationManager;
@@ -30,14 +31,9 @@ public class BadgeIntentService extends IntentService {
         super.onCreate();
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
-    
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-    }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(@NonNull Intent intent) {
         if (intent != null) {
             int badgeCount = intent.getIntExtra("badgeCount", 0);
 
@@ -45,9 +41,9 @@ public class BadgeIntentService extends IntentService {
             notificationId++;
 
             Notification.Builder builder = new Notification.Builder(getApplicationContext())
-                .setContentTitle(badgeCount+"条未读消息")
-                .setContentText(badgeCount+"条未读消息")
-                .setSmallIcon(R.drawable.ic_launcher);
+                    .setContentTitle(badgeCount+"条未读消息")
+                    .setContentText(badgeCount+"条未读消息")
+                    .setSmallIcon(R.drawable.ic_launcher);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 setupNotificationChannel();
@@ -60,6 +56,12 @@ public class BadgeIntentService extends IntentService {
             mNotificationManager.notify(notificationId, notification);
         }
     }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+    }
+
 
     @TargetApi(Build.VERSION_CODES.O)
     private void setupNotificationChannel() {

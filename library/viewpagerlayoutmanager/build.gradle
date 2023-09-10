@@ -28,7 +28,7 @@ dependencies {
     compileOnly 'androidx.recyclerview:recyclerview:1.0.0'
 }
 
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 def currentVersion = '2.0.22'
 def versionDes = 'Fix bugs'

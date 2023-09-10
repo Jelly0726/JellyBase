@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+group='com.github.arvinljw'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // build a jar with source files
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+
+    task javadoc(type: Javadoc) {
+        failOnError  false
+        source = android.sourceSets.main.java.sourceFiles
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.compile
+    }
+
+    // build a jar with javadoc
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
+    compileOnly 'com.google.code.gson:gson:2.8.2'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.1.6'
+//    api 'com.sina.weibo.sdk:core:4.3.6:openDefaultRelease@aar'
+    implementation 'io.github.sinaweibosdk:core:13.6.1@aar'
+}

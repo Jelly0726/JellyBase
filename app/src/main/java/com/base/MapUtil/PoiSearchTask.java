@@ -3,11 +3,10 @@ package com.base.MapUtil;
 
 import android.content.Context;
 
-import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.poisearch.PoiResult;
-import com.amap.api.services.poisearch.PoiSearch;
-import com.amap.api.services.poisearch.PoiSearch.OnPoiSearchListener;
-import com.amap.api.services.poisearch.PoiSearch.Query;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.PoiItemV2;
+import com.amap.api.services.poisearch.PoiResultV2;
+import com.amap.api.services.poisearch.PoiSearchV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ import systemdb.PositionEntity;
  * @since JDK 1.6
  * @see
  */
-public class PoiSearchTask implements OnPoiSearchListener {
+public class PoiSearchTask implements PoiSearchV2.OnPoiSearchListener {
 
 	private Context mContext;
 
@@ -38,24 +37,29 @@ public class PoiSearchTask implements OnPoiSearchListener {
 	}
 
 	public void search(String keyWord,String city) {
-		Query query = new Query(keyWord, "", city);
+		PoiSearchV2.Query query = new PoiSearchV2.Query(keyWord, "", city);
 		query.setPageSize(10); 
-		query.setPageNum(0); 
+		query.setPageNum(0);
 
-		PoiSearch poiSearch = new PoiSearch(mContext, query);
+		PoiSearchV2 poiSearch = null;
+		try {
+			poiSearch = new PoiSearchV2(mContext, query);
+		} catch (AMapException e) {
+			throw new RuntimeException(e);
+		}
 		poiSearch.setOnPoiSearchListener(this);
 		poiSearch.searchPOIAsyn();
 	}
 	@Override
-	public void onPoiSearched(PoiResult poiResult, int resultCode) {
+	public void onPoiSearched(PoiResultV2 poiResult, int resultCode) {
 		//Log.i("WF","poiResult="+poiResult.getPois()+",resultCode="+resultCode);
 		if (resultCode == 1000 && poiResult != null) {
-			ArrayList<PoiItem> pois=poiResult.getPois();
+			ArrayList<PoiItemV2> pois=poiResult.getPois();
 			if(pois==null){
 				return;
 			}
 			List<PositionEntity>entities=new ArrayList<PositionEntity>();
-			for(PoiItem poiItem:pois){
+			for(PoiItemV2 poiItem:pois){
 				PositionEntity entity=new PositionEntity(poiItem.getLatLonPoint().getLatitude(),
 						poiItem.getLatLonPoint().getLongitude(),poiItem.getTitle()
 						,poiItem.getCityName());
@@ -68,7 +72,8 @@ public class PoiSearchTask implements OnPoiSearchListener {
 	}
 
 	@Override
-	public void onPoiItemSearched(PoiItem poiItem, int i) {
+	public void onPoiItemSearched(PoiItemV2 poiItemV2, int i) {
 
 	}
+
 }

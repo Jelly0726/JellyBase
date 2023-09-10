@@ -1,6 +1,8 @@
 package com.jelly.mvp.presenter;
 
 
+import static com.jelly.baselibrary.moshi.MoshiUtilsKt.toJson;
+
 import com.base.httpmvp.mvpbase.BaseModel;
 import com.base.httpmvp.mvpbase.ObserverResponseListener;
 import com.base.httpmvp.retrofitapi.HttpMethods;
@@ -24,7 +26,7 @@ public class MessagePresenter extends MessageContact.Presenter {
         Observable observable = HttpMethods
                 .getInstance()
                 .getProxy(IApiService.class)
-                .getMessage(GlobalToken.getToken().getToken(), mGson.toJson(mView.getMessageParam()))
+                .getMessage(GlobalToken.getToken().getToken(), toJson(mView.getMessageParam()))
                 .flatMap(new HttpFunctions<HttpResultList<Message>>());
         mModel.subscribe(observable, mView.bindLifecycle(), new ObserverResponseListener<HttpResultList<Message>>() {
             @Override

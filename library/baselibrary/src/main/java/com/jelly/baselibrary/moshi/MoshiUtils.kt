@@ -17,6 +17,7 @@ import java.lang.reflect.Type
  */
 
 object MoshiUtils {
+    abstract class MoshiTypeReference<T> // 自定义的类，用来包装泛型
     val moshiBuild = Moshi.Builder().build()
     //使用Kotlin-Reflect包时，这里改一下:
 //    val moshiBuild = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
@@ -28,7 +29,7 @@ object MoshiUtils {
     fun <T> fromJons(reader: JsonReader, type: Type): T? = getAdapter<T>(type).fromJson(reader)
 
     //自动获取type序列化,性能较差
-    inline fun <reified T:Any> fromJson(json: String): T? = getAdapter<T>().fromJson(json)
+//    inline fun <reified T:Any> fromJson(json: String): T? = getAdapter<T>().fromJson(json)
     inline fun <reified T> fromJson(buffer: BufferedSource): T? = getAdapter<T>().fromJson(buffer)
     inline fun <reified T> fromJson(`is`: InputStream): T? = getAdapter<T>().fromJson(Buffer().readFrom(`is`))
     inline fun <reified T> fromJson(reader: JsonReader): T? = getAdapter<T>().fromJson(reader)
@@ -77,7 +78,41 @@ object MoshiUtils {
 
     fun <T> getAdapter(type: Type): JsonAdapter<T> = moshiBuild.adapter(type)
     inline fun <reified T> getAdapter(): JsonAdapter<T> =  moshiBuild.adapter(object :TypeToken<T>(){}.type)
+    //反序列化
+    inline fun <reified T> toJson(src: T, indent: String = ""): String {
 
+        try {
+
+            val jsonAdapter = moshiBuild.adapter<T>(getGenericType<T>())
+            return jsonAdapter.indent(indent).toJson(src)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ""
+
+    }
+    //自动获取type序列化
+    inline fun <reified T> fromJson(jsonStr: String): T? {
+        try {
+            val jsonAdapter = moshiBuild.adapter<T>(getGenericType<T>())
+            return jsonAdapter.fromJson(jsonStr)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    inline fun <reified T> getGenericType(): Type {
+        val type =
+                object :
+                        MoshiTypeReference<T>() {}::class.java
+                        .genericSuperclass
+                        .let { it as ParameterizedType }
+                        .actualTypeArguments
+                        .first()
+        return type
+
+    }
 }
 abstract class TypeToken<T>{
     val type:Type get() = run{

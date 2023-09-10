@@ -31,8 +31,7 @@ import java.util.List;
  * @version
  * @see
  */
-public class LocationTask implements  AMapLocationListener,
-		OnLocationGetListener {
+public class LocationTask implements  AMapLocationListener, OnLocationGetListener {
 
 	//声明AMapLocationClient类对象
 	public AMapLocationClient mLocationClient = null;
@@ -42,7 +41,11 @@ public class LocationTask implements  AMapLocationListener,
 	private static Context mContext;
 	private LocationTask(Context context) {
 		//初始化定位
-		mLocationClient = new AMapLocationClient(context);
+		try {
+			mLocationClient = new AMapLocationClient(context);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		//设置定位回调监听
 		mLocationClient.setLocationListener(this);
 		mRegecodeTask = new RegeocodeTask(context);
@@ -94,7 +97,11 @@ public class LocationTask implements  AMapLocationListener,
 			mLocationClient.stopLocation();//停止定位
 		}else {
 			//初始化定位
-			mLocationClient = new AMapLocationClient(mContext);
+			try {
+				mLocationClient = new AMapLocationClient(mContext);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 			//设置定位回调监听
 			mLocationClient.setLocationListener(this);
 		}

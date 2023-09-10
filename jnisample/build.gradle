@@ -23,7 +23,7 @@ android {
         externalNativeBuild {
             cmake {
 //                cppFlags ""
-//                abiFilters "armeabi", "armeabi-v7a", "x86",'mips'  //输出指定三种abi体系结构下的so库。
+//                abiFilters "armeabi", "armeabi-v7a", ,'x86', 'x86_64','mips'  //输出指定三种abi体系结构下的so库。
                 cppFlags "-std=c++11 -frtti -fexceptions"
                 //设置支持的SO库架构
                 abiFilters 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64'

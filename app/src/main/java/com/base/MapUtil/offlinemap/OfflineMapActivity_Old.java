@@ -40,8 +40,7 @@ import java.util.List;
 /**
  * AMapV2地图中简单介绍离线地图下载
  */
-public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityOldBinding> implements
-		OfflineMapDownloadListener {
+public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityOldBinding> implements OfflineMapDownloadListener {
 	private OfflineMapManager amapManager = null;// 离线地图下载控制器
 	private List<OfflineMapProvince> provinceList = new ArrayList<OfflineMapProvince>();// 保存一级目录的省直辖市
 	private HashMap<Object, List<OfflineMapCity>> cityMap = new HashMap<Object, List<OfflineMapCity>>();// 保存二级目录的市
@@ -142,7 +141,11 @@ public class OfflineMapActivity_Old extends BaseActivity<AmapOfflinemapActivityO
 			e1.printStackTrace();
 		}
 
-		amapManager = new OfflineMapManager(context, this);
+		try {
+			amapManager = new OfflineMapManager(context, this);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		provinceList = amapManager.getOfflineMapProvinceList();
 
 		List<OfflineMapProvince> bigCityList = new ArrayList<OfflineMapProvince>();// 以省格式保存直辖市、港澳、全国概要图

@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapException;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -56,7 +57,11 @@ public class AMapNaviTask implements AMapNaviListener {
     private long DELAY_TIME = 5000;
     private AMapNaviTask(){
         mTtsManager = TTSController.getInstance(BaseApplication.getInstance());
-        mAMapNavi = AMapNavi.getInstance(BaseApplication.getInstance());
+        try {
+            mAMapNavi = AMapNavi.getInstance(BaseApplication.getInstance());
+        } catch (AMapException e) {
+            throw new RuntimeException(e);
+        }
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
     }

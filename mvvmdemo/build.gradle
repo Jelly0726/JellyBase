@@ -1,18 +1,4 @@
-buildscript {
-    ext.kotlin_version = '1.5.0'
-    repositories {
-//        mavenCentral()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        // NOTE: Do not place your application dependencies here; they belong
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // in the individual module build.gradle files
-    }
-}
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
