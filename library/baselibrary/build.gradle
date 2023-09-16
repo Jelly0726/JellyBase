@@ -198,8 +198,8 @@ dependencies {
     //微信支付
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //腾讯tbs
-//        api 'com.tencent.tbs.tbssdk:sdk:43993'
-    api files('libs\\tbs_sdk_thirdapp_v4.3.0.93_43993.jar')
+//   api 'com.tencent.tbs:tbssdk:44286'
+    api files('libs\\tbs_sdk_thirdapp_v4.3.0.386_44286_sharewithdownloadwithfile_withoutGame_obfs_20230210_114429.jar')
     //应用宝自动升级
     api files('libs/tmassistantsdk_selfupdate-jce-external_3.0.5_78_20181115214920.jar')
     //微博

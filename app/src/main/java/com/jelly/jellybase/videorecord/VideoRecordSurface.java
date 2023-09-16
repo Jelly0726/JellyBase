@@ -4,8 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.hardware.camera2;
-import android.hardware.camera2.CameraManager;
+import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaRecorder;
@@ -30,7 +29,7 @@ import java.util.TimerTask;
  */
 public class VideoRecordSurface extends SurfaceView implements SurfaceHolder.Callback, MediaRecorder.OnErrorListener {
     private final String TAG = this.getClass().getSimpleName();
-    private CameraManager mCamera;
+    private Camera mCamera;
     private Context mContext;
     /*** 标识当前是前摄像头还是后摄像头  back:0  front:1*/
     private int backOrFtont = 0;

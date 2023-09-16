@@ -32,6 +32,7 @@ import com.jelly.baselibrary.token.GlobalToken
 import com.jelly.baselibrary.view.GrayFrameLayout
 import com.jelly.baselibrary.view.SoftKeyboardManager
 import com.mylhyl.circledialog.CircleDialog
+import com.squareup.moshi.internal.Util
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import java.lang.reflect.InvocationTargetException
@@ -134,25 +135,34 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity(),Observer<Any>
      */
     private fun bindingView() {
         //↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓使用viewbinding绑定视图↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-        val type = javaClass.genericSuperclass as ParameterizedType
-        type?.let { it ->
-            for (cl in it.actualTypeArguments) {
-                try {
-                    cl as Class<T>
-                    //多个泛型时判断类的name是否以Binding，不是跳过本次
-                    if (!cl.name.endsWith("Binding")) continue
-                    val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
-                    binding = inflate.invoke(null, layoutInflater) as T
-                    binding?.let { it ->
-                        setContentView(it.root)
+        val type = javaClass.genericSuperclass
+        javaClass.genericSuperclass
+//        val type = this::class.supertypes.first().arguments.first().type?.javaClass?.newInstance()
+//        val newInstance = this::class.supertypes.first().arguments.first().type?.javaClass?.newInstance()
+//        val type=this::class.supertypes.first()
+        if(type is ParameterizedType){
+            type?.let { it ->
+                for (cl in it.actualTypeArguments) {
+                    try {
+//                        libcore.reflect.WildcardTypeImpl
+//                        cl.javaClass as Class<T>
+                        //多个泛型时判断类的name是否以Binding，不是跳过本次
+                        System.out.println("泛型的类型"+cl.toString())
+                        if (!cl.toString().endsWith("Binding")) continue
+                        cl as Class<T>
+                        val inflate: Method = cl.getDeclaredMethod("inflate", LayoutInflater::class.java)
+                        binding = inflate.invoke(null, layoutInflater) as T
+                        binding?.let { it ->
+                            setContentView(it.root)
+                        }
+                        return@let
+                    } catch (e: NoSuchMethodException) {
+                        e.printStackTrace()
+                    } catch (e: IllegalAccessException) {
+                        e.printStackTrace()
+                    } catch (e: InvocationTargetException) {
+                        e.printStackTrace()
                     }
-                    return@let
-                } catch (e: NoSuchMethodException) {
-                    e.printStackTrace()
-                } catch (e: IllegalAccessException) {
-                    e.printStackTrace()
-                } catch (e: InvocationTargetException) {
-                    e.printStackTrace()
                 }
             }
         }

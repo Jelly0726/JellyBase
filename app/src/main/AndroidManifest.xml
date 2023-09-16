@@ -792,6 +792,7 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <!--↑↑↑↑↑↑↑↑地图搜索↑↑↑↑↑↑↑↑-->
+        <activity android:name=".activity.IconfontActivity"/>
         <!-- 注册监听手机状态 -->
         <receiver android:name=".receiver.PhoneStatReceiver" >
             <intent-filter android:priority="2147483647" >

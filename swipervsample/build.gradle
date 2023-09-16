@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.yanzhenjie.recyclerview.swipe.sample"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 9
         versionName "1.1.4"

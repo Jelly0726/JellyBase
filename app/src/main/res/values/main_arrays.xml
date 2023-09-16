@@ -51,6 +51,7 @@
         <item>选择器</item>
         <item>文件选择器</item>
         <item>所属银行</item>
+        <item>iconfont</item>
     </string-array>
 
     <string-array name="cause">

@@ -69,6 +69,7 @@ import com.jelly.jellybase.activity.GSYVideoActivity;
 import com.jelly.jellybase.activity.GraphValiCodeActivity;
 import com.jelly.jellybase.activity.HomeActivity;
 import com.jelly.jellybase.activity.IDCartActivity;
+import com.jelly.jellybase.activity.IconfontActivity;
 import com.jelly.jellybase.activity.LineChartActivity;
 import com.jelly.jellybase.activity.MessageActivity;
 import com.jelly.jellybase.activity.PIPActivity;
@@ -723,6 +724,10 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                     break;
                 case 49:// 所属银行
                     intent=new Intent(BaseApplication.getInstance(), BankActivity.class);
+                    startActivity(intent);
+                    break;
+                case 50:// iconfont
+                    intent=new Intent(BaseApplication.getInstance(), IconfontActivity.class);
                     startActivity(intent);
                     break;
             }

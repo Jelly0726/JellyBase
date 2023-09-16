@@ -359,7 +359,7 @@
 public static java.lang.String TABLENAME;
 }
 -keep class **$Properties
-
+-keep class **$Properties {*;}
 # If you do not use SQLCipher:
 -dontwarn org.greenrobot.greendao.database.**
 
@@ -369,6 +369,7 @@ public static java.lang.String TABLENAME;
 public static java.lang.String TABLENAME;
 }
 -keep class **$Properties
+-keep class **$Properties {*;}
 -keep class net.sqlcipher.database.**{*;}
 -keep public interface net.sqlcipher.database.**
 -dontwarn net.sqlcipher.database.**

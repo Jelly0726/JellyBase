@@ -21,7 +21,6 @@ android {
     def API_REL_HOST = "\"http://driver.test.com/\""
     //开发环境域名地址
     def API_DEBUG_HOST = "\"http://driver.4000000144.com/\""
-
     compileSdkVersion 30
     defaultConfig {
         applicationId envInfo.x32.applicationId
@@ -149,7 +148,7 @@ android {
             buildConfigField "boolean", "SEND_ERR", "true"//是否发送崩溃信息
             buildConfigField "String", "API_HOST", "${API_DEBUG_HOST}"//开发环境域名地址
             zipAlignEnabled global.zipAlignEnabled
-            minifyEnabled global.minifyEnabled
+            minifyEnabled false
             shrinkResources global.shrinkResources
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -325,16 +324,16 @@ dependencies {
     //高德地图so及jar
     //因为导航里已经有地图所以3D地图和导航不能同时导入
     //api 'com.amap.api:3dmap:latest.integration'
-    //    api 'com.amap.api:3dmap:6.5.0'
+//    implementation 'com.amap.api:3dmap:6.5.0'
     //定位功能
 //    implementation 'com.amap.api:location:latest.integration'
-//        api 'com.amap.api:location:5.0.0'
+//    implementation 'com.amap.api:location:5.0.0'
     //搜索功能
     implementation 'com.amap.api:search:9.7.0'
-//        api 'com.amap.api:search:7.3.0'
+//    implementation 'com.amap.api:search:7.3.0'
     //导航
     implementation 'com.amap.api:navi-3dmap:9.8.2_3dmap9.8.2'
-    //api 'com.amap.api:navi-3dmap:7.5.0'
+//    implementation 'com.amap.api:navi-3dmap:7.5.0'
     //kotlinx.serialization 是kotlin官方提供的更适合多平台移植
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVerion")
@@ -344,4 +343,5 @@ dependencies {
     implementation project(path: ':library:ocr_ui')
     //基础
     implementation project(path: ':library:baselibrary')
+    implementation project(path: ':library:IconFontView')
 }

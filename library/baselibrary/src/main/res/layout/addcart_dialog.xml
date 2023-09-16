@@ -56,7 +56,7 @@
                 android:gravity="center_vertical"
                 android:text="已选"/>
         </LinearLayout>
-        <ImageView
+        <com.jelly.baselibrary.imageView.ImageViewPlus
             android:id="@+id/goods_pic"
             android:layout_width="125mm"
             android:layout_height="125mm"

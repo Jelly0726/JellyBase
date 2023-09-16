@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapException;
 import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -45,7 +46,7 @@ import com.jelly.baselibrary.eventBus.NetEvent;
 import com.jelly.baselibrary.mprogressdialog.MProgressUtil;
 import com.jelly.baselibrary.toast.ToastUtils;
 import com.jelly.jellybase.R;
-import com.jelly.jellybase.databinding.AmapActivityBinding;
+import com.jelly.jellybase.databinding.AmapMainActivityBinding;
 import com.jelly.jellybase.server.LocationService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -58,7 +59,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2018/3/13.
  */
 
-public class AMapActivity extends BaseActivity<AmapActivityBinding> implements AMapNaviListener, AMap.OnCameraChangeListener,
+public class AMapActivity extends BaseActivity<AmapMainActivityBinding> implements AMapNaviListener, AMap.OnCameraChangeListener,
         AMap.OnMapLoadedListener, LocationSource, AMap.OnMarkerClickListener, View.OnClickListener {
     private AMap aMap;
     private MyLocationStyle myLocationStyle;
@@ -152,7 +153,11 @@ public class AMapActivity extends BaseActivity<AmapActivityBinding> implements A
         mTtsManager = TTSController.getInstance(getApplicationContext());
         mTtsManager.init();
 
-        mAMapNavi = AMapNavi.getInstance(getApplicationContext());
+        try {
+            mAMapNavi = AMapNavi.getInstance(getApplicationContext());
+        } catch (AMapException e) {
+            throw new RuntimeException(e);
+        }
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
         //是否启用内置语音
